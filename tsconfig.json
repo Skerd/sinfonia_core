@@ -16,7 +16,7 @@
     "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "types": [
       "vite/client"
     ],
