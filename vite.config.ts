@@ -49,9 +49,54 @@ function sinfoniaAppHtmlPlugin(appId: string): Plugin {
     };
 }
 
+/**
+ * When `VITE_ENABLED_MODULES` is set, stub files under disabled `src/modules/<name>`
+ * packages so eager contribution globs do not pull them into the graph.
+ * `core` is always kept.
+ */
+function enabledModulesExcludePlugin(rawEnv: string | undefined): Plugin {
+    const raw = rawEnv?.trim();
+    if (!raw) {
+        return {name: "sinfonia-enabled-modules"};
+    }
+    const enabled = new Set([
+        "core",
+        ...raw
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean),
+    ]);
+    const marker = "/src/modules/";
+
+    return {
+        name: "sinfonia-enabled-modules",
+        enforce: "pre",
+        load(id) {
+            const normalized = id.split("?")[0]!.replace(/\\/g, "/");
+            const idx = normalized.indexOf(marker);
+            if (idx === -1) {
+                return null;
+            }
+            const moduleName = normalized.slice(idx + marker.length).split("/")[0];
+            if (!moduleName || enabled.has(moduleName)) {
+                return null;
+            }
+            if (/\.(?:[cm]?[jt]sx?)$/.test(normalized)) {
+                return "export default undefined;\n";
+            }
+            if (normalized.endsWith(".json")) {
+                return "export default {};\n";
+            }
+            return null;
+        },
+    };
+}
+
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, __dirname, "");
+    const enabledModulesRaw =
+        process.env.VITE_ENABLED_MODULES ?? env.VITE_ENABLED_MODULES;
     const sinfoniaAppId = resolveSinfoniaAppId(
         process.env.VITE_SINFONIA_APP ?? env.VITE_SINFONIA_APP,
     );
@@ -60,6 +105,7 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [
+            enabledModulesExcludePlugin(enabledModulesRaw),
             sinfoniaAppHtmlPlugin(sinfoniaAppId),
             // checker({
             //     typescript: true

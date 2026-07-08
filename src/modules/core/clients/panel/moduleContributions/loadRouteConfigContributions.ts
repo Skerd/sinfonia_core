@@ -1,8 +1,11 @@
 import type {RouteConfigArgs, RouteConfigContribution} from "@coreModule/clients/panel/moduleContributions/routeConfigContribution.types.ts";
+import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
 
-const raw = import.meta.glob<Record<string, unknown>>(
-    "@/modules/*/clients/panel/routeConfigContribution.{tsx,ts}",
-    { eager: true },
+const raw = filterGlobByEnabledModules(
+    import.meta.glob<Record<string, unknown>>(
+        "@/modules/*/clients/panel/routeConfigContribution.{tsx,ts}",
+        { eager: true },
+    ),
 );
 
 let sorted: RouteConfigContribution[] | undefined;

@@ -4,10 +4,13 @@ import type {
     SidebarContribution,
     SidebarContributionContext,
 } from "@coreModule/clients/panel/moduleContributions/sidebarContribution.types.ts";
+import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
 
-const raw = import.meta.glob<Record<string, unknown>>(
-    "@/modules/*/clients/panel/sidebarContribution.{tsx,ts}",
-    { eager: true },
+const raw = filterGlobByEnabledModules(
+    import.meta.glob<Record<string, unknown>>(
+        "@/modules/*/clients/panel/sidebarContribution.{tsx,ts}",
+        { eager: true },
+    ),
 );
 
 let sortedContributions: SidebarContribution[] | undefined;

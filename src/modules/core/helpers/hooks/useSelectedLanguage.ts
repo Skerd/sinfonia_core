@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react'
 import {RootState} from '@coreModule/helpers/redux/store/generalStore.ts'
 import {useSelector} from 'react-redux'
 import mainConfig from '@coreModule/assets/languages/mainConfig.json'
+import {filterGlobByEnabledModules} from '@coreModule/helpers/modules/enabledModules.ts'
 
 const messages = mainConfig.helper.languageSelect
 const defaultLanguageCode = mainConfig.defaults.language || 'en-US'
@@ -51,10 +52,12 @@ type LanguageModuleLoader = () => Promise<LanguageModule>;
  * Vite requires a static pattern (no runtime folder scan); new modules are included automatically
  * when they add `assets/languages` — no per-module alias entry needed here.
  */
-const rawLanguageGlob = import.meta.glob('@/modules/*/assets/languages/*/**/*.json', {
-    eager: false,
-    import: 'default',
-}) as Record<string, LanguageModuleLoader>;
+const rawLanguageGlob = filterGlobByEnabledModules(
+    import.meta.glob('@/modules/*/assets/languages/*/**/*.json', {
+        eager: false,
+        import: 'default',
+    }) as Record<string, LanguageModuleLoader>,
+);
 
 let cachedBundlerLanguageRoots: readonly string[] | undefined
 

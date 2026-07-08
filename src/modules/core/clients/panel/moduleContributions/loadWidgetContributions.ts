@@ -1,8 +1,11 @@
 import type {WidgetContribution} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
+import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
 
-const raw = import.meta.glob<Record<string, unknown>>(
-    "@/modules/*/clients/panel/widgetContribution.{tsx,ts}",
-    {eager: true},
+const raw = filterGlobByEnabledModules(
+    import.meta.glob<Record<string, unknown>>(
+        "@/modules/*/clients/panel/widgetContribution.{tsx,ts}",
+        {eager: true},
+    ),
 );
 
 let sorted: WidgetContribution[] | undefined;

@@ -1,10 +1,13 @@
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type {NavSubCollapsible} from "@coreModule/helpers/panel/sidebarNav.types.ts";
 import type {TenancySettingsContribution} from "@coreModule/clients/panel/moduleContributions/tenancySettingsContribution.types.ts";
+import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
 
-const raw = import.meta.glob<Record<string, unknown>>(
-    "@/modules/*/clients/panel/tenancySettingsContribution.{tsx,ts}",
-    {eager: true},
+const raw = filterGlobByEnabledModules(
+    import.meta.glob<Record<string, unknown>>(
+        "@/modules/*/clients/panel/tenancySettingsContribution.{tsx,ts}",
+        {eager: true},
+    ),
 );
 
 let sorted: TenancySettingsContribution[] | undefined;
