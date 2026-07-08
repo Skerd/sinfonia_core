@@ -1,0 +1,49 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/editSmtpServer.tsx",
+  "title": "Edit SMTP server",
+  "description": "Leave password blank to keep the current password.",
+  "errorTitle": "Failed to load SMTP server",
+  "errorDescription": "Please click here to retry fetching server data.",
+  "noId": "No SMTP server selected.",
+  "backToList": "Back to list",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "e.g. Primary SMTP",
+    "sequenceLabel": "Priority (sequence)",
+    "sequencePlaceholder": "10",
+    "activeLabel": "Active",
+    "hostLabel": "SMTP host",
+    "hostPlaceholder": "smtp.example.com",
+    "portLabel": "Port",
+    "portPlaceholder": "587",
+    "encryptionLabel": "Encryption",
+    "authTypeLabel": "Authentication",
+    "usernameLabel": "Username",
+    "usernamePlaceholder": "user@example.com",
+    "passwordLabel": "Password (leave blank to keep)",
+    "passwordPlaceholder": "••••••••",
+    "fromEmailLabel": "From email",
+    "fromEmailPlaceholder": "noreply@example.com",
+    "fromNameLabel": "From name",
+    "fromNamePlaceholder": "My Company",
+    "replyToLabel": "Reply-To",
+    "replyToPlaceholder": "support@example.com",
+    "encryption": {
+      "none": "None",
+      "ssl": "SSL",
+      "starttls": "STARTTLS"
+    },
+    "authType": {
+      "login": "Username / password",
+      "none": "None"
+    }
+  },
+  "formHeader": {
+    "title": "Edit SMTP server",
+    "description": "Leave password blank to keep the current password."
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Save"
+  }
+}

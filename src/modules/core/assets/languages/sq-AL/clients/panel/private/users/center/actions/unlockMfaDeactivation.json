@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockMfaDeactivation.tsx",
+  "unlockMfaDeactivation": "Zhblloko çaktivizimin e MFA",
+  "unlockMfaDeactivationConfirm": "Zhbllokohet bllokimi i çaktivizimit të MPJ?",
+  "unlockMfaDeactivationConfirmDesc": "Kjo do të pastrojë bllokimin e çaktivizimit të MFA. Përdoruesi do të jetë në gjendje të kërkojë një kod të ri çaktivizimi të MPJ-së.",
+  "unlockMfaDeactivationResendEmail": "Ridërgo emailin e çaktivizimit të MPJ-së",
+  "unlockMfaDeactivationSuccess": "Bllokimi i çaktivizimit të MFA u fshi me sukses",
+  "unlockMfaDeactivationError": "Pastrimi i bllokimit të çaktivizimit të MFA dështoi",
+  "axios": {
+    "start": {
+      "title": "Zhbllokimi i çaktivizimit të MPJ-së",
+      "time": 3000
+    },
+    "success": {
+      "title": "Bllokimi i çaktivizimit të MFA u fshi me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Pastrimi i bllokimit të çaktivizimit të MFA dështoi",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/left/channelsFetcher.tsx",
+  "failTitle": "Ngarkimi i kanaleve të përdoruesve dështoi",
+  "failTitleTooltip": "Klikoni për të ringarkuar kanalet e përdoruesve",
+  "noDataTitle": "Nuk ka rezultate"
+}

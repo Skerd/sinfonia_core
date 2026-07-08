@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/index.tsx",
+  "title": "Security",
+  "description": "Update your password, two-factor authentication, active sessions, login history, and account status."
+}

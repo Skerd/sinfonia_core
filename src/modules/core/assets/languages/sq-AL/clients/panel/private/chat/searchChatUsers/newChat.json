@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/searchChatUsers/newChat.tsx",
+  "members": "Anëtarët",
+  "searchPeople": "Kërkoni njerëz",
+  "failTitle": "Ngarkimi i përdoruesve dështoi",
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e përdoruesve",
+  "noDataTitle": "Nuk u gjetën njerëz.",
+  "form": {
+    "nameLabel": "Emri i grupit",
+    "namePlaceholder": "Emri i grupit"
+  }
+}

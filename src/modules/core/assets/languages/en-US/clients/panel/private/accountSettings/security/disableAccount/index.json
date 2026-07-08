@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/index.tsx",
+  "title": "Account status",
+  "description": "Change account status",
+  "failTitle": "Failed to load account status",
+  "failTitleTooltip": "Click to retry loading account status"
+}

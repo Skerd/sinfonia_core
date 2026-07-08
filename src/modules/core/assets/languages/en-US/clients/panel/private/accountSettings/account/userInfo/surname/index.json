@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/surname/index.tsx",
+  "form": {
+    "surnameLabel": "Surname",
+    "surnameDescription": "This is the surname that will be displayed in the system."
+  },
+  "failTitle": "Failed to load surname",
+  "failTitleTooltip": "Click to retry loading surname"
+}

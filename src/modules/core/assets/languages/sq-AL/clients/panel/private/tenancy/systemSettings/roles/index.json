@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/index.tsx",
+  "title": "Të gjitha rolet",
+  "description": "Shikoni dhe modifikoni rolet e kompanisë",
+  "searchPlaceholder": "Kërko sipas emrit ose slug...",
+  "failTitle": "Ngarkimi i roleve dështoi",
+  "failTitleTooltip": "Kliko këtu për të riprovuar ngarkimin e roleve",
+  "create": "Krijo rol",
+  "fields": {
+    "name": "Emri",
+    "isAdmin": "Roli i administratorit",
+    "isSignupDefault": "Parazgjedhja për regjistrim",
+    "canEdit": "Mund të modifikojë",
+    "canDelete": "Mund të fshihet",
+    "slug": "Slug",
+    "createdBy": "Krijuar nga",
+    "company": "Kompania",
+    "deletedAt": "Statusi",
+    "deletedBy": "Fshirë nga"
+  }
+}

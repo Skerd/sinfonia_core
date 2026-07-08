@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterValueInput.tsx",
+  "yes": "E vërtetë",
+  "no": "E rreme",
+  "min": "Min",
+  "max": "Maks",
+  "selectValues": "Zgjidhni vlerat",
+  "selectValue": "Zgjidhni vlerën",
+  "enterValue": "Fut vlerën",
+  "inValuesPlaceholder": "a,b,c..."
+}

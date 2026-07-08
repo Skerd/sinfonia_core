@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/deletePhoto.tsx",
+  "confirm": "Fshije",
+  "cancel": "Anulo",
+  "deletePhoto": "Fshi foton",
+  "axios": {
+    "start": {
+      "title": "Fshirja e fotos së kopertinës filloi",
+      "time": 3000
+    },
+    "success": {
+      "title": "Fotografia e kopertinës u fshi me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fshirja e fotos së kopertinës dështoi",
+      "time": 3000
+    }
+  }
+}

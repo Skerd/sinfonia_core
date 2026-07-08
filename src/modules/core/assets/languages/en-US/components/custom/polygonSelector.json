@@ -1,0 +1,15 @@
+{
+  "path": "src/modules/core/components/custom/polygonSelector.tsx",
+  "zoomOut": "Zoom out",
+  "zoomIn": "Zoom in",
+  "resetZoom": "Reset zoom",
+  "expand": "Expand image",
+  "collapse": "Collapse image",
+  "clear": "Clear all points",
+  "revert": "Revert last point",
+  "info": "Click on the image to add points. ⌘/Ctrl + Scroll to zoom and drag image to pan.",
+  "currentPolygon": "Current polygon:",
+  "point": "point",
+  "points": "points",
+  "clickToClose": "Click on the first point to close the polygon."
+}

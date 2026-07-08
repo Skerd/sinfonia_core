@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/index.tsx",
+  "title": "Countries",
+  "description": "Manage countries and configuration settings",
+  "create": "Create country",
+  "searchPlaceholder": "Search by name, code, or add filters...",
+  "status": "Status",
+  "name": "Name",
+  "code": "Code",
+  "phoneCode": "Phone code",
+  "currency": "Currency",
+  "deleted": "Deleted",
+  "active": "Active",
+  "fields": {
+    "name": "Name",
+    "code": "Code",
+    "phoneCode": "Phone code",
+    "currency": "Currency",
+    "createdBy": "Created by",
+    "company": "Company",
+    "deletedAt": "Status",
+    "deletedBy": "Deleted by"
+  }
+}

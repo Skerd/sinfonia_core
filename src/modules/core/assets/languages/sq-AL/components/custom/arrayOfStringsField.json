@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/components/custom/arrayOfStringsField.tsx",
+  "label": "Artikuj",
+  "placeholder": "Shto një artikull…",
+  "removeTooltip": "Hiq",
+  "addButtonLabel": "Shto artikull",
+  "maxItemsReached": "Është arritur numri maksimal i artikujve."
+}

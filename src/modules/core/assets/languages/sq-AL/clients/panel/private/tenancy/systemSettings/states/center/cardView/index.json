@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/cardView/index.tsx",
+  "failTitle": "Ngarkimi dështoi",
+  "failDescription": "Ndodhi një gabim. Ju lutemi provoni përsëri.",
+  "noData": "Nuk u gjet asnjë shtet"
+}

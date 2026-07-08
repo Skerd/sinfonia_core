@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx",
+  "title": "Çaktivizo kompaninë",
+  "description": "Jeni i sigurt që dëshironi ta çaktivizoni këtë kompani? Përdoruesit nuk do të jenë në gjendje të hyjnë në sistem pas çaktivizimit.",
+  "confirm": "Çaktivizo",
+  "confirmNameLabel": "Shkruani emrin e kompanisë për të konfirmuar",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Çaktivizimi i kompanisë",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kompania u çaktivizua me sukses.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kompania dështoi të çaktivizohej",
+      "time": 3000
+    }
+  }
+}

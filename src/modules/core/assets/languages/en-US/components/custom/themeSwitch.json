@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/themeSwitch.tsx",
+  "toggleTheme": "Toggle theme",
+  "light": "Light",
+  "dark": "Dark",
+  "system": "System"
+}

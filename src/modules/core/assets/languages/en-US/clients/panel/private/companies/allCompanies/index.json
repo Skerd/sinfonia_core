@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/companies/allCompanies/index.tsx",
+  "title": "All companies",
+  "description": "All companies",
+  "failTitle": "Failed to load all companies",
+  "failDescription": "Click here to retry loading all companies",
+  "noData": "No companies found",
+  "createCompany": "Create company"
+}

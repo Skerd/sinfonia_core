@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/createUser/index.tsx",
+  "title": "Shto përdorues të ri",
+  "administrationTitle": "Shto përdorues të ri",
+  "description": "Krijo një përdorues të ri të internetit këtu. Kliko ruaj kur të kesh mbaruar.",
+  "administrationDescription": "Krijo përdorues të ri të ekipit këtu. Kliko ruaj kur të kesh mbaruar.",
+  "addUser": "Shto përdorues"
+}

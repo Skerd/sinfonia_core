@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/components/custom/messagingProviders/testMessagingProviderConnectionDialog.tsx",
+  "title": "Testo lidhjen e mesazheve",
+  "description": "Dërgo një mesazh test SMS ose WhatsApp për të verifikuar këtë ofrues. Vendos numrin e telefonit të marrësit më poshtë.",
+  "testPhoneLabel": "Telefoni i marrësit test",
+  "confirm": "Testo lidhjen",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Duke testuar lidhjen e mesazheve…"
+    },
+    "success": {
+      "title": "Testi i lidhjes së mesazheve u krye me sukses."
+    },
+    "error": {
+      "title": "Testi i lidhjes së mesazheve dështoi"
+    }
+  }
+}

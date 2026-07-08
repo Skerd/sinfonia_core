@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/cardView/userProfileCard.tsx",
+  "failTitle": "Failed to load user data",
+  "failTitleTooltip": "Click here to retry loading user data",
+  "about": "About",
+  "info": "Info",
+  "email": "Email",
+  "emailVerified": "Current verified email",
+  "invitedUser": "Please verify the email by accepting the invitation request",
+  "emailNotVerified": "Please verify your new email by clicking on the link sent to your inbox",
+  "timezone": "Timezone",
+  "birthday": "Birthday",
+  "phoneNumber": "Phone number",
+  "registeredDate": "Register date",
+  "registeredFrom": "Registered from",
+  "emailVerifiedAt": "Email verified at",
+  "lockedOutUntil": "Locked out until",
+  "online": "Online",
+  "offline": "Offline",
+  "createdBy": "Created by",
+  "status": "Status",
+  "statuses": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "invited": "Invited"
+  },
+  "mfaStatuses": {
+    "active": "MFA active",
+    "notActive": "MFA not active"
+  },
+  "roles": "Roles",
+  "unsuccessfulLogins": "Unsuccessful logins",
+  "lastLoginDate": "Last login",
+  "requests": "Requests",
+  "requestsInvitation": "Invitation",
+  "requestsActivation": "Activation",
+  "requestsPasswordReset": "Password reset",
+  "requestsMfaDeactivation": "MFA deactivation"
+}

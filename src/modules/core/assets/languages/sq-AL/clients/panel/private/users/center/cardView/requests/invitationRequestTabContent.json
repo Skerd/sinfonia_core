@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/cardView/requests/invitationRequestTabContent.tsx",
+  "invitedBy": "I ftuar nga",
+  "invitedAt": "I ftuar në",
+  "opened": "U hap",
+  "attempts": "Përpjekjet",
+  "invitationExpiresAt": "Skadon në",
+  "accepted": "Pranuar",
+  "acceptedAt": "Pranuar në",
+  "lockedUntil": "I mbyllur deri në",
+  "yes": "po",
+  "no": "Nr"
+}

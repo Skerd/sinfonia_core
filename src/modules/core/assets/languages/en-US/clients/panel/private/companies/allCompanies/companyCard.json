@@ -1,0 +1,30 @@
+{
+  "path": "src/modules/core/clients/panel/private/companies/allCompanies/companyCard.tsx",
+  "contactInfo": "Contact information ",
+  "location": "Location",
+  "aboutUs": "About us",
+  "notActive": "Not active",
+  "deactivated": "Deactivated",
+  "openInGoogleMaps": "Google Maps",
+  "openInAppleMaps": "Apple Maps",
+  "downloadCard": "Download company card",
+  "expand": "Expand",
+  "collapse": "Collapse",
+  "_id": "Id",
+  "name": "Name",
+  "email": "Email",
+  "phone": "Phone",
+  "phoneNumber": {
+    "prefix": "Prefix",
+    "number": "Number"
+  },
+  "address": "Address",
+  "city": "City",
+  "country": "Country",
+  "postalCode": "Postal code",
+  "description": "Description",
+  "website": "Website",
+  "vat": "VAT",
+  "allowedDomains": "Allowed domains",
+  "edit": "Update"
+}

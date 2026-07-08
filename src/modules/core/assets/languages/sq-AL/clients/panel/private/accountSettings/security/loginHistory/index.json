@@ -1,0 +1,32 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
+  "title": "Historia e hyrjes",
+  "description": "Rishiko identifikimin e fundit dhe përpjekjet e dështuara. Të dhënat e krijuara nga serveri nuk mund të modifikohen këtu.",
+  "searchPlaceholder": "Kërkoni sipas kohës, pajisjes ose IP-së",
+  "unknownLocation": "Vendndodhja e panjohur",
+  "reason": "Arsyeja",
+  "status": {
+    "success": "Identifikimi i suksesshëm",
+    "failure": "Identifikimi i dështuar"
+  },
+  "badge": {
+    "success": "Suksese",
+    "failure": "Dështoi",
+    "mfa": "MPJ"
+  },
+  "fields": {
+    "user": "Përdoruesi",
+    "userId": "Përdoruesi",
+    "time": "Koha",
+    "status": "Statusi",
+    "mfa": "MPJ",
+    "reason": "Arsyeja",
+    "device": "Pajisja",
+    "os": "Sistemi operativ",
+    "browser": "Shfletuesi",
+    "userAgent": "Agjenti i përdoruesit",
+    "ip": "Adresa IP",
+    "geolocation": "Gjeolokimi",
+    "createdAt": "Krijuar në"
+  }
+}

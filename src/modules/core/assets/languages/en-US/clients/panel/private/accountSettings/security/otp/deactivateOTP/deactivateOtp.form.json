@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/otp/deactivateOTP/deactivateOtp.form.tsx",
+  "deactivateNow": "Are you sure you want to deactivate 2FA?",
+  "deactivateNowDescription": "After deactivation, the user can log into the system using password onlu",
+  "withOTPCodeDescription": "Fill 2FA code to deactivate",
+  "confirm": "Deactivate 2FA",
+  "cancel": "Cancel",
+  "twoParts": {
+    "noOtpCode": {
+      "0": "Don't have 2FA code?",
+      "1": "Request email instructions"
+    }
+  },
+  "checkEmail": "Check email to continue 2FA deactivation",
+  "disabled": "2FA successfully deactivated!",
+  "form": {
+    "mfaCodeLabel": "2FA code",
+    "mfaCodePlaceholder": "2FA code"
+  },
+  "axios": {
+    "start": {
+      "title": "Deactivating 2FA",
+      "time": 3000
+    },
+    "error": {
+      "title": "2FA deactivation failed",
+      "time": 3000
+    },
+    "success": {
+      "title": "Completed successfully",
+      "time": 3000
+    }
+  }
+}

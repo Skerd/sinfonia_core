@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/companies/index.tsx",
+  "failTitle": "Failed to load company",
+  "failTitleTooltip": "Click to reload company"
+}

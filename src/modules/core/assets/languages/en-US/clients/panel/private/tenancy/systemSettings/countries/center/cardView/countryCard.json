@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx",
+  "name": "Name",
+  "flag": "Flag",
+  "code": "Code",
+  "phoneCode": "Phone code",
+  "currency": "Currency",
+  "deleted": "Deleted",
+  "active": "Active",
+  "failedTitle": "Failed to load country",
+  "failedDescription": "Tap to retry."
+}

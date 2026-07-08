@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/components/custom/files/mediaField.tsx",
+  "uploadImageHint": "Ngarko imazh",
+  "uploadVideoHint": "Ngarko video",
+  "uploadFileHint": "Ngarko skedarin",
+  "imageAlt": "Imazhi",
+  "videoAlt": "Video",
+  "fileAlt": "Skedari",
+  "videoUnsupported": "Shfletuesi juaj nuk e mbështet etiketën e videos."
+}

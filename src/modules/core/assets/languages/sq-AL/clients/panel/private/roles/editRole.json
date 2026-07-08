@@ -1,0 +1,32 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/editRole.tsx",
+  "title": "Redakto rolin",
+  "description": "Përditëso detajet e rolit",
+  "errorTitle": "Ngarkimi i të dhënave të roleve dështoi",
+  "errorDescription": "Ju lutemi, klikoni këtu për të riprovuar marrjen e të dhënave të roleve",
+  "form": {
+    "nameLabel": "Emri i rolit",
+    "namePlaceholder": "Emri i rolit",
+    "nameDescription": "Emri i shfaqur i rolit",
+    "templateLabel": "shabllon",
+    "templatePlaceholder": "shabllon",
+    "templateDescription": "Kopjoni lejet nga një rol tjetër"
+  },
+  "none": "Asnjë",
+  "cancel": "Anulo",
+  "submit": "Ruaj",
+  "axios": {
+    "start": {
+      "title": "Roli ruajtës",
+      "time": 3000
+    },
+    "success": {
+      "title": "Roli u përditësua me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Roli nuk mund të përditësohej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  }
+}

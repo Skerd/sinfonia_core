@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/mongo.tsx",
+  "mongoDbTitle": "Mongo DB",
+  "online": "Online",
+  "offline": "Jashtë linje",
+  "uptime": "Koha e funksionimit",
+  "db": "DB",
+  "storage": "Magazinimi",
+  "index": "Indeksi",
+  "day": "ditë",
+  "days": "ditë",
+  "hour": "orë",
+  "hours": "orë",
+  "minute": "minutë",
+  "minutes": "minuta",
+  "second": "e dyta",
+  "seconds": "sekonda"
+}

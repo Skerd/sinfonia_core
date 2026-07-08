@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notifications/index.tsx",
+  "title": "Njoftimet",
+  "description": "Konfiguroni mënyrën se si merrni njoftimet.",
+  "notifyAbout": {
+    "title": "Më njoftoni për...",
+    "all": "Të gjitha mesazhet e reja",
+    "direct": "Mesazhe direkte dhe përmendje",
+    "nothing": "Asgjë"
+  },
+  "emailNotifications": {
+    "title": "Njoftimet me email",
+    "communication": {
+      "title": "Email-et e komunikimit",
+      "description": "Merrni email në lidhje me aktivitetin e llogarisë suaj."
+    },
+    "marketing": {
+      "title": "Email marketingu",
+      "description": "Merr email për produktet tona, veçoritë dhe më shumë."
+    },
+    "security": {
+      "title": "Emailet e sigurisë",
+      "description": "Merrni email në lidhje me aktivitetin dhe sigurinë e llogarisë suaj."
+    }
+  },
+  "update": "Përditëso njoftimet"
+}

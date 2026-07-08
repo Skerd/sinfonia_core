@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/components/custom/confirmDialog.tsx",
+  "cancel": "Anulo",
+  "confirm": "Konfirmo"
+}

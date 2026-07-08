@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/center/actions/delete.tsx",
+  "title": "Delete",
+  "deleteConfirmTitle": "Delete role",
+  "deleteConfirmDescription": "Are you sure you want to delete this role? This will remove the role from all users who have it assigned.",
+  "confirmNameLabel": "Type the role name to confirm",
+  "cancel": "Cancel",
+  "confirmDelete": "Delete",
+  "axios": {
+    "start": {
+      "title": "Deleting role",
+      "time": 3000
+    },
+    "success": {
+      "title": "Role deleted successfully!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Role could not be deleted, please try again!",
+      "time": 3000
+    }
+  }
+}

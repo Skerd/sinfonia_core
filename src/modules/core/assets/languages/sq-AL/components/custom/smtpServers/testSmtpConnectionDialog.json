@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/components/custom/smtpServers/testSmtpConnectionDialog.tsx",
+  "title": "Testo lidhjen SMTP",
+  "description": "Verifikoni serverin dhe dërgoni një email test në adresën tuaj.",
+  "confirm": "Testo lidhjen",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Duke testuar lidhjen SMTP…"
+    },
+    "success": {
+      "title": "Testi i lidhjes SMTP u krye me sukses."
+    },
+    "error": {
+      "title": "Testi i lidhjes SMTP dështoi"
+    }
+  }
+}

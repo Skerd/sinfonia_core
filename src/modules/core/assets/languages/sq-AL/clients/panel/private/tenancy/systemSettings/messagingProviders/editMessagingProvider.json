@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/editMessagingProvider.tsx",
+  "title": "Ndrysho ofruesin e mesazheve",
+  "description": "Lini auth token bosh për të mbajtur tokenin aktual.",
+  "errorTitle": "Ngarkimi i ofruesit të mesazheve dështoi",
+  "errorDescription": "Klikoni këtu për të provuar përsëri.",
+  "noId": "Nuk është zgjedhur asnjë ofrues mesazhesh.",
+  "backToList": "Kthehu te lista",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "p.sh. Twilio kryesor",
+    "providerTypeLabel": "Ofruesi",
+    "providerType": {
+      "twilio": "Twilio"
+    },
+    "accountSidLabel": "Account SID",
+    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "authTokenLabel": "Auth token",
+    "authTokenPlaceholder": "••••••••",
+    "authTokenEditLabel": "Auth token (lini bosh për të mbajtur)",
+    "authTokenEditPlaceholder": "••••••••",
+    "fromPhoneLabel": "Dërgues SMS (E.164)",
+    "fromPhonePlaceholder": "+355691234567",
+    "fromWhatsappLabel": "Dërgues WhatsApp (E.164)",
+    "fromWhatsappPlaceholder": "+355691234567"
+  },
+  "formHeader": {
+    "title": "Ndrysho ofruesin e mesazheve",
+    "description": "Lini auth token bosh për të mbajtur tokenin aktual."
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Ruaj"
+  }
+}

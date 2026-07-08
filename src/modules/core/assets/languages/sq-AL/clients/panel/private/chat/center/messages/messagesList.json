@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/messagesList.tsx",
+  "failTitle": "Ngarkimi i mesazheve dështoi",
+  "failTitleTooltip": "Klikoni për të ringarkuar mesazhet",
+  "welcome": "Mirë se vini në bisedë",
+  "today": "Sot",
+  "yesterday": "Dje",
+  "weekDays": [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "description": "Connect an SMS or WhatsApp provider. Credentials are stored encrypted.",
+  "form": {
+    "accountSidLabel": "Account SID",
+    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "authTokenEditLabel": "Auth Token Edit Label",
+    "authTokenLabel": "Auth token",
+    "authTokenPlaceholder": "••••••••",
+    "fromPhoneLabel": "SMS sender (E.164)",
+    "fromPhonePlaceholder": "+15551234567",
+    "fromWhatsappLabel": "WhatsApp sender (E.164)",
+    "fromWhatsappPlaceholder": "+15551234567",
+    "nameLabel": "Name",
+    "namePlaceholder": "e.g. Primary Twilio",
+    "providerType": {
+      "twilio": "Twilio"
+    },
+    "providerTypeLabel": "Provider"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Create"
+  },
+  "formHeader": {
+    "description": "Connect an SMS or WhatsApp provider. Credentials are stored encrypted.",
+    "title": "Add messaging provider"
+  },
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/createMessagingProvider.tsx",
+  "title": "Add messaging provider"
+}

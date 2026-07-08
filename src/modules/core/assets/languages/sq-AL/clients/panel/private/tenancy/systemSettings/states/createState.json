@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/createState.tsx",
+  "title": "Krijo shtet",
+  "description": "Shto një gjendje të re",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri i shtetit",
+    "codeLabel": "Kodi",
+    "codePlaceholder": "p.sh. CA",
+    "countryLabel": "Vendi",
+    "countryPlaceholder": "Zgjidh shtetin"
+  },
+  "axios": {
+    "start": {
+      "title": "Krijimi i shtetit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Shteti u krijua me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Shteti nuk mund të krijohej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Krijo shtet",
+    "description": "Shto një gjendje të re"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Krijo"
+  }
+}

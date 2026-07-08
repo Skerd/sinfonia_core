@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/inviteUser/index.tsx",
+  "title": "Fto përdorues",
+  "administrationTitle": "Fto përdorues",
+  "description": "Ftoni përdorues të ri për të hyrë në faqen tuaj duke i dërguar një ftesë me email. Caktoni një rol për të përcaktuar nivelin e tyre të aksesit.",
+  "administrationDescription": "Ftoni përdorues të ri të bashkohet me ekipin tuaj duke i dërguar një ftesë me email. Caktoni një rol për të përcaktuar nivelin e tyre të aksesit.",
+  "inviteUser": "Fto përdorues"
+}

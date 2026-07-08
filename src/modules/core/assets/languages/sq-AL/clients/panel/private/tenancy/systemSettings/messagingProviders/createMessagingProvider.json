@@ -1,0 +1,30 @@
+{
+  "description": "Lidhni një ofrues SMS ose WhatsApp. Kredencialet ruhen të enkriptuara.",
+  "form": {
+    "accountSidLabel": "Account SID",
+    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "authTokenEditLabel": "Auth Token Edit Label",
+    "authTokenLabel": "Auth token",
+    "authTokenPlaceholder": "••••••••",
+    "fromPhoneLabel": "Dërgues SMS (E.164)",
+    "fromPhonePlaceholder": "+355691234567",
+    "fromWhatsappLabel": "Dërgues WhatsApp (E.164)",
+    "fromWhatsappPlaceholder": "+355691234567",
+    "nameLabel": "Emri",
+    "namePlaceholder": "p.sh. Twilio kryesor",
+    "providerType": {
+      "twilio": "Twilio"
+    },
+    "providerTypeLabel": "Ofruesi"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Krijo"
+  },
+  "formHeader": {
+    "description": "Lidhni një ofrues SMS ose WhatsApp. Kredencialet ruhen të enkriptuara.",
+    "title": "Shto ofrues mesazhesh"
+  },
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/createMessagingProvider.tsx",
+  "title": "Shto ofrues mesazhesh"
+}

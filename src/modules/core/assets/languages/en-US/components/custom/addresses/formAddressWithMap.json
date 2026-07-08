@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/components/custom/addresses/formAddressWithMap.tsx",
+  "addAddress": "Add address",
+  "remove": "Remove address",
+  "form": {
+    "countryLabel": "Country",
+    "countryPlaceholder": "Select country",
+    "stateLabel": "State",
+    "statePlaceholder": "Select state",
+    "cityLabel": "City",
+    "cityPlaceholder": "Select city",
+    "streetLabel": "Street",
+    "streetPlaceholder": "Street",
+    "postalCodeLabel": "Postal code",
+    "postalCodePlaceholder": "Postal code",
+    "latitudeLabel": "Latitude",
+    "latitudePlaceholder": "Latitude",
+    "longitudeLabel": "Longitude",
+    "longitudePlaceholder": "Longitude"
+  }
+}

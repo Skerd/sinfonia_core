@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/phoneNumber/index.tsx",
+  "form": {
+    "phoneNumberNumberLabel": "Phone number",
+    "phoneNumberNumberPlaceholder": "Phone number"
+  },
+  "failTitle": "Failed to load phone number",
+  "failTitleTooltip": "Click to retry loading phone number"
+}

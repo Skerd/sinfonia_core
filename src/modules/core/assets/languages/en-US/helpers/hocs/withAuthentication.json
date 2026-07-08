@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/helpers/hocs/withAuthentication.tsx",
+  "verifying": "Security check",
+  "loadingUser": "Loading previously logged user",
+  "sessionExpiredTitle": "Your session has expired",
+  "sessionExpiredDescription": "Your session has expired, please sign in again",
+  "sessionExpiredOkButton": "Ok"
+}

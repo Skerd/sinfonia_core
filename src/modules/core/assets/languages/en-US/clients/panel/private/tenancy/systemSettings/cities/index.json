@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx",
+  "title": "Cities",
+  "description": "Manage cities",
+  "createCity": "Create city",
+  "searchPlaceholder": "Search by name or add filters...",
+  "noData": "No cities found",
+  "failTitle": "Failed to load cities",
+  "failDescription": "An error occurred while loading cities. Please try again.",
+  "status": "Status",
+  "name": "Name",
+  "state": "State",
+  "country": "Country",
+  "deleted": "Deleted",
+  "active": "Active",
+  "fields": {
+    "name": "Name",
+    "state": "State",
+    "country": "Country",
+    "createdBy": "Created by",
+    "company": "Company",
+    "deletedAt": "Status",
+    "deletedBy": "Deleted by"
+  }
+}

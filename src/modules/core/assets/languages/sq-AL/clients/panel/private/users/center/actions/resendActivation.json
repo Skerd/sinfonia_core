@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/resendActivation.tsx",
+  "resendActivationEmail": "Ridërgo email aktivizimi",
+  "resendActivationEmailConfirm": "Të ridërgohet emaili i aktivizimit?",
+  "resendActivationEmailConfirmDesc": "Përdoruesit do t'i dërgohet një email i ri aktivizimi.",
+  "resendActivationEmailSuccess": "Email-i i aktivizimit u dërgua me sukses",
+  "resendActivationEmailError": "Dërgimi i email-it të aktivizimit dështoi",
+  "axios": {
+    "start": {
+      "title": "Dërgimi i emailit të aktivizimit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Email-i i aktivizimit u dërgua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Dërgimi i email-it të aktivizimit dështoi",
+      "time": 3000
+    }
+  }
+}

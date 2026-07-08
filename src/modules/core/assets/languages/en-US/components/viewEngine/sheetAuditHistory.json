@@ -1,0 +1,19 @@
+{
+    "menuItem": "Activity",
+    "drawerTitle": "Activity",
+    "drawerDescription": "Changes to this record over time.",
+    "loadMore": "Load more",
+    "loading": "Loading…",
+    "empty": "No activity yet.",
+    "errorTitle": "Could not load activity",
+    "retry": "Try again",
+    "actionCreate": "created this record",
+    "actionUpdate": "updated",
+    "actionDelete": "deleted this record",
+    "actionRestore": "restored this record",
+    "systemActor": "System",
+    "unknownField": "Field",
+    "from": "From",
+    "to": "To",
+    "noFieldChanges": "No visible field changes (restricted or empty diff)."
+}

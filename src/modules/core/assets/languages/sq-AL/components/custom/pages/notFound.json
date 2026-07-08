@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/pages/notFound.tsx",
+  "title": "Oops! Faqja nuk u gjet!",
+  "description": "Duket si faqja që po kërkoni\nnuk ekziston ose mund të jetë hequr.",
+  "backLabel": "Kthehu prapa",
+  "backHome": "Kthehu në shtëpi"
+}

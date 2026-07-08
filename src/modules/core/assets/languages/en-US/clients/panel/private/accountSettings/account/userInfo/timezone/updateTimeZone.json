@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/timezone/updateTimeZone.tsx",
+  "confirm": "Confirm timezone change",
+  "cancel": "Cancel",
+  "axios": {
+    "start": {
+      "title": "Updating time zone",
+      "time": 3000
+    },
+    "success": {
+      "title": "Time zone updated successfully",
+      "time": 3000
+    },
+    "error": {
+      "title": "Time zone failed to be updated",
+      "time": 3000
+    }
+  }
+}

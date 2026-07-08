@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/index.tsx",
+  "status": {
+    "title": "Statusi:",
+    "active": "Aktiv",
+    "blocked": "E bllokuar",
+    "invited": "I ftuar"
+  },
+  "registeredDate": "I regjistruar:",
+  "failTitle": "Ngarkimi i të dhënave dështoi",
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e të dhënave",
+  "requestsInvitation": "Ftesë",
+  "requestsActivation": "Aktivizimi",
+  "requestsPasswordReset": "Rivendosja e fjalëkalimit",
+  "requestsMfaDeactivation": "Çaktivizimi i MPJ-së"
+}

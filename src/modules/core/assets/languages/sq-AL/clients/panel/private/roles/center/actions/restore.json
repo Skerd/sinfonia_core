@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/center/actions/restore.tsx",
+  "title": "Rivendos",
+  "restoreConfirmTitle": "Rivendosja e rolit",
+  "restoreConfirmDescription": "Je i sigurt që dëshiron ta rivendosësh këtë rol?",
+  "cancel": "Anulo",
+  "confirmRestore": "Rivendos",
+  "axios": {
+    "start": {
+      "title": "Roli i rivendosjes",
+      "time": 3000
+    },
+    "success": {
+      "title": "Roli u rivendos me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Roli nuk mund të rivendosej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  }
+}

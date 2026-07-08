@@ -1,0 +1,57 @@
+{
+  "description": "Përcaktoni kur dhe si ekzekutohet një handler në sfond.",
+  "form": {
+    "activeLabel": "Aktiv",
+    "codeLabel": "Kodi",
+    "companyLabel": "Kompania",
+    "companyPlaceholder": "Zgjidh kompaninë",
+    "cronExpressionLabel": "Shprehje cron",
+    "cronExpressionPlaceholder": "0 0 * * * *",
+    "descriptionLabel": "Përshkrimi",
+    "handlerLabel": "Handler",
+    "intervalUnit": {
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
+    "intervalUnit.days": "Ditë",
+    "intervalUnit.hours": "Orë",
+    "intervalUnit.minutes": "Minuta",
+    "intervalUnit.seconds": "Sekonda",
+    "intervalUnitLabel": "Njësia e intervalit",
+    "intervalValueLabel": "Vlera e intervalit",
+    "intervalValuePlaceholder": "5",
+    "maxRetriesLabel": "Riprovime maks.",
+    "nameLabel": "Emri",
+    "priorityLabel": "Prioriteti",
+    "scope": {
+      "company": "Company",
+      "global": "Global"
+    },
+    "scope.company": "Kompani",
+    "scope.global": "Global (platformë)",
+    "scopeLabel": "Fusha",
+    "type": {
+      "cron": "Cron",
+      "interval": "Interval",
+      "once": "Once",
+      "queue": "Queue"
+    },
+    "type.cron": "Shprehje cron",
+    "type.interval": "Interval",
+    "type.once": "Një herë",
+    "type.queue": "Radhë",
+    "typeLabel": "Lloji i orarit"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Krijo"
+  },
+  "formHeader": {
+    "description": "Përcaktoni kur dhe si ekzekutohet një handler në sfond.",
+    "title": "Krijo veprim të planifikuar"
+  },
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/createCronJob.tsx",
+  "title": "Krijo veprim të planifikuar"
+}

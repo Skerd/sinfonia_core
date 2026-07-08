@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/index.tsx",
+  "title": "Kompanitë",
+  "description": "Menaxhoni kompanitë",
+  "createCompany": "Krijo kompani",
+  "searchPlaceholder": "Kërko me emër, email ose shto filtra...",
+  "noData": "Nuk u gjet asnjë kompani",
+  "failTitle": "Ngarkimi i kompanive dështoi",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit të kompanive. Ju lutemi provoni përsëri.",
+  "name": "Emri",
+  "email": "Email",
+  "website": "Faqja e internetit",
+  "vat": "TVSH",
+  "isActive": "Statusi",
+  "fields": {
+    "name": "Emri",
+    "email": "Email",
+    "phoneNumber": "Numri i telefonit",
+    "addresses": "Adresat",
+    "description": "Përshkrimi",
+    "logo": "Logo",
+    "website": "Faqja e internetit",
+    "vat": "TVSH",
+    "company": "Kompania mëmë",
+    "isActive": "Statusi",
+    "allowedDomains": "Domenet e lejuara",
+    "createdBy": "Krijuar nga",
+    "deletedAt": "Fshirë në",
+    "deletedBy": "Fshirë nga"
+  }
+}

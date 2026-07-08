@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/name/updateName.tsx",
+  "confirm": "Confirm name change",
+  "cancel": "Cancel",
+  "axios": {
+    "start": {
+      "title": "Updating name",
+      "time": 3000
+    },
+    "success": {
+      "title": "Name successfully updated.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Name failed to be updated",
+      "time": 3000
+    }
+  }
+}

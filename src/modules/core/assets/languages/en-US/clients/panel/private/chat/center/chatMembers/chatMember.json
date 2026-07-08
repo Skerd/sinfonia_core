@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/chatMember.tsx",
+  "admin": "Admin",
+  "owner": "Owner",
+  "user": "User"
+}

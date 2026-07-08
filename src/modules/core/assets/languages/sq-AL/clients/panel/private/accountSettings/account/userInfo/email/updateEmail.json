@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/email/updateEmail.tsx",
+  "confirm": "Konfirmo ndryshimin e emailit",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Email-i po përditësohet",
+      "time": 3000
+    },
+    "success": {
+      "title": "Email-i u përditësua me sukses. Ju lutemi verifikoni këtë email duke klikuar në lidhjen e dërguar në këtë email",
+      "time": 3000
+    },
+    "error": {
+      "title": "Email-i nuk u përditësua",
+      "time": 3000
+    }
+  }
+}

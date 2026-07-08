@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/restore.tsx",
+  "title": "Rivendos",
+  "restoreConfirmTitle": "Rivendos shtetin",
+  "restoreConfirmDescription": "Je i sigurt që dëshiron ta restaurosh këtë vend?",
+  "cancel": "Anulo",
+  "confirmRestore": "Rivendos",
+  "axios": {
+    "start": {
+      "title": "Rivendosja e vendit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Vendi u rivendos me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Vendi nuk mund të rikthehej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  }
+}

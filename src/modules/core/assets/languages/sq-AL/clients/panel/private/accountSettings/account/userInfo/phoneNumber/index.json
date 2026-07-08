@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/phoneNumber/index.tsx",
+  "form": {
+    "phoneNumberNumberLabel": "Numri i telefonit",
+    "phoneNumberNumberPlaceholder": "Numri i telefonit"
+  },
+  "failTitle": "Ngarkimi i numrit të telefonit dështoi",
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e numrit të telefonit"
+}

@@ -1,0 +1,49 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/editSmtpServer.tsx",
+  "title": "Ndrysho serverin SMTP",
+  "description": "Lëreni fjalëkalimin bosh për ta mbajtur atë aktual.",
+  "errorTitle": "Ngarkimi i serverit SMTP dështoi",
+  "errorDescription": "Klikoni këtu për të riprovuar marrjen e të dhënave.",
+  "noId": "Asnjë server SMTP i zgjedhur.",
+  "backToList": "Kthehu te lista",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "p.sh. SMTP kryesor",
+    "sequenceLabel": "Prioriteti (sekuenca)",
+    "sequencePlaceholder": "10",
+    "activeLabel": "Aktiv",
+    "hostLabel": "Host SMTP",
+    "hostPlaceholder": "smtp.example.com",
+    "portLabel": "Porta",
+    "portPlaceholder": "587",
+    "encryptionLabel": "Enkriptimi",
+    "authTypeLabel": "Autentifikimi",
+    "usernameLabel": "Përdoruesi",
+    "usernamePlaceholder": "user@example.com",
+    "passwordLabel": "Fjalëkalimi (bosh = mbaj)",
+    "passwordPlaceholder": "••••••••",
+    "fromEmailLabel": "Email dërgues",
+    "fromEmailPlaceholder": "noreply@example.com",
+    "fromNameLabel": "Emri dërgues",
+    "fromNamePlaceholder": "Kompania ime",
+    "replyToLabel": "Reply-To",
+    "replyToPlaceholder": "support@example.com",
+    "encryption": {
+      "none": "Asnjë",
+      "ssl": "SSL",
+      "starttls": "STARTTLS"
+    },
+    "authType": {
+      "login": "Përdorues / fjalëkalim",
+      "none": "Asnjë"
+    }
+  },
+  "formHeader": {
+    "title": "Ndrysho serverin SMTP",
+    "description": "Lëreni fjalëkalimin bosh për ta mbajtur atë aktual."
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Ruaj"
+  }
+}

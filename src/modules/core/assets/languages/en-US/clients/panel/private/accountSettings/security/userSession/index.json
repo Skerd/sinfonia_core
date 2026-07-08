@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/userSession/index.tsx",
+  "title": "Active sessions",
+  "description": "See where you are signed in and revoke access on devices you do not trust.",
+  "helperText": "If you do not recognize a device, open the row menu (⋮) and choose Revoke access, then change your password.",
+  "rowActions": "Open session menu",
+  "searchPlaceholder": "Search by session, device, or location",
+  "unknown": "Unknown",
+  "unknownDevice": "Unknown device",
+  "unknownLocation": "Unknown location",
+  "sessionId": "Session ID",
+  "userAgent": "User agent",
+  "expiresAt": "Expires",
+  "revoke": "Revoke access",
+  "revokeSuccess": "Session access revoked.",
+  "revokeError": "Could not revoke this session.",
+  "badge": {
+    "active": "Active",
+    "revoked": "Revoked",
+    "current": "This device"
+  },
+  "fields": {
+    "user": "User",
+    "userId": "User",
+    "sessionId": "Session ID",
+    "deviceId": "Device ID",
+    "userAgent": "User agent",
+    "ipAddress": "IP address",
+    "geolocation": "Geolocation",
+    "createdAt": "Created at",
+    "lastActiveAt": "Last active",
+    "expiresAt": "Expires",
+    "isActive": "Active"
+  }
+}

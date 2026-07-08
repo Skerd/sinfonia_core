@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/connect/index.tsx",
+  "link": "Lidhja e ftesës",
+  "failTitle": "Krijimi i kodit QR të Telegramit dështoi",
+  "failTitleTooltip": "Klikoni këtu për të riprovuar gjenerimin e kodit QR të Telegram",
+  "steps": {
+    "one": "Skanoni kodin QR të mëposhtëm me telefonin tuaj ose klikoni në 'Lidhjen e ftesës'"
+  },
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Lidhja e Telegramit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Telegrami u lidh me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Lidhja e telegramit dështoi",
+      "time": 3000
+    }
+  }
+}

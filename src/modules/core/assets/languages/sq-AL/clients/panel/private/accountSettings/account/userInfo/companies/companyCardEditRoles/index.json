@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/index.tsx",
+  "roles": "Rolet",
+  "update": "Përditëso",
+  "cancel": "Anulo",
+  "failTitle": "Ngarkimi i roleve të kompanive dështoi",
+  "failTitleTooltip": "Klikoni këtu për të riprovuar ngarkimin e roleve të kompanive",
+  "clarification": "Sqarim",
+  "clarificationDescription": "E gjelbra është aktive ose në aktivizim, e kuqja është joaktive ose në çaktivizim"
+}

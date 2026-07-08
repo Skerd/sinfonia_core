@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/shared/termsAndConditions.tsx",
+  "byClickingYouAgree": "By using our services, you agree to our",
+  "termsOfService": "Terms of Service",
+  "and": "and",
+  "privacyPolicy": "Privacy Policy",
+  "termsContent": "These Terms of Service govern your use of this application.\n\nYour organization may provide additional terms; contact your administrator for the complete agreement applicable to you.",
+  "privacyContent": "This Privacy Policy explains what information we process when you use this application and how we use it.\n\nFor details specific to your organization and region, contact your administrator."
+}

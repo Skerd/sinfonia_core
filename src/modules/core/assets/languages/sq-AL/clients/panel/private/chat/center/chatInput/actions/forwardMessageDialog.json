@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/actions/forwardMessageDialog.tsx",
+  "failTitle": "Kanalet nuk mund të ngarkoheshin",
+  "failTitleTooltip": "Trokit për të provuar të ngarkosh sërish kanalet.",
+  "noDataTitle": "Nuk ka kanale të disponueshme.",
+  "forward": "Përpara",
+  "message": "Mesazh",
+  "selectChannelsToForward": "Zgjidhni kanalet për të përcjellë këtë mesazh",
+  "addComment": "Shto një koment (opsionale)",
+  "addCommentPlaceholder": "Shto një koment...",
+  "selectChannels": "Zgjidhni kanalet",
+  "cancel": "Anulo",
+  "sending": "Po dërgohet...",
+  "axios": {
+    "start": {
+      "title": "Përcjellja e mesazhit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Mesazhi u përcoll me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Përcjellja e mesazhit dështoi",
+      "time": 3000
+    }
+  },
+  "messageDeleted": "Mesazhi u fshi"
+}

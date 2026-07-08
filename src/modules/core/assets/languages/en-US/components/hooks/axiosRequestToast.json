@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/hooks/axiosRequestToast.tsx",
+  "error": "ERROR",
+  "success": "Success",
+  "requestInfo": "Request Info"
+}

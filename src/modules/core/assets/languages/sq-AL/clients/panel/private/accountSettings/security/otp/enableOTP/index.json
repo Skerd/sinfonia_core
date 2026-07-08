@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/otp/enableOTP/index.tsx",
+  "failTitle": "Kodi qr i aktivizimit 2FA nuk mund të gjenerohej",
+  "failDescription": "Klikoni këtu për të riprovuar gjenerimin e kodit qr të aktivizimit 2FA"
+}

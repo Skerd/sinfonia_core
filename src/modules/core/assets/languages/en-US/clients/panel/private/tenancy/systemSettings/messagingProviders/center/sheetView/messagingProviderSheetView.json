@@ -1,0 +1,28 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx",
+  "failedTitle": "Failed to load messaging provider",
+  "failedDescription": "Something went wrong while loading this provider. Click to retry.",
+  "failedTooltipDescription": "Click to retry fetching data.",
+  "overview": "Overview",
+  "credentials": "Credentials",
+  "senders": "Senders",
+  "lastTest": "Last connection test",
+  "providerType": "Provider",
+  "active": "Active",
+  "accountSid": "Account SID",
+  "hasAuthToken": "Auth token stored",
+  "fromPhone": "SMS sender",
+  "fromWhatsapp": "WhatsApp sender",
+  "yes": "Yes",
+  "no": "No",
+  "lastTestStatus": "Last test",
+  "lastTestedAt": "Last tested",
+  "lastTestMessage": "Test message",
+  "providerTypeValues": {
+    "twilio": "Twilio"
+  },
+  "lastTestStatusValues": {
+    "ok": "OK",
+    "failed": "Failed"
+  }
+}

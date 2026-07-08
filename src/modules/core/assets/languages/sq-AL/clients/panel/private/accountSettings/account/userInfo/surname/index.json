@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/surname/index.tsx",
+  "form": {
+    "surnameLabel": "Mbiemri",
+    "surnameDescription": "Ky është mbiemri që do të shfaqet në sistem."
+  },
+  "failTitle": "Ngarkimi i mbiemrit dështoi",
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e mbiemrit"
+}

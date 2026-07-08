@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/createCountry.tsx",
+  "title": "Krijo shtet",
+  "description": "Shto një shtet të ri",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri i shtetit",
+    "codeLabel": "Kodi",
+    "codePlaceholder": "p.sh. SHBA",
+    "phoneCodeLabel": "Kodi i telefonit",
+    "phoneCodePlaceholder": "+1",
+    "currencyLabel": "Monedha",
+    "currencyPlaceholder": "Zgjidhni monedhën"
+  },
+  "axios": {
+    "start": {
+      "title": "Krijimi i vendit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Vendi u krijua me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Shteti nuk mund të krijohej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Krijo shtet",
+    "description": "Shto një shtet të ri"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Krijo"
+  }
+}

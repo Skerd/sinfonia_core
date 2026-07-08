@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/timezone/index.tsx",
+  "form": {
+    "newTimeZoneLabel": "Zona kohore",
+    "newTimeZoneDescription": "Kjo është zona kohore që do të përdoret për të shfaqur kohën në sistem."
+  },
+  "failTitle": "Ngarkimi i zonës kohore dështoi",
+  "failTitleTooltip": "Kliko për të riprovuar ngarkimin e zonës kohore"
+}

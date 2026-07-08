@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/companyDropDownItems.tsx",
+  "failTitle": "Ngarkimi i kompanive dështoi",
+  "failTitleTooltip": "Klikoni për të ringarkuar kompanitë",
+  "noData": "Nuk ka rezultate"
+}

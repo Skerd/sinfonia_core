@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx",
+  "name": "Emri",
+  "flag": "Flamuri",
+  "code": "Kodi",
+  "phoneCode": "Kodi i telefonit",
+  "currency": "Monedha",
+  "deleted": "Fshirë",
+  "active": "Aktiv",
+  "failedTitle": "Ngarkimi i shtetit dështoi",
+  "failedDescription": "Trokit për të riprovuar."
+}

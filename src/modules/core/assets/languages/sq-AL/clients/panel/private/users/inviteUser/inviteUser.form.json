@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/inviteUser/inviteUser.form.tsx",
+  "form": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "p.sh.: email@example.com",
+    "nameLabel": "Emri",
+    "namePlaceholder": "p.sh.: Gjoni",
+    "surnameLabel": "Mbiemri",
+    "surnamePlaceholder": "p.sh.: Doe",
+    "userRoleLabel": "Roli",
+    "userRolePlaceholder": "Zgjidhni një rol",
+    "welcomeMessageLabel": "Mesazh i mirëseardhjes (opsionale)",
+    "welcomeMessagePlaceholder": "Shtoni një shënim personal në ftesën tuaj (opsionale)"
+  },
+  "cancel": "Anulo",
+  "invite": "Fto",
+  "axios": {
+    "start": {
+      "title": "Përdorues ftues",
+      "time": 3000
+    },
+    "success": {
+      "title": "Përdoruesi u ftua me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Ftesa e përdoruesit dështoi.",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "defaults": {
+    "language": "en-US"
+  },
+  "helper": {
+    "languageSelect": {
+      "failedToLoadComponentLanguage": "Could not load component language: "
+    },
+    "languageLoaderHoc": {
+      "en-US": {
+        "loadingText": "Language",
+        "failedLoadingTitle": "Failed to load language",
+        "maxRetriesExceededText": "Please refresh the page to reload language",
+        "loadingTextColor": "#fc0"
+      },
+      "sq-AL": {
+        "loadingText": "Gjuha",
+        "failedLoadingTitle": "Nuk mund te ngarkohej gjuha",
+        "maxRetriesExceededText": "Ju lutem rifresoni faqen per te provuar perseri ngarkimin e gjuhes"
+      }
+    },
+    "clearanceLoaderHoc": {
+      "en-US": {
+        "noClearance": "Not authorized to view content.",
+        "neededClearances": "Needed permissions: [$].",
+        "showNeededClearances": true
+      },
+      "sq-AL": {
+        "noClearance": "Nuk jeni i autorizuar per te pare seksionin",
+        "neededClearances": "Te drejtat e nevojshme: [$].",
+        "showNeededClearances": true
+      }
+    },
+    "websocketLoaderHoc": {
+      "en-US": {
+        "loading": "Connecting to remote fixture updater",
+        "error": "Connecting to remote fixture updater failed, retrying...",
+        "success": "Successfully connected to remote fixture updater"
+      },
+      "sq-AL": {
+        "loading": "Duke u lidhur me ndeshjet LIVE",
+        "error": "Lidhja me ndeshjet LIVE deshtoi, duke u rilidhur...",
+        "success": "U krye lidhja me ndeshjet LIVE"
+      }
+    }
+  },
+  "supportedLanguages": [
+    {
+      "languageCode": "sq-AL",
+      "name": "Shqip"
+    },
+    {
+      "languageCode": "en-US",
+      "name": "English"
+    }
+  ],
+  "components": {
+    "selectWithIntegration": {
+      "en-US": {
+        "all": "All"
+      },
+      "sq-AL": {
+        "all": "Te gjitha"
+      }
+    },
+    "languageSelector": {
+      "en-US": {
+        "selectLanguage": "Select language"
+      },
+      "sq-AL": {
+        "selectLanguage": "Zgjidhni gjuhen"
+      }
+    },
+    "passwordStrength": {
+      "en-US": {
+        "passwordTooShort": "Short password",
+        "passwordStages": ["Short", "Weak", "Moderate", "Good", "Excellent"]
+      },
+      "sq-AL": {
+        "passwordTooShort": "Fjalekalim i shkurter",
+        "passwordStages": ["I dobet", "I dobet", "I pranueshem", "I mire", "I shkelqyer"]
+      }
+    },
+    "tableWithIntegration": {
+      "en-US": {
+        "noData": "No data",
+        "noDataAtAll": "No data can be shown. This table is empty.",
+        "noDataDescription": "Please update search filters to show more data.",
+        "loading": "Loading table data"
+      },
+      "sq-AL": {
+        "noData": "Tabela nuk ka te dhena",
+        "noDataAtAll": "Asnje e dhene nuk mund te shfaqet. Kjo tabele eshte bosh.",
+        "noDataDescription": "Ju lutem perditesoni filtrat e kerkimit, per me shume rezultate",
+        "loading": "Duke ngarkuar te dhenat e tables"
+      }
+    },
+    "uploadFile": {
+      "en-US": {
+        "dropOnly": "Drop the files here",
+        "dragAndDrop": "Drag & drop files here",
+        "or": "or",
+        "browse": "browse",
+        "upload": "to upload",
+        "oneFile": "One file only",
+        "upTo": "Up to",
+        "files": "files",
+        "each": "each",
+        "remove": "Remove file"
+      },
+      "sq-AL": {
+        "dropOnly": "Hidh skedarët këtu",
+        "dragAndDrop": "Tërhiq dhe lësho skedarët këtu",
+        "or": "ose",
+        "browse": "shfleto",
+        "upload": "për të ngarkuar",
+        "oneFile": "Vetëm një skedar",
+        "upTo": "Deri në",
+        "files": "skedar",
+        "secili": "secili",
+        "remove": "Hiq skedarin"
+      }
+    }
+  },
+  "thirdPartyAuthenticators": [
+    {
+      "name": "google",
+      "url": "https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id=597111669266-7b82722bh49ubm1pb48aogsbl4mlvo6a.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fauthenticate%2Flogin%2Fgoogle&response_type=code&scope=openid%20profile%20email&service=lso&o2v=1&ddm=0&flowName=GeneralOAuthFlow"
+    },
+    {
+      "name": "apple",
+      "url": "https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id=597111669266-7b82722bh49ubm1pb48aogsbl4mlvo6a.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fauthenticate%2Flogin%2Fgoogle&response_type=code&scope=openid%20profile%20email&service=lso&o2v=1&ddm=0&flowName=GeneralOAuthFlow"
+    }
+  ]
+}

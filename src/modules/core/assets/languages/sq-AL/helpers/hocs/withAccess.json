@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/helpers/hocs/withAccess.tsx",
+  "loading": "Po ngarkon burimet e qasjes në sajtin...",
+  "noClearance": "Nuk është i autorizuar për të parë përmbajtjen.",
+  "failTitle": "Lejet e qasjes nuk mund të ngarkoheshin",
+  "failDescription": "Trokit për të provuar sërish. Nëse problemi vazhdon, rifresko faqen ose regjistrohu përsëri.",
+  "tooltipDescription": "Riprovoni të ngarkoni lejet për këtë sesion."
+}

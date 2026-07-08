@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/otp/enableOTP/enableOtp.form.tsx",
+  "manualSetup": "Çelësi i konfigurimit",
+  "confirm": "Aktivizoni 2FA",
+  "cancel": "Anulo",
+  "form": {
+    "tokenLabel": "Kodi i gjeneruar",
+    "tokenPlaceholder": "Kodi i gjeneruar"
+  },
+  "steps": {
+    "one": "Skanoni kodin QR më poshtë me aplikacionin tuaj të preferuar të vërtetuesit",
+    "two": "Fusni kodin e krijuar në fushën më poshtë",
+    "three": "Klikoni në '!!!' butonin për të aktivizuar 2FA"
+  },
+  "axios": {
+    "start": {
+      "title": "Aktivizimi i 2FA",
+      "time": 3000
+    },
+    "success": {
+      "title": "2FA u aktivizua me sukses",
+      "time": 1000
+    },
+    "error": {
+      "title": "Aktivizimi 2FA dështoi",
+      "time": 3000
+    }
+  }
+}

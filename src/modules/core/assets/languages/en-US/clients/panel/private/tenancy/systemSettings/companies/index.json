@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/index.tsx",
+  "title": "Companies",
+  "description": "Manage companies",
+  "createCompany": "Create company",
+  "searchPlaceholder": "Search by name, email, or add filters...",
+  "noData": "No companies found",
+  "failTitle": "Failed to load companies",
+  "failDescription": "An error occurred while loading companies. Please try again.",
+  "name": "Name",
+  "email": "Email",
+  "website": "Website",
+  "vat": "VAT",
+  "isActive": "Status",
+  "fields": {
+    "name": "Name",
+    "email": "Email",
+    "phoneNumber": "Phone number",
+    "addresses": "Addresses",
+    "description": "Description",
+    "logo": "Logo",
+    "website": "Website",
+    "vat": "VAT",
+    "company": "Parent company",
+    "isActive": "Status",
+    "allowedDomains": "Allowed domains",
+    "createdBy": "Created by",
+    "deletedAt": "Deleted at",
+    "deletedBy": "Deleted by"
+  }
+}

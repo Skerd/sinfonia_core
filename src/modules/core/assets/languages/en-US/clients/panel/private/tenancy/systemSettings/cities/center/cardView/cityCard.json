@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx",
+  "name": "Name",
+  "state": "State",
+  "active": "Active",
+  "country": "Country",
+  "deleted": "Deleted",
+  "failedTitle": "Failed to load city",
+  "failedDescription": "Tap to retry."
+}

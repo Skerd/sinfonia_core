@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/components/custom/messagingProviders/setMessagingProviderActiveDialog.tsx",
+  "activate": {
+    "title": "Aktivizo ofruesin e mesazheve",
+    "description": "Ky ofrues do të përdoret për mesazhet dalëse SMS dhe WhatsApp."
+  },
+  "deactivate": {
+    "title": "Çaktivizo ofruesin e mesazheve",
+    "description": "Ky ofrues nuk do të përdoret më për mesazhe derisa të aktivizohet përsëri."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
+  "title": "shtetet",
+  "description": "Menaxhoni shtetet",
+  "createState": "Krijo shtet",
+  "searchPlaceholder": "Kërko sipas emrit, kodit ose shto filtra...",
+  "noData": "Nuk u gjet asnjë shtet",
+  "failTitle": "Ngarkimi i gjendjeve dështoi",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit të gjendjeve. Ju lutemi provoni përsëri.",
+  "status": "Statusi",
+  "name": "Emri",
+  "code": "Kodi",
+  "country": "Vendi",
+  "deleted": "Fshirë",
+  "active": "Aktiv",
+  "fields": {
+    "name": "Emri",
+    "code": "Kodi",
+    "country": "Vendi",
+    "createdBy": "Krijuar nga",
+    "company": "Kompania",
+    "deletedAt": "Statusi",
+    "deletedBy": "Fshirë nga"
+  }
+}

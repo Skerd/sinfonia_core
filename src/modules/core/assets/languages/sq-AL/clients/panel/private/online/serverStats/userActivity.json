@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverStats/userActivity.tsx",
+  "lastUpdated": "Përditësimi i fundit:",
+  "userActivityTitle": "Aktiviteti i përdoruesit",
+  "waitingForActivityData": "Në pritje të të dhënave të aktivitetit...",
+  "live": "Jetoni",
+  "activeUsers": "Përdoruesit aktivë",
+  "connections": "Lidhjet",
+  "activeRooms": "Dhomat aktive",
+  "users": "Përdoruesit",
+  "instances": "Instancat",
+  "messages": "Mesazhet",
+  "noActiveRooms": "Nuk ka dhoma aktive"
+}

@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/signUp/index.tsx",
+  "title": "Sign up",
+  "descriptionOne": "Create your account below.",
+  "descriptionTwo": "Then sign in with your email and password."
+}

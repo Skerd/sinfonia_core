@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/resendInvitation.tsx",
+  "resendInvitationEmail": "Resend invitation email",
+  "resendInvitationEmailConfirm": "Resend invitation email?",
+  "resendInvitationEmailConfirmDesc": "A new invitation email will be sent to the user.",
+  "resendInvitationEmailSuccess": "Invitation email sent successfully",
+  "resendInvitationEmailError": "Failed to send invitation email",
+  "axios": {
+    "start": {
+      "title": "Sending invitation email",
+      "time": 3000
+    },
+    "success": {
+      "title": "Invitation email sent successfully",
+      "time": 3000
+    },
+    "error": {
+      "title": "Failed to send invitation email",
+      "time": 3000
+    }
+  }
+}

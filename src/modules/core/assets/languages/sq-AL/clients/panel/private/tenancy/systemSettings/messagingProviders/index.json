@@ -1,0 +1,28 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
+  "title": "Ofruesit e mesazheve",
+  "description": "Konfiguroni ofruesit SMS dhe WhatsApp për këtë kompani. Përdoren vetëm ofruesit aktivë për mesazhet dalëse.",
+  "createMessagingProvider": "Shto ofrues mesazhesh",
+  "searchPlaceholder": "Kërko sipas emrit ose Account SID...",
+  "noData": "Nuk ka ofrues mesazhesh",
+  "failTitle": "Ngarkimi i ofruesve të mesazheve dështoi",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit. Provoni përsëri.",
+  "name": "Emri",
+  "providerType": "Ofruesi",
+  "accountSid": "Account SID",
+  "fromPhone": "Dërgues SMS",
+  "fromWhatsapp": "Dërgues WhatsApp",
+  "active": "Aktiv",
+  "yes": "Po",
+  "no": "Jo",
+  "lastTestStatus": "Testi i fundit",
+  "fields": {
+    "name": "Emri",
+    "providerType": "Ofruesi",
+    "accountSid": "Account SID",
+    "fromPhone": "Dërgues SMS",
+    "fromWhatsapp": "Dërgues WhatsApp",
+    "active": "Aktiv",
+    "lastTestStatus": "Testi i fundit"
+  }
+}

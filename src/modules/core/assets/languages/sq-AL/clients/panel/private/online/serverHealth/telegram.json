@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/telegram.tsx",
+  "telegramServerTitle": "Serveri i Telegramit",
+  "online": "Online",
+  "offline": "Jashtë linje",
+  "connectedClients": "Klientë të lidhur",
+  "messages": "Mesazhet"
+}

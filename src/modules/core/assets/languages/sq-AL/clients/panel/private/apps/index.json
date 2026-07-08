@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/index.tsx",
+  "title": "Integrimet e aplikacioneve",
+  "description": "Këtu është një listë e aplikacioneve tuaja për integrim!",
+  "filterApps": "Filtro aplikacionet",
+  "dropDown": {
+    "allApps": "Të gjitha aplikacionet",
+    "connected": "Lidhur",
+    "notConnected": "Nuk është i lidhur"
+  },
+  "order": {
+    "ascending": "Në ngjitje",
+    "descending": "Duke zbritur"
+  },
+  "appsList": {
+    "telegram": {
+      "key": "telegram",
+      "name": "Telegrami",
+      "logo": "IconTelegram",
+      "desc": "Lidhu me Telegram për komunikim në kohë reale.",
+      "connected": false
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/navUser/index.tsx",
+  "profile": "Profile",
+  "security": "Security",
+  "account": "Account",
+  "notifications": "Notifications",
+  "signOut": "Sign out",
+  "dialog": {
+    "title": "Sign out",
+    "description": "Are you sure you want to sign out? You will need to sign in again to access your account.",
+    "confirmText": "Sign out",
+    "cancelText": "Cancel"
+  }
+}

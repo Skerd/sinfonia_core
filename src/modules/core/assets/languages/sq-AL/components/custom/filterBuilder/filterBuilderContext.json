@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterBuilderContext.tsx",
+  "loadingFilters": "Duke ngarkuar filtrat...",
+  "filterLoadError": "Ngarkimi i fushave të filtrit dështoi",
+  "filterLoadErrorDescription": "Kliko për të riprovuar marrjen e fushave të filtrit!"
+}

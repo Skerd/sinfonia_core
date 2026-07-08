@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/center/actions/delete.tsx",
+  "title": "Fshije",
+  "deleteConfirmTitle": "Fshi rolin",
+  "deleteConfirmDescription": "Je i sigurt që dëshiron ta fshish këtë rol? Kjo do ta heqë rolin nga të gjithë përdoruesit të cilëve u është caktuar.",
+  "confirmNameLabel": "Shkruani emrin e rolit për të konfirmuar",
+  "cancel": "Anulo",
+  "confirmDelete": "Fshije",
+  "axios": {
+    "start": {
+      "title": "Fshirja e rolit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Roli u fshi me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Roli nuk mund të fshihej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  }
+}

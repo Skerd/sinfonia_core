@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/editCity.tsx",
+  "title": "Redakto qytetin",
+  "description": "Përditëso detajet e qytetit",
+  "errorTitle": "Ngarkimi i të dhënave të qytetit dështoi",
+  "errorDescription": "Ju lutemi, klikoni këtu për të riprovuar marrjen e të dhënave të qytetit",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri i qytetit",
+    "countryLabel": "Vendi",
+    "countryPlaceholder": "Zgjidh shtetin",
+    "stateLabel": "Shtetit",
+    "statePlaceholder": "Zgjidhni gjendjen"
+  },
+  "noId": "Asnjë qytet i zgjedhur.",
+  "backToList": "Kthehu në listë",
+  "formHeader": {
+    "title": "Redakto qytetin",
+    "description": "Përditëso detajet e qytetit"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Ruaj"
+  }
+}

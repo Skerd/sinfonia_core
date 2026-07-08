@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/email/index.tsx",
+  "form": {
+    "newEmailLabel": "Email",
+    "newEmailDescription": "Ky është emaili që do të përdoret për të hyrë në sistem."
+  },
+  "failTitle": "Ngarkimi i emailit dështoi",
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e emailit",
+  "emailVerified": "Email aktual i verifikuar",
+  "invitedUser": "Ju lutemi verifikoni emailin duke pranuar kërkesën për ftesë",
+  "emailNotVerified": "Ju lutemi verifikoni emailin tuaj të ri duke klikuar në lidhjen e dërguar në kutinë tuaj hyrëse",
+  "emailNotVerifiedSmall": "Ju lutemi verifikoni emailin tuaj të ri"
+}

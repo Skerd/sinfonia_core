@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/components/custom/customDateDisplayer.tsx",
+  "weekDays": [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ],
+  "yesterday": "Dje"
+}

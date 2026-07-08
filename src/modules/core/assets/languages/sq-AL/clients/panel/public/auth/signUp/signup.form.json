@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/signUp/signup.form.tsx",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri",
+    "surnameLabel": "Mbiemri",
+    "surnamePlaceholder": "Mbiemri",
+    "emailLabel": "Email",
+    "emailPlaceholder": "shembull@email.com",
+    "passwordLabel": "Fjalëkalimi",
+    "passwordPlaceholder": "Fjalëkalimi",
+    "confirmPasswordLabel": "Konfirmo fjalëkalimin",
+    "confirmPasswordPlaceholder": "Konfirmo fjalëkalimin",
+    "phoneNumberLabel": "Numri i telefonit",
+    "phoneNumberPlaceholder": "Numri i telefonit",
+    "phoneNumberPrefixLabel": "Prefiksi i numrit të telefonit",
+    "phoneNumberPrefixPlaceholder": "Prefiksi i numrit të telefonit"
+  },
+  "signUpButtonLabel": "Krijo një llogari",
+  "axios": {
+    "start": {
+      "title": "Po krijon llogari, ju lutemi prisni",
+      "time": 3000
+    },
+    "success": {
+      "title": "Llogaria juaj është krijuar me sukses. Ju lutemi ndiqni hapat e dërguar në emailin tuaj për të vazhduar.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Krijimi i llogarisë dështoi",
+      "time": 3000
+    }
+  }
+}

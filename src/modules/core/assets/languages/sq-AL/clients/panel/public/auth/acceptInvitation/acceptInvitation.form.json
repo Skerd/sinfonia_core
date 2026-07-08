@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/acceptInvitation/acceptInvitation.form.tsx",
+  "verifyingInvitationCodeTitle": "Kontrolli i sigurisë",
+  "verifyingInvitationCodeDescription": "Po kontrollon vlefshmërinë e kodit të ftesës.",
+  "errorVerifyingInvitationCodeTitle": "Kontrolli i sigurisë dështoi",
+  "errorVerifyingInvitationCodeDescription": "Ky kod ftese është i pavlefshëm ose ka skaduar.",
+  "errorAcceptingInvitationTitle": "Ftesa nuk u pranua",
+  "errorAcceptingInvitationDescription": "Diçka e papritur ndodhi gjatë pranimit të ftesës. Ju lutemi provoni përsëri më vonë!",
+  "successAcceptingInvitationTitle": "Suksese",
+  "successAcceptingInvitationDescription": "Ftesa u pranua me sukses. Tani mund të hyni në llogarinë tuaj duke përdorur fjalëkalimin tuaj.",
+  "title": "Pranoje ftesën",
+  "description": "Vendosni fjalëkalimin tuaj për të pranuar ftesën",
+  "form": {
+    "passwordLabel": "Fjalëkalimi",
+    "passwordPlaceholder": "Futni fjalëkalimin tuaj",
+    "invitationCodeLabel": "Kodi i ftesës"
+  },
+  "confirm": "Pranoje ftesën",
+  "axios": {
+    "start": {
+      "title": "Pranimi i ftesës",
+      "time": 3000
+    },
+    "success": {
+      "title": "Ftesa u pranua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Ftesa nuk mund të pranohej",
+      "time": 3000
+    }
+  }
+}

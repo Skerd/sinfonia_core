@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
+  "title": "Monedhat",
+  "description": "Menaxhoni monedhat",
+  "createCurrency": "Krijo monedhë",
+  "searchPlaceholder": "Kërkoni sipas emrit, shkurtesës ose shtoni filtra...",
+  "noData": "Nuk u gjet asnjë monedhë",
+  "failTitle": "Ngarkimi i monedhave dështoi",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit të monedhave. Ju lutemi provoni përsëri.",
+  "status": "Statusi",
+  "name": "Emri",
+  "symbol": "Simboli",
+  "abbreviation": "Shkurtesa",
+  "decimalPlaces": "Vendet dhjetore",
+  "deleted": "Fshirë",
+  "active": "Aktiv",
+  "fields": {
+    "name": "Emri",
+    "symbol": "Simboli",
+    "abbreviation": "Shkurtesa",
+    "decimalPlaces": "Vendet dhjetore",
+    "createdBy": "Krijuar nga",
+    "company": "Kompania",
+    "deletedAt": "Statusi",
+    "deletedBy": "Fshirë nga"
+  }
+}

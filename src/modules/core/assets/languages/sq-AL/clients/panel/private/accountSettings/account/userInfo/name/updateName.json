@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/name/updateName.tsx",
+  "confirm": "Konfirmo ndryshimin e emrit",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Po përditësohet emri",
+      "time": 3000
+    },
+    "success": {
+      "title": "Emri u përditësua me sukses.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Emri nuk u përditësua",
+      "time": 3000
+    }
+  }
+}

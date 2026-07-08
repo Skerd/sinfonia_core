@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/index.tsx",
+  "title": "Cilësimet",
+  "description": "Menaxhoni cilësimet e llogarisë tuaj dhe vendosni preferencat e postës elektronike.",
+  "account": "Llogaria",
+  "security": "Siguria",
+  "notifications": "Njoftimet"
+}

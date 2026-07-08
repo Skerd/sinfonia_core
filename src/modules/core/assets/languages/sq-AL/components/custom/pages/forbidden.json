@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/pages/forbidden.tsx",
+  "title": "Qasja është e ndaluar",
+  "description": "Nuk ke lejen e nevojshme\n për të parë këtë burim.",
+  "backLabel": "Kthehu prapa",
+  "backHome": "Kthehu në shtëpi"
+}

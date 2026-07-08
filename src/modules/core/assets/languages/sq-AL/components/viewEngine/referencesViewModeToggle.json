@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/viewEngine/referencesViewModeToggle.tsx",
+  "compactView": "Kompakt",
+  "cardsView": "Karta",
+  "toggleReferenceListView": "Ndërrimi i paraqitjes së listës së inspektimeve"
+}

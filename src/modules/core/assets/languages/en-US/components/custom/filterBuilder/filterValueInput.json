@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterValueInput.tsx",
+  "yes": "True",
+  "no": "False",
+  "min": "Min",
+  "max": "Max",
+  "selectValues": "Select values",
+  "selectValue": "Select value",
+  "enterValue": "Enter value",
+  "inValuesPlaceholder": "a,b,c..."
+}

@@ -1,0 +1,36 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx",
+  "overview": "Overview",
+  "description": "Description",
+  "company": "Company",
+  "name": "Name",
+  "email": "Email",
+  "phone": "Phone",
+  "website": "Website",
+  "logo": "Logo",
+  "vat": "VAT",
+  "parentCompany": "Parent company",
+  "allowedDomains": "Allowed domains",
+  "howToReach": "How to reach us",
+  "whoAreWe": "Who are we",
+  "audit": "Audit",
+  "createdBy": "Created by",
+  "deletedBy": "Deleted by",
+  "deletedAt": "Deleted at",
+  "active": "Active",
+  "notActive": "Not active",
+  "status": {
+    "true": "Active",
+    "false": "Not active"
+  },
+  "form": {
+    "streetLabel": "Street",
+    "postalCodeLabel": "Postal code",
+    "cityLabel": "City",
+    "stateLabel": "State",
+    "countryLabel": "Country",
+    "latitudeLabel": "Latitude",
+    "longitudeLabel": "Longitude",
+    "logoLabel": "Logo"
+  }
+}

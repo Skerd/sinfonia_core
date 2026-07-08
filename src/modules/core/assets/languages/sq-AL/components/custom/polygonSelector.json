@@ -1,0 +1,15 @@
+{
+  "path": "src/modules/core/components/custom/polygonSelector.tsx",
+  "zoomOut": "Zmadhoni",
+  "zoomIn": "Zmadhoni",
+  "resetZoom": "Rivendos zmadhimin",
+  "expand": "Zgjero imazhin",
+  "collapse": "Palos imazhin",
+  "clear": "Pastro të gjitha pikat",
+  "revert": "Kthejeni pikën e fundit",
+  "info": "Klikoni në imazh për të shtuar pikë. ⌘/Ctrl + Lëvizni për të zmadhuar dhe zvarriteni imazhin për të zhvendosur.",
+  "currentPolygon": "Shumëkëndëshi aktual:",
+  "point": "pikë",
+  "points": "pikë",
+  "clickToClose": "Klikoni në pikën e parë për të mbyllur poligonin."
+}

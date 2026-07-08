@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/hooks/axiosRequestToast.tsx",
+  "error": "GABIM",
+  "success": "Suksese",
+  "requestInfo": "Kërko Informacion"
+}

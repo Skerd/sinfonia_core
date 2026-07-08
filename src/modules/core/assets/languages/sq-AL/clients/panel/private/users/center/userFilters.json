@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/userFilters.tsx",
+  "filterSearch": "Kërkoni sipas emrit, emailit, telefonit",
+  "filterStatus": "Statusi",
+  "filterStatusAll": "Të gjitha statuset",
+  "filterRoles": "Filtro sipas rolit",
+  "clearFilters": "Pastro filtrat",
+  "statuses": {
+    "active": "Aktiv",
+    "inactive": "Joaktiv",
+    "invited": "I ftuar"
+  }
+}

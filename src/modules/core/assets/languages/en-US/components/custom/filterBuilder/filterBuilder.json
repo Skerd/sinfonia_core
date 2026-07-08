@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterBuilder.tsx",
+  "addCustomFilter": "Add custom filters",
+  "apply": "Apply",
+  "clearFilters": "Clear",
+  "loadingFilters": "Loading filters...",
+  "filterLoadError": "Failed to load filter fields"
+}

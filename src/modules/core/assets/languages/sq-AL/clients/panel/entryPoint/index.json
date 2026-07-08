@@ -1,0 +1,278 @@
+{
+  "path": "src/modules/core/clients/panel/entryPoint/index.tsx",
+  "home": {
+    "title": "Aplikacionet"
+  },
+  "common": {
+    "create": "Krijo",
+    "edit": "Redakto",
+    "delete": "Fshije"
+  },
+  "menus": {
+    "company": {
+      "title": "Kompania",
+      "dashboard": {
+        "title": "Vështrim i përgjithshëm"
+      },
+      "administration": {
+        "title": "Administrata"
+      },
+      "users": {
+        "title": "Përdoruesit"
+      },
+      "chats": {
+        "title": "Bisedat"
+      },
+      "info": {
+        "title": "Kompania"
+      },
+      "editCompany": {
+        "title": "Redaktoni kompaninë"
+      },
+      "createCompany": {
+        "title": "Krijo kompani"
+      }
+    },
+    "account": {
+      "mainTitle": "Llogaria ime",
+      "title": "Llogaria ime",
+      "accountSettings": {
+        "title": "Cilësimet"
+      },
+      "profile": {
+        "title": "Profili"
+      },
+      "security": {
+        "title": "Siguria"
+      },
+      "account": {
+        "title": "Llogaria"
+      },
+      "notifications": {
+        "title": "Njoftimet"
+      },
+      "notificationCenter": {
+        "title": "Aktiviteti"
+      },
+      "apps": {
+        "title": "Aplikacionet e lidhura"
+      }
+    },
+    "tenancy": {
+      "title": "Qiramarrja",
+      "companies": {
+        "title": "Të gjitha kompanitë"
+      },
+      "serverPerformance": {
+        "title": "Performanca"
+      },
+      "cronJobs": {
+        "title": "Veprime të planifikuara"
+      },
+      "systemSettings": {
+        "title": "Konfigurimet",
+        "roles": {
+          "title": "Rolet"
+        },
+        "countries": {
+          "title": "Shtetet"
+        },
+        "states": {
+          "title": "Rajonet"
+        },
+        "cities": {
+          "title": "Qytetet"
+        },
+        "currencies": {
+          "title": "Monedhat"
+        },
+        "companies": {
+          "title": "Kompanitë"
+        },
+        "smtpServers": {
+          "title": "Posta dalëse"
+        },
+        "constructors": {
+          "title": "Konstruktorët"
+        },
+        "unitTypeCategories": {
+          "title": "Kategoritë e llojeve të njësive"
+        },
+        "unitTypes": {
+          "title": "Llojet e njësive"
+        },
+        "categories": {
+          "title": "Kategoritë"
+        },
+        "listings": {
+          "title": "Listimet"
+        },
+        "taskrequests": {
+          "title": "Kërkesat për detyra"
+        },
+        "orders": {
+          "title": "Porositë"
+        },
+        "bids": {
+          "title": "Ofertat"
+        },
+        "bookings": {
+          "title": "Rezervimet"
+        },
+        "disputes": {
+          "title": "Ankesat"
+        },
+        "reviews": {
+          "title": "Vlerësimet"
+        },
+        "promotions": {
+          "title": "Promovimet"
+        },
+        "listingflags": {
+          "title": "Raportimet"
+        },
+        "providerprofile": {
+          "title": "Profilet e ofruesve"
+        },
+        "provideravailability": {
+          "title": "Disponueshmëria"
+        },
+        "listingaddons": {
+          "title": "Shtesa të listimeve"
+        },
+        "listingpackages": {
+          "title": "Paketat e listimeve"
+        },
+        "escrowdashboard": {
+          "title": "Paneli eskro"
+        },
+        "products": {
+          "title": "Produktet"
+        },
+        "collections": {
+          "title": "Koleksionet"
+        },
+        "productorders": {
+          "title": "Porositë e produkteve"
+        },
+        "inventories": {
+          "title": "Inventari"
+        },
+        "warehouses": {
+          "title": "Magazinat"
+        },
+        "productattributes": {
+          "title": "Atributet e produkteve"
+        },
+        "discounts": {
+          "title": "Zbritjet"
+        },
+        "taxzones": {
+          "title": "Zonat tatimore"
+        },
+        "shippingzones": {
+          "title": "Zonat e transportit"
+        },
+        "cmsblocks": {
+          "title": "Blloqet CMS"
+        },
+        "customergroups": {
+          "title": "Grupet e klientëve"
+        },
+        "pricingrules": {
+          "title": "Rregullat e çmimeve"
+        },
+        "analytics": {
+          "title": "Analitika"
+        }
+      }
+    },
+    "realEstate": {
+      "title": "Pasuri të paluajtshme",
+      "overview": {
+        "title": "Vështrim i përgjithshëm"
+      },
+      "dashboard": {
+        "title": "Paneli"
+      },
+      "projects": {
+        "title": "Projektet"
+      },
+      "edifices": {
+        "title": "Ndërtesat"
+      },
+      "floors": {
+        "title": "Dyshemetë"
+      },
+      "units": {
+        "title": "Njësitë"
+      },
+      "inspections": {
+        "title": "Inspektimet"
+      },
+      "unitCosts": {
+        "title": "Kostot e njësisë"
+      },
+      "modificationRequests": {
+        "title": "Kërkesat për modifikim"
+      },
+      "reservations": {
+        "title": "Rezervimet"
+      },
+      "sales": {
+        "title": "Shitjet"
+      },
+      "paymentPlans": {
+        "title": "Planet e Pagesave"
+      },
+      "constructors": {
+        "title": "Konstruktorët"
+      },
+      "unitTypeCategories": {
+        "title": "Kategoritë e llojeve të njësive"
+      },
+      "unitTypes": {
+        "title": "Llojet e njësive"
+      },
+      "commissions": {
+        "title": "Komisionet"
+      },
+      "agentReport": {
+        "title": "Raporti i Agjentit"
+      },
+      "leads": {
+        "title": "Drejtimet"
+      },
+      "unitAvailability": {
+        "title": "Kalendari i Disponueshmërisë"
+      },
+      "ownerPortal": {
+        "title": "Qendra e Qirave"
+      },
+      "rentalsHub": {
+        "title": "Qendra e Qirave"
+      },
+      "leases": {
+        "title": "Kontratat e Qirasë"
+      },
+      "rentalPayments": {
+        "title": "Pagesat e Qirasë"
+      },
+      "roi": {
+        "title": "Llogaritësi ROI"
+      },
+      "constructionUpdates": {
+        "title": "Përditësimet e Ndërtimit"
+      },
+      "snags": {
+        "title": "Lista e Defekteve"
+      },
+      "groupDashboard": {
+        "title": "Paneli i Grupit"
+      },
+      "erpExport": {
+        "title": "Eksporti ERP"
+      }
+    }
+  }
+}

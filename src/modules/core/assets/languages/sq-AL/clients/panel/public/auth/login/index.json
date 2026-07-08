@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/login/index.tsx",
+  "signInHeader": {
+    "title": "Identifikohu",
+    "descriptionOne": "Futni emailin dhe fjalëkalimin tuaj më poshtë për",
+    "descriptionTwo": "hyni në llogarinë tuaj"
+  },
+  "mfaHeader": {
+    "title": "Autentifikimi me dy faktorë",
+    "descriptionOne": "Ju lutemi shkruani kodin e vërtetimit.",
+    "descriptionTwo": "Mund ta gjeni kodin në aplikacionin tuaj të vërtetimit."
+  },
+  "mfaFooter": {
+    "forgot": "Nuk mund të hyni në 2FA?",
+    "reset": "Rivendos atë",
+    "or": "Ose",
+    "goLogin": "Kthehuni te identifikimi"
+  }
+}

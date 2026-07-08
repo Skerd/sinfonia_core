@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/cardView/companyCard.tsx",
+  "contactInfo": "Informacioni i kontaktit",
+  "location": "Vendndodhja",
+  "aboutUs": "Rreth nesh",
+  "active": "Aktiv",
+  "notActive": "Jo aktiv",
+  "deactivated": "I çaktivizuar",
+  "openInGoogleMaps": "Google Maps",
+  "openInAppleMaps": "Hartat e Apple",
+  "downloadCard": "Shkarkoni kartën e kompanisë",
+  "expand": "Zgjero",
+  "collapse": "Kolapsi",
+  "_id": "Id",
+  "name": "Emri",
+  "email": "Email",
+  "phone": "Telefoni",
+  "phoneNumber": {
+    "prefix": "Parashtesa",
+    "number": "Numri"
+  },
+  "address": "Adresa",
+  "city": "Qyteti",
+  "country": "Vendi",
+  "postalCode": "Kodi postar",
+  "description": "Përshkrimi",
+  "website": "Faqja e internetit",
+  "vat": "TVSH",
+  "allowedDomains": "Domenet e lejuara",
+  "edit": "Redakto"
+}

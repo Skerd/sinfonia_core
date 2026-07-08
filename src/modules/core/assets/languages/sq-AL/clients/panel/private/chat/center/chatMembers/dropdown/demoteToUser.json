@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/demoteToUser.tsx",
+  "removeFromAdmin": "Hiqe si administrator",
+  "axios": {
+    "start": {
+      "title": "Zhdukja e anëtarit në përdorues",
+      "time": 3000
+    },
+    "success": {
+      "title": "Anëtari u degradua me sukses në përdorues",
+      "time": 3000
+    },
+    "error": {
+      "title": "Zhvendosja e përdoruesit në përdorues dështoi",
+      "time": 3000
+    }
+  }
+}

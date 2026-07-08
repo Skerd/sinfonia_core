@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/disableAccount.form.tsx",
+  "form": {
+    "usernameLabel": "Username",
+    "usernamePlaceholder": "Username",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "statusLabel": "Status",
+    "statusPlaceholder": "Status"
+  },
+  "title": "User account is active",
+  "description": "If you want to deactivate the account, please follow the steps below.",
+  "steps": {
+    "one": "Fill in your password",
+    "two": "Click on the '!!!!' button to deactivate your account",
+    "three": "Warning, if you deactivate your account, you need to contact system administrator to re-activate it!"
+  },
+  "deactivateButton": "Block",
+  "axios": {
+    "start": {
+      "title": "Deactivating account",
+      "time": 3000
+    },
+    "success": {
+      "title": "Account deactivated successfully",
+      "time": 1000
+    },
+    "error": {
+      "title": "Account deactivation failed",
+      "time": 3000
+    }
+  }
+}

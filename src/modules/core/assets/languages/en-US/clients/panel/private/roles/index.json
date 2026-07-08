@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/index.tsx",
+  "title": "All roles",
+  "description": "View and edit company roles",
+  "searchPlaceholder": "Search by name or slug...",
+  "failTitle": "Failed to load roles",
+  "failTitleTooltip": "Click here to retry loading roles",
+  "create": "Create role",
+  "fields": {
+    "name": "Name",
+    "isAdmin": "Admin role",
+    "isSignupDefault": "Default for signup",
+    "canEdit": "Can edit",
+    "canDelete": "Can delete",
+    "slug": "Slug",
+    "createdBy": "Created by",
+    "company": "Company",
+    "deletedAt": "Status",
+    "deletedBy": "Deleted by"
+  }
+}

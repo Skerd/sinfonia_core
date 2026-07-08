@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/surname/updateSurname.tsx",
+  "confirm": "Confirm surname change",
+  "cancel": "Cancel",
+  "axios": {
+    "start": {
+      "title": "Updating surname",
+      "time": 3000
+    },
+    "success": {
+      "title": "Surname successfully updated.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Surname failed to be updated",
+      "time": 3000
+    }
+  }
+}

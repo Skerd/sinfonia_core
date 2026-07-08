@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/ui/table/view-options.tsx",
+  "toggleColumns": "Toggle columns",
+  "searchColumns": "Search columns...",
+  "noColumnsMatch": "No columns match"
+}

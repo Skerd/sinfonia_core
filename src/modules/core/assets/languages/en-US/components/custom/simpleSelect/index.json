@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/components/custom/simpleSelect/index.tsx",
+  "selectPlaceholder": "Select...",
+  "search": "Search",
+  "searchPlaceholder": "Search...",
+  "noResults": "No results found.",
+  "more": "more",
+  "clear": "Clear",
+  "selected": "selected"
+}

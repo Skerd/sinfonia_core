@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/pages/internalServerError.tsx",
+  "title": "Oops! Diçka shkoi keq :)",
+  "description": "Kërkojmë ndjesë për shqetësimin.\n Ju lutemi provoni përsëri më vonë.",
+  "backLabel": "Kthehu prapa",
+  "backHome": "Kthehu në shtëpi"
+}

@@ -1,0 +1,36 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx",
+  "overview": "Vështrim i përgjithshëm",
+  "description": "Përshkrimi",
+  "company": "Kompania",
+  "name": "Emri",
+  "email": "Email",
+  "phone": "Telefoni",
+  "website": "Faqja e internetit",
+  "logo": "Logo",
+  "vat": "TVSH",
+  "parentCompany": "Kompania mëmë",
+  "allowedDomains": "Domenet e lejuara",
+  "howToReach": "Si të arrini tek ne",
+  "whoAreWe": "Kush jemi ne",
+  "audit": "Auditimi",
+  "createdBy": "Krijuar nga",
+  "deletedBy": "Fshirë nga",
+  "deletedAt": "Fshirë në",
+  "active": "Aktiv",
+  "notActive": "Jo aktiv",
+  "status": {
+    "true": "Aktiv",
+    "false": "Jo aktiv"
+  },
+  "form": {
+    "streetLabel": "Rruga",
+    "postalCodeLabel": "Kodi postar",
+    "cityLabel": "Qyteti",
+    "stateLabel": "Shtetit",
+    "countryLabel": "Vendi",
+    "latitudeLabel": "Gjerësia gjeografike",
+    "longitudeLabel": "Gjatësia gjeografike",
+    "logoLabel": "Logo"
+  }
+}

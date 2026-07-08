@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/name/index.tsx",
+  "form": {
+    "nameLabel": "Emri",
+    "nameDescription": "Ky është emri që do të shfaqet në sistem."
+  },
+  "failTitle": "Emri i ngarkimit dështoi",
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e emrit"
+}

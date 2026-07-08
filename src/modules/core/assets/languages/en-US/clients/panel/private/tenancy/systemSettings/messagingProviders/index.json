@@ -1,0 +1,28 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
+  "title": "Messaging providers",
+  "description": "Configure SMS and WhatsApp providers for this company. Only active providers are used for outbound messages.",
+  "createMessagingProvider": "Add messaging provider",
+  "searchPlaceholder": "Search by name or account SID...",
+  "noData": "No messaging providers configured",
+  "failTitle": "Failed to load messaging providers",
+  "failDescription": "An error occurred while loading messaging providers. Please try again.",
+  "name": "Name",
+  "providerType": "Provider",
+  "accountSid": "Account SID",
+  "fromPhone": "SMS sender",
+  "fromWhatsapp": "WhatsApp sender",
+  "active": "Active",
+  "yes": "Yes",
+  "no": "No",
+  "lastTestStatus": "Last test",
+  "fields": {
+    "name": "Name",
+    "providerType": "Provider",
+    "accountSid": "Account SID",
+    "fromPhone": "SMS sender",
+    "fromWhatsapp": "WhatsApp sender",
+    "active": "Active",
+    "lastTestStatus": "Last test"
+  }
+}

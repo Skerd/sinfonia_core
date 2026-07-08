@@ -1,0 +1,26 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx",
+  "failedTitle": "Failed to load scheduled action",
+  "failedDescription": "Something went wrong while loading this job. Click to retry.",
+  "failedTooltipDescription": "Click to retry fetching data.",
+  "overview": "Overview",
+  "name": "Name",
+  "handler": "Handler",
+  "type": "Schedule type",
+  "active": "Active",
+  "nextRunAt": "Next run",
+  "lastRunAt": "Last run",
+  "code": "Code",
+  "yes": "Yes",
+  "no": "No",
+  "typeValues": {
+    "interval": "Interval",
+    "cron": "Cron expression",
+    "once": "Once",
+    "queue": "Queue"
+  },
+  "scopeValues": {
+    "global": "Global",
+    "company": "Company"
+  }
+}

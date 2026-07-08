@@ -1,0 +1,15 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/center/sheetView/loginHistorySheetView.tsx",
+  "loginHistory": "Login history",
+  "ip": "IP address",
+  "loginDetails": "Sign-in details",
+  "clientInfo": "Client",
+  "user": "User",
+  "time": "Time",
+  "status": "Status",
+  "mfa": "MFA",
+  "device": "Device",
+  "os": "Operating system",
+  "browser": "Browser",
+  "userAgent": "User agent"
+}

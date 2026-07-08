@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/helpers/hocs/withAccess.tsx",
+  "loading": "Loading site access resources...",
+  "noClearance": "Not authorized to view content.",
+  "failTitle": "Could not load access permissions",
+  "failDescription": "Tap to try again. If the problem continues, refresh the page or sign in again.",
+  "tooltipDescription": "Retry loading permissions for this session."
+}

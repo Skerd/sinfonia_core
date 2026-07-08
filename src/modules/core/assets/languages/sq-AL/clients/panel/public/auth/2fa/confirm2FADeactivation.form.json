@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/2fa/confirm2FADeactivation.form.tsx",
+  "loading": "Çaktivizimi i 2FA",
+  "loadingDescription": "Çaktivizimi i 2FA për përdoruesin duke përdorur lidhjen çaktivizuese 2FA",
+  "fail": "Çaktivizimi i 2FA dështoi",
+  "failDescription": "Lidhja e çaktivizimit 2FA nuk është e saktë",
+  "success": "2FA është çaktivizuar",
+  "successDescription": "2FA u çaktivizua me sukses, tani mund të identifikoheni vetëm duke përdorur fjalëkalimin tuaj",
+  "axios": {
+    "start": {
+      "title": "Çaktivizimi i 2FA",
+      "time": 3000
+    },
+    "success": {
+      "title": "Çaktivizimi 2FA me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Çaktivizimi i 2FA dështoi",
+      "time": 3000
+    }
+  }
+}

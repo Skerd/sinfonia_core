@@ -1,0 +1,42 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/editCountry.tsx",
+  "title": "Edit country",
+  "description": "Update country details",
+  "errorTitle": "Failed to load country data",
+  "errorDescription": "Please click here to retry fetching country data",
+  "form": {
+    "idLabel": "Country ID",
+    "nameLabel": "Name",
+    "namePlaceholder": "Country name",
+    "codeLabel": "Code",
+    "codePlaceholder": "e.g. USA",
+    "phoneCodeLabel": "Phone code",
+    "phoneCodePlaceholder": "+1",
+    "currencyLabel": "Currency",
+    "currencyPlaceholder": "Select currency"
+  },
+  "noId": "No country selected.",
+  "backToList": "Back to list",
+  "axios": {
+    "start": {
+      "title": "Saving country",
+      "time": 3000
+    },
+    "success": {
+      "title": "Country updated successfully!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Country could not be updated, please try again!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Edit country",
+    "description": "Update country details"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Save"
+  }
+}

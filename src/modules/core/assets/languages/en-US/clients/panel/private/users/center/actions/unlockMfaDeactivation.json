@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockMfaDeactivation.tsx",
+  "unlockMfaDeactivation": "Unlock MFA deactivation",
+  "unlockMfaDeactivationConfirm": "Unlock MFA deactivation lock?",
+  "unlockMfaDeactivationConfirmDesc": "This will clear the MFA deactivation lock. The user will be able to request a new MFA deactivation code.",
+  "unlockMfaDeactivationResendEmail": "Resend MFA deactivation email",
+  "unlockMfaDeactivationSuccess": "MFA deactivation lock cleared successfully",
+  "unlockMfaDeactivationError": "Failed to clear MFA deactivation lock",
+  "axios": {
+    "start": {
+      "title": "Unlocking MFA deactivation",
+      "time": 3000
+    },
+    "success": {
+      "title": "MFA deactivation lock cleared successfully",
+      "time": 3000
+    },
+    "error": {
+      "title": "Failed to clear MFA deactivation lock",
+      "time": 3000
+    }
+  }
+}

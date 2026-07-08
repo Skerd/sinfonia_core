@@ -1,0 +1,41 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterChip.tsx",
+  "editFilter": "Redakto filtrin",
+  "filterField": "Zgjidhni një fushë",
+  "filterOperator": "Operatori",
+  "removeFilter": "Hiq",
+  "yes": "e vërtetë",
+  "no": "e rreme",
+  "exists": "ekziston",
+  "empty": "është bosh",
+  "chipOperators": {
+    "equals": "është",
+    "notEquals": "nuk është",
+    "contains": "përmban",
+    "startsWith": "fillon me",
+    "endsWith": "përfundon me",
+    "greaterThan": ">",
+    "greaterThanOrEqual": "≥",
+    "lessThan": "<",
+    "lessThanOrEqual": "≤",
+    "between": "ndërmjet",
+    "in": "është ndonjë nga",
+    "notIn": "nuk është asnjë nga",
+    "exists": "ekziston"
+  },
+  "operators": {
+    "equals": "Të barabartë",
+    "notEquals": "Jo të barabartë",
+    "contains": "Përmban",
+    "startsWith": "Fillon me",
+    "endsWith": "Përfundon me",
+    "greaterThan": "Më e madhe se",
+    "greaterThanOrEqual": "Më e madhe apo e barabartë",
+    "lessThan": "Më pak se",
+    "lessThanOrEqual": "Më pak ose e barabartë",
+    "between": "ndërmjet",
+    "in": "Në",
+    "notIn": "Jo në",
+    "exists": "ekziston"
+  }
+}

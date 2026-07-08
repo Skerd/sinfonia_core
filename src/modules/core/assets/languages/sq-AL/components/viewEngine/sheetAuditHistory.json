@@ -1,0 +1,19 @@
+{
+    "menuItem": "Aktiviteti",
+    "drawerTitle": "Aktiviteti",
+    "drawerDescription": "Ndryshimet në këtë rekord me kalimin e kohës.",
+    "loadMore": "Ngarko më shumë",
+    "loading": "Duke ngarkuar…",
+    "empty": "Ende pa aktivitet.",
+    "errorTitle": "Ngarkimi i aktivitetit dështoi",
+    "retry": "Provo përsëri",
+    "actionCreate": "krijoi këtë rekord",
+    "actionUpdate": "përditësoi",
+    "actionDelete": "fshi këtë rekord",
+    "actionRestore": "riktheu këtë rekord",
+    "systemActor": "Sistemi",
+    "unknownField": "Fusha",
+    "from": "Nga",
+    "to": "Në",
+    "noFieldChanges": "Pa ndryshime të dukshme fushe (diff i kufizuar ose bosh)."
+}

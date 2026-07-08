@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/components/custom/cardAndTableView.tsx",
+  "error": "Error",
+  "filterLoadError": "Failed to load table configuration",
+  "showFilters": "Show filters",
+  "hideFilters": "Hide filters",
+  "showTableView": "Show Table View",
+  "showCardView": "Show Card View",
+  "failTitle": "Failed to load data",
+  "failDescription": "Could not load data. Please click here to retry.",
+  "tooltipDescription": "Click to retry fetching data",
+  "failTableConfigTitle": "Failed to load table configuration",
+  "failTableConfigDescription": "Could not load table configuration. Please click here to retry.",
+  "tooltipTableConfigDescription": "Click to retry fetching table configuration",
+  "noData": "No results found, please consider changing filters",
+  "loading": "Loading..."
+}

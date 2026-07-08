@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/index.tsx",
+  "title": "Settings",
+  "description": "Manage your account settings and set e-mail preferences.",
+  "account": "Account",
+  "security": "Security",
+  "notifications": "Notifications"
+}

@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterRule.tsx",
+  "filterRule": "Filter rule",
+  "rule": "Rule",
+  "operators": {
+    "equals": "Equals",
+    "notEquals": "Not equals",
+    "contains": "Contains",
+    "startsWith": "Starts with",
+    "endsWith": "Ends with",
+    "greaterThan": "Greater than",
+    "greaterThanOrEqual": "Greater or equal",
+    "lessThan": "Less than",
+    "lessThanOrEqual": "Less or equal",
+    "between": "Between",
+    "in": "In",
+    "notIn": "Not in",
+    "exists": "Exists"
+  },
+  "filterField": "Select a field",
+  "filterOperator": "Operator",
+  "selectFieldFirst": "Select a field",
+  "removeFilter": "Remove"
+}

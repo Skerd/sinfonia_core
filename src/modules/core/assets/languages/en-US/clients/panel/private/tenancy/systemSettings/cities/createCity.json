@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/createCity.tsx",
+  "title": "Create city",
+  "description": "Add a new city",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "City name",
+    "countryLabel": "Country",
+    "countryPlaceholder": "Select country",
+    "stateLabel": "State",
+    "statePlaceholder": "Select state"
+  },
+  "formHeader": {
+    "title": "Create city",
+    "description": "Add a new city"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Create"
+  }
+}

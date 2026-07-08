@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockActivation.tsx",
+  "unlockActivation": "Zhblloko aktivizimin",
+  "unlockActivationConfirm": "Zhblloko kyçjen e aktivizimit?",
+  "unlockActivationConfirmDesc": "Kjo do të pastrojë bllokimin e aktivizimit. Përdoruesi do të jetë në gjendje të kërkojë një email të ri aktivizimi.",
+  "unlockActivationResendEmail": "Ridërgo email aktivizimi",
+  "unlockActivationSuccess": "Bllokimi i aktivizimit u fshi me sukses",
+  "unlockActivationError": "Bllokimi i aktivizimit dështoi",
+  "axios": {
+    "start": {
+      "title": "Zhbllokimi i aktivizimit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Bllokimi i aktivizimit u fshi me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Bllokimi i aktivizimit dështoi",
+      "time": 3000
+    }
+  }
+}

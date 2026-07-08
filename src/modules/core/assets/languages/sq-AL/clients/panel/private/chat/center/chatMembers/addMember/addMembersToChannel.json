@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/addMembersToChannel.tsx",
+  "addToChat": "Shto në chat",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Shtimi i anëtarëve në kanal",
+      "time": 3000
+    },
+    "success": {
+      "title": "U shtuan me sukses anëtarët në kanal!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Nuk mund të shtoheshin anëtarë në kanal, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  }
+}

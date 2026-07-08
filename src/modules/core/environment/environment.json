@@ -1,0 +1,25 @@
+{
+  "debugging": {
+    "enableFormToggle": false,
+    "enableFormPostInfo": false,
+    "enableFormErrors": false,
+    "enableFormResponseSuccessInfo": false,
+    "enableFormResponseErrorInfo": false
+  },
+  "layout": {
+    "activateThirdPartyAuthentication": true,
+    "activateSignup": true,
+    "activateForgetPassword": true
+  },
+  "withClearance": {
+    "useLocalData": false,
+    "showLoading": false,
+    "showError": true,
+    "showNeededClearances": true
+  },
+  "withResourceAccess": {
+    "showLoading": false,
+    "showError": true,
+    "showNeededClearances": true
+  }
+}

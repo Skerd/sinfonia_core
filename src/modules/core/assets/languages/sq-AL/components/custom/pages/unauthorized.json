@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/pages/unauthorized.tsx",
+  "title": "Qasje e paautorizuar",
+  "description": "Ju lutemi identifikohuni me kredencialet e duhura\n për të hyrë në këtë burim.",
+  "backLabel": "Kthehu prapa",
+  "backHome": "Kthehu në shtëpi"
+}

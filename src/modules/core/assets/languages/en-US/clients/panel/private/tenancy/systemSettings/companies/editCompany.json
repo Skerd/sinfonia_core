@@ -1,0 +1,68 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/editCompany.tsx",
+  "title": "Edit company",
+  "description": "Update company details",
+  "editTitle": "Update company",
+  "editDescription": "Update company info",
+  "generalInfo": "General info",
+  "howToReach": "How to reach us",
+  "whoAreWe": "Who are we",
+  "addAddress": "Add new address",
+  "address": "Address",
+  "remove": "Remove",
+  "errorTitle": "Failed to load company",
+  "errorDescription": "Please click here to retry fetching company data",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Email",
+    "phoneNumberNumberLabel": "Phone number",
+    "phoneNumberNumberPlaceholder": "Phone number",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Description",
+    "logoLabel": "Logo",
+    "websiteLabel": "Website",
+    "websitePlaceholder": "Website",
+    "vatLabel": "VAT",
+    "vatPlaceholder": "VAT",
+    "allowedDomainsLabel": "Allowed domains",
+    "allowedDomainsPlaceholder": "Add a domain",
+    "streetLabel": "Street",
+    "streetPlaceholder": "Street",
+    "postalCodeLabel": "Postal code",
+    "postalCodePlaceholder": "Postal code",
+    "cityLabel": "City",
+    "cityPlaceholder": "City",
+    "stateLabel": "State",
+    "statePlaceholder": "State",
+    "countryLabel": "Country",
+    "countryPlaceholder": "Country",
+    "latitudeLabel": "Latitude",
+    "latitudePlaceholder": "Latitude",
+    "longitudeLabel": "Longitude",
+    "longitudePlaceholder": "Longitude"
+  },
+  "axios": {
+    "start": {
+      "title": "Updating company",
+      "time": 3000
+    },
+    "success": {
+      "title": "Company successfully updated!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Company could not be updated, please try again!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Update company",
+    "description": "Update company info"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Save"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/telegram.tsx",
+  "telegramServerTitle": "Telegram Server",
+  "online": "Online",
+  "offline": "Offline",
+  "connectedClients": "Connected Clients",
+  "messages": "Messages"
+}

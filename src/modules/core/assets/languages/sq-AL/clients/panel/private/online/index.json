@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/index.tsx",
+  "title": "Monitorimi i serverit",
+  "description": "Shëndeti i serverit në kohë reale, matjet e performancës dhe monitorimi i aktivitetit të përdoruesit"
+}

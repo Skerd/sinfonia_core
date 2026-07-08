@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/inviteUser/inviteUser.form.tsx",
+  "form": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "eg: email@example.com",
+    "nameLabel": "Name",
+    "namePlaceholder": "eg: John",
+    "surnameLabel": "Surname",
+    "surnamePlaceholder": "eg: Doe",
+    "userRoleLabel": "Role",
+    "userRolePlaceholder": "Select a role",
+    "welcomeMessageLabel": "Welcome message (optional)",
+    "welcomeMessagePlaceholder": "Add a personal note to your invitation (optional)"
+  },
+  "cancel": "Cancel",
+  "invite": "Invite",
+  "axios": {
+    "start": {
+      "title": "Inviting user",
+      "time": 3000
+    },
+    "success": {
+      "title": "User invited successfully!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Failed to invite user.",
+      "time": 3000
+    }
+  }
+}

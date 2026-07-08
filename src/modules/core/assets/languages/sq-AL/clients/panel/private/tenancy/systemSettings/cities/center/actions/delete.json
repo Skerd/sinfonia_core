@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/actions/delete.tsx",
+  "title": "Fshije",
+  "deleteConfirmTitle": "Fshi qytetin",
+  "deleteConfirmDescription": "Je i sigurt që dëshiron ta fshish këtë qytet?",
+  "confirmNameLabel": "Shkruani emrin e qytetit për të konfirmuar",
+  "cancel": "Anulo",
+  "confirmDelete": "Fshije",
+  "axios": {
+    "start": {
+      "title": "Fshirja e qytetit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Qyteti u fshi me sukses.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Qyteti nuk arriti të fshihej",
+      "time": 3000
+    }
+  }
+}

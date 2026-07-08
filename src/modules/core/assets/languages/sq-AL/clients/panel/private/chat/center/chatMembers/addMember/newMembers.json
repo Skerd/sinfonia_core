@@ -1,0 +1,14 @@
+{
+  "title": "Anëtarë të rinj",
+  "to": "Shtoni",
+  "searchPeople": "Kërkoni njerëz",
+  "noPeopleFound": "Nuk u gjetën njerëz.",
+  "failTitle": "Ngarkimi i përdoruesve dështoi",
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e përdoruesve",
+  "noDataTitle": "Nuk u gjet asnjë përdorues",
+  "form": {
+    "nameLabel": "Emri i kanalit",
+    "namePlaceholder": "Fut emrin e kanalit"
+  },
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx"
+}

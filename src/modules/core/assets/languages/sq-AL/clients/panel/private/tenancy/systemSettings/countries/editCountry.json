@@ -1,0 +1,42 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/editCountry.tsx",
+  "title": "Redakto shtetin",
+  "description": "Përditëso detajet e shtetit",
+  "errorTitle": "Ngarkimi i të dhënave të vendit dështoi",
+  "errorDescription": "Ju lutemi, klikoni këtu për të riprovuar marrjen e të dhënave të shtetit",
+  "form": {
+    "idLabel": "ID e shtetit",
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri i shtetit",
+    "codeLabel": "Kodi",
+    "codePlaceholder": "p.sh. SHBA",
+    "phoneCodeLabel": "Kodi i telefonit",
+    "phoneCodePlaceholder": "+1",
+    "currencyLabel": "Monedha",
+    "currencyPlaceholder": "Zgjidhni monedhën"
+  },
+  "noId": "Asnjë shtet i zgjedhur.",
+  "backToList": "Kthehu në listë",
+  "axios": {
+    "start": {
+      "title": "Vendi shpëtimtar",
+      "time": 3000
+    },
+    "success": {
+      "title": "Shteti u përditësua me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Shteti nuk mund të përditësohej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Redakto shtetin",
+    "description": "Përditëso detajet e shtetit"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Ruaj"
+  }
+}

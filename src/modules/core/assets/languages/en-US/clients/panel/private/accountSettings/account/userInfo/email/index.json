@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/email/index.tsx",
+  "form": {
+    "newEmailLabel": "Email",
+    "newEmailDescription": "This is the email that will be used to log into the system."
+  },
+  "failTitle": "Failed to load email",
+  "failTitleTooltip": "Click to retry loading email",
+  "emailVerified": "Current verified email",
+  "invitedUser": "Please verify the email by accepting the invitation request",
+  "emailNotVerified": "Please verify your new email by clicking on the link sent to your inbox",
+  "emailNotVerifiedSmall": "Please verify your new email"
+}

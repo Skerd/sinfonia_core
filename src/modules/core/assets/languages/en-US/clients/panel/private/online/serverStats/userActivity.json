@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverStats/userActivity.tsx",
+  "lastUpdated": " Last updated:",
+  "userActivityTitle": "User Activity",
+  "waitingForActivityData": "Waiting for activity data...",
+  "live": "Live",
+  "activeUsers": "Active Users",
+  "connections": "Connections",
+  "activeRooms": "Active Rooms",
+  "users": "Users",
+  "instances": "Instances",
+  "messages": "Messages",
+  "noActiveRooms": "No active rooms"
+}

@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/timezone/updateTimeZone.tsx",
+  "confirm": "Konfirmo ndryshimin e zonës kohore",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Po përditëson zonën kohore",
+      "time": 3000
+    },
+    "success": {
+      "title": "Zona kohore u përditësua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Zona kohore nuk u përditësua",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/createCity.tsx",
+  "title": "Krijo qytet",
+  "description": "Shto një qytet të ri",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri i qytetit",
+    "countryLabel": "Vendi",
+    "countryPlaceholder": "Zgjidh shtetin",
+    "stateLabel": "Shtetit",
+    "statePlaceholder": "Zgjidhni gjendjen"
+  },
+  "formHeader": {
+    "title": "Krijo qytet",
+    "description": "Shto një qytet të ri"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Krijo"
+  }
+}

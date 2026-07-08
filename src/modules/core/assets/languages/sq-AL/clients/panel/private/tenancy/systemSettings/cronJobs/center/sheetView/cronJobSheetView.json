@@ -1,0 +1,26 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx",
+  "failedTitle": "Ngarkimi i veprimit dështoi",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të provuar përsëri.",
+  "failedTooltipDescription": "Klikoni për të provuar përsëri ngarkimin e të dhënave.",
+  "overview": "Përmbledhje",
+  "name": "Emri",
+  "handler": "Handler",
+  "type": "Lloji i orarit",
+  "active": "Aktiv",
+  "nextRunAt": "Ekzekutimi i radhës",
+  "lastRunAt": "Ekzekutimi i fundit",
+  "code": "Kodi",
+  "yes": "Po",
+  "no": "Jo",
+  "typeValues": {
+    "interval": "Interval",
+    "cron": "Shprehje cron",
+    "once": "Një herë",
+    "queue": "Radhë"
+  },
+  "scopeValues": {
+    "global": "Global",
+    "company": "Kompani"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/phoneNumber/updatePhoneNumber.tsx",
+  "confirm": "Confirm phone number change",
+  "cancel": "Cancel",
+  "axios": {
+    "start": {
+      "title": "Updating phone number",
+      "time": 3000
+    },
+    "success": {
+      "title": "Phone number successfully updated",
+      "time": 3000
+    },
+    "error": {
+      "title": "Phone number failed to be updated",
+      "time": 3000
+    }
+  }
+}

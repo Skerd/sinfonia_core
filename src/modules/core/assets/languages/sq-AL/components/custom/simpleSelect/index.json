@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/components/custom/simpleSelect/index.tsx",
+  "selectPlaceholder": "Zgjidh...",
+  "search": "Kërko",
+  "searchPlaceholder": "Kërko...",
+  "noResults": "Nuk u gjet asnjë rezultat.",
+  "more": "më shumë",
+  "clear": "E qartë",
+  "selected": "të zgjedhura"
+}

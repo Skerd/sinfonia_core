@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/phoneNumber/updatePhoneNumber.tsx",
+  "confirm": "Konfirmo ndryshimin e numrit të telefonit",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Po përditëson numrin e telefonit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Numri i telefonit u përditësua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Numri i telefonit nuk u përditësua",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/components/custom/addresses/formAddressWithMap.tsx",
+  "addAddress": "Shto adresën",
+  "remove": "Hiq adresën",
+  "form": {
+    "countryLabel": "Vendi",
+    "countryPlaceholder": "Zgjidh shtetin",
+    "stateLabel": "Shtetit",
+    "statePlaceholder": "Zgjidhni gjendjen",
+    "cityLabel": "Qyteti",
+    "cityPlaceholder": "Zgjidhni qytetin",
+    "streetLabel": "Rruga",
+    "streetPlaceholder": "Rruga",
+    "postalCodeLabel": "Kodi postar",
+    "postalCodePlaceholder": "Kodi postar",
+    "latitudeLabel": "Gjerësia gjeografike",
+    "latitudePlaceholder": "Gjerësia gjeografike",
+    "longitudeLabel": "Gjatësia gjeografike",
+    "longitudePlaceholder": "Gjatësia gjeografike"
+  }
+}

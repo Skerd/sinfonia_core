@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx",
+  "failedTitle": "Ngarkimi i serverit SMTP dështoi",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të riprovuar.",
+  "failedTooltipDescription": "Klikoni për të provuar përsëri marrjen e të dhënave.",
+  "host": "Host",
+  "overview": "Vështrim i përgjithshëm",
+  "connection": "Lidhja",
+  "sender": "Dërguesi",
+  "lastTest": "Testi i fundit i lidhjes",
+  "sequence": "Prioriteti",
+  "active": "Aktiv",
+  "port": "Porta",
+  "encryption": "Enkriptimi",
+  "authType": "Autentifikimi",
+  "username": "Përdoruesi",
+  "hasPassword": "Fjalëkalimi i ruajtur",
+  "fromEmail": "Email dërgues",
+  "fromName": "Emri dërgues",
+  "replyTo": "Reply-To",
+  "yes": "Po",
+  "no": "Jo",
+  "lastTestStatus": "Testi i fundit",
+  "lastTestedAt": "Testuar më",
+  "lastTestMessage": "Mesazhi i testit",
+  "encryptionValues": {
+    "none": "Asnjë",
+    "ssl": "SSL",
+    "starttls": "STARTTLS"
+  },
+  "authTypeValues": {
+    "login": "Përdorues / fjalëkalim",
+    "none": "Asnjë"
+  },
+  "lastTestStatusValues": {
+    "ok": "OK",
+    "failed": "Dështoi"
+  }
+}

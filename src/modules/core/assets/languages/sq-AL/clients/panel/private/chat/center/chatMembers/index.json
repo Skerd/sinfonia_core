@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/index.tsx",
+  "title": "Anëtarët",
+  "failTitle": "Ngarkimi i anëtarëve të kanalit dështoi",
+  "failTitleTooltip": "Kliko këtu për të riprovuar marrjen e anëtarëve të kanalit",
+  "noData": "Nuk u gjet asnjë anëtar"
+}

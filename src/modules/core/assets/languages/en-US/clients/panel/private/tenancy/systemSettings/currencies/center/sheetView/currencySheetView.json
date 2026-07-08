@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx",
+  "currency": "Currency",
+  "overview": "Overview",
+  "metadata": "Metadata",
+  "symbol": "Symbol",
+  "abbreviation": "Abbreviation",
+  "decimalPlaces": "Decimal places",
+  "createdBy": "Created by"
+}

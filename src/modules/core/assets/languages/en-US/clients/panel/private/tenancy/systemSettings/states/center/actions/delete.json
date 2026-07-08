@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/actions/delete.tsx",
+  "title": "Delete",
+  "deleteConfirmTitle": "Delete state",
+  "deleteConfirmDescription": "Are you sure you want to delete this state?",
+  "confirmNameLabel": "Type the state name to confirm",
+  "cancel": "Cancel",
+  "confirmDelete": "Delete",
+  "axios": {
+    "start": {
+      "title": "Deleting state",
+      "time": 3000
+    },
+    "success": {
+      "title": "State successfully deleted.",
+      "time": 3000
+    },
+    "error": {
+      "title": "State failed to be deleted",
+      "time": 3000
+    }
+  }
+}

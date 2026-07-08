@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/ui/table/view-options.tsx",
+  "toggleColumns": "Ndrysho kolonat",
+  "searchColumns": "Kërko kolonat...",
+  "noColumnsMatch": "Asnjë kolonë nuk përputhet"
+}

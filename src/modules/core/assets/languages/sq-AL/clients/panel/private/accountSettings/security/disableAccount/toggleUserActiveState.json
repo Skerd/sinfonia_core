@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx",
+  "titleActivate": "Të aktivizohet përdoruesi [!!!]?",
+  "titleDeactivate": "Të bllokohet përdoruesi [!!!]?",
+  "descriptionActivate": "Jeni të sigurt që dëshironi të aktivizoni përdoruesin [!!!]. Përdoruesi mund të ri-logohet në sistem pas aktivizimit.",
+  "descriptionDeactivate": "Jeni i sigurt që dëshironi të bllokoni përdoruesin [!!!]? Përdoruesi nuk mund të hyjë në sistem pas bllokimit.",
+  "activate": "Aktivizoni",
+  "deactivate": "Blloko",
+  "axios": {
+    "start": {
+      "title": "Ndryshimi i statusit të përdoruesit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Statusi i përdoruesit ndryshoi me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Ndryshimi i statusit të përdoruesit dështoi",
+      "time": 3000
+    }
+  }
+}

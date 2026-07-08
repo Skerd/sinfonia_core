@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/websocket.tsx",
+  "websocketServerTitle": "Websocket Server",
+  "online": "Online",
+  "offline": "Offline",
+  "uptime": "Uptime",
+  "connections": "Connections",
+  "state0": "Connecting",
+  "state1": "Open",
+  "state2": "Closing",
+  "state3": "Closed",
+  "messages": "Messages",
+  "users": "Online users",
+  "rooms": "Rooms",
+  "day": "day",
+  "days": "days",
+  "hour": "hour",
+  "hours": "hours",
+  "minute": "minute",
+  "minutes": "minutes",
+  "second": "second",
+  "seconds": "seconds"
+}

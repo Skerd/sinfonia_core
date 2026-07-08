@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/table/usersTableBody.tsx",
+  "noResult": "Nuk ka rezultate",
+  "failTitle": "Ngarkimi i të dhënave të përdoruesve dështoi",
+  "failTitleTooltip": "Kliko këtu për të riprovuar ngarkimin e të dhënave të përdoruesve"
+}

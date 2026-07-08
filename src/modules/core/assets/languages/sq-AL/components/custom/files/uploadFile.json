@@ -1,0 +1,15 @@
+{
+  "path": "src/modules/core/components/custom/files/uploadFile.tsx",
+  "dropOnly": "Hidhini skedarët këtu",
+  "dragAndDrop": "Zvarrit dhe lësho skedarët këtu",
+  "or": "ose",
+  "browse": "shfletoni",
+  "upload": "për të ngarkuar",
+  "oneFile": "Vetëm një skedar",
+  "upTo": "Deri në",
+  "files": "dosjet",
+  "each": "secili",
+  "remove": "Hiq skedarin",
+  "converting": "Po konvertohet...",
+  "maxSizeExceeded": "Skedari është shumë i madh. Madhësia maksimale është {{size}}MB."
+}

@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx",
+  "failedTitle": "Failed to load SMTP server",
+  "failedDescription": "Something went wrong while loading this server. Click to retry.",
+  "failedTooltipDescription": "Click to retry fetching data.",
+  "host": "Host",
+  "overview": "Overview",
+  "connection": "Connection",
+  "sender": "Sender",
+  "lastTest": "Last connection test",
+  "sequence": "Priority",
+  "active": "Active",
+  "port": "Port",
+  "encryption": "Encryption",
+  "authType": "Authentication",
+  "username": "Username",
+  "hasPassword": "Password stored",
+  "fromEmail": "From email",
+  "fromName": "From name",
+  "replyTo": "Reply-To",
+  "yes": "Yes",
+  "no": "No",
+  "lastTestStatus": "Last test",
+  "lastTestedAt": "Last tested",
+  "lastTestMessage": "Test message",
+  "encryptionValues": {
+    "none": "None",
+    "ssl": "SSL",
+    "starttls": "STARTTLS"
+  },
+  "authTypeValues": {
+    "login": "Username / password",
+    "none": "None"
+  },
+  "lastTestStatusValues": {
+    "ok": "OK",
+    "failed": "Failed"
+  }
+}

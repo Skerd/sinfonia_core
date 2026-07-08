@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/timezone/index.tsx",
+  "form": {
+    "newTimeZoneLabel": "Time zone",
+    "newTimeZoneDescription": "This is the time zone that will be used to display time in the system."
+  },
+  "failTitle": "Failed to load timezone",
+  "failTitleTooltip": "Click to retry loading timezone"
+}

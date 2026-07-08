@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/actions/restore.tsx",
+  "title": "Rivendos",
+  "restoreConfirmTitle": "Rivendos monedhën",
+  "restoreConfirmDescription": "Je i sigurt që dëshiron ta restaurosh këtë monedhë?",
+  "cancel": "Anulo",
+  "confirmRestore": "Rivendos",
+  "axios": {
+    "start": {
+      "title": "Rivendosja e monedhës",
+      "time": 3000
+    },
+    "success": {
+      "title": "Monedha u rivendos me sukses.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Valuta nuk u rivendos",
+      "time": 3000
+    }
+  }
+}

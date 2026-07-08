@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/createCountry.tsx",
+  "title": "Create country",
+  "description": "Add a new country",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Country name",
+    "codeLabel": "Code",
+    "codePlaceholder": "e.g. USA",
+    "phoneCodeLabel": "Phone code",
+    "phoneCodePlaceholder": "+1",
+    "currencyLabel": "Currency",
+    "currencyPlaceholder": "Select currency"
+  },
+  "axios": {
+    "start": {
+      "title": "Creating country",
+      "time": 3000
+    },
+    "success": {
+      "title": "Country created successfully!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Country could not be created, please try again!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Create country",
+    "description": "Add a new country"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Create"
+  }
+}

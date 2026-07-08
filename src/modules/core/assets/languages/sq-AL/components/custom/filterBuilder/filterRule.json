@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterRule.tsx",
+  "filterRule": "Rregulli i filtrit",
+  "rule": "Rregulli",
+  "operators": {
+    "equals": "Të barabartë",
+    "notEquals": "Jo të barabartë",
+    "contains": "Përmban",
+    "startsWith": "Fillon me",
+    "endsWith": "Përfundon me",
+    "greaterThan": "Më e madhe se",
+    "greaterThanOrEqual": "Më e madhe apo e barabartë",
+    "lessThan": "Më pak se",
+    "lessThanOrEqual": "Më pak ose e barabartë",
+    "between": "ndërmjet",
+    "in": "Në",
+    "notIn": "Jo në",
+    "exists": "ekziston"
+  },
+  "filterField": "Zgjidhni një fushë",
+  "filterOperator": "Operatori",
+  "selectFieldFirst": "Zgjidhni një fushë",
+  "removeFilter": "Hiq"
+}

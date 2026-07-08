@@ -1,0 +1,278 @@
+{
+  "path": "src/modules/core/clients/panel/entryPoint/index.tsx",
+  "home": {
+    "title": "Apps"
+  },
+  "common": {
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "menus": {
+    "company": {
+      "title": "Company",
+      "dashboard": {
+        "title": "Overview"
+      },
+      "administration": {
+        "title": "Administration"
+      },
+      "users": {
+        "title": "Users"
+      },
+      "chats": {
+        "title": "Chats"
+      },
+      "info": {
+        "title": "Company"
+      },
+      "editCompany": {
+        "title": "Edit company"
+      },
+      "createCompany": {
+        "title": "Create company"
+      }
+    },
+    "account": {
+      "mainTitle": "My account",
+      "title": "My account",
+      "accountSettings": {
+        "title": "Settings"
+      },
+      "profile": {
+        "title": "Profile"
+      },
+      "security": {
+        "title": "Security"
+      },
+      "account": {
+        "title": "Account"
+      },
+      "notifications": {
+        "title": "Notifications"
+      },
+      "notificationCenter": {
+        "title": "Activity"
+      },
+      "apps": {
+        "title": "Connected apps"
+      }
+    },
+    "tenancy": {
+      "title": "Tenancy",
+      "companies": {
+        "title": "All companies"
+      },
+      "serverPerformance": {
+        "title": "Performance"
+      },
+      "cronJobs": {
+        "title": "Scheduled actions"
+      },
+      "systemSettings": {
+        "title": "Configurations",
+        "roles": {
+          "title": "Roles"
+        },
+        "countries": {
+          "title": "Countries"
+        },
+        "states": {
+          "title": "States"
+        },
+        "cities": {
+          "title": "Cities"
+        },
+        "currencies": {
+          "title": "Currencies"
+        },
+        "companies": {
+          "title": "Companies"
+        },
+        "smtpServers": {
+          "title": "Mail servers"
+        },
+        "constructors": {
+          "title": "Constructors"
+        },
+        "unitTypeCategories": {
+          "title": "Unit Type Categories"
+        },
+        "unitTypes": {
+          "title": "Unit Types"
+        },
+        "categories": {
+          "title": "Categories"
+        },
+        "listings": {
+          "title": "Listings"
+        },
+        "taskrequests": {
+          "title": "Task Requests"
+        },
+        "orders": {
+          "title": "Orders"
+        },
+        "bids": {
+          "title": "Bids"
+        },
+        "bookings": {
+          "title": "Bookings"
+        },
+        "disputes": {
+          "title": "Disputes"
+        },
+        "reviews": {
+          "title": "Reviews"
+        },
+        "promotions": {
+          "title": "Promotions"
+        },
+        "listingflags": {
+          "title": "Listing Flags"
+        },
+        "providerprofile": {
+          "title": "Provider Profiles"
+        },
+        "provideravailability": {
+          "title": "Availability"
+        },
+        "listingaddons": {
+          "title": "Listing Add-Ons"
+        },
+        "listingpackages": {
+          "title": "Listing Packages"
+        },
+        "escrowdashboard": {
+          "title": "Escrow Dashboard"
+        },
+        "products": {
+          "title": "Products"
+        },
+        "collections": {
+          "title": "Collections"
+        },
+        "productorders": {
+          "title": "Product Orders"
+        },
+        "inventories": {
+          "title": "Inventory"
+        },
+        "warehouses": {
+          "title": "Warehouses"
+        },
+        "productattributes": {
+          "title": "Product Attributes"
+        },
+        "discounts": {
+          "title": "Discounts"
+        },
+        "taxzones": {
+          "title": "Tax Zones"
+        },
+        "shippingzones": {
+          "title": "Shipping Zones"
+        },
+        "cmsblocks": {
+          "title": "CMS Blocks"
+        },
+        "customergroups": {
+          "title": "Customer Groups"
+        },
+        "pricingrules": {
+          "title": "Pricing Rules"
+        },
+        "analytics": {
+          "title": "Analytics"
+        }
+      }
+    },
+    "realEstate": {
+      "title": "Real Estate",
+      "overview": {
+        "title": "Overview"
+      },
+      "dashboard": {
+        "title": "Dashboard"
+      },
+      "projects": {
+        "title": "Projects"
+      },
+      "edifices": {
+        "title": "Edifices"
+      },
+      "floors": {
+        "title": "Floors"
+      },
+      "units": {
+        "title": "Units"
+      },
+      "inspections": {
+        "title": "Inspections"
+      },
+      "unitCosts": {
+        "title": "Unit costs"
+      },
+      "modificationRequests": {
+        "title": "Modification Requests"
+      },
+      "reservations": {
+        "title": "Reservations"
+      },
+      "sales": {
+        "title": "Sales"
+      },
+      "paymentPlans": {
+        "title": "Payment Plans"
+      },
+      "constructors": {
+        "title": "Constructors"
+      },
+      "unitTypeCategories": {
+        "title": "Unit Type Categories"
+      },
+      "unitTypes": {
+        "title": "Unit Types"
+      },
+      "commissions": {
+        "title": "Commissions"
+      },
+      "agentReport": {
+        "title": "Agent Report"
+      },
+      "leads": {
+        "title": "Leads"
+      },
+      "unitAvailability": {
+        "title": "Availability Calendar"
+      },
+      "ownerPortal": {
+        "title": "Rentals Hub"
+      },
+      "rentalsHub": {
+        "title": "Rentals Hub"
+      },
+      "leases": {
+        "title": "Leases"
+      },
+      "rentalPayments": {
+        "title": "Rental Payments"
+      },
+      "roi": {
+        "title": "ROI Calculator"
+      },
+      "constructionUpdates": {
+        "title": "Construction Updates"
+      },
+      "snags": {
+        "title": "Snagging List"
+      },
+      "groupDashboard": {
+        "title": "Group Dashboard"
+      },
+      "erpExport": {
+        "title": "ERP Export"
+      }
+    }
+  }
+}

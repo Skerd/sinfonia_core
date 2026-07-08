@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/addMembersToChannel.tsx",
+  "addToChat": "Add to chat",
+  "cancel": "Cancel",
+  "axios": {
+    "start": {
+      "title": "Adding members to channel",
+      "time": 3000
+    },
+    "success": {
+      "title": "Successfully added members to channel!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Could not add members to channel, please try again!",
+      "time": 3000
+    }
+  }
+}

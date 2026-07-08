@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/left/channelsList.tsx",
+  "you": "Ju",
+  "unreadMessages": "mesazhe të palexuara",
+  "user_left": "U largua nga grupi",
+  "user_removed": "hequr",
+  "user_added": "shtuar",
+  "user_made_admin": "promovuar në admin",
+  "user_demoted_from_admin": "degraduar",
+  "noChats": "Shiko të vetmuar këtu",
+  "messageDeleted": "Mesazh i fshirë",
+  "isTyping": "po shkruan...",
+  "areTyping": "janë duke shtypur...",
+  "and": "dhe",
+  "others": "të tjerët",
+  "unknown": "E panjohur"
+}

@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/actions/delete.tsx",
+  "title": "Delete",
+  "deleteConfirmTitle": "Delete currency",
+  "deleteConfirmDescription": "Are you sure you want to delete this currency?",
+  "confirmNameLabel": "Type the currency name to confirm",
+  "cancel": "Cancel",
+  "confirmDelete": "Delete",
+  "axios": {
+    "start": {
+      "title": "Deleting currency",
+      "time": 3000
+    },
+    "success": {
+      "title": "Currency successfully deleted.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Currency failed to be deleted",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/createRole.tsx",
+  "title": "Create role",
+  "description": "Add a new role with permissions",
+  "failTitle": "Failed to load permissions",
+  "failDescription": "Failed to load permissions, please try again",
+  "failTooltip": "Click here to retry loading permissions",
+  "noData": "No permissions found, so no role can be created",
+  "form": {
+    "nameLabel": "Role name",
+    "namePlaceholder": "Role name",
+    "nameDescription": "The display name of the role",
+    "templateLabel": "Template",
+    "templatePlaceholder": "Template",
+    "templateDescription": "Copy permissions from another role"
+  },
+  "none": "None",
+  "cancel": "Cancel",
+  "submit": "Create",
+  "axios": {
+    "start": {
+      "title": "Creating role",
+      "time": 3000
+    },
+    "success": {
+      "title": "Role created successfully",
+      "time": 3000
+    },
+    "error": {
+      "title": "Role creation failed",
+      "time": 3000
+    }
+  }
+}

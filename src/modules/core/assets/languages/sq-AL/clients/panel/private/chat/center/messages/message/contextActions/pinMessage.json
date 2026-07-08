@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/pinMessage.tsx",
+  "pin": "Pin",
+  "axios": {
+    "start": {
+      "title": "Mesazhi po gozhdohet",
+      "time": 3000
+    },
+    "success": {
+      "title": "Mesazhi u gozhdua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Gozhdimi i mesazhit dështoi.",
+      "time": 3000
+    }
+  }
+}

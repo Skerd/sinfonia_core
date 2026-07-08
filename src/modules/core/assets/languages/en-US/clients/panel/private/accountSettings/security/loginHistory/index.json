@@ -1,0 +1,32 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
+  "title": "Login history",
+  "description": "Review recent sign-ins and failed attempts. Server-generated records cannot be edited here.",
+  "searchPlaceholder": "Search by time, device, or IP",
+  "unknownLocation": "Unknown location",
+  "reason": "Reason",
+  "status": {
+    "success": "Successful login",
+    "failure": "Failed login"
+  },
+  "badge": {
+    "success": "Success",
+    "failure": "Failed",
+    "mfa": "MFA"
+  },
+  "fields": {
+    "user": "User",
+    "userId": "User",
+    "time": "Time",
+    "status": "Status",
+    "mfa": "MFA",
+    "reason": "Reason",
+    "device": "Device",
+    "os": "Operating system",
+    "browser": "Browser",
+    "userAgent": "User agent",
+    "ip": "IP address",
+    "geolocation": "Geolocation",
+    "createdAt": "Created at"
+  }
+}

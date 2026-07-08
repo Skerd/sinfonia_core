@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/actions/delete.tsx",
+  "title": "Fshije",
+  "deleteConfirmTitle": "Fshi gjendjen",
+  "deleteConfirmDescription": "Jeni i sigurt që dëshironi ta fshini këtë gjendje?",
+  "confirmNameLabel": "Shkruani emrin e shtetit për të konfirmuar",
+  "cancel": "Anulo",
+  "confirmDelete": "Fshije",
+  "axios": {
+    "start": {
+      "title": "Gjendja po fshihet",
+      "time": 3000
+    },
+    "success": {
+      "title": "Gjendja u fshi me sukses.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Gjendja nuk u fshi",
+      "time": 3000
+    }
+  }
+}

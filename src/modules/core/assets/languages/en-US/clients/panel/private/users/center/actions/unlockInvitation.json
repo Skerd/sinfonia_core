@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockInvitation.tsx",
+  "unlockInvitation": "Unlock invitation",
+  "unlockInvitationConfirm": "Unlock invitation lock?",
+  "unlockInvitationConfirmDesc": "This will clear the invitation lock. The user will be able to receive a new invitation email.",
+  "unlockInvitationResendEmail": "Resend invitation email",
+  "unlockInvitationSuccess": "Invitation lock cleared successfully",
+  "unlockInvitationError": "Failed to clear invitation lock",
+  "axios": {
+    "start": {
+      "title": "Unlocking invitation",
+      "time": 3000
+    },
+    "success": {
+      "title": "Invitation lock cleared successfully",
+      "time": 3000
+    },
+    "error": {
+      "title": "Failed to clear invitation lock",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/actions/delete.tsx",
+  "title": "Fshije",
+  "deleteConfirmTitle": "Fshi monedhën",
+  "deleteConfirmDescription": "Je i sigurt që dëshiron ta fshish këtë monedhë?",
+  "confirmNameLabel": "Shkruani emrin e monedhës për të konfirmuar",
+  "cancel": "Anulo",
+  "confirmDelete": "Fshije",
+  "axios": {
+    "start": {
+      "title": "Fshirja e monedhës",
+      "time": 3000
+    },
+    "success": {
+      "title": "Monedha u fshi me sukses.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Valuta nuk u fshi",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "title": "New members",
+  "to": "Add",
+  "searchPeople": "Search people",
+  "noPeopleFound": "No people found.",
+  "failTitle": "Failed to load users",
+  "failTitleTooltip": "Click to retry loading users",
+  "noDataTitle": "No users found",
+  "form": {
+    "nameLabel": "Channel Name",
+    "namePlaceholder": "Enter channel name"
+  },
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx"
+}

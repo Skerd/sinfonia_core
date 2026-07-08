@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/email/updateEmail.tsx",
+  "confirm": "Confirm email change",
+  "cancel": "Cancel",
+  "axios": {
+    "start": {
+      "title": "Updating email",
+      "time": 3000
+    },
+    "success": {
+      "title": "Email successfully updated. Please verify this email by clicking on the link sent to this email",
+      "time": 3000
+    },
+    "error": {
+      "title": "Email failed to be updated",
+      "time": 3000
+    }
+  }
+}

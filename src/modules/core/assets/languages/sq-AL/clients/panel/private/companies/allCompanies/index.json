@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/companies/allCompanies/index.tsx",
+  "title": "Të gjitha kompanitë",
+  "description": "Të gjitha kompanitë",
+  "failTitle": "Ngarkimi i të gjitha kompanive dështoi",
+  "failDescription": "Klikoni këtu për të riprovuar ngarkimin e të gjitha kompanive",
+  "noData": "Nuk u gjet asnjë kompani",
+  "createCompany": "Krijo kompani"
+}

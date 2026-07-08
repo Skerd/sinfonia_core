@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/errorBoundary.tsx",
+  "title": "Something went wrong",
+  "description": "An unexpected error occurred while rendering this page.",
+  "retry": "Retry",
+  "goHome": "Go home"
+}

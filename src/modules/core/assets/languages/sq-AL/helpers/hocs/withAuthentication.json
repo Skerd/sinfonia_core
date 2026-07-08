@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/helpers/hocs/withAuthentication.tsx",
+  "verifying": "Kontrolli i sigurisë",
+  "loadingUser": "Po ngarkohet përdoruesi i regjistruar më parë",
+  "sessionExpiredTitle": "Seanca juaj ka skaduar",
+  "sessionExpiredDescription": "Seanca juaj ka skaduar, ju lutemi identifikohuni përsëri",
+  "sessionExpiredOkButton": "Ok"
+}

@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/components/custom/files/mediaField.tsx",
+  "uploadImageHint": "Upload image",
+  "uploadVideoHint": "Upload video",
+  "uploadFileHint": "Upload file",
+  "imageAlt": "Image",
+  "videoAlt": "Video",
+  "fileAlt": "File",
+  "videoUnsupported": "Your browser does not support the video tag."
+}

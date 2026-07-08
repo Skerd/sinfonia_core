@@ -1,0 +1,57 @@
+{
+  "description": "Define when and how a background handler runs.",
+  "form": {
+    "activeLabel": "Active",
+    "codeLabel": "Code",
+    "companyLabel": "Company",
+    "companyPlaceholder": "Select company",
+    "cronExpressionLabel": "Cron expression",
+    "cronExpressionPlaceholder": "0 0 * * * *",
+    "descriptionLabel": "Description",
+    "handlerLabel": "Handler",
+    "intervalUnit": {
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
+    "intervalUnit.days": "Days",
+    "intervalUnit.hours": "Hours",
+    "intervalUnit.minutes": "Minutes",
+    "intervalUnit.seconds": "Seconds",
+    "intervalUnitLabel": "Interval unit",
+    "intervalValueLabel": "Interval value",
+    "intervalValuePlaceholder": "5",
+    "maxRetriesLabel": "Max retries",
+    "nameLabel": "Name",
+    "priorityLabel": "Priority",
+    "scope": {
+      "company": "Company",
+      "global": "Global"
+    },
+    "scope.company": "Company",
+    "scope.global": "Global (platform)",
+    "scopeLabel": "Scope",
+    "type": {
+      "cron": "Cron",
+      "interval": "Interval",
+      "once": "Once",
+      "queue": "Queue"
+    },
+    "type.cron": "Cron expression",
+    "type.interval": "Interval",
+    "type.once": "Once",
+    "type.queue": "Queue",
+    "typeLabel": "Schedule type"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Create"
+  },
+  "formHeader": {
+    "description": "Define when and how a background handler runs.",
+    "title": "Create scheduled action"
+  },
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/createCronJob.tsx",
+  "title": "Create scheduled action"
+}

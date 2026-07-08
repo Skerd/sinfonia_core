@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/enableAccount.form.tsx",
+  "title": "Llogaria e përdoruesit nuk është aktive",
+  "description": "Nëse dëshironi të aktivizoni, klikoni butonin më poshtë",
+  "deactivateButton": "Aktivizoni",
+  "axios": {
+    "start": {
+      "title": "Aktivizimi i llogarisë",
+      "time": 3000
+    },
+    "success": {
+      "title": "Aktivizimi i llogarisë përfundoi me sukses",
+      "time": 1000
+    },
+    "error": {
+      "title": "Aktivizimi i llogarisë dështoi",
+      "time": 3000
+    }
+  }
+}

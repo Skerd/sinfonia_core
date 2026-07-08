@@ -1,0 +1,88 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/index.tsx",
+  "title": "User list",
+  "searchPlaceholder": "Search by name, email, or add filters...",
+  "activeFilters": "active",
+  "administrationTitle": "Administration users list",
+  "description": "Manage your users and their roles here.",
+  "administrationDescription": "Manage company administration users and their roles here.",
+  "photo": "Photo",
+  "emailVerified": "Current email",
+  "invitedUser": "Please verify the email by accepting the invitation request",
+  "emailNotVerified": "Please verify your new email by clicking on the link sent to your inbox",
+  "statuses": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "invited": "Invited"
+  },
+  "companies": "Companies",
+  "fields": {
+    "!enums": {
+      "roles": {
+        "active": {
+          "active": "Active",
+          "inactive": "Inactive",
+          "invited": "Invited"
+        }
+      },
+      "mfaStatus": {
+        "active": "Active",
+        "notActive": "Not active"
+      }
+    },
+    "username": "Email",
+    "name": "Name",
+    "surname": "Surname",
+    "timezone": "Timezone",
+    "birthday": "Birthday",
+    "phoneNumber": "Phone number",
+    "photo": "Photo",
+    "cover": "Cover",
+    "isEmailVerified": "Email verified",
+    "emailVerifiedAt": "Email verified at",
+    "registeredFrom": "Registered from",
+    "registerDate": "Joined on",
+    "online": "Online",
+    "roles": {
+      "active": "Status",
+      "unsuccessfulLogins": "Unsuccessful logins",
+      "lockedOutUntil": "Locked out until",
+      "lastLogin": "Last login",
+      "roles": "Roles"
+    },
+    "finance": "Finance",
+    "mfaStatus": "MFA status",
+    "requests": {
+      "mfaDeactivation": {
+        "opened": "MFA deactivation opened",
+        "attempts": "MFA deactivation attempts",
+        "date": "MFA deactivation date",
+        "lockedUntil": "MFA deactivation locked until"
+      },
+      "passwordReset": {
+        "opened": "Password reset opened",
+        "attempts": "Password reset attempts",
+        "date": "Password reset date",
+        "lockedUntil": "Password reset locked until"
+      },
+      "activation": {
+        "email": "Activation email",
+        "attempts": "Activation attempts",
+        "date": "Activation date",
+        "lockedUntil": "Activation locked until"
+      },
+      "invitation": {
+        "opened": "Invitation opened",
+        "attempts": "Invitation attempts",
+        "date": "Invitation date",
+        "lockedUntil": "Invitation locked until",
+        "invitedBy": "Invited by",
+        "invitedAt": "Invited at",
+        "invitationExpiresAt": "Invitation expires at",
+        "accepted": "Accepted",
+        "acceptedAt": "Accepted at",
+        "welcomeMessage": "Welcome message"
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/companies/companyList.tsx",
+  "failTitle": "Ngarkimi i të dhënave të kompanive dështoi",
+  "failTitleTooltip": "Klikoni këtu për të riprovuar ngarkimin e të dhënave të kompanive",
+  "noData": "Nuk ka rezultate"
+}

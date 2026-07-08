@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/userSession/index.tsx",
+  "title": "Seancat aktive",
+  "description": "Shiko se ku je identifikuar dhe anuloje aksesin në pajisjet që nuk i beson.",
+  "helperText": "Nëse nuk e njihni një pajisje, hapni menynë e rreshtave (⋮) dhe zgjidhni Revoko aksesin, më pas ndryshoni fjalëkalimin tuaj.",
+  "rowActions": "Hap menynë e sesionit",
+  "searchPlaceholder": "Kërko sipas sesionit, pajisjes ose vendndodhjes",
+  "unknown": "E panjohur",
+  "unknownDevice": "Pajisja e panjohur",
+  "unknownLocation": "Vendndodhja e panjohur",
+  "sessionId": "ID e sesionit",
+  "userAgent": "Agjenti i përdoruesit",
+  "expiresAt": "Skadon",
+  "revoke": "Revoko aksesin",
+  "revokeSuccess": "Qasja në seancë u anulua.",
+  "revokeError": "Ky sesion nuk mund të revokohej.",
+  "badge": {
+    "active": "Aktiv",
+    "revoked": "Revokuar",
+    "current": "Kjo pajisje"
+  },
+  "fields": {
+    "user": "Përdoruesi",
+    "userId": "Përdoruesi",
+    "sessionId": "ID e sesionit",
+    "deviceId": "ID e pajisjes",
+    "userAgent": "Agjenti i përdoruesit",
+    "ipAddress": "Adresa IP",
+    "geolocation": "Gjeolokimi",
+    "createdAt": "Krijuar në",
+    "lastActiveAt": "Aktivi i fundit",
+    "expiresAt": "Skadon",
+    "isActive": "Aktiv"
+  }
+}

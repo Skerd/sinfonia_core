@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/components/custom/apiSelect/index.tsx",
+  "search": "Search",
+  "noResults": "No results found.",
+  "more": "more",
+  "clear": "Clear",
+  "createNewModel": "Create new '{}'",
+  "createNewUser": "Create new user"
+}

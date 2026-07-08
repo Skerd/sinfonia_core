@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx",
+  "overview": "Overview",
+  "metadata": "Metadata",
+  "createdBy": "Created by",
+  "state": "State",
+  "code": "Code",
+  "country": "Country"
+}

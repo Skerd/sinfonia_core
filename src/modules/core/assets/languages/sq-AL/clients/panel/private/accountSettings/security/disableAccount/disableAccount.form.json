@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/disableAccount.form.tsx",
+  "form": {
+    "usernameLabel": "Emri i përdoruesit",
+    "usernamePlaceholder": "Emri i përdoruesit",
+    "passwordLabel": "Fjalëkalimi",
+    "passwordPlaceholder": "Fjalëkalimi",
+    "statusLabel": "Statusi",
+    "statusPlaceholder": "Statusi"
+  },
+  "title": "Llogaria e përdoruesit është aktive",
+  "description": "Nëse dëshironi të çaktivizoni llogarinë, ju lutemi ndiqni hapat e mëposhtëm.",
+  "steps": {
+    "one": "Plotësoni fjalëkalimin tuaj",
+    "two": "Klikoni në '!!!!' butonin për të çaktivizuar llogarinë tuaj",
+    "three": "Kujdes, nëse çaktivizoni llogarinë tuaj, duhet të kontaktoni administratorin e sistemit për ta riaktivizuar atë!"
+  },
+  "deactivateButton": "Blloko",
+  "axios": {
+    "start": {
+      "title": "Po çaktivizon llogarinë",
+      "time": 3000
+    },
+    "success": {
+      "title": "Llogaria u çaktivizua me sukses",
+      "time": 1000
+    },
+    "error": {
+      "title": "Çaktivizimi i llogarisë dështoi",
+      "time": 3000
+    }
+  }
+}

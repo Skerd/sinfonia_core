@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/resendInvitation.tsx",
+  "resendInvitationEmail": "Ridërgo email-in e ftesës",
+  "resendInvitationEmailConfirm": "Të ridërgohet emaili i ftesës?",
+  "resendInvitationEmailConfirmDesc": "Përdoruesit do t'i dërgohet një email i ri ftese.",
+  "resendInvitationEmailSuccess": "Email-i i ftesës u dërgua me sukses",
+  "resendInvitationEmailError": "Dërgimi i email-it të ftesës dështoi",
+  "axios": {
+    "start": {
+      "title": "Dërgimi i emailit të ftesës",
+      "time": 3000
+    },
+    "success": {
+      "title": "Email-i i ftesës u dërgua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Dërgimi i email-it të ftesës dështoi",
+      "time": 3000
+    }
+  }
+}

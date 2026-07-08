@@ -1,0 +1,28 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
+  "title": "Outgoing mail servers",
+  "description": "Configure SMTP servers for this company. Lower sequence is tried first.",
+  "createSmtpServer": "Add SMTP server",
+  "searchPlaceholder": "Search by name or host...",
+  "noData": "No SMTP servers configured",
+  "failTitle": "Failed to load SMTP servers",
+  "failDescription": "An error occurred while loading SMTP servers. Please try again.",
+  "name": "Name",
+  "host": "Host",
+  "sequence": "Priority",
+  "port": "Port",
+  "encryption": "Encryption",
+  "active": "Active",
+  "fromEmail": "From email",
+  "fields": {
+    "name": "Name",
+    "sequence": "Priority",
+    "active": "Active",
+    "host": "Host",
+    "port": "Port",
+    "encryption": "Encryption",
+    "authType": "Authentication",
+    "fromEmail": "From email",
+    "lastTestStatus": "Last test"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/promoteToAdmin.tsx",
+  "makeAdmin": "Bëje administratorin e grupit",
+  "axios": {
+    "start": {
+      "title": "Promovimi i anëtarit në administrator",
+      "time": 3000
+    },
+    "success": {
+      "title": "Anëtari u promovua me sukses në administrator",
+      "time": 3000
+    },
+    "error": {
+      "title": "Promovimi i përdoruesit në administrator dështoi",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/index.tsx",
+  "home": {
+    "title": "Apps",
+    "subtitle": "Choose an app to open",
+    "searchPlaceholder": "Search apps…",
+    "noResults": "No apps match your search.",
+    "recent": "Recent",
+    "greetingMorning": "Good morning",
+    "greetingAfternoon": "Good afternoon",
+    "greetingEvening": "Good evening"
+  },
+  "menus": {
+    "company": {
+      "title": "Company",
+      "dashboard": {
+        "title": "Overview"
+      },
+      "administration": {
+        "title": "Administration"
+      },
+      "users": {
+        "title": "Users"
+      },
+      "chats": {
+        "title": "Chats"
+      },
+      "settings": {
+        "title": "Settings",
+        "company": {
+          "title": "Company"
+        },
+        "roles": {
+          "title": "Roles"
+        }
+      }
+    },
+    "account": {
+      "title": "My account",
+      "accountSettings": {
+        "title": "Settings",
+        "profile": {
+          "title": "Profile"
+        },
+        "security": {
+          "title": "Security"
+        },
+        "account": {
+          "title": "Account"
+        },
+        "notifications": {
+          "title": "Notifications"
+        },
+        "notificationCenter": {
+          "title": "Activity"
+        }
+      },
+      "apps": {
+        "title": "Apps",
+        "connectedApps": {
+          "title": "Connected apps"
+        }
+      }
+    },
+    "tenancy": {
+      "title": "Tenancy",
+      "companies": {
+        "title": "Companies",
+        "allCompanies": {
+          "title": "Companies",
+          "editCompany": {
+            "title": "Edit company"
+          },
+          "createCompany": {
+            "title": "Create company"
+          }
+        }
+      },
+      "resources": {
+        "title": "Resources",
+        "serverPerformance": {
+          "title": "Performance"
+        },
+        "cronJobs": {
+          "title": "Scheduled actions"
+        }
+      },
+      "systemSettings": {
+        "title": "Configurations",
+        "core": {
+          "title": "Core"
+        },
+        "countries": {
+          "title": "Countries"
+        },
+        "states": {
+          "title": "States"
+        },
+        "cities": {
+          "title": "Cities"
+        },
+        "currencies": {
+          "title": "Currencies"
+        },
+        "smtpServers": {
+          "title": "Mail servers"
+        },
+        "messagingProviders": {
+          "title": "Messaging Providers"
+        },
+        "eCommerce": {
+          "title": "eCommerce"
+        },
+        "categories": {
+          "title": "Categories"
+        }
+      }
+    },
+    "realEstate": {
+      "title": "Real Estate",
+      "overview": {
+        "title": "Overview"
+      },
+      "dashboard": {
+        "title": "Dashboard"
+      },
+      "projects": {
+        "title": "Projects"
+      },
+      "edifices": {
+        "title": "Edifices"
+      },
+      "floors": {
+        "title": "Floors"
+      },
+      "units": {
+        "title": "Units"
+      },
+      "inspections": {
+        "title": "Inspections"
+      },
+      "unitCosts": {
+        "title": "Unit costs"
+      },
+      "modificationRequests": {
+        "title": "Modification Requests"
+      },
+      "reservations": {
+        "title": "Reservations"
+      },
+      "sales": {
+        "title": "Sales"
+      },
+      "contractsHub": {
+        "title": "Contracts & Clients"
+      },
+      "paymentPlans": {
+        "title": "Payment Plans"
+      },
+      "constructors": {
+        "title": "Constructors"
+      },
+      "unitTypeCategories": {
+        "title": "Unit Type Categories"
+      },
+      "unitTypes": {
+        "title": "Unit Types"
+      },
+      "commissions": {
+        "title": "Commissions"
+      },
+      "leads": {
+        "title": "Leads"
+      },
+      "unitAvailability": {
+        "title": "Availability Calendar"
+      },
+      "ownersAndRentals": {
+        "title": "Owners & Rentals"
+      },
+      "rentalsHub": {
+        "title": "Rentals Hub"
+      },
+      "leases": {
+        "title": "Leases"
+      },
+      "rentalPayments": {
+        "title": "Rental Payments"
+      },
+      "constructionUpdates": {
+        "title": "Construction Updates"
+      },
+      "snags": {
+        "title": "Snagging List"
+      }
+    },
+    "reports": {
+      "title": "Reports",
+      "groupDashboard": {
+        "title": "Group Dashboard"
+      },
+      "agentReport": {
+        "title": "Agent Report"
+      },
+      "roi": {
+        "title": "ROI Calculator"
+      },
+      "erpExport": {
+        "title": "ERP Export"
+      }
+    },
+    "finance": {
+      "title": "Finance",
+      "unitCosts": {
+        "title": "Unit costs"
+      }
+    },
+    "eCommerce": {
+      "title": "eCommerce",
+      "listings": {
+        "title": "Listings"
+      },
+      "taskrequests": {
+        "title": "Task Requests"
+      },
+      "orders": {
+        "title": "Orders"
+      },
+      "bids": {
+        "title": "Bids"
+      },
+      "bookings": {
+        "title": "Bookings"
+      },
+      "disputes": {
+        "title": "Disputes"
+      },
+      "reviews": {
+        "title": "Reviews"
+      },
+      "promotions": {
+        "title": "Promotions"
+      },
+      "listingFlags": {
+        "title": "Listing Flags"
+      },
+      "providerProfile": {
+        "title": "Provider Profiles"
+      },
+      "providerAvailability": {
+        "title": "Availability"
+      },
+      "listingAddOns": {
+        "title": "Listing Add-Ons"
+      },
+      "listingPackages": {
+        "title": "Listing Packages"
+      },
+      "escrowDashboard": {
+        "title": "Escrow Dashboard"
+      },
+      "productCommerce": {
+        "title": "Product Commerce"
+      },
+      "products": {
+        "title": "Products"
+      },
+      "collections": {
+        "title": "Collections"
+      },
+      "productorders": {
+        "title": "Product Orders"
+      },
+      "inventories": {
+        "title": "Inventory"
+      },
+      "warehouses": {
+        "title": "Warehouses"
+      },
+      "productattributes": {
+        "title": "Product Attributes"
+      },
+      "discounts": {
+        "title": "Discounts"
+      },
+      "taxzones": {
+        "title": "Tax Zones"
+      },
+      "shippingzones": {
+        "title": "Shipping Zones"
+      },
+      "cmsblocks": {
+        "title": "CMS Blocks"
+      },
+      "customergroups": {
+        "title": "Customer Groups"
+      },
+      "pricingrules": {
+        "title": "Pricing Rules"
+      },
+      "analytics": {
+        "title": "Analytics"
+      }
+    }
+  }
+}

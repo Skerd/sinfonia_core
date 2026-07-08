@@ -1,0 +1,88 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/index.tsx",
+  "title": "Lista e përdoruesve",
+  "searchPlaceholder": "Kërko me emër, email ose shto filtra...",
+  "activeFilters": "aktive",
+  "administrationTitle": "Lista e përdoruesve të administratës",
+  "description": "Menaxho përdoruesit dhe rolet e tyre këtu.",
+  "administrationDescription": "Menaxho përdoruesit e administratës së kompanisë dhe rolet e tyre këtu.",
+  "photo": "Foto",
+  "emailVerified": "Email aktual",
+  "invitedUser": "Ju lutemi verifikoni emailin duke pranuar kërkesën për ftesë",
+  "emailNotVerified": "Ju lutemi verifikoni emailin tuaj të ri duke klikuar në lidhjen e dërguar në kutinë tuaj hyrëse",
+  "statuses": {
+    "active": "Aktiv",
+    "inactive": "Joaktiv",
+    "invited": "I ftuar"
+  },
+  "companies": "Kompanitë",
+  "fields": {
+    "!enums": {
+      "roles": {
+        "active": {
+          "active": "Aktiv",
+          "inactive": "Joaktiv",
+          "invited": "I ftuar"
+        }
+      },
+      "mfaStatus": {
+        "active": "Aktiv",
+        "notActive": "Jo aktiv"
+      }
+    },
+    "username": "Email",
+    "name": "Emri",
+    "surname": "Mbiemri",
+    "timezone": "Zona kohore",
+    "birthday": "ditëlindjen",
+    "phoneNumber": "Numri i telefonit",
+    "photo": "Foto",
+    "cover": "Mbulesë",
+    "isEmailVerified": "Email-i u verifikua",
+    "emailVerifiedAt": "Email i verifikuar në",
+    "registeredFrom": "Regjistruar nga",
+    "registerDate": "U bashkua",
+    "online": "Online",
+    "roles": {
+      "active": "Statusi",
+      "unsuccessfulLogins": "Identifikimi i pasuksesshëm",
+      "lockedOutUntil": "I mbyllur deri në",
+      "lastLogin": "Hyrja e fundit",
+      "roles": "Rolet"
+    },
+    "finance": "Financa",
+    "mfaStatus": "Statusi i MPJ-së",
+    "requests": {
+      "mfaDeactivation": {
+        "opened": "U hap çaktivizimi i MPJ-së",
+        "attempts": "Përpjekjet për çaktivizimin e MPJ-së",
+        "date": "Data e çaktivizimit të MPJ-së",
+        "lockedUntil": "Çaktivizimi i MPJ-së u kyç deri në"
+      },
+      "passwordReset": {
+        "opened": "Rivendosja e fjalëkalimit u hap",
+        "attempts": "Përpjekjet për rivendosjen e fjalëkalimit",
+        "date": "Data e rivendosjes së fjalëkalimit",
+        "lockedUntil": "Rivendosja e fjalëkalimit u kyç deri në"
+      },
+      "activation": {
+        "email": "Email aktivizimi",
+        "attempts": "Përpjekjet për aktivizim",
+        "date": "Data e aktivizimit",
+        "lockedUntil": "Aktivizimi u kyç deri në"
+      },
+      "invitation": {
+        "opened": "Ftesa u hap",
+        "attempts": "Përpjekjet për ftesë",
+        "date": "Data e ftesës",
+        "lockedUntil": "Ftesa u kyç deri në",
+        "invitedBy": "I ftuar nga",
+        "invitedAt": "I ftuar në",
+        "invitationExpiresAt": "Ftesa skadon në",
+        "accepted": "Pranuar",
+        "acceptedAt": "Pranuar në",
+        "welcomeMessage": "Mesazh mirëseardhjeje"
+      }
+    }
+  }
+}

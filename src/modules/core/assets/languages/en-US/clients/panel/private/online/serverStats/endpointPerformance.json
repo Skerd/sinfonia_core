@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverStats/endpointPerformance.tsx",
+  "lastUpdated": " Last updated:",
+  "endpointPerformanceTitle": "Endpoint Performance",
+  "waitingForPerformanceData": "Waiting for performance data...",
+  "endpointsTracked": "Endpoints Tracked",
+  "totalMetrics": "Total Metrics",
+  "uniqueEndpoints": "Unique Endpoints",
+  "tracked": "Tracked",
+  "slowest": "Slowest",
+  "mostCalled": "Most Called",
+  "errors": "Errors",
+  "method": "Method",
+  "endpoint": "Endpoint",
+  "count": "Count",
+  "avgMs": "Avg (ms)",
+  "p95Ms": "P95 (ms)",
+  "p99Ms": "P99 (ms)",
+  "errorRate": "Error Rate",
+  "noDataAvailable": "No data available"
+}

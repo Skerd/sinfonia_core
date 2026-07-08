@@ -1,0 +1,61 @@
+{
+  "backToList": "Kthehu te lista",
+  "description": "Përditësoni orarin, fushën dhe parametrat e ekzekutimit.",
+  "errorDescription": "Klikoni këtu për të provuar përsëri ngarkimin e të dhënave.",
+  "errorTitle": "Ngarkimi i veprimit dështoi",
+  "form": {
+    "activeLabel": "Aktiv",
+    "codeLabel": "Kodi",
+    "companyLabel": "Kompania",
+    "companyPlaceholder": "Zgjidh kompaninë",
+    "cronExpressionLabel": "Shprehje cron",
+    "cronExpressionPlaceholder": "0 0 * * * *",
+    "descriptionLabel": "Përshkrimi",
+    "handlerLabel": "Handler",
+    "intervalUnit": {
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
+    "intervalUnit.days": "Ditë",
+    "intervalUnit.hours": "Orë",
+    "intervalUnit.minutes": "Minuta",
+    "intervalUnit.seconds": "Sekonda",
+    "intervalUnitLabel": "Njësia e intervalit",
+    "intervalValueLabel": "Vlera e intervalit",
+    "intervalValuePlaceholder": "5",
+    "maxRetriesLabel": "Riprovime maks.",
+    "nameLabel": "Emri",
+    "priorityLabel": "Prioriteti",
+    "scope": {
+      "company": "Company",
+      "global": "Global"
+    },
+    "scope.company": "Kompani",
+    "scope.global": "Global (platformë)",
+    "scopeLabel": "Fusha",
+    "type": {
+      "cron": "Cron",
+      "interval": "Interval",
+      "once": "Once",
+      "queue": "Queue"
+    },
+    "type.cron": "Shprehje cron",
+    "type.interval": "Interval",
+    "type.once": "Një herë",
+    "type.queue": "Radhë",
+    "typeLabel": "Lloji i orarit"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Ruaj"
+  },
+  "formHeader": {
+    "description": "Përditësoni orarin, fushën dhe parametrat e ekzekutimit.",
+    "title": "Ndrysho veprimin e planifikuar"
+  },
+  "noId": "Nuk është zgjedhur asnjë veprim i planifikuar.",
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/editCronJob.tsx",
+  "title": "Ndrysho veprimin e planifikuar"
+}

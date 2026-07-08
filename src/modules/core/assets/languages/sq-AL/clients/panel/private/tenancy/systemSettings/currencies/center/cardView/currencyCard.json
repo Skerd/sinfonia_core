@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/cardView/currencyCard.tsx",
+  "name": "Emri",
+  "symbol": "Simboli",
+  "abbreviation": "Shkurtesa",
+  "decimalPlaces": "Vendet dhjetore",
+  "deleted": "Fshirë",
+  "active": "Aktiv",
+  "failedTitle": "Ngarkimi i monedhës dështoi",
+  "failedDescription": "Trokit për të riprovuar."
+}

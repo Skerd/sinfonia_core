@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/delete.tsx",
+  "title": "Delete",
+  "deleteConfirmTitle": "Delete country",
+  "deleteConfirmDescription": "Are you sure you want to delete this country?",
+  "confirmNameLabel": "Type the country name to confirm",
+  "cancel": "Cancel",
+  "confirmDelete": "Delete",
+  "axios": {
+    "start": {
+      "title": "Deleting country",
+      "time": 3000
+    },
+    "success": {
+      "title": "Country deleted successfully!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Country could not be deleted, please try again!",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/searchChatUsers/index.tsx",
+  "createNewChatChannel": "Create new chat channel",
+  "title": "New chat"
+}

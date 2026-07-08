@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/activateAccount/activateAccount.form.tsx",
+  "loading": "Activating account",
+  "loadingDescription": "Activating account using activation link",
+  "fail": "Account activation failed",
+  "failDescription": "Account activation link is not correct",
+  "success": "Account activated",
+  "successDescription": "Account activated successfully, you can now login only using your password",
+  "axios": {
+    "start": {
+      "title": "Activating account",
+      "time": 3000
+    },
+    "success": {
+      "title": "Account activation successful",
+      "time": 3000
+    },
+    "error": {
+      "title": "Account activation failed",
+      "time": 3000
+    }
+  }
+}

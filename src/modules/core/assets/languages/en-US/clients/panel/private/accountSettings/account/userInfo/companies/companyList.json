@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/companies/companyList.tsx",
+  "failTitle": "Failed to load companies data",
+  "failTitleTooltip": "Click here to retry loading companies data",
+  "noData": "No results"
+}

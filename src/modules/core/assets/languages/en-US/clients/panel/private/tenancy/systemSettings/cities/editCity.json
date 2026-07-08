@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/editCity.tsx",
+  "title": "Edit city",
+  "description": "Update city details",
+  "errorTitle": "Failed to load city data",
+  "errorDescription": "Please click here to retry fetching city data",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "City name",
+    "countryLabel": "Country",
+    "countryPlaceholder": "Select country",
+    "stateLabel": "State",
+    "statePlaceholder": "Select state"
+  },
+  "noId": "No city selected.",
+  "backToList": "Back to list",
+  "formHeader": {
+    "title": "Edit city",
+    "description": "Update city details"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Save"
+  }
+}

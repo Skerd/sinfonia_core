@@ -1,0 +1,64 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/createCompany.tsx",
+  "title": "Create company",
+  "description": "Create a new company",
+  "generalInfo": "General info",
+  "howToReach": "How to reach us",
+  "whoAreWe": "Who are we",
+  "addAddress": "Add new address",
+  "address": "Address",
+  "remove": "Remove",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Email",
+    "phoneNumberNumberLabel": "Phone number",
+    "phoneNumberNumberPlaceholder": "Phone number",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Description",
+    "logoLabel": "Logo",
+    "websiteLabel": "Website",
+    "websitePlaceholder": "Website",
+    "vatLabel": "VAT",
+    "vatPlaceholder": "VAT",
+    "allowedDomainsLabel": "Allowed domains",
+    "allowedDomainsPlaceholder": "Add a domain",
+    "streetLabel": "Street",
+    "streetPlaceholder": "Street",
+    "postalCodeLabel": "Postal code",
+    "postalCodePlaceholder": "Postal code",
+    "cityLabel": "City",
+    "cityPlaceholder": "City",
+    "stateLabel": "State",
+    "statePlaceholder": "State",
+    "countryLabel": "Country",
+    "countryPlaceholder": "Country",
+    "latitudeLabel": "Latitude",
+    "latitudePlaceholder": "Latitude",
+    "longitudeLabel": "Longitude",
+    "longitudePlaceholder": "Longitude"
+  },
+  "axios": {
+    "start": {
+      "title": "Creating company",
+      "time": 3000
+    },
+    "success": {
+      "title": "Company successfully created!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Company could not be created, please try again!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Create company",
+    "description": "Create a new company"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Create"
+  }
+}

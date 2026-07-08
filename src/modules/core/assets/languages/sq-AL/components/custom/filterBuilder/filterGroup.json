@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterGroup.tsx",
+  "matchAll": "Përputhen të gjitha",
+  "matchAny": "Përputhen me ndonjë",
+  "newRule": "Rregull i ri",
+  "filterGroup": "Grupi i filtrave",
+  "addGroup": "Shto grup",
+  "removeGroup": "Hiq grupin"
+}

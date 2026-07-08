@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/index.tsx",
+  "serverHealthTitle": "Shëndeti i Serverit",
+  "waitingForHealthData": "Në pritje të të dhënave shëndetësore...",
+  "failTitle": "Ngarkimi i të dhënave shëndetësore të serverit dështoi",
+  "failTitleTooltip": "Ngarkimi i të dhënave shëndetësore të serverit dështoi, klikoni këtu për të provuar përsëri",
+  "healthy": "Të shëndetshëm",
+  "degraded": "I degraduar",
+  "error": "Gabim",
+  "notAvailable": "Nuk disponohet",
+  "connected": "Lidhur",
+  "disconnected": "E shkëputur",
+  "version": "Versioni",
+  "lastUpdated": "Përditësimi i fundit",
+  "enabled": "Aktivizuar",
+  "disabled": "I paaftë",
+  "readyState": "Gjendja e gatshme"
+}

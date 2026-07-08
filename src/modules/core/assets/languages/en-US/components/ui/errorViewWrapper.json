@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/components/ui/errorViewWrapper.tsx",
+  "waitLimit": "Please wait, you can retry in: ",
+  "waitFinished": "Rate limit unlocked!"
+}

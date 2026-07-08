@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/actions/restore.tsx",
+  "title": "Rivendos",
+  "restoreConfirmTitle": "Rivendos qytetin",
+  "restoreConfirmDescription": "Je i sigurt që dëshiron ta restaurosh këtë qytet?",
+  "cancel": "Anulo",
+  "confirmRestore": "Rivendos",
+  "axios": {
+    "start": {
+      "title": "Rivendosja e qytetit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Qyteti u restaurua me sukses.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Qyteti nuk u rivendos",
+      "time": 3000
+    }
+  }
+}

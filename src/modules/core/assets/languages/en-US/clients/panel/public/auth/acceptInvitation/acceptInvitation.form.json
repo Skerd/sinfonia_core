@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/acceptInvitation/acceptInvitation.form.tsx",
+  "verifyingInvitationCodeTitle": "Security check",
+  "verifyingInvitationCodeDescription": "Checking invitation code validity.",
+  "errorVerifyingInvitationCodeTitle": "Security check failed",
+  "errorVerifyingInvitationCodeDescription": "This invitation code is invalid or has expired.",
+  "errorAcceptingInvitationTitle": "Failed to accept invitation",
+  "errorAcceptingInvitationDescription": "Something unexpected happened while accepting the invitation. Please try again later!",
+  "successAcceptingInvitationTitle": "Success",
+  "successAcceptingInvitationDescription": "Invitation accepted successfully. You can now log into your account using your password.",
+  "title": "Accept invitation",
+  "description": "Set your password to accept the invitation",
+  "form": {
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "invitationCodeLabel": "Invitation code"
+  },
+  "confirm": "Accept invitation",
+  "axios": {
+    "start": {
+      "title": "Accepting invitation",
+      "time": 3000
+    },
+    "success": {
+      "title": "Invitation accepted successfully",
+      "time": 3000
+    },
+    "error": {
+      "title": "Could not accept invitation",
+      "time": 3000
+    }
+  }
+}

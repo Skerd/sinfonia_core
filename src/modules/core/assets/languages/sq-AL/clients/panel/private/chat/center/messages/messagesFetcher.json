@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/messagesFetcher.tsx",
+  "noMessages": "Duket i vetmuar këtu",
+  "failTitle": "Ngarkimi i mesazheve të kanalit dështoi",
+  "failTitleTooltip": "Klikoni për të ringarkuar mesazhet e kanalit"
+}

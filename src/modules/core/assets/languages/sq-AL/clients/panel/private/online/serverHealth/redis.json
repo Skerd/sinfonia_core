@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/redis.tsx",
+  "redisServerTitle": "Serveri Redis",
+  "online": "Online",
+  "offline": "Jashtë linje",
+  "uptime": "Koha e funksionimit",
+  "jobs": "Punët",
+  "failed": "Dështoi",
+  "avgTime": "Mesatar Koha",
+  "nodes": "Nyjet",
+  "day": "ditë",
+  "days": "ditë",
+  "hour": "orë",
+  "hours": "orë",
+  "minute": "minutë",
+  "minutes": "minuta",
+  "second": "e dyta",
+  "seconds": "sekonda"
+}

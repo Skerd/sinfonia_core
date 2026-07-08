@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/entityPage/quickFilterBar.tsx",
+  "yes": "Yes",
+  "no": "No",
+  "clear": "Clear",
+  "clearFilters": "Clear all"
+}

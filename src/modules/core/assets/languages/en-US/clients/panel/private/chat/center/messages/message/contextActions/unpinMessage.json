@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/unpinMessage.tsx",
+  "unpin": "Unpin",
+  "axios": {
+    "start": {
+      "title": "Unpinning message",
+      "time": 3000
+    },
+    "success": {
+      "title": "Message successfully unpinned",
+      "time": 3000
+    },
+    "error": {
+      "title": "Failed to unpin message.",
+      "time": 3000
+    }
+  }
+}

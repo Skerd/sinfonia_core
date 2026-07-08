@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/tableView/stateTableBody.tsx",
+  "noData": "Nuk u gjet asnjë shtet",
+  "failTitle": "Ngarkimi dështoi",
+  "failDescription": "Ndodhi një gabim. Ju lutemi provoni përsëri."
+}

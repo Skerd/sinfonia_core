@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/newPhoto.tsx",
+  "confirm": "Ruaj",
+  "cancel": "Anulo",
+  "updatePhoto": "Përditëso fotografinë",
+  "axios": {
+    "start": {
+      "title": "Duke ngarkuar foto",
+      "time": 3000
+    },
+    "success": {
+      "title": "Fotografia u ngarkua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Ngarkimi i fotografisë dështoi",
+      "time": 3000
+    }
+  }
+}

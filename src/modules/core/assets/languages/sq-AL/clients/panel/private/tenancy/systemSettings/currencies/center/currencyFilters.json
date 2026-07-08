@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/currencyFilters.tsx",
+  "filterName": "Filtro sipas emrit",
+  "filterAbbreviation": "Filtro me shkurtim",
+  "clearFilters": "Pastro filtrat"
+}

@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/index.tsx",
+  "title": "Statusi i llogarisë",
+  "description": "Ndrysho statusin e llogarisë",
+  "failTitle": "Ngarkimi i statusit të llogarisë dështoi",
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e statusit të llogarisë"
+}

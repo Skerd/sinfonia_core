@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/chatMemberRemoveFromGroup.tsx",
+  "removeMember": "Hiq nga grupi",
+  "axios": {
+    "start": {
+      "title": "Po hiqet anëtari",
+      "time": 3000
+    },
+    "success": {
+      "title": "Anëtari u hoq me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Heqja e anëtarit dështoi",
+      "time": 3000
+    }
+  }
+}

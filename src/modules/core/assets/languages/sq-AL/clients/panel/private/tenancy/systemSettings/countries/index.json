@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/index.tsx",
+  "title": "shtetet",
+  "description": "Menaxho vendet dhe cilësimet e konfigurimit",
+  "create": "Krijo shtet",
+  "searchPlaceholder": "Kërko sipas emrit, kodit ose shto filtra...",
+  "status": "Statusi",
+  "name": "Emri",
+  "code": "Kodi",
+  "phoneCode": "Kodi i telefonit",
+  "currency": "Monedha",
+  "deleted": "Fshirë",
+  "active": "Aktiv",
+  "fields": {
+    "name": "Emri",
+    "code": "Kodi",
+    "phoneCode": "Kodi i telefonit",
+    "currency": "Monedha",
+    "createdBy": "Krijuar nga",
+    "company": "Kompania",
+    "deletedAt": "Statusi",
+    "deletedBy": "Fshirë nga"
+  }
+}

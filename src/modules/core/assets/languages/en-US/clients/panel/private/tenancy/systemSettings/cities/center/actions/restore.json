@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/actions/restore.tsx",
+  "title": "Restore",
+  "restoreConfirmTitle": "Restore city",
+  "restoreConfirmDescription": "Are you sure you want to restore this city?",
+  "cancel": "Cancel",
+  "confirmRestore": "Restore",
+  "axios": {
+    "start": {
+      "title": "Restoring city",
+      "time": 3000
+    },
+    "success": {
+      "title": "City successfully restored.",
+      "time": 3000
+    },
+    "error": {
+      "title": "City failed to be restored",
+      "time": 3000
+    }
+  }
+}

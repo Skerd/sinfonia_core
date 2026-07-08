@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/tableView/index.tsx",
+  "status": "Statusi",
+  "name": "Emri",
+  "code": "Kodi",
+  "country": "Vendi",
+  "deleted": "Fshirë",
+  "noData": "Nuk u gjet asnjë shtet",
+  "failTitle": "Ngarkimi dështoi",
+  "failDescription": "Ndodhi një gabim. Ju lutemi provoni përsëri."
+}

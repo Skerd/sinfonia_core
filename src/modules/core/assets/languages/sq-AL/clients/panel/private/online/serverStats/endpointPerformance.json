@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverStats/endpointPerformance.tsx",
+  "lastUpdated": "Përditësimi i fundit:",
+  "endpointPerformanceTitle": "Performanca e pikës fundore",
+  "waitingForPerformanceData": "Në pritje të të dhënave të performancës...",
+  "endpointsTracked": "Pikat e fundit të gjurmuara",
+  "totalMetrics": "Metrikat totale",
+  "uniqueEndpoints": "Pikat përfundimtare unike",
+  "tracked": "Gjurmuar",
+  "slowest": "Më i ngadalshëm",
+  "mostCalled": "Më të thirrurit",
+  "errors": "Gabimet",
+  "method": "Metoda",
+  "endpoint": "Pika përfundimtare",
+  "count": "Numëroni",
+  "avgMs": "Mesatare (ms)",
+  "p95Ms": "P95 (ms)",
+  "p99Ms": "P99 (ms)",
+  "errorRate": "Shkalla e gabimit",
+  "noDataAvailable": "Nuk ka të dhëna të disponueshme"
+}

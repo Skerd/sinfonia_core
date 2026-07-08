@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/custom/pages/maintenanceError.tsx",
+  "title": "Website is under maintenance!",
+  "description": "The site is not available at the moment.\n We'll be back online shortly.",
+  "learnMore": "Learn more"
+}

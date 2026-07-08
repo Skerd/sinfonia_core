@@ -1,0 +1,6 @@
+{
+  "selected": "Zgjedhur",
+  "delete": "Fshije",
+  "cancel": "Anulo",
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/actions/deleteMessages.tsx"
+}

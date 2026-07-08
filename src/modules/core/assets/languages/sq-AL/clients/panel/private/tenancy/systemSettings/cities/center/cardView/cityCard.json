@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx",
+  "name": "Emri",
+  "state": "Shtetit",
+  "active": "Aktiv",
+  "country": "Vendi",
+  "deleted": "Fshirë",
+  "failedTitle": "Ngarkimi i qytetit dështoi",
+  "failedDescription": "Trokit për të riprovuar."
+}

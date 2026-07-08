@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/cardView/requests/mfaDeactivationRequestTabContent.tsx",
+  "opened": "Opened",
+  "attempts": "Attempts",
+  "date": "Date",
+  "lockedUntil": "Locked until",
+  "yes": "Yes",
+  "no": "No"
+}

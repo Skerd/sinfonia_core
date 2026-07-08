@@ -1,0 +1,40 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/editState.tsx",
+  "title": "Edit state",
+  "description": "Update state details",
+  "errorTitle": "Failed to load state data",
+  "errorDescription": "Please click here to retry fetching state data",
+  "form": {
+    "idLabel": "State ID",
+    "nameLabel": "Name",
+    "namePlaceholder": "State name",
+    "codeLabel": "Code",
+    "codePlaceholder": "e.g. CA",
+    "countryLabel": "Country",
+    "countryPlaceholder": "Select country"
+  },
+  "noId": "No state selected.",
+  "backToList": "Back to list",
+  "axios": {
+    "start": {
+      "title": "Saving state",
+      "time": 3000
+    },
+    "success": {
+      "title": "State updated successfully!",
+      "time": 3000
+    },
+    "error": {
+      "title": "State could not be updated, please try again!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Edit state",
+    "description": "Update state details"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Save"
+  }
+}

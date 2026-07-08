@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/restore.tsx",
+  "title": "Restore",
+  "restoreConfirmTitle": "Restore country",
+  "restoreConfirmDescription": "Are you sure you want to restore this country?",
+  "cancel": "Cancel",
+  "confirmRestore": "Restore",
+  "axios": {
+    "start": {
+      "title": "Restoring country",
+      "time": 3000
+    },
+    "success": {
+      "title": "Country restored successfully!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Country could not be restored, please try again!",
+      "time": 3000
+    }
+  }
+}

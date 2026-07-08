@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/unpinMessage.tsx",
+  "unpin": "Zhgozhdoni",
+  "axios": {
+    "start": {
+      "title": "Mesazhi po zhgozhdohet",
+      "time": 3000
+    },
+    "success": {
+      "title": "Mesazhi u zhgozhdua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Zhgozhdimi i mesazhit dështoi.",
+      "time": 3000
+    }
+  }
+}

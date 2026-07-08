@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/activateAccount/activateAccount.form.tsx",
+  "loading": "Aktivizimi i llogarisë",
+  "loadingDescription": "Aktivizimi i llogarisë duke përdorur lidhjen e aktivizimit",
+  "fail": "Aktivizimi i llogarisë dështoi",
+  "failDescription": "Lidhja e aktivizimit të llogarisë nuk është e saktë",
+  "success": "Llogaria u aktivizua",
+  "successDescription": "Llogaria u aktivizua me sukses, tani mund të identifikoheni vetëm duke përdorur fjalëkalimin tuaj",
+  "axios": {
+    "start": {
+      "title": "Aktivizimi i llogarisë",
+      "time": 3000
+    },
+    "success": {
+      "title": "Aktivizimi i llogarisë me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Aktivizimi i llogarisë dështoi",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,58 @@
+export const messagesData = [
+  {
+    id: 1,
+    content: "Did you get a chance to look at the proposal?",
+    sender: "Jordan Reed",
+    avatar: "https://i.pravatar.cc/150?img=8",
+    timestamp: "10:12 AM",
+    status: "read",
+    type: "received",
+  },
+  {
+    id: 2,
+    content: "Yes, just finished. The pricing section looks good—I’ll add a couple of notes and send it back.",
+    sender: "You",
+    timestamp: "10:14 AM",
+    avatar: "https://i.pravatar.cc/150?img=12",
+    status: "delivered",
+    type: "sent",
+  },
+  {
+    id: 3,
+    content: "Sounds good. Do you need anything else from my side before the call?",
+    sender: "Jordan Reed",
+    avatar: "https://i.pravatar.cc/150?img=8",
+    timestamp: "10:15 AM",
+    status: "read",
+    type: "received",
+  },
+  {
+    id: 4,
+    content: "I think we’re set. I’ll share the deck in the channel so everyone can skim before 3pm.",
+    sender: "You",
+    avatar: "https://i.pravatar.cc/150?img=12",
+    timestamp: "10:16 AM",
+    status: "sent",
+    type: "sent",
+  },
+  {
+    id: 5,
+    content: "Perfect, thanks. Talk then.",
+    sender: "Jordan Reed",
+    avatar: "https://i.pravatar.cc/150?img=8",
+    timestamp: "10:17 AM",
+    status: "read",
+    type: "received",
+  },
+  {
+    id: 6,
+    content: "See you then.",
+    sender: "You",
+    avatar: "https://i.pravatar.cc/150?img=12",
+    timestamp: "10:18 AM",
+    status: "sent",
+    type: "sent",
+  },
+];
+
+export type Message = (typeof messagesData)[number];

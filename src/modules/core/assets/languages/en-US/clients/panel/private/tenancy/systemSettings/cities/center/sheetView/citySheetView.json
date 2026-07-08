@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx",
+  "name": "Name",
+  "city": "City",
+  "overview": "Overview",
+  "metadata": "Metadata",
+  "state": "State / Region",
+  "country": "Country",
+  "createdBy": "Created by"
+}

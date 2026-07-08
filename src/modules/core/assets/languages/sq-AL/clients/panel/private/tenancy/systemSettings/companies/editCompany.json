@@ -1,0 +1,68 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/editCompany.tsx",
+  "title": "Redaktoni kompaninë",
+  "description": "Përditësoni detajet e kompanisë",
+  "editTitle": "Përditëso kompaninë",
+  "editDescription": "Përditësoni informacionin e kompanisë",
+  "generalInfo": "Informacione të përgjithshme",
+  "howToReach": "Si të arrini tek ne",
+  "whoAreWe": "Kush jemi ne",
+  "addAddress": "Shto adresë të re",
+  "address": "Adresa",
+  "remove": "Hiq",
+  "errorTitle": "Ngarkimi i kompanisë dështoi",
+  "errorDescription": "Ju lutemi, klikoni këtu për të riprovuar marrjen e të dhënave të kompanisë",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Email",
+    "phoneNumberNumberLabel": "Numri i telefonit",
+    "phoneNumberNumberPlaceholder": "Numri i telefonit",
+    "descriptionLabel": "Përshkrimi",
+    "descriptionPlaceholder": "Përshkrimi",
+    "logoLabel": "Logo",
+    "websiteLabel": "Faqja e internetit",
+    "websitePlaceholder": "Faqja e internetit",
+    "vatLabel": "TVSH",
+    "vatPlaceholder": "TVSH",
+    "allowedDomainsLabel": "Domenet e lejuara",
+    "allowedDomainsPlaceholder": "Shto një domen",
+    "streetLabel": "Rruga",
+    "streetPlaceholder": "Rruga",
+    "postalCodeLabel": "Kodi postar",
+    "postalCodePlaceholder": "Kodi postar",
+    "cityLabel": "Qyteti",
+    "cityPlaceholder": "Qyteti",
+    "stateLabel": "Shtetit",
+    "statePlaceholder": "Shtetit",
+    "countryLabel": "Vendi",
+    "countryPlaceholder": "Vendi",
+    "latitudeLabel": "Gjerësia gjeografike",
+    "latitudePlaceholder": "Gjerësia gjeografike",
+    "longitudeLabel": "Gjatësia gjeografike",
+    "longitudePlaceholder": "Gjatësia gjeografike"
+  },
+  "axios": {
+    "start": {
+      "title": "Përditësimi i kompanisë",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kompania u përditësua me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kompania nuk mund të përditësohej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Përditëso kompaninë",
+    "description": "Përditësoni informacionin e kompanisë"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Ruaj"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
+  "title": "Veprime të planifikuara",
+  "description": "Menaxho punët e planifikuara (cron)",
+  "createCronJob": "Krijo veprim të planifikuar",
+  "searchPlaceholder": "Kërko sipas emrit, kodit ose handler-it...",
+  "noData": "Nuk u gjetën veprime të planifikuara",
+  "failTitle": "Ngarkimi i listës dështoi",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit të veprimeve të planifikuara. Provoni përsëri.",
+  "tooltipDescription": "Klikoni për të provuar përsëri ngarkimin e veprimeve të planifikuara.",
+  "fields": {
+    "code": "Kodi",
+    "name": "Emri",
+    "handler": "Handler",
+    "type": "Lloji i orarit",
+    "active": "Aktiv",
+    "scope": "Fusha",
+    "priority": "Prioriteti",
+    "nextRunAt": "Ekzekutimi i radhës",
+    "lastRunAt": "Ekzekutimi i fundit"
+  }
+}

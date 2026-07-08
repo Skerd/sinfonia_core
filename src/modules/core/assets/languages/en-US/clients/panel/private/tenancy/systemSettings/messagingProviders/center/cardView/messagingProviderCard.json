@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/cardView/messagingProviderCard.tsx",
+  "name": "Name",
+  "providerType": "Provider",
+  "fromPhone": "SMS sender",
+  "fromWhatsapp": "WhatsApp sender",
+  "active": "Active",
+  "yes": "Yes",
+  "no": "No",
+  "providerTypeValues": {
+    "twilio": "Twilio"
+  },
+  "deleted": "Deleted",
+  "failedTitle": "Failed to load messaging provider",
+  "failedDescription": "Tap to retry."
+}

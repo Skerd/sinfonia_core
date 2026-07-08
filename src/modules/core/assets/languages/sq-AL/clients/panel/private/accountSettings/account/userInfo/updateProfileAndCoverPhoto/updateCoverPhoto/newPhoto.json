@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/newPhoto.tsx",
+  "confirm": "Ruaj",
+  "cancel": "Anulo",
+  "updatePhoto": "Përditëso fotografinë",
+  "axios": {
+    "start": {
+      "title": "Duke ngarkuar foton e kopertinës",
+      "time": 3000
+    },
+    "success": {
+      "title": "Foto e kopertinës u ngarkua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Ngarkimi i fotos së kopertinës dështoi",
+      "time": 3000
+    }
+  }
+}

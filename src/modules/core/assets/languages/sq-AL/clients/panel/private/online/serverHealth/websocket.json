@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/websocket.tsx",
+  "websocketServerTitle": "Serveri i uebit",
+  "online": "Online",
+  "offline": "Jashtë linje",
+  "uptime": "Koha e funksionimit",
+  "connections": "Lidhjet",
+  "state0": "Duke u lidhur",
+  "state1": "Hapur",
+  "state2": "Mbyllja",
+  "state3": "Mbyllur",
+  "messages": "Mesazhet",
+  "users": "Përdoruesit në internet",
+  "rooms": "Dhomat",
+  "day": "ditë",
+  "days": "ditë",
+  "hour": "orë",
+  "hours": "orë",
+  "minute": "minutë",
+  "minutes": "minuta",
+  "second": "e dyta",
+  "seconds": "sekonda"
+}

@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/cardView/smtpServerCard.tsx",
+  "name": "Emri",
+  "host": "Host",
+  "sequence": "Prioriteti",
+  "port": "Porta",
+  "active": "Aktiv",
+  "encryption": "Enkriptimi",
+  "fromEmail": "Email dërgues",
+  "deleted": "Fshirë",
+  "failedTitle": "Ngarkimi i serverit SMTP dështoi",
+  "failedDescription": "Trokit për të riprovuar."
+}

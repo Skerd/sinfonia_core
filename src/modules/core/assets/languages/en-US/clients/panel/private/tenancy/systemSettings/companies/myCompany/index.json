@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/index.tsx",
+  "title": "Company",
+  "description": "Company info",
+  "failTitle": "Failed to load company",
+  "failTitleTooltip": "Click to retry loading company info"
+}

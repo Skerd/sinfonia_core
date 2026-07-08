@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/deleteMessages.tsx",
+  "selected": "Zgjedhur",
+  "cancel": "Anulo",
+  "delete": "Fshije",
+  "axios": {
+    "start": {
+      "title": "Fshirja e mesazheve",
+      "time": 3000
+    },
+    "success": {
+      "title": "Mesazhet u fshinë me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fshirja e mesazheve dështoi",
+      "time": 3000
+    }
+  }
+}

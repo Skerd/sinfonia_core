@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/tableView/stateTableBody.tsx",
+  "noData": "No states found",
+  "failTitle": "Failed to load",
+  "failDescription": "An error occurred. Please try again."
+}

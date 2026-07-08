@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/actions/delete.tsx",
+  "title": "Delete",
+  "deleteConfirmTitle": "Delete city",
+  "deleteConfirmDescription": "Are you sure you want to delete this city?",
+  "confirmNameLabel": "Type the city name to confirm",
+  "cancel": "Cancel",
+  "confirmDelete": "Delete",
+  "axios": {
+    "start": {
+      "title": "Deleting city",
+      "time": 3000
+    },
+    "success": {
+      "title": "City successfully deleted.",
+      "time": 3000
+    },
+    "error": {
+      "title": "City failed to be deleted",
+      "time": 3000
+    }
+  }
+}

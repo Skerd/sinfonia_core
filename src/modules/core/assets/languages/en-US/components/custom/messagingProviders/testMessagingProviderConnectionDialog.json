@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/components/custom/messagingProviders/testMessagingProviderConnectionDialog.tsx",
+  "title": "Test messaging connection",
+  "description": "Send a test SMS or WhatsApp message to verify this provider. Enter the recipient phone number below.",
+  "testPhoneLabel": "Test recipient phone",
+  "confirm": "Test connection",
+  "cancel": "Cancel",
+  "axios": {
+    "start": {
+      "title": "Testing messaging connection…"
+    },
+    "success": {
+      "title": "Messaging connection test succeeded."
+    },
+    "error": {
+      "title": "Messaging connection test failed"
+    }
+  }
+}

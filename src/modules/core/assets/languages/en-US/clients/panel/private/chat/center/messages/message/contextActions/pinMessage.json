@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/pinMessage.tsx",
+  "pin": "Pin",
+  "axios": {
+    "start": {
+      "title": "Pinning message",
+      "time": 3000
+    },
+    "success": {
+      "title": "Message successfully pinned",
+      "time": 3000
+    },
+    "error": {
+      "title": "Failed to pin message.",
+      "time": 3000
+    }
+  }
+}

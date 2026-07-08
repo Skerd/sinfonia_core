@@ -1,0 +1,11 @@
+{
+  "message": "Shkruani mesazhet tuaja...",
+  "send": "Dërgo",
+  "reply": "Përgjigju",
+  "attach": "Bashkangjit skedar(et). Madhësia maksimale për skedar: {}",
+  "noLongerMember": "Nuk mund t'i dërgosh mesazhe këtij grupi sepse nuk je më anëtar.",
+  "messageDeleted": "Mesazhi u fshi",
+  "fileTooLarge": "Një ose më shumë skedarë tejkalojnë kufirin e 50 MB dhe nuk u shtuan.",
+  "mentionSuggestions": "Përmend një anëtar të kanalit",
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/input.tsx"
+}

@@ -1,0 +1,32 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/editRole.tsx",
+  "title": "Edit role",
+  "description": "Update role details",
+  "errorTitle": "Failed to load role data",
+  "errorDescription": "Please click here to retry fetching role data",
+  "form": {
+    "nameLabel": "Role name",
+    "namePlaceholder": "Role name",
+    "nameDescription": "The display name of the role",
+    "templateLabel": "Template",
+    "templatePlaceholder": "Template",
+    "templateDescription": "Copy permissions from another role"
+  },
+  "none": "None",
+  "cancel": "Cancel",
+  "submit": "Save",
+  "axios": {
+    "start": {
+      "title": "Saving role",
+      "time": 3000
+    },
+    "success": {
+      "title": "Role updated successfully!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Role could not be updated, please try again!",
+      "time": 3000
+    }
+  }
+}

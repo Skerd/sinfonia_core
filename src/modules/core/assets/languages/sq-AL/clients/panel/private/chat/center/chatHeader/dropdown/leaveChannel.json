@@ -1,0 +1,40 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatHeader/dropdown/leaveChannel.tsx",
+  "leaveGroup": "Largohu nga grupi",
+  "deleteChat": "Fshi bisedën",
+  "dialog": {
+    "titleLeave": "Largohu nga biseda",
+    "titleDelete": "Fshi bisedën",
+    "descriptionLeave": "Je i sigurt që dëshiron të largohesh nga kjo bisedë?",
+    "descriptionDelete": "Je i sigurt që dëshiron ta fshish këtë bisedë?",
+    "confirmTextLeave": "Largohu",
+    "confirmTextDelete": "Fshije",
+    "cancelText": "Anulo"
+  },
+  "axiosOnFunction": {
+    "startLeave": {
+      "title": "Duke u larguar nga biseda",
+      "time": 3000
+    },
+    "startDelete": {
+      "title": "Fshirja e bisedës",
+      "time": 3000
+    },
+    "successLeave": {
+      "title": "U largua me sukses nga biseda",
+      "time": 3000
+    },
+    "successDelete": {
+      "title": "Biseda u fshi me sukses",
+      "time": 3000
+    },
+    "errorLeave": {
+      "title": "Largimi nga biseda dështoi, provo sërish!",
+      "time": 3000
+    },
+    "errorDelete": {
+      "title": "Fshirja e bisedës dështoi, provoni përsëri!",
+      "time": 3000
+    }
+  }
+}

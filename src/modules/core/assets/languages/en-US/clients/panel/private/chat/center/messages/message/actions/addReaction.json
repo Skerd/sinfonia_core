@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/actions/addReaction.tsx",
+  "searchPlaceholder": "Search",
+  "suggested": "Frequently Used",
+  "smileys_people": "Smileys & People",
+  "animals_nature": "Animals & Nature",
+  "food_drink": "Food & Drink",
+  "travel_places": "Travel & Places",
+  "activities": "Activities",
+  "objects": "Objects",
+  "symbols": "Symbols",
+  "flags": "Flags"
+}

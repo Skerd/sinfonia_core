@@ -1,0 +1,41 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterChip.tsx",
+  "editFilter": "Edit filter",
+  "filterField": "Select a field",
+  "filterOperator": "Operator",
+  "removeFilter": "Remove",
+  "yes": "true",
+  "no": "false",
+  "exists": "exists",
+  "empty": "is empty",
+  "chipOperators": {
+    "equals": "is",
+    "notEquals": "is not",
+    "contains": "contains",
+    "startsWith": "starts with",
+    "endsWith": "ends with",
+    "greaterThan": ">",
+    "greaterThanOrEqual": "≥",
+    "lessThan": "<",
+    "lessThanOrEqual": "≤",
+    "between": "between",
+    "in": "is any of",
+    "notIn": "is none of",
+    "exists": "exists"
+  },
+  "operators": {
+    "equals": "Equals",
+    "notEquals": "Not equals",
+    "contains": "Contains",
+    "startsWith": "Starts with",
+    "endsWith": "Ends with",
+    "greaterThan": "Greater than",
+    "greaterThanOrEqual": "Greater or equal",
+    "lessThan": "Less than",
+    "lessThanOrEqual": "Less or equal",
+    "between": "Between",
+    "in": "In",
+    "notIn": "Not in",
+    "exists": "Exists"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/disconnect/index.tsx",
+  "title": "Are you sure you want to unlink Telegram?",
+  "description": "You will not receive notifications anymore",
+  "usersTitle": "Are you sure you want to unlink Telegram?",
+  "usersDescription": "The user will not receive notifications anymore",
+  "button": "Confirm",
+  "backButton": "Cancel",
+  "axios": {
+    "start": {
+      "title": "Disconnecting Telegram",
+      "time": 3000
+    },
+    "success": {
+      "title": "Telegram disconnected successfully",
+      "time": 3000
+    },
+    "error": {
+      "title": "Telegram disconnect failed",
+      "time": 3000
+    }
+  }
+}

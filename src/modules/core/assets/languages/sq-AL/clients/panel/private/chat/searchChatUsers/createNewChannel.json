@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/searchChatUsers/createNewChannel.tsx",
+  "chat": "Filloni të bisedoni",
+  "axios": {
+    "start": {
+      "title": "Krijimi i kanalit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kanali u krijua me sukses!",
+      "time": 3000
+    },
+    "successExists": {
+      "title": "Kanali ekziston tashmë!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kanali nuk mund të krijohej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  }
+}

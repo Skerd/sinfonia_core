@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx",
+  "title": "Qytetet",
+  "description": "Menaxhoni qytete",
+  "createCity": "Krijo qytet",
+  "searchPlaceholder": "Kërko sipas emrit ose shto filtra...",
+  "noData": "Nuk u gjet asnjë qytet",
+  "failTitle": "Ngarkimi i qyteteve dështoi",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit të qyteteve. Ju lutemi provoni përsëri.",
+  "status": "Statusi",
+  "name": "Emri",
+  "state": "Shtetit",
+  "country": "Vendi",
+  "deleted": "Fshirë",
+  "active": "Aktiv",
+  "fields": {
+    "name": "Emri",
+    "state": "Shtetit",
+    "country": "Vendi",
+    "createdBy": "Krijuar nga",
+    "company": "Kompania",
+    "deletedAt": "Statusi",
+    "deletedBy": "Fshirë nga"
+  }
+}

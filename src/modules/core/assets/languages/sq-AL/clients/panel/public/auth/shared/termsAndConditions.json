@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/shared/termsAndConditions.tsx",
+  "byClickingYouAgree": "Duke përdorur shërbimet tona, ju pajtoheni me tonën",
+  "termsOfService": "Kushtet e Shërbimit",
+  "and": "dhe",
+  "privacyPolicy": "Politika e privatësisë",
+  "termsContent": "Këto Kushte të Shërbimit rregullojnë përdorimin tuaj të këtij aplikacioni.\n\nOrganizata juaj mund të ofrojë kushte shtesë; kontaktoni administratorin për marrëveshjen e plotë të zbatueshme për ju.",
+  "privacyContent": "Kjo Politikë e privatësisë shpjegon çfarë informacioni përpunojmë kur përdorni këtë aplikacion dhe si e përdorim atë.\n\nPër detaje specifike për organizatën dhe rajonin tuaj, kontaktoni administratorin."
+}

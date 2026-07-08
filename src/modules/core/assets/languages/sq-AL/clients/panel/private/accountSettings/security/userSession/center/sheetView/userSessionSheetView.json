@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/userSession/center/sheetView/userSessionSheetView.tsx",
+  "userSession": "Sesioni i përdoruesit",
+  "sessionId": "ID e sesionit",
+  "sessionDetails": "Detajet e seancës",
+  "networkInfo": "Rrjeti",
+  "user": "Përdoruesi",
+  "deviceId": "ID e pajisjes",
+  "isActive": "Aktiv",
+  "lastActiveAt": "Aktivi i fundit",
+  "ipAddress": "Adresa IP",
+  "userAgent": "Agjenti i përdoruesit",
+  "revoke": "Revoko aksesin"
+}

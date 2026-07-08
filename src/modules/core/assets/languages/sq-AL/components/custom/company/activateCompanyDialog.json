@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/components/custom/company/activateCompanyDialog.tsx",
+  "title": "Aktivizoni kompaninë",
+  "description": "Jeni i sigurt që dëshironi ta aktivizoni këtë kompani? Përdoruesit do të mund të hyjnë në sistem pas aktivizimit.",
+  "confirm": "Aktivizoni",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Kompania që aktivizon",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kompania u aktivizua me sukses.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kompania nuk u aktivizua",
+      "time": 3000
+    }
+  }
+}

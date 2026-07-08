@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/index.tsx",
+  "name": "Telegram",
+  "description": "Connect with Telegram for real-time communication.",
+  "connected": "Connected",
+  "notConnected": "Connect",
+  "connect": "Connect",
+  "disconnect": "Disconnect",
+  "failTitle": "Failed to load status",
+  "failTitleTooltip": "Click here to retry fetching status",
+  "linked": {
+    "title": "Telegram successfully linked",
+    "description": "Click the button below to unlink Telegram",
+    "button": "Unlink"
+  },
+  "notLinked": {
+    "title": "Telegram not linked",
+    "description": "Click the button below to link Telegram",
+    "button": "Link"
+  }
+}

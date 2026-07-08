@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/impersonate/index.tsx",
+  "impersonate": "imitoj",
+  "exit": "Dil nga imitimi",
+  "failTitle": "Ngarkimi i informacionit dështoi",
+  "failTitleTooltip": "Kliko për të riprovuar, nëse 5 përpjekje dështojnë, imitimi do të dalë"
+}

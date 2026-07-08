@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
+  "title": "Scheduled actions",
+  "description": "Manage cron jobs and scheduled tasks",
+  "createCronJob": "Create scheduled action",
+  "searchPlaceholder": "Search by name, code, or handler...",
+  "noData": "No scheduled actions found",
+  "failTitle": "Failed to load scheduled actions",
+  "failDescription": "An error occurred while loading scheduled actions. Please try again.",
+  "tooltipDescription": "Click to retry fetching scheduled actions.",
+  "fields": {
+    "code": "Code",
+    "name": "Name",
+    "handler": "Handler",
+    "type": "Schedule type",
+    "active": "Active",
+    "scope": "Scope",
+    "priority": "Priority",
+    "nextRunAt": "Next run",
+    "lastRunAt": "Last run"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx",
+  "title": "Activate company",
+  "description": "Are you sure you want to activate this company? Users will be able to access the system after activating.",
+  "confirm": "Activate",
+  "cancel": "Cancel",
+  "axios": {
+    "start": {
+      "title": "Activating company",
+      "time": 3000
+    },
+    "success": {
+      "title": "Company successfully activated.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Company failed to be activated",
+      "time": 3000
+    }
+  }
+}

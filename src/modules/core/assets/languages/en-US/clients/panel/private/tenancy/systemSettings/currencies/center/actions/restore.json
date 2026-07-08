@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/actions/restore.tsx",
+  "title": "Restore",
+  "restoreConfirmTitle": "Restore currency",
+  "restoreConfirmDescription": "Are you sure you want to restore this currency?",
+  "cancel": "Cancel",
+  "confirmRestore": "Restore",
+  "axios": {
+    "start": {
+      "title": "Restoring currency",
+      "time": 3000
+    },
+    "success": {
+      "title": "Currency successfully restored.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Currency failed to be restored",
+      "time": 3000
+    }
+  }
+}

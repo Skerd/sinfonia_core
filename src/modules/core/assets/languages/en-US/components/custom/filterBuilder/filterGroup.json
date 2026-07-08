@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterGroup.tsx",
+  "matchAll": "Match all",
+  "matchAny": "Match any",
+  "newRule": "New rule",
+  "filterGroup": "Filter group",
+  "addGroup": "Add group",
+  "removeGroup": "Remove group"
+}

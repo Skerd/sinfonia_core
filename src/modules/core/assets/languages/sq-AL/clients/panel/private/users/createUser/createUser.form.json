@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/createUser/createUser.form.tsx",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri",
+    "surnameLabel": "Mbiemri",
+    "surnamePlaceholder": "Mbiemri",
+    "emailLabel": "Email",
+    "emailPlaceholder": "email@example.com",
+    "passwordLabel": "Fjalëkalimi",
+    "passwordPlaceholder": "Fjalëkalimi",
+    "confirmPasswordLabel": "Konfirmo fjalëkalimin",
+    "confirmPasswordPlaceholder": "Konfirmo fjalëkalimin",
+    "userRoleLabel": "Roli",
+    "userRolePlaceholder": "Roli"
+  },
+  "cancel": "Anulo",
+  "confirmButton": "Krijo llogari",
+  "axios": {
+    "start": {
+      "title": "Krijimi i përdoruesit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Përdoruesi u krijua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Krijimi i përdoruesit dështoi",
+      "time": 3000
+    }
+  }
+}

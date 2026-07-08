@@ -1,0 +1,28 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/login/signin.form.tsx",
+  "form": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "shembull@email.com",
+    "passwordLabel": "Fjalëkalimi",
+    "passwordPlaceholder": "********",
+    "mfaCodeLabel": "Kodi 2FA",
+    "ipAddressLabel": "Adresa IP"
+  },
+  "forgotPassword": "Keni harruar fjalëkalimin?",
+  "signInButtonLabel": "Identifikohu",
+  "verify": "Verifiko",
+  "axios": {
+    "start": {
+      "title": "Po identifikohesh, ju lutemi prisni",
+      "time": 3000
+    },
+    "error": {
+      "title": "Identifikimi dështoi",
+      "time": 3000
+    },
+    "success": {
+      "title": "U kyçët me sukses",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/index.tsx",
+  "title": "Kompania",
+  "description": "Informacioni i kompanisë",
+  "failTitle": "Ngarkimi i kompanisë dështoi",
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e informacionit të kompanisë"
+}

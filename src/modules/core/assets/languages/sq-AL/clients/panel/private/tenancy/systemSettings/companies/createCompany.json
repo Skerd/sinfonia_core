@@ -1,0 +1,64 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/createCompany.tsx",
+  "title": "Krijo kompani",
+  "description": "Krijo një kompani të re",
+  "generalInfo": "Informacione të përgjithshme",
+  "howToReach": "Si të arrini tek ne",
+  "whoAreWe": "Kush jemi ne",
+  "addAddress": "Shto adresë të re",
+  "address": "Adresa",
+  "remove": "Hiq",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Email",
+    "phoneNumberNumberLabel": "Numri i telefonit",
+    "phoneNumberNumberPlaceholder": "Numri i telefonit",
+    "descriptionLabel": "Përshkrimi",
+    "descriptionPlaceholder": "Përshkrimi",
+    "logoLabel": "Logo",
+    "websiteLabel": "Faqja e internetit",
+    "websitePlaceholder": "Faqja e internetit",
+    "vatLabel": "TVSH",
+    "vatPlaceholder": "TVSH",
+    "allowedDomainsLabel": "Domenet e lejuara",
+    "allowedDomainsPlaceholder": "Shto një domen",
+    "streetLabel": "Rruga",
+    "streetPlaceholder": "Rruga",
+    "postalCodeLabel": "Kodi postar",
+    "postalCodePlaceholder": "Kodi postar",
+    "cityLabel": "Qyteti",
+    "cityPlaceholder": "Qyteti",
+    "stateLabel": "Shtetit",
+    "statePlaceholder": "Shtetit",
+    "countryLabel": "Vendi",
+    "countryPlaceholder": "Vendi",
+    "latitudeLabel": "Gjerësia gjeografike",
+    "latitudePlaceholder": "Gjerësia gjeografike",
+    "longitudeLabel": "Gjatësia gjeografike",
+    "longitudePlaceholder": "Gjatësia gjeografike"
+  },
+  "axios": {
+    "start": {
+      "title": "Krijimi i kompanisë",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kompania u krijua me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kompania nuk mund të krijohej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Krijo kompani",
+    "description": "Krijo një kompani të re"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Krijo"
+  }
+}

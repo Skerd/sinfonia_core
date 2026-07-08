@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/table/index.tsx",
+  "filter": "Filtro përdoruesit",
+  "status": "Statusi",
+  "roles": {
+    "no_role": "Asnjë rol"
+  },
+  "statuses": {
+    "active": "Aktiv",
+    "inactive": "Joaktiv",
+    "invited": "I ftuar"
+  },
+  "role": "Roli",
+  "username": "Email",
+  "name": "Emri i plotë",
+  "view": "Shiko",
+  "toggleColumns": "Ndrysho kolonat",
+  "email": "Email",
+  "phoneNumber": "Numri i telefonit"
+}

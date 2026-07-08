@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/otp/deactivateOTP/deactivateOtp.form.tsx",
+  "deactivateNow": "Jeni i sigurt që dëshironi të çaktivizoni 2FA?",
+  "deactivateNowDescription": "Pas çaktivizimit, përdoruesi mund të hyjë në sistem duke përdorur fjalëkalimin onlu",
+  "withOTPCodeDescription": "Plotësoni kodin 2FA për ta çaktivizuar",
+  "confirm": "Çaktivizo 2FA",
+  "cancel": "Anulo",
+  "twoParts": {
+    "noOtpCode": {
+      "0": "Nuk keni kod 2FA?",
+      "1": "Kërkoni udhëzime me email"
+    }
+  },
+  "checkEmail": "Kontrolloni emailin për të vazhduar çaktivizimin e 2FA",
+  "disabled": "2FA u çaktivizua me sukses!",
+  "form": {
+    "mfaCodeLabel": "Kodi 2FA",
+    "mfaCodePlaceholder": "Kodi 2FA"
+  },
+  "axios": {
+    "start": {
+      "title": "Çaktivizimi i 2FA",
+      "time": 3000
+    },
+    "error": {
+      "title": "Çaktivizimi i 2FA dështoi",
+      "time": 3000
+    },
+    "success": {
+      "title": "U krye me sukses",
+      "time": 3000
+    }
+  }
+}

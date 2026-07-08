@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/stateFilters.tsx",
+  "filterName": "Filtro sipas emrit",
+  "filterCode": "Filtro sipas kodit",
+  "filterCountry": "Filtro sipas shtetit",
+  "clearFilters": "Pastro filtrat"
+}

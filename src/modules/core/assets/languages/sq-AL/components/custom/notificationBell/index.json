@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/components/custom/notificationBell/index.tsx",
+  "title": "Njoftimet",
+  "markAllRead": "Shënoni të gjitha të lexuara",
+  "loading": "Po ngarkohet...",
+  "noNotifications": "Nuk ka njoftime",
+  "viewAll": "Shiko të gjitha",
+  "system": "Sistemi",
+  "justNow": "Vetëm tani",
+  "minutesAgo": "{} minuta më parë",
+  "minutesAgoUnit": "m më parë",
+  "hoursAgo": "{} orë më parë",
+  "hoursAgoUnit": "orë më parë"
+}

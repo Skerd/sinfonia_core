@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/index.tsx",
+  "title": "Members",
+  "failTitle": "Failed to load channel members",
+  "failTitleTooltip": "Click here to retry fetching channel members",
+  "noData": "No members found"
+}

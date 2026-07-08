@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/actions/addReaction.tsx",
+  "searchPlaceholder": "Kërko",
+  "suggested": "Përdoret shpesh",
+  "smileys_people": "Buzëqeshje dhe njerëz",
+  "animals_nature": "Kafshët & Natyra",
+  "food_drink": "Ushqim & Pije",
+  "travel_places": "Udhëtim & Vende",
+  "activities": "Aktivitetet",
+  "objects": "Objektet",
+  "symbols": "Simbolet",
+  "flags": "Flamujt"
+}

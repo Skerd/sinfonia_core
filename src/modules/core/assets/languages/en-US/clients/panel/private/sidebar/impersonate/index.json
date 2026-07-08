@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/impersonate/index.tsx",
+  "impersonate": "Impersonate",
+  "exit": "Exit impersonation",
+  "failTitle": "Failed to load info",
+  "failTitleTooltip": "Click to retry, if 5 failed attempts, the impersonation will exit"
+}

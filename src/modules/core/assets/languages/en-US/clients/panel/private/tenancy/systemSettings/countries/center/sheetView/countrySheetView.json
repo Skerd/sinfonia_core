@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx",
+  "overview": "Overview",
+  "metadata": "Metadata",
+  "createdBy": "Created by",
+  "country": "Country",
+  "name": "Name",
+  "code": "Code",
+  "phoneCode": "Phone code",
+  "currency": "Currency"
+}

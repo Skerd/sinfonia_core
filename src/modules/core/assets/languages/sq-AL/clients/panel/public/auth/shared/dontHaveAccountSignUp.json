@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/shared/dontHaveAccountSignUp.tsx",
+  "dontHaveAccount": "Nuk keni një llogari?",
+  "signUp": "Regjistrohu"
+}

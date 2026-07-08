@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/index.tsx",
+  "serverHealthTitle": "Server Health",
+  "waitingForHealthData": "Waiting for health data...",
+  "failTitle": "Failed to load server health data",
+  "failTitleTooltip": "Failed to load server health data, click here to try again",
+  "healthy": "Healthy",
+  "degraded": "Degraded",
+  "error": "Error",
+  "notAvailable": "Not Available",
+  "connected": "Connected",
+  "disconnected": "Disconnected",
+  "version": "Version",
+  "lastUpdated": "Last Updated",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "readyState": "Ready State"
+}

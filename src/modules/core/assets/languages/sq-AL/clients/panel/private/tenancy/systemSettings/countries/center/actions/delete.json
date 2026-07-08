@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/delete.tsx",
+  "title": "Fshije",
+  "deleteConfirmTitle": "Fshi shtetin",
+  "deleteConfirmDescription": "Je i sigurt që dëshiron ta fshish këtë shtet?",
+  "confirmNameLabel": "Shkruani emrin e shtetit për të konfirmuar",
+  "cancel": "Anulo",
+  "confirmDelete": "Fshije",
+  "axios": {
+    "start": {
+      "title": "Fshirja e shtetit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Shteti u fshi me sukses!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Shteti nuk mund të fshihej, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  }
+}

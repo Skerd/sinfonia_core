@@ -1,0 +1,15 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/center/sheetView/loginHistorySheetView.tsx",
+  "loginHistory": "Historia e hyrjes",
+  "ip": "Adresa IP",
+  "loginDetails": "Detajet e hyrjes",
+  "clientInfo": "Klienti",
+  "user": "Përdoruesi",
+  "time": "Koha",
+  "status": "Statusi",
+  "mfa": "MPJ",
+  "device": "Pajisja",
+  "os": "Sistemi operativ",
+  "browser": "Shfletuesi",
+  "userAgent": "Agjenti i përdoruesit"
+}

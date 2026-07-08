@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/disconnect/index.tsx",
+  "title": "Jeni i sigurt që dëshironi të shkëputni Telegramin?",
+  "description": "Nuk do të merrni më njoftime",
+  "usersTitle": "Jeni i sigurt që dëshironi të shkëputni Telegramin?",
+  "usersDescription": "Përdoruesi nuk do të marrë më njoftime",
+  "button": "Konfirmo",
+  "backButton": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Shkëputja e Telegramit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Telegrami u shkëput me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Shkëputja e telegramit dështoi",
+      "time": 3000
+    }
+  }
+}

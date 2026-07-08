@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/companies/index.tsx",
+  "failTitle": "Ngarkimi i kompanisë dështoi",
+  "failTitleTooltip": "Klikoni për të ringarkuar kompaninë"
+}

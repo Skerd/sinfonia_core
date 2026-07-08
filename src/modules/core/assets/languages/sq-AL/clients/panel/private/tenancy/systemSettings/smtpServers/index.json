@@ -1,0 +1,28 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
+  "title": "Serverët SMTP",
+  "description": "Konfiguroni serverët SMTP për këtë kompani. Sekuenca më e ulët provohet e para.",
+  "createSmtpServer": "Shto server SMTP",
+  "searchPlaceholder": "Kërko sipas emrit ose hostit...",
+  "noData": "Nuk ka serverë SMTP",
+  "failTitle": "Ngarkimi i serverëve SMTP dështoi",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit. Provoni përsëri.",
+  "name": "Emri",
+  "host": "Host",
+  "sequence": "Prioriteti",
+  "port": "Porta",
+  "encryption": "Enkriptimi",
+  "active": "Aktiv",
+  "fromEmail": "Email dërgues",
+  "fields": {
+    "name": "Emri",
+    "sequence": "Prioriteti",
+    "active": "Aktiv",
+    "host": "Host",
+    "port": "Porta",
+    "encryption": "Enkriptimi",
+    "authType": "Autentifikimi",
+    "fromEmail": "Email dërgues",
+    "lastTestStatus": "Testi i fundit"
+  }
+}

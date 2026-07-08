@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/2fa/confirm2FADeactivation.form.tsx",
+  "loading": "Deactivating 2FA",
+  "loadingDescription": "Deactivating 2FA for user using 2FA deactivating link",
+  "fail": "2FA deactivation failed",
+  "failDescription": "2FA deactivation link is not correct",
+  "success": "2FA deactivated",
+  "successDescription": "2FA deactivated successfully, you can now login only using your password",
+  "axios": {
+    "start": {
+      "title": "Deactivating 2FA",
+      "time": 3000
+    },
+    "success": {
+      "title": "2FA deactivation successful",
+      "time": 3000
+    },
+    "error": {
+      "title": "2FA deactivation failed",
+      "time": 3000
+    }
+  }
+}

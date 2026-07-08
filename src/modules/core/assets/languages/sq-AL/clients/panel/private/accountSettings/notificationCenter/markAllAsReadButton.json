@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx",
+  "markAllAsRead": "Shënoni të gjitha si të lexuara",
+  "confirmTitle": "Shënoni të gjitha si të lexuara",
+  "confirmDescription": "Jeni i sigurt që dëshironi të shënoni të gjitha njoftimet si të lexuara?",
+  "cancel": "Anulo",
+  "confirm": "Shënoni si të lexuar",
+  "axios": {
+    "start": {
+      "title": "Duke shënuar të gjitha si të lexuara",
+      "time": 3000
+    },
+    "success": {
+      "title": "Të gjitha njoftimet janë shënuar si të lexuara.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Shënimi i njoftimeve si të lexuara dështoi",
+      "time": 3000
+    }
+  }
+}

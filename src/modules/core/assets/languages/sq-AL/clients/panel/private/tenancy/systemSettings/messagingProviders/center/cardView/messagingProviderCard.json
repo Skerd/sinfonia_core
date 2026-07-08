@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/cardView/messagingProviderCard.tsx",
+  "name": "Emri",
+  "providerType": "Ofruesi",
+  "fromPhone": "Dërgues SMS",
+  "fromWhatsapp": "Dërgues WhatsApp",
+  "active": "Aktiv",
+  "yes": "Po",
+  "no": "Jo",
+  "providerTypeValues": {
+    "twilio": "Twilio"
+  },
+  "deleted": "Fshirë",
+  "failedTitle": "Ngarkimi i ofruesit të mesazheve dështoi",
+  "failedDescription": "Prekni për të provuar përsëri."
+}

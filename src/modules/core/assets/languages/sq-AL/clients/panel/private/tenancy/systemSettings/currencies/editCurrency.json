@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/editCurrency.tsx",
+  "title": "Ndrysho monedhën",
+  "description": "Përditësoni detajet e monedhës",
+  "errorTitle": "Ngarkimi i të dhënave të monedhës dështoi",
+  "errorDescription": "Ju lutemi, klikoni këtu për të riprovuar marrjen e të dhënave të monedhës",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri i monedhës",
+    "symbolLabel": "Simboli",
+    "symbolPlaceholder": "p.sh. $",
+    "abbreviationLabel": "Shkurtesa",
+    "abbreviationPlaceholder": "p.sh. USD",
+    "decimalPlacesLabel": "Vendet dhjetore",
+    "decimalPlacesPlaceholder": "2"
+  },
+  "noId": "Asnjë monedhë e zgjedhur.",
+  "backToList": "Kthehu në listë",
+  "formHeader": {
+    "title": "Ndrysho monedhën",
+    "description": "Përditësoni detajet e monedhës"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Ruaj"
+  }
+}

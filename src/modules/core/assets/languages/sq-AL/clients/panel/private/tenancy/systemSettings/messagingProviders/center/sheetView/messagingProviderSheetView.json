@@ -1,0 +1,28 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx",
+  "failedTitle": "Ngarkimi i ofruesit të mesazheve dështoi",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të provuar përsëri.",
+  "failedTooltipDescription": "Klikoni për të rifreskuar të dhënat.",
+  "overview": "Përmbledhje",
+  "credentials": "Kredencialet",
+  "senders": "Dërguesit",
+  "lastTest": "Testi i fundit i lidhjes",
+  "providerType": "Ofruesi",
+  "active": "Aktiv",
+  "accountSid": "Account SID",
+  "hasAuthToken": "Token i ruajtur",
+  "fromPhone": "Dërgues SMS",
+  "fromWhatsapp": "Dërgues WhatsApp",
+  "yes": "Po",
+  "no": "Jo",
+  "lastTestStatus": "Testi i fundit",
+  "lastTestedAt": "Testuar më",
+  "lastTestMessage": "Mesazhi i testit",
+  "providerTypeValues": {
+    "twilio": "Twilio"
+  },
+  "lastTestStatusValues": {
+    "ok": "OK",
+    "failed": "Dështoi"
+  }
+}

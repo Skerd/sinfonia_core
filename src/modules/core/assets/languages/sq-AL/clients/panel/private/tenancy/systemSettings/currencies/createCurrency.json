@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/createCurrency.tsx",
+  "title": "Krijo monedhë",
+  "description": "Shtoni një monedhë të re",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri i monedhës",
+    "symbolLabel": "Simboli",
+    "symbolPlaceholder": "p.sh. $",
+    "abbreviationLabel": "Shkurtesa",
+    "abbreviationPlaceholder": "p.sh. USD",
+    "decimalPlacesLabel": "Vendet dhjetore",
+    "decimalPlacesPlaceholder": "2"
+  },
+  "formHeader": {
+    "title": "Krijo monedhë",
+    "description": "Shtoni një monedhë të re"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Krijo"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx",
+  "name": "Emri",
+  "code": "Kodi",
+  "country": "Vendi",
+  "deleted": "Fshirë",
+  "active": "Aktiv",
+  "failedTitle": "Gjendja e ngarkimit dështoi",
+  "failedDescription": "Trokit për të riprovuar."
+}

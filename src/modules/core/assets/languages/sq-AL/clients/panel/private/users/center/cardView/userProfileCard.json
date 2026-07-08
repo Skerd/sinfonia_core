@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/cardView/userProfileCard.tsx",
+  "failTitle": "Ngarkimi i të dhënave të përdoruesit dështoi",
+  "failTitleTooltip": "Kliko këtu për të riprovuar ngarkimin e të dhënave të përdoruesit",
+  "about": "Rreth",
+  "info": "Informacion",
+  "email": "Email",
+  "emailVerified": "Email aktual i verifikuar",
+  "invitedUser": "Ju lutemi verifikoni emailin duke pranuar kërkesën për ftesë",
+  "emailNotVerified": "Ju lutemi verifikoni emailin tuaj të ri duke klikuar në lidhjen e dërguar në kutinë tuaj hyrëse",
+  "timezone": "Zona kohore",
+  "birthday": "ditëlindjen",
+  "phoneNumber": "Numri i telefonit",
+  "registeredDate": "Data e regjistrimit",
+  "registeredFrom": "Regjistruar nga",
+  "emailVerifiedAt": "Email i verifikuar në",
+  "lockedOutUntil": "I mbyllur deri në",
+  "online": "Online",
+  "offline": "Jashtë linje",
+  "createdBy": "Krijuar nga",
+  "status": "Statusi",
+  "statuses": {
+    "active": "Aktiv",
+    "inactive": "Joaktiv",
+    "invited": "I ftuar"
+  },
+  "mfaStatuses": {
+    "active": "MPJ aktive",
+    "notActive": "MPJ jo aktive"
+  },
+  "roles": "Rolet",
+  "unsuccessfulLogins": "Identifikimi i pasuksesshëm",
+  "lastLoginDate": "Hyrja e fundit",
+  "requests": "Kërkesat",
+  "requestsInvitation": "Ftesë",
+  "requestsActivation": "Aktivizimi",
+  "requestsPasswordReset": "Rivendosja e fjalëkalimit",
+  "requestsMfaDeactivation": "Çaktivizimi i MPJ-së"
+}

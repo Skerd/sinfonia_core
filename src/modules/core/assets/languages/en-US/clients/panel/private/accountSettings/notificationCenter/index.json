@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx",
+  "title": "Notification Center",
+  "description": "View and manage your notifications",
+  "unreadOnly": "Unread only",
+  "failTitle": "Failed to load notification",
+  "failDescription": "Click here to retry fetching notifications",
+  "loading": "Loading...",
+  "noNotifications": "No notifications",
+  "error": "Failed to load notifications",
+  "loadMore": "Load more",
+  "system": "System"
+}

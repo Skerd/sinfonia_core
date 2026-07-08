@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/editCurrency.tsx",
+  "title": "Edit currency",
+  "description": "Update currency details",
+  "errorTitle": "Failed to load currency data",
+  "errorDescription": "Please click here to retry fetching currency data",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Currency name",
+    "symbolLabel": "Symbol",
+    "symbolPlaceholder": "e.g. $",
+    "abbreviationLabel": "Abbreviation",
+    "abbreviationPlaceholder": "e.g. USD",
+    "decimalPlacesLabel": "Decimal places",
+    "decimalPlacesPlaceholder": "2"
+  },
+  "noId": "No currency selected.",
+  "backToList": "Back to list",
+  "formHeader": {
+    "title": "Edit currency",
+    "description": "Update currency details"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Save"
+  }
+}

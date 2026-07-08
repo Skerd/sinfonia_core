@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/promoteToAdmin.tsx",
+  "makeAdmin": "Make group admin",
+  "axios": {
+    "start": {
+      "title": "Promoting member to admin",
+      "time": 3000
+    },
+    "success": {
+      "title": "Member successfully promoted to admin",
+      "time": 3000
+    },
+    "error": {
+      "title": "Failed to promote user to admin",
+      "time": 3000
+    }
+  }
+}

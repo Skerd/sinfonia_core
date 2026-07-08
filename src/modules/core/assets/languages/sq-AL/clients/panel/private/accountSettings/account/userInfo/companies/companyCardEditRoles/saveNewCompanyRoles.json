@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/saveNewCompanyRoles.tsx",
+  "confirm": "Konfirmo ndryshimin e roleve",
+  "editRoles": "Redakto rolet",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Përditësimi i roleve",
+      "time": 3000
+    },
+    "success": {
+      "title": "Rolet u përditësuan me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Përditësimi i rolit dështoi",
+      "time": 3000
+    }
+  }
+}

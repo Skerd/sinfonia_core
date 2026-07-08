@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverStats/index.tsx",
+  "waitingForPerformanceData": "Waiting for performance data...",
+  "failTitle": "Failed to load server stats data",
+  "failTitleTooltip": "Failed to load server stats data, click here to try again"
+}

@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
+  "title": "Currencies",
+  "description": "Manage currencies",
+  "createCurrency": "Create currency",
+  "searchPlaceholder": "Search by name, abbreviation, or add filters...",
+  "noData": "No currencies found",
+  "failTitle": "Failed to load currencies",
+  "failDescription": "An error occurred while loading currencies. Please try again.",
+  "status": "Status",
+  "name": "Name",
+  "symbol": "Symbol",
+  "abbreviation": "Abbreviation",
+  "decimalPlaces": "Decimal places",
+  "deleted": "Deleted",
+  "active": "Active",
+  "fields": {
+    "name": "Name",
+    "symbol": "Symbol",
+    "abbreviation": "Abbreviation",
+    "decimalPlaces": "Decimal places",
+    "createdBy": "Created by",
+    "company": "Company",
+    "deletedAt": "Status",
+    "deletedBy": "Deleted by"
+  }
+}

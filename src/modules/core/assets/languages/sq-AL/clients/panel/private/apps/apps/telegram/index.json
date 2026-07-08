@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/index.tsx",
+  "name": "Telegrami",
+  "description": "Lidhu me Telegram për komunikim në kohë reale.",
+  "connected": "Lidhur",
+  "notConnected": "Lidheni",
+  "connect": "Lidheni",
+  "disconnect": "Shkëputeni",
+  "failTitle": "Ngarkimi i statusit dështoi",
+  "failTitleTooltip": "Kliko këtu për të riprovuar marrjen e statusit",
+  "linked": {
+    "title": "Telegrami u lidh me sukses",
+    "description": "Klikoni butonin më poshtë për të shkëputur Telegramin",
+    "button": "Shkëpute"
+  },
+  "notLinked": {
+    "title": "Telegrami nuk është i lidhur",
+    "description": "Klikoni butonin më poshtë për të lidhur Telegramin",
+    "button": "Lidhje"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx",
+  "currency": "Monedha",
+  "overview": "Vështrim i përgjithshëm",
+  "metadata": "Metadatat",
+  "symbol": "Simboli",
+  "abbreviation": "Shkurtesa",
+  "decimalPlaces": "Vendet dhjetore",
+  "createdBy": "Krijuar nga"
+}

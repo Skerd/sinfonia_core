@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/createRole.tsx",
+  "title": "Krijo rol",
+  "description": "Shto një rol të ri me leje",
+  "failTitle": "Ngarkimi i lejeve dështoi",
+  "failDescription": "Ngarkimi i lejeve dështoi, ju lutemi provoni përsëri",
+  "failTooltip": "Kliko këtu për të riprovuar ngarkimin e lejeve",
+  "noData": "Nuk u gjetën leje, kështu që asnjë rol nuk mund të krijohet",
+  "form": {
+    "nameLabel": "Emri i rolit",
+    "namePlaceholder": "Emri i rolit",
+    "nameDescription": "Emri i shfaqur i rolit",
+    "templateLabel": "shabllon",
+    "templatePlaceholder": "shabllon",
+    "templateDescription": "Kopjoni lejet nga një rol tjetër"
+  },
+  "none": "Asnjë",
+  "cancel": "Anulo",
+  "submit": "Krijo",
+  "axios": {
+    "start": {
+      "title": "Krijimi i rolit",
+      "time": 3000
+    },
+    "success": {
+      "title": "Roli u krijua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Krijimi i rolit dështoi",
+      "time": 3000
+    }
+  }
+}

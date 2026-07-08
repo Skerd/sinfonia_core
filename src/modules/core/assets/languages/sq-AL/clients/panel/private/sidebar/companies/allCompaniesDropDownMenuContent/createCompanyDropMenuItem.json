@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/createCompanyDropMenuItem.tsx",
+  "addCompany": "Shto kompani",
+  "dialogTitle": "Krijo kompani",
+  "dialogDescription": "Krijoni një kompani të re duke përdorur formularin më poshtë."
+}

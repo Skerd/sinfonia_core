@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/index.tsx",
+  "title": "Server Monitoring",
+  "description": "Real-time server health, performance metrics, and user activity monitoring"
+}

@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/components/custom/apiSelect/index.tsx",
+  "search": "Kërko",
+  "noResults": "Nuk u gjet asnjë rezultat.",
+  "more": "më shumë",
+  "clear": "E qartë",
+  "createNewModel": "Krijo '{}' të ri",
+  "createNewUser": "Krijo përdorues të ri"
+}

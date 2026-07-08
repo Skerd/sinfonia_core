@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
+  "title": "States",
+  "description": "Manage states",
+  "createState": "Create state",
+  "searchPlaceholder": "Search by name, code, or add filters...",
+  "noData": "No states found",
+  "failTitle": "Failed to load states",
+  "failDescription": "An error occurred while loading states. Please try again.",
+  "status": "Status",
+  "name": "Name",
+  "code": "Code",
+  "country": "Country",
+  "deleted": "Deleted",
+  "active": "Active",
+  "fields": {
+    "name": "Name",
+    "code": "Code",
+    "country": "Country",
+    "createdBy": "Created by",
+    "company": "Company",
+    "deletedAt": "Status",
+    "deletedBy": "Deleted by"
+  }
+}
