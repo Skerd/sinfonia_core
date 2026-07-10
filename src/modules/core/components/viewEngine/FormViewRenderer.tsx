@@ -136,14 +136,15 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
     };
 
     return (
-        <div className="flex-full gap-4">
+        // Avoid nested `.flex-full` (each sets overflow-y: auto) — panel content is the sole scroll root.
+        <div className="flex flex-col gap-4">
             {!hideChrome && (
                 <Header
                     title={buildTitleBreadcrumb(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
                     description={resolveLanguageKey("formHeader.description")}
                 />
             )}
-            <div className={`flex-full space-y-4 ${hideChrome ? "px-0 pb-2" : "px-2 pb-[100px]"}`}>
+            <div className={`space-y-4 ${hideChrome ? "px-0 pb-2" : "px-2 pb-[100px]"}`}>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit as any)} className="grid gap-4">
 

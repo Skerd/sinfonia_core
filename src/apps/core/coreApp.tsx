@@ -56,9 +56,9 @@ function CoreApp() {
                                             <Route path="/:menu?/:subview?/:id?/*" element={
                                                 <>
                                                     <PanelHomePage />
-                                                    <SidebarProvider className="">
+                                                    <SidebarProvider className="h-svh max-h-svh min-h-0 overflow-hidden">
                                                         <AdministrativePanelSideBar />
-                                                        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+                                                        <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
                                                             <CenterPanel />
                                                         </div>
                                                     </SidebarProvider>

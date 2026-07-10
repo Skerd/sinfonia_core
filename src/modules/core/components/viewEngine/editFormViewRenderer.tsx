@@ -200,12 +200,13 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
     };
 
     return (
-        <div className="flex-full gap-4">
+        // Avoid nested `.flex-full` (each sets overflow-y: auto) — panel content is the sole scroll root.
+        <div className="flex flex-col gap-4">
             <Header
                 title={buildTitleBreadcrumb(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
                 description={resolveLanguageKey("formHeader.description")}
             />
-            <div className="flex-full px-2 pb-[100px] space-y-4">
+            <div className="px-2 pb-[100px] space-y-4">
                 {
                     loadingData ?
                     <Loader />

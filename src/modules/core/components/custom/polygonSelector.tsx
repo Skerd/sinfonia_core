@@ -617,7 +617,12 @@ function PolygonSelector({
                 )
             }
 
-            <div className="w-full max-w-3xl mx-auto max-h-full h-full">
+            {/*
+              Only stretch to parent height in overlay/dashboard (`fillHeight`).
+              In forms, `h-full` resolves against the panel scrollport and forces a
+              second scrollbar alongside the page scroll once the selector mounts.
+            */}
+            <div className={cn("w-full max-w-3xl mx-auto", fillHeight && "h-full max-h-full")}>
 
                 <div
                     className={cn("relative w-full max-w-3xl mx-auto", className)}

@@ -87,11 +87,14 @@ function CenterPanel({resolveLanguageKey, standalone}: CenterPanelProps){
     const Main = standalone ? "main" : SidebarInset;
     const hideHeader = standalone || (menu === "company" && subview === "chats" && isMobile && activeChannelId);
 
+    // Do not use `.flex-full` here: that class always sets `overflow-y: auto`, which
+    // overrides `overflow-hidden` and creates nested scrollports (double scrollbar +
+    // empty "black" region at the bottom of tall forms).
     return (
-        <Main className="h-svh min-w-0 flex-full max-h-svh overflow-hidden">
+        <Main className="flex h-svh max-h-svh min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
             {
                 !hideHeader &&
-                <header className="z-40 sticky flex pt-1 pe-1 items-center gap-2 shrink-0 border-b">
+                <header className="z-40 sticky flex shrink-0 items-center gap-2 border-b pt-1 pe-1">
                     <SidebarTrigger />
                     <Separator orientation="vertical" className="my-1" />
                     <Breadcrumb>
@@ -122,10 +125,10 @@ function CenterPanel({resolveLanguageKey, standalone}: CenterPanelProps){
                     </div>
                 </header>
             }
-            <div className={cn("min-w-0 flex-full justify-center overflow-hidden", standalone && "h-full")}>
+            <div className={cn("flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden", standalone && "h-full")}>
                 <div
                     className={clsx(
-                        "min-w-0 w-full max-w-full mx-auto flex-full",
+                        "mx-auto flex min-h-0 min-w-0 w-full max-w-full flex-1 flex-col overflow-y-auto",
                         standalone ? "h-full" : menu === "company" && subview === "chats" && isMobile ? "px-0" : "px-2 pb-2 mt-2",
                     )}
                 >
@@ -141,7 +144,6 @@ function CenterPanel({resolveLanguageKey, standalone}: CenterPanelProps){
                             })
                     }
                 </div>
-                {/*<div style={{height: "25px", minHeight: "25px"}} />*/}
             </div>
         </Main>
     )
