@@ -13,6 +13,7 @@ import WebsocketResource from "@coreModule/clients/panel/private/online/serverHe
 import KafkaResource from "@coreModule/clients/panel/private/online/serverHealth/kafka.tsx";
 import TelegramResource from "@coreModule/clients/panel/private/online/serverHealth/telegram.tsx";
 import AssistantResource from "@coreModule/clients/panel/private/online/serverHealth/assistant.tsx";
+import CronResource from "@coreModule/clients/panel/private/online/serverHealth/cron.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {ServerHealthFormResponseType} from "armonia/src/modules/core/api/auxiliary/private/serverHealth/serverHealth.dto.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -117,6 +118,7 @@ function ServerHealth({
                                     <KafkaResource />
                                     <TelegramResource />
                                     <AssistantResource />
+                                    <CronResource />
                                 </div>
                             }
                         </>
