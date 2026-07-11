@@ -91,6 +91,8 @@ const createInitialServerHealth = (): ServerHealthFormResponseType => ({
                 rooms: [],
                 users: 0,
                 messages: 0,
+                failedJobs: 0,
+                totalTime: 0,
                 url: "",
                 circuitBreaker: createDefaultCircuitBreaker()
             },

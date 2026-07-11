@@ -5,33 +5,42 @@ import {clsx} from "clsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
-function WebsocketMessages({title}:{title: string}){
-    const {messages, connected} = useSelector((state: RootState) => state.serverResources.serverHealth.services!.websocket);
-    if( !connected ){
-        return <></>
-    }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {messages?.toLocaleString()}</Badge>)
+function useWebsocket(){
+    return useSelector((state: RootState) => state.serverResources.serverHealth.services!.websocket);
 }
-function WebsocketUsers({title}:{title: string}){
-    const {users, connected} = useSelector((state: RootState) => state.serverResources.serverHealth.services!.websocket);
+
+function WebsocketJobs({title}:{title: string}){
+    const {messages, connected} = useWebsocket();
     if( !connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {users?.toLocaleString()}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {messages?.toLocaleString() || 0}</Badge>)
 }
-function WebsocketRooms({title}:{title: string}){
-    const {rooms, connected} = useSelector((state: RootState) => state.serverResources.serverHealth.services!.websocket);
+function WebsocketFailedJobs({title}:{title: string}){
+    const {failedJobs, connected} = useWebsocket();
     if( !connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {rooms?.length.toLocaleString() || "-"}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {(failedJobs || 0).toLocaleString()}</Badge>)
+}
+function WebsocketAvgJobTime({title}:{title: string}){
+    const {failedJobs, messages, totalTime, connected} = useWebsocket();
+    if( !connected ){
+        return <></>
+    }
+    const ops = (failedJobs || 0) + (messages || 0);
+    return (
+        <Badge variant="outline" className="text-xs font-medium">
+            {title}: {ops ? `${((totalTime || 0) / ops).toFixed(2)}ms` : "-"}
+        </Badge>
+    )
 }
 function WebsocketUptime({title, resolveLanguageKey}:{title: string, resolveLanguageKey: ResolveLanguageKey}){
-    const {lastStart, connected} = useSelector((state: RootState) => state.serverResources.serverHealth.services!.websocket);
+    const {lastStart, connected} = useWebsocket();
     if( !connected ){
         return <></>
     }
@@ -39,19 +48,36 @@ function WebsocketUptime({title, resolveLanguageKey}:{title: string, resolveLang
 }
 
 function WebsocketOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}){
-    const {connected} = useSelector((state: RootState) => state.serverResources.serverHealth.services!.websocket);
+    const {connected} = useWebsocket();
     return (
-        <TooltipDisplayer tooltip={resolveLanguageKey(connected ? "online" : "offline")}>
-            <MessageSquare className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
-        </TooltipDisplayer>
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <MessageSquare className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
     )
 }
-function WebsocketReady({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}){
-    const {connected} = useSelector((state: RootState) => state.serverResources.serverHealth.services!.websocket);
+function WebsocketHost({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}){
+    const {url} = useWebsocket();
+    // url is `ws://hostname:port` — surface as host • port like Mongo's host • name.
+    let host = "";
+    let port = "";
+    try {
+        if (url) {
+            const parsed = new URL(url);
+            host = parsed.hostname;
+            port = parsed.port;
+        }
+    } catch {
+        host = url || "";
+    }
     return (
-        <p className="text-xs text-muted-foreground">
-            {connected ? resolveLanguageKey("online") : resolveLanguageKey("offline")}
-        </p>
+        <p className="text-xs text-muted-foreground">{host || resolveLanguageKey("offline")}{port && ` • ${port}`}</p>
     )
 }
 
@@ -59,7 +85,7 @@ type WebsocketResourceProps = WithLanguageType & {}
 
 function WebsocketResource({resolveLanguageKey}: WebsocketResourceProps){
 
-    const {connected} = useSelector((state: RootState) => state.serverResources.serverHealth.services!.websocket);
+    const {connected} = useWebsocket();
 
     return (
         <div className={cn("flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background space-y-1", {"border-destructive animate-pulse": !connected})}>
@@ -67,13 +93,13 @@ function WebsocketResource({resolveLanguageKey}: WebsocketResourceProps){
                 <WebsocketOnline resolveLanguageKey={resolveLanguageKey} />
                 <div>
                     <p className={cn("text-sm font-medium", {"text-destructive": !connected})}>{resolveLanguageKey("websocketServerTitle")}</p>
-                    <WebsocketReady resolveLanguageKey={resolveLanguageKey} />
+                    <WebsocketHost resolveLanguageKey={resolveLanguageKey} />
                 </div>
             </div>
             <div className="flex gap-1 flex-wrap max-w-full">
-                <WebsocketMessages title={resolveLanguageKey("messages")} />
-                <WebsocketUsers title={resolveLanguageKey("users")} />
-                <WebsocketRooms title={resolveLanguageKey("rooms")} />
+                <WebsocketJobs title={resolveLanguageKey("jobs")} />
+                <WebsocketFailedJobs title={resolveLanguageKey("failed")} />
+                <WebsocketAvgJobTime title={resolveLanguageKey("avgTime")} />
                 <WebsocketUptime title={resolveLanguageKey("uptime")} resolveLanguageKey={resolveLanguageKey}/>
             </div>
         </div>
