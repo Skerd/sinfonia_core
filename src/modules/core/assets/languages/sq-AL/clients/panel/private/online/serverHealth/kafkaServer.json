@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/kafkaServer.tsx",
+  "kafkaServerTitle": "Serveri Kafka",
+  "online": "Online",
+  "offline": "Jashtë linje",
+  "uptime": "Koha e funksionimit",
+  "jobs": "Punët",
+  "failed": "Dështoi",
+  "avgTime": "Mesatar Koha",
+  "consumers": "Konsumatorët",
+  "noConsumersRegistered": "Nuk ka konsumatorë të regjistruar",
+  "day": "ditë",
+  "days": "ditë",
+  "hour": "orë",
+  "hours": "orë",
+  "minute": "minutë",
+  "minutes": "minuta",
+  "second": "sekondë",
+  "seconds": "sekonda"
+}

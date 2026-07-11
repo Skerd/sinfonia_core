@@ -14,5 +14,7 @@
   "lastUpdated": "Last Updated",
   "enabled": "Enabled",
   "disabled": "Disabled",
-  "readyState": "Ready State"
+  "readyState": "Ready State",
+  "infrastructureServers": "Infrastructure servers",
+  "serviceServers": "Service servers"
 }

@@ -11,6 +11,7 @@ import MongoResource from "@coreModule/clients/panel/private/online/serverHealth
 import RedisResource from "@coreModule/clients/panel/private/online/serverHealth/redis.tsx";
 import WebsocketResource from "@coreModule/clients/panel/private/online/serverHealth/websocket.tsx";
 import KafkaResource from "@coreModule/clients/panel/private/online/serverHealth/kafka.tsx";
+import KafkaServerResource from "@coreModule/clients/panel/private/online/serverHealth/kafkaServer.tsx";
 import TelegramResource from "@coreModule/clients/panel/private/online/serverHealth/telegram.tsx";
 import AssistantResource from "@coreModule/clients/panel/private/online/serverHealth/assistant.tsx";
 import CronResource from "@coreModule/clients/panel/private/online/serverHealth/cron.tsx";
@@ -112,15 +113,30 @@ function ServerHealth({
                                 error ?
                                 <SimpleError title={resolveLanguageKey("failTitle")} description={resolveLanguageKey("failTitleTooltip")} onClick={() => {setForceReload(forceReload + 1)}}/>
                                 :
-                                <div className="space-y-3">
-                                    <MongoResource />
-                                    <RedisResource />
-                                    <ApiResource />
-                                    <WebsocketResource />
-                                    <KafkaResource />
-                                    <AssistantResource />
-                                    <CronResource />
-                                    <TelegramResource />
+                                <div className="space-y-5">
+                                    <section className="space-y-2">
+                                        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                                            {resolveLanguageKey("infrastructureServers")}
+                                        </h3>
+                                        <div className="space-y-3">
+                                            <MongoResource />
+                                            <RedisResource />
+                                            <KafkaResource />
+                                        </div>
+                                    </section>
+                                    <section className="space-y-2">
+                                        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                                            {resolveLanguageKey("serviceServers")}
+                                        </h3>
+                                        <div className="space-y-3">
+                                            <ApiResource />
+                                            <WebsocketResource />
+                                            <KafkaServerResource />
+                                            <AssistantResource />
+                                            <CronResource />
+                                            <TelegramResource />
+                                        </div>
+                                    </section>
                                 </div>
                             }
                         </>

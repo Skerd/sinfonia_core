@@ -73,15 +73,19 @@ const createInitialServerHealth = (): ServerHealthFormResponseType => ({
                 failedJobs: 0,
                 completedJobs: 0,
                 totalTime: 0,
+                nodes: [],
                 circuitBreaker: createDefaultCircuitBreaker()
             },
             kafka: {
                 lastStart: 0,
                 connected: false,
                 enabled: false,
-                failedJobs: 0,
-                completedJobs: 0,
-                totalTime: 0,
+                brokers: [],
+                brokersOnline: [],
+                brokerCount: 0,
+                topics: [],
+                topicCount: 0,
+                clusterId: "",
                 circuitBreaker: createDefaultCircuitBreaker()
             },
             websocket: {
@@ -109,6 +113,22 @@ const createInitialServerHealth = (): ServerHealthFormResponseType => ({
                 totalMs: 0,
                 averageMs: 0,
                 circuitBreaker: createDefaultCircuitBreaker()
+            },
+            kafkaServer: {
+                connected: false,
+                lastHeartbeat: 0,
+                lastStart: 0,
+                serverId: "",
+                processed: 0,
+                completed: 0,
+                failed: 0,
+                totalMs: 0,
+                averageMs: 0,
+                consumers: {
+                    expected: 0,
+                    running: 0,
+                    list: []
+                }
             }
         }
 });

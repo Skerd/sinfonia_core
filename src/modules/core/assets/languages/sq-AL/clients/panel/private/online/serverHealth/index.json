@@ -14,5 +14,7 @@
   "lastUpdated": "Përditësimi i fundit",
   "enabled": "Aktivizuar",
   "disabled": "I paaftë",
-  "readyState": "Gjendja e gatshme"
+  "readyState": "Gjendja e gatshme",
+  "infrastructureServers": "Serverët e infrastrukturës",
+  "serviceServers": "Serverët e shërbimeve"
 }
