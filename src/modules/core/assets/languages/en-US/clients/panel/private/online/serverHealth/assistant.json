@@ -3,7 +3,16 @@
   "assistantServerTitle": "AI Assistant Server",
   "online": "Online",
   "offline": "Offline",
-  "answered": "Answered",
+  "uptime": "Uptime",
+  "jobs": "Jobs",
   "failed": "Failed",
-  "averageMs": "Avg (ms)"
+  "avgTime": "Avg. Time",
+  "day": "day",
+  "days": "days",
+  "hour": "hour",
+  "hours": "hours",
+  "minute": "minute",
+  "minutes": "minutes",
+  "second": "second",
+  "seconds": "seconds"
 }

@@ -5,7 +5,8 @@ import {Bot} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
+import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 /** The AI-assistant responder runs as its own dedicated process (assistantServer). */
@@ -13,42 +14,65 @@ function useAssistant(){
     return useSelector((state: RootState) => state.serverResources.serverHealth.services?.assistant);
 }
 
-function AssistantOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}){
-    const connected = !!useAssistant()?.connected;
-    return (
-        <TooltipDisplayer tooltip={resolveLanguageKey(connected ? "online" : "offline")}>
-            <Bot className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
-        </TooltipDisplayer>
-    )
-}
-function AssistantServerName({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}){
-    const assistant = useAssistant();
-    return (
-        <p className="text-xs text-muted-foreground">
-            {assistant?.connected ? (assistant?.serverId || resolveLanguageKey("online")) : resolveLanguageKey("offline")}
-        </p>
-    )
-}
-function AssistantAnswered({title}:{title: string}){
+function AssistantJobs({title}:{title: string}){
     const assistant = useAssistant();
     if( !assistant?.connected ){
         return <></>
     }
     return (<Badge variant="outline" className="text-xs font-medium">{title}: {assistant.answered?.toLocaleString() || 0}</Badge>)
 }
-function AssistantFailed({title}:{title: string}){
+function AssistantFailedJobs({title}:{title: string}){
     const assistant = useAssistant();
     if( !assistant?.connected ){
         return <></>
     }
     return (<Badge variant="outline" className="text-xs font-medium">{title}: {assistant.failed?.toLocaleString() || 0}</Badge>)
 }
-function AssistantAverage({title}:{title: string}){
+function AssistantAvgJobTime({title}:{title: string}){
     const assistant = useAssistant();
     if( !assistant?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {assistant.averageMs?.toLocaleString() || 0}</Badge>)
+    return (
+        <Badge variant="outline" className="text-xs font-medium">
+            {title}: {(assistant.answered || 0) ? `${(assistant.averageMs || 0).toFixed(2)}ms` : "-"}
+        </Badge>
+    )
+}
+function AssistantUptime({title, resolveLanguageKey}:{title: string, resolveLanguageKey: ResolveLanguageKey}){
+    const assistant = useAssistant();
+    if( !assistant?.connected ){
+        return <></>
+    }
+    const lastStart = assistant.lastStart || assistant.lastHeartbeat || 0;
+    if( !lastStart ){
+        return <></>
+    }
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatDurationInDaysHoursOrMinutes(Date.now() - lastStart, resolveLanguageKey)}</Badge>)
+}
+
+function AssistantOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}){
+    const connected = !!useAssistant()?.connected;
+    return (
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Bot className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
+    )
+}
+function AssistantServerName({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}){
+    const {serverId} = useAssistant() || {};
+    const [host, ...rest] = (serverId || "").split(":");
+    const name = rest.join(":");
+    return (
+        <p className="text-xs text-muted-foreground">{host || resolveLanguageKey("offline")}{name && ` • ${name}`}</p>
+    )
 }
 
 type AssistantResourceProps = WithLanguageType & {}
@@ -67,9 +91,10 @@ function AssistantResource({resolveLanguageKey}: AssistantResourceProps){
                 </div>
             </div>
             <div className="flex gap-1 flex-wrap max-w-full">
-                <AssistantAnswered title={resolveLanguageKey("answered")} />
-                <AssistantFailed title={resolveLanguageKey("failed")} />
-                <AssistantAverage title={resolveLanguageKey("averageMs")} />
+                <AssistantJobs title={resolveLanguageKey("jobs")} />
+                <AssistantFailedJobs title={resolveLanguageKey("failed")} />
+                <AssistantAvgJobTime title={resolveLanguageKey("avgTime")} />
+                <AssistantUptime title={resolveLanguageKey("uptime")} resolveLanguageKey={resolveLanguageKey}/>
             </div>
         </div>
     )
