@@ -86,7 +86,7 @@ function CustomDateDisplayer({
             }
         ));
 
-    }, [timeZone, date, showOnlyWeekDay, showOnlyYesterday]);
+    }, [timeZone, date, showOnlyWeekDay, showOnlyYesterday, resolveLanguageKey]);
 
     return (
         <TooltipDisplayer tooltip={fullDate}>

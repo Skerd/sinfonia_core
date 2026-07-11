@@ -1,4 +1,5 @@
 {
+    "path": "src/modules/core/components/viewEngine/sheetAuditHistory.tsx",
     "menuItem": "Activity",
     "drawerTitle": "Activity",
     "drawerDescription": "Changes to this record over time.",

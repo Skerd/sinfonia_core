@@ -92,6 +92,9 @@
         "smtpServers": {
           "title": "Posta dalëse"
         },
+        "messagingProviders": {
+          "title": "Ofruesit e Mesazheve"
+        },
         "constructors": {
           "title": "Konstruktorët"
         },
