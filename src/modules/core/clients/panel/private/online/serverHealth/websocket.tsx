@@ -62,9 +62,16 @@ function WebsocketOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLangu
         </TooltipProvider>
     )
 }
-function WebsocketHost({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}){
-    const {url} = useWebsocket();
-    // url is `ws://hostname:port` — surface as host • port like Mongo's host • name.
+function WebsocketServerName({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}){
+    const {serverId, url} = useWebsocket();
+    if (serverId) {
+        const [host, ...rest] = serverId.split(":");
+        const name = rest.join(":");
+        return (
+            <p className="text-xs text-muted-foreground">{host || resolveLanguageKey("offline")}{name && ` • ${name}`}</p>
+        );
+    }
+    // Fallback for older payloads without serverId: parse ws://host:port.
     let host = "";
     let port = "";
     try {
@@ -78,7 +85,7 @@ function WebsocketHost({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguag
     }
     return (
         <p className="text-xs text-muted-foreground">{host || resolveLanguageKey("offline")}{port && ` • ${port}`}</p>
-    )
+    );
 }
 
 type WebsocketResourceProps = WithLanguageType & {}
@@ -93,7 +100,7 @@ function WebsocketResource({resolveLanguageKey}: WebsocketResourceProps){
                 <WebsocketOnline resolveLanguageKey={resolveLanguageKey} />
                 <div>
                     <p className={cn("text-sm font-medium", {"text-destructive": !connected})}>{resolveLanguageKey("websocketServerTitle")}</p>
-                    <WebsocketHost resolveLanguageKey={resolveLanguageKey} />
+                    <WebsocketServerName resolveLanguageKey={resolveLanguageKey} />
                 </div>
             </div>
             <div className="flex gap-1 flex-wrap max-w-full">

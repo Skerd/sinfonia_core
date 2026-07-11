@@ -94,6 +94,7 @@ const createInitialServerHealth = (): ServerHealthFormResponseType => ({
                 failedJobs: 0,
                 totalTime: 0,
                 url: "",
+                serverId: "",
                 circuitBreaker: createDefaultCircuitBreaker()
             },
             telegram: {
