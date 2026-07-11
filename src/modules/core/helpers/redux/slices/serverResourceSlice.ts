@@ -97,10 +97,16 @@ const createInitialServerHealth = (): ServerHealthFormResponseType => ({
                 circuitBreaker: createDefaultCircuitBreaker()
             },
             telegram: {
+                lastStart: 0,
+                lastHeartbeat: 0,
                 connected: false,
                 botName: "",
+                serverId: "",
                 messages: 0,
                 users: 0,
+                failed: 0,
+                totalMs: 0,
+                averageMs: 0,
                 circuitBreaker: createDefaultCircuitBreaker()
             }
         }

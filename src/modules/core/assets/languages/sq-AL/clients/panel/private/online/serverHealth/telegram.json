@@ -3,6 +3,16 @@
   "telegramServerTitle": "Serveri i Telegramit",
   "online": "Online",
   "offline": "Jashtë linje",
-  "connectedClients": "Klientë të lidhur",
-  "messages": "Mesazhet"
+  "messages": "Mesazhet",
+  "failed": "Dështuar",
+  "avgTime": "Koha mesatare",
+  "uptime": "Koha e funksionimit",
+  "day": "ditë",
+  "days": "ditë",
+  "hour": "orë",
+  "hours": "orë",
+  "minute": "minutë",
+  "minutes": "minuta",
+  "second": "sekondë",
+  "seconds": "sekonda"
 }

@@ -3,6 +3,16 @@
   "telegramServerTitle": "Telegram Server",
   "online": "Online",
   "offline": "Offline",
-  "connectedClients": "Connected Clients",
-  "messages": "Messages"
+  "messages": "Messages",
+  "failed": "Failed",
+  "avgTime": "Avg. Time",
+  "uptime": "Uptime",
+  "day": "day",
+  "days": "days",
+  "hour": "hour",
+  "hours": "hours",
+  "minute": "minute",
+  "minutes": "minutes",
+  "second": "second",
+  "seconds": "seconds"
 }
