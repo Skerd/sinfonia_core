@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/assistant.tsx",
+  "assistantServerTitle": "Serveri i Asistentit AI",
+  "online": "Online",
+  "offline": "Jashtë linje",
+  "answered": "Të përgjigjura",
+  "failed": "Të dështuara",
+  "averageMs": "Mesatarja (ms)"
+}
