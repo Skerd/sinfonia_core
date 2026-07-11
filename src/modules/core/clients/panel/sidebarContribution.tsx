@@ -99,6 +99,14 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
             usersPermissions: [],
             atLeastOnePermission: true,
         },
+        {
+            title: resolveLanguageKey("menus.account.apps.connectedApps.title"),
+            url: "/account/apps",
+            icon: Boxes,
+            permissions: [],
+            usersPermissions: [],
+            atLeastOnePermission: true,
+        },
     ];
     return {
         title: resolveLanguageKey("menus.account.title"),

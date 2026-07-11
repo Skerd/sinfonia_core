@@ -30,6 +30,7 @@ import EditSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSett
 import AllMessagingProviders from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders";
 import CreateMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/createMessagingProvider.tsx";
 import EditMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/editMessagingProvider.tsx";
+import Apps from "@coreModule/clients/panel/private/apps";
 
 function safeDecode(value: string | null): string | undefined {
     if (value == null || value === "") return undefined;
@@ -64,6 +65,7 @@ function renderCoreCenterPanelContent({
     if (menu === "account") {
         if (["account", "security", "notifications"].includes(subview || "")) return <AccountSettings />;
         if (subview === "notificationCenter") return <NotificationCenter />;
+        if (subview === "apps") return <Apps />;
     }
 
     // Tenancy routes
