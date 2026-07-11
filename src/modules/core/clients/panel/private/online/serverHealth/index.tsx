@@ -14,6 +14,7 @@ import KafkaResource from "@coreModule/clients/panel/private/online/serverHealth
 import TelegramResource from "@coreModule/clients/panel/private/online/serverHealth/telegram.tsx";
 import AssistantResource from "@coreModule/clients/panel/private/online/serverHealth/assistant.tsx";
 import CronResource from "@coreModule/clients/panel/private/online/serverHealth/cron.tsx";
+import ApiResource from "@coreModule/clients/panel/private/online/serverHealth/api.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {ServerHealthFormResponseType} from "armonia/src/modules/core/api/auxiliary/private/serverHealth/serverHealth.dto.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -114,11 +115,12 @@ function ServerHealth({
                                 <div className="space-y-3">
                                     <MongoResource />
                                     <RedisResource />
+                                    <ApiResource />
                                     <WebsocketResource />
                                     <KafkaResource />
-                                    <TelegramResource />
                                     <AssistantResource />
                                     <CronResource />
+                                    <TelegramResource />
                                 </div>
                             }
                         </>
