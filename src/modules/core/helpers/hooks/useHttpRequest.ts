@@ -337,6 +337,14 @@ export default function useHttpRequest<TData = unknown>(
             toastConfig["error"] = (err) => {
                 console.log(err);
                 const requestError = (isPlainObject(err) ? err : {}) as Partial<HttpError>;
+                // Silent settle (aborted request / session expiry) — no user-facing toast.
+                if (
+                    (requestError.status === 403 || requestError.status === 401) &&
+                    !requestError.message &&
+                    !requestError.error_code
+                ) {
+                    return null as unknown as string;
+                }
                 let message = String(runtimeProps.resolveLanguageKey?.("axios.error.title") || "");
                 let serverError = requestError.message || "";
                 console.log(requestError, serverError);
@@ -346,14 +354,6 @@ export default function useHttpRequest<TData = unknown>(
                 if (!!serverError) {
                     message = (!!message ? (message + ": ") : "") + serverError;
                 }
-                if (requestError.status === 403) {
-                    // return null;
-                }
-                // if( !!err.content && Array.isArray(err.content) ){
-                // err.content.forEach( (errC: any) => {
-                //     toast.error(errC.message);
-                // })
-                // }
                 return message;
             }
         }
@@ -465,9 +465,18 @@ export default function useHttpRequest<TData = unknown>(
                 if (rawData instanceof Blob) {
                     try { rawData = JSON.parse(await rawData.text()); } catch { rawData = {}; }
                 }
-                const responseData = (isPlainObject(rawData) ? rawData : {}) as Partial<HttpError>;
+                const responseData = (isPlainObject(rawData) ? rawData : {}) as Partial<HttpError> & {
+                    errorCode?: string;
+                };
                 const status = axiosLikeError?.response?.status;
-                setError({...responseData, status} as HttpError);
+                const errorCode = responseData.error_code || responseData.errorCode;
+                const isSessionExpired =
+                    status === 401 ||
+                    errorCode === "token_verification_failed" ||
+                    errorCode === "no_token" ||
+                    errorCode === "session_not_found";
+
+                setError({...responseData, status, error_code: errorCode || responseData.error_code} as HttpError);
                 if (
                     responseData?.error_code === "rate_limit_exceeded" &&
                     typeof responseData?.availableIn === "number" &&
@@ -481,8 +490,11 @@ export default function useHttpRequest<TData = unknown>(
                         rateLimitTimeoutRef.current = null;
                     }, responseData.availableIn * 1000);
                 }
-                if (!currentProps.hideIfError) {
+                // Session expiry is handled by withAuthentication's dialog — skip the error toast.
+                if (!currentProps.hideIfError && !isSessionExpired) {
                     toastReject({...responseData, status});
+                } else if (isSessionExpired) {
+                    toastReject({status: 403});
                 }
                 childError(err);
 

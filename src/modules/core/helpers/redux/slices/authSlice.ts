@@ -18,6 +18,8 @@ export interface AuthenticationState {
     token: string | null;
     refreshToken: string | null;
     user: ValidateTokenFormResponseType;
+    /** True when a mid-session API call detected an expired/invalid auth session. */
+    sessionExpired: boolean;
 }
 
 /**
@@ -44,7 +46,8 @@ const createEmptyUser = (): ValidateTokenFormResponseType => {
 const initialState: AuthenticationState = {
     token: getToken() || null,
     refreshToken: getRefreshToken() || null,
-    user: getUser() || createEmptyUser()
+    user: getUser() || createEmptyUser(),
+    sessionExpired: false,
 };
 
 export const authenticationSlice = createSlice({
@@ -63,6 +66,7 @@ export const authenticationSlice = createSlice({
                 state.token = null;
                 state.refreshToken = null;
                 state.user = createEmptyUser();
+                state.sessionExpired = false;
                 return;
             }
 
@@ -70,6 +74,7 @@ export const authenticationSlice = createSlice({
             setRefreshToken(refreshToken);
             state.token = token;
             state.refreshToken = refreshToken;
+            state.sessionExpired = false;
         },
         /**
          * Replaces current user profile after token validation.
@@ -113,9 +118,25 @@ export const authenticationSlice = createSlice({
             state.user = createEmptyUser();
             state.token = null;
             state.refreshToken = null;
-        }
+            state.sessionExpired = false;
+        },
+        /**
+         * Marks the session as expired after an authenticated API call fails auth.
+         * Clears persisted credentials so further requests stop attaching a dead token,
+         * but leaves `sessionExpired` set so the UI can show the expiry dialog first.
+         */
+        markSessionExpired: (state) => {
+            if (state.sessionExpired) {
+                return;
+            }
+            clearAuth();
+            state.token = null;
+            state.refreshToken = null;
+            state.user = createEmptyUser();
+            state.sessionExpired = true;
+        },
     }
 })
 
-export const { logIn, signOut, updateTimezone, updateUserData, updateToken, updateRefreshToken, updateUserValue } = authenticationSlice.actions;
+export const { logIn, signOut, updateTimezone, updateUserData, updateToken, updateRefreshToken, updateUserValue, markSessionExpired } = authenticationSlice.actions;
 export default authenticationSlice.reducer;

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {LoaderCircle} from "lucide-react";
 import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -29,7 +29,8 @@ const SESSION_EXPIRED_REDIRECT_DELAY_MS = 3000;
  * - Resolves token from Redux (`state.authentication.token`) or localStorage (e.g. after refresh).
  * - Calls `/api/user/validateToken` to validate the token and load user data.
  * - If valid: dispatches user data and token, then renders the wrapped component.
- * - If invalid or no token: shows "session expired" (when token was present) or redirects to login.
+ * - If invalid or no token: shows "session expired" (when token was present / mid-session
+ *   expiry was detected) or redirects to login.
  *
  * The wrapped component receives all props passed to the enhanced component (including
  * `resolveLanguageKey` and other `withLanguage` props). Use this HOC for any route that
@@ -51,16 +52,46 @@ const withAuthentication = () => <TProps extends object>(
         const [loading, setLoading] = useState<boolean>(true);
         const [failedAuthentication, setFailedAuthentication] = useState<boolean>(false);
         const loginToken = useSelector((state: RootState) => state.authentication.token);
+        const sessionExpired = useSelector((state: RootState) => state.authentication.sessionExpired);
+        const redirectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
         const goToLogin = () => {
+            if (redirectTimeoutRef.current) {
+                clearTimeout(redirectTimeoutRef.current);
+                redirectTimeoutRef.current = null;
+            }
             dispatch(signOut());
             window.location.href = "/authenticate/login";
-            // navigate("/authenticate/login");
             setLoading(false);
             setFailedAuthentication(false);
-        }
+        };
+
+        const showSessionExpiredAndRedirect = () => {
+            setLoading(false);
+            setFailedAuthentication(true);
+            if (redirectTimeoutRef.current) {
+                clearTimeout(redirectTimeoutRef.current);
+            }
+            redirectTimeoutRef.current = setTimeout(() => {
+                goToLogin();
+            }, SESSION_EXPIRED_REDIRECT_DELAY_MS);
+        };
 
         useEffect(() => {
+            return () => {
+                if (redirectTimeoutRef.current) {
+                    clearTimeout(redirectTimeoutRef.current);
+                }
+            };
+        }, []);
+
+        useEffect(() => {
+            // Mid-session expiry from apiClient (withAxios / any authenticated call).
+            if (sessionExpired) {
+                showSessionExpiredAndRedirect();
+                return;
+            }
+
             setLoading(true);
             setFailedAuthentication(false);
 
@@ -84,14 +115,11 @@ const withAuthentication = () => <TProps extends object>(
                 })
                 .catch(() => {
                     if (abortController.signal.aborted) return;
-                    setLoading(false);
-                    setFailedAuthentication(true);
-                    setTimeout(() => {
-                        goToLogin();
-                    }, SESSION_EXPIRED_REDIRECT_DELAY_MS);
+                    // Interceptor may already have set sessionExpired; either way show the dialog.
+                    showSessionExpiredAndRedirect();
                 });
             return () => abortController.abort();
-        }, [loginToken]);
+        }, [loginToken, sessionExpired]);
 
         if (loading) {
             return (
