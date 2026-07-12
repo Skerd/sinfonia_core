@@ -5,7 +5,7 @@ import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import { useAccess } from "@coreModule/helpers/hocs/withAccess.tsx";
-import { IconLink } from "@tabler/icons-react";
+import { IconInfoCircle, IconLink } from "@tabler/icons-react";
 
 /** Open/close wiring from `#SmallInfoCard`; renderer may bind extra props (e.g. `fetchId`). */
 export type SmallInfoCardLinkedSheetOuterProps = {
@@ -129,6 +129,8 @@ export default function SmallInfoCard({
         resourceHasPositiveRead(linkedAccess.read);
 
     const [linkedSheetOpen, setLinkedSheetOpen] = useState(false);
+    const tooltipText = tooltip != null ? String(tooltip).trim() : "";
+    const hasTooltip = tooltipText.length > 0;
 
     const checkValue = (v: ReactNode) => {
         if (v === null || v === undefined) return false;
@@ -142,70 +144,86 @@ export default function SmallInfoCard({
 
     return (
         <>
-            <TooltipDisplayer tooltip={tooltip}>
-                <div
-                    className={cn(
-                        "flex items-center gap-1 p-1 rounded-lg h-fit",
-                        containerStyles[variant],
-                    )}
-                >
-                    {Icon != null && (
-                        <div
+            <div
+                className={cn(
+                    "flex items-center gap-2 p-2 rounded-lg h-fit",
+                    containerStyles[variant],
+                )}
+            >
+                {Icon != null && (
+                    <div
+                        className={cn(
+                            "shrink-0 p-2.5 rounded-md",
+                            iconWrapStyles[variant],
+                        )}
+                    >
+                        <Icon
                             className={cn(
-                                "shrink-0 p-2 rounded-md",
-                                iconWrapStyles[variant],
+                                "h-5 w-5",
+                                accentTextStyles[variant],
                             )}
-                        >
-                            <Icon
-                                className={cn(
-                                    "h-4 w-4",
-                                    accentTextStyles[variant],
-                                )}
-                            />
-                        </div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                        <div className="text-xs font-medium text-muted-foreground">
+                        />
+                    </div>
+                )}
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1 min-w-0">
+                        <div className="text-sm font-medium text-muted-foreground truncate">
                             {title}
                         </div>
-                        {!dontRenderValue && (
-                            <div
-                                className={cn(
-                                    "text-sm font-semibold",
-                                    value ? valueTextStyles[variant] : undefined,
-                                )}
-                            >
-                                <HiddenElement>
-                                    {
-                                        !!show &&
-                                        <>
-                                            {checkValue(value) ? value : <div className="mt-0.5"><ValueNotSet /></div>}
-                                        </>
-                                    }
-                                </HiddenElement>
-                            </div>
+                        {hasTooltip && (
+                            <TooltipDisplayer tooltip={tooltipText}>
+                                <button
+                                    type="button"
+                                    className={cn(
+                                        "inline-flex shrink-0 items-center justify-center rounded-full",
+                                        "text-muted-foreground/70 hover:text-muted-foreground",
+                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                    )}
+                                    aria-label={tooltipText}
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <IconInfoCircle className="size-3.5" stroke={1.75} />
+                                </button>
+                            </TooltipDisplayer>
                         )}
                     </div>
-                    {showLinkedBadge && LinkedSheet != null && (
-                        <TooltipDisplayer tooltip={title}>
-                            <div
-                                className={cn(
-                                    "shrink-0 p-1 flex items-center justify-center rounded-md border border-border",
-                                    "bg-background text-xs font-semibold text-muted-foreground",
-                                    "hover:bg-muted hover:text-foreground hover:cursor-pointer",
-                                )}
-                                aria-label={title}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setLinkedSheetOpen(true);
-                                }}
-                            >
-                                <IconLink size={14} />
-                            </div>
-                        </TooltipDisplayer>
+                    {!dontRenderValue && (
+                        <div
+                            className={cn(
+                                "text-base font-semibold",
+                                value ? valueTextStyles[variant] : undefined,
+                            )}
+                        >
+                            <HiddenElement>
+                                {
+                                    !!show &&
+                                    <>
+                                        {checkValue(value) ? value : <div className="mt-0.5"><ValueNotSet /></div>}
+                                    </>
+                                }
+                            </HiddenElement>
+                        </div>
                     )}
                 </div>
-            </TooltipDisplayer>
+                {showLinkedBadge && LinkedSheet != null && (
+                    <TooltipDisplayer tooltip={title}>
+                        <div
+                            className={cn(
+                                "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
+                                "bg-background text-sm font-semibold text-muted-foreground",
+                                "hover:bg-muted hover:text-foreground hover:cursor-pointer",
+                            )}
+                            aria-label={title}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setLinkedSheetOpen(true);
+                            }}
+                        >
+                            <IconLink size={16} />
+                        </div>
+                    </TooltipDisplayer>
+                )}
+            </div>
             {LinkedSheet != null && (
                 <SmallInfoCardNestedSheets
                     LinkedSheet={LinkedSheet}

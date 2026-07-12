@@ -9,6 +9,11 @@ export type ViewRendererContext = {
     /** Per-field write permissions (edit forms). Nodes with permissions.write are hidden when the key is absent. */
     writeAccess?: Record<string, any>;
     mode: "sheet" | "form";
+    /**
+     * Sheet entity model (`ViewConfig.model`), used to namespace `#SheetGroup` collapse
+     * localStorage keys so the same section title stays independent across entity types.
+     */
+    sheetModel?: string;
     renderField?: (node: ViewNode, binding: FieldBinding, index: number) => ReactNode;
     /** Form submit / busy state (create & edit). */
     formLoading?: boolean;

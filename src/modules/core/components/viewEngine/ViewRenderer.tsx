@@ -305,6 +305,29 @@ function renderRegisteredComponent(
         }
     } else if (COMPONENTS_NEEDING_LANGUAGE.has(token)) {
         const rawTitle = resolvedProps.title;
+        if (token === "#SheetGroup") {
+            // Persist collapse against the raw language key (stable across locales),
+            // optionally namespaced by sheet model. Explicit `collapseKey` wins.
+            const explicitKey =
+                typeof resolvedProps.collapseKey === "string" && resolvedProps.collapseKey.length > 0
+                    ? resolvedProps.collapseKey
+                    : typeof resolvedProps.collapseStorageKey === "string" &&
+                        resolvedProps.collapseStorageKey.length > 0
+                      ? resolvedProps.collapseStorageKey
+                      : null;
+            const titleKey = typeof rawTitle === "string" && rawTitle.length > 0 ? rawTitle : null;
+            const derived =
+                explicitKey ??
+                (titleKey
+                    ? ctx.sheetModel
+                        ? `${ctx.sheetModel}:${titleKey}`
+                        : titleKey
+                    : null);
+            if (derived) {
+                resolvedProps.collapseStorageKey = derived;
+            }
+            delete resolvedProps.collapseKey;
+        }
         if (rawTitle && ctx.resolveLanguageKey) {
             resolvedProps.title = ctx.resolveLanguageKey(rawTitle);
         }

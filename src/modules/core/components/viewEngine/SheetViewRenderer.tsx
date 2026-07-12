@@ -1,4 +1,4 @@
-import {useState, type ReactNode, useEffect, useImperativeHandle, type ComponentType, useMemo} from "react";
+import {useState, type ReactNode, useEffect, useImperativeHandle, type ComponentType, useMemo, useRef, useCallback} from "react";
 import type { ViewConfig, ViewNode, SheetHeaderConfig } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type { AccessObject } from "@coreModule/helpers/hocs/withAccess.tsx";
@@ -30,6 +30,8 @@ import {
 } from "@coreModule/components/viewEngine/collectFieldLabelsFromViewConfig.ts";
 import {FLOATING_SHEET_CONTENT_CLASS} from "@coreModule/components/viewEngine/sheetFloatingChrome.ts";
 
+/** Keep in sync with `data-closed:duration-*` on `SheetContent`. */
+const SHEET_CLOSE_ANIMATION_MS = 280;
 export type SheetViewRendererProps = WithAxiosType<any, SingleForm> & {
     config: ViewConfig;
     data: Record<string, any>;
@@ -100,7 +102,7 @@ export type SheetViewRendererPublicProps = Omit<
     data: Record<string, any>;
 };
 
-const DEFAULT_CONTENT_CLASS = "max-w-[98vw] min-w-[98vw] lg:max-w-[45vw] lg:min-w-[45vw] overflow-y-auto border";
+const DEFAULT_CONTENT_CLASS = "max-w-[98vw] min-w-[98vw] lg:max-w-[58vw] lg:min-w-[58vw] overflow-y-auto border";
 
 function setValueAtDotPath(record: Record<string, any>, dotPath: string, value: unknown): Record<string, any> {
     const segments = dotPath.split(".").filter((s) => s.length > 0);
@@ -166,15 +168,57 @@ export function SheetViewRenderer({
     const [action, setAction] = useState("");
     const [forceReload, setForceReload] = useState(0);
     const [auditHistoryOpen, setAuditHistoryOpen] = useState(false);
+    /**
+     * Local open flag so exit animation can finish before parents that do
+     * `{action === "view" && <Sheet…/>}` unmount this tree.
+     */
+    const [present, setPresent] = useState(open);
+    const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const header = config.header;
     const readAccess = access.read && typeof access.read === "object" ? access.read : {};
     const deleteRestoreName = deleteRestoreConfirmLabel ?? (readAccess.name && data.name ? data.name : undefined);
+
+    const clearCloseTimer = useCallback(() => {
+        if (closeTimerRef.current != null) {
+            clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+        }
+    }, []);
+
+    useEffect(() => () => clearCloseTimer(), [clearCloseTimer]);
+
+    useEffect(() => {
+        if (open) {
+            clearCloseTimer();
+            setPresent(true);
+        }
+    }, [open, clearCloseTimer]);
+
+    const requestClose = useCallback(() => {
+        clearCloseTimer();
+        setPresent(false);
+        closeTimerRef.current = setTimeout(() => {
+            closeTimerRef.current = null;
+            onOpenChange(false);
+        }, SHEET_CLOSE_ANIMATION_MS);
+    }, [clearCloseTimer, onOpenChange]);
+
+    const handleOpenChange = useCallback((next: boolean) => {
+        if (next) {
+            clearCloseTimer();
+            setPresent(true);
+            onOpenChange(true);
+            return;
+        }
+        requestClose();
+    }, [clearCloseTimer, onOpenChange, requestClose]);
 
     const ctx: ViewRendererContext = {
         data,
         resolveLanguageKey,
         access: readAccess,
         mode: "sheet",
+        sheetModel: config.model,
         referenceCardUnitContext,
         unlinkEmbeddedRefPath: (dotPath: string) => {
             setData((prev: Record<string, any>) => {
@@ -246,8 +290,8 @@ export function SheetViewRenderer({
     }, [dataProps]);
 
     return (
-        <SheetMenuNavigateDismissProvider onDismiss={() => onOpenChange(false)}>
-            <Sheet open={open} onOpenChange={onOpenChange}>
+        <SheetMenuNavigateDismissProvider onDismiss={requestClose}>
+            <Sheet open={present} onOpenChange={handleOpenChange}>
             <SheetContent
                 side="right"
                 showCloseButton={false}
