@@ -122,7 +122,8 @@ export type EntityListPageProps<T extends BaseEntity> = {
     hideHeader?: boolean;
     /** Custom delete/restore confirm label (default uses `read.name` + `entity.name`). */
     buildDeleteConfirmLabel?: (entity: T, read: Record<string, unknown> | undefined) => string | undefined;
-    renderCard: (
+    /** Required for card view; when omitted, the list stays in table mode. */
+    renderCard?: (
         entity: T,
         onDelete: (row?: T, response?: DeletedData) => void,
         onRestore: (row?: T) => void,
@@ -365,12 +366,14 @@ export default function EntityListPage<T extends BaseEntity>({
                         listRef={listRef}
                         renderFunctions={{
                             cardRender: (entity) =>
-                                renderCard(
-                                    entity,
-                                    (row, response) => handleDelete(row ?? entity, response),
-                                    (row) => handleRestore(row ?? entity),
-                                    listRef as EntityListRefs<T>,
-                                ) as JSX.Element,
+                                typeof renderCard === "function"
+                                    ? (renderCard(
+                                        entity,
+                                        (row, response) => handleDelete(row ?? entity, response),
+                                        (row) => handleRestore(row ?? entity),
+                                        listRef as EntityListRefs<T>,
+                                    ) as JSX.Element)
+                                    : (<></> as unknown as JSX.Element),
                             action: (entity) => (
                                 <ActionMenu
                                     accessModel={accessModel}
