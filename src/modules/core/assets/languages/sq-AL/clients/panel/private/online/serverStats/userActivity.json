@@ -7,8 +7,19 @@
   "activeUsers": "Përdoruesit aktivë",
   "connections": "Lidhjet",
   "activeRooms": "Dhomat aktive",
+  "whoIsWhere": "Kush është ku",
   "users": "Përdoruesit",
   "instances": "Instancat",
   "messages": "Mesazhet",
-  "noActiveRooms": "Nuk ka dhoma aktive"
+  "noActiveRooms": "Nuk ka dhoma aktive",
+  "noUsersInRoom": "Nuk ka përdorues në këtë dhomë",
+  "oneTab": "1 skedë",
+  "tabCount": "{count} skeda",
+  "searchRoomsOrUsers": "Kërko dhoma ose përdorues…",
+  "searchUsers": "Kërko përdorues…",
+  "noRoomsMatchSearch": "Asnjë dhomë nuk përputhet me kërkimin",
+  "noUsersMatchSearch": "Asnjë përdorues nuk përputhet me kërkimin",
+  "usersPageStatus": "{from}–{to} nga {total}",
+  "previousPage": "Faqja e mëparshme",
+  "nextPage": "Faqja tjetër"
 }

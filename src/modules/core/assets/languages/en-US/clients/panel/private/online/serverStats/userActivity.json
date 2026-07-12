@@ -7,8 +7,19 @@
   "activeUsers": "Active Users",
   "connections": "Connections",
   "activeRooms": "Active Rooms",
+  "whoIsWhere": "Who is where",
   "users": "Users",
   "instances": "Instances",
   "messages": "Messages",
-  "noActiveRooms": "No active rooms"
+  "noActiveRooms": "No active rooms",
+  "noUsersInRoom": "No users in this room",
+  "oneTab": "1 tab",
+  "tabCount": "{count} tabs",
+  "searchRoomsOrUsers": "Search rooms or users…",
+  "searchUsers": "Search users…",
+  "noRoomsMatchSearch": "No rooms match your search",
+  "noUsersMatchSearch": "No users match your search",
+  "usersPageStatus": "{from}–{to} of {total}",
+  "previousPage": "Previous page",
+  "nextPage": "Next page"
 }
