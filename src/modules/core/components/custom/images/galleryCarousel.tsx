@@ -25,6 +25,11 @@ interface GalleryCarouselProps {
     showThumbnails?: boolean
     allowFullScreen?: boolean
     coverAfterFirst?: boolean
+    modifyImagesOnDarkMode?: React.ComponentType<{
+        src: string
+        alt: string
+        className: string
+    }>
     /**
      * When true, renders a scrollable strip of square preview tiles for all media.
      * Placement is controlled by `previewLocation`.
@@ -156,6 +161,7 @@ export function GalleryCarousel({
     showThumbnails = true,
     allowFullScreen = true,
     coverAfterFirst = false,
+    modifyImagesOnDarkMode,
     showPreviews = false,
     previewLocation = "right",
 }: GalleryCarouselProps) {
@@ -336,6 +342,16 @@ export function GalleryCarousel({
                                                 : "object-contain")
                                         }
                                     />
+                                ) : modifyImagesOnDarkMode ? (
+                                    React.createElement(modifyImagesOnDarkMode, {
+                                        src: resolveMediaUrl(mediaUrl, item),
+                                        alt: item.name ?? "",
+                                        className:
+                                            mediaClassBase +
+                                            (coverAfterFirst
+                                                ? "object-cover"
+                                                : "object-contain"),
+                                    })
                                 ) : (
                                     <img
                                         src={resolveMediaUrl(mediaUrl, item)}
@@ -359,6 +375,7 @@ export function GalleryCarousel({
         aspectRatio,
         mediaUrl,
         coverAfterFirst,
+        modifyImagesOnDarkMode,
         allowFullScreen,
         setVideoRef,
         api,
@@ -561,6 +578,22 @@ export function GalleryCarousel({
                                                                 : "object-contain")
                                                         }
                                                     />
+                                                ) : modifyImagesOnDarkMode ? (
+                                                    React.createElement(
+                                                        modifyImagesOnDarkMode,
+                                                        {
+                                                            src: resolveMediaUrl(
+                                                                mediaUrl,
+                                                                item
+                                                            ),
+                                                            alt: item.name ?? "",
+                                                            className:
+                                                                mediaClassBase +
+                                                                (coverAfterFirst
+                                                                    ? "object-cover"
+                                                                    : "object-contain"),
+                                                        }
+                                                    )
                                                 ) : (
                                                     <img
                                                         src={resolveMediaUrl(
