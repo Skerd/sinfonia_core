@@ -3,6 +3,7 @@ import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {LayoutGrid, List, SlidersVertical} from "lucide-react";
 import {JSX, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useState} from "react";
+import Masonry from "react-masonry-css";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type { FilterGroup } from "armonia/src/modules/core/database/filter";
@@ -28,6 +29,12 @@ import FilterBuilder from "@coreModule/components/custom/filterBuilder/filterBui
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {openActionMenuFromContextMenu} from "@coreModule/components/custom/actions/menu/openActionMenuFromContextMenu.ts";
+
+export type EntityCardLayout = "grid" | "masonry";
+
+export type MasonryBreakpointCols =
+    | number
+    | {default: number; [key: number]: number};
 
 /** Card list cell: always reserve 1px border so highlighting never reflows the grid. */
 const ENTITY_CARD_WRAPPER_BASE = "rounded-xl border border-transparent box-border transition-colors";
@@ -100,6 +107,10 @@ type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: numbe
         cardViewClassName?: string,
         scrollRootClassName?: string,
     }
+    /** Card list packing. `masonry` uses Pinterest-style columns (ignores CSS grid on cardViewClassName). */
+    cardLayout?: EntityCardLayout;
+    /** Column counts for `cardLayout="masonry"` (react-masonry-css max-width breakpoints). */
+    masonryBreakpointCols?: MasonryBreakpointCols;
     configurations: {
         limit?: number,
         columnVisibility?: VisibilityState,
@@ -137,6 +148,8 @@ function CountryCenterView<
     error,
     requestInfo,
     containersClassName,
+    cardLayout = "grid",
+    masonryBreakpointCols = {default: 4, 1280: 3, 1024: 2, 768: 1},
     configurations = {
         limit: 20
     },
@@ -454,25 +467,39 @@ function CountryCenterView<
                                                     <>
                                                         {
                                                             viewMode === "card" ?
-                                                                <div className={containersClassName?.cardViewClassName}>
-                                                                    {
-                                                                        tableData.map((item) => {
-                                                                            return (
-                                                                                <div
-                                                                                    key={String(getId(item))}
-                                                                                    className={cn(
-                                                                                        "h-full min-h-0",
-                                                                                        ENTITY_CARD_WRAPPER_BASE,
-                                                                                        ENTITY_CARD_MENU_OPEN,
-                                                                                    )}
-                                                                                    onContextMenu={openActionMenuFromContextMenu}
-                                                                                >
-                                                                                    {renderFunctions.cardRender(item)}
-                                                                                </div>
-                                                                            )
-                                                                        })
+                                                                (() => {
+                                                                    const cardItems = tableData.map((item) => (
+                                                                        <div
+                                                                            key={String(getId(item))}
+                                                                            className={cn(
+                                                                                cardLayout === "masonry" ? "min-w-0" : "h-full min-h-0",
+                                                                                ENTITY_CARD_WRAPPER_BASE,
+                                                                                ENTITY_CARD_MENU_OPEN,
+                                                                            )}
+                                                                            onContextMenu={openActionMenuFromContextMenu}
+                                                                        >
+                                                                            {renderFunctions.cardRender(item)}
+                                                                        </div>
+                                                                    ));
+
+                                                                    if (cardLayout === "masonry") {
+                                                                        return (
+                                                                            <Masonry
+                                                                                breakpointCols={masonryBreakpointCols}
+                                                                                className="my-masonry-grid"
+                                                                                columnClassName="my-masonry-grid_column"
+                                                                            >
+                                                                                {cardItems}
+                                                                            </Masonry>
+                                                                        );
                                                                     }
-                                                                </div>
+
+                                                                    return (
+                                                                        <div className={containersClassName?.cardViewClassName}>
+                                                                            {cardItems}
+                                                                        </div>
+                                                                    );
+                                                                })()
                                                                 :
                                                                 <>
                                                                     <div className="min-w-0 w-full overflow-x-auto rounded-md border">

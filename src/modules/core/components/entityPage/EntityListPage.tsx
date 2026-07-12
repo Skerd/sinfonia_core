@@ -158,6 +158,10 @@ export type EntityListPageProps<T extends BaseEntity> = {
     /** Extra controls rendered in the page header beside the create button. */
     headerActions?: ReactNode;
     cardViewClassName?: string;
+    /** Pinterest-style packing for card view (default `grid`). */
+    cardLayout?: "grid" | "masonry";
+    /** Column breakpoints when `cardLayout="masonry"`. */
+    masonryBreakpointCols?: number | {default: number; [key: number]: number};
     configurations?: {limit?: number; columnVisibility?: Record<string, boolean>};
     /** Forwarded to the list POST (e.g. parent filter `{ country }`). */
     extraParams?: Record<string, unknown>;
@@ -214,6 +218,8 @@ export default function EntityListPage<T extends BaseEntity>({
     createLanguageKey = "create",
     headerActions,
     cardViewClassName = "grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 pe-1",
+    cardLayout = "grid",
+    masonryBreakpointCols,
     configurations,
     extraParams,
     extraFilters,
@@ -359,6 +365,8 @@ export default function EntityListPage<T extends BaseEntity>({
                             },
                         }}
                         configurations={{limit: 20, ...configurations}}
+                        cardLayout={cardLayout}
+                        masonryBreakpointCols={masonryBreakpointCols}
                         containersClassName={{
                             cardViewClassName,
                             scrollRootClassName: "flex-full",
