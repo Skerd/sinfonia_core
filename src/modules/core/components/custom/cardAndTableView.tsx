@@ -43,6 +43,36 @@ const ENTITY_TABLE_ROW_MENU_OPEN =
 const ENTITY_TABLE_CELL_MENU_OPEN =
     "group-has-[[data-slot=dropdown-menu-trigger][data-state=open]]/row:bg-muted/40";
 
+type EntityListViewMode = "card" | "table";
+
+function listViewModeStorageKey(tableConfigKey: string): string {
+    return `entityListViewMode:${tableConfigKey}`;
+}
+
+function loadStoredListViewMode(tableConfigKey: string, fallback: EntityListViewMode = "card"): EntityListViewMode {
+    if (typeof window === "undefined" || !tableConfigKey) {
+        return fallback;
+    }
+    try {
+        const v = localStorage.getItem(listViewModeStorageKey(tableConfigKey));
+        if (v === "card" || v === "table") {
+            return v;
+        }
+    } catch {
+        /* ignore */
+    }
+    return fallback;
+}
+
+function saveStoredListViewMode(tableConfigKey: string, mode: EntityListViewMode): void {
+    if (!tableConfigKey) return;
+    try {
+        localStorage.setItem(listViewModeStorageKey(tableConfigKey), mode);
+    } catch {
+        /* ignore */
+    }
+}
+
 type VisibilityState = Record<string, boolean>;
 
 type TableConfigOptions = {
@@ -133,7 +163,9 @@ function CountryCenterView<
     const isMobile = useIsMobile();
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
 
-    const [viewMode, setViewMode] = useState<"card" | "table">("card");
+    const [viewMode, setViewMode] = useState<EntityListViewMode>(() =>
+        loadStoredListViewMode(tableConfigKey),
+    );
     const [firstCall, setFirstCall] = useState<boolean>(true);
     const [forceReload, setForceReload] = useState<number>(0);
 
@@ -179,6 +211,10 @@ function CountryCenterView<
     useEffect(() => {
         setExtraParameters({...extraParams})
     }, [extraParams]);
+
+    useEffect(() => {
+        saveStoredListViewMode(tableConfigKey, viewMode);
+    }, [tableConfigKey, viewMode]);
 
     useEffect(() => {
         if (!syncExtraFiltersKeys?.length) return;
