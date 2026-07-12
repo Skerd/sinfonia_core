@@ -14,6 +14,7 @@ import MessagesList from "@coreModule/clients/panel/private/chat/center/messages
 import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
 import TypingIndicators from "@coreModule/clients/panel/private/chat/center/typingIndicators.tsx";
+import {cn} from "@coreModule/components/lib/utils.ts";
 
 type ChatProps = WithLanguageType & {}
 
@@ -52,12 +53,11 @@ function Chat({resolveLanguageKey}: ChatProps){
 
     const bird = () => {
         return (
-            <div className="flex flex-col space-y-0 items-center justify-center py-4">
-                <p className="font-semibold text-sm text-foreground">{resolveLanguageKey("welcome")}</p>
-                <svg data-v-ad307406="" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
-                     fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                     className="lucide animal-icon lucide-animal-icon lucide-animal animal-icon"
-                     data-darkreader-inline-stroke="">
+            <div className="flex flex-col items-center justify-center space-y-0 py-4">
+                <p className="text-sm font-semibold text-foreground">{resolveLanguageKey("welcome")}</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
+                     className="text-muted-foreground">
                     <path d="M16 7h.01"></path>
                     <path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"></path>
                     <path d="m20 7 2 .5-2 .5"></path>
@@ -69,102 +69,62 @@ function Chat({resolveLanguageKey}: ChatProps){
         )
     }
 
+    const conversationPane = (mobile: boolean) => (
+        <div className={cn("relative flex-full border", !mobile && "rounded-lg")}>
+            <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-contain bg-center"
+                style={{
+                    backgroundImage: theme === "light" ? "url('/chatBackground.jpg')" : "url('/chatBackgroundDark.png')",
+                    opacity: theme === "light" ? 0.4 : 0.1,
+                    zIndex: 0,
+                }}
+            />
+            <div className="relative z-1">
+                <ChatHeader defaultTitle={""} />
+            </div>
+            <div ref={scrollContainerRef} className={cn("relative z-1 flex-full px-0 pt-1", mobile && "px-0")}>
+                {
+                    !!activeChannelId ?
+                    <>
+                        <MessageFetcherRender
+                            scrollRoot={scrollRef}
+                            fetchNewer={true}
+                        />
+                        <MessagesList scrollRoot={scrollRef} scrollRootRevision={scrollRootRevision} />
+                    </>
+                    :
+                    bird()
+                }
+            </div>
+            <div className="relative z-1 px-2 pb-2">
+                <TypingIndicators />
+                <ChatInputAll />
+            </div>
+        </div>
+    );
+
     return (
-        <div className="flex-full flex-row" style={{border: "0px solid blue"}}>
+        <div className="flex-full flex-row">
             {
-                (isMobile) ?
-                <div className="w-full flex-full" style={{border: "0px solid red"}}>
+                isMobile ?
+                <div className="flex-full w-full">
                     {
                         !activeChannelId ?
-                        <div className="flex-full" style={{border: "0px solid red"}}>
+                        <div className="flex-full">
                             <LeftChatPanel />
                         </div>
                         :
-                        <div className="relative flex-full border">
-                            <div
-                                style={{
-                                    position: "absolute",
-                                    inset: 0,
-                                    backgroundImage: theme === "light" ? "url('/chatBackground.jpg')" : "url('/chatBackgroundDark.png')",
-                                    backgroundSize: "contain",
-                                    backgroundPosition: "center",
-                                    opacity: theme === "light" ? 0.4 : 0.1, // ← control opacity here
-                                    zIndex: 0,
-                                    // border: "2px solid red"
-                                }}
-                            />
-                            <div style={{zIndex: 1}}>
-                                <ChatHeader defaultTitle={""} />
-                            </div>
-                            <div ref={scrollContainerRef} className="flex-full px-0 pt-1" style={{zIndex: 1}}>
-                                {
-                                    !!activeChannelId ?
-                                    <>
-                                        <>
-                                            <MessageFetcherRender
-                                                scrollRoot={scrollRef}
-                                                fetchNewer={true}
-                                            />
-                                        </>
-                                        <MessagesList scrollRoot={scrollRef} scrollRootRevision={scrollRootRevision} />
-                                    </>
-                                    :
-                                    <>
-                                        {bird()}
-                                    </>
-                                }
-                            </div>
-                            <div className="px-2 pb-2" style={{zIndex: 1}}>
-                                <TypingIndicators />
-                                <ChatInputAll />
-                            </div>
-                        </div>
+                        conversationPane(true)
                     }
                 </div>
                 :
-                <div className="w-full h-full grid grid-cols-8 gap-2">
-                    <div className="flex-full col-span-2">
+                <div className="grid h-full w-full grid-cols-8 gap-2">
+                    <div className="col-span-2 flex-full">
                         <LeftChatPanel />
                     </div>
-                    <div className="relative flex-full col-span-6 border rounded-lg" style={{border: "0px solid blue"}}>
-                        <div
-                            style={{
-                                position: "absolute",
-                                inset: 0,
-                                backgroundImage: theme === "light" ? "url('/chatBackground.jpg')" : "url('/chatBackgroundDark.png')",
-                                backgroundSize: "contain",
-                                backgroundPosition: "center",
-                                opacity: theme === "light" ? 0.4 : 0.1, // ← control opacity here
-                                zIndex: 0,
-                                // border: "2px solid red"
-                            }}
-                        />
-                        <div style={{zIndex: 1}}>
-                            <ChatHeader defaultTitle={""} />
-                        </div>
-                        <div className="flex-full" style={{zIndex: 1}}>
-                            <div ref={scrollContainerRef} className="flex-full px-0 pt-1 bg-containx z-1" style={{zIndex: 1, border: "0px solid red"}}>
-                                {
-                                    !!activeChannelId ?
-                                    <>
-                                        <MessageFetcherRender
-                                            scrollRoot={scrollRef}
-                                            fetchNewer={true}
-                                        />
-                                        <MessagesList scrollRoot={scrollRef} scrollRootRevision={scrollRootRevision} />
-                                    </>
-                                    :
-                                    <>
-                                        {bird()}
-                                    </>
-                                }
-                            </div>
-                        </div>
-
-                        <div className="px-2 pb-2" style={{zIndex: 1}}>
-                            <TypingIndicators />
-                            <ChatInputAll />
-                        </div>
+                    <div className="col-span-6 flex-full">
+                        {conversationPane(false)}
                     </div>
                 </div>
             }

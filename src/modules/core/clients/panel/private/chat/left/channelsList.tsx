@@ -8,8 +8,6 @@ import {Fragment, RefObject, useEffect, useRef} from "react";
 import {Info, Users} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
-import {Separator} from "@coreModule/components/ui/separator.tsx";
-import {Badge} from "@coreModule/components/ui/badge.tsx";
 import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
 import CustomDateDisplayer from "@coreModule/components/custom/customDateDisplayer.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -77,7 +75,9 @@ function ChannelInfo({
 
         return (
             <TooltipDisplayer tooltip={`${messages} ${resolveLanguageKey("unreadMessages")}`}>
-                <Badge className="rounded-lg p-1.5 h-6 w-6">{messageCount}</Badge>
+                <span className="ms-auto flex size-5 shrink-0 items-center justify-center rounded-full bg-green-500 text-[10px] font-medium text-white dark:bg-green-800">
+                    {messageCount}
+                </span>
             </TooltipDisplayer>
         )
     }
@@ -156,9 +156,8 @@ function ChannelInfo({
                 type='button'
                 ref={ref}
                 className={cn(
-                    'group hover:bg-accent hover:text-accent-foreground hover:cursor-pointer',
-                    `flex w-full items-center rounded-md px-2 py-2 text-start text-sm gap-2`,
-                    activeChannelId === channel._id ? "bg-muted" : ""
+                    "group relative flex min-w-0 w-full cursor-pointer items-center gap-3 px-2 py-3 text-start hover:bg-muted/50",
+                    activeChannelId === channel._id && "bg-muted"
                 )}
                 onClick={() => {
                     dispatch(openChannel(channel._id));
@@ -166,11 +165,11 @@ function ChannelInfo({
             >
                 {
                     channel.metaData.isGroup ?
-                    <Avatar className="flex items-center justify-center border size-10">
+                    <Avatar className="flex size-10 shrink-0 items-center justify-center border">
                         <Users size={18} />
                     </Avatar>
                     :
-                    <HiddenElement Render={<Avatar className="flex items-center justify-center border size-10"><Users size={18} /></Avatar>}>
+                    <HiddenElement Render={<Avatar className="flex size-10 shrink-0 items-center justify-center border"><Users size={18} /></Avatar>}>
                         {
                             read.users &&
                             <>
@@ -183,12 +182,12 @@ function ChannelInfo({
                     </HiddenElement>
                 }
 
-                <div className="flex-full overflow-hidden justify-center h-10">
-                    <div className="flex items-center justify-between w-full">
+                <div className="min-w-0 grow">
+                    <div className="flex items-center justify-between gap-2">
                         {
                             (channel.metaData.isGroup) ?
                             <HiddenElement>
-                                {read.name && <p className="">{channel.name}</p>}
+                                {read.name && <p className="truncate text-sm font-medium">{channel.name}</p>}
                             </HiddenElement>
                             :
                             <HiddenElement>
@@ -197,41 +196,48 @@ function ChannelInfo({
                                     <>
                                         {
                                             !!avatarUser &&
-                                            <p>{getName(avatarUser)}</p>
+                                            <p className="truncate text-sm font-medium">{getName(avatarUser)}</p>
                                         }
                                     </>
                                 }
                             </HiddenElement>
                         }
                         {
-                            !channel.metaData?.unreadMessages ?
-                            <>
-                                {
-                                    !!channel.metaData?.lastMessage?.date &&
-                                    <CustomDateDisplayer timeZone={user.timezone} date={channel.metaData.lastMessage?.date} showOnlyWeekDay={true} showOnlyYesterday={true} />
-                                }
-                            </>
-                            :
-                            <>
-                                <Badge className="rounded-lg p-1.5 h-6 w-6">{getUnreadMessages(channel.metaData?.unreadMessages)}</Badge>
-                            </>
+                            !!channel.metaData?.lastMessage?.date &&
+                            <span className="shrink-0 text-muted-foreground text-xs">
+                                <CustomDateDisplayer timeZone={user.timezone} date={channel.metaData.lastMessage?.date} showOnlyWeekDay={true} showOnlyYesterday={true} />
+                            </span>
                         }
                     </div>
                     {
                         (() => {
                             const isChannelOpened = activeChannelId === channel._id;
                             const typingText = !isChannelOpened ? getTypingText() : "";
+                            const unread = channel.metaData?.unreadMessages ?? 0;
                             if (typingText) {
                                 return (
-                                    <div className="max-w-full flex grow text-xs text-muted-foreground group-hover:text-accent-foreground/90 italic animate-pulse">
-                                        {typingText}
+                                    <div className="flex items-center gap-2">
+                                        <span className="min-w-0 grow truncate text-sm italic text-muted-foreground animate-pulse">
+                                            {typingText}
+                                        </span>
+                                        {unread > 0 ? getUnreadMessages(unread) : null}
                                     </div>
                                 );
                             }
                             if (channel?.metaData?.lastMessage) {
                                 return (
-                                    <div className="max-w-full flex grow text-xs text-muted-foreground group-hover:text-accent-foreground/90">
-                                        {getLastMessage(channel.metaData.lastMessage)}
+                                    <div className="flex items-center gap-2">
+                                        <span className="min-w-0 grow truncate text-sm text-muted-foreground">
+                                            {getLastMessage(channel.metaData.lastMessage)}
+                                        </span>
+                                        {unread > 0 ? getUnreadMessages(unread) : null}
+                                    </div>
+                                );
+                            }
+                            if (unread > 0) {
+                                return (
+                                    <div className="flex items-center justify-end">
+                                        {getUnreadMessages(unread)}
                                     </div>
                                 );
                             }
@@ -240,7 +246,6 @@ function ChannelInfo({
                     }
                 </div>
             </button>
-            <Separator className='my-1' />
         </Fragment>
     )
 }
@@ -264,16 +269,17 @@ function ChannelsList({searchName, scrollRoot, resolveLanguageKey}: ChannelsList
         return <HiddenElement />
     }
 
+    const isEmpty = (!channelsOrderIds || channelsOrderIds.length === 0) && !searchName;
+
     return (
         <>
             {
-                !channelsOrderIds || channelsOrderIds.length === 0 && !searchName &&
-                <div className="flex flex-col space-y-0 items-center justify-center py-4">
-                    <p className="font-semibold text-sm text-foreground">{resolveLanguageKey("noChats")}...</p>
-                    <svg data-v-ad307406="" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                         className="lucide animal-icon lucide-animal-icon lucide-animal animal-icon"
-                         data-darkreader-inline-stroke="">
+                isEmpty &&
+                <div className="flex flex-col items-center justify-center space-y-0 py-4">
+                    <p className="text-sm font-semibold text-foreground">{resolveLanguageKey("noChats")}...</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
+                         className="text-muted-foreground">
                         <path d="M16 7h.01"></path>
                         <path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"></path>
                         <path d="m20 7 2 .5-2 .5"></path>
@@ -283,17 +289,19 @@ function ChannelsList({searchName, scrollRoot, resolveLanguageKey}: ChannelsList
                     </svg>
                 </div>
             }
-            {
-                channelsOrderIds?.map((id, index) => {
-                    return (
-                        <ChannelRender
-                            key={id}
-                            channelId={id}
-                            index={index}
-                        />
-                    )
-                })
-            }
+            <div className="divide-y">
+                {
+                    channelsOrderIds?.map((id, index) => {
+                        return (
+                            <ChannelRender
+                                key={id}
+                                channelId={id}
+                                index={index}
+                            />
+                        )
+                    })
+                }
+            </div>
             <ChannelsFetcher searchName={searchName} scrollRoot={scrollRoot} />
         </>
     )

@@ -1,13 +1,14 @@
 {
   "path": "src/modules/core/components/custom/customDateDisplayer.tsx",
+  "today": "Sot",
+  "yesterday": "Dje",
   "weekDays": [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ],
-  "yesterday": "Dje"
+    "E diel",
+    "E hënë",
+    "E martë",
+    "E mërkurë",
+    "E enjte",
+    "E premte",
+    "E shtunë"
+  ]
 }

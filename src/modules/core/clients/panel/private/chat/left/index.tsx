@@ -50,8 +50,8 @@ function LeftChatPanel({
                         </div>
                     }
                 </div>
-                <label className={cn('focus-within:ring-ring focus-within:ring-1 focus-within:outline-hidden', 'border-border h-9 flex w-full items-center space-x-0 rounded-md border ps-2')}>
-                    <SearchIcon size={15} className='me-2 stroke-slate-500' />
+                <label className={cn('focus-within:ring-ring focus-within:ring-1 focus-within:outline-hidden', 'border-border flex h-9 w-full items-center space-x-0 rounded-md border ps-2')}>
+                    <SearchIcon size={15} className='me-2 text-muted-foreground' />
                     <span className='sr-only'>{resolveLanguageKey("searchChat")}</span>
                     <input
                         type='text'
@@ -59,11 +59,12 @@ function LeftChatPanel({
                         placeholder={resolveLanguageKey("searchChat") + "..."}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
+                        autoComplete="off"
                     />
                 </label>
             </div>
 
-            <div ref={scrollRef} className='overflow-y-auto px-2 md:px-0'>
+            <div ref={scrollRef} className='overflow-y-auto px-0 md:px-0'>
                 <ChannelsList searchName={searchForChannel} scrollRoot={scrollRef}/>
             </div>
         </div>

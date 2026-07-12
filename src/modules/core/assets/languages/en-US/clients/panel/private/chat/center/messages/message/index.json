@@ -25,5 +25,6 @@
   "readReceipts": "Read receipts",
   "receiptWaitingDelivery": "Not delivered yet",
   "receiptDelivered": "Delivered",
-  "receiptRead": "Read"
+  "receiptRead": "Read",
+  "attachments": "Attachments"
 }

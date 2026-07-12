@@ -23,6 +23,7 @@ function MessagesList({scrollRoot, scrollRootRevision = 0}: MessagesListProps){
     const {read} = useAccess("messages");
     const user = useSelector((state: RootState) => state.authentication.user);
     const messagesOrderIds = useSelector((state: RootState) => state.chat.messagesOrderIds);
+    const messages = useSelector((state: RootState) => state.chat.messages);
     const activeChannelId = useSelector((state: RootState) => state.chat.activeChannelId);
     const openedChannel = useSelector((state: RootState) => state.chat.channels[activeChannelId ?? ""]);
     const readAckedRef = useRef<Set<string>>(new Set());
@@ -32,6 +33,31 @@ function MessagesList({scrollRoot, scrollRootRevision = 0}: MessagesListProps){
     activeChannelRef.current = activeChannelId;
 
     const messagesOrderKey = messagesOrderIds?.join("\x1e") ?? "";
+
+    /** Skip hide entries so they don't fake a sender-group break between visible bubbles. */
+    const getVisibleNeighbor = (fromIndex: number, direction: -1 | 1) => {
+        if (!messagesOrderIds?.length) {
+            return undefined;
+        }
+        for (let i = fromIndex + direction; i >= 0 && i < messagesOrderIds.length; i += direction) {
+            const candidate = messages[messagesOrderIds[i]];
+            if (!candidate || candidate.status === "hide") {
+                continue;
+            }
+            return candidate;
+        }
+        return undefined;
+    };
+
+    const breaksSenderGroup = (
+        self: (typeof messages)[string] | undefined,
+        other: (typeof messages)[string] | undefined,
+    ) =>
+        !self
+        || !other
+        || self.type === "notification"
+        || other.type === "notification"
+        || self.sender?._id !== other.sender?._id;
 
     useEffect(() => {
         readAckedRef.current = new Set();
@@ -187,62 +213,39 @@ function MessagesList({scrollRoot, scrollRootRevision = 0}: MessagesListProps){
     }
 
     return (
-        <>
-            {/*<div className="h-full max-h-full overflow-y-auto" style={{border: "0px solid blue"}}>*/}
-                {
-                    messagesOrderIds?.map((messageId, index) => {
-                        return (
-                            <MemoizedMessage
-                                key={messageId}
-                                user={user}
-                                messageId={messageId}
-                                nextMessageId={messagesOrderIds[index + 1]}
-                                index={index}
-                                openedChannel={openedChannel}
-                                goTo={index === messagesOrderIds.length - 1}
-                            />
-                        )
-                    })
-                }
+        // Margin-only stacking (no flex gap) so every consecutive pair uses the same rule.
+        <div className="flex flex-col px-3 py-2">
+            {
+                messagesOrderIds?.map((messageId, index) => {
+                    const message = messages[messageId];
+                    const previousVisible = getVisibleNeighbor(index, -1);
+                    const nextVisible = getVisibleNeighbor(index, 1);
+                    const isFirstInGroup = breaksSenderGroup(message, previousVisible);
+                    const isLastInGroup = breaksSenderGroup(message, nextVisible);
+                    // Same stack rhythm for own and received: tight within a run, looser on sender change.
+                    const stackClassName =
+                        message && message.status !== "hide" && previousVisible
+                            ? (isFirstInGroup ? "mt-3" : "mt-1.5")
+                            : undefined;
 
-                {/*<Virtuoso*/}
-                {/*    key={activeChannelId || "no-channel"}*/}
-                {/*    // style={{ height: '100%' }}*/}
-                {/*    data={messagesOrderIds}*/}
-                {/*    atTopStateChange={(state) => {*/}
-                {/*        console.log("top", state);*/}
-                {/*    }}*/}
-                {/*    atBottomStateChange={(state) => {*/}
-                {/*        console.log("bottom", state);*/}
-                {/*    }}*/}
-                {/*    startReached={() => {*/}
-                {/*        // alert("start");*/}
-                {/*    }}*/}
-                {/*    endReached={() => {*/}
-                {/*        // alert("end");*/}
-                {/*        // if (hasMore) loadOlderMessages();*/}
-                {/*    }}*/}
-                {/*    itemContent={(index, messageId) => {*/}
-                {/*        return (*/}
-                {/*            <div className="min-h-4">*/}
-                {/*                <MemoizedMessage*/}
-                {/*                    key={messageId}*/}
-                {/*                    user={user}*/}
-                {/*                    messageId={messageId}*/}
-                {/*                    nextMessageId={messagesOrderIds[index + 1]}*/}
-                {/*                    index={index}*/}
-                {/*                    openedChannel={openedChannel}*/}
-                {/*                />*/}
-                {/*            </div>*/}
-                {/*        );*/}
-                {/*    }}*/}
-                {/*    initialTopMostItemIndex={messagesOrderIds.length - 1}*/}
-                {/*    followOutput="smooth"*/}
-                {/*/>*/}
-            {/*</div>*/}
-            {/*<TypingIndicators />*/}
-        </>
-
+                    return (
+                        <MemoizedMessage
+                            key={messageId}
+                            user={user}
+                            messageId={messageId}
+                            previousMessageId={messagesOrderIds[index - 1]}
+                            nextMessageId={messagesOrderIds[index + 1]}
+                            isFirstInGroup={isFirstInGroup}
+                            isLastInGroup={isLastInGroup}
+                            stackClassName={stackClassName}
+                            index={index}
+                            openedChannel={openedChannel}
+                            goTo={index === messagesOrderIds.length - 1}
+                        />
+                    )
+                })
+            }
+        </div>
     )
 }
 

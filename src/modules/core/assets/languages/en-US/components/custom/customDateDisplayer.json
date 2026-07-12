@@ -1,5 +1,7 @@
 {
   "path": "src/modules/core/components/custom/customDateDisplayer.tsx",
+  "today": "Today",
+  "yesterday": "Yesterday",
   "weekDays": [
     "Sunday",
     "Monday",
@@ -8,6 +10,5 @@
     "Thursday",
     "Friday",
     "Saturday"
-  ],
-  "yesterday": "Yesterday"
+  ]
 }

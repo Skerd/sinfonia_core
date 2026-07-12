@@ -6,12 +6,12 @@
   "today": "Sot",
   "yesterday": "Dje",
   "weekDays": [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
+    "E diel",
+    "E hënë",
+    "E martë",
+    "E mërkurë",
+    "E enjte",
+    "E premte",
+    "E shtunë"
   ]
 }

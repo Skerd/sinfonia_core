@@ -1,4 +1,4 @@
-import {ReactNode, useEffect, useRef, useState} from "react";
+import {CSSProperties, ReactNode, useEffect, useRef, useState} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -24,12 +24,12 @@ import ForwardMessage from "@coreModule/clients/panel/private/chat/center/messag
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import EditMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/editMessage.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
+import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
 import {MessageSenderType, MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
-import {Badge} from "@coreModule/components/ui/badge.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import InfoRow from "@coreModule/components/custom/infoRow.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
@@ -41,6 +41,12 @@ type MessageProps = WithLanguageType & {
     openedChannel: Channel,
     messageId: string;
     nextMessageId?: string,
+    previousMessageId?: string,
+    /** Precomputed in MessagesList from visible neighbors (skips hide). */
+    isFirstInGroup?: boolean,
+    isLastInGroup?: boolean,
+    /** Vertical stack margin from MessagesList (margin-only, no parent gap). */
+    stackClassName?: string,
     user: ValidateTokenFormResponseType,
     scrollIntoView: boolean,
     specificUserId?: string,
@@ -52,6 +58,10 @@ function Message({
     resolveLanguageKey,
     messageId,
     nextMessageId,
+    previousMessageId,
+    isFirstInGroup: isFirstInGroupProp,
+    isLastInGroup: isLastInGroupProp,
+    stackClassName,
     scrollIntoView,
     user,
     specificUserId,
@@ -64,14 +74,15 @@ function Message({
     const dispatch = useDispatch();
     const [contextOpened, setContextOpened] = useState<boolean>(false);
     const [reactionPickerOpened, setReactionPickerOpened] = useState<boolean>(false);
+    const [attachmentsOpen, setAttachmentsOpen] = useState<boolean>(false);
 
     const bubbleRef = useRef<HTMLDivElement>(null);
     const pickerRef = useRef<HTMLDivElement>(null);
 
     const message: MessageType = useSelector((state: RootState) => state.chat.messages[messageId]);
     const nextMessage = useSelector((state: RootState) => (nextMessageId ? state.chat?.messages?.[nextMessageId] : undefined));
+    const previousMessage = useSelector((state: RootState) => (previousMessageId ? state.chat?.messages?.[previousMessageId] : undefined));
 
-    const [openAllFiles, setOpenAllFiles] = useState<boolean>(false);
     const openDelete = useSelector((state: RootState) => state.chat.openDelete);
 
     useOutsideClick(pickerRef, () => setReactionPickerOpened(false));
@@ -133,7 +144,12 @@ function Message({
             nodes.push(
                 <Popover key={`mention-${start}`}>
                     <PopoverTrigger asChild>
-                        <span className="text-green-600 font-medium cursor-pointer hover:underline">
+                        <span className={cn(
+                            "font-medium cursor-pointer hover:underline",
+                            message.sender?._id === user.id
+                                ? "text-primary-foreground/90 underline-offset-2"
+                                : "text-primary"
+                        )}>
                             {
                                 foundMention ?
                                 <>
@@ -185,7 +201,7 @@ function Message({
     }
     if( message.type === "notification" ){
         return (
-            <div ref={ref} className='flex items-center justify-center w-full mb-2'>
+            <div ref={ref} className={cn("flex w-full items-center justify-center", stackClassName ?? "mb-2")}>
                 <div className="bg-card text-muted-foreground border text-sm font-semibold rounded-lg px-6 py-1">
                     <LongText className='max-w-full'>
                         {
@@ -201,26 +217,42 @@ function Message({
     }
 
     const owner = user.id === message.sender?._id;
+    const hasAttachments = (message.media?.length ?? 0) > 0;
+    const hasText = Boolean(message.message?.trim());
+
+    // Prefer list-computed flags (visible neighbors). Fall back for any non-list usage.
+    const breaksGroup = (other?: MessageType) =>
+        !other
+        || other.type === "notification"
+        || other.status === "hide"
+        || other.sender?._id !== message.sender?._id;
+
+    const isFirstInGroup = isFirstInGroupProp ?? breaksGroup(previousMessage);
+    const isLastInGroup = isLastInGroupProp ?? breaksGroup(nextMessage);
 
     const messageBubbleClassNameResolver = () => {
-        return {
-            "relative wrap-break-word shadow max-w-[99%] sm:max-w-[75%] md:max-w-[680px] mx-2 mb-1.5 py-1 px-0 rounded-lg hover:cursor-pointer select-none space-y-0": true,
-            "bg-muted dark:bg-muted dark:text-white": !owner,
-            "bg-card dark:bg-green-900 dark:text-white ": owner,
-            "rounded-ee-none": ( owner && (nextMessage?.sender?._id !== message.sender?._id || nextMessage?.type === "notification")),
-            "rounded-es-none": ( !owner && (nextMessage?.sender?._id !== message.sender?._id || nextMessage?.type === "notification")),
-            "border-green-500 border-2": (contextOpened || reactionPickerOpened),
-            "border-2 border-transparent": !(contextOpened || reactionPickerOpened)
-        }
+        return cn(
+            "relative wrap-break-word rounded-lg text-sm select-none hover:cursor-pointer",
+            hasAttachments && !hasText ? "p-1.5" : "px-3 py-1.5",
+            hasAttachments ? "max-w-[min(100%,20rem)] sm:max-w-[22rem]" : "max-w-[min(100%,28rem)]",
+            owner ? "bg-primary text-primary-foreground" : "bg-muted",
+            // WhatsApp-style tail only on the last bubble in a consecutive run.
+            owner && isLastInGroup && "rounded-br-none",
+            !owner && isLastInGroup && "rounded-bl-none",
+            (contextOpened || reactionPickerOpened) && "ring-2 ring-primary/60",
+        )
     }
     const messageTime = () => {
         return (
             <HiddenElement randomLength={2}>
                 {
                     read.createdAt &&
-                    <p className="flex items-end text-[10px]/[10px]">
+                    <span className={cn(
+                        "text-[10px] tabular-nums leading-none",
+                        owner ? "text-primary-foreground/70" : "text-muted-foreground",
+                    )}>
                         {formatDate(message.date, {timeZone: user.timezone, format: {hour: "2-digit", minute: "2-digit"}})}
-                    </p>
+                    </span>
                 }
             </HiddenElement>
         )
@@ -240,7 +272,7 @@ function Message({
         const allDelivered = otherIds.length > 0 && deliveryRows.every((r) => !!r?.date);
 
         const receiptTooltip = () => (
-            <div className="w-full min-w-0" style={{border: "0px solid red"}}>
+            <div className="w-full min-w-0">
                 <p className="border-b border-background/20 pb-1 text-[10px] font-semibold uppercase tracking-wide text-background/85">
                     {resolveLanguageKey("readReceipts")}
                 </p>
@@ -308,117 +340,169 @@ function Message({
         );
 
         let icon: ReactNode;
-        if (otherIds.length === 0) {return <Check className="size-4 shrink-0 text-muted-foreground" aria-hidden />;}
-        if (allRead) {icon = (<CheckCheck className="size-4 shrink-0 text-primary" aria-hidden/>);}
-        else if (allDelivered) {icon = <CheckCheck className="size-4 shrink-0 text-muted-foreground" aria-hidden />;}
-        else {icon = <Check className="size-4 shrink-0 text-muted-foreground" aria-hidden />;}
+        if (otherIds.length === 0) {return <Check className="size-3 opacity-70" aria-hidden />;}
+        if (allRead) {icon = (<CheckCheck className="size-3 text-sky-300" aria-hidden/>);}
+        else if (allDelivered) {icon = <CheckCheck className="size-3 opacity-70" aria-hidden />;}
+        else {icon = <Check className="size-3 opacity-70" aria-hidden />;}
 
         return (
-            <div className="flex items-center justify-center ms-1">
-                <TooltipDisplayer tooltipRender={receiptTooltip} side="top" contentClassName="!max-w-[min(252px,calc(100vw-16px))] !w-full !flex-col !items-stretch !gap-0 !px-2.5 !py-1.5 !text-xs [&>svg]:hidden">
-                    <span className="inline-flex cursor-default items-end">{icon}</span>
-                </TooltipDisplayer>
-            </div>
+            <TooltipDisplayer tooltipRender={receiptTooltip} side="top" contentClassName="!max-w-[min(252px,calc(100vw-16px))] !w-full !flex-col !items-stretch !gap-0 !px-2.5 !py-1.5 !text-xs [&>svg]:hidden">
+                <span className="inline-flex cursor-default items-center">{icon}</span>
+            </TooltipDisplayer>
         )
     }
     const messageAvatar = () => {
-        if( !owner && openedChannel.metaData.isGroup ){
-            return (
-                <div className="flex items-start h-full">
-                    {
-                        read.sender &&
-                        <CustomAvatar avatarClassName="size-8" user={message.sender}/>
-                    }
-                </div>
-            )
+        if (owner) {
+            return null;
         }
-        return <></>
+        // Width-only gutter for non-last bubbles so row height = bubble height (same as own messages).
+        if (!isLastInGroup) {
+            return <div className="w-10 shrink-0" aria-hidden />;
+        }
+        if (!read.sender) {
+            return <CustomAvatar avatarClassName="size-10 shrink-0 self-end" />;
+        }
+        return (
+            <CustomAvatar
+                avatarClassName="size-10 shrink-0 self-end"
+                user={message.sender}
+            />
+        )
     }
     const messageFiles = () => {
-        if( !!message.media?.length ){
-            if( message.media?.length > MAX_FILES ){
-                return (
-                    <div className="w-full flex items-center justify-end space-x-1 mb-0.5">
-                        {
-                            message.media?.map((file, index) => {
-                                if( index < MAX_FILES ){
-                                    return (
-                                        <div className="relative">
-                                            <SingleFile
-                                                key={message._id + "_" + index}
-                                                file={{id: file._id, file: file}}
-                                                specificUserId={specificUserId}
-                                                isBig={openAllFiles}
-                                                canDownload={true}
-                                            />
-                                        </div>
-                                    )
-                                }
-                            })
-                        }
-                        <div className="backdrop-blur-sm  rounded-lg flex items-center justify-center z-2 hover:cursor-pointer">
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <Badge variant="outline" className="text-xs">
-                                        +{(message.media?.length ?? 0) - (MAX_FILES + 1)}
-                                    </Badge>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-fit" side={"top"} align={message?.sender?._id === user.id ? "end" : "start"}>
-                                    <div className="grid grid-cols-3 gap-1 max-h-80 overflow-y-auto">
-                                        {
-                                            message.media?.map((file, index) => {
-                                                if( index >= MAX_FILES ){
-                                                    return (
-                                                        <div className="relative">
-                                                            <SingleFile
-                                                                key={message._id + "_" + index}
-                                                                file={{id: file._id, file: file}}
-                                                                specificUserId={specificUserId}
-                                                                isBig={openAllFiles}
-                                                                canDownload={true}
-                                                            />
-                                                        </div>
-                                                    )
-                                                }
-                                            })
-                                        }
-                                    </div>
-                                </PopoverContent>
-                            </Popover>
-                        </div>
-                    </div>
-                )
-            }
-            else{
-                return (
-                    <div className="w-full flex items-center justify-end space-x-1 mb-0.5">
-                        {
-                            message.media?.map((file, index) => {
-                                return (
-                                    <div className="relative">
-                                        <SingleFile
-                                            key={message._id + "_" + index}
-                                            file={{id: file._id, file: file}}
-                                            specificUserId={specificUserId}
-                                            isBig={openAllFiles}
-                                            canDownload={true}
-                                        />
-                                    </div>
-
-                                )
-                            })
-                        }
-                    </div>
-                )
-            }
+        const media = message.media;
+        if (!media?.length) {
+            return null;
         }
-        return <></>
+
+        const visible = media.slice(0, MAX_FILES);
+        const overflow = media.length - MAX_FILES;
+        const count = media.length;
+        const tileClass = cn(
+            "group/file relative overflow-hidden",
+            count === 1 ? "aspect-[4/3] w-full min-h-40" : "aspect-square w-full min-h-28",
+        );
+
+        return (
+            <div className={cn(hasText && "mb-2")}>
+                <div
+                    className={cn(
+                        "grid gap-1",
+                        count === 1 ? "grid-cols-1" : "grid-cols-2",
+                    )}
+                >
+                    {visible.map((file, index) => (
+                        <div key={`${message._id}_${file._id}_${index}`} className={tileClass}>
+                            <SingleFile
+                                file={{id: file._id, file: file}}
+                                specificUserId={specificUserId}
+                                isBig={true}
+                                canDownload={true}
+                                variant="chat"
+                                className="h-full w-full"
+                            />
+                            {index === visible.length - 1 && overflow > 0 && (
+                                <button
+                                    type="button"
+                                    className={cn(
+                                        "absolute inset-0 z-10 flex cursor-pointer items-center justify-center rounded-md text-sm font-semibold backdrop-blur-[2px]",
+                                        owner
+                                            ? "bg-primary/70 text-primary-foreground"
+                                            : "bg-foreground/55 text-background",
+                                    )}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setContextOpened(false);
+                                        setAttachmentsOpen(true);
+                                    }}
+                                    onPointerDown={(e) => {
+                                        // Keep ContextMenu / parent bubble from swallowing the open action.
+                                        e.stopPropagation();
+                                    }}
+                                >
+                                    +{overflow}
+                                </button>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    const attachmentsDialog = () => {
+        const media = message.media;
+        if (!media?.length) {
+            return null;
+        }
+
+        const count = media.length;
+        const columns = Math.min(count, count <= 2 ? count : count <= 4 ? 3 : count <= 8 ? 4 : count <= 12 ? 5 : 6);
+        const dialogWidth = cn(
+            "w-[min(96vw,var(--attachments-dialog-w))] max-w-none sm:max-w-none",
+        );
+        const dialogWidthVar =
+            count <= 2 ? "24rem"
+            : count <= 4 ? "36rem"
+            : count <= 8 ? "48rem"
+            : count <= 12 ? "60rem"
+            : "72rem";
+
+        return (
+            <Dialog open={attachmentsOpen} onOpenChange={setAttachmentsOpen} modal>
+                <DialogContent
+                    style={{"--attachments-dialog-w": dialogWidthVar} as CSSProperties}
+                    className={cn(
+                        "flex max-h-[min(90vh,56rem)] flex-col gap-4",
+                        dialogWidth,
+                        count <= 4 ? "h-auto" : "h-[min(90vh,56rem)]",
+                    )}
+                    onContextMenu={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }}
+                    onOpenAutoFocus={(e) => e.preventDefault()}
+                >
+                    <DialogHeader>
+                        <DialogTitle>
+                            {count} {resolveLanguageKey("attachments")}
+                        </DialogTitle>
+                    </DialogHeader>
+                    <div
+                        className={cn(
+                            "grid min-h-0 gap-2 overflow-y-auto",
+                            count > 4 && "flex-1",
+                        )}
+                        style={{gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`}}
+                    >
+                        {media.map((file, index) => (
+                            <div
+                                key={`${message._id}_all_${file._id}_${index}`}
+                                className="relative aspect-square min-h-0 overflow-visible"
+                            >
+                                <SingleFile
+                                    file={{id: file._id, file: file}}
+                                    specificUserId={specificUserId}
+                                    isBig={true}
+                                    canDownload={true}
+                                    variant="chat"
+                                    className="h-full w-full"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </DialogContent>
+            </Dialog>
+        )
     }
     const messageReliedTo = () => {
         if( (read?.replyTo && message.replyTo) ){
             return (
                 <div
-                    className="flex text-xs rounded-lg italic overflow-hidden border-l-4 border-muted-foreground mb-0.5"
+                    className={cn(
+                        "mb-1 overflow-hidden rounded-md border-l-4 px-2 py-1 text-xs italic",
+                        owner ? "border-primary-foreground/40 bg-primary-foreground/10" : "border-muted-foreground/50 bg-background/40"
+                    )}
                     onClick={(e) => {
                         e.stopPropagation();
                         e.preventDefault();
@@ -430,14 +514,14 @@ function Message({
                         }
                     }}
                 >
-                    <div className="p-1 space-y-1">
+                    <div className="space-y-0.5">
                         <HiddenElement>
                             {
                                 read?.replyTo?.keys?.sender &&
                                 <>
                                     {
                                         !!message.replyTo?.sender &&
-                                        <div className="flex items-center">
+                                        <div className="flex items-center font-medium not-italic">
                                             {message.replyTo.sender._id === user.id ? resolveLanguageKey("you") : getName(message.replyTo.sender)}
                                         </div>
                                     }
@@ -466,10 +550,13 @@ function Message({
     const messageForwarded = () => {
         if( read?.forwardedText && message.forwardedMessage ) {
             return (
-                <div className="flex text-xs rounded-lg italic overflow-hidden border-l-4 border-muted-foreground mb-1">
-                    <div className="p-1 space-y-1">
-                        <div className="flex items-center">
-                            <Forward size={12} className="inline mr-1" />
+                <div className={cn(
+                    "mb-1 overflow-hidden rounded-md border-l-4 px-2 py-1 text-xs italic",
+                    owner ? "border-primary-foreground/40 bg-primary-foreground/10" : "border-muted-foreground/50 bg-background/40"
+                )}>
+                    <div className="space-y-0.5">
+                        <div className="flex items-center font-medium not-italic">
+                            <Forward size={12} className="mr-1 inline" />
                             <p>{resolveLanguageKey("forwarded")}</p>
                         </div>
                         <p>
@@ -482,10 +569,10 @@ function Message({
         return <></>
     }
     const messageSender = () => {
-        // Show sender name if message is not from the owner and the channel is a group
-        if(!owner && openedChannel.metaData.isGroup ){
+        // Show sender name on the first bubble of a group in group chats.
+        if(!owner && openedChannel.metaData.isGroup && isFirstInGroup ){
             return (
-                <p className="text-xs italic text-muted-foreground px-2">
+                <p className="mb-0.5 text-xs font-medium text-muted-foreground">
                     {getName(message.sender)}
                 </p>
             )
@@ -552,117 +639,189 @@ function Message({
 
     }
 
+    const messageMeta = () => (
+        <span
+            className={cn(
+                "inline-flex shrink-0 items-center gap-0.5 ps-2 pt-0.5 leading-none",
+                owner ? "text-primary-foreground/70" : "text-muted-foreground",
+            )}
+        >
+            {messageIsPinned()}
+            {(message.status === "edited") && (
+                <span className="text-[10px] leading-none opacity-80">{resolveLanguageKey("edited")}</span>
+            )}
+            {messageTime()}
+            {messageReceiptTicks()}
+        </span>
+    )
+
+    const messageBody = () => (
+        <div className="grid min-w-0">
+            <div className="col-start-1 row-start-1 min-w-0">
+                {messageReliedTo()}
+                {messageForwarded()}
+                {messageSender()}
+                {messageFiles()}
+                {
+                    hasText &&
+                    <HiddenElement showLock={false}>
+                        {
+                            read.text &&
+                            <p className="whitespace-pre-wrap wrap-break-word pe-[3.75rem]">
+                                {renderMessageWithMentions(message.message)}
+                            </p>
+                        }
+                    </HiddenElement>
+                }
+                {
+                    !hasText && hasAttachments &&
+                    <div className="h-5 w-full" aria-hidden />
+                }
+            </div>
+            <div className="col-start-1 row-start-1 self-end justify-self-end">
+                {messageMeta()}
+            </div>
+        </div>
+    )
+
     if( message.status === "deleted" ){
         return (
-            <div ref={ref} key={`message-${messageId}`} id={`message-${messageId}`} className="flex w-full items-center" onClick={() => {if( openDelete ){dispatch(toggleDeleteMessageId(message._id))}}}>
+            <div
+                ref={ref}
+                key={`message-${messageId}`}
+                id={`message-${messageId}`}
+                className={cn(
+                    "flex w-full items-start gap-1",
+                    stackClassName,
+                )}
+                onClick={() => {if( openDelete ){dispatch(toggleDeleteMessageId(message._id))}}}
+            >
                 <ToggleDelete messageId={message._id}/>
-                <div id={"message-center-content-" + messageId} className={cn("flex grow space-x-1 items-center", {"justify-start": !owner, "justify-end ": owner})}>
+                <div
+                    id={"message-center-content-" + messageId}
+                    className={cn("flex min-w-0 grow gap-2", owner && "flex-row-reverse")}
+                >
                     {messageAvatar()}
-                    <ContextMenu onOpenChange={setContextOpened}>
-                        <ContextMenuTrigger asChild>
-                            <div className={cn(messageBubbleClassNameResolver())} ref={bubbleRef} onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
-                                <div className={cn("flex grow w-full space-x-2 px-2", {"justify-start": !owner, "justify-end": owner})}>
-                                    <div className="flex grow items-center space-x-0.5 text-muted-foreground">
-                                        <CircleSlash size={12} />
-                                        <p className="italic">{resolveLanguageKey(  message.sender._id === user.id ? "youDeletedTheMessage" : "messageDeleted")}</p>
+                    <div className={cn("group flex min-w-0 flex-col", owner && "items-end")}>
+                        <ContextMenu
+                            open={contextOpened && !attachmentsOpen}
+                            onOpenChange={(open) => {
+                                if (attachmentsOpen) {
+                                    setContextOpened(false);
+                                    return;
+                                }
+                                setContextOpened(open);
+                            }}
+                        >
+                            <ContextMenuTrigger asChild>
+                                <div
+                                    className={cn(messageBubbleClassNameResolver(), "bg-muted text-muted-foreground")}
+                                    ref={bubbleRef}
+                                    onClick={(e) => {e.stopPropagation(); e.preventDefault();}}
+                                >
+                                    <div className="grid min-w-0">
+                                        <div className="col-start-1 row-start-1 flex min-w-0 items-center gap-1 pe-[3.75rem]">
+                                            <CircleSlash size={12} />
+                                            <p className="italic">{resolveLanguageKey(  message.sender._id === user.id ? "youDeletedTheMessage" : "messageDeleted")}</p>
+                                        </div>
+                                        <div className="col-start-1 row-start-1 self-end justify-self-end">
+                                            {messageMeta()}
+                                        </div>
                                     </div>
-                                    {messageTime()}
                                 </div>
-                            </div>
-                        </ContextMenuTrigger>
-                        {
-                            (!openedChannel.metaData?.readOnly && !openDelete) &&
-                            <ContextMenuContent className="w-fit">
-                                <DeleteMessage messageId={message._id} shortcutOverride={"1"} />
-                            </ContextMenuContent>
-                        }
-                    </ContextMenu>
+                            </ContextMenuTrigger>
+                            {
+                                (!openedChannel.metaData?.readOnly && !openDelete) &&
+                                <ContextMenuContent className="w-fit">
+                                    <DeleteMessage messageId={message._id} shortcutOverride={"1"} />
+                                </ContextMenuContent>
+                            }
+                        </ContextMenu>
+                    </div>
                 </div>
             </div>
         )
     }
 
     return (
-        <div>
-            <div ref={ref} key={`message-${messageId}`} id={`message-${messageId}`} className="flex w-full items-center" onClick={() => {if( openDelete ){dispatch(toggleDeleteMessageId(message._id))}}}>
-                <ToggleDelete messageId={message._id}/>
-                <div id={"message-center-content-" + messageId} className={cn("flex grow space-x-1 items-center", {"justify-start": !owner, "justify-end ": owner})}>
-                    {messageAvatar()}
-                    <Popover open={reactionPickerOpened}>
-                        <PopoverTrigger asChild>
-                            <div>
-                                <ContextMenu onOpenChange={setContextOpened}>
-                                    <ContextMenuTrigger asChild>
-                                        <div className={cn(messageBubbleClassNameResolver())} ref={bubbleRef} onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
-                                            {/*Show reply to message info*/}
-                                            <div className="px-0.5">
-                                                {messageReliedTo()}
-                                                {messageForwarded()}
-                                                {messageSender()}
-                                                {messageFiles()}
-                                            </div>
-                                            <div className="flex" onClick={(e) => {e.stopPropagation(); setOpenAllFiles(false);}}>
-                                                <div className={cn("flex grow w-full space-x-1 px-2", {"justify-start": !owner, "justify-end": owner})}>
-                                                    <HiddenElement showLock={false}>
-                                                        {
-                                                            read.text &&
-                                                            <div className="flex grow">
-                                                                <p className="whitespace-pre-wrap wrap-break-word">
-                                                                    {renderMessageWithMentions(message.message)}
-                                                                </p>
-                                                            </div>
-                                                        }
-                                                    </HiddenElement>
-                                                    <p className="flex items-end mb-1 gap-0.5">
-                                                        {messageIsPinned()}
-                                                        {(message.status === "edited") && <p className="text-[10px]/[10px]">{resolveLanguageKey("edited")}</p>}
-                                                        {messageTime()}
-                                                        {messageReceiptTicks()}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <Reactions
-                                                messageId={message._id}
-                                                owner={owner}
-                                            />
-                                        </div>
-                                    </ContextMenuTrigger>
-                                    {
-                                        (!openedChannel.metaData?.readOnly && !openDelete) &&
-                                        <ContextMenuContent className="w-48">
-                                            {
-                                                message.sender._id === user.id &&
-                                                <EditMessage message={message}/>
-                                            }
-                                            <ReplyMessage message={message}/>
-                                            {
-                                                (message.status === "active" || message.status === "edited") &&
-                                                <ForwardMessage message={message}/>
-                                            }
-                                            <ReactMessage messageId={message._id} openReactionPicker={(value: boolean) => {setReactionPickerOpened(value)}}/>
-                                            {
-                                                message.pinned ?
-                                                    <UnpinMessage messageId={message._id}/>
-                                                    :
-                                                    <PinMessage messageId={message._id}/>
-                                            }
-                                            <DeleteMessage messageId={message._id} />
-                                        </ContextMenuContent>
-                                    }
-                                </ContextMenu>
-                            </div>
-                        </PopoverTrigger>
-                        <PopoverContent side={"top"} align={message?.sender?._id === user.id ? "end" : "start"} className="p-0 w-fit bg-[#00000000] ring-0 shadow-none" style={{border: "0px !important"}}>
-                            <div ref={pickerRef} className="select-none">
-                                <ReactToMessage
-                                    messageId={message._id}
-                                    onSuccess={() => {setReactionPickerOpened(false)}}
-                                />
-                            </div>
-                        </PopoverContent>
-                    </Popover>
-                </div>
+        <div
+            ref={ref}
+            key={`message-${messageId}`}
+            id={`message-${messageId}`}
+            className={cn(
+                "flex w-full items-start gap-1",
+                stackClassName,
+            )}
+            onClick={() => {if( openDelete ){dispatch(toggleDeleteMessageId(message._id))}}}
+        >
+            <ToggleDelete messageId={message._id}/>
+            <div
+                id={"message-center-content-" + messageId}
+                className={cn("flex min-w-0 grow gap-2", owner && "flex-row-reverse")}
+            >
+                {messageAvatar()}
+                <Popover open={reactionPickerOpened}>
+                    <PopoverTrigger asChild>
+                        <div className={cn("group flex min-w-0 flex-col", owner && "items-end")}>
+                            <ContextMenu
+                            open={contextOpened && !attachmentsOpen}
+                            onOpenChange={(open) => {
+                                if (attachmentsOpen) {
+                                    setContextOpened(false);
+                                    return;
+                                }
+                                setContextOpened(open);
+                            }}
+                        >
+                                <ContextMenuTrigger asChild>
+                                    <div
+                                        className={messageBubbleClassNameResolver()}
+                                        ref={bubbleRef}
+                                        onClick={(e) => {e.stopPropagation(); e.preventDefault();}}
+                                    >
+                                        {messageBody()}
+                                        <Reactions
+                                            messageId={message._id}
+                                            owner={owner}
+                                        />
+                                    </div>
+                                </ContextMenuTrigger>
+                                {
+                                    (!openedChannel.metaData?.readOnly && !openDelete) &&
+                                    <ContextMenuContent className="w-48">
+                                        {
+                                            message.sender._id === user.id &&
+                                            <EditMessage message={message}/>
+                                        }
+                                        <ReplyMessage message={message}/>
+                                        {
+                                            (message.status === "active" || message.status === "edited") &&
+                                            <ForwardMessage message={message}/>
+                                        }
+                                        <ReactMessage messageId={message._id} openReactionPicker={(value: boolean) => {setReactionPickerOpened(value)}}/>
+                                        {
+                                            message.pinned ?
+                                                <UnpinMessage messageId={message._id}/>
+                                                :
+                                                <PinMessage messageId={message._id}/>
+                                        }
+                                        <DeleteMessage messageId={message._id} />
+                                    </ContextMenuContent>
+                                }
+                            </ContextMenu>
+                        </div>
+                    </PopoverTrigger>
+                    <PopoverContent side={"top"} align={message?.sender?._id === user.id ? "end" : "start"} className="w-fit border-0 bg-transparent p-0 shadow-none ring-0">
+                        <div ref={pickerRef} className="select-none">
+                            <ReactToMessage
+                                messageId={message._id}
+                                onSuccess={() => {setReactionPickerOpened(false)}}
+                            />
+                        </div>
+                    </PopoverContent>
+                </Popover>
             </div>
+            {attachmentsDialog()}
         </div>
     )
 }

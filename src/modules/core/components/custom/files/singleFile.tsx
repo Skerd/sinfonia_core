@@ -12,9 +12,14 @@ import {
     Download,
 } from "lucide-react";
 import {useEffect, useState} from "react";
-import {DialogContent} from "@coreModule/components/ui/dialog.tsx";
-import {Dialog} from "@radix-ui/react-dialog";
+import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
+import {
+    ContextMenu,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuTrigger,
+} from "@coreModule/components/ui/context-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Media} from "armonia/src/modules/core/types";
 
@@ -36,7 +41,10 @@ type SingleFileProps = WithLanguageType & {
     file: Omit<FileToUpload, "file"> & {file: File | Media},
     isBig?: boolean,
     table?: boolean,
-    uploadThis?: boolean
+    uploadThis?: boolean,
+    /** Chat bubble attachments: compact tile that inherits bubble chrome. */
+    variant?: "default" | "chat",
+    className?: string,
 }
 function SingleFile({
     resolveLanguageKey,
@@ -46,8 +54,11 @@ function SingleFile({
     file,
     isBig = true,
     uploadThis = false,
-    table = false
+    table = false,
+    variant = "default",
+    className,
 }: SingleFileProps) {
+    const isChat = variant === "chat";
 
     const [open, setOpen] = useState(false);
     const [duration, setDuration] = useState<number | null>(null);
@@ -103,13 +114,29 @@ function SingleFile({
 
         // card preview (small)
         if (type.startsWith("image/")) {
-            return <img src={url} className={cn("w-full h-full object-fill rounded-lg", {"rounded-se-none rounded-ss-none": (isBig && !controls)})}  alt={displayName || "attachment"}/>;
+            return (
+                <img
+                    src={url}
+                    className={cn(
+                        "h-full w-full",
+                        isChat || controls ? "object-cover" : "object-fill",
+                        !isChat && "rounded-lg",
+                        {"rounded-se-none rounded-ss-none": (isBig && !controls && !isChat)},
+                    )}
+                    alt={displayName || "attachment"}
+                />
+            );
         }
         if (type.startsWith("video/")) {
             return (
                 <video
                     src={url}
-                    className={cn("w-full h-full object-fill rounded-lg", {"rounded-se-none rounded-ss-none": (isBig && !controls)})}
+                    className={cn(
+                        "h-full w-full",
+                        isChat || controls ? "object-cover" : "object-fill",
+                        !isChat && "rounded-lg",
+                        {"rounded-se-none rounded-ss-none": (isBig && !controls && !isChat)},
+                    )}
                     muted={!controls}
                     controls={controls}
                     autoPlay={controls}
@@ -140,16 +167,21 @@ function SingleFile({
         }
         if (type === "application/pdf") {
             return (
-                <div className="w-full h-full flex items-center justify-center bg-gray-50 rounded-lg">
+                <div className={cn(
+                    "flex h-full w-full items-center justify-center rounded-lg",
+                    isChat ? "bg-background/20" : "bg-gray-50",
+                )}>
                     {
                         controls ?
                         <div className="min-h-32">
-                            <iframe src={url} className="w-full h-full border-none" />
+                            <iframe src={url} className="h-full w-full border-none" />
                         </div>
                         :
-                        <div className="h-full w-full flex flex-col items-center justify-center space-x-1">
-                            <FileText className={cn({"w-16 h-16": isBig, "w-10 h-10": !isBig})}/>
-                            .{getFileExtension(innerFile instanceof File ? innerFile.name : innerFile.name)}
+                        <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-2 text-center">
+                            <FileText className={cn({"w-16 h-16": isBig && !isChat, "w-10 h-10": !isBig || isChat})}/>
+                            <span className="max-w-full truncate text-[10px] opacity-80">
+                                .{getFileExtension(displayName)}
+                            </span>
                         </div>
                     }
                 </div>
@@ -157,10 +189,15 @@ function SingleFile({
         }
 
         return (
-            <div className="w-full h-full flex items-center justify-center bg-gray-50 rounded-lg">
-                <div className="h-full w-full flex flex-col items-center justify-center space-x-1">
-                    <LucidFile className={cn({"w-16 h-16": isBig, "w-10 h-10": !isBig})}/>
-                    .{getFileExtension(innerFile instanceof File ? innerFile.name : innerFile.name)}
+            <div className={cn(
+                "flex h-full w-full items-center justify-center rounded-lg",
+                isChat ? "bg-background/20" : "bg-gray-50",
+            )}>
+                <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-2 text-center">
+                    <LucidFile className={cn({"w-16 h-16": isBig && !isChat, "w-10 h-10": !isBig || isChat})}/>
+                    <span className="max-w-full truncate text-[10px] opacity-80">
+                        .{getFileExtension(displayName)}
+                    </span>
                 </div>
             </div>
         );
@@ -186,20 +223,43 @@ function SingleFile({
         );
     }, [file?.id, file?.file]);
 
+    const openPreview = () => setOpen(true);
+
+    const runDownload = () => {
+        if (file.file instanceof File) {
+            downloadFile(URL.createObjectURL(file.file), file.file.name);
+        }
+        else {
+            downloadFile(`/api/auxiliary/media/` + file.file._id, file.file.name);
+        }
+    };
+
     const renderDropDownMenu = () => {
 
         if( !canRemove && !canDownload && !canPreview ) return <></>;
 
         return (
             <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger asChild>
                     {
+                        isChat ?
+                        <Button
+                            type="button"
+                            size="icon"
+                            variant="secondary"
+                            className="size-7 rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm hover:bg-background"
+                            onClick={(e) => {e.stopPropagation();}}
+                            onPointerDown={(e) => {e.stopPropagation();}}
+                        >
+                            <EllipsisVertical className="size-3.5" />
+                        </Button>
+                        :
                         isBig ?
                         <div className="hover:cursor-pointer">
                             <EllipsisVertical size={16} className="text-muted-foreground" />
                         </div>
                         :
-                        <Button variant="ghost" className="hover:cursor-pointer size-6 text-muted-foreground">
+                        <Button variant="ghost" className="size-6 text-muted-foreground hover:cursor-pointer">
                             <EllipsisVertical color={"gray"} size={1} />
                         </Button>
                     }
@@ -214,21 +274,14 @@ function SingleFile({
                     }
                     {
                         canPreview &&
-                        <DropdownMenuItem onClick={() => {setOpen(true)}}>
+                        <DropdownMenuItem onClick={openPreview}>
                             <Eye/>
                             <p>{resolveLanguageKey("preview")}</p>
                         </DropdownMenuItem>
                     }
                     {
                         canDownload &&
-                        <DropdownMenuItem onClick={() => {
-                            if( file.file instanceof File) {
-                                downloadFile(URL.createObjectURL(file.file), file.file.name)
-                            }
-                            else {
-                                downloadFile(`/api/auxiliary/media/` + file.file._id, file.file.name);
-                            }
-                        }}>
+                        <DropdownMenuItem onClick={runDownload}>
                             <Download />
                             <p>{resolveLanguageKey("download")}</p>
                         </DropdownMenuItem>
@@ -239,6 +292,32 @@ function SingleFile({
         )
     }
 
+    const renderContextMenuItems = () => (
+        <>
+            {
+                canRemove &&
+                <ContextMenuItem onClick={() => {onRemove(file?.id)}}>
+                    <Trash2 color="red"/>
+                    <p>{resolveLanguageKey("remove")}</p>
+                </ContextMenuItem>
+            }
+            {
+                canPreview &&
+                <ContextMenuItem onClick={openPreview}>
+                    <Eye/>
+                    <p>{resolveLanguageKey("preview")}</p>
+                </ContextMenuItem>
+            }
+            {
+                canDownload &&
+                <ContextMenuItem onClick={runDownload}>
+                    <Download />
+                    <p>{resolveLanguageKey("download")}</p>
+                </ContextMenuItem>
+            }
+        </>
+    );
+
     useEffect(() => {
         if( uploadThis ){
             //TODO fix
@@ -247,21 +326,37 @@ function SingleFile({
         }
     }, [uploadThis]);
 
-    return (
-        <div className={cn("relative flex flex-col p-0 border rounded-md bg-card", {"h-20 w-20": !isBig, "h-36 w-36": isBig, "size-9": table})} onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
+    const fileCard = (
+        <div
+            className={cn(
+                "group/file relative flex flex-col p-0",
+                isChat
+                    ? "h-full w-full overflow-hidden rounded-md border border-border/70 bg-muted/30 shadow-sm transition-[border-color,box-shadow,transform] hover:z-10 hover:border-primary hover:ring-2 hover:ring-primary/35 hover:shadow-md"
+                    : "rounded-md border bg-card",
+                !isChat && {"h-20 w-20": !isBig, "h-36 w-36": isBig, "size-9": table},
+                className,
+            )}
+            onClick={(e) => {e.stopPropagation(); e.preventDefault();}}
+            onContextMenu={(e) => {e.stopPropagation();}}
+        >
             <>
                 {
+                    isChat ?
+                    <div className="absolute end-1 top-1 z-1 opacity-0 transition-opacity group-hover/file:opacity-100 focus-within:opacity-100 data-[state=open]:opacity-100">
+                        {renderDropDownMenu()}
+                    </div>
+                    :
                     (isBig) ?
-                    <div className="ps-1 flex w-full items-center justify-between" onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
+                    <div className="flex w-full items-center justify-between ps-1" onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
                         <div className="flex w-[85%]">
                             {
                                 isBig && !!file &&
-                                <TooltipDisplayer tooltip={file.file.name}>
-                                    <p className="text-xs text-muted-foreground hover:cursor-pointer truncate">{file.file.name}</p>
+                                <TooltipDisplayer tooltip={getMediaDisplayName(file.file)}>
+                                    <p className="truncate text-xs text-muted-foreground hover:cursor-pointer">{getMediaDisplayName(file.file)}</p>
                                 </TooltipDisplayer>
                             }
                         </div>
-                        <div className="flex items-center rounded hover:bg-muted py-1 px-0">
+                        <div className="flex items-center rounded px-0 py-1 hover:bg-muted">
                             {renderDropDownMenu()}
                         </div>
                     </div>
@@ -274,30 +369,67 @@ function SingleFile({
                             </div>
                         }
                     </>
-
                 }
 
-                <div className={cn("flex grow w-full rounded-lg bg-muted overflow-hidden", {"rounded-se-none rounded-ss-none ": isBig})}>
-                    <div className="relative group w-full h-full overflow-hidden hover:cursor-pointer text-muted-foreground" onClick={() => {if( canPreview ){ setOpen(true); }}}>
+                <div className={cn(
+                    "flex w-full grow overflow-hidden",
+                    isChat ? "rounded-md bg-transparent" : "rounded-lg bg-muted",
+                    {"rounded-se-none rounded-ss-none ": isBig && !isChat},
+                )}>
+                    <div
+                        className={cn(
+                            "relative h-full w-full overflow-hidden hover:cursor-pointer",
+                            isChat ? "text-current" : "text-muted-foreground",
+                        )}
+                        onClick={() => {if( canPreview ){ openPreview(); }}}
+                    >
                         {
                             !!file && renderPreviewCard(file.file, false, file.path)
                         }
                     </div>
                 </div>
-
-                {
-                    open &&
-                    <Dialog open={open} onOpenChange={setOpen}>
-                        <DialogContent className="max-w-3xl w-auto p-2">
-                            <div className="flex items-center justify-center" style={{border: "0px solid red"}}>
-                                {!!file && renderPreviewCard(file.file, true, file.path)}
-                            </div>
-                        </DialogContent>
-                    </Dialog>
-                }
             </>
         </div>
-    )
+    );
+
+    const previewDialog = (
+        <Dialog open={open} onOpenChange={setOpen} modal>
+            <DialogContent
+                className="max-h-[90vh] w-auto max-w-[min(96vw,56rem)] p-2 sm:max-w-[min(96vw,56rem)]"
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
+            >
+                <div className="flex max-h-[85vh] items-center justify-center overflow-auto">
+                    {!!file && renderPreviewCard(file.file, true, file.path)}
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+
+    if (isChat && (canRemove || canDownload || canPreview)) {
+        return (
+            <>
+                <ContextMenu>
+                    <ContextMenuTrigger asChild>
+                        {fileCard}
+                    </ContextMenuTrigger>
+                    <ContextMenuContent className="w-44">
+                        {renderContextMenuItems()}
+                    </ContextMenuContent>
+                </ContextMenu>
+                {previewDialog}
+            </>
+        );
+    }
+
+    return (
+        <>
+            {fileCard}
+            {previewDialog}
+        </>
+    );
 }
 
 export default compose(
