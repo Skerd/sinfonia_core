@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+    --color-pronix-ink: #181818;
+    --color-pronix-ink-muted: rgba(24, 24, 24, 0.8);
+    --color-pronix-ink-faded: rgba(24, 24, 24, 0.3);
+    --color-pronix-blue: #0247fe;
+    --color-pronix-cream: #f5ede4;
+    --color-pronix-border: rgba(24, 24, 24, 0.2);
+    --color-pronix-white-border: rgba(255, 255, 255, 0.4);
+    --font-aeonik: "DM Sans", system-ui, sans-serif;
+    --font-kamerik: "Space Grotesk", system-ui, sans-serif;
+}
+
+@layer base {
+    body {
+        @apply bg-white text-[#181818] antialiased;
+        font-family: var(--font-aeonik);
+    }
+}
+
+@layer utilities {
+    .font-aeonik-medium {
+        font-family: var(--font-aeonik);
+        font-weight: 500;
+    }
+
+    .font-aeonik-light {
+        font-family: var(--font-aeonik);
+        font-weight: 300;
+    }
+
+    .font-kamerik-bold {
+        font-family: var(--font-kamerik);
+        font-weight: 700;
+    }
+
+    .font-kamerik-book {
+        font-family: var(--font-kamerik);
+        font-weight: 400;
+    }
+}
