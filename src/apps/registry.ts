@@ -1,5 +1,5 @@
 /** Registered Sinfonia clients under `src/apps/<id>/`. */
-export const SINFONIA_APP_IDS = ["core", "development"] as const;
+export const SINFONIA_APP_IDS = ["core", "development", "public"] as const;
 
 export type SinfoniaAppId = (typeof SINFONIA_APP_IDS)[number];
 

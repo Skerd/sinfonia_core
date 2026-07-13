@@ -17,6 +17,7 @@
         "build": "vite build",
         "coreInstallAndDev": "export NODE_ENV=development && cd ../armonia && npm run build && cd ../sinfonia && rm -rf node_modules/.vite && yarn add ../armonia && vite --host",
         "coreDev": "export NODE_ENV=development && vite --host",
+        "publicDev": "export NODE_ENV=development VITE_SINFONIA_APP=public && vite --host",
         "runXAndY": "export NODE_ENV=development VITE_ENABLED_MODULES=x,y && vite --host",
         "typecheck": "node scripts/moduleAliases.ts && tsc --noEmit",
         "test": "vitest run",
