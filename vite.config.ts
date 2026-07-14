@@ -93,6 +93,16 @@ function enabledModulesExcludePlugin(rawEnv: string | undefined): Plugin {
 }
 
 
+/** Normalize deploy path to a Vite `base` (always `/` or `/segment/`). */
+function normalizeViteBasePath(raw: string | undefined): string {
+    const value = (raw ?? "/").trim() || "/";
+    if (value === "/") {
+        return "/";
+    }
+    const trimmed = value.replace(/^\/+|\/+$/g, "");
+    return `/${trimmed}/`;
+}
+
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, __dirname, "");
     const enabledModulesRaw =
@@ -100,10 +110,14 @@ export default defineConfig(({ mode }) => {
     const sinfoniaAppId = resolveSinfoniaAppId(
         process.env.VITE_SINFONIA_APP ?? env.VITE_SINFONIA_APP,
     );
+    const viteBase = normalizeViteBasePath(
+        process.env.VITE_BASE_PATH ?? env.VITE_BASE_PATH,
+    );
     // Scan `src/modules/*` → `@${dir}Module` aliases; keep tsconfig `paths` in sync for the IDE.
     syncTsconfigModulePaths();
 
     return {
+        base: viteBase,
         plugins: [
             enabledModulesExcludePlugin(enabledModulesRaw),
             sinfoniaAppHtmlPlugin(sinfoniaAppId),
