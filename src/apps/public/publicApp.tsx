@@ -10,6 +10,7 @@ import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {getLocalStorageValue, setLocalStorageValue} from "@coreModule/helpers/context/localStorage/localStorageProvider.ts";
 import {generateUUID} from "@coreModule/helpers/general";
 import PublicLayout from "@propertyManagementModule/clients/client/public/shared/publicLayout.tsx";
+import {sinfoniaRouterBasename} from "../routerBasename";
 
 const HomePage = lazy(() => import("@propertyManagementModule/clients/client/public/home/index.tsx"));
 const ProjectsPage = lazy(() => import("@propertyManagementModule/clients/client/public/projects/index.tsx"));
@@ -46,7 +47,7 @@ function PublicApp() {
     return (
         <Provider store={store}>
             <LanguageProvider storageKey="vite-ui-language">
-                <BrowserRouter>
+                <BrowserRouter basename={sinfoniaRouterBasename()}>
                     <Suspense fallback={<Loader />}>
                         <Routes>
                             <Route element={<PublicLayout />}>
