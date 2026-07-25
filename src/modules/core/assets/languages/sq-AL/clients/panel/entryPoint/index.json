@@ -9,30 +9,6 @@
     "delete": "Fshije"
   },
   "menus": {
-    "company": {
-      "title": "Kompania",
-      "dashboard": {
-        "title": "Vështrim i përgjithshëm"
-      },
-      "administration": {
-        "title": "Administrata"
-      },
-      "users": {
-        "title": "Përdoruesit"
-      },
-      "chats": {
-        "title": "Bisedat"
-      },
-      "info": {
-        "title": "Kompania"
-      },
-      "editCompany": {
-        "title": "Redaktoni kompaninë"
-      },
-      "createCompany": {
-        "title": "Krijo kompani"
-      }
-    },
     "account": {
       "mainTitle": "Llogaria ime",
       "title": "Llogaria ime",
@@ -190,91 +166,28 @@
         }
       }
     },
-    "realEstate": {
-      "title": "Pasuri të paluajtshme",
-      "overview": {
+    "company": {
+      "title": "Kompania",
+      "dashboard": {
         "title": "Vështrim i përgjithshëm"
       },
-      "dashboard": {
-        "title": "Paneli"
+      "administration": {
+        "title": "Administrata"
       },
-      "projects": {
-        "title": "Projektet"
+      "users": {
+        "title": "Përdoruesit"
       },
-      "edifices": {
-        "title": "Ndërtesat"
+      "chats": {
+        "title": "Bisedat"
       },
-      "floors": {
-        "title": "Dyshemetë"
+      "info": {
+        "title": "Kompania"
       },
-      "units": {
-        "title": "Njësitë"
+      "editCompany": {
+        "title": "Redaktoni kompaninë"
       },
-      "inspections": {
-        "title": "Inspektimet"
-      },
-      "unitCosts": {
-        "title": "Kostot e njësisë"
-      },
-      "modificationRequests": {
-        "title": "Kërkesat për modifikim"
-      },
-      "reservations": {
-        "title": "Rezervimet"
-      },
-      "sales": {
-        "title": "Shitjet"
-      },
-      "paymentPlans": {
-        "title": "Planet e Pagesave"
-      },
-      "constructors": {
-        "title": "Konstruktorët"
-      },
-      "unitTypeCategories": {
-        "title": "Kategoritë e llojeve të njësive"
-      },
-      "unitTypes": {
-        "title": "Llojet e njësive"
-      },
-      "commissions": {
-        "title": "Komisionet"
-      },
-      "agentReport": {
-        "title": "Raporti i Agjentit"
-      },
-      "leads": {
-        "title": "Drejtimet"
-      },
-      "unitAvailability": {
-        "title": "Kalendari i Disponueshmërisë"
-      },
-      "ownerPortal": {
-        "title": "Qendra e Qirave"
-      },
-      "rentalsHub": {
-        "title": "Qendra e Qirave"
-      },
-      "leases": {
-        "title": "Kontratat e Qirasë"
-      },
-      "rentalPayments": {
-        "title": "Pagesat e Qirasë"
-      },
-      "roi": {
-        "title": "Llogaritësi ROI"
-      },
-      "constructionUpdates": {
-        "title": "Përditësimet e Ndërtimit"
-      },
-      "snags": {
-        "title": "Lista e Defekteve"
-      },
-      "groupDashboard": {
-        "title": "Paneli i Grupit"
-      },
-      "erpExport": {
-        "title": "Eksporti ERP"
+      "createCompany": {
+        "title": "Krijo kompani"
       }
     }
   }

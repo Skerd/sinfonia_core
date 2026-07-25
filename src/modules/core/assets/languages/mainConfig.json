@@ -17,6 +17,11 @@
         "loadingText": "Gjuha",
         "failedLoadingTitle": "Nuk mund te ngarkohej gjuha",
         "maxRetriesExceededText": "Ju lutem rifresoni faqen per te provuar perseri ngarkimin e gjuhes"
+      },
+      "de-CH": {
+        "loadingText": "Sprache",
+        "failedLoadingTitle": "Sprache konnte nicht geladen werden",
+        "maxRetriesExceededText": "Bitte laden Sie die Seite neu, um die Sprache erneut zu laden"
       }
     },
     "clearanceLoaderHoc": {
@@ -28,6 +33,11 @@
       "sq-AL": {
         "noClearance": "Nuk jeni i autorizuar per te pare seksionin",
         "neededClearances": "Te drejtat e nevojshme: [$].",
+        "showNeededClearances": true
+      },
+      "de-CH": {
+        "noClearance": "Nicht berechtigt, diesen Inhalt anzuzeigen.",
+        "neededClearances": "Benötigte Berechtigungen: [$].",
         "showNeededClearances": true
       }
     },
@@ -41,6 +51,11 @@
         "loading": "Duke u lidhur me ndeshjet LIVE",
         "error": "Lidhja me ndeshjet LIVE deshtoi, duke u rilidhur...",
         "success": "U krye lidhja me ndeshjet LIVE"
+      },
+      "de-CH": {
+        "loading": "Verbindung zum Live-Updater wird hergestellt",
+        "error": "Verbindung zum Live-Updater fehlgeschlagen, erneuter Versuch...",
+        "success": "Verbindung zum Live-Updater erfolgreich hergestellt"
       }
     }
   },
@@ -52,6 +67,10 @@
     {
       "languageCode": "en-US",
       "name": "English"
+    },
+    {
+      "languageCode": "de-CH",
+      "name": "Deutsch (Schweiz)"
     }
   ],
   "components": {
@@ -61,6 +80,9 @@
       },
       "sq-AL": {
         "all": "Te gjitha"
+      },
+      "de-CH": {
+        "all": "Alle"
       }
     },
     "languageSelector": {
@@ -69,6 +91,9 @@
       },
       "sq-AL": {
         "selectLanguage": "Zgjidhni gjuhen"
+      },
+      "de-CH": {
+        "selectLanguage": "Sprache auswählen"
       }
     },
     "passwordStrength": {
@@ -79,6 +104,10 @@
       "sq-AL": {
         "passwordTooShort": "Fjalekalim i shkurter",
         "passwordStages": ["I dobet", "I dobet", "I pranueshem", "I mire", "I shkelqyer"]
+      },
+      "de-CH": {
+        "passwordTooShort": "Kurzes Passwort",
+        "passwordStages": ["Kurz", "Schwach", "Mittel", "Gut", "Ausgezeichnet"]
       }
     },
     "tableWithIntegration": {
@@ -93,6 +122,12 @@
         "noDataAtAll": "Asnje e dhene nuk mund te shfaqet. Kjo tabele eshte bosh.",
         "noDataDescription": "Ju lutem perditesoni filtrat e kerkimit, per me shume rezultate",
         "loading": "Duke ngarkuar te dhenat e tables"
+      },
+      "de-CH": {
+        "noData": "Keine Daten",
+        "noDataAtAll": "Es können keine Daten angezeigt werden. Diese Tabelle ist leer.",
+        "noDataDescription": "Bitte passen Sie die Suchfilter an, um mehr Daten anzuzeigen.",
+        "loading": "Tabellendaten werden geladen"
       }
     },
     "uploadFile": {
@@ -119,6 +154,18 @@
         "files": "skedar",
         "secili": "secili",
         "remove": "Hiq skedarin"
+      },
+      "de-CH": {
+        "dropOnly": "Dateien hier ablegen",
+        "dragAndDrop": "Dateien hierher ziehen und ablegen",
+        "or": "oder",
+        "browse": "durchsuchen",
+        "upload": "zum Hochladen",
+        "oneFile": "Nur eine Datei",
+        "upTo": "Bis zu",
+        "files": "Dateien",
+        "each": "je",
+        "remove": "Datei entfernen"
       }
     }
   },

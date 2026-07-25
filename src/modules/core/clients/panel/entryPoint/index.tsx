@@ -14,6 +14,7 @@ import NotificationBell from "@coreModule/components/custom/notificationBell";
 import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {resolveCenterPanelClassName} from "@coreModule/clients/panel/moduleContributions/loadPanelLayoutContributions.ts";
 
 type CenterPanelProps = WithLanguageType & {
     standalone?: boolean;
@@ -128,8 +129,13 @@ function CenterPanel({resolveLanguageKey, standalone}: CenterPanelProps){
             <div className={cn("flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden", standalone && "h-full")}>
                 <div
                     className={clsx(
-                        "mx-auto flex min-h-0 min-w-0 w-full max-w-full flex-1 flex-col overflow-y-auto",
-                        standalone ? "h-full" : menu === "company" && subview === "chats" && isMobile ? "px-0" : "px-2 pb-2 mt-2",
+                        "mx-auto flex min-h-0 min-w-0 w-full max-w-full flex-1 flex-col",
+                        standalone
+                            ? "h-full"
+                            : resolveCenterPanelClassName({menu, subview, isMobile})
+                              ?? (menu === "company" && subview === "chats" && isMobile
+                                  ? "overflow-y-auto px-0"
+                                  : "overflow-y-auto px-2 pb-2 mt-2"),
                     )}
                 >
                     {

@@ -9,30 +9,6 @@
     "delete": "Delete"
   },
   "menus": {
-    "company": {
-      "title": "Company",
-      "dashboard": {
-        "title": "Overview"
-      },
-      "administration": {
-        "title": "Administration"
-      },
-      "users": {
-        "title": "Users"
-      },
-      "chats": {
-        "title": "Chats"
-      },
-      "info": {
-        "title": "Company"
-      },
-      "editCompany": {
-        "title": "Edit company"
-      },
-      "createCompany": {
-        "title": "Create company"
-      }
-    },
     "account": {
       "mainTitle": "My account",
       "title": "My account",
@@ -190,91 +166,28 @@
         }
       }
     },
-    "realEstate": {
-      "title": "Real Estate",
-      "overview": {
+    "company": {
+      "title": "Company",
+      "dashboard": {
         "title": "Overview"
       },
-      "dashboard": {
-        "title": "Dashboard"
+      "administration": {
+        "title": "Administration"
       },
-      "projects": {
-        "title": "Projects"
+      "users": {
+        "title": "Users"
       },
-      "edifices": {
-        "title": "Edifices"
+      "chats": {
+        "title": "Chats"
       },
-      "floors": {
-        "title": "Floors"
+      "info": {
+        "title": "Company"
       },
-      "units": {
-        "title": "Units"
+      "editCompany": {
+        "title": "Edit company"
       },
-      "inspections": {
-        "title": "Inspections"
-      },
-      "unitCosts": {
-        "title": "Unit costs"
-      },
-      "modificationRequests": {
-        "title": "Modification Requests"
-      },
-      "reservations": {
-        "title": "Reservations"
-      },
-      "sales": {
-        "title": "Sales"
-      },
-      "paymentPlans": {
-        "title": "Payment Plans"
-      },
-      "constructors": {
-        "title": "Constructors"
-      },
-      "unitTypeCategories": {
-        "title": "Unit Type Categories"
-      },
-      "unitTypes": {
-        "title": "Unit Types"
-      },
-      "commissions": {
-        "title": "Commissions"
-      },
-      "agentReport": {
-        "title": "Agent Report"
-      },
-      "leads": {
-        "title": "Leads"
-      },
-      "unitAvailability": {
-        "title": "Availability Calendar"
-      },
-      "ownerPortal": {
-        "title": "Rentals Hub"
-      },
-      "rentalsHub": {
-        "title": "Rentals Hub"
-      },
-      "leases": {
-        "title": "Leases"
-      },
-      "rentalPayments": {
-        "title": "Rental Payments"
-      },
-      "roi": {
-        "title": "ROI Calculator"
-      },
-      "constructionUpdates": {
-        "title": "Construction Updates"
-      },
-      "snags": {
-        "title": "Snagging List"
-      },
-      "groupDashboard": {
-        "title": "Group Dashboard"
-      },
-      "erpExport": {
-        "title": "ERP Export"
+      "createCompany": {
+        "title": "Create company"
       }
     }
   }

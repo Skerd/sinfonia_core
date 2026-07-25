@@ -11,30 +11,6 @@
     "greetingEvening": "Mirëmbrëma"
   },
   "menus": {
-    "company": {
-      "title": "Kompania",
-      "dashboard": {
-        "title": "Vështrim i përgjithshëm"
-      },
-      "administration": {
-        "title": "Administrata"
-      },
-      "users": {
-        "title": "Përdoruesit"
-      },
-      "chats": {
-        "title": "Bisedat"
-      },
-      "settings": {
-        "title": "Cilësimet",
-        "company": {
-          "title": "Kompania"
-        },
-        "roles": {
-          "title": "Rolet"
-        }
-      }
-    },
     "account": {
       "title": "Llogaria ime",
       "accountSettings": {
@@ -86,220 +62,52 @@
         }
       },
       "systemSettings": {
+        "smtpServers": {
+          "title": "Posta dalëse"
+        },
+        "cities": {
+          "title": "Qytetet"
+        },
+        "states": {
+          "title": "shtetet"
+        },
         "title": "Konfigurimet",
+        "messagingProviders": {
+          "title": "Ofruesit e Mesazheve"
+        },
         "core": {
           "title": "Themelore"
         },
         "countries": {
           "title": "shtetet"
         },
-        "states": {
-          "title": "shtetet"
-        },
-        "cities": {
-          "title": "Qytetet"
-        },
         "currencies": {
           "title": "Monedhat"
-        },
-        "smtpServers": {
-          "title": "Posta dalëse"
-        },
-        "messagingProviders": {
-          "title": "Ofruesit e Mesazheve"
-        },
-        "eCommerce": {
-          "title": "E-tregtia"
-        },
-        "categories": {
-          "title": "Kategoritë"
         }
       }
     },
-    "realEstate": {
-      "title": "Pasuri të paluajtshme",
-      "overview": {
+    "company": {
+      "title": "Kompania",
+      "dashboard": {
         "title": "Vështrim i përgjithshëm"
       },
-      "dashboard": {
-        "title": "Paneli"
+      "administration": {
+        "title": "Administrata"
       },
-      "projects": {
-        "title": "Projektet"
+      "users": {
+        "title": "Përdoruesit"
       },
-      "edifices": {
-        "title": "Ndërtesat"
+      "chats": {
+        "title": "Bisedat"
       },
-      "floors": {
-        "title": "Dyshemetë"
-      },
-      "units": {
-        "title": "Njësitë"
-      },
-      "inspections": {
-        "title": "Inspektimet"
-      },
-      "unitCosts": {
-        "title": "Kostot e njësisë"
-      },
-      "modificationRequests": {
-        "title": "Kërkesat për modifikim"
-      },
-      "reservations": {
-        "title": "Rezervimet"
-      },
-      "sales": {
-        "title": "Shitjet"
-      },
-      "contractsHub": {
-        "title": "Kontratat & Klientët"
-      },
-      "paymentPlans": {
-        "title": "Planet e Pagesave"
-      },
-      "constructors": {
-        "title": "Konstruktorët"
-      },
-      "unitTypeCategories": {
-        "title": "Kategoritë e llojeve të njësive"
-      },
-      "unitTypes": {
-        "title": "Llojet e njësive"
-      },
-      "commissions": {
-        "title": "Komisionet"
-      },
-      "leads": {
-        "title": "Drejtimet"
-      },
-      "unitAvailability": {
-        "title": "Kalendari i Disponueshmërisë"
-      },
-      "ownersAndRentals": {
-        "title": "Pronarë & Qira"
-      },
-      "rentalsHub": {
-        "title": "Qendra e Qirave"
-      },
-      "leases": {
-        "title": "Kontratat e Qirasë"
-      },
-      "rentalPayments": {
-        "title": "Pagesat e Qirasë"
-      },
-      "constructionUpdates": {
-        "title": "Përditësimet e Ndërtimit"
-      },
-      "snags": {
-        "title": "Lista e Defekteve"
-      }
-    },
-    "reports": {
-      "title": "Raportet",
-      "groupDashboard": {
-        "title": "Paneli i Grupit"
-      },
-      "agentReport": {
-        "title": "Raporti i Agjentit"
-      },
-      "roi": {
-        "title": "Llogaritësi ROI"
-      },
-      "erpExport": {
-        "title": "Eksporti ERP"
-      }
-    },
-    "finance": {
-      "title": "Financat",
-      "unitCosts": {
-        "title": "Kostot e njësisë"
-      }
-    },
-    "eCommerce": {
-      "title": "eCommerce",
-      "listings": {
-        "title": "Listimet"
-      },
-      "taskrequests": {
-        "title": "Kërkesat për detyra"
-      },
-      "orders": {
-        "title": "Porositë"
-      },
-      "bids": {
-        "title": "Ofertat"
-      },
-      "bookings": {
-        "title": "Rezervimet"
-      },
-      "disputes": {
-        "title": "Ankesat"
-      },
-      "reviews": {
-        "title": "Vlerësimet"
-      },
-      "promotions": {
-        "title": "Promovimet"
-      },
-      "listingFlags": {
-        "title": "Raportimet"
-      },
-      "providerProfile": {
-        "title": "Profilet e ofruesve"
-      },
-      "providerAvailability": {
-        "title": "Disponueshmëria"
-      },
-      "listingAddOns": {
-        "title": "Shtesa të Listimeve"
-      },
-      "listingPackages": {
-        "title": "Paketat e Listimeve"
-      },
-      "escrowDashboard": {
-        "title": "Paneli Eskro"
-      },
-      "productCommerce": {
-        "title": "Tregtia e produkteve"
-      },
-      "products": {
-        "title": "Produktet"
-      },
-      "collections": {
-        "title": "Koleksionet"
-      },
-      "productorders": {
-        "title": "Porositë e produkteve"
-      },
-      "inventories": {
-        "title": "Inventari"
-      },
-      "warehouses": {
-        "title": "Magazinat"
-      },
-      "productattributes": {
-        "title": "Atributet e produkteve"
-      },
-      "discounts": {
-        "title": "Zbritjet"
-      },
-      "taxzones": {
-        "title": "Zonat tatimore"
-      },
-      "shippingzones": {
-        "title": "Zonat e transportit"
-      },
-      "cmsblocks": {
-        "title": "Blloqet CMS"
-      },
-      "customergroups": {
-        "title": "Grupet e klientëve"
-      },
-      "pricingrules": {
-        "title": "Rregullat e çmimeve"
-      },
-      "analytics": {
-        "title": "Analitika"
+      "settings": {
+        "title": "Cilësimet",
+        "company": {
+          "title": "Kompania"
+        },
+        "roles": {
+          "title": "Rolet"
+        }
       }
     }
   }
