@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import {type ReactNode, useLayoutEffect, useRef, useState} from 'react';
 import { ChevronRight } from 'lucide-react';
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Link, useParams, useLocation} from 'react-router-dom';
@@ -7,6 +7,8 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, 
 import {SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar} from '@coreModule/components/ui/sidebar.tsx';
 import {NavCollapsible, NavItem, NavLink, NavLinkItem, NavSubCollapsible} from "@coreModule/helpers/panel/sidebarNav.types.ts";
 import {compose} from "redux";
+import {cn} from "@coreModule/components/lib/utils.ts";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 
 export function ProtectNavigation(
     clearanceLevel: number,
@@ -86,6 +88,37 @@ function NavBadge({ children }: { children: ReactNode }) {
   return <Badge className='rounded-full px-1 py-0 text-xs'>{children}</Badge>
 }
 
+/** Truncated label that shows a tooltip only when the text overflows. */
+function NavTruncatedTitle({ title, className }: { title: string; className?: string }) {
+    const ref = useRef<HTMLSpanElement>(null)
+    const [truncated, setTruncated] = useState(false)
+
+    useLayoutEffect(() => {
+        const el = ref.current
+        if (!el) return
+        const check = () => setTruncated(el.scrollWidth > el.clientWidth + 1)
+        check()
+        const ro = new ResizeObserver(check)
+        ro.observe(el)
+        return () => ro.disconnect()
+    }, [title])
+
+    return (
+        <TooltipProvider delayDuration={300}>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <span ref={ref} className={cn('min-w-0 truncate', className)}>
+                        {title}
+                    </span>
+                </TooltipTrigger>
+                <TooltipContent side="right" sideOffset={8} hidden={!truncated}>
+                    {title}
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
+    )
+}
+
 function SidebarMenuLink({ item }: { item: NavLink }) {
     const { setOpenMobile } = useSidebar()
     const { menu, subview } = useParams();
@@ -95,7 +128,7 @@ function SidebarMenuLink({ item }: { item: NavLink }) {
             <SidebarMenuButton asChild isActive={checkIsActive(`/${menu}/${subview}`, item)} tooltip={item.title}>
                 <Link to={item.url} onClick={() => setOpenMobile(false)}>
                     {item.icon && <item.icon />}
-                    <span>{item.title}</span>
+                    <NavTruncatedTitle title={item.title} />
                 </Link>
             </SidebarMenuButton>
             {item.badge && (
@@ -118,8 +151,8 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                 <DropdownMenuTrigger asChild>
                     <SidebarMenuButton tooltip={item.title} isActive={checkIsActive(href, item)}>
                         {item.icon && <item.icon />}
-                        <span>{item.title}</span>
-                        <ChevronRight className='ms-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
+                        <NavTruncatedTitle title={item.title} className='flex-1' />
+                        <ChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent side='right' align='start' sideOffset={4}>
@@ -141,7 +174,7 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                                             className={`${checkIsActive(href, sub as NavLink) ? 'bg-secondary' : ''}`}
                                         >
                                             {sub.icon && <sub.icon />}
-                                            <span className='max-w-52 text-wrap'>{sub.title}</span>
+                                            <NavTruncatedTitle title={sub.title} className='max-w-52' />
                                             {sub.badge && (
                                                 <span className='ms-auto text-xs'>{sub.badge}</span>
                                             )}
@@ -168,7 +201,7 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                                             className={`${hrefMatchesSubLink(href, String(link.url)) ? 'bg-secondary' : ''}`}
                                         >
                                             {link.icon && <link.icon />}
-                                            <span className='max-w-52 text-wrap'>{link.title}</span>
+                                            <NavTruncatedTitle title={link.title} className='max-w-52' />
                                             {link.badge && (
                                                 <span className='ms-auto text-xs'>{link.badge}</span>
                                             )}
@@ -204,8 +237,8 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                 <CollapsibleTrigger asChild>
                     <SidebarMenuButton tooltip={item.title}>
                         {item.icon && <item.icon />}
-                        <span>{item.title}</span>
-                        <ChevronRight className='ms-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180' />
+                        <NavTruncatedTitle title={item.title} className='flex-1' />
+                        <ChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180' />
                     </SidebarMenuButton>
                 </CollapsibleTrigger>
                 {item.badge && (
@@ -227,7 +260,7 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                             <SidebarMenuSubButton asChild isActive={checkIsActive(href, subItem as NavLink)}>
                                                 <Link to={subItem.url} onClick={() => setOpenMobile(false)}>
                                                     {subItem.icon && <subItem.icon />}
-                                                    <span>{subItem.title}</span>
+                                                    <NavTruncatedTitle title={subItem.title} />
                                                     {subItem.badge && <NavBadge>{subItem.badge}</NavBadge>}
                                                 </Link>
                                             </SidebarMenuSubButton>
@@ -249,8 +282,8 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                             <CollapsibleTrigger asChild>
                                                 <SidebarMenuSubButton isActive={nestedOpen}>
                                                     {nested.icon && <nested.icon />}
-                                                    <span>{nested.title}</span>
-                                                    <ChevronRight className='ms-auto transition-transform duration-200 group-data-[state=open]/subcollapsible:rotate-90 rtl:rotate-180' />
+                                                    <NavTruncatedTitle title={nested.title} className='flex-1' />
+                                                    <ChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/subcollapsible:rotate-90 rtl:rotate-180' />
                                                 </SidebarMenuSubButton>
                                             </CollapsibleTrigger>
                                             <CollapsibleContent>
@@ -266,7 +299,7 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                                     <SidebarMenuSubButton asChild isActive={hrefMatchesSubLink(href, String(link.url))}>
                                                                         <Link to={link.url} onClick={() => setOpenMobile(false)}>
                                                                             {link.icon && <link.icon />}
-                                                                            <span>{link.title}</span>
+                                                                            <NavTruncatedTitle title={link.title} />
                                                                             {link.badge && <NavBadge>{link.badge}</NavBadge>}
                                                                         </Link>
                                                                     </SidebarMenuSubButton>
