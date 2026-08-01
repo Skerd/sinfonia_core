@@ -1,0 +1,70 @@
+{
+	"groups": {
+		"Musicalbums": "Albums",
+		"Musicartists": "Artists",
+		"Musicsongs": "Songs"
+	},
+	"permissions": {
+		"Musicalbums": {
+			"artist": "Artist",
+			"coverImageUrl": "Cover Image Url",
+			"createdAt": "Created At",
+			"createdBy": "Created By",
+			"deletedAt": "Deleted At",
+			"deletedBy": "Deleted By",
+			"musicalbums": "Albums",
+			"sourceUrl": "Source Url",
+			"title": "Title",
+			"updatedAt": "Updated At",
+			"year": "Year"
+		},
+		"Musicartists": {
+			"aliases": "Aliases",
+			"bio": "Bio",
+			"birthday": "Birthday",
+			"birthplace": "Birthplace",
+			"coverImageUrl": "Cover Image Url",
+			"createdAt": "Created At",
+			"createdBy": "Created By",
+			"deletedAt": "Deleted At",
+			"deletedBy": "Deleted By",
+			"genres": "Genres",
+			"livesIn": "Lives In",
+			"musicartists": "Artists",
+			"name": "Name",
+			"realName": "Real Name",
+			"slug": "Slug",
+			"socials": "Socials",
+			"socials_platform": "Socials Platform",
+			"socials_url": "Socials Url",
+			"sourceUrl": "Source Url",
+			"updatedAt": "Updated At",
+			"zodiac": "Zodiac"
+		},
+		"Musicsongs": {
+			"album": "Album",
+			"artist": "Artist",
+			"coverImageUrl": "Cover Image Url",
+			"createdAt": "Created At",
+			"createdBy": "Created By",
+			"credits": "Credits",
+			"credits_name": "Credits Name",
+			"credits_role": "Credits Role",
+			"deletedAt": "Deleted At",
+			"deletedBy": "Deleted By",
+			"externalId": "External Id",
+			"featuredArtists": "Featured Artists",
+			"genres": "Genres",
+			"hashtags": "Hashtags",
+			"language": "Language",
+			"lyrics": "Lyrics",
+			"musicsongs": "Songs",
+			"publishDate": "Publish Date",
+			"sourceUrl": "Source Url",
+			"title": "Title",
+			"updatedAt": "Updated At",
+			"youtubeUrl": "Youtube Url",
+			"youtubeVideos": "Youtube Videos"
+		}
+	}
+}

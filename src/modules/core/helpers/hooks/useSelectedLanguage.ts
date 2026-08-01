@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux'
 import mainConfig from '@coreModule/assets/languages/mainConfig.json'
 import {filterGlobByEnabledModules} from '@coreModule/helpers/modules/enabledModules.ts'
 import {applyModuleMenuContributions} from '@coreModule/clients/panel/moduleContributions/loadMenuLanguageContributions.ts'
+import {applyModuleRolesPermissionsContributions} from '@coreModule/clients/panel/moduleContributions/loadRolesPermissionsLanguageContributions.ts'
 
 const messages = mainConfig.helper.languageSelect
 const defaultLanguageCode = mainConfig.defaults.language || 'en-US'
@@ -152,8 +153,11 @@ async function loadComponentLanguage(
             if (!loader) continue;
             try {
                 const module = await loader();
-                const translations = applyModuleMenuContributions(
-                    stripTranslationMeta(module),
+                const translations = applyModuleRolesPermissionsContributions(
+                    applyModuleMenuContributions(
+                        stripTranslationMeta(module),
+                        code,
+                    ),
                     code,
                 );
                 translationCache.set(cacheKey, translations);
