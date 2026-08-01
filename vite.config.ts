@@ -10,7 +10,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 import {createRequire} from "node:module";
 // import checker from "vite-plugin-checker";
 import {visualizer} from "rollup-plugin-visualizer";
-import { resolveSinfoniaAppId } from "./src/apps/registry";
+import { resolveSinfoniaApp } from "./scripts/sinfoniaApps";
 import { buildViteModuleAliases, syncTsconfigModulePaths, } from "./scripts/moduleAliases";
 
 const require = createRequire(import.meta.url);
@@ -26,8 +26,7 @@ const wasmDir = normalizePath(
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-function sinfoniaAppHtmlPlugin(appId: string): Plugin {
-    const appHtmlPath = path.resolve(__dirname, "src/apps", appId, "index.html");
+function sinfoniaAppHtmlPlugin(appHtmlPath: string, appId: string): Plugin {
     const rootHtmlPath = path.resolve(__dirname, "index.html");
 
     return {
@@ -85,7 +84,7 @@ function enabledModulesExcludePlugin(rawEnv: string | undefined): Plugin {
                 return "export default undefined;\n";
             }
             if (normalized.endsWith(".json")) {
-                return "export default {};\n";
+                return "{}\n";
             }
             return null;
         },
@@ -107,7 +106,7 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, __dirname, "");
     const enabledModulesRaw =
         process.env.VITE_ENABLED_MODULES ?? env.VITE_ENABLED_MODULES;
-    const sinfoniaAppId = resolveSinfoniaAppId(
+    const sinfoniaApp = resolveSinfoniaApp(
         process.env.VITE_SINFONIA_APP ?? env.VITE_SINFONIA_APP,
     );
     const viteBase = normalizeViteBasePath(
@@ -120,7 +119,7 @@ export default defineConfig(({ mode }) => {
         base: viteBase,
         plugins: [
             enabledModulesExcludePlugin(enabledModulesRaw),
-            sinfoniaAppHtmlPlugin(sinfoniaAppId),
+            sinfoniaAppHtmlPlugin(sinfoniaApp.indexHtml, sinfoniaApp.appId),
             // checker({
             //     typescript: true
             // }),

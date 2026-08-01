@@ -14,7 +14,7 @@ import {getLocalStorageValue, setLocalStorageValue} from "@coreModule/helpers/co
 import {generateUUID} from "@coreModule/helpers/general";
 import PanelHomePage from "@coreModule/clients/panel/private/home/PanelHomePage.tsx";
 import {SidebarProvider} from "@coreModule/components/ui/sidebar.tsx";
-import {sinfoniaRouterBasename} from "../routerBasename";
+import {sinfoniaRouterBasename} from "@coreModule/helpers/sinfoniaRouterBasename";
 
 const PrivatePage = lazy(() => import("@coreModule/clients/panel/pages/private"));
 const AuthenticationPage = lazy(() => import("@coreModule/clients/panel/pages/public/auth"));
