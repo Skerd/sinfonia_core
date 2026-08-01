@@ -1,16 +1,20 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, createElement, type ComponentType } from "react";
 import { compose } from "redux";
 import type { Media } from "armonia/src/modules/core/types";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
+import SmallInfoCard, {
+    type SmallInfoCardLinkedSheetOuterProps,
+} from "@coreModule/components/custom/smallInfoCard.tsx";
 import SheetMediaFilesStrip from "./sheetMediaFilesStrip.tsx";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import { useReferencesViewModeOptional } from "./referencesViewModeContext.tsx";
 import { SheetListPaginationFooter, useSheetListPagination } from "./sheetListPagination.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import { format, isValid } from "date-fns";
+import { resolveIcon, resolveWidget } from "./widgetRegistry.ts";
 
 function resolvePath(obj: Record<string, any>, path: string): any {
     return path.split(".").reduce<any>((acc, key) => acc?.[key], obj);
@@ -32,7 +36,7 @@ export type EmbeddedItemFieldConfig = {
     /** Dot-path within each item object (e.g. `"notes"`, `"media"`). */
     name: string;
     /** How to render this field's value. */
-    type: "expandableText" | "text" | "mediaStrip";
+    type: "expandableText" | "text" | "mediaStrip" | "linkedRef";
     /** Extra Tailwind class applied to the rendered element. */
     className?: string;
     /** Sub-paths on `parent` (defaults to `name`) joined for display. */
@@ -42,7 +46,38 @@ export type EmbeddedItemFieldConfig = {
     joinSeparator?: string;
     format?: "date" | "dateTime";
     languageKeyCategory?: string;
+    /** Optional sheet language key prefixed before the value (e.g. `"Price: 5"`). */
+    labelKey?: string;
+    /**
+     * Dot-path to a currency object on the item (`{symbol?, abbreviation?}`).
+     * When set, the field value is shown as e.g. `€12.5` / `12.5 EUR`.
+     */
+    currencyField?: string;
+    /** Linked-sheet wiring when `type` is `"linkedRef"`. */
+    linkedSheetModel?: string;
+    linkedSheetWidget?: string;
+    linkedSheetEntityProp?: string;
+    icon?: string;
 };
+
+function cardColumnsClass(columns: number | undefined): string {
+    if (columns === 2) return "grid grid-cols-2 gap-2";
+    if (columns === 3) return "grid grid-cols-3 gap-2";
+    if (columns === 4) return "grid grid-cols-4 gap-2";
+    return "space-y-2";
+}
+
+function formatAmountWithCurrency(amountText: string, currency: unknown): string {
+    const amount = amountText.trim();
+    if (!amount) return "";
+    if (!currency || typeof currency !== "object") return amount;
+    const c = currency as {symbol?: unknown; abbreviation?: unknown};
+    const symbol = typeof c.symbol === "string" ? c.symbol.trim() : "";
+    const abbreviation = typeof c.abbreviation === "string" ? c.abbreviation.trim() : "";
+    if (symbol) return `${symbol}${amount}`;
+    if (abbreviation) return `${amount} ${abbreviation}`;
+    return amount;
+}
 
 function resolveEmbeddedFieldText(
     item: Record<string, any>,
@@ -61,7 +96,9 @@ function resolveEmbeddedFieldText(
         raw = resolvePath(item, field.name);
     }
 
-    if (field.languageKeyCategory && typeof raw === "string" && raw.trim()) {
+    if (field.languageKeyCategory && typeof raw === "boolean") {
+        raw = resolveLanguageKey(`${field.languageKeyCategory}.${raw ? "true" : "false"}`);
+    } else if (field.languageKeyCategory && typeof raw === "string" && raw.trim()) {
         const key = `${field.languageKeyCategory}.${raw.trim()}`;
         const resolved = resolveLanguageKey(key);
         if (resolved !== key) raw = resolved;
@@ -71,13 +108,31 @@ function resolveEmbeddedFieldText(
         return formatTemporal(raw, field.format) ?? "";
     }
 
-    return String(raw ?? "").trim();
+    const text = String(raw ?? "").trim();
+    if (field.currencyField) {
+        return formatAmountWithCurrency(text, resolvePath(item, field.currencyField));
+    }
+    return text;
+}
+
+function resolveLinkedRefStub(item: Record<string, any>, field: EmbeddedItemFieldConfig): Record<string, any> | null {
+    const raw = resolvePath(item, field.parent ?? field.name);
+    if (raw == null) return null;
+    if (typeof raw === "string" && raw.length > 0) return {_id: raw};
+    if (typeof raw === "object" && !Array.isArray(raw)) {
+        const id = (raw as {_id?: unknown})._id;
+        if (typeof id === "string" && id.length > 0) return raw as Record<string, any>;
+    }
+    return null;
 }
 
 function fieldHasValue(item: Record<string, any>, field: EmbeddedItemFieldConfig): boolean {
     if (field.type === "mediaStrip") {
         const v = resolvePath(item, field.name);
         return Array.isArray(v) && v.length > 0;
+    }
+    if (field.type === "linkedRef") {
+        return resolveLinkedRefStub(item, field) != null;
     }
     return resolveEmbeddedFieldText(item, field, (k) => k).length > 0;
 }
@@ -132,6 +187,75 @@ function sortItems(
     return sorted;
 }
 
+function renderLinkedRefField(
+    item: Record<string, any>,
+    field: EmbeddedItemFieldConfig,
+    resolveSheet: ResolveLanguageKey,
+    key: string | number,
+) {
+    const stub = resolveLinkedRefStub(item, field);
+    if (!stub) return null;
+    const id = stub._id as string;
+    const LinkedWidget =
+        typeof field.linkedSheetWidget === "string" && field.linkedSheetWidget.startsWith("#")
+            ? (resolveWidget(field.linkedSheetWidget) as ComponentType<any> | null)
+            : null;
+    const model = typeof field.linkedSheetModel === "string" ? field.linkedSheetModel : "";
+    const entityProp =
+        typeof field.linkedSheetEntityProp === "string" && field.linkedSheetEntityProp.length > 0
+            ? field.linkedSheetEntityProp
+            : "entity";
+
+    const display =
+        field.valuePath?.length
+            ? resolveEmbeddedFieldText(item, field, resolveSheet)
+            : typeof stub.name === "string"
+              ? stub.name
+              : typeof stub.title === "string"
+                ? stub.title
+                : id;
+
+    const label =
+        typeof field.labelKey === "string" && field.labelKey.length > 0
+            ? resolveSheet(field.labelKey)
+            : null;
+    const Icon = field.icon ? resolveIcon(field.icon) : undefined;
+
+    let linkedReferenceSheet:
+        | {resourceId: string; LinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps>}
+        | undefined;
+
+    if (LinkedWidget && model && id) {
+        const bootstrap =
+            stub && typeof stub === "object" && Object.keys(stub).length > 1
+                ? {...stub}
+                : {_id: id, ...(display ? {title: display, name: display} : {})};
+        const Bound: ComponentType<SmallInfoCardLinkedSheetOuterProps> = (sheetProps) => {
+            const {onLinkedDeleted: _omit, ...rest} = sheetProps;
+            const sheetPropsOut: Record<string, unknown> = {
+                ...rest,
+                fetchId: id,
+            };
+            sheetPropsOut[entityProp] = bootstrap;
+            return createElement(LinkedWidget, sheetPropsOut);
+        };
+        linkedReferenceSheet = {resourceId: model, LinkedSheet: Bound};
+    }
+
+    return (
+        <SmallInfoCard
+            key={key}
+            show
+            title={label ? String(label) : display}
+            tooltip={label ? String(label) : display}
+            Icon={Icon ?? undefined}
+            value={label ? display : null}
+            dontRenderValue={!label}
+            linkedReferenceSheet={linkedReferenceSheet}
+        />
+    );
+}
+
 export type SheetEmbeddedItemsListProps = WithLanguageType & {
     items: Record<string, any>[];
     fields: EmbeddedItemFieldConfig[];
@@ -141,6 +265,8 @@ export type SheetEmbeddedItemsListProps = WithLanguageType & {
     compactSummaryFields?: string[];
     compactSummaryJoinSeparator?: string;
     displayMode?: "cards" | "compact";
+    /** Card-mode field grid columns (e.g. `3` → three fields per row). */
+    cardColumns?: number;
     /** Items per page; omit to show all. */
     pageSize?: number;
     listClassName?: string;
@@ -156,6 +282,7 @@ function SheetEmbeddedItemsList({
     compactSummaryFields,
     compactSummaryJoinSeparator = " · ",
     displayMode = "cards",
+    cardColumns,
     pageSize,
     listClassName,
     sortField,
@@ -195,6 +322,8 @@ function SheetEmbeddedItemsList({
     const itemKey = (item: Record<string, any>, index: number) =>
         typeof item._id === "string" && item._id.length > 0 ? item._id : `embedded-item-${index}`;
 
+    const fieldsLayoutClass = cardColumnsClass(cardColumns);
+
     const listBody =
         displayMode === "compact" ? (
             <div className="space-y-1">
@@ -228,37 +357,54 @@ function SheetEmbeddedItemsList({
                         className="rounded-lg border border-border/60 bg-card p-3 space-y-2"
                     >
                         <span className="text-xs font-medium text-muted-foreground">#{globalIndex}</span>
+                        <div className={fieldsLayoutClass}>
                         {fields.map((f, fi) => {
                             if (f.type === "mediaStrip") {
                                 const value = resolvePath(item, f.name);
                                 if (!Array.isArray(value) || value.length === 0) return null;
                                 return (
-                                    <SheetMediaFilesStrip
-                                        key={fi}
-                                        media={value as Media[]}
-                                        resolveLanguageKey={resolveSheet}
-                                        canDownload
-                                        canRemove={false}
-                                        isBig={false}
-                                        className={f.className}
-                                    />
+                                    <div key={fi} className={cardColumns ? "col-span-full" : undefined}>
+                                        <SheetMediaFilesStrip
+                                            media={value as Media[]}
+                                            resolveLanguageKey={resolveSheet}
+                                            canDownload
+                                            canRemove={false}
+                                            isBig={false}
+                                            className={f.className}
+                                        />
+                                    </div>
+                                );
+                            }
+                            if (f.type === "linkedRef") {
+                                return (
+                                    <div key={fi} className={cardColumns ? "col-span-full" : undefined}>
+                                        {renderLinkedRefField(item, f, resolveSheet, fi)}
+                                    </div>
                                 );
                             }
                             const text = resolveEmbeddedFieldText(item, f, resolveSheet);
                             if (!text) return null;
+                            const label =
+                                typeof f.labelKey === "string" && f.labelKey.length > 0
+                                    ? resolveSheet(f.labelKey)
+                                    : null;
+                            const display = label ? `${label}: ${text}` : text;
                             if (f.type === "expandableText") {
                                 return (
-                                    <ExpandableText key={fi} show className={f.className ?? "text-sm"}>
-                                        {text}
-                                    </ExpandableText>
+                                    <div key={fi} className={cardColumns ? "col-span-full" : undefined}>
+                                        <ExpandableText show className={f.className ?? "text-sm"}>
+                                            {display}
+                                        </ExpandableText>
+                                    </div>
                                 );
                             }
                             return (
                                 <p key={fi} className={f.className ?? "text-sm"}>
-                                    {text}
+                                    {display}
                                 </p>
                             );
                         })}
+                        </div>
                     </div>
                     );
                 })}
@@ -281,6 +427,6 @@ function SheetEmbeddedItemsList({
 }
 
 export default compose(
-    withLanguage("src/modules/core/components/viewEngine/sheetPaginatedReferenceCardList.tsx"),
+    withLanguage("src/modules/core/components/viewEngine/sheetEmbeddedItemsList.tsx"),
     withDebug(true, true),
 )(SheetEmbeddedItemsList);

@@ -13,7 +13,7 @@ import {
 } from '@coreModule/components/ui/command.tsx';
 import {Badge} from '@coreModule/components/ui/badge.tsx';
 import {Separator} from '@coreModule/components/ui/separator.tsx';
-import {ChevronsUpDown, X} from 'lucide-react';
+import {ChevronsUpDown, User, X} from 'lucide-react';
 import {cn} from '@coreModule/components/lib/utils.ts';
 import apiClient from '@coreModule/helpers/axiosClients/apiClient.ts';
 import PageIncrementer from '@coreModule/components/custom/apiSelect/pageIncrementer.tsx';
@@ -34,6 +34,7 @@ import {
 } from "@coreModule/components/custom/apiSelect/createFromSearchRegistry.ts";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
+import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 
 /** Optional: only inside `<Form>` (react-hook-form). Enables project→edifice style cascades from view `widgetProps`. */
 type ApiSelectFormDependencyProps = {
@@ -67,7 +68,7 @@ type ApiSelectProps = WithLanguageType &
         apiUrl: string;
         postBody?: Record<string, unknown>;
         value?: string | string[]; /** Single: string. Multiple: string[]. */
-        onValueChange?: (value: string | string[], label?: string | string[]) => void; /** When true, value/onValueChange use string[] and user can select multiple. */
+        onValueChange?: (value: string | string[], label?: string | string[], photo?: string) => void; /** When true, value/onValueChange use string[] and user can select multiple. */
         multiple?: boolean;
         placeholder?: string;
         /**
@@ -86,6 +87,11 @@ type ApiSelectProps = WithLanguageType &
         /** When true with `multiple`, renders removable chip badges below the select for selected items. */
         showSelectedChips?: boolean;
         /**
+         * Ids that should show a checkmark in the dropdown without binding them as this control's `value`
+         * (e.g. FormObjectIdChips already-selected items while the picker stays empty for add-another).
+         */
+        markedValues?: string[];
+        /**
          * Optional override for inline create-from-search (otherwise derived from `REF_SELECT_BY_API_URL` via `apiUrl`).
          */
         createFromSearch?: RefSelectCreateFromSearch;
@@ -97,6 +103,7 @@ const DEFAULT_SEARCH_DEBOUNCE_MS = 300;
 type SelectOption = {
     label: string;
     value: string;
+    photo?: string;
 };
 
 const EMPTY_SEARCH_KEY = '__empty__';
@@ -135,6 +142,7 @@ type ApiSelectListItem = {
     id?: string;
     name?: string;
     label?: string;
+    photo?: string;
 };
 
 type ApiListResponse = {
@@ -154,6 +162,7 @@ function toSelectOption(item: ApiSelectListItem): SelectOption {
     return {
         value: item._id ?? item.value ?? item.id ?? '',
         label: item.name ?? item.label ?? '',
+        photo: item.photo,
     };
 }
 
@@ -172,6 +181,18 @@ type ApiSelectInnerProps = Omit<
 function getNestedValue(obj: FieldValues | undefined, path: string): unknown {
     if (!obj) return undefined;
     return path.split(".").reduce((acc: unknown, key) => (acc != null && typeof acc === "object" ? (acc as Record<string, unknown>)[key] : undefined), obj);
+}
+
+function SelectOptionAvatar({photo, label}: {photo?: string; label: string}) {
+    if (!photo) return null;
+    return (
+        <Avatar className="size-6 shrink-0 border">
+            <AvatarImage src={`/api/auxiliary/media/${photo}`} alt={label} />
+            <AvatarFallback>
+                <User size={12} />
+            </AvatarFallback>
+        </Avatar>
+    );
 }
 
 function ApiSelectFormDependencyBridge({
@@ -391,6 +412,7 @@ function ApiSelectCore({
     defaultOptions = [],
     searchDebounceMs = DEFAULT_SEARCH_DEBOUNCE_MS,
     showSelectedChips = false,
+    markedValues = [],
     createFromSearch: createFromSearchOverride,
     formExtras,
     inlineCreateEntityLabel,
@@ -403,6 +425,10 @@ function ApiSelectCore({
                 ? (Array.isArray(value) ? value : value != null ? [value] : [])
                 : (value != null && !Array.isArray(value) ? [value] : []),
         [multiple, value]
+    );
+    const markedValuesSet = useMemo(
+        () => new Set((markedValues ?? []).filter((v): v is string => typeof v === "string" && v.length > 0)),
+        [markedValues]
     );
 
     const [open, setOpen] = useState(false);
@@ -757,7 +783,7 @@ function ApiSelectCore({
                 const nextLabels = [...selectedValues.map(resolveLabel), label];
                 onValueChange?.(nextValues, nextLabels);
             } else {
-                onValueChange?.(id, label);
+                onValueChange?.(id, label, undefined);
             }
             setOptions((prev) => {
                 const merged = [opt, ...prev.filter((o) => o.value !== id)];
@@ -847,7 +873,7 @@ function ApiSelectCore({
                 const nextLabels = nextOptions.map((o) => o.label);
                 onValueChange?.(nextValues, nextLabels);
             } else {
-                onValueChange?.(option.value, option.label);
+                onValueChange?.(option.value, option.label, option.photo);
                 setOpen(false);
             }
         },
@@ -856,7 +882,7 @@ function ApiSelectCore({
 
     const renderOptionItem = useCallback(
         (option: SelectOption) => {
-            const isSelected = selectedValuesSet.has(option.value);
+            const isSelected = selectedValuesSet.has(option.value) || markedValuesSet.has(option.value);
             return (
                 <CommandItem
                     key={option.value}
@@ -877,11 +903,14 @@ function ApiSelectCore({
                     ) : (
                         <CheckIcon className={cn('text-primary h-4 w-4', isSelected ? 'opacity-100' : 'opacity-0')} />
                     )}
+                    {option.photo ? (
+                        <SelectOptionAvatar photo={option.photo} label={option.label} />
+                    ) : null}
                     <p>{option.label}</p>
                 </CommandItem>
             );
         },
-        [multiple, selectedValuesSet, handleOptionSelect]
+        [multiple, selectedValuesSet, markedValuesSet, handleOptionSelect]
     );
 
     const renderMultipleTriggerContent = () => {
@@ -893,7 +922,17 @@ function ApiSelectCore({
     };
 
     const renderSingleTriggerContent = () => {
-        if (selectedOption) return selectedOption.label;
+        if (selectedOption) {
+            if (selectedOption.photo) {
+                return (
+                    <span className="flex min-w-0 items-center gap-2">
+                        <SelectOptionAvatar photo={selectedOption.photo} label={selectedOption.label} />
+                        <span className="truncate">{selectedOption.label}</span>
+                    </span>
+                );
+            }
+            return selectedOption.label;
+        }
         if (pendingValue) {
             return (
                 <span className="flex items-center text-muted-foreground italic">

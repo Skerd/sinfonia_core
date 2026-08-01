@@ -1,5 +1,5 @@
 import { compose } from "redux";
-import { createElement, useEffect, type ComponentType } from "react";
+import { createElement, Suspense, useEffect, type ComponentType } from "react";
 import { useReferencesViewModeOptional } from "./referencesViewModeContext.tsx";
 import withLanguage, { WithLanguageType, type ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -96,14 +96,17 @@ function SheetPaginatedReferenceCardList({
                               show={show}
                           />
                       ))
-                    : slice.map((stub) =>
-                          createElement(Card, {
-                              key: stub._id,
-                              ...shared,
-                              [itemDataProp]: stub,
-                              fetchId: stub._id,
-                          }),
-                      )}
+                    : slice.map((stub) => (
+                          // Contribution cards are `lazy()` — without a local Suspense, suspension
+                          // bubbles to the app-root Loader and remounts the whole panel (looks like a refresh).
+                          <Suspense key={stub._id} fallback={null}>
+                              {createElement(Card, {
+                                  ...shared,
+                                  [itemDataProp]: stub,
+                                  fetchId: stub._id,
+                              })}
+                          </Suspense>
+                      ))}
             </div>
             <SheetListPaginationFooter
                 rangeLabel={pagination.rangeLabel}

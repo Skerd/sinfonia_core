@@ -182,6 +182,11 @@ function SheetEmbeddedItemsListHost(props: {
         ? (wp.compactSummaryFields as string[]).filter((f) => typeof f === "string" && f.length > 0)
         : undefined;
 
+    const cardColumns =
+        typeof wp.cardColumns === "number" && Number.isFinite(wp.cardColumns) && wp.cardColumns >= 2
+            ? Math.min(4, Math.floor(wp.cardColumns))
+            : undefined;
+
     return createElement(SheetEmbeddedItemsList, {
         key: index,
         items,
@@ -191,6 +196,7 @@ function SheetEmbeddedItemsListHost(props: {
         compactSummaryJoinSeparator:
             typeof wp.compactSummaryJoinSeparator === "string" ? wp.compactSummaryJoinSeparator : undefined,
         displayMode,
+        cardColumns,
         pageSize,
         listClassName: typeof wp.listClassName === "string" ? wp.listClassName : undefined,
         sortField: typeof wp.sortField === "string" ? wp.sortField : undefined,
@@ -571,10 +577,17 @@ function renderSheetField(
             if (value === "") value = null;
         } else if (Array.isArray(value) && value.length > 0 && value.every((x) => typeof x === "string")) {
             value = (value as string[]).map((line) => `• ${line}`).join("\n");
+        } else if (wp.format === "json" && value != null && typeof value === "object") {
+            try {
+                value = JSON.stringify(value, null, 2);
+            } catch {
+                value = null;
+            }
         }
         const show = !(node.permissions?.read && !hasAccessPath(ctx.access, node.permissions.read));
-        const {valueType: _expandableValueType, ...expandableWp} = wp;
+        const {valueType: _expandableValueType, format: _expandableFormat, ...expandableWp} = wp;
         void _expandableValueType;
+        void _expandableFormat;
         return createElement(
             Component,
             {
@@ -629,16 +642,27 @@ function renderSheetField(
                 mediaList.push({ _id: raw });
             }
         }
-        if (mediaList.length === 0) return <ValueNotSet />;
-        return createElement(Component, {
-            key: index,
-            media: mediaList,
-            resolveLanguageKey: ctx.resolveLanguageKey,
-            className: typeof wp.className === "string" ? wp.className : undefined,
-            canDownload: wp.canDownload !== false,
-            canRemove: wp.canRemove === true,
-            isBig: wp.isBig === true,
-        });
+        const stripLabel =
+            typeof binding.label === "string" && binding.label.length > 0
+                ? String(ctx.resolveLanguageKey(binding.label))
+                : null;
+        const stripIcon = typeof wp.icon === "string" ? wp.icon : null;
+        if (mediaList.length === 0) {
+            return wrapSheetMediaWithLabel(stripLabel, <ValueNotSet />, index, stripIcon);
+        }
+        return wrapSheetMediaWithLabel(
+            stripLabel,
+            createElement(Component, {
+                media: mediaList,
+                resolveLanguageKey: ctx.resolveLanguageKey,
+                className: typeof wp.className === "string" ? wp.className : undefined,
+                canDownload: wp.canDownload !== false,
+                canRemove: wp.canRemove === true,
+                isBig: wp.isBig === true,
+            }),
+            index,
+            stripIcon,
+        );
     }
 
     if (binding.widget === "#SheetModificationLineItems") {
@@ -809,26 +833,50 @@ function renderSheetField(
         );
         if (!hasAccess) return null;
 
-        return createElement(Component, {
-            ...wp,
-            key: index,
-            mainImage,
-            imageGallery,
-            videoGallery,
-        });
+        const galleryLabel =
+            typeof binding.label === "string" && binding.label.length > 0
+                ? String(ctx.resolveLanguageKey(binding.label))
+                : null;
+        const galleryIcon = typeof wp.icon === "string" ? wp.icon : null;
+        const hasMedia =
+            (mainImage != null &&
+                (typeof mainImage === "string"
+                    ? mainImage.length > 0
+                    : typeof mainImage === "object")) ||
+            imageGallery.length > 0 ||
+            videoGallery.length > 0;
+        if (!hasMedia) {
+            return wrapSheetMediaWithLabel(galleryLabel, <ValueNotSet />, index, galleryIcon);
+        }
+
+        const {icon: _galleryIconProp, ...galleryWp} = wp;
+        void _galleryIconProp;
+        return wrapSheetMediaWithLabel(
+            galleryLabel,
+            createElement(Component, {
+                ...galleryWp,
+                mainImage,
+                imageGallery,
+                videoGallery,
+            }),
+            index,
+            galleryIcon,
+        );
     }
 
     if (binding.widget === "#SheetLocationMap") {
         const show = !(node.permissions?.read && !hasAccessPath(ctx.access, node.permissions.read));
         if (!show) return null;
-        const address = data ? resolvePath(data, wp.addressField ?? "address") : null;
-        if( !address ){
+        const addressField = wp.addressField ?? "address";
+        // "." = entity itself is the address (flat lat/lng on the document, e.g. customerAddress)
+        const address = !data ? null : addressField === "." ? data : resolvePath(data, addressField);
+        if (!address) {
             return null;
         }
         return createElement(Component, {
             ...wp,
             key: index,
-            address
+            address,
         });
     }
 
@@ -837,6 +885,32 @@ function renderSheetField(
     }
 
     return createElement(Component, { ...wp, key: index });
+}
+
+/** Optional title (+ icon) above gallery / media strip so empty state is not a bare ValueNotSet. */
+function wrapSheetMediaWithLabel(
+    label: string | null,
+    content: ReactNode,
+    key: number,
+    iconToken?: string | null,
+): ReactNode {
+    if (!label) {
+        return createElement("div", {key}, content);
+    }
+    const Icon = typeof iconToken === "string" && iconToken.length > 0 ? resolveIcon(iconToken) : null;
+    const heading = createElement(
+        "div",
+        {className: "flex items-center gap-2"},
+        Icon
+            ? createElement(
+                  "div",
+                  {className: "shrink-0 rounded-md bg-background p-2"},
+                  createElement(Icon, {className: "h-4 w-4 text-muted-foreground"}),
+              )
+            : null,
+        createElement("p", {className: "text-sm font-medium text-muted-foreground"}, label),
+    );
+    return createElement("div", {key, className: "space-y-1.5"}, heading, content);
 }
 
 function formatSheetSmallInfoTemporal(value: unknown, mode: "date" | "dateTime"): string | null {
@@ -886,6 +960,83 @@ function bootstrapLinkedSmallInfoSheetData(
         return { ...(stub as Record<string, unknown>) };
     }
     return bootstrapLinkedSheetDataFromDisplayValue(linkedId, displayValue, valueFieldName);
+}
+
+type LinkedSheetTarget = {
+    model: string;
+    widgetToken: string;
+    entityProp: string;
+    valueField: string | undefined;
+};
+
+/**
+ * Resolves a nested sheet target from either static `linkedSheetModel` / `linkedSheetWidget`
+ * or polymorphic `linkedSheetByType` + `linkedSheetTypePath` (discriminator on `data`).
+ *
+ * Example:
+ * ```
+ * linkedRefPath: "sourceId",
+ * linkedSheetTypePath: "sourceType",
+ * linkedSheetByType: {
+ *   productOrder: {
+ *     linkedSheetModel: "productOrders",
+ *     linkedSheetWidget: "#ProductOrderSheetView",
+ *     linkedSheetEntityProp: "order",
+ *   },
+ * }
+ * ```
+ * Types missing from the map (e.g. `checkout` with no panel sheet) simply do not link.
+ */
+function resolveLinkedSheetTarget(
+    wp: Record<string, any>,
+    data: Record<string, any> | undefined,
+): LinkedSheetTarget | null {
+    const byType = wp.linkedSheetByType;
+    if (byType != null && typeof byType === "object" && !Array.isArray(byType)) {
+        if (!data) return null;
+        const typePath =
+            typeof wp.linkedSheetTypePath === "string" && wp.linkedSheetTypePath.length > 0
+                ? wp.linkedSheetTypePath
+                : "sourceType";
+        const typeVal = resolvePath(data, typePath);
+        if (typeof typeVal !== "string" || typeVal.length === 0) return null;
+        const entry = (byType as Record<string, unknown>)[typeVal];
+        if (entry == null || typeof entry !== "object" || Array.isArray(entry)) return null;
+        const e = entry as Record<string, unknown>;
+        const model = typeof e.linkedSheetModel === "string" ? e.linkedSheetModel : "";
+        const widgetToken =
+            typeof e.linkedSheetWidget === "string" && e.linkedSheetWidget.startsWith("#")
+                ? e.linkedSheetWidget
+                : "";
+        if (!model || !widgetToken) return null;
+        return {
+            model,
+            widgetToken,
+            entityProp:
+                typeof e.linkedSheetEntityProp === "string" && e.linkedSheetEntityProp.length > 0
+                    ? e.linkedSheetEntityProp
+                    : "project",
+            valueField:
+                typeof e.linkedSheetValueField === "string" ? e.linkedSheetValueField : undefined,
+        };
+    }
+
+    const model = typeof wp.linkedSheetModel === "string" ? wp.linkedSheetModel : "";
+    const widgetToken =
+        typeof wp.linkedSheetWidget === "string" && wp.linkedSheetWidget.startsWith("#")
+            ? wp.linkedSheetWidget
+            : "";
+    if (!model || !widgetToken) return null;
+    return {
+        model,
+        widgetToken,
+        entityProp:
+            typeof wp.linkedSheetEntityProp === "string" && wp.linkedSheetEntityProp.length > 0
+                ? wp.linkedSheetEntityProp
+                : "project",
+        valueField:
+            typeof wp.linkedSheetValueField === "string" ? wp.linkedSheetValueField : undefined,
+    };
 }
 
 /**
@@ -987,11 +1138,14 @@ function renderLinkedObjectRefCardList(
                   ? stub.name
                   : id;
 
-        const bootstrap = bootstrapLinkedSheetDataFromDisplayValue(
-            id,
-            displayTitle,
-            typeof wp.linkedSheetValueField === "string" ? wp.linkedSheetValueField : undefined,
-        );
+        const bootstrap =
+            stub && typeof stub === "object" && !Array.isArray(stub) && Object.keys(stub as object).length > 1
+                ? {...(stub as Record<string, unknown>)}
+                : bootstrapLinkedSheetDataFromDisplayValue(
+                      id,
+                      displayTitle,
+                      typeof wp.linkedSheetValueField === "string" ? wp.linkedSheetValueField : undefined,
+                  );
         const entityProp =
             typeof wp.linkedSheetEntityProp === "string" && wp.linkedSheetEntityProp.length > 0
                 ? wp.linkedSheetEntityProp
@@ -1071,7 +1225,7 @@ function renderSmallInfoCard(
     if (wp.valueType === "currencyList") {
         displayValue = renderCurrencyList(data, binding.name, wp, resolveLanguageKey);
     } else if (wp.valueType === "stringBadgeList") {
-        displayValue = renderStringBadgeList(data, binding.name);
+        displayValue = renderStringBadgeList(data, binding.name, wp.maxItems);
     } else if (wp.valueType === "objectNameBadgeList") {
         displayValue = renderObjectNameBadgeList(data, binding.name, wp.labelField ?? "name");
     } else if (wp.valueType === "unitTypeBadgeList") {
@@ -1196,19 +1350,15 @@ function renderSmallInfoCard(
     }
 
     const linkedPath = typeof wp.linkedRefPath === "string" ? wp.linkedRefPath : "";
-    const linkedModel = typeof wp.linkedSheetModel === "string" ? wp.linkedSheetModel : "";
-    const linkedSheetToken =
-        typeof wp.linkedSheetWidget === "string" && wp.linkedSheetWidget.startsWith("#")
-            ? wp.linkedSheetWidget
-            : "";
-    const LinkedSheetWidget = linkedSheetToken ? resolveWidget(linkedSheetToken) : null;
+    const linkedTarget = resolveLinkedSheetTarget(wp, data);
+    const LinkedSheetWidget = linkedTarget ? resolveWidget(linkedTarget.widgetToken) : null;
     let linkedReferenceSheet:
         | {
               resourceId: string;
               LinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps>;
           }
         | undefined;
-    if (linkedPath && linkedModel && data && LinkedSheetWidget) {
+    if (linkedPath && linkedTarget && data && LinkedSheetWidget) {
         const raw = resolvePath(data, linkedPath);
         const normalized = normalizeObjectIdRef(raw);
         const id = normalized?.fetchId;
@@ -1217,12 +1367,9 @@ function renderSmallInfoCard(
                 id,
                 raw,
                 displayValue,
-                typeof wp.linkedSheetValueField === "string" ? wp.linkedSheetValueField : undefined,
+                linkedTarget.valueField,
             );
-            const entityProp =
-                typeof wp.linkedSheetEntityProp === "string" && wp.linkedSheetEntityProp.length > 0
-                    ? wp.linkedSheetEntityProp
-                    : "project";
+            const entityProp = linkedTarget.entityProp;
             const BoundLinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps> = (sheetProps) => {
                 const { onLinkedDeleted, ...rest } = sheetProps;
                 const refCtx = ctx.referenceCardUnitContext;
@@ -1246,7 +1393,7 @@ function renderSmallInfoCard(
                 return createElement(LinkedSheetWidget as ComponentType<any>, sheetPropsOut);
             };
             linkedReferenceSheet = {
-                resourceId: linkedModel,
+                resourceId: linkedTarget.model,
                 LinkedSheet: BoundLinkedSheet,
             };
         }
@@ -1269,18 +1416,27 @@ function renderSmallInfoCard(
 
 function renderStringBadgeList(
     data: Record<string, any> | undefined,
-    fieldName: string
+    fieldName: string,
+    maxItems?: number
 ): ReactNode {
     if (!data) return null;
     const list = resolvePath(data, fieldName);
     if (!Array.isArray(list) || list.length === 0) return <div className="mt-0.5"><ValueNotSet /></div> ;
+    const limit = typeof maxItems === "number" && maxItems > 0 ? maxItems : list.length;
+    const visible = list.slice(0, limit);
+    const remaining = list.length - visible.length;
     return (
         <div className="flex flex-wrap space-y-1 space-x-1 mt-0.5">
-            {list.map((item: unknown, i: number) => (
+            {visible.map((item: unknown, i: number) => (
                 <Badge key={i} variant="outline">
                     {String(item)}
                 </Badge>
             ))}
+            {remaining > 0 && (
+                <Badge variant="secondary">
+                    +{remaining}
+                </Badge>
+            )}
         </div>
     );
 }

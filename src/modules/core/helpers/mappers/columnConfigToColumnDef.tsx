@@ -178,45 +178,56 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
         //
 
         if( col.cellType === "objectId" ){
-            const displayFields = (col.meta as { refDisplayKey?: string[] } | undefined)?.refDisplayKey ?? ["name"];
+            const colMeta = col.meta as { refDisplayKey?: string[]; maxInlineItems?: number } | undefined;
+            const displayFields = colMeta?.refDisplayKey ?? ["name"];
+            const maxInlineItems = colMeta?.maxInlineItems ?? 2;
             const getByPath = (obj: Record<string, unknown>, path: string): unknown =>
                 path.split(".").reduce((a, k) => (a as Record<string, unknown>)?.[k], obj);
             const toDisplayLabel = (item: Record<string, unknown>): string => {
+                const hasLiteral = displayFields.some((f) => f.startsWith("!"));
                 const parts = displayFields.map((f: string) => {
+                    if (f.startsWith("!")) return f.slice(1);
                     const x = getByPath(item, f);
                     return x == null || typeof x === "object" ? "" : String(x).trim();
                 });
-                return parts.filter(Boolean).join(" ") || "";
+                return parts.filter((p) => p !== "").join(hasLiteral ? "" : " ") || "";
             };
             return {
                 ...base,
                 cell: ({ row }) => {
                     let value = (col.dtoPath ? findFromObject(row.original, col.dtoPath) : row.getValue(col.accessorPath)) as Record<string, unknown> | Record<string, unknown>[] | undefined;
                     if( !value ) return <></>;
-                    const items = Array.isArray(value) ? value : [value];
-                    if (items.length > 2) {
-                        return (
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <Badge variant="outline" className="cursor-pointer hover:bg-accent">
-                                        {items.length} {findFromLanguage(fields, col.labelKey)}
-                                    </Badge>
-                                </PopoverTrigger>
-                                <PopoverContent align="start" className="w-auto max-w-lg px-2">
-                                    <div className="max-h-60 w-fit overflow-y-auto flex flex-col gap-1.5">
-                                        {items.map((item, i) => (
-                                            <Badge variant="outline" key={i} className="text-sm">{toDisplayLabel(item)}</Badge>
-                                        ))}
-                                    </div>
-                                </PopoverContent>
-                            </Popover>
-                        );
-                    }
+                    const rawItems = (Array.isArray(value) ? value : [value]).filter(
+                        (item): item is Record<string, unknown> =>
+                            item != null && typeof item === "object" && !Array.isArray(item),
+                    );
+                    const labeled = rawItems
+                        .map((item) => ({item, label: toDisplayLabel(item)}))
+                        .filter(({label}) => label !== "");
+                    if (labeled.length === 0) return <></>;
+                    const visible = labeled.slice(0, maxInlineItems);
+                    const remaining = labeled.length - visible.length;
                     return (
                         <div className="flex items-center gap-1 flex-wrap">
-                            {items.map((item, i) => (
-                                <Badge key={i} variant="outline">{toDisplayLabel(item)}</Badge>
+                            {visible.map(({label}, i) => (
+                                <Badge key={i} variant="outline">{label}</Badge>
                             ))}
+                            {remaining > 0 && (
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <Badge variant="secondary" className="cursor-pointer hover:bg-accent font-normal">
+                                            +{remaining} {findFromLanguage(currentLanguage, "more") ?? "more"}
+                                        </Badge>
+                                    </PopoverTrigger>
+                                    <PopoverContent align="start" className="w-auto max-w-lg px-2">
+                                        <div className="max-h-60 w-fit overflow-y-auto flex flex-col gap-1.5">
+                                            {labeled.slice(maxInlineItems).map(({label}, i) => (
+                                                <Badge variant="outline" key={i} className="text-sm">{label}</Badge>
+                                            ))}
+                                        </div>
+                                    </PopoverContent>
+                                </Popover>
+                            )}
                         </div>
                     );
                 },
@@ -581,20 +592,26 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                 cell: ({ row }) => {
                     let value = (col.dtoPath ? findFromObject(row.original, col.dtoPath) : row.getValue(col.accessorPath)) as Record<string, unknown> | Record<string, unknown>[] | undefined;
                     if (!value) return <></>;
-                    const items = Array.isArray(value) ? value : [value];
-                    if (items.length > 2) {
+                    const rawItems = (Array.isArray(value) ? value : [value]).filter(
+                        (item): item is Record<string, unknown> =>
+                            item != null && typeof item === "object" && !Array.isArray(item),
+                    );
+                    const labeled = rawItems
+                        .map((item) => ({item, label: toDisplayLabel(item)}))
+                        .filter(({label}) => label !== "");
+                    if (labeled.length === 0) return <></>;
+                    if (labeled.length > 2) {
                         return (
                             <Popover>
                                 <PopoverTrigger asChild>
                                     <Badge variant="outline" className="cursor-pointer hover:bg-accent">
-                                        {items.length} {findFromLanguage(fields, col.labelKey)}
+                                        {labeled.length} {findFromLanguage(fields, col.labelKey)}
                                     </Badge>
                                 </PopoverTrigger>
                                 <PopoverContent align="start" className="w-auto max-w-lg px-2">
                                     <div className="max-h-60 w-fit overflow-y-auto flex flex-col gap-1.5">
-                                        {
-                                            items.map((item, i) => (
-                                            <Badge variant="outline" key={i} className="text-sm">{toDisplayLabel(item)}</Badge>
+                                        {labeled.map(({label}, i) => (
+                                            <Badge variant="outline" key={i} className="text-sm">{label}</Badge>
                                         ))}
                                     </div>
                                 </PopoverContent>
@@ -603,8 +620,8 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                     }
                     return (
                         <div className="flex items-center gap-1 flex-wrap">
-                            {items.map((item, i) => (
-                                <Badge key={i} variant="outline">{toDisplayLabel(item)}</Badge>
+                            {labeled.map(({label}, i) => (
+                                <Badge key={i} variant="outline">{label}</Badge>
                             ))}
                         </div>
                     );

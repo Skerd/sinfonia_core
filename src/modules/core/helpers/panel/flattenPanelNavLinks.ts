@@ -44,16 +44,8 @@ function collectFromSubItem(
         return;
     }
     if ("items" in sub && sub.items) {
-        for (const link of sub.items) {
-            if ("url" in link && link.url) {
-                out.push({
-                    title: link.title,
-                    url: String(link.url),
-                    icon: link.icon,
-                    groupTitle,
-                    badge: link.badge,
-                });
-            }
+        for (const child of sub.items) {
+            collectFromSubItem(child, groupTitle, out);
         }
     }
 }

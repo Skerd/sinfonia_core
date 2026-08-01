@@ -28,10 +28,12 @@ type BaseEntity = {
 // Auto sheet — rendered inside EntityListPage when no renderSheet override is given
 // ---------------------------------------------------------------------------
 
-/** List mutation ref forwarded to cards/sheets (`updateRow`, `refetch`). */
+/** List mutation ref forwarded to cards/sheets (`updateRow`, `mapRows`, `refetch`). */
 export type EntityListRefs<T extends BaseEntity = BaseEntity> = RefObject<{
     refetch: () => void;
     updateRow: (id: string | number, patch: Partial<T>) => void;
+    /** Patch currently loaded rows in place (no network). Return a patch or void to skip. */
+    mapRows: (mapper: (row: T) => Partial<T> | void) => void;
 } | null>;
 
 type AutoSheetViewProps = {
@@ -47,6 +49,7 @@ type AutoSheetViewProps = {
     buildEditPath: (entity: any) => string;
     renderSheetActionMenuChildren?: (entity: any) => ReactNode;
     hideEdit?: boolean;
+    actionMenuAllowCustomChildren?: boolean;
     onSheetRowPatched?: (row: Record<string, unknown>) => void;
     deleteRestoreConfirmLabel?: string;
 };
@@ -64,6 +67,7 @@ function AutoSheetView({
     buildEditPath,
     renderSheetActionMenuChildren,
     hideEdit,
+    actionMenuAllowCustomChildren,
     onSheetRowPatched,
     deleteRestoreConfirmLabel,
 }: AutoSheetViewProps) {
@@ -72,7 +76,16 @@ function AutoSheetView({
     const [sheetData, setSheetData] = useState<Record<string, unknown>>(entity);
 
     useEffect(() => {
-        setSheetData(entity);
+        setSheetData((prev) => {
+            const next: Record<string, unknown> = {...entity};
+            // Keep enrichSingle-only fields (e.g. movements) when list rows re-assert.
+            for (const [key, value] of Object.entries(prev)) {
+                if (!(key in entity) || (entity as Record<string, unknown>)[key] === undefined) {
+                    next[key] = value;
+                }
+            }
+            return next;
+        });
     }, [entity]);
 
     if (!viewConfig) return null;
@@ -92,6 +105,7 @@ function AutoSheetView({
             onRestore={onRestore}
             editPath={buildEditPath(entity)}
             hideEdit={hideEdit}
+            actionMenuAllowCustomChildren={actionMenuAllowCustomChildren}
             actionMenuChildren={renderSheetActionMenuChildren?.(entity)}
             onSheetRowPatched={onSheetRowPatched}
             deleteRestoreConfirmLabel={deleteRestoreConfirmLabel}
@@ -265,6 +279,7 @@ export default function EntityListPage<T extends BaseEntity>({
     const listRef = useRef<{
         refetch: () => void;
         updateRow: (id: string | number, patch: Partial<T>) => void;
+        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
     } | null>(null);
 
     const handleDelete = (entity: T, response?: DeletedData) => {
@@ -434,6 +449,7 @@ export default function EntityListPage<T extends BaseEntity>({
                                     access={access}
                                     buildEditPath={buildEditPath}
                                     hideEdit={resolveHideEdit(sheetEntity)}
+                                    actionMenuAllowCustomChildren={rowActionMenu?.allowMenuForCustomChildren}
                                     renderSheetActionMenuChildren={(e) =>
                                         sheetActionMenuChildren?.(e, (a) => bindRowActionMenu(e, a), listHelpers)
                                     }

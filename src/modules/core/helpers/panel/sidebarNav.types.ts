@@ -24,9 +24,9 @@ export type NavLinkItem = BaseNavItem & {
     url: To;
 };
 
-/** Subgroup under a top-level collapsible (e.g. Real Estate under Configurations). */
+/** Subgroup under a top-level collapsible (e.g. Real Estate under Configurations). Supports one nested level (e.g. eCommerce → POS). */
 export type NavSubCollapsible = BaseNavItem & {
-    items: NavLinkItem[];
+    items: (NavLinkItem | NavSubCollapsible)[];
     url?: never;
 };
 

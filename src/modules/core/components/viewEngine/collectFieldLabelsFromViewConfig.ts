@@ -66,7 +66,15 @@ function hintForBinding(binding: FieldBinding): AuditFieldHint | null {
 
     if (w === "#SmallInfoCard") {
         const linkedPath = typeof wp.linkedRefPath === "string" ? wp.linkedRefPath.trim() : "";
-        const linkedToken = typeof wp.linkedSheetWidget === "string" ? wp.linkedSheetWidget : "";
+        let linkedToken = typeof wp.linkedSheetWidget === "string" ? wp.linkedSheetWidget : "";
+        if (!linkedToken && wp.linkedSheetByType != null && typeof wp.linkedSheetByType === "object") {
+            // Prefer productOrder when present; otherwise first mapped widget (audit hint is best-effort).
+            const byType = wp.linkedSheetByType as Record<string, {linkedSheetWidget?: string}>;
+            linkedToken =
+                byType.productOrder?.linkedSheetWidget ??
+                Object.values(byType).find((e) => typeof e?.linkedSheetWidget === "string")?.linkedSheetWidget ??
+                "";
+        }
         const linkedHint = linkedToken ? getAuditSinglePostHint(linkedToken) : undefined;
 
         if (wp.valueType === "linkedObjectRefCardList" && linkedHint) {

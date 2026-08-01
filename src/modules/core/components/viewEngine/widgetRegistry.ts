@@ -66,6 +66,7 @@ const WIDGET_REGISTRY: Record<string, ComponentType<any>> = {
     "#ExpandableText": ExpandableText,
     "#ApiSelect": ApiSelect,
     "#SimpleSelect": SimpleSelect,
+    "#Select": SimpleSelect,
     "#DateInput": DateInput,
     "#StringArrayField": StringArrayField,
     "#ListingFaqsField": ListingFaqsField,

@@ -15,6 +15,11 @@ export type ReferenceCompactRowConfig = {
     /** Language key for the row label (e.g. `inspection`). */
     label: string;
     valuePath: string[];
+    /**
+     * Optional parallel list to `valuePath`: when set, that segment is resolved via
+     * `resolveLanguageKey(\`${category}.${raw}\`)` (falls back to raw when missing).
+     */
+    valueLanguageKeyCategories?: (string | null | undefined)[];
     joinSeparator?: string;
     linkedSheetModel: string;
     linkedSheetWidget: string;
@@ -52,9 +57,18 @@ export function ReferenceStubCompactRow({
     let displayValue: unknown = null;
     if (config.valuePath.length > 0) {
         const parts = config.valuePath
-            .map((p) => resolveDotPath(stub, p))
-            .filter((v) => v != null && v !== "")
-            .map((v) => String(v));
+            .map((p, i) => {
+                const raw = resolveDotPath(stub, p);
+                if (raw == null || raw === "") return null;
+                const category = config.valueLanguageKeyCategories?.[i];
+                if (typeof category === "string" && category.length > 0 && typeof raw === "string") {
+                    const key = `${category}.${raw}`;
+                    const resolved = resolveLanguageKey(key);
+                    return resolved !== key ? resolved : String(raw);
+                }
+                return String(raw);
+            })
+            .filter((v): v is string => v != null && v !== "");
         displayValue = parts.length > 0 ? parts.join(config.joinSeparator ?? " ") : null;
     }
 

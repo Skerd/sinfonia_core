@@ -387,11 +387,11 @@ export function renderFormWidget(
 
     if (binding.widget === "#ApiSelect") {
         const formExtras = extra?.formExtras as Record<string, unknown> | undefined;
-        const mergeMap = widgetProps.postBodyFormExtrasMerge as Record<string, unknown> | undefined;
         const {
-            postBodyFormExtrasMerge: _mergeMap,
+            postBodyFormExtrasMerge: mergeMap,
             normalizeEmptyToUndefined,
             inlineCreateEntityLabel: inlineCreateEntityLabelKeyFromWp,
+            defaultOptionsFormExtraKey,
             // Consumed by FormRepeater's renderRowNode; strip before forwarding to ApiSelect.
             postBodyFromRowFields: _pbFromRow,
             disabledWhenRowFieldEmpty: _disableWhen,
@@ -412,6 +412,13 @@ export function renderFormWidget(
                 if (v != null && v !== "") mergedPost = { ...mergedPost, [postKey]: v };
             }
         }
+        const defaultOptionsFromExtras =
+            typeof defaultOptionsFormExtraKey === "string" && defaultOptionsFormExtraKey.length > 0
+                ? formExtras?.[defaultOptionsFormExtraKey]
+                : undefined;
+        const defaultOptions = Array.isArray(defaultOptionsFromExtras)
+            ? defaultOptionsFromExtras
+            : restWp.defaultOptions;
         const onValueChange = (value: string | string[], label?: string | string[]) => {
             let normalized: string | string[] | null | undefined = value;
             if (!Array.isArray(value) && (value === "" || value == null)) {
@@ -425,8 +432,10 @@ export function renderFormWidget(
             normalizeEmptyToUndefined ?
                 field.value == null || field.value === "" ?
                     ""
-                :   String(field.value)
-            :   field.value;
+                :   String(typeof field.value === "object" && field.value != null ? (field.value as {_id?: string})._id ?? field.value : field.value)
+            :   (typeof field.value === "object" && field.value != null
+                    ? (field.value as {_id?: string})._id ?? field.value
+                    : field.value);
         return (
             <Widget
                 apiUrl={widgetProps.apiUrl}
@@ -437,6 +446,7 @@ export function renderFormWidget(
                 resolveLanguageKey={resolveLanguageKey}
                 disabled={field.disabled || !!restWp.disabled}
                 {...restWp}
+                defaultOptions={defaultOptions}
                 postBody={mergedPost}
                 formFieldName={binding.name}
                 formExtras={formExtras}
@@ -444,7 +454,7 @@ export function renderFormWidget(
         );
     }
 
-    if (binding.widget === "#SimpleSelect") {
+    if (binding.widget === "#SimpleSelect" || binding.widget === "#Select") {
         const rawOpts = (widgetProps.options ?? []) as { value: string; label: string }[];
         const resolvedOptions = rawOpts.map((o) => ({
             ...o,

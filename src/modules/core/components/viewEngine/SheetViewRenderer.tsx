@@ -285,8 +285,17 @@ export function SheetViewRenderer({
     }, [fetchId, url, forceReload]);
 
     useEffect(() => {
-        if( !dataProps ) return;
-        setData(dataProps);
+        if (!dataProps) return;
+        setData((prev) => {
+            const next: Record<string, any> = {...dataProps};
+            // Preserve enrichSingle-only keys (e.g. inventory.movements) when list rows re-assert.
+            for (const [key, value] of Object.entries(prev || {})) {
+                if (!(key in dataProps) || dataProps[key] === undefined) {
+                    next[key] = value;
+                }
+            }
+            return next;
+        });
     }, [dataProps]);
 
     return (

@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {LayoutGrid, List, SlidersVertical} from "lucide-react";
-import {JSX, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useState} from "react";
+import {JSX, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import Masonry from "react-masonry-css";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -122,9 +122,21 @@ type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: numbe
     getItems?: (response: ResponseType) => T[];
     getTotal?: (response: ResponseType) => number;
     getId?: (item: T) => string | number;
-    onRegister?: (api: { refetch: () => void; updateRow: (id: string | number, patch: Partial<T>) => void }) => void;
-    ref?: Ref<{ refetch: () => void; updateRow: (id: string | number, patch: Partial<T>) => void } | null>;
-    listRef?: Ref<{ refetch: () => void; updateRow: (id: string | number, patch: Partial<T>) => void } | null>;
+    onRegister?: (api: {
+        refetch: () => void;
+        updateRow: (id: string | number, patch: Partial<T>) => void;
+        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
+    }) => void;
+    ref?: Ref<{
+        refetch: () => void;
+        updateRow: (id: string | number, patch: Partial<T>) => void;
+        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
+    } | null>;
+    listRef?: Ref<{
+        refetch: () => void;
+        updateRow: (id: string | number, patch: Partial<T>) => void;
+        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
+    } | null>;
     extraParams?: Record<string, unknown>;
     extraFilters?: Record<string, unknown>;
     /** AND-merged ahead of Filter Builder DSL (e.g. finance vendor/purchaser rules). */
@@ -189,6 +201,34 @@ function CountryCenterView<
     const [columnFilters, onColumnFiltersChange] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState | undefined>(undefined);
 
+    const dataRef = useRef(data);
+    dataRef.current = data;
+    const getIdRef = useRef(getId);
+    getIdRef.current = getId;
+
+    const listApi = useMemo(() => ({
+        refetch: () => setForceReload((prev) => prev + 1),
+        updateRow: (id: string | number, patch: Partial<T>) => {
+            const key = String(id);
+            setRowOverlays((prev) => ({...prev, [key]: {...prev[key], ...patch}}));
+        },
+        mapRows: (mapper: (row: T) => Partial<T> | void) => {
+            const items = ((dataRef.current?.data ?? []) as T[]);
+            setRowOverlays((prev) => {
+                const next = {...prev};
+                for (const item of items) {
+                    const key = String(getIdRef.current(item));
+                    const current = {...item, ...prev[key]} as T;
+                    const patch = mapper(current);
+                    if (patch && Object.keys(patch).length > 0) {
+                        next[key] = {...prev[key], ...patch};
+                    }
+                }
+                return next;
+            });
+        },
+    }), []);
+
     const [open, setOpen] = useState(false);
     const [extraParameters, setExtraParameters] = useState<Record<string, any>>({...extraParams});
     const [filters, setFilters] = useState<Record<string, any>>({...extraFilters});
@@ -251,14 +291,8 @@ function CountryCenterView<
     }, [extraFilters, syncExtraFiltersKeys]);
 
     useEffect(() => {
-        onRegister?.({
-            refetch: () => setForceReload((prev) => prev + 1),
-            updateRow: (id: string | number, patch: Partial<T>) => {
-                const key = String(id);
-                setRowOverlays((prev) => ({ ...prev, [key]: { ...prev[key], ...patch } }));
-            },
-        });
-    }, [onRegister]);
+        onRegister?.(listApi);
+    }, [onRegister, listApi]);
     useEffect(() => {
         setColumnVisibility(tableColumnVisibility);
     }, [tableColumnVisibility]);
@@ -285,13 +319,7 @@ function CountryCenterView<
         }
     }, [offset, limit, forceReload, sorting, filters, extraParameters, loadingTableConfig, toolbarFilterDSL]);
     const effectiveRef = listRefFromParent ?? refFromParent;
-    useImperativeHandle(effectiveRef, () => ({
-        refetch: () => setForceReload((prev) => prev + 1),
-        updateRow: (id: string | number, patch: Partial<T>) => {
-            const key = String(id);
-            setRowOverlays((prev) => ({ ...prev, [key]: { ...prev[key], ...patch } }));
-        }
-    }), []);
+    useImperativeHandle(effectiveRef, () => listApi, [listApi]);
     useImperativeHandle(innerRef, () => ({
         success: () => {
             setFirstCall(false);
