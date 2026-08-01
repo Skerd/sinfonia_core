@@ -8,6 +8,7 @@ import ChangeForgottenPassword from "@coreModule/clients/panel/public/auth/passw
 import AcceptInvitation from "@coreModule/clients/panel/public/auth/acceptInvitation/acceptInvitation.form.tsx";
 import LanguageSwitch from "@coreModule/components/custom/languageSwitch.tsx";
 import ThemeSwitch from "@coreModule/components/custom/themeSwitch.tsx";
+import {resolveAuthPanelComponent} from "@coreModule/clients/panel/moduleContributions/loadAuthPanelContributions.ts";
 import {ReactNode} from "react";
 import {GalleryVerticalEnd} from "lucide-react";
 
@@ -32,6 +33,7 @@ function AuthLayout({ children }: AuthLayoutProps) {
 export default function AuthenticationPage() {
 
     const {panel} = useParams();
+    const ModuleAuthPanel = resolveAuthPanelComponent(panel);
 
     return (
         <AuthLayout>
@@ -42,6 +44,7 @@ export default function AuthenticationPage() {
             {panel === "signUp" && <SignUp />}
             {panel === "activateAccount" && <ActivateAccount />}
             {panel === "acceptInvitation" && <AcceptInvitation />}
+            {ModuleAuthPanel ? <ModuleAuthPanel /> : null}
             <div className="flex justify-center">
                 <LanguageSwitch showTitles={true} />
                 <ThemeSwitch showTitles={true}/>
