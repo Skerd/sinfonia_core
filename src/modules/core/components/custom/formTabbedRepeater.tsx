@@ -24,6 +24,7 @@ export type FormTabbedRepeaterProps = {
     rowCascades?: RowCascade[];
     rowTitleFields?: string[];
     rowTitleSeparator?: string;
+    rowTitleSeparators?: string[];
     rowTitlePlaceholder?: string;
     addLabel?: string;
     removeLabel?: string;
@@ -43,6 +44,7 @@ export default function FormTabbedRepeater({
     rowCascades,
     rowTitleFields,
     rowTitleSeparator,
+    rowTitleSeparators,
     rowTitlePlaceholder,
     addLabel,
     removeLabel,
@@ -96,6 +98,7 @@ export default function FormTabbedRepeater({
                         rowCascades={rowCascades}
                         rowTitleFields={rowTitleFields}
                         rowTitleSeparator={rowTitleSeparator}
+                        rowTitleSeparators={rowTitleSeparators}
                         rowTitlePlaceholder={rowTitlePlaceholder}
                         addLabel={addLabel}
                         removeLabel={removeLabel}

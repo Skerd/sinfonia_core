@@ -98,8 +98,12 @@ function resolveEmbeddedFieldText(
 
     if (field.languageKeyCategory && typeof raw === "boolean") {
         raw = resolveLanguageKey(`${field.languageKeyCategory}.${raw ? "true" : "false"}`);
-    } else if (field.languageKeyCategory && typeof raw === "string" && raw.trim()) {
-        const key = `${field.languageKeyCategory}.${raw.trim()}`;
+    } else if (
+        field.languageKeyCategory &&
+        (typeof raw === "string" || typeof raw === "number") &&
+        String(raw).trim()
+    ) {
+        const key = `${field.languageKeyCategory}.${String(raw).trim()}`;
         const resolved = resolveLanguageKey(key);
         if (resolved !== key) raw = resolved;
     }

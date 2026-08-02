@@ -116,6 +116,7 @@ export function renderCompoundWidget(
                 title={wp.title}
                 rowTitleFields={wp.rowTitleFields}
                 rowTitleSeparator={wp.rowTitleSeparator}
+                rowTitleSeparators={wp.rowTitleSeparators}
                 rowTitlePlaceholder={wp.rowTitlePlaceholder}
                 addLabel={wp.addLabel}
                 removeLabel={wp.removeLabel}
@@ -273,6 +274,7 @@ export function renderCompoundWidget(
                 rowCascades={wp.rowCascades}
                 rowTitleFields={wp.rowTitleFields}
                 rowTitleSeparator={wp.rowTitleSeparator}
+                rowTitleSeparators={wp.rowTitleSeparators}
                 rowTitlePlaceholder={wp.rowTitlePlaceholder}
                 addLabel={wp.addLabel}
                 removeLabel={wp.removeLabel}
@@ -456,22 +458,43 @@ export function renderFormWidget(
 
     if (binding.widget === "#SimpleSelect" || binding.widget === "#Select") {
         const rawOpts = (widgetProps.options ?? []) as { value: string; label: string }[];
-        const resolvedOptions = rawOpts.map((o) => ({
-            ...o,
-            label: o.label.includes(".") ? String(resolveLanguageKey(o.label)) : o.label,
-        }));
+        const resolvedOptions = rawOpts.map((o) => {
+            const rawLabel = typeof o.label === "string" ? o.label : String(o.label ?? o.value ?? "");
+            return {
+                ...o,
+                value: String(o.value),
+                label: rawLabel.includes(".") ? String(resolveLanguageKey(rawLabel)) : rawLabel,
+            };
+        });
         const emptyValue = extra?.editMode ? null : undefined;
+        const onValueChangeFull = widgetProps.__onValueChangeFull as
+            | ((value: string | string[], label?: string | string[]) => void)
+            | undefined;
         return (
             <Widget
-                {...widgetProps}
                 options={resolvedOptions}
-                value={field.value}
-                onValueChange={(v: string | string[]) =>
-                    field.onChange(!Array.isArray(v) && (v === "" || v == null) ? emptyValue : v)
-                }
+                value={field.value == null || field.value === "" ? undefined : String(field.value)}
+                onValueChange={(v: string | string[]) => {
+                    const next = !Array.isArray(v) && (v === "" || v == null) ? emptyValue : v;
+                    field.onChange(next);
+                    if (!onValueChangeFull) return;
+                    if (Array.isArray(v)) {
+                        const labels = v.map(
+                            (item) => resolvedOptions.find((o) => o.value === item)?.label ?? item,
+                        );
+                        onValueChangeFull(v, labels);
+                    } else {
+                        const label = resolvedOptions.find((o) => o.value === v)?.label;
+                        onValueChangeFull(v, label);
+                    }
+                }}
                 placeholder={placeholder}
                 multiple={widgetProps.multiple}
                 disabled={field.disabled || widgetProps.disabled}
+                className={widgetProps.className}
+                forTable={widgetProps.forTable}
+                searchPlaceholder={widgetProps.searchPlaceholder}
+                aria-invalid={widgetProps["aria-invalid"]}
             />
         );
     }

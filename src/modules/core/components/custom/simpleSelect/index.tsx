@@ -40,7 +40,7 @@ type SimpleSelectProps = WithLanguageType & {
 };
 
 const DEFAULT_FILTER: (option: SimpleSelectOption, searchText: string) => boolean = (option, searchText) =>
-    option.label.toLowerCase().includes(searchText.trim().toLowerCase());
+    String(option.label ?? "").toLowerCase().includes(searchText.trim().toLowerCase());
 
 function SimpleSelectRender({
     options,
@@ -125,7 +125,8 @@ function SimpleSelectRender({
             return (
                 <CommandItem
                     key={option.value}
-                    value={option.value}
+                    // cmdk uses `value` for filtering; bare numeric strings like "0" can break open/select.
+                    value={`${option.label} ${option.value}`}
                     className="space-x-0"
                     aria-selected={multiple ? isSelected : undefined}
                     onSelect={() => handleOptionSelect(option)}

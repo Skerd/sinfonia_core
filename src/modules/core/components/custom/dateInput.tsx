@@ -17,7 +17,7 @@ const CALENDAR_SURFACE_CLASS =
   "bg-background p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(7)]"
 
 const TIME_CELL_CLASS = cn(
-  "flex h-(--cell-size) w-full min-w-(--cell-size) snap-center items-center justify-center rounded-(--cell-radius) text-sm font-normal transition-colors select-none",
+  "flex h-(--cell-size) w-full snap-center items-center justify-center rounded-(--cell-radius) px-2.5 text-sm font-normal tabular-nums transition-colors select-none",
   "hover:bg-muted hover:text-foreground",
   "data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground",
   "disabled:pointer-events-none disabled:opacity-50",
@@ -91,19 +91,27 @@ function TimeScrollColumn({
   disabled,
   onSelect,
 }: TimeScrollColumnProps) {
+  const listRef = React.useRef<HTMLDivElement>(null)
   const selectedRef = React.useRef<HTMLButtonElement>(null)
 
   React.useEffect(() => {
-    selectedRef.current?.scrollIntoView({ block: "center", behavior: "instant" })
+    const list = listRef.current
+    const selectedEl = selectedRef.current
+    if (!list || !selectedEl) return
+    // Keep scroll vertical-only — scrollIntoView can nudge parent containers sideways.
+    const top =
+      selectedEl.offsetTop - list.clientHeight / 2 + selectedEl.clientHeight / 2
+    list.scrollTo({ top: Math.max(0, top), behavior: "instant" })
   }, [selected])
 
   return (
-    <div className="flex min-w-(--cell-size) flex-col grow]:">
-      <div className="flex h-(--cell-size) items-center justify-center text-[0.8rem] font-normal text-muted-foreground select-none">
+    <div className="flex w-11 shrink-0 flex-col overflow-hidden">
+      <div className="flex h-(--cell-size) items-center justify-center px-1 text-[0.8rem] font-normal text-muted-foreground select-none">
         {label}
       </div>
       <div
-        className="h-[calc(var(--cell-size)*7.5)] overflow-y-auto overscroll-contain scroll-smooth px-0.5 snap-y snap-mandatory"
+        ref={listRef}
+        className="h-[calc(var(--cell-size)*7.5)] overflow-x-hidden overflow-y-auto overscroll-y-contain scroll-smooth px-0.5 snap-y snap-mandatory [scrollbar-gutter:stable]"
         role="listbox"
         aria-label={label}
       >
@@ -138,6 +146,8 @@ type DateInputTimePanelProps = {
   minuteLabel: string
   secondLabel: string
   onTimeChange: (hour: number, minute: number, second: number) => void
+  /** When true, omit the left border (used for time-only popovers). */
+  standalone?: boolean
 }
 
 function DateInputTimePanel({
@@ -148,17 +158,23 @@ function DateInputTimePanel({
   minuteLabel,
   secondLabel,
   onTimeChange,
+  standalone = false,
 }: DateInputTimePanelProps) {
   const hour = dateValue && isValid(dateValue) ? dateValue.getHours() : 0
   const minute = dateValue && isValid(dateValue) ? dateValue.getMinutes() : 0
   const second = dateValue && isValid(dateValue) ? dateValue.getSeconds() : 0
 
   return (
-    <div className="flex flex-col border-l border-border px-2 space-y-1.5">
+    <div
+      className={cn(
+        "flex flex-col px-2 space-y-1.5",
+        !standalone && "border-l border-border",
+      )}
+    >
         <p className="flex items-center justify-center py-1">
             <IconClock />
         </p>
-        <div className="flex space-x-2 grow">
+        <div className="flex shrink-0 gap-2 overflow-hidden">
             <TimeScrollColumn
                 label={hourLabel}
                 values={HOURS}
@@ -219,8 +235,13 @@ function parseWeekdayNames(
 function resolvePlaceholder(
   lang: LanguageDictionary | null,
   explicit?: string,
+  timeOnly?: boolean,
 ): string {
   if (explicit != null && explicit !== "") return explicit
+  if (timeOnly) {
+    const t = lang?.timePlaceholder
+    if (typeof t === "string") return t
+  }
   const p = lang?.placeholder
   return typeof p === "string" ? p : DEFAULT_PLACEHOLDER
 }
@@ -235,12 +256,18 @@ type DateInputBase = Omit<
     React.ComponentProps<typeof Calendar>,
     "mode" | "selected" | "onSelect" | "monthNames" | "weekdayNames"
   >
+  /**
+   * Time-only picker (no calendar). Requires a string `valueFormat` with hour/minute
+   * tokens (e.g. `"HH:mm"`). Reuses the same scroll time panel as datetime mode.
+   */
+  timeOnly?: boolean
 }
 
 /** `Date` values (default). */
 export type DateInputProps =
   | (DateInputBase & {
       valueFormat?: undefined
+      timeOnly?: false
       value?: Date
       onChange?: (date: Date | undefined) => void
     })
@@ -262,13 +289,25 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       valueFormat,
       value,
       onChange,
+      timeOnly = false,
       ...inputProps
     } = props
 
-    const hasTime = valueFormat ? formatIncludesTime(valueFormat) : false
-    const withSeconds = valueFormat ? formatIncludesSeconds(valueFormat) : false
+    const resolvedValueFormat =
+      valueFormat ?? (timeOnly ? "HH:mm" : undefined)
+    const hasTime =
+      timeOnly ||
+      (resolvedValueFormat ? formatIncludesTime(resolvedValueFormat) : false)
+    const withSeconds = resolvedValueFormat
+      ? formatIncludesSeconds(resolvedValueFormat)
+      : false
     const displayFormat =
-      displayFormatProp ?? (valueFormat && hasTime ? valueFormat : "PPP")
+      displayFormatProp ??
+      (resolvedValueFormat && hasTime
+        ? resolvedValueFormat
+        : timeOnly
+          ? "HH:mm"
+          : "PPP")
 
     const [open, setOpen] = React.useState(false)
     const { currentLanguage } = useSelectedLanguage<LanguageDictionary>(
@@ -281,29 +320,34 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
     const resolvedPlaceholder = resolvePlaceholder(
       currentLanguage,
       placeholder,
+      timeOnly,
     )
     const hourLabel = typeof currentLanguage?.hourLabel === "string" ? currentLanguage.hourLabel : "Hr"
     const minuteLabel = typeof currentLanguage?.minuteLabel === "string" ? currentLanguage.minuteLabel : "Min"
     const secondLabel = typeof currentLanguage?.secondLabel === "string" ? currentLanguage.secondLabel : "Sec"
 
     const dateValue = React.useMemo(() => {
-      if (valueFormat) {
+      if (resolvedValueFormat) {
         const s = typeof value === "string" ? value : ""
         if (!s) return undefined
-        const d = parse(s, valueFormat, new Date())
+        let d = parse(s, resolvedValueFormat, new Date())
+        // Native <input type="time"> often yields HH:mm:ss — accept that in time-only mode.
+        if (!isValid(d) && timeOnly && /^\d{1,2}:\d{2}/.test(s)) {
+          d = parse(s.slice(0, 5), "HH:mm", new Date())
+        }
         return isValid(d) ? d : undefined
       }
       const d = value as Date | undefined
       return d && isValid(d) ? d : undefined
-    }, [value, valueFormat])
+    }, [value, resolvedValueFormat, timeOnly])
 
     const emitStringValue = React.useCallback(
       (d: Date | undefined) => {
-        if (!valueFormat) return
-        const out = d && isValid(d) ? format(d, valueFormat) : ""
+        if (!resolvedValueFormat) return
+        const out = d && isValid(d) ? format(d, resolvedValueFormat) : ""
         ;(onChange as ((v: string) => void) | undefined)?.(out)
       },
-      [onChange, valueFormat],
+      [onChange, resolvedValueFormat],
     )
 
     const handleTimePartChange = React.useCallback(
@@ -342,41 +386,43 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
             className={cn(
               "flex w-fit",
               CALENDAR_SURFACE_CLASS,
-              hasTime && "pr-0",
+              hasTime && !timeOnly && "pr-0",
             )}
           >
-            <Calendar
-              {...calendarProps}
-              className={cn(
-                "bg-transparent p-0 in-data-[slot=popover-content]:bg-transparent",
-                calendarProps?.className,
-              )}
-              mode="single"
-              selected={dateValue}
-              monthNames={monthNames}
-              weekdayNames={weekdayNames}
-              captionLayout={calendarProps?.captionLayout ?? "dropdown"}
-              onSelect={(d) => {
-                if (valueFormat) {
-                  if (!d || !isValid(d)) {
-                    emitStringValue(undefined)
+            {!timeOnly && (
+              <Calendar
+                {...calendarProps}
+                className={cn(
+                  "bg-transparent p-0 in-data-[slot=popover-content]:bg-transparent",
+                  calendarProps?.className,
+                )}
+                mode="single"
+                selected={dateValue}
+                monthNames={monthNames}
+                weekdayNames={weekdayNames}
+                captionLayout={calendarProps?.captionLayout ?? "dropdown"}
+                onSelect={(d) => {
+                  if (resolvedValueFormat) {
+                    if (!d || !isValid(d)) {
+                      emitStringValue(undefined)
+                      if (!hasTime) setOpen(false)
+                      return
+                    }
+                    const merged = hasTime
+                      ? mergeCalendarDateWithTime(d, dateValue, withSeconds)
+                      : d
+                    emitStringValue(merged)
                     if (!hasTime) setOpen(false)
-                    return
+                  } else {
+                    ;(onChange as ((d: Date | undefined) => void) | undefined)?.(
+                      d,
+                    )
+                    setOpen(false)
                   }
-                  const merged = hasTime
-                    ? mergeCalendarDateWithTime(d, dateValue, withSeconds)
-                    : d
-                  emitStringValue(merged)
-                  if (!hasTime) setOpen(false)
-                } else {
-                  ;(onChange as ((d: Date | undefined) => void) | undefined)?.(
-                    d,
-                  )
-                  setOpen(false)
-                }
-              }}
-            />
-            {hasTime && valueFormat && (
+                }}
+              />
+            )}
+            {hasTime && resolvedValueFormat && (
               <DateInputTimePanel
                 dateValue={dateValue}
                 withSeconds={withSeconds}
@@ -385,6 +431,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 minuteLabel={minuteLabel}
                 secondLabel={secondLabel}
                 onTimeChange={handleTimePartChange}
+                standalone={timeOnly}
               />
             )}
           </div>
