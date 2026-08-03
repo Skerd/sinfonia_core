@@ -17,7 +17,7 @@ const dialogAvatarSize = "220px";
 
 const HiddenProfilePhoto = () => {
     return (
-        <div className={cn("hover:cursor-pointer flex items-center justify-center bg-gray-400 border-4 border-white absolute bottom-[-25px] left-8 rounded-full")} style={{width: avatarSize, height: avatarSize}}>
+        <div className={cn("hover:cursor-pointer flex items-center justify-center bg-muted-foreground border-4 border-white absolute bottom-[-25px] left-8 rounded-full")} style={{width: avatarSize, height: avatarSize}}>
             <div className="rounded-full flex grow items-center justify-center h-full w-full">
                 <HiddenElement/>
             </div>
@@ -57,7 +57,7 @@ function UpdateProfilePhoto({
     }
     if( (!!read.photo && !write.photo) ){
         return (
-            <div className={cn("hover:cursor-pointer flex items-center justify-center bg-gray-400 border-4 border-white absolute bottom-[-25px] left-8 rounded-full")} style={{width: avatarSize, height: avatarSize}}>
+            <div className={cn("hover:cursor-pointer flex items-center justify-center bg-muted-foreground border-4 border-white absolute bottom-[-25px] left-8 rounded-full")} style={{width: avatarSize, height: avatarSize}}>
                 <div className="rounded-full flex grow items-center justify-center h-full w-full">
                     <div className="rounded-full flex grow items-center justify-center h-full w-full">
                         <ProfilePhoto
@@ -72,7 +72,7 @@ function UpdateProfilePhoto({
     }
 
     return (
-        <div className={cn("hover:cursor-pointer flex items-center justify-center bg-gray-400 border-4 border-white absolute bottom-[-25px] left-8 rounded-full")} style={{width: avatarSize, height: avatarSize}}>
+        <div className={cn("hover:cursor-pointer flex items-center justify-center bg-muted-foreground border-4 border-white absolute bottom-[-25px] left-8 rounded-full")} style={{width: avatarSize, height: avatarSize}}>
             <div className="hover:cursor-pointer w-full h-full rounded-full">
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
@@ -93,7 +93,7 @@ function UpdateProfilePhoto({
                             <DialogTitle>{resolveLanguageKey("title")}</DialogTitle>
                         </DialogHeader>
                         <div className="flex items-center justify-center py-4 w-full">
-                            <div className="rounded-full flex justify-center items-center bg-gray-400 text-white border-4 border-white " style={{width: dialogAvatarSize, height: dialogAvatarSize}}>
+                            <div className="rounded-full flex justify-center items-center bg-muted-foreground text-white border-4 border-white" style={{width: dialogAvatarSize, height: dialogAvatarSize}}>
                                 {
                                     !currentPhotoUrl ?
                                     <User size="91px"/>

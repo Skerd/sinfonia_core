@@ -1,4 +1,4 @@
-import {Toaster} from "sonner";
+import {Toaster} from "@coreModule/components/ui/sonner.tsx";
 import {Provider} from "react-redux";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {ThemeProvider} from "@coreModule/helpers/context/providers/theme-provider.tsx";
@@ -69,11 +69,12 @@ function CoreApp() {
                                     </Routes>
                                 </Suspense>
                             </BrowserRouter>
+                            {/* Inside ThemeProvider so toasts resolve the same theme as the app. */}
+                            <ToasterContainer />
                         </ThemeProvider>
                     </LanguageProvider>
                 </ViewConfigProvider>
             </TableConfigProvider>
-            <ToasterContainer />
         </Provider>
     )
 }

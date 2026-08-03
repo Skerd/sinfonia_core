@@ -1001,7 +1001,7 @@ function PolygonSelector({
                     !disabled &&
                     <Card className="mt-2 flex gap-0 flex-wrap px-2 py-1 w-full text-sm text-muted-foreground">
                         <p>1. {resolveLanguageKey("info")}</p>
-                        <p className={cn({"text-green-600": isClosed})}>2. {resolveLanguageKey("currentPolygon")} {points.length} {resolveLanguageKey(points.length !== 1 ? "points" : "point")}</p>
+                        <p className={cn({"text-success": isClosed})}>2. {resolveLanguageKey("currentPolygon")} {points.length} {resolveLanguageKey(points.length !== 1 ? "points" : "point")}</p>
                         {
                             !isClosed &&
                             <p>3. {resolveLanguageKey("clickToClose")}</p>

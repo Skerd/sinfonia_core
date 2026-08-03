@@ -10,15 +10,19 @@ import {compose} from "redux";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 
+/**
+ * Currently an identity wrapper: both guard HOCs are disabled below, so the
+ * permission arguments are accepted (and underscore-prefixed) purely to keep
+ * every call site wired up for when `withClearance` is switched back on.
+ */
 export function ProtectNavigation(
-    clearanceLevel: number,
-    permissions: string[] = [],
-    otherPermissions: string[] = [],
-    atLeastOnePermission: boolean = false,
+    _permissions: string[] = [],
+    _usersPermissions: string[] = [],
+    _atLeastOnePermission: boolean = false,
     protectWhat: any
 ) {
     return compose(
-        // withClearance(clearanceLevel, permissions, otherPermissions, atLeastOnePermission),
+        // withClearance(permissions, usersPermissions, atLeastOnePermission),
         // withPiramida(true)
     )(protectWhat)
 }
@@ -28,13 +32,15 @@ function hrefMatchesSubLink(href: string, url: string | undefined): boolean {
 }
 
 function subEntryActive(href: string, sub: NavLinkItem | NavSubCollapsible): boolean {
-    if ('url' in sub && sub.url) {
-        return hrefMatchesSubLink(href, String(sub.url));
+    // Narrow on `items` rather than `url`: a NavLinkItem with a falsy url would
+    // otherwise fall through to the recursive branch, which it has no items for.
+    if ('items' in sub && sub.items) {
+        return sub.items.some((child) => subEntryActive(href, child));
     }
-    return sub.items.some((child) => subEntryActive(href, child));
+    return 'url' in sub && !!sub.url && hrefMatchesSubLink(href, String(sub.url));
 }
 
-export function NavGroup({ title, items }: any) {
+export function NavGroup({ title, items }: {title: string; items: NavItem[]}) {
 
     const { state, isMobile } = useSidebar()
     // const { menu, subview } = useParams();
@@ -49,9 +55,8 @@ export function NavGroup({ title, items }: any) {
                         const key = `${item.title}-${("url" in item ? item.url : "group") ?? 'group'}`
                         if (!item.items){
                             const ProtectedMenuLink = ProtectNavigation(
-                                item.clearanceLevel,
                                 item.permissions,
-                                item.otherPermissions,
+                                item.usersPermissions,
                                 item.atLeastOnePermission,
                                 SidebarMenuLink
                             )
@@ -59,9 +64,8 @@ export function NavGroup({ title, items }: any) {
                         }
                         if (state === 'collapsed' && !isMobile){
                             const ProtectedSidebarMenuCollapsedDropdown = ProtectNavigation(
-                                item.clearanceLevel,
                                 item.permissions,
-                                item.otherPermissions,
+                                item.usersPermissions,
                                 item.atLeastOnePermission,
                                 SidebarMenuCollapsedDropdown
                             )
@@ -70,9 +74,8 @@ export function NavGroup({ title, items }: any) {
                             )
                         }
                         const ProtectedSidebarMenuCollapsible = ProtectNavigation(
-                            item.clearanceLevel,
                             item.permissions,
-                            item.otherPermissions,
+                            item.usersPermissions,
                             item.atLeastOnePermission,
                             SidebarMenuCollapsible
                         )
@@ -164,7 +167,6 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                         item.items.filter((x: NavLinkItem | NavSubCollapsible) => !!x).flatMap((sub: NavLinkItem | NavSubCollapsible) => {
                             if ('url' in sub && sub.url) {
                                 const ProtectedDropDownItem = ProtectNavigation(
-                                    sub.clearanceLevel,
                                     sub.permissions,
                                     sub.usersPermissions,
                                     true,
@@ -192,7 +194,6 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                             const nestedItems = nested.items.flatMap((child) => {
                                 if ('url' in child && child.url) {
                                     const ProtectedNestedItem = ProtectNavigation(
-                                        child.clearanceLevel,
                                         child.permissions,
                                         child.usersPermissions,
                                         true,
@@ -220,7 +221,6 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                                 const deeperItems = deeper.items.map((link) => {
                                     if (!('url' in link) || !link.url) return null;
                                     const ProtectedDeeperItem = ProtectNavigation(
-                                        link.clearanceLevel,
                                         link.permissions,
                                         link.usersPermissions,
                                         true,
@@ -283,7 +283,6 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                             item.items.map((subItem) => {
                                 if ('url' in subItem && subItem.url) {
                                     const ProtectedSidebarMenuSubItem = ProtectNavigation(
-                                        subItem.clearanceLevel,
                                         subItem.permissions,
                                         subItem.usersPermissions,
                                         true,
@@ -322,7 +321,6 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                     {nested.items.map((child) => {
                                                         if ('url' in child && child.url) {
                                                             const ProtectedNestedLink = ProtectNavigation(
-                                                                child.clearanceLevel,
                                                                 child.permissions,
                                                                 child.usersPermissions,
                                                                 true,
@@ -363,7 +361,6 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                                             {deeper.items.map((link) => {
                                                                                 if (!('url' in link) || !link.url) return null;
                                                                                 const ProtectedDeeperLink = ProtectNavigation(
-                                                                                    link.clearanceLevel,
                                                                                     link.permissions,
                                                                                     link.usersPermissions,
                                                                                     true,
@@ -409,12 +406,15 @@ function checkIsActive(href: string, item: NavItem, mainNav = false) {
   const childMatches =
       !!item?.items?.some((i) => subEntryActive(href, i as NavLinkItem | NavSubCollapsible));
 
+  // `To` also covers Partial<Path>; only string urls are path-comparable.
+  const itemUrl = typeof item?.url === 'string' ? item.url : undefined;
+
   return (
-    href === item.url || // /endpint?search=param
-    href.split('?')[0] === item.url || // endpoint
+    href === itemUrl || // /endpint?search=param
+    href.split('?')[0] === itemUrl || // endpoint
     childMatches ||
     (mainNav &&
       href.split('/')[1] !== '' &&
-      href.split('/')[1] === item?.url?.split('/')[1])
+      href.split('/')[1] === itemUrl?.split('/')[1])
   )
 }

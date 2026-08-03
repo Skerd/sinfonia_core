@@ -38,11 +38,11 @@ function RestoreDropdown({
 
     return (
         <DropdownMenuItem ref={ref} onClick={() => {onAction(actionKey)}}>
-            <RotateCcw className="text-green-600" size={16}/>
-            <p className="text-green-600">
+            <RotateCcw className="text-success" size={16}/>
+            <p className="text-success">
                 {resolveLanguageKey("title")}
             </p>
-            <DropdownMenuShortcut className="text-green-600">⌘⏎</DropdownMenuShortcut>
+            <DropdownMenuShortcut className="text-success">⌘⏎</DropdownMenuShortcut>
         </DropdownMenuItem>
     )
 }

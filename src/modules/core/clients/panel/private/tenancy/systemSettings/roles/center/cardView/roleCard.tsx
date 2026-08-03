@@ -83,12 +83,13 @@ const RoleCard = React.memo(function RoleCard({
     }
 
     return (
-        <div className="rounded-xl relative overflow-hidden transition-all hover:shadow-md cursor-pointer flex w-full items-stretch">
+        // Hover lives on the Card, not this layout wrapper, so the accent follows the ring it already draws.
+        <div className="group rounded-xl relative overflow-hidden cursor-pointer flex w-full items-stretch">
             {(read.deletedBy || read.deletedAt) && (
                 <DeletedInfo deletedAt={role.deletedAt} deletedBy={role.deletedBy} />
             )}
 
-            <Card className="p-0 bg-muted/50 flex-1 min-w-0">
+            <Card className="p-0 bg-muted/50 flex-1 min-w-0 transition-[box-shadow,--tw-ring-color] duration-200 group-hover:shadow-md group-hover:ring-primary/40">
                 <CardHeader className="group pt-3 pb-2">
                     <div className="flex items-center space-x-1 gap-2">
                         <div className="grow min-w-0">

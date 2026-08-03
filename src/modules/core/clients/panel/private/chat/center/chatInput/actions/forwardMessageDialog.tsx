@@ -175,7 +175,7 @@ function ForwardMessageDialog({
 
                 <div className="space-y-4">
                     {/* Message preview */}
-                    <div className="bg-muted rounded-lg p-3 border-l-4 border-blue-500">
+                    <div className="bg-muted rounded-lg p-3 border-l-4 border-info/50">
                         <div className="text-xs text-muted-foreground mb-1">
                             {message.sender.name} {message.sender.surname}
                         </div>

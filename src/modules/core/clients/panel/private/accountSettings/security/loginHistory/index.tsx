@@ -6,7 +6,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import CardAndTableView from "@coreModule/components/custom/cardAndTableView.tsx";
+import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
 import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
@@ -27,10 +27,7 @@ function UserAccountSecurityLoginHistory({specificUserId, resolveLanguageKey}: U
     const {read} = useAccess("loginHistories", !specificUserId ? "self" : "others");
     const targetUserId = specificUserId ?? currentUserId;
     const viewingSelf = !specificUserId;
-    const listRef = useRef<{
-        refetch: () => void;
-        updateRow: (id: string | number, patch: Partial<LoginHistory>) => void;
-    } | null>(null);
+    const listRef = useRef<EntityListApi<LoginHistory> | null>(null);
     const [rowMenuAction, setRowMenuAction] = useState("");
     const [sheetEntry, setSheetEntry] = useState<LoginHistory | null>(null);
 

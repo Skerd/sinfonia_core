@@ -57,7 +57,7 @@ function AssistantOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLangu
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Bot className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
+                    <Bot className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>

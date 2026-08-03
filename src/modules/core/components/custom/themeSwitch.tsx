@@ -1,5 +1,4 @@
 import {compose} from "redux";
-import { useEffect } from 'react'
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Check, Moon, Sun } from 'lucide-react'
 import { Button } from '@coreModule/components/ui/button.tsx'
@@ -13,12 +12,6 @@ type ThemeSwitchProps = WithLanguageType & {
 
 function ThemeSwitch({resolveLanguageKey, showTitles}: ThemeSwitchProps) {
     const { theme, setTheme } = useTheme()
-
-    useEffect(() => {
-        const themeColor = theme === 'dark' ? '#020817' : '#fff'
-        const metaThemeColor = document.querySelector("meta[name='theme-color']")
-        if (metaThemeColor) metaThemeColor.setAttribute('content', themeColor)
-    }, [theme])
 
     return (
         <DropdownMenu modal={false}>

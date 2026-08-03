@@ -1,10 +1,10 @@
 import type {ModuleCapabilities} from "./systemMap.types.ts";
 
 const MODULE_COLORS: Record<string, string> = {
-    eCommerce: "#b45309",
-    eCommerceMarketplace: "#047857",
-    propertyManagement: "#0369a1",
-    shared: "#475569",
+    eCommerce: "var(--chart-4)",
+    eCommerceMarketplace: "var(--chart-3)",
+    propertyManagement: "var(--chart-5)",
+    shared: "var(--muted-foreground)",
 };
 
 type CapabilitiesViewProps = {
@@ -18,7 +18,7 @@ export function CapabilitiesView({capabilities}: CapabilitiesViewProps) {
     return (
         <div className={`grid gap-4 ${cols}`}>
             {capabilities.map((mod) => {
-                const accent = MODULE_COLORS[mod.id] ?? "#475569";
+                const accent = MODULE_COLORS[mod.id] ?? "var(--muted-foreground)";
                 return (
                     <article
                         key={mod.id}

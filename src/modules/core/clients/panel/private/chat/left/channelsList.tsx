@@ -75,7 +75,7 @@ function ChannelInfo({
 
         return (
             <TooltipDisplayer tooltip={`${messages} ${resolveLanguageKey("unreadMessages")}`}>
-                <span className="ms-auto flex size-5 shrink-0 items-center justify-center rounded-full bg-green-500 text-[10px] font-medium text-white dark:bg-green-800">
+                <span className="ms-auto flex size-5 shrink-0 items-center justify-center rounded-full bg-success text-[10px] font-medium text-white">
                     {messageCount}
                 </span>
             </TooltipDisplayer>

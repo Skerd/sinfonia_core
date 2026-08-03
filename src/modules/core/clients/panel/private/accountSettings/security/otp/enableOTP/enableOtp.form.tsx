@@ -145,7 +145,7 @@ function AccountSecurityEnableOtpForm({
                                                         type="submit"
                                                         variant="outline"
                                                         size="icon"
-                                                        className={cn("h-full px-2", {"text-green-500 hover:border-green-400 hover:dark:border-green-400": (token?.length === 6)})}
+                                                        className={cn("h-full px-2", {"text-success hover:border-success/50 hover:dark:border-success/50": (token?.length === 6)})}
                                                         disabled={loading || token?.length !== 6}
                                                     >
                                                         <Check className="h-4 w-4" />

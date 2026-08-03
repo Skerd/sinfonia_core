@@ -341,7 +341,7 @@ function Message({
 
         let icon: ReactNode;
         if (otherIds.length === 0) {return <Check className="size-3 opacity-70" aria-hidden />;}
-        if (allRead) {icon = (<CheckCheck className="size-3 text-sky-300" aria-hidden/>);}
+        if (allRead) {icon = (<CheckCheck className="size-3 text-info" aria-hidden/>);}
         else if (allDelivered) {icon = <CheckCheck className="size-3 opacity-70" aria-hidden />;}
         else {icon = <Check className="size-3 opacity-70" aria-hidden />;}
 

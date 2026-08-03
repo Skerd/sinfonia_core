@@ -59,7 +59,7 @@ function TelegramOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLangua
             <Tooltip>
                 <TooltipTrigger asChild>
                     <span className="inline-flex hover:cursor-pointer">
-                        <IconTelegram className={clsx("h-5 w-5", connected ? "text-green-500" : "text-red-500")} />
+                        <IconTelegram className={clsx("h-5 w-5", connected ? "text-success" : "text-destructive")} />
                     </span>
                 </TooltipTrigger>
                 <TooltipContent>

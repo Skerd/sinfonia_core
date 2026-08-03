@@ -4,7 +4,7 @@ import {useAccess, type AccessObject} from "@coreModule/helpers/hocs/withAccess.
 import Header from "@coreModule/components/custom/header.tsx";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import CardAndTableView from "@coreModule/components/custom/cardAndTableView.tsx";
+import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
 import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
@@ -29,12 +29,7 @@ type BaseEntity = {
 // ---------------------------------------------------------------------------
 
 /** List mutation ref forwarded to cards/sheets (`updateRow`, `mapRows`, `refetch`). */
-export type EntityListRefs<T extends BaseEntity = BaseEntity> = RefObject<{
-    refetch: () => void;
-    updateRow: (id: string | number, patch: Partial<T>) => void;
-    /** Patch currently loaded rows in place (no network). Return a patch or void to skip. */
-    mapRows: (mapper: (row: T) => Partial<T> | void) => void;
-} | null>;
+export type EntityListRefs<T extends BaseEntity = BaseEntity> = RefObject<EntityListApi<T> | null>;
 
 type AutoSheetViewProps = {
     entity: BaseEntity & Record<string, unknown>;
@@ -276,11 +271,7 @@ export default function EntityListPage<T extends BaseEntity>({
     const [sheetEntity, setSheetEntity] = useState<T | null>(null);
     const [action, setAction] = useState("");
 
-    const listRef = useRef<{
-        refetch: () => void;
-        updateRow: (id: string | number, patch: Partial<T>) => void;
-        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
-    } | null>(null);
+    const listRef = useRef<EntityListApi<T> | null>(null);
 
     const handleDelete = (entity: T, response?: DeletedData) => {
         if (response?.deletedAt != null || response?.deletedBy != null) {

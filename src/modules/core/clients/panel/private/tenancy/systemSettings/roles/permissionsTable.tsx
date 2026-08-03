@@ -190,7 +190,7 @@ function ActionCell({hasPermission, checked, tags, ids, editable, parentLoading,
     if (!checked) return <span className="text-muted-foreground">—</span>;
     const content = (
         <div className="size-5 flex items-center justify-center">
-            <Check className="size-5 text-green-600" aria-label="yes" />
+            <Check className="size-5 text-success" aria-label="yes" />
         </div>
     );
     if (!tags.length) return content;

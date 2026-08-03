@@ -63,7 +63,7 @@ export default function LoginHistoryCard({entry, resolveLanguageKey, timezone, v
                     <div
                         className={cn(
                             "flex size-7 shrink-0 items-center justify-center rounded-full",
-                            isSuccess ? "bg-emerald-500/10 text-emerald-600" : "bg-destructive/10 text-destructive"
+                            isSuccess ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive"
                         )}
                     >
                         {isSuccess ? <CheckCircle2 className="size-3.5" /> : <XCircle className="size-3.5" />}

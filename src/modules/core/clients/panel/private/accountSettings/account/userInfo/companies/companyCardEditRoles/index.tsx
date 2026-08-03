@@ -207,7 +207,7 @@ function AccountCompaniesCardEditRoles({
                                 return (
                                     <Badge
                                         key={`badge_for_${role._id}_${role.label}_${index}`}
-                                        className={cn("hover:cursor-pointer", {"border border-red-400": !role.newValue, "border border-green-700 bg-green-700": role.newValue})}
+                                        className={cn("hover:cursor-pointer", {"border border-destructive/50": !role.newValue, "border border-success bg-success": role.newValue})}
                                         variant={!role.newValue ? "outline" : "default"}
                                         onClick={() => {
                                             toggleRole(role.value, !role.newValue);

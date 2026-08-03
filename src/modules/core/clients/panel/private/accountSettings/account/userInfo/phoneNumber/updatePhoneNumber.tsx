@@ -68,7 +68,7 @@ function UpdatePhoneNumber({
                             type="submit"
                             variant="outline"
                             size="icon"
-                            className={cn("h-full px-2 text-green-500", {"hover:border-green-400 hover:dark:border-green-400": !!fieldValue})}
+                            className={cn("h-full px-2 text-success", {"hover:border-success/50 hover:dark:border-success/50": !!fieldValue})}
                             disabled={loading}
                         >
                             <Check className={cn("h-4 w-4 hover:text-white", )} />

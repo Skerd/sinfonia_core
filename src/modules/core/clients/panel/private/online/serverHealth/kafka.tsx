@@ -99,7 +99,7 @@ function KafkaOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageK
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Globe className={clsx("h-5 w-5 hover:cursor-pointer", online ? "text-green-500" : "text-red-500")} />
+                    <Globe className={clsx("h-5 w-5 hover:cursor-pointer", online ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(online ? "online" : "offline")}</p>

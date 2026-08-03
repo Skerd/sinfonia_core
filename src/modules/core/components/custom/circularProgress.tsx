@@ -8,7 +8,7 @@ type CircularProgressProps = SVGProps<SVGSVGElement> & {
     strokeWidth?: number;
     /** Progress from 0 to 100. Values are clamped to this range. */
     percentage: number;
-    /** Tailwind class for the progress stroke (e.g. "text-blue-500"). Uses currentColor. */
+    /** Tailwind class for the progress stroke (e.g. "text-info"). Uses currentColor. */
     color?: string;
     /** Tailwind class or CSS color for the track. Defaults to a light gray. */
     trackClassName?: string;
@@ -21,7 +21,7 @@ export function CircularProgress({
     size = 100,
     strokeWidth = 10,
     percentage,
-    color = "text-blue-500",
+    color = "text-info",
     trackClassName,
     className,
     "aria-label": ariaLabel,

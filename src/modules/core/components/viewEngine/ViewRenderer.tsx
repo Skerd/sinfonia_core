@@ -1544,7 +1544,7 @@ function renderCurrencyList(
     const andKey = wp.andKey ?? "and";
 
     return (
-        <div className="text-green-600 flex flex-wrap space-x-1">
+        <div className="text-success flex flex-wrap space-x-1">
             {list.map((item: any, i: number) => {
                 const currency = item.currency;
                 const currencyName = currency?.abbreviation ?? currency?.symbol ?? currency?.name ?? "";

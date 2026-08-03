@@ -240,7 +240,7 @@ function UserProfileCardInner({
 
     return (
         <div>
-            <Card className="p-0 gap-6 transition-all duration-300 hover:shadow-md">
+            <Card className="p-0 gap-6 transition-[box-shadow,--tw-ring-color] duration-200 hover:shadow-md hover:ring-primary/40">
 
                 <HiddenElement>
                     {
@@ -253,7 +253,7 @@ function UserProfileCardInner({
                                 hideCondition={!read.cover}
                             />
                             <div
-                                className="flex items-center justify-center bg-gray-400 border-4 border-white absolute bottom-[-25px] left-8 rounded-full"
+                                className="flex items-center justify-center bg-muted-foreground border-4 border-white absolute bottom-[-25px] left-8 rounded-full"
                                 style={{width: avatarSize, height: avatarSize}}>
                                 <div className="w-full h-full rounded-full">
                                     <ProfilePhoto
@@ -285,10 +285,10 @@ function UserProfileCardInner({
                                                 variant="outline"
                                                 className={cn(
                                                     "text-xs font-normal",
-                                                    data.online ? "border-green-500/50 text-green-600" : "border-muted text-muted-foreground"
+                                                    data.online ? "border-success/50 text-success" : "border-muted text-muted-foreground"
                                                 )}
                                             >
-                                                <span className={cn("mr-1 size-1.5 rounded-full", data.online ? "bg-green-500" : "bg-muted-foreground")}/>
+                                                <span className={cn("mr-1 size-1.5 rounded-full", data.online ? "bg-success" : "bg-muted-foreground")}/>
                                                 {data.online ? resolveLanguageKey("online") : resolveLanguageKey("offline")}
                                             </Badge>
                                         }
@@ -298,8 +298,8 @@ function UserProfileCardInner({
                                                 <Badge
                                                     variant="outline"
                                                     className={cn("text-xs font-normal", {
-                                                        "border-red-500/50 text-red-500": data.mfaStatus === "notActive",
-                                                        "border-green-500/50 text-green-500": data.mfaStatus === "active",
+                                                        "border-destructive/50 text-destructive": data.mfaStatus === "notActive",
+                                                        "border-success/50 text-success": data.mfaStatus === "active",
                                                     })}
                                                 >
                                                     <Shield size={12} className={cn("mr-1")}/>
@@ -334,9 +334,9 @@ function UserProfileCardInner({
                                                 <>
                                                     {
                                                         (data.verified && !data.unverifiedEmail) ?
-                                                        <BadgeCheck size={20} className="text-blue-500"/>
+                                                        <BadgeCheck size={20} className="text-info"/>
                                                         :
-                                                        <BadgeAlert size={20} className="text-red-500"/>
+                                                        <BadgeAlert size={20} className="text-destructive"/>
                                                     }
                                                 </>
                                             }
@@ -461,7 +461,7 @@ function UserProfileCardInner({
                                                         <>
                                                             {
                                                                 data.status === "active" &&
-                                                                <ShieldCheck size={18} className="text-green-600"/>
+                                                                <ShieldCheck size={18} className="text-success"/>
                                                             }
                                                             {
                                                                 data.status === "inactive" &&
@@ -469,7 +469,7 @@ function UserProfileCardInner({
                                                             }
                                                             {
                                                                 data.status === "invited" &&
-                                                                <ShieldQuestionMark size={18} className="text-sky-300"/>
+                                                                <ShieldQuestionMark size={18} className="text-info"/>
                                                             }
                                                         </>
                                                     }
@@ -485,9 +485,9 @@ function UserProfileCardInner({
                                                 read.roles?.keys?.active && !!data.status &&
                                                 <>
                                                     <span className={cn("hover:underline", {
-                                                        "text-green-600": data.status === "active",
+                                                        "text-success": data.status === "active",
                                                         "text-destructive": data.status === "inactive",
-                                                        "text-sky-300": data.status === "invited"
+                                                        "text-info": data.status === "invited"
                                                     })}>
                                                         {resolveLanguageKey(`statuses.${data.status}`)}
                                                     </span>

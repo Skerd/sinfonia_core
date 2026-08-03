@@ -57,7 +57,7 @@ function ApiOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Server className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
+                    <Server className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>

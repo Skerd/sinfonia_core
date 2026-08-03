@@ -99,9 +99,9 @@ function AccountProfileEmail({
                             <TooltipTrigger asChild>
                                 {
                                     (isEmailVerified && !unverifiedEmail) ?
-                                    <BadgeCheck size={20} className="text-blue-500 hover:cursor-pointer"/>
+                                    <BadgeCheck size={20} className="text-info hover:cursor-pointer"/>
                                     :
-                                    <BadgeAlert size={20} className="text-red-500 hover:cursor-pointer"/>
+                                    <BadgeAlert size={20} className="text-destructive hover:cursor-pointer"/>
                                 }
                             </TooltipTrigger>
                             <TooltipContent>
@@ -151,9 +151,9 @@ function AccountProfileEmail({
                                         <TooltipTrigger asChild>
                                             {
                                                 (isEmailVerified && !unverifiedEmail) ?
-                                                <BadgeCheck size={20} className="text-blue-500 hover:cursor-pointer"/>
+                                                <BadgeCheck size={20} className="text-info hover:cursor-pointer"/>
                                                 :
-                                                <BadgeAlert size={20} className="text-red-500 hover:cursor-pointer"/>
+                                                <BadgeAlert size={20} className="text-destructive hover:cursor-pointer"/>
                                             }
                                         </TooltipTrigger>
                                         <TooltipContent>

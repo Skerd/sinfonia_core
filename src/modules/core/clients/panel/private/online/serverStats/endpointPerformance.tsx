@@ -37,19 +37,19 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
 
     const getMethodBadgeColor = (method: string) => {
         switch (method) {
-            case 'GET': return 'bg-blue-500';
-            case 'POST': return 'bg-green-500';
-            case 'PUT': return 'bg-yellow-500';
-            case 'DELETE': return 'bg-red-500';
-            case 'PATCH': return 'bg-purple-500';
-            default: return 'bg-gray-500';
+            case 'GET': return 'bg-info';
+            case 'POST': return 'bg-success';
+            case 'PUT': return 'bg-warning';
+            case 'DELETE': return 'bg-destructive';
+            case 'PATCH': return 'bg-primary';
+            default: return 'bg-muted-foreground';
         }
     };
 
     const getDurationColor = (duration: number) => {
-        if (duration < 100) return 'text-green-600';
-        if (duration < 500) return 'text-yellow-600';
-        return 'text-red-600';
+        if (duration < 100) return 'text-success';
+        if (duration < 500) return 'text-warning';
+        return 'text-destructive';
     };
 
     const currentEndpoints: EndpointStat[] = activeTab === 'slowest'

@@ -1,79 +1,62 @@
 import type {SystemMapCluster} from "./systemMap.types.ts";
 
+/**
+ * Categorical hues for the architecture diagram. Twelve clusters need more
+ * distinct colors than the five --chart-* tokens provide, so they are defined
+ * here rather than pulled from the theme.
+ *
+ * Lightness is held near 0.52 so no cluster reads as louder than its peers, and
+ * the surface/border tints are mixed against `transparent` instead of a baked
+ * pale hex. That is what lets the diagram survive dark mode: the tint composites
+ * over whatever the canvas actually is, rather than forcing a light background.
+ */
+const CLUSTER_COLORS = {
+    catalog: "oklch(0.511 0.086 186)",
+    ordering: "oklch(0.555 0.146 49)",
+    payments: "oklch(0.488 0.217 264)",
+    marketplace: "oklch(0.508 0.105 166)",
+    escrow: "oklch(0.514 0.198 17)",
+    portfolio: "oklch(0.500 0.119 243)",
+    sales: "oklch(0.555 0.146 49)",
+    leasing: "oklch(0.511 0.086 186)",
+    delivery: "oklch(0.541 0.247 293)",
+    cost: "oklch(0.553 0.174 38)",
+    quality: "oklch(0.514 0.198 17)",
+    shared: "var(--muted-foreground)",
+} as const satisfies Record<SystemMapCluster, string>;
+
+const CLUSTER_LABELS = {
+    catalog: "Catalog",
+    ordering: "Ordering",
+    payments: "Payments & Ops",
+    marketplace: "Marketplace",
+    escrow: "Escrow",
+    portfolio: "Portfolio",
+    sales: "Sales",
+    leasing: "Leasing",
+    delivery: "Delivery",
+    cost: "Cost",
+    quality: "Quality & HSE",
+    shared: "Shared",
+} as const satisfies Record<SystemMapCluster, string>;
+
+const surfaceTint = (color: string) => `color-mix(in oklab, ${color} 12%, transparent)`;
+const borderTint = (color: string) => `color-mix(in oklab, ${color} 40%, transparent)`;
+
 export const CLUSTER_META: Record<
     SystemMapCluster,
     {label: string; color: string; bg: string; border: string}
-> = {
-    catalog: {
-        label: "Catalog",
-        color: "#0f766e",
-        bg: "#f0fdfa",
-        border: "#5eead4",
-    },
-    ordering: {
-        label: "Ordering",
-        color: "#b45309",
-        bg: "#fffbeb",
-        border: "#fcd34d",
-    },
-    payments: {
-        label: "Payments & Ops",
-        color: "#1d4ed8",
-        bg: "#eff6ff",
-        border: "#93c5fd",
-    },
-    marketplace: {
-        label: "Marketplace",
-        color: "#047857",
-        bg: "#ecfdf5",
-        border: "#6ee7b7",
-    },
-    escrow: {
-        label: "Escrow",
-        color: "#be123c",
-        bg: "#fff1f2",
-        border: "#fda4af",
-    },
-    portfolio: {
-        label: "Portfolio",
-        color: "#0369a1",
-        bg: "#f0f9ff",
-        border: "#7dd3fc",
-    },
-    sales: {
-        label: "Sales",
-        color: "#b45309",
-        bg: "#fffbeb",
-        border: "#fcd34d",
-    },
-    leasing: {
-        label: "Leasing",
-        color: "#0f766e",
-        bg: "#f0fdfa",
-        border: "#5eead4",
-    },
-    delivery: {
-        label: "Delivery",
-        color: "#7c3aed",
-        bg: "#f5f3ff",
-        border: "#c4b5fd",
-    },
-    cost: {
-        label: "Cost",
-        color: "#c2410c",
-        bg: "#fff7ed",
-        border: "#fdba74",
-    },
-    quality: {
-        label: "Quality & HSE",
-        color: "#be123c",
-        bg: "#fff1f2",
-        border: "#fda4af",
-    },
-    shared: {
-        label: "Shared",
-        color: "#475569",
-        bg: "#f8fafc",
-        border: "#cbd5e1",
-    },
-};
+> = Object.fromEntries(
+    (Object.keys(CLUSTER_COLORS) as SystemMapCluster[]).map((key) => {
+        const color = CLUSTER_COLORS[key];
+        return [
+            key,
+            {
+                label: CLUSTER_LABELS[key],
+                color,
+                bg: surfaceTint(color),
+                border: borderTint(color),
+            },
+        ];
+    }),
+) as Record<SystemMapCluster, {label: string; color: string; bg: string; border: string}>;

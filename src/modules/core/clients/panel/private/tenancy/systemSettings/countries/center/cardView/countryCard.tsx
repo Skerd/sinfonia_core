@@ -140,7 +140,7 @@ function CountryCard({
             {!sheetOnly && (
                 <Card
                     className={cn(
-                        "group p-0 h-full relative transition-all duration-300 hover:shadow-md hover:cursor-pointer",
+                        "group p-0 h-full relative transition-[box-shadow,--tw-ring-color] duration-200 hover:cursor-pointer hover:shadow-md hover:ring-primary/40",
                         small && "hover:shadow-sm",
                     )}
                     onClick={() => setAction("view")}

@@ -91,7 +91,7 @@ export function StringArrayField<TFieldValues extends FieldValues = FieldValues>
                                         <p>{item}</p>
                                         <TooltipDisplayer tooltip={resolve(removeTooltipKey, resolveLanguageKey)}>
                                             <X
-                                                className="size-3 hover:cursor-pointer hover:text-red-500"
+                                                className="size-3 hover:cursor-pointer hover:text-destructive"
                                                 onClick={() => {
                                                     const current = (form.getValues(name) as string[] | undefined) || [];
                                                     form.setValue(name, current.filter((f) => f !== item) as any, { shouldValidate: true, shouldDirty: true });

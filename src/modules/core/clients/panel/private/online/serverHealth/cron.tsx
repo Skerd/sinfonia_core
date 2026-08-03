@@ -57,7 +57,7 @@ function CronOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKe
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Timer className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
+                    <Timer className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>

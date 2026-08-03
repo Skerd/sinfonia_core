@@ -88,7 +88,7 @@ function KafkaServerConsumers({title, resolveLanguageKey}:{title: string, resolv
                             list.map((c: KafkaConsumerStatus) => (
                                 <div key={c.name} className="flex items-center justify-between gap-2">
                                     <div className="flex items-center space-x-1 text-nowrap">
-                                        <p className={clsx("h-2 w-2 rounded-full", c.alive ? "bg-green-500" : "bg-red-500")} />
+                                        <p className={clsx("h-2 w-2 rounded-full", c.alive ? "bg-success" : "bg-destructive")} />
                                         <p className="font-medium">{c.displayName || c.name}</p>
                                     </div>
                                     <p className="opacity-70 text-nowrap">({c.groupId})</p>
@@ -108,7 +108,7 @@ function KafkaServerOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLan
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Layers className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
+                    <Layers className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>

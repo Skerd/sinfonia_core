@@ -113,7 +113,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                 type="button"
                                 variant="outline"
                                 size="icon"
-                                className="px-2 hover:bg-green-600 hover:text-white"
+                                className="px-2 hover:bg-success hover:text-white"
                                 onClick={handleAdminDeactivate}
                                 disabled={loading}
                             >
@@ -124,7 +124,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                 type="button"
                                 variant="outline"
                                 size="icon"
-                                className="px-2 hover:bg-red-400 hover:text-white"
+                                className="px-2 hover:bg-destructive/20 hover:text-white"
                                 onClick={() => {
                                     onCancel();
                                 }}
@@ -174,7 +174,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                                             type="submit"
                                                             variant="outline"
                                                             size="icon"
-                                                            className={cn("h-full px-2", {"text-green-500 hover:border-green-400 hover:dark:border-green-400": (mfaCode?.length === 6)})}
+                                                            className={cn("h-full px-2", {"text-success hover:border-success/50 hover:dark:border-success/50": (mfaCode?.length === 6)})}
                                                             disabled={loading || mfaCode?.length !== 6}
                                                         >
                                                             <Check className="h-4 w-4" />
@@ -213,7 +213,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                             handleSendEmail();
                                         }
                                     }}
-                                    className={`ml-auto inline-block text-sm underline ${loading ? "text-gray-400 cursor-not-allowed" : "cursor-pointer"}`}
+                                    className={`ml-auto inline-block text-sm underline ${loading ? "text-muted-foreground cursor-not-allowed" : "cursor-pointer"}`}
                                 >
                                     {resolveLanguageKey("twoParts.noOtpCode")[1]}
                                 </Link>

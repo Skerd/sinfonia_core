@@ -1,6 +1,13 @@
 import type { ComponentType, ReactNode } from "react";
 import { Suspense, useState } from "react";
 import { cn } from "@coreModule/components/lib/utils.ts";
+import {
+    Item,
+    ItemActions,
+    ItemContent,
+    ItemMedia,
+    ItemTitle,
+} from "@coreModule/components/ui/item.tsx";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -39,12 +46,16 @@ type SmallInfoCardProps = {
     };
 };
 
+/**
+ * Applied over `Item variant="outline"`, so every variant keeps the same 1px box and
+ * the grid stays aligned; `default` just makes its border invisible.
+ */
 const containerStyles: Record<SmallInfoCardVariant, string> = {
-    default: "bg-muted/30",
-    success: "border border-status-sold/30 bg-status-sold/5",
-    destructive: "border border-destructive/30 bg-destructive/5",
-    warning: "border border-status-reserved/30 bg-status-reserved/5",
-    info: "border border-status-available/30 bg-status-available/5",
+    default: "border-transparent bg-muted/30",
+    success: "border-status-sold/30 bg-status-sold/5",
+    destructive: "border-destructive/30 bg-destructive/5",
+    warning: "border-status-reserved/30 bg-status-reserved/5",
+    info: "border-status-available/30 bg-status-available/5",
 };
 
 const iconWrapStyles: Record<SmallInfoCardVariant, string> = {
@@ -144,16 +155,14 @@ export default function SmallInfoCard({
 
     return (
         <>
-            <div
-                className={cn(
-                    "flex items-center gap-2 p-2 rounded-lg h-fit",
-                    containerStyles[variant],
-                )}
+            <Item
+                variant="outline"
+                className={cn("h-fit gap-2 p-2", containerStyles[variant])}
             >
                 {Icon != null && (
-                    <div
+                    <ItemMedia
                         className={cn(
-                            "shrink-0 p-2.5 rounded-md",
+                            "p-2.5 rounded-md",
                             iconWrapStyles[variant],
                         )}
                     >
@@ -163,13 +172,13 @@ export default function SmallInfoCard({
                                 accentTextStyles[variant],
                             )}
                         />
-                    </div>
+                    </ItemMedia>
                 )}
-                <div className="flex-1 min-w-0">
+                <ItemContent className="min-w-0 gap-0.5">
                     <div className="flex items-center gap-1 min-w-0">
-                        <div className="text-sm font-medium text-muted-foreground truncate">
+                        <ItemTitle className="min-w-0 font-medium text-muted-foreground">
                             {title}
-                        </div>
+                        </ItemTitle>
                         {hasTooltip && (
                             <TooltipDisplayer tooltip={tooltipText}>
                                 <button
@@ -204,26 +213,30 @@ export default function SmallInfoCard({
                             </HiddenElement>
                         </div>
                     )}
-                </div>
+                </ItemContent>
                 {showLinkedBadge && LinkedSheet != null && (
-                    <TooltipDisplayer tooltip={title}>
-                        <div
-                            className={cn(
-                                "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
-                                "bg-background text-sm font-semibold text-muted-foreground",
-                                "hover:bg-muted hover:text-foreground hover:cursor-pointer",
-                            )}
-                            aria-label={title}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setLinkedSheetOpen(true);
-                            }}
-                        >
-                            <IconLink size={16} />
-                        </div>
-                    </TooltipDisplayer>
+                    <ItemActions>
+                        <TooltipDisplayer tooltip={title}>
+                            <button
+                                type="button"
+                                className={cn(
+                                    "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
+                                    "bg-background text-sm font-semibold text-muted-foreground",
+                                    "hover:bg-muted hover:text-foreground hover:cursor-pointer",
+                                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                )}
+                                aria-label={title}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setLinkedSheetOpen(true);
+                                }}
+                            >
+                                <IconLink size={16} />
+                            </button>
+                        </TooltipDisplayer>
+                    </ItemActions>
                 )}
-            </div>
+            </Item>
             {LinkedSheet != null && (
                 <SmallInfoCardNestedSheets
                     LinkedSheet={LinkedSheet}

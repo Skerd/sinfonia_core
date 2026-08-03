@@ -38,7 +38,7 @@ function formatCost(n: number): string {
 
 const cardClass =
     "text-sm p-2 rounded-md bg-muted/50 border border-border/30 space-y-1";
-const highlightClass = "text-emerald-600 dark:text-emerald-400 shrink-0 font-medium";
+const highlightClass = "text-success shrink-0 font-medium";
 
 export default function SheetModificationLineItems({
     items,

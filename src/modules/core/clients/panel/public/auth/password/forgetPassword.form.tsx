@@ -67,7 +67,7 @@ function ForgotPassword({
         return (
             <Card className="gap-4 w-full h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <OctagonAlert size={30} color="#c82121"/>
+                    <OctagonAlert size={30} color="var(--destructive)"/>
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("fail")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("failDescription")}</CardDescription>
                 </CardHeader>

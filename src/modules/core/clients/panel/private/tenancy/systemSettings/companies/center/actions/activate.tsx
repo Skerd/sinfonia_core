@@ -20,7 +20,7 @@ function ActivateCompany({company, resolveLanguageKey, onAction}: ActivateCompan
 
     return (
         <DropdownMenuItem onClick={() => {onAction("activateCompany");}}>
-            <ShieldCheck className="text-green-600" size={16} />
+            <ShieldCheck className="text-success" size={16} />
             {resolveLanguageKey("title")}
         </DropdownMenuItem>
     );

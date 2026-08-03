@@ -130,7 +130,7 @@ const StateCard = memo(function StateCard({
     return (
         <>
             {!sheetOnly && (
-                <Card className={cn("group p-0 h-full relative transition-all duration-300 hover:shadow-md hover:cursor-pointer", small && "hover:shadow-sm")} onClick={() => setAction("view")}>
+                <Card className={cn("group p-0 h-full relative transition-[box-shadow,--tw-ring-color] duration-200 hover:cursor-pointer hover:shadow-md hover:ring-primary/40", small && "hover:shadow-sm")} onClick={() => setAction("view")}>
                     <div className="flex w-full items-stretch">
                         {(read.deletedBy || read.deletedAt) && (
                             <DeletedInfo deletedAt={state.deletedAt} deletedBy={state.deletedBy} />

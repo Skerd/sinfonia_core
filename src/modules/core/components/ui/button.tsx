@@ -2,8 +2,8 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx"
-import { cn } from "@coreModule/components/lib/utils.ts"
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer"
+import { cn } from "@coreModule/components/lib/utils"
 
 function ButtonTitle({
   children,

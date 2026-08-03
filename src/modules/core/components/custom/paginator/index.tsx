@@ -3,6 +3,11 @@ import {compose} from "redux";
 import LimitUpdater from "@coreModule/components/custom/paginator/limitUpdater.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+} from "@coreModule/components/ui/pagination.tsx";
 import {ChevronLeft, ChevronRight} from "lucide-react";
 import {useEffect, useState} from "react";
 
@@ -35,10 +40,13 @@ function Paginator({
         setPropLimit?.(limit);
     }, [limit]);
 
+    // This control pages by offset/limit over an editable range rather than by
+    // page number, so it borrows Pagination's nav/list semantics but keeps
+    // buttons: the targets change state, they are not navigable links.
     return (
-        <div className="flex items-center">
-            <p className="text-xs text-muted-foreground mr-2 flex items-center gap-1 text-nowrap">
-                <div>
+        <Pagination className="mx-0 w-auto justify-end">
+            <PaginationContent className="gap-0">
+                <PaginationItem className="mr-2 flex items-center gap-1 text-nowrap text-xs text-muted-foreground">
                     <LimitUpdater
                         start={start}
                         end={end}
@@ -50,51 +58,56 @@ function Paginator({
                             setLimit(newEnd - newStart + 1);
                         }}
                     />
-                </div>
-               {" / "}{total}
-                {/*({offset})({limit})*/}
-            </p>
-            <TooltipDisplayer tooltip={resolveLanguageKey("previousPage")}>
-                <Button
-                    size="icon-sm"
-                    variant="ghost"
-                    type="button"
-                    onClick={() => {
-                        const rawOffset = offset - limit;
-                        const newOffset =
-                            rawOffset < 0
-                                ? Math.max(0, total - limit)
-                                : rawOffset;
-                        setStart(Math.max(1, newOffset + 1));
-                        setEnd(Math.max(1, Math.min(newOffset + limit, total)));
-                        setOffset(newOffset);
-                    }}
-                    disabled={total === 0 || loading}
-                >
-                    <ChevronLeft />
-                </Button>
-            </TooltipDisplayer>
-            <TooltipDisplayer tooltip={resolveLanguageKey("nextPage")}>
-                <Button
-                    size="icon-sm"
-                    type="button"
-                    variant="ghost"
-                    onClick={() => {
-                        const rawOffset = offset + limit;
-                        const newOffset =
-                            rawOffset >= total && total > 0
-                                ? 0
-                                : rawOffset;
-                        setStart(Math.max(1, newOffset + 1));
-                        setEnd(Math.max(1, Math.min(newOffset + limit, total)));
-                        setOffset(newOffset);
-                    }}
-                    disabled={total === 0 || loading}
-                >
-                    <ChevronRight />
-                </Button>
-            </TooltipDisplayer>
-        </div>
+                    <span>{" / "}{total}</span>
+                </PaginationItem>
+                <PaginationItem>
+                    <TooltipDisplayer tooltip={resolveLanguageKey("previousPage")}>
+                        <Button
+                            size="icon-sm"
+                            variant="ghost"
+                            type="button"
+                            aria-label={resolveLanguageKey("previousPage")}
+                            onClick={() => {
+                                const rawOffset = offset - limit;
+                                const newOffset =
+                                    rawOffset < 0
+                                        ? Math.max(0, total - limit)
+                                        : rawOffset;
+                                setStart(Math.max(1, newOffset + 1));
+                                setEnd(Math.max(1, Math.min(newOffset + limit, total)));
+                                setOffset(newOffset);
+                            }}
+                            disabled={total === 0 || loading}
+                        >
+                            <ChevronLeft />
+                        </Button>
+                    </TooltipDisplayer>
+                </PaginationItem>
+                <PaginationItem>
+                    <TooltipDisplayer tooltip={resolveLanguageKey("nextPage")}>
+                        <Button
+                            size="icon-sm"
+                            type="button"
+                            variant="ghost"
+                            aria-label={resolveLanguageKey("nextPage")}
+                            onClick={() => {
+                                const rawOffset = offset + limit;
+                                const newOffset =
+                                    rawOffset >= total && total > 0
+                                        ? 0
+                                        : rawOffset;
+                                setStart(Math.max(1, newOffset + 1));
+                                setEnd(Math.max(1, Math.min(newOffset + limit, total)));
+                                setOffset(newOffset);
+                            }}
+                            disabled={total === 0 || loading}
+                        >
+                            <ChevronRight />
+                        </Button>
+                    </TooltipDisplayer>
+                </PaginationItem>
+            </PaginationContent>
+        </Pagination>
     )
 }
 

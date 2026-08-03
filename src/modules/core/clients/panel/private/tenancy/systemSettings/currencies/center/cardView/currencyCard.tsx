@@ -127,7 +127,7 @@ const CurrencyCard = memo(function CurrencyCard({
             {!sheetOnly && (
                 <Card
                     className={cn(
-                        "group p-0 relative transition-all duration-300 hover:shadow-md hover:cursor-pointer h-fit",
+                        "group p-0 relative transition-[box-shadow,--tw-ring-color] duration-200 hover:cursor-pointer hover:shadow-md hover:ring-primary/40 h-fit",
                         small && "hover:shadow-sm"
                     )}
                     onClick={() => setAction("view")}

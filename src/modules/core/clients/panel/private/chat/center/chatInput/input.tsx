@@ -410,7 +410,7 @@ function ChatInputAll({
                             }}
                             data={mentionData}
                             appendSpaceOnAdd={true}
-                            className="font-medium text-green-600 dark:text-green-500"
+                            className="font-medium text-success"
                             renderSuggestion={(entry, _search, highlightedDisplay, _index, focused) => {
                                 const user = usersById.get(String(entry.id));
                                 return (

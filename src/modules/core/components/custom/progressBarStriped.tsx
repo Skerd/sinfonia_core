@@ -1,6 +1,12 @@
 import {cn} from "@coreModule/components/lib/utils.ts";
 
-export function StripedProgress({ value = 0, className }) {
+type StripedProgressProps = {
+    /** Completion percentage, 0-100. */
+    value?: number;
+    className?: string;
+};
+
+export function StripedProgress({ value = 0, className }: StripedProgressProps) {
     return (
         <div
             className={cn(

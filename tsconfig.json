@@ -32,8 +32,19 @@
     "baseUrl": ".",
     "paths": {
       "@coreModule/*": ["src/modules/core/*"],
+      "@eCommerceModule/*": ["src/modules/eCommerce/*"],
+      "@eCommerceMarketplaceModule/*": ["src/modules/eCommerceMarketplace/*"],
+      "@financeModule/*": ["src/modules/finance/*"],
+      "@musicIndustryModule/*": ["src/modules/musicIndustry/*"],
+      "@propertyManagementModule/*": ["src/modules/propertyManagement/*"],
+      "@swissOutreachModule/*": ["src/modules/swissOutreach/*"],
       "armonia/*": ["../armonia/*"],
       "@/*": ["src/*"]
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/modules/core/components/uiKit"
+  ]
 }

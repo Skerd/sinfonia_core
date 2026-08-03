@@ -7,7 +7,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
 import UsersInviteDialog from "@coreModule/clients/panel/private/users/inviteUser";
 import CreateUsers from "@coreModule/clients/panel/private/users/createUser";
-import CardAndTableView from "@coreModule/components/custom/cardAndTableView.tsx";
+import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
 import {UserCard} from "@coreModule/clients/panel/private/users/center/cardView";
 import {AllUsersFormResponseType, CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
 import {AllUsersFormType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.type.ts";
@@ -23,10 +23,7 @@ type UsersProps = WithLanguageType & {
 
 function Users({resolveLanguageKey, administration}: UsersProps) {
 
-    const listApiRef = useRef<{
-        refetch: () => void;
-        updateRow: (id: string | number, patch: Partial<CompanyUserType>) => void;
-    } | null>(null);
+    const listApiRef = useRef<EntityListApi<CompanyUserType> | null>(null);
 
     const newUserCreated = useSelector((state: RootState) => state.ui.newUserCreated);
 

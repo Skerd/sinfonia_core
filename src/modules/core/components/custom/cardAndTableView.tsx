@@ -1,6 +1,7 @@
 import {compose} from "redux";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {ToggleGroup, ToggleGroupItem} from "@coreModule/components/ui/toggle-group.tsx";
 import {LayoutGrid, List, SlidersVertical} from "lucide-react";
 import {JSX, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import Masonry from "react-masonry-css";
@@ -29,6 +30,21 @@ import FilterBuilder from "@coreModule/components/custom/filterBuilder/filterBui
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {openActionMenuFromContextMenu} from "@coreModule/components/custom/actions/menu/openActionMenuFromContextMenu.ts";
+
+/**
+ * Imperative list-mutation API exposed by {@link CardAndTableView} via `ref`/`listRef`
+ * and forwarded to cards, sheets and row actions.
+ *
+ * Single source of truth: consumers must reference this type rather than restating
+ * the shape inline, otherwise a ref declared without `mapRows` silently stops
+ * matching the component's prop type.
+ */
+export type EntityListApi<T> = {
+    refetch: () => void;
+    updateRow: (id: string | number, patch: Partial<T>) => void;
+    /** Patch currently loaded rows in place (no network). Return a patch or void to skip. */
+    mapRows: (mapper: (row: T) => Partial<T> | void) => void;
+};
 
 export type EntityCardLayout = "grid" | "masonry";
 
@@ -122,21 +138,9 @@ type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: numbe
     getItems?: (response: ResponseType) => T[];
     getTotal?: (response: ResponseType) => number;
     getId?: (item: T) => string | number;
-    onRegister?: (api: {
-        refetch: () => void;
-        updateRow: (id: string | number, patch: Partial<T>) => void;
-        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
-    }) => void;
-    ref?: Ref<{
-        refetch: () => void;
-        updateRow: (id: string | number, patch: Partial<T>) => void;
-        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
-    } | null>;
-    listRef?: Ref<{
-        refetch: () => void;
-        updateRow: (id: string | number, patch: Partial<T>) => void;
-        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
-    } | null>;
+    onRegister?: (api: EntityListApi<T>) => void;
+    ref?: Ref<EntityListApi<T> | null>;
+    listRef?: Ref<EntityListApi<T> | null>;
     extraParams?: Record<string, unknown>;
     extraFilters?: Record<string, unknown>;
     /** AND-merged ahead of Filter Builder DSL (e.g. finance vendor/purchaser rules). */
@@ -415,7 +419,7 @@ function CountryCenterView<
                         </>
                     }
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-2">
                     <PageController
                         total={data?.total ?? 0}
                         limit={configurations.limit}
@@ -425,29 +429,30 @@ function CountryCenterView<
                     />
                     {
                         read &&
-                        <div className="flex items-center space-x-2">
-                            <div className="flex rounded-md border border-border">
+                        <div className="flex items-center gap-2">
+                            <ToggleGroup
+                                type="single"
+                                spacing={0}
+                                variant="outline"
+                                value={viewMode}
+                                // Radix clears the value when the active item is pressed again;
+                                // ignore that so the list always has a view mode.
+                                onValueChange={(next) => {
+                                    if (next === "table" || next === "card") setViewMode(next);
+                                }}
+                                aria-label={resolveLanguageKey("showTableView")}
+                            >
                                 <TooltipDisplayer tooltip={resolveLanguageKey("showTableView")}>
-                                    <Button
-                                        variant={viewMode === "table" ? "secondary" : "ghost"}
-                                        size="icon"
-                                        onClick={() => setViewMode("table")}
-                                        className="rounded-r-none"
-                                    >
+                                    <ToggleGroupItem value="table" aria-label={resolveLanguageKey("showTableView")}>
                                         <List />
-                                    </Button>
+                                    </ToggleGroupItem>
                                 </TooltipDisplayer>
                                 <TooltipDisplayer tooltip={resolveLanguageKey("showCardView")}>
-                                    <Button
-                                        variant={viewMode === "card" ? "secondary" : "ghost"}
-                                        size="icon"
-                                        onClick={() => setViewMode("card")}
-                                        className="rounded-l-none"
-                                    >
-                                        <LayoutGrid/>
-                                    </Button>
+                                    <ToggleGroupItem value="card" aria-label={resolveLanguageKey("showCardView")}>
+                                        <LayoutGrid />
+                                    </ToggleGroupItem>
                                 </TooltipDisplayer>
-                            </div>
+                            </ToggleGroup>
                             {
                                 viewMode === "table" &&
                                 <DataTableViewOptions table={table} />

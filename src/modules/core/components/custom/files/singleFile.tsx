@@ -169,7 +169,7 @@ function SingleFile({
             return (
                 <div className={cn(
                     "flex h-full w-full items-center justify-center rounded-lg",
-                    isChat ? "bg-background/20" : "bg-gray-50",
+                    isChat ? "bg-background/20" : "bg-muted",
                 )}>
                     {
                         controls ?
@@ -191,7 +191,7 @@ function SingleFile({
         return (
             <div className={cn(
                 "flex h-full w-full items-center justify-center rounded-lg",
-                isChat ? "bg-background/20" : "bg-gray-50",
+                isChat ? "bg-background/20" : "bg-muted",
             )}>
                 <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-2 text-center">
                     <LucidFile className={cn({"w-16 h-16": isBig && !isChat, "w-10 h-10": !isBig || isChat})}/>

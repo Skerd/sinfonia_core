@@ -90,7 +90,7 @@ export function NodeDetailPanel({node, onClose}: NodeDetailPanelProps) {
                         </h4>
                         <a
                             href={node.panelRoute}
-                            className="text-[12px] text-blue-700 hover:underline break-all"
+                            className="text-[12px] text-info hover:underline break-all"
                         >
                             {node.panelRoute}
                         </a>

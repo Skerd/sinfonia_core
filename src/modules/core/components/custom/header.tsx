@@ -1,26 +1,43 @@
+import type {ReactNode} from "react";
 import {Separator} from "@coreModule/components/ui/separator.tsx";
+import {cn} from "@coreModule/components/lib/utils.ts";
 
 type SimpleHeaderProps = {
     title: string,
     description: string,
-    children?: any
+    children?: ReactNode,
+    className?: string,
 }
 
+/**
+ * Page-level heading for panel views.
+ *
+ * Uses a real <h1>/<p> pair rather than two <p>s so screen readers and the
+ * document outline reflect the page, and so the type scale is set once here
+ * instead of per page.
+ */
 export default function Header({
     title,
     description,
-    children
+    children,
+    className,
 }: SimpleHeaderProps) {
     return (
-        <div className="space-y-1">
-            <div className="flex items-center justify-between space-x-1">
-                <div className="flex-1">
-                    <p className='text-lg md:text-xl font-bold tracking-tighter'>{title}</p>
-                    <p className='text-sm md:text-base text-muted-foreground'>{description}</p>
+        <div className={cn("space-y-2", className)}>
+            <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 flex-1 space-y-0.5">
+                    <h1 className="truncate text-lg font-semibold tracking-tight md:text-xl">
+                        {title}
+                    </h1>
+                    {description && (
+                        <p className="text-sm text-muted-foreground">{description}</p>
+                    )}
                 </div>
-                {children}
+                {children && (
+                    <div className="flex shrink-0 items-center gap-2">{children}</div>
+                )}
             </div>
-            <Separator className='shadow-sm' />
+            <Separator />
         </div>
     )
 }

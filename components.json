@@ -4,7 +4,7 @@
   "rsc": false,
   "tsx": true,
   "tailwind": {
-    "config": "tailwind.config.js",
+    "config": "tailwind.config.ts",
     "css": "src/modules/core/apps/core/index.css",
     "baseColor": "neutral",
     "cssVariables": true,
@@ -15,11 +15,11 @@
   "menuColor": "default",
   "menuAccent": "subtle",
   "aliases": {
-    "components": "@coreModule/components/uiKit",
+    "components": "@coreModule/components",
     "utils": "@coreModule/components/lib/utils",
-    "ui": "@coreModule/components/uiKit/ui",
+    "ui": "@coreModule/components/ui",
     "lib": "@coreModule/components/lib",
-    "hooks": "@coreModule/components/uiKit/hooks"
+    "hooks": "@coreModule/components/hooks"
   },
   "registries": {
     "@animate-ui": "https://animate-ui.com/r/{name}.json",

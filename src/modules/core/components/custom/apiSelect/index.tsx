@@ -17,7 +17,7 @@ import {ChevronsUpDown, User, X} from 'lucide-react';
 import {cn} from '@coreModule/components/lib/utils.ts';
 import apiClient from '@coreModule/helpers/axiosClients/apiClient.ts';
 import PageIncrementer from '@coreModule/components/custom/apiSelect/pageIncrementer.tsx';
-import {HashLoader} from 'react-spinners';
+import {Spinner} from "@coreModule/components/ui/spinner.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {CheckIcon, PlusCircledIcon} from "@radix-ui/react-icons";
@@ -1081,7 +1081,7 @@ function ApiSelectCore({
                         {
                             loading && options.length === 0 ?
                             <div className="flex p-3 items-center justify-center w-full border rounded-lg">
-                                <HashLoader color="gray" size="20px" loading />
+                                <Spinner className="size-5 text-muted-foreground" />
                             </div>
                             :
                             <>
@@ -1119,7 +1119,7 @@ function ApiSelectCore({
                                         {
                                             (loadingMore) &&
                                             <div className="flex p-2 items-center justify-center">
-                                                <HashLoader color="gray" size="16px" loading={loadingMore} />
+                                                <Spinner className="size-4 text-muted-foreground" />
                                             </div>
                                         }
                                         {filteredDefaultOptions.length > 0 && (

@@ -1,13 +1,17 @@
-import { useTheme } from "next-themes"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 import { IconCircleCheck, IconInfoCircle, IconAlertTriangle, IconAlertOctagon, IconLoader } from "@tabler/icons-react"
+import { useThemeOptional } from "@coreModule/helpers/context/providers/theme-provider.tsx"
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
+  // Reads the app's own cookie-backed provider rather than next-themes, which is
+  // never mounted. `resolvedTheme` is used over `theme` so "system" is settled
+  // by the same logic that sets the root class, keeping toasts in step with it.
+  const themeContext = useThemeOptional()
+  const theme: ToasterProps["theme"] = themeContext?.resolvedTheme ?? "system"
 
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
+      theme={theme}
       className="toaster group"
       icons={{
         success: (

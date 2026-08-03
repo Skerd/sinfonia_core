@@ -79,7 +79,7 @@ export default function UserSessionCard({
                     <div
                         className={cn(
                             "flex size-7 shrink-0 items-center justify-center rounded-full",
-                            isActive ? "bg-emerald-500/10 text-emerald-600" : "bg-muted text-muted-foreground"
+                            isActive ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"
                         )}
                     >
                         <ShieldCheck className="size-3.5 shrink-0" />

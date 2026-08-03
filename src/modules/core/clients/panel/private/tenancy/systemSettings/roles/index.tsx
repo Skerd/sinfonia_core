@@ -7,7 +7,7 @@ import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import CardAndTableView from "@coreModule/components/custom/cardAndTableView.tsx";
+import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
 import RoleCard from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/center/cardView/roleCard.tsx";
 import {RoleFormType} from "armonia/src/modules/core/api/company/private/roles/role.form.type.ts";
 import {CompanyRole as CompanyRoleType} from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
@@ -33,10 +33,7 @@ function Roles({resolveLanguageKey}: RolesProps) {
     const [sheetRole, setSheetRole] = useState<CompanyRoleType | null>(null);
     const [action, setAction] = useState("");
 
-    const listRef = useRef<{
-        refetch: () => void;
-        updateRow: (id: string | number, patch: Partial<CompanyRoleType>) => void;
-    } | null>(null);
+    const listRef = useRef<EntityListApi<CompanyRoleType> | null>(null);
 
     const handleDelete = (r: CompanyRoleType, response?: DeletedData) => {
         if (response?.deletedAt != null || response?.deletedBy != null) {

@@ -108,7 +108,7 @@ const CompanyCard = memo(function CompanyCard({
                 {
                     read?.isActive &&
                     <TooltipDisplayer tooltip={resolveLanguageKey(company.isActive ? "active": "notActive")}>
-                        <div className={cn("absolute top-0 left-0 h-full w-1 shrink-0", !company.isActive ? "bg-destructive" : "bg-green-700")} />
+                        <div className={cn("absolute top-0 left-0 h-full w-1 shrink-0", !company.isActive ? "bg-destructive" : "bg-success")} />
                     </TooltipDisplayer>
                 }
                 <CardHeader className="flex justify-between items-center gap-2">

@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import NavUser from "@coreModule/clients/panel/private/sidebar/navUser";
 import CompaniesSwitcher from "@coreModule/clients/panel/private/sidebar/companies";
@@ -44,6 +44,9 @@ function AdministrativePanelSideBar({
 }: ComponentProps<typeof Sidebar> & AdministrativePanelSideBarProps) {
     const channelsUnread = useSelector((state: RootState) => state.chat.channelsUnread);
     const chatUnreadTotal = Object.values(channelsUnread ?? {}).reduce((a, b) => a + b, 0);
+    const {pathname} = useLocation();
+    // The module nav groups resolve their own active state; this entry is hardcoded here.
+    const isHomeActive = pathname === "/" || pathname === "/home";
 
     return (
         <Sidebar collapsible="icon" variant="floating">
@@ -55,7 +58,11 @@ function AdministrativePanelSideBar({
                 <SidebarGroup>
                     <SidebarMenu>
                         <SidebarMenuItem>
-                            <SidebarMenuButton asChild tooltip={resolveLanguageKey("home.title")}>
+                            <SidebarMenuButton
+                                asChild
+                                isActive={isHomeActive}
+                                tooltip={resolveLanguageKey("home.title")}
+                            >
                                 <Link to="/">
                                     <IconHome />
                                     <span>{resolveLanguageKey("home.title")}</span>

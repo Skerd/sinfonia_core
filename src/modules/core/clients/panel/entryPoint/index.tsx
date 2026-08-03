@@ -15,6 +15,7 @@ import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {resolveCenterPanelClassName} from "@coreModule/clients/panel/moduleContributions/loadPanelLayoutContributions.ts";
+import {Fragment} from "react";
 
 type CenterPanelProps = WithLanguageType & {
     standalone?: boolean;
@@ -95,32 +96,39 @@ function CenterPanel({resolveLanguageKey, standalone}: CenterPanelProps){
         <Main className="flex h-svh max-h-svh min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
             {
                 !hideHeader &&
-                <header className="z-40 sticky flex shrink-0 items-center gap-2 border-b pt-1 pe-1">
-                    <SidebarTrigger />
-                    <Separator orientation="vertical" className="my-1" />
-                    <Breadcrumb>
-                        <BreadcrumbList>
+                <header className="z-40 flex h-12 shrink-0 items-center gap-2 border-b border-border bg-background px-2">
+                    <SidebarTrigger className="shrink-0" />
+                    <Separator orientation="vertical" className="h-5 shrink-0" />
+                    <Breadcrumb className="min-w-0 flex-1">
+                        <BreadcrumbList className="flex-nowrap">
                             {
-                                breadcrumbs.map((crumb, index) => (
-                                    <div key={index} style={{display: 'flex', alignItems: 'center'}}>
-                                        {index > 0 && <BreadcrumbSeparator className="hidden md:block" />}
-                                        <BreadcrumbItem className="hidden md:block">
-                                            {index === breadcrumbs.length - 1 ? (
-                                                <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
-                                            ) : (
-                                                <BreadcrumbLink href={crumb.path}>
-                                                    {crumb.label}
-                                                </BreadcrumbLink>
-                                            )}
-                                        </BreadcrumbItem>
-                                    </div>
-                                ))
+                                breadcrumbs.map((crumb, index) => {
+                                    const isLast = index === breadcrumbs.length - 1;
+                                    return (
+                                        <Fragment key={crumb.path}>
+                                            {index > 0 && <BreadcrumbSeparator className="hidden md:block" />}
+                                            {/*
+                                              * Only the trailing crumb survives on mobile. Hiding the whole
+                                              * trail left the header with no indication of location at all.
+                                              */}
+                                            <BreadcrumbItem className={cn("min-w-0", !isLast && "hidden md:block")}>
+                                                {isLast ? (
+                                                    <BreadcrumbPage className="truncate">{crumb.label}</BreadcrumbPage>
+                                                ) : (
+                                                    <BreadcrumbLink href={crumb.path} className="truncate">
+                                                        {crumb.label}
+                                                    </BreadcrumbLink>
+                                                )}
+                                            </BreadcrumbItem>
+                                        </Fragment>
+                                    );
+                                })
                             }
                         </BreadcrumbList>
                     </Breadcrumb>
-                    <div className="ms-auto flex items-center gap-2 px-1">
+                    <div className="ms-auto flex shrink-0 items-center gap-1">
                         <NotificationBell />
-                        <Separator orientation="vertical" className="my-1 h-6 shrink-0" />
+                        <Separator orientation="vertical" className="h-5 shrink-0" />
                         <ThemeSwitch />
                         <LanguageSwitch />
                     </div>

@@ -106,7 +106,7 @@ function CompaniesSwitcher({
                                         read.logo &&
                                         <Avatar>
                                             <AvatarImage src={`/api/auxiliary/media/${data.logo}`} alt={data.name + "photo"} />
-                                            <AvatarFallback className="text-black dark:text-white font-semibold">{data?.name.substring(0, 2)?.toUpperCase() ?? ""}</AvatarFallback>
+                                            <AvatarFallback className="text-foreground font-semibold">{data?.name.substring(0, 2)?.toUpperCase() ?? ""}</AvatarFallback>
                                         </Avatar>
                                     }
                                 </HiddenElement>

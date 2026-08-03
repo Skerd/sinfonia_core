@@ -80,7 +80,7 @@ export function withDeletedDrawer<TProps extends object>(Component: ComponentTyp
         }
 
         return (
-            <div className="group flex flex-col rounded-xl bg-linear-to-b from-red-600 to-red-700 shadow-[0_6px_20px_-4px_rgba(180,0,0,0.45)]">
+            <div className="group flex flex-col rounded-xl bg-linear-to-b from-destructive to-destructive shadow-[0_6px_20px_-4px_rgba(180,0,0,0.45)]">
                 <div className="relative z-10 p-0.5">
                     <Component {...props} />
                 </div>

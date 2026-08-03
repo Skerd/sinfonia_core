@@ -164,7 +164,7 @@ export function SheetViewRenderer({
     auditHistoryFieldLabels,
 }: SheetViewRendererProps) {
 
-    const [data, setData] = useState(dataProps || {});
+    const [data, setData] = useState<Record<string, any>>(dataProps || {});
     const [action, setAction] = useState("");
     const [forceReload, setForceReload] = useState(0);
     const [auditHistoryOpen, setAuditHistoryOpen] = useState(false);

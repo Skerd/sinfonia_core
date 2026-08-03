@@ -54,7 +54,7 @@ function DeletedInfo({
                     </DeletedTooltip>
                     :
                     <TooltipDisplayer tooltip={resolveLanguageKey("active")}>
-                        <div className="h-full min-h-full w-1.5 bg-green-600" />
+                        <div className="h-full min-h-full w-1.5 bg-success" />
                     </TooltipDisplayer>
                 }
             </div>

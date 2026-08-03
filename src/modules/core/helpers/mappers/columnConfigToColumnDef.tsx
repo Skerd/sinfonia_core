@@ -120,9 +120,9 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
         //                             )}
         //                         >
         //                             {data.verified && !data.unverifiedEmail ? (
-        //                                 <BadgeCheck size={18} className="text-blue-500 shrink-0" />
+        //                                 <BadgeCheck size={18} className="text-info shrink-0" />
         //                             ) : (
-        //                                 <BadgeAlert size={18} className="text-red-500 shrink-0" />
+        //                                 <BadgeAlert size={18} className="text-destructive shrink-0" />
         //                             )}
         //                         </TooltipDisplayer>
         //                         {email ? (
@@ -358,7 +358,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                     const value = (col.dtoPath ? findFromObject(row.original, col.dtoPath) : row.getValue(col.accessorPath)) as boolean | undefined;
                     return (
                         <div className="flex items-center" style={{border: "0px solid red"}}>
-                            {/*<Badge variant="outline" className={cn("capitalize", value ? "bg-green-500" : "bg-red-500")}>*/}
+                            {/*<Badge variant="outline" className={cn("capitalize", value ? "bg-success" : "bg-destructive")}>*/}
                             {/*    <Check />*/}
                             {/*    <CircleSlash />*/}
                             {/*</Badge>*/}
@@ -639,14 +639,14 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                             {
                                 !!value ?
                                     <div className="flex items-center space-x-1">
-                                        <IconFileXFilled className="text-red-500" />
+                                        <IconFileXFilled className="text-destructive" />
                                         <p>{formatDate(new Date(value), {
                                             timeZone: timezone ?? "UTC",
                                             format: { dateStyle: "long", timeStyle: "medium" }
                                         })}</p>
                                     </div>
                                     :
-                                    <IconFileLike className="text-green-400" />
+                                    <IconFileLike className="text-success" />
                             }
                         </TooltipDisplayer>
                     )

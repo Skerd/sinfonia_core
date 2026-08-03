@@ -1,5 +1,12 @@
 import type { KeyboardEvent, MouseEvent, MouseEventHandler } from "react";
-import { Alert, AlertDescription, AlertTitle } from "@coreModule/components/ui/alert.tsx";
+import {
+    Empty,
+    EmptyContent,
+    EmptyDescription,
+    EmptyHeader,
+    EmptyMedia,
+    EmptyTitle,
+} from "@coreModule/components/ui/empty.tsx";
 import { BrushCleaning } from "lucide-react";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 
@@ -20,6 +27,7 @@ export default function NoData({
     reasons,
 }: NoDataProps) {
     const isClickable = typeof onClick === "function";
+    const hasReasons = Array.isArray(reasons) && reasons.length > 0;
 
     const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
         if (!isClickable || !onClick) return;
@@ -29,10 +37,13 @@ export default function NoData({
         }
     };
 
-    const alert = (
-        <Alert
-            variant="warning"
-            className={isClickable ? "cursor-pointer" : undefined}
+    const empty = (
+        <Empty
+            className={
+                isClickable
+                    ? "border border-dashed border-border p-4 transition-colors hover:cursor-pointer hover:bg-muted/50"
+                    : "border border-dashed border-border p-4"
+            }
             onClick={onClick}
             {...(isClickable && {
                 role: "button",
@@ -40,25 +51,29 @@ export default function NoData({
                 onKeyDown: handleKeyDown,
             })}
         >
-            <BrushCleaning />
-            <AlertTitle>{title}</AlertTitle>
-            <AlertDescription>
-                {description ? <p>{description}</p> : null}
-                {Array.isArray(reasons) && reasons.length > 0 ? (
-                    <ul className="list-inside list-disc text-sm mt-1">
+            <EmptyHeader>
+                <EmptyMedia variant="icon">
+                    <BrushCleaning />
+                </EmptyMedia>
+                <EmptyTitle>{title}</EmptyTitle>
+                {description && <EmptyDescription>{description}</EmptyDescription>}
+            </EmptyHeader>
+            {hasReasons && (
+                <EmptyContent>
+                    <ul className="list-inside list-disc text-left text-sm text-muted-foreground">
                         {reasons.map((reason, index) => (
                             <li key={`${reason}-${index}`}>{reason}</li>
                         ))}
                     </ul>
-                ) : null}
-            </AlertDescription>
-        </Alert>
+                </EmptyContent>
+            )}
+        </Empty>
     );
 
-    const tooltipContent = tooltip ?? (description ?? undefined);
+    const tooltipContent = tooltip ?? description ?? undefined;
     return tooltipContent ? (
-        <TooltipDisplayer tooltip={tooltipContent}>{alert}</TooltipDisplayer>
+        <TooltipDisplayer tooltip={tooltipContent}>{empty}</TooltipDisplayer>
     ) : (
-        alert
+        empty
     );
 }

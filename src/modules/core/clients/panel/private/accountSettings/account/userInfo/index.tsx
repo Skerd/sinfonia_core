@@ -92,7 +92,7 @@ function UserAccountProfileUserInfo({
                         <>
                             {
                                 data?.status === "active" ?
-                                <Badge className="bg-green-600">{resolveLanguageKey("status.title")}{resolveLanguageKey("status.active")}</Badge>
+                                <Badge className="bg-success">{resolveLanguageKey("status.title")}{resolveLanguageKey("status.active")}</Badge>
                                 :
                                 <>
                                     {

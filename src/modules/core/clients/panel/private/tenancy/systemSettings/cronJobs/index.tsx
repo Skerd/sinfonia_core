@@ -31,7 +31,7 @@ function AllCronJobs({resolveLanguageKey}: WithLanguageType) {
             renderCard={(job, onDelete, onRestore) => (
                 <CronJobCard
                     job={job}
-                    onDelete={(row, response?: DeletedData) => onDelete(row ?? job, response)}
+                    onDelete={(row: CronJob, response?: DeletedData) => onDelete(row ?? job, response)}
                     onRestore={() => onRestore(job)}
                 />
             )}
