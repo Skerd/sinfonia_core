@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/left/channelsFetcher.tsx",
+  "failTitle": "Benutzer channels konnten nicht geladen werden",
+  "failTitleTooltip": "Click bis reload benutzer channels",
+  "noDataTitle": "Keine Ergebnisse"
+}

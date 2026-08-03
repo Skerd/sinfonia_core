@@ -1,0 +1,61 @@
+{
+  "backToList": "Zurück zu liste",
+  "description": "Aktualisieren terminplan, umfang, und execution einstellungen.",
+  "errorDescription": "Bitte click here bis retry fetching job daten.",
+  "errorTitle": "Scheduled aktion konnten nicht geladen werden",
+  "form": {
+    "activeLabel": "Aktiv",
+    "codeLabel": "Code",
+    "companyLabel": "Firma",
+    "companyPlaceholder": "Firma auswählen",
+    "cronExpressionLabel": "Cron expression",
+    "cronExpressionPlaceholder": "0 0 * * * *",
+    "descriptionLabel": "Beschreibung",
+    "handlerLabel": "Handler",
+    "intervalUnit": {
+      "days": "Tage",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
+    "intervalUnit.days": "Tage",
+    "intervalUnit.hours": "Hours",
+    "intervalUnit.minutes": "Minutes",
+    "intervalUnit.seconds": "Seconds",
+    "intervalUnitLabel": "Intervall einheit",
+    "intervalValueLabel": "Intervall wert",
+    "intervalValuePlaceholder": "5",
+    "maxRetriesLabel": "Max retries",
+    "nameLabel": "Name",
+    "priorityLabel": "Priority",
+    "scope": {
+      "company": "Firma",
+      "global": "Global"
+    },
+    "scope.company": "Firma",
+    "scope.global": "Global (platform)",
+    "scopeLabel": "Umfang",
+    "type": {
+      "cron": "Cron",
+      "interval": "Intervall",
+      "once": "Once",
+      "queue": "Queue"
+    },
+    "type.cron": "Cron expression",
+    "type.interval": "Intervall",
+    "type.once": "Once",
+    "type.queue": "Queue",
+    "typeLabel": "Terminplan typ"
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Speichern"
+  },
+  "formHeader": {
+    "description": "Aktualisieren terminplan, umfang, und execution einstellungen.",
+    "title": "Scheduled aktion bearbeiten"
+  },
+  "noId": "Keine scheduled aktion selected.",
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/editCronJob.tsx",
+  "title": "Scheduled aktion bearbeiten"
+}

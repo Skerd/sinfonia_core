@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/pages/notFound.tsx",
+  "title": "Oops! Seite Nicht Gefunden!",
+  "description": "It seems like die seite sie're looking für\ndoes nicht exist oder might have been removed.",
+  "backLabel": "Go back",
+  "backHome": "Zurück zu Startseite"
+}

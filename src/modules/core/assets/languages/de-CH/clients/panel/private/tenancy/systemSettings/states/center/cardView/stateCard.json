@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx",
+  "name": "Name",
+  "code": "Code",
+  "country": "Land",
+  "deleted": "Gelöscht",
+  "active": "Aktiv",
+  "failedTitle": "Kanton konnten nicht geladen werden",
+  "failedDescription": "Tap bis retry."
+}

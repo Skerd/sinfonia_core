@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx",
+  "markAllAsRead": "Mark alle as read",
+  "confirmTitle": "Mark alle as read",
+  "confirmDescription": "Sind sie sicher sie want bis mark alle benachrichtigungen as read?",
+  "cancel": "Abbrechen",
+  "confirm": "Als gelesen markieren",
+  "axios": {
+    "start": {
+      "title": "Marking alle as read",
+      "time": 3000
+    },
+    "success": {
+      "title": "Alle benachrichtigungen marked as read.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fehlgeschlagen bis mark benachrichtigungen as read",
+      "time": 3000
+    }
+  }
+}

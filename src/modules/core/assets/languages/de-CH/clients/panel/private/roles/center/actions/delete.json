@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/center/actions/delete.tsx",
+  "title": "Löschen",
+  "deleteConfirmTitle": "Rolle löschen",
+  "deleteConfirmDescription": "Sind sie sicher sie want bis löschen diese rolle? Diese will entfernen die rolle von alle users who have it zugewiesen.",
+  "confirmNameLabel": "Typ die rolle name bis confirm",
+  "cancel": "Abbrechen",
+  "confirmDelete": "Löschen",
+  "axios": {
+    "start": {
+      "title": "Deleting rolle",
+      "time": 3000
+    },
+    "success": {
+      "title": "Rolle gelöscht erfolgreich!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Rolle konnte nicht werden gelöscht, bitte versuchen erneut!",
+      "time": 3000
+    }
+  }
+}

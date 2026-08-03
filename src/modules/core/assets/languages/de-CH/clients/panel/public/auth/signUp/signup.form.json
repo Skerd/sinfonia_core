@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/signUp/signup.form.tsx",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Name",
+    "surnameLabel": "Surname",
+    "surnamePlaceholder": "Surname",
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "example@e-Mail.com",
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "Passwort",
+    "confirmPasswordLabel": "Confirm passwort",
+    "confirmPasswordPlaceholder": "Confirm passwort",
+    "phoneNumberLabel": "Telefon nummer",
+    "phoneNumberPlaceholder": "Telefon nummer",
+    "phoneNumberPrefixLabel": "Telefon nummer prefix",
+    "phoneNumberPrefixPlaceholder": "Telefon nummer prefix"
+  },
+  "signUpButtonLabel": "Ein konto erstellen",
+  "axios": {
+    "start": {
+      "title": "Konto, bitte wait wird erstellt",
+      "time": 3000
+    },
+    "success": {
+      "title": "Ihr konto ist erfolgreich erstellt. Bitte follow die steps sent bis ihr e-Mail bis weiter.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Konto creation fehlgeschlagen",
+      "time": 3000
+    }
+  }
+}

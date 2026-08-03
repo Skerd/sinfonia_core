@@ -1,0 +1,68 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/editCompany.tsx",
+  "title": "Firma bearbeiten",
+  "description": "Aktualisieren firma details",
+  "editTitle": "Aktualisieren firma",
+  "editDescription": "Aktualisieren firma info",
+  "generalInfo": "Allgemeine Infos",
+  "howToReach": "How bis reach us",
+  "whoAreWe": "Who sind we",
+  "addAddress": "Neu adresse hinzufügen",
+  "address": "Adresse",
+  "remove": "Entfernen",
+  "errorTitle": "Firma konnten nicht geladen werden",
+  "errorDescription": "Bitte click here bis retry fetching firma daten",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Name",
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "E-Mail",
+    "phoneNumberNumberLabel": "Telefon nummer",
+    "phoneNumberNumberPlaceholder": "Telefon nummer",
+    "descriptionLabel": "Beschreibung",
+    "descriptionPlaceholder": "Beschreibung",
+    "logoLabel": "Logo",
+    "websiteLabel": "Website",
+    "websitePlaceholder": "Website",
+    "vatLabel": "VAT",
+    "vatPlaceholder": "VAT",
+    "allowedDomainsLabel": "Allowed domains",
+    "allowedDomainsPlaceholder": "A domain hinzufügen",
+    "streetLabel": "Strasse",
+    "streetPlaceholder": "Strasse",
+    "postalCodeLabel": "Postleitzahl",
+    "postalCodePlaceholder": "Postleitzahl",
+    "cityLabel": "Ort",
+    "cityPlaceholder": "Ort",
+    "stateLabel": "Kanton",
+    "statePlaceholder": "Kanton",
+    "countryLabel": "Land",
+    "countryPlaceholder": "Land",
+    "latitudeLabel": "Breitengrad",
+    "latitudePlaceholder": "Breitengrad",
+    "longitudeLabel": "Längengrad",
+    "longitudePlaceholder": "Längengrad"
+  },
+  "axios": {
+    "start": {
+      "title": "Firma wird aktualisiert",
+      "time": 3000
+    },
+    "success": {
+      "title": "Firma erfolgreich aktualisiert!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Firma konnte nicht aktualisiert werden, bitte erneut versuchen!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Aktualisieren firma",
+    "description": "Aktualisieren firma info"
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Speichern"
+  }
+}

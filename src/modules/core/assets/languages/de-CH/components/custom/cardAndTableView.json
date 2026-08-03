@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/components/custom/cardAndTableView.tsx",
+  "error": "Fehler",
+  "filterLoadError": "Tabelle konfiguration konnten nicht geladen werden",
+  "showFilters": "Anzeigen filters",
+  "hideFilters": "Ausblenden filters",
+  "showTableView": "Anzeigen Tabelle Anzeigen",
+  "showCardView": "Anzeigen Karte Anzeigen",
+  "failTitle": "Daten konnten nicht geladen werden",
+  "failDescription": "Konnte nicht laden daten. Bitte click here bis retry.",
+  "tooltipDescription": "Click bis retry fetching daten",
+  "failTableConfigTitle": "Tabelle konfiguration konnten nicht geladen werden",
+  "failTableConfigDescription": "Konnte nicht laden tabelle konfiguration. Bitte click here bis retry.",
+  "tooltipTableConfigDescription": "Click bis retry fetching tabelle konfiguration",
+  "noData": "Keine results gefunden, bitte consider changing filters",
+  "loading": "Laden..."
+}

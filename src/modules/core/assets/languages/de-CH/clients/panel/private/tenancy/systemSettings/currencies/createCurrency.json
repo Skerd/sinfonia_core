@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/createCurrency.tsx",
+  "title": "Währung erstellen",
+  "description": "A neu währung hinzufügen",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Währung name",
+    "symbolLabel": "Symbol",
+    "symbolPlaceholder": "E.g. $",
+    "abbreviationLabel": "Abbreviation",
+    "abbreviationPlaceholder": "E.g. USD",
+    "decimalPlacesLabel": "Decimal places",
+    "decimalPlacesPlaceholder": "2"
+  },
+  "formHeader": {
+    "title": "Währung erstellen",
+    "description": "A neu währung hinzufügen"
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Erstellen"
+  }
+}

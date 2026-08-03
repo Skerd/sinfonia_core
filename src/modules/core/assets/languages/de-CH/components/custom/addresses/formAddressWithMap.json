@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/components/custom/addresses/formAddressWithMap.tsx",
+  "addAddress": "Adresse hinzufügen",
+  "remove": "Entfernen adresse",
+  "form": {
+    "countryLabel": "Land",
+    "countryPlaceholder": "Land auswählen",
+    "stateLabel": "Kanton",
+    "statePlaceholder": "Kanton auswählen",
+    "cityLabel": "Ort",
+    "cityPlaceholder": "Ort auswählen",
+    "streetLabel": "Strasse",
+    "streetPlaceholder": "Strasse",
+    "postalCodeLabel": "Postleitzahl",
+    "postalCodePlaceholder": "Postleitzahl",
+    "latitudeLabel": "Breitengrad",
+    "latitudePlaceholder": "Breitengrad",
+    "longitudeLabel": "Längengrad",
+    "longitudePlaceholder": "Längengrad"
+  }
+}

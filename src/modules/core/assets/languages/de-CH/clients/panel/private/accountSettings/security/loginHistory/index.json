@@ -1,0 +1,32 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
+  "title": "Anmelden history",
+  "description": "Prüfung recent sign-ins und fehlgeschlagen attempts. Server-generated einträge kann nicht werden edited here.",
+  "searchPlaceholder": "Suchen von time, gerät, oder IP",
+  "unknownLocation": "Unknown standort",
+  "reason": "Grund",
+  "status": {
+    "success": "Successful anmelden",
+    "failure": "Fehlgeschlagen anmelden"
+  },
+  "badge": {
+    "success": "Erfolg",
+    "failure": "Fehlgeschlagen",
+    "mfa": "MFA"
+  },
+  "fields": {
+    "user": "Benutzer",
+    "userId": "Benutzer",
+    "time": "Time",
+    "status": "Status",
+    "mfa": "MFA",
+    "reason": "Grund",
+    "device": "Gerät",
+    "os": "Operating system",
+    "browser": "Browser",
+    "userAgent": "Benutzer makler",
+    "ip": "IP adresse",
+    "geolocation": "Geolocation",
+    "createdAt": "Erstellt am"
+  }
+}

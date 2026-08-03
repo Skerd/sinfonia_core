@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/navUser/index.tsx",
+  "profile": "Profil",
+  "security": "Sicherheit",
+  "account": "Konto",
+  "notifications": "Benachrichtigungen",
+  "signOut": "Abmelden",
+  "dialog": {
+    "title": "Abmelden",
+    "description": "Sind sie sicher sie want bis sign out? Sie will need bis sign in erneut bis zugriff ihr konto.",
+    "confirmText": "Abmelden",
+    "cancelText": "Abbrechen"
+  }
+}

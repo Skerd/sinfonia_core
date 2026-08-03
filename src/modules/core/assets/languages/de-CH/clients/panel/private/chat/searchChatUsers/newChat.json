@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/searchChatUsers/newChat.tsx",
+  "members": "Mitglieder",
+  "searchPeople": "Suchen people",
+  "failTitle": "Benutzer konnten nicht geladen werden",
+  "failTitleTooltip": "Click bis retry laden users",
+  "noDataTitle": "Keine people gefunden.",
+  "form": {
+    "nameLabel": "Group name",
+    "namePlaceholder": "Group name"
+  }
+}

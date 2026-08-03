@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notifications/index.tsx",
+  "title": "Benachrichtigungen",
+  "description": "Configure how sie receive benachrichtigungen.",
+  "notifyAbout": {
+    "title": "Notify me about...",
+    "all": "Alle neu nachrichten",
+    "direct": "Direct nachrichten und mentions",
+    "nothing": "Nothing"
+  },
+  "emailNotifications": {
+    "title": "E-Mail benachrichtigungen",
+    "communication": {
+      "title": "Communication emails",
+      "description": "Receive emails about ihr konto activity."
+    },
+    "marketing": {
+      "title": "Marketing emails",
+      "description": "Receive emails about unser produkte, features und more."
+    },
+    "security": {
+      "title": "Sicherheit emails",
+      "description": "Receive emails about ihr konto activity und sicherheit."
+    }
+  },
+  "update": "Aktualisieren benachrichtigungen"
+}

@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockInvitation.tsx",
+  "unlockInvitation": "Unlock einladung",
+  "unlockInvitationConfirm": "Unlock einladung lock?",
+  "unlockInvitationConfirmDesc": "Diese will leeren die einladung lock. Die benutzer will werden able bis receive a neu einladung e-Mail.",
+  "unlockInvitationResendEmail": "Resend einladung e-Mail",
+  "unlockInvitationSuccess": "Einladung lock cleared erfolgreich",
+  "unlockInvitationError": "Fehlgeschlagen bis leeren einladung lock",
+  "axios": {
+    "start": {
+      "title": "Unlocking einladung",
+      "time": 3000
+    },
+    "success": {
+      "title": "Einladung lock cleared erfolgreich",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fehlgeschlagen bis leeren einladung lock",
+      "time": 3000
+    }
+  }
+}

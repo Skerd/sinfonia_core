@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/index.tsx",
+  "serverHealthTitle": "Server Health",
+  "waitingForHealthData": "Waiting für health daten...",
+  "failTitle": "Server health daten konnten nicht geladen werden",
+  "failTitleTooltip": "Server health daten, click here bis versuchen erneut konnten nicht geladen werden",
+  "healthy": "Healthy",
+  "degraded": "Degraded",
+  "error": "Fehler",
+  "notAvailable": "Nicht verfügbar",
+  "connected": "Connected",
+  "disconnected": "Disconnected",
+  "version": "Version",
+  "lastUpdated": "Nach Aktualisiert",
+  "enabled": "Aktiviert",
+  "disabled": "Deaktiviert",
+  "readyState": "Ready Kanton",
+  "infrastructureServers": "Infrastructure servers",
+  "serviceServers": "Service servers"
+}

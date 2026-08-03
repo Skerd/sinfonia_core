@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/stateFilters.tsx",
+  "filterName": "Filter von name",
+  "filterCode": "Filter von code",
+  "filterCountry": "Filter von land",
+  "clearFilters": "Leeren filters"
+}

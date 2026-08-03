@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/companyDropDownItems.tsx",
+  "failTitle": "Companies konnten nicht geladen werden",
+  "failTitleTooltip": "Click bis reload companies",
+  "noData": "Keine Ergebnisse"
+}

@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/components/custom/company/deactivateCompanyDialog.tsx",
+  "title": "Deaktivieren firma",
+  "description": "Sind sie sicher sie want bis deaktivieren diese firma? Users will nicht werden able bis zugriff die system after deactivating.",
+  "confirm": "Deaktivieren",
+  "confirmNameLabel": "Typ die firma name bis confirm",
+  "cancel": "Abbrechen",
+  "axios": {
+    "start": {
+      "title": "Deactivating firma",
+      "time": 3000
+    },
+    "success": {
+      "title": "Firma erfolgreich deactivated.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Firma fehlgeschlagen bis werden deactivated",
+      "time": 3000
+    }
+  }
+}

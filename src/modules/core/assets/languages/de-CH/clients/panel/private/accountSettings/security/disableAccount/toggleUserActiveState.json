@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx",
+  "titleActivate": "Aktivieren benutzer [!!!]?",
+  "titleDeactivate": "Block benutzer [!!!]?",
+  "descriptionActivate": "Sind sie sicher sie want bis aktivieren benutzer [!!!]. Die benutzer can re-anmelden into die system after die activation.",
+  "descriptionDeactivate": "Sind sie sicher sie want bis block benutzer [!!!]? Die benutzer can nicht zugriff die system after blocking.",
+  "activate": "Aktivieren",
+  "deactivate": "Block",
+  "axios": {
+    "start": {
+      "title": "Changing benutzer status",
+      "time": 3000
+    },
+    "success": {
+      "title": "Benutzer status changed erfolgreich",
+      "time": 3000
+    },
+    "error": {
+      "title": "Benutzer status change fehlgeschlagen",
+      "time": 3000
+    }
+  }
+}

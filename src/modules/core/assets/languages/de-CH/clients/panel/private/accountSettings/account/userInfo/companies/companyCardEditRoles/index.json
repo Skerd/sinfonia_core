@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/index.tsx",
+  "roles": "Rollen",
+  "update": "Aktualisieren",
+  "cancel": "Abbrechen",
+  "failTitle": "Companies rollen konnten nicht geladen werden",
+  "failTitleTooltip": "Click here bis retry laden companies rollen",
+  "clarification": "Clarification",
+  "clarificationDescription": "Grün ist aktiv oder in activation, red ist inaktiv oder in deactivation"
+}

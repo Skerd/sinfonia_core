@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/actions/restore.tsx",
+  "title": "Wiederherstellen",
+  "restoreConfirmTitle": "Wiederherstellen währung",
+  "restoreConfirmDescription": "Sind sie sicher sie want bis wiederherstellen diese währung?",
+  "cancel": "Abbrechen",
+  "confirmRestore": "Wiederherstellen",
+  "axios": {
+    "start": {
+      "title": "Restoring währung",
+      "time": 3000
+    },
+    "success": {
+      "title": "Währung erfolgreich restored.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Währung fehlgeschlagen bis werden restored",
+      "time": 3000
+    }
+  }
+}

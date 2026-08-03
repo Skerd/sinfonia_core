@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/actions/delete.tsx",
+  "title": "Löschen",
+  "deleteConfirmTitle": "Ort löschen",
+  "deleteConfirmDescription": "Sind sie sicher sie want bis löschen diese ort?",
+  "confirmNameLabel": "Typ die ort name bis confirm",
+  "cancel": "Abbrechen",
+  "confirmDelete": "Löschen",
+  "axios": {
+    "start": {
+      "title": "Deleting ort",
+      "time": 3000
+    },
+    "success": {
+      "title": "Ort erfolgreich gelöscht.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Ort fehlgeschlagen bis werden gelöscht",
+      "time": 3000
+    }
+  }
+}

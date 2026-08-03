@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/resendInvitation.tsx",
+  "resendInvitationEmail": "Resend einladung e-Mail",
+  "resendInvitationEmailConfirm": "Resend einladung e-Mail?",
+  "resendInvitationEmailConfirmDesc": "A neu einladung e-Mail will werden sent bis die benutzer.",
+  "resendInvitationEmailSuccess": "Einladung e-Mail sent erfolgreich",
+  "resendInvitationEmailError": "Fehlgeschlagen bis send einladung e-Mail",
+  "axios": {
+    "start": {
+      "title": "Sending einladung e-Mail",
+      "time": 3000
+    },
+    "success": {
+      "title": "Einladung e-Mail sent erfolgreich",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fehlgeschlagen bis send einladung e-Mail",
+      "time": 3000
+    }
+  }
+}

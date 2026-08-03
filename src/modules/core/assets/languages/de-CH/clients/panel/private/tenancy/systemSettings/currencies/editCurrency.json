@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/editCurrency.tsx",
+  "title": "Währung bearbeiten",
+  "description": "Aktualisieren währung details",
+  "errorTitle": "Währung daten konnten nicht geladen werden",
+  "errorDescription": "Bitte click here bis retry fetching währung daten",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Währung name",
+    "symbolLabel": "Symbol",
+    "symbolPlaceholder": "E.g. $",
+    "abbreviationLabel": "Abbreviation",
+    "abbreviationPlaceholder": "E.g. USD",
+    "decimalPlacesLabel": "Decimal places",
+    "decimalPlacesPlaceholder": "2"
+  },
+  "noId": "Keine währung selected.",
+  "backToList": "Zurück zu liste",
+  "formHeader": {
+    "title": "Währung bearbeiten",
+    "description": "Aktualisieren währung details"
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Speichern"
+  }
+}

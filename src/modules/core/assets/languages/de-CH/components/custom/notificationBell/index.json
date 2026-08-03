@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/components/custom/notificationBell/index.tsx",
+  "title": "Benachrichtigungen",
+  "markAllRead": "Mark alle read",
+  "loading": "Laden...",
+  "noNotifications": "Keine benachrichtigungen",
+  "viewAll": "Alle anzeigen",
+  "system": "System",
+  "justNow": "Gerade eben",
+  "minutesAgo": "{}m ago",
+  "minutesAgoUnit": "M ago",
+  "hoursAgo": "{}h ago",
+  "hoursAgoUnit": "H ago"
+}

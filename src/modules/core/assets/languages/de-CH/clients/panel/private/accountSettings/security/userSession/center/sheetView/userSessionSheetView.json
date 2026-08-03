@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/userSession/center/sheetView/userSessionSheetView.tsx",
+  "userSession": "Benutzer sitzung",
+  "sessionId": "Sitzung ID",
+  "sessionDetails": "Sitzung details",
+  "networkInfo": "Network",
+  "user": "Benutzer",
+  "deviceId": "Gerät ID",
+  "isActive": "Aktiv",
+  "lastActiveAt": "Nach aktiv",
+  "ipAddress": "IP adresse",
+  "userAgent": "Benutzer makler",
+  "revoke": "Revoke zugriff"
+}

@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/helpers/hocs/withAccess.tsx",
+  "loading": "Laden baustelle zugriff resources...",
+  "noClearance": "Nicht authorized bis anzeigen content.",
+  "failTitle": "Konnte nicht laden zugriff berechtigungen",
+  "failDescription": "Tap bis versuchen erneut. If die problem continues, refresh die seite oder sign in erneut.",
+  "tooltipDescription": "Retry laden berechtigungen für diese sitzung."
+}

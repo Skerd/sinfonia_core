@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/table/usersTableBody.tsx",
+  "noResult": "Keine Ergebnisse",
+  "failTitle": "Users daten konnten nicht geladen werden",
+  "failTitleTooltip": "Click here bis retry laden users daten"
+}

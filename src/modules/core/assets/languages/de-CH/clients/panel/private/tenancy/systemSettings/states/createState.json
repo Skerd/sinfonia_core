@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/createState.tsx",
+  "title": "Kanton erstellen",
+  "description": "A neu kanton hinzufügen",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Kanton name",
+    "codeLabel": "Code",
+    "codePlaceholder": "E.g. CA",
+    "countryLabel": "Land",
+    "countryPlaceholder": "Land auswählen"
+  },
+  "axios": {
+    "start": {
+      "title": "Kanton wird erstellt",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kanton erstellt erfolgreich!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kanton konnte nicht erstellt werden, bitte erneut versuchen!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Kanton erstellen",
+    "description": "A neu kanton hinzufügen"
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Erstellen"
+  }
+}

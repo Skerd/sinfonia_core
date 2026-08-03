@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/components/custom/actions/restoreAction.tsx",
+  "title": "Wiederherstellen",
+  "description": "Sind sie sicher sie want bis wiederherstellen",
+  "item": "position",
+  "typeToConfirm": "Typ '{}' bis confirm",
+  "typeDelete": "Löschen",
+  "cancel": "Abbrechen",
+  "restore": "Wiederherstellen",
+  "axios": {
+    "start": {
+      "title": "Restoring position",
+      "time": 3000
+    },
+    "success": {
+      "title": "Position erfolgreich restored!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Position konnte nicht werden restored, bitte versuchen erneut!",
+      "time": 3000
+    }
+  }
+}

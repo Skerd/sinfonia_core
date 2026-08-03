@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/connect/index.tsx",
+  "link": "Einladung Link",
+  "failTitle": "Fehlgeschlagen bis generate Telegram QR code",
+  "failTitleTooltip": "Click here bis retry generating Telegram QR code",
+  "steps": {
+    "one": "Scan die following QR code mit ihr telefon oder click on die 'Einladung Link'"
+  },
+  "cancel": "Abbrechen",
+  "axios": {
+    "start": {
+      "title": "Connecting Telegram",
+      "time": 3000
+    },
+    "success": {
+      "title": "Telegram connected erfolgreich",
+      "time": 3000
+    },
+    "error": {
+      "title": "Telegram connect fehlgeschlagen",
+      "time": 3000
+    }
+  }
+}

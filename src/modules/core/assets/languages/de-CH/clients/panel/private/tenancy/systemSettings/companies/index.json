@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/index.tsx",
+  "title": "Firmen",
+  "description": "Companies verwalten",
+  "createCompany": "Firma erstellen",
+  "searchPlaceholder": "Suchen von name, e-Mail, oder hinzufügen filters...",
+  "noData": "Keine companies gefunden",
+  "failTitle": "Companies konnten nicht geladen werden",
+  "failDescription": "Beim Laden von companies ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+  "name": "Name",
+  "email": "E-Mail",
+  "website": "Website",
+  "vat": "VAT",
+  "isActive": "Status",
+  "fields": {
+    "name": "Name",
+    "email": "E-Mail",
+    "phoneNumber": "Telefon nummer",
+    "addresses": "Addresses",
+    "description": "Beschreibung",
+    "logo": "Logo",
+    "website": "Website",
+    "vat": "VAT",
+    "company": "Parent firma",
+    "isActive": "Status",
+    "allowedDomains": "Allowed domains",
+    "createdBy": "Erstellt von",
+    "deletedAt": "Gelöscht am",
+    "deletedBy": "Gelöscht von"
+  }
+}
