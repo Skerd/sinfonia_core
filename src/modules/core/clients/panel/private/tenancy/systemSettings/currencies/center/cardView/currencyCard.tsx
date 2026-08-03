@@ -144,7 +144,7 @@ const CurrencyCard = memo(function CurrencyCard({
                                 )}
                             >
                                 <div className="min-w-0 flex-1">
-                                    <HiddenElement showLock randomLength={0}>
+                                    <HiddenElement randomLength={10}>
                                         {read?.name && (
                                             <>
                                                 {currency.name ? (
@@ -184,6 +184,7 @@ const CurrencyCard = memo(function CurrencyCard({
                                         icon={Type}
                                         label={resolveLanguageKey("symbol")}
                                         tooltip={resolveLanguageKey("symbol")}
+                                        show={!!read?.symbol}
                                         value={
                                             <HiddenElement showLock randomLength={0}>
                                                 {read?.symbol && (
@@ -204,6 +205,7 @@ const CurrencyCard = memo(function CurrencyCard({
                                         icon={Hash}
                                         label={resolveLanguageKey("abbreviation")}
                                         tooltip={resolveLanguageKey("abbreviation")}
+                                        show={!!read?.abbreviation}
                                         value={
                                             <HiddenElement showLock randomLength={0}>
                                                 {read?.abbreviation && (
@@ -224,6 +226,7 @@ const CurrencyCard = memo(function CurrencyCard({
                                         icon={Sigma}
                                         label={resolveLanguageKey("decimalPlaces")}
                                         tooltip={resolveLanguageKey("decimalPlaces")}
+                                        show={!!read?.decimalPlaces}
                                         value={
                                             <HiddenElement showLock randomLength={0}>
                                                 {read?.decimalPlaces != null && (

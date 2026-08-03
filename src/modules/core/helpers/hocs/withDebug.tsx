@@ -9,7 +9,6 @@ import {
     Languages,
     LoaderCircle,
     Rss,
-    ShieldQuestionMark,
     Shredder
 } from "lucide-react";
 import {toast} from "sonner";
@@ -19,6 +18,7 @@ import {Card} from "@coreModule/components/ui/card.tsx";
 import {Toggle} from "@coreModule/components/ui/toggle.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import {AccessDebugPopover} from "@coreModule/helpers/hocs/accessDebugPanel.tsx";
 
 type ResolveKey = (key: string, returnUndefinedIfNeeded?: boolean) => unknown;
 
@@ -89,20 +89,22 @@ function pushWithAxiosToastPreview(props: Record<string, any>, variant: "loading
  */
 type DebuggableProps = Record<string, any>;
 
-/**
- * Wraps a component with development-only debug controls.
- *
- * Behavior:
- * - In non-localhost environments (or when `hideDebug=true`), returns the original component
- *   without any additional wrapper/hook overhead.
- * - In localhost, injects a compact debug toolbar and allows simulating loading/error/empty states.
- *
- * @param checked indicates whether all expected HOCs are already wired (visual ratio/check indicator).
- * @param hideDebug force-disables debug UI even on localhost.
- */
-const withDebug = (checked?: boolean, hideDebug: boolean = false) => (WrappedComponent: any) => {
+function normalizeDebugResourceIds(resourceIds?: string | string[]): string[] {
+    if (!resourceIds) {
+        return [];
+    }
+    const list = Array.isArray(resourceIds) ? resourceIds : [resourceIds];
+    return [...new Set(list.map((id) => id.trim().toLowerCase()).filter(Boolean))];
+}
+
+const withDebug = (
+    checked?: boolean,
+    hideDebug: boolean = false,
+    resourceIds?: string | string[],
+) => (WrappedComponent: any) => {
 
     const showDebugInfo = typeof window !== "undefined" && window.location?.host?.includes("localhost") && !hideDebug;
+    const normalizedResourceIds = normalizeDebugResourceIds(resourceIds);
 
     // In non-debug environments, skip all wrapper state/hooks entirely.
     if (!showDebugInfo) {
@@ -151,24 +153,20 @@ const withDebug = (checked?: boolean, hideDebug: boolean = false) => (WrappedCom
 
         return (
             <>
-                {
-                    (!checked) &&
-                    <div
-                        className="flex items-center space-x-0.5 z-10 px-0.5 py-1 border bg-muted rounded-lg text-xs"
-                        // onMouseEnter={() => {setSize(24);}}
-                        // onMouseLeave={() => {setSize(12);}}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                        }}
-                    >
+                <div
+                    className="flex items-center space-x-0.5 z-10 px-0.5 py-1 border bg-muted rounded-lg text-xs"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }}
+                >
                         {
-                            !checked ?
+                            checked ?
+                                <CircleCheckBig color="green" size={size} className="top-0"/>
+                                :
                                 <div className="text-[10px]/[8px] font-bold cursor-default opacity-100">
                                     {ratio}
                                 </div>
-                                :
-                                <CircleCheckBig color="green" size={size} className="top-0"/>
                         }
                         {
                             props.withHidden &&
@@ -462,53 +460,8 @@ const withDebug = (checked?: boolean, hideDebug: boolean = false) => (WrappedCom
                             </Popover>
                         }
 
-                        {
-                            props.withAccess &&
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <ShieldQuestionMark size={size}
-                                                        className="top-0 opacity-100 hover:cursor-pointer hover:text-muted-foreground"/>
-                                </PopoverTrigger>
-                                <PopoverContent asChild>
-                                    <Card className="flex items-center gap-2 w-fit">
-                                        <div
-                                            className="grid grid-rows-2 grid-cols-[140px_1fr] gap-0 h-full w-full text-xs">
-                                            <p>Resource:</p>
-                                            <p className="font-semibold">{props.withAccess?.resourceId}</p>
-                                            <p>In behalf of:</p>
-                                            <div className="flex items-center space-x-1">
-                                                <span
-                                                    className="font-semibold">{props.withAccess.ifPropValue || "-"}</span>
-                                                {
-                                                    !!props.withAccess.ifPropValue &&
-                                                    <CopyTooltip text={props.withAccess.ifPropValue}/>
-                                                }
-                                            </div>
-                                            <p>Error-Render:</p>
-                                            <p className="font-semibold">{props.withAccess?.renderComponentOnError ? "true" : "false"}</p>
-                                            <p>Create:</p>
-                                            <p className="font-semibold">{props.withAccess?.create ? "true" : "false"}</p>
-                                            <p>Delete:</p>
-                                            <p className="font-semibold">{props.withAccess?.delete ? "true" : "false"}</p>
-                                            <p>Read:</p>
-                                            <p className="col-span-2 font-semibold">
-                                                <pre>
-                                                    {JSON.stringify(props.withAccess?.read, null, 2)}
-                                                </pre>
-                                            </p>
-                                            <p>Write:</p>
-                                            <p className="col-span-2 font-semibold">
-                                                <pre>
-                                                    {JSON.stringify(props.withAccess?.write, null, 2)}
-                                                </pre>
-                                            </p>
-                                        </div>
-                                    </Card>
-                                </PopoverContent>
-                            </Popover>
-                        }
-                    </div>
-                }
+                        <AccessDebugPopover resourceIds={normalizedResourceIds} size={size}/>
+                </div>
                 <WrappedComponent
                     {...props}
                     loading={props.loading || testLoadings}

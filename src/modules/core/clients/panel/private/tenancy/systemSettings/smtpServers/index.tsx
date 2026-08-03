@@ -30,7 +30,6 @@ function AllSmtpServers({resolveLanguageKey}: WithLanguageType) {
             createLanguageKey="createSmtpServer"
             buildEditPath={smtpServerEditPath}
             resolveLanguageKey={resolveLanguageKey}
-            cardViewClassName="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3"
             renderActionMenuChildren={(_entity, bindRowAction) => (
                 <TestSmtpConnection onAction={(a: string) => bindRowAction(a)} />
             )}
@@ -75,5 +74,5 @@ function AllSmtpServers({resolveLanguageKey}: WithLanguageType) {
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "smtpServers"),
 )(AllSmtpServers);

@@ -125,7 +125,7 @@ const SmtpServerCard = memo(function SmtpServerCard({
                                 )}
                             >
                                 <div className="min-w-0 flex-1">
-                                    <HiddenElement showLock randomLength={0}>
+                                    <HiddenElement randomLength={10}>
                                         {read?.name && (
                                             smtpServer.name ? (
                                                 <TooltipDisplayer tooltip={resolveLanguageKey("name")}>
@@ -158,13 +158,31 @@ const SmtpServerCard = memo(function SmtpServerCard({
                                     icon={Server}
                                     label={resolveLanguageKey("host")}
                                     tooltip={resolveLanguageKey("host")}
-                                    value={`${smtpServer.host}:${smtpServer.port}`}
+                                    show={!!read?.host || !!read?.port}
+                                    value={
+                                        <div className="flex items-center">
+                                            <HiddenElement randomLength={8}>
+                                                {read?.host ? (smtpServer.host || <ValueNotSet />) : null}
+                                            </HiddenElement>
+                                            {read?.host && read?.port ? <span>:</span> : null}
+                                            <HiddenElement randomLength={4}>
+                                                {read?.port ? (smtpServer.port != null ? String(smtpServer.port) : <ValueNotSet />) : null}
+                                            </HiddenElement>
+                                        </div>
+                                    }
                                 />
                                 <InfoRow
                                     icon={Mail}
                                     label={resolveLanguageKey("sequence")}
                                     tooltip={resolveLanguageKey("sequence")}
-                                    value={String(smtpServer.sequence)}
+                                    show={!!read?.sequence}
+                                    value={
+                                        <HiddenElement showLock randomLength={0}>
+                                            {read?.sequence ? (
+                                                smtpServer.sequence != null ? String(smtpServer.sequence) : <ValueNotSet />
+                                            ) : null}
+                                        </HiddenElement>
+                                    }
                                 />
                             </div>
                         </div>

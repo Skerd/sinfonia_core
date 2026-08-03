@@ -1,11 +1,15 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx",
   "overview": "Vështrim i përgjithshëm",
-  "metadata": "Metadatat",
-  "createdBy": "Krijuar nga",
+  "lifecycle": "Cikli i jetës",
   "country": "Vendi",
   "name": "Emri",
   "code": "Kodi",
   "phoneCode": "Kodi i telefonit",
-  "currency": "Monedha"
+  "currency": "Monedha",
+  "createdAt": "Krijuar më",
+  "updatedAt": "Përditësuar më",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga"
 }

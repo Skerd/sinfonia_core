@@ -7,6 +7,7 @@
   "credentials": "Kredencialet",
   "senders": "Dërguesit",
   "lastTest": "Testi i fundit i lidhjes",
+  "lifecycle": "Cikli i jetës",
   "providerType": "Ofruesi",
   "active": "Aktiv",
   "accountSid": "Account SID",
@@ -18,6 +19,11 @@
   "lastTestStatus": "Testi i fundit",
   "lastTestedAt": "Testuar më",
   "lastTestMessage": "Mesazhi i testit",
+  "createdAt": "Krijuar më",
+  "updatedAt": "Përditësuar më",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga",
   "providerTypeValues": {
     "twilio": "Twilio"
   },

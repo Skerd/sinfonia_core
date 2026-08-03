@@ -2,9 +2,13 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx",
   "currency": "Monedha",
   "overview": "Vështrim i përgjithshëm",
-  "metadata": "Metadatat",
+  "lifecycle": "Cikli i jetës",
   "symbol": "Simboli",
   "abbreviation": "Shkurtesa",
   "decimalPlaces": "Vendet dhjetore",
-  "createdBy": "Krijuar nga"
+  "createdAt": "Krijuar më",
+  "updatedAt": "Përditësuar më",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga"
 }

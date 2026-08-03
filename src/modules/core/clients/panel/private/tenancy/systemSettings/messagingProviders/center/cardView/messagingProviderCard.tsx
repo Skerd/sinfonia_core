@@ -132,7 +132,7 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                                 )}
                             >
                                 <div className="min-w-0 flex-1">
-                                    <HiddenElement showLock randomLength={0}>
+                                    <HiddenElement randomLength={10}>
                                         {read?.name && (
                                             messagingProvider.name ? (
                                                 <TooltipDisplayer tooltip={resolveLanguageKey("name")}>
@@ -163,23 +163,46 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                                 )}
                             </div>
                             <div className={cn("space-y-2 text-sm pt-0", small ? "px-3" : "px-4")}>
-                                <InfoRow
-                                    icon={MessageSquare}
-                                    label={resolveLanguageKey("providerType")}
-                                    tooltip={resolveLanguageKey("providerType")}
-                                    value={providerTypeLabel}
-                                />
+                                <div className="grid md:grid-cols-2">
+                                    <InfoRow
+                                        icon={MessageSquare}
+                                        label={resolveLanguageKey("providerType")}
+                                        tooltip={resolveLanguageKey("providerType")}
+                                        show={!!read?.providerType}
+                                        value={
+                                            <HiddenElement showLock randomLength={0}>
+                                                {read?.providerType ? (
+                                                    messagingProvider.providerType ? providerTypeLabel : <ValueNotSet />
+                                                ) : null}
+                                            </HiddenElement>
+                                        }
+                                    />
+                                    <InfoRow
+                                        icon={Power}
+                                        label={resolveLanguageKey("active")}
+                                        tooltip={resolveLanguageKey("active")}
+                                        show={!!read?.active}
+                                        value={
+                                            <HiddenElement showLock randomLength={0}>
+                                                {read?.active ? (
+                                                    resolveLanguageKey(messagingProvider.active ? "yes" : "no")
+                                                ) : null}
+                                            </HiddenElement>
+                                        }
+                                    />
+                                </div>
                                 <InfoRow
                                     icon={Phone}
                                     label={resolveLanguageKey("fromPhone")}
                                     tooltip={resolveLanguageKey("fromPhone")}
-                                    value={messagingProvider.fromPhone}
-                                />
-                                <InfoRow
-                                    icon={Power}
-                                    label={resolveLanguageKey("active")}
-                                    tooltip={resolveLanguageKey("active")}
-                                    value={resolveLanguageKey(messagingProvider.active ? "yes" : "no")}
+                                    show={!!read?.fromPhone}
+                                    value={
+                                        <HiddenElement showLock randomLength={0}>
+                                            {read?.fromPhone ? (
+                                                messagingProvider.fromPhone || <ValueNotSet />
+                                            ) : null}
+                                        </HiddenElement>
+                                    }
                                 />
                             </div>
                         </div>
@@ -229,7 +252,7 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                             onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
                             messagingProvider={messagingProvider}
                             targetActive={action === "activateMessagingProvider"}
-                            onSuccess={(provider) => {
+                            onSuccess={(provider: MessagingProvider) => {
                                 setMessagingProvider(provider);
                                 setForceReload((n) => n + 1);
                             }}

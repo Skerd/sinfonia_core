@@ -23,6 +23,13 @@
     "fromPhone": "SMS sender",
     "fromWhatsapp": "WhatsApp sender",
     "active": "Active",
-    "lastTestStatus": "Last test"
+    "lastTestedAt": "Last tested",
+    "lastTestStatus": "Last test",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "createdBy": "Created by",
+    "company": "Company",
+    "deletedAt": "Status",
+    "deletedBy": "Deleted by"
   }
 }

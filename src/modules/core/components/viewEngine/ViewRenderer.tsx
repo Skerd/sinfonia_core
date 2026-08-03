@@ -36,14 +36,16 @@ import SheetCompanyAddressesSection from "./sheetCompanyAddressesSection.tsx";
 import SheetAddressSection from "./sheetAddressSection.tsx";
 import SheetEmbeddedItemsList, { type EmbeddedItemFieldConfig } from "./sheetEmbeddedItemsList.tsx";
 import {
+    filterAccessibleValuePath,
     hasAccessPath,
+    hasSmallInfoCardValueAccess,
     normalizeObjectIdRef,
     resolvePath,
     type ViewRendererContext,
 } from "./viewRendererHelpers.ts";
 
 export type { ViewRendererContext };
-export { hasAccessPath, normalizeObjectIdRef, resolvePath };
+export { hasAccessPath, hasSmallInfoCardValueAccess, normalizeObjectIdRef, resolvePath };
 
 /** Lazy-loaded to avoid a static import cycle (cards → sheet → ViewRenderer). */
 const TenancyCountryCardLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx"));
@@ -1245,31 +1247,42 @@ function renderSmallInfoCard(
     } else if (wp.valuePath && Array.isArray(wp.valuePath) && data) {
         const parent = wp.parent ? resolvePath(data, wp.parent) : data;
         if (!parent) return null;
-        let pathParts = wp.valuePath.map((p: string) => resolvePath(parent, p));
-        const categoriesByPath = wp.languageKeyCategoriesByPath as Record<string, string> | undefined;
-        if (categoriesByPath && typeof categoriesByPath === "object") {
-            pathParts = pathParts.map((part, i) => {
-                const segment = String(wp.valuePath[i] ?? "");
-                const category =
-                    categoriesByPath[segment] ?? categoriesByPath[segment.split(".")[0] ?? ""];
-                if (category && part != null && typeof part === "string" && part.length > 0) {
-                    return resolveLanguageKey(`${category}.${part}`);
-                }
-                return part;
-            });
-        }
-        if (wp.format === "locale") {
-            pathParts = pathParts.map((part: unknown) =>
-                part != null && typeof part === "number" ? part.toLocaleString() : part
-            );
-        }
-        if (wp.pickFirstTruthyValuePath) {
-            displayValue = pathParts.find((part) => part != null && part !== "") ?? null;
+        const rawValuePath = (wp.valuePath as unknown[]).filter(
+            (p): p is string => typeof p === "string" && p.length > 0,
+        );
+        const valuePath =
+            typeof wp.parent === "string" && wp.parent.length > 0
+                ? filterAccessibleValuePath(ctx.access, wp.parent, rawValuePath)
+                : rawValuePath;
+        if (valuePath.length > 0) {
+            let pathParts = valuePath.map((p: string) => resolvePath(parent, p));
+            const categoriesByPath = wp.languageKeyCategoriesByPath as Record<string, string> | undefined;
+            if (categoriesByPath && typeof categoriesByPath === "object") {
+                pathParts = pathParts.map((part, i) => {
+                    const segment = String(valuePath[i] ?? "");
+                    const category =
+                        categoriesByPath[segment] ?? categoriesByPath[segment.split(".")[0] ?? ""];
+                    if (category && part != null && typeof part === "string" && part.length > 0) {
+                        return resolveLanguageKey(`${category}.${part}`);
+                    }
+                    return part;
+                });
+            }
+            if (wp.format === "locale") {
+                pathParts = pathParts.map((part: unknown) =>
+                    part != null && typeof part === "number" ? part.toLocaleString() : part
+                );
+            }
+            if (wp.pickFirstTruthyValuePath) {
+                displayValue = pathParts.find((part) => part != null && part !== "") ?? null;
+            } else {
+                const parts = pathParts.filter(
+                    (part) => part !== null && part !== undefined && part !== ""
+                );
+                displayValue = parts.join(wp.joinSeparator ?? " ");
+            }
         } else {
-            const parts = pathParts.filter(
-                (part) => part !== null && part !== undefined && part !== ""
-            );
-            displayValue = parts.join(wp.joinSeparator ?? " ");
+            displayValue = null;
         }
     } else if (data) {
         displayValue = resolvePath(data, binding.name);
@@ -1404,7 +1417,7 @@ function renderSmallInfoCard(
             key={index}
             title={label}
             tooltip={tooltipText}
-            show={!(node.permissions?.read && !hasAccessPath(ctx.access, node.permissions.read))}
+            show={hasSmallInfoCardValueAccess(ctx.access, binding)}
             Icon={Icon ?? undefined}
             value={displayValue}
             variant={variant}

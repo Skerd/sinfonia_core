@@ -262,7 +262,18 @@ function CountryCenterView<
     }, [tableFilters, tableConfigOptions, resolveLanguageKey]);
 
     useEffect(() => {
-        setExtraParameters({...extraParams})
+        const next = {...(extraParams ?? {})};
+        setExtraParameters((prev) => {
+            const prevKeys = Object.keys(prev);
+            const nextKeys = Object.keys(next);
+            if (
+                prevKeys.length === nextKeys.length &&
+                nextKeys.every((key) => Object.is(prev[key], next[key]))
+            ) {
+                return prev;
+            }
+            return next;
+        });
     }, [extraParams]);
 
     useEffect(() => {

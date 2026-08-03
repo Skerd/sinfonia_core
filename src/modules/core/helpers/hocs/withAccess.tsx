@@ -1,6 +1,8 @@
 import {
     ComponentType,
     createContext,
+    Dispatch,
+    SetStateAction,
     useContext,
     useEffect,
     useMemo,
@@ -39,8 +41,34 @@ export type WithAccessType = {
     withAccess: AccessObject;
 };
 
+/** Boolean / field-map overrides applied by `withDebug` on top of the real access map. */
+export type AccessPermissionOverride = {
+    create?: boolean;
+    delete?: boolean;
+    restore?: boolean;
+    /**
+     * Master override for the whole read/write map.
+     * `false` denies everything; `true` restores the real map (or grants `true` if it was denied).
+     */
+    read?: boolean;
+    write?: boolean;
+    /**
+     * Per-field denials/grants keyed by dotted path (`name`, `country.name`).
+     * Nested maps use the same `keys` walk as `hasAccessPath`.
+     */
+    readFields?: Record<string, boolean>;
+    writeFields?: Record<string, boolean>;
+};
+
+export type AccessDebugOverrides = {
+    [resourceId: string]: {
+        self?: AccessPermissionOverride;
+        others?: AccessPermissionOverride;
+    };
+};
+
 // Global Access Context - stores access objects keyed by resourceId (camelCase plural)
-type AccessContextValue = {
+export type AccessContextValue = {
     [resourceId: string]: {
         self: AccessObject;
         others?: AccessObject;
@@ -49,6 +77,12 @@ type AccessContextValue = {
 
 const AccessContext = createContext<AccessContextValue>({});
 
+type AccessDebugOverrideContextValue = {
+    overrides: AccessDebugOverrides;
+    setOverrides: Dispatch<SetStateAction<AccessDebugOverrides>>;
+};
+
+const AccessDebugOverrideContext = createContext<AccessDebugOverrideContextValue | null>(null);
 
 function accessFormToAccessObject(
     resourceId: string,
@@ -70,9 +104,10 @@ function accessFormToAccessObject(
 function accessAllResponseToContext(data: AccessAllFormResponseType): AccessContextValue {
     const ctx: AccessContextValue = {};
     for (const [modelName, bundle] of Object.entries(data)) {
-        ctx[modelName] = {
-            self: accessFormToAccessObject(modelName, bundle.self),
-            others: bundle.others ? accessFormToAccessObject(modelName, bundle.others) : undefined,
+        const key = modelName.toLowerCase();
+        ctx[key] = {
+            self: accessFormToAccessObject(key, bundle.self),
+            others: bundle.others ? accessFormToAccessObject(key, bundle.others) : undefined,
         };
     }
     return ctx;
@@ -90,6 +125,234 @@ const emptyAccessObject = (resourceId: string): AccessObject => ({
     renderComponentOnError: false,
 });
 
+type AccessFieldNode = {
+    [key: string]: {
+        keys?: AccessFieldNode;
+    } | Record<string, never>;
+};
+
+export type AccessFieldPath = {
+    path: string;
+    depth: number;
+    hasChildren: boolean;
+};
+
+/** Flatten a read/write field map into dotted paths (walks nested `keys`). */
+export function flattenAccessFieldPaths(tree: unknown, prefix = "", depth = 0): AccessFieldPath[] {
+    if (!tree || typeof tree !== "object" || Array.isArray(tree)) {
+        return [];
+    }
+    const result: AccessFieldPath[] = [];
+    for (const [key, value] of Object.entries(tree as Record<string, unknown>)) {
+        const path = prefix ? `${prefix}.${key}` : key;
+        const nestedKeys =
+            value && typeof value === "object" && !Array.isArray(value) && "keys" in (value as object)
+                ? (value as {keys?: unknown}).keys
+                : undefined;
+        const hasChildren =
+            !!nestedKeys && typeof nestedKeys === "object" && !Array.isArray(nestedKeys)
+            && Object.keys(nestedKeys as object).length > 0;
+        result.push({path, depth, hasChildren});
+        if (hasChildren) {
+            result.push(...flattenAccessFieldPaths(nestedKeys, path, depth + 1));
+        }
+    }
+    return result;
+}
+
+/** Same path walk as view-engine `hasAccessPath`. */
+export function accessFieldPathExists(tree: unknown, path: string): boolean {
+    if (!tree || !path) {
+        return false;
+    }
+    if (typeof tree !== "object") {
+        return tree === true;
+    }
+    const record = tree as Record<string, unknown>;
+    if (record[path] !== undefined) {
+        return !!record[path];
+    }
+    const parts = path.split(".");
+    let cursor: unknown = record;
+    for (let i = 0; i < parts.length; i++) {
+        if (!cursor || typeof cursor !== "object") {
+            return false;
+        }
+        const next = (cursor as Record<string, unknown>)[parts[i]];
+        if (i === parts.length - 1) {
+            return !!next;
+        }
+        cursor = (next as {keys?: unknown} | undefined)?.keys ?? next;
+    }
+    return false;
+}
+
+function deepCloneAccessFields(tree: unknown): AccessFieldNode {
+    if (!tree || typeof tree !== "object" || Array.isArray(tree)) {
+        return {};
+    }
+    const out: AccessFieldNode = {};
+    for (const [key, value] of Object.entries(tree as Record<string, unknown>)) {
+        if (value && typeof value === "object" && !Array.isArray(value) && "keys" in (value as object)) {
+            const keys = (value as {keys?: unknown}).keys;
+            out[key] = {
+                keys: keys && typeof keys === "object" ? deepCloneAccessFields(keys) : {},
+            };
+        } else {
+            out[key] = {};
+        }
+    }
+    return out;
+}
+
+function removeAccessFieldPath(tree: AccessFieldNode, path: string): AccessFieldNode {
+    const parts = path.split(".");
+    if (parts.length === 1) {
+        const next = {...tree};
+        delete next[parts[0]];
+        return next;
+    }
+    const [head, ...rest] = parts;
+    const node = tree[head];
+    if (!node || typeof node !== "object") {
+        return tree;
+    }
+    const childKeys =
+        "keys" in node && node.keys && typeof node.keys === "object"
+            ? removeAccessFieldPath(node.keys as AccessFieldNode, rest.join("."))
+            : {};
+    if (Object.keys(childKeys).length === 0) {
+        const next = {...tree};
+        delete next[head];
+        return next;
+    }
+    return {
+        ...tree,
+        [head]: {keys: childKeys},
+    };
+}
+
+function grantAccessFieldPath(tree: AccessFieldNode, path: string, leafFromBase?: unknown): AccessFieldNode {
+    const resolvedLeaf: AccessFieldNode[string] =
+        leafFromBase && typeof leafFromBase === "object" && !Array.isArray(leafFromBase)
+            ? ("keys" in (leafFromBase as object)
+                ? {keys: deepCloneAccessFields((leafFromBase as {keys?: unknown}).keys ?? {})}
+                : {})
+            : {};
+
+    const apply = (node: AccessFieldNode, segs: string[]): AccessFieldNode => {
+        if (segs.length === 1) {
+            if (node[segs[0]]) {
+                return node;
+            }
+            return {...node, [segs[0]]: resolvedLeaf};
+        }
+        const [h, ...r] = segs;
+        const cur = node[h];
+        const keys =
+            cur && typeof cur === "object" && "keys" in cur && cur.keys
+                ? (cur.keys as AccessFieldNode)
+                : {};
+        return {...node, [h]: {keys: apply(keys, r)}};
+    };
+    return apply(tree, path.split("."));
+}
+
+function getAccessSubtree(tree: unknown, path: string): unknown {
+    if (!tree || typeof tree !== "object") {
+        return undefined;
+    }
+    const parts = path.split(".");
+    let cursor: unknown = tree;
+    for (let i = 0; i < parts.length; i++) {
+        if (!cursor || typeof cursor !== "object") {
+            return undefined;
+        }
+        const next = (cursor as Record<string, unknown>)[parts[i]];
+        if (i === parts.length - 1) {
+            return next;
+        }
+        cursor = (next as {keys?: unknown} | undefined)?.keys ?? next;
+    }
+    return undefined;
+}
+
+function applyFieldMapOverride(
+    base: unknown,
+    master: boolean | undefined,
+    fieldOverrides?: Record<string, boolean>,
+): unknown {
+    if (master === false) {
+        return false;
+    }
+    if (master === true) {
+        return typeof base === "object" && base ? base : true;
+    }
+
+    const hasFieldOverrides = !!fieldOverrides && Object.keys(fieldOverrides).length > 0;
+    if (!hasFieldOverrides) {
+        return base;
+    }
+
+    let tree: AccessFieldNode =
+        base && typeof base === "object" ? deepCloneAccessFields(base) : {};
+
+    // Denies first (deeper paths first so parent deny wins cleanly), then grants.
+    const denies = Object.entries(fieldOverrides!)
+        .filter(([, enabled]) => !enabled)
+        .sort((a, b) => b[0].split(".").length - a[0].split(".").length);
+    const grants = Object.entries(fieldOverrides!)
+        .filter(([, enabled]) => enabled)
+        .sort((a, b) => a[0].split(".").length - b[0].split(".").length);
+
+    for (const [path] of denies) {
+        tree = removeAccessFieldPath(tree, path);
+    }
+    for (const [path] of grants) {
+        if (!accessFieldPathExists(tree, path)) {
+            tree = grantAccessFieldPath(tree, path, getAccessSubtree(base, path));
+        }
+    }
+
+    return Object.keys(tree).length > 0 ? tree : false;
+}
+
+function mergeAccessOverride(
+    base: AccessObject,
+    override?: AccessPermissionOverride
+): AccessObject {
+    if (!override) {
+        return base;
+    }
+    const next: AccessObject = {...base};
+    if (override.create !== undefined) {
+        next.create = override.create;
+    }
+    if (override.delete !== undefined) {
+        next.delete = override.delete;
+    }
+    if (override.restore !== undefined) {
+        next.restore = override.restore;
+    }
+    if (override.read !== undefined || override.readFields) {
+        next.read = applyFieldMapOverride(base.read, override.read, override.readFields);
+    }
+    if (override.write !== undefined || override.writeFields) {
+        next.write = applyFieldMapOverride(base.write, override.write, override.writeFields);
+    }
+    return next;
+}
+
+/** Full access map from the nearest `withAccess` provider (real server values, no debug overrides). */
+export function useAccessMap(): AccessContextValue {
+    return useContext(AccessContext);
+}
+
+/** Debug override state used by `withDebug` permission toggles. Null outside `withAccess`. */
+export function useAccessDebugOverrides(): AccessDebugOverrideContextValue | null {
+    return useContext(AccessDebugOverrideContext);
+}
+
 /**
  * Reads access for a resource from the nearest `withAccess` provider.
  *
@@ -101,24 +364,27 @@ export function useAccess(
     perspective: "self" | "others" = "self"
 ): AccessObject {
     const accessMap = useContext(AccessContext);
+    const debugOverrides = useContext(AccessDebugOverrideContext);
 
     if (!resourceId) {
         return emptyAccessObject("");
     }
     resourceId = resourceId.toLowerCase();
 
-    // console.log(accessMap);
     const entry = accessMap[resourceId];
     if (!entry) {
         return emptyAccessObject(resourceId);
     }
 
-    const chosen = perspective === "others" && entry.others !== undefined ? entry.others : entry.self;
+    const overrideKey: "self" | "others" =
+        perspective === "others" && entry.others !== undefined ? "others" : "self";
+    const chosen = overrideKey === "others" && entry.others !== undefined ? entry.others : entry.self;
+    const override = debugOverrides?.overrides[resourceId]?.[overrideKey];
 
-    return {
+    return mergeAccessOverride({
         ...chosen,
         resourceId,
-    };
+    }, override);
 }
 
 const siteAccessShell: AccessObject = {
@@ -150,11 +416,16 @@ const withAccess = () => <TProps extends object>(
         const [loading, setLoading] = useState<boolean>(false);
         const [accessMap, setAccessMap] = useState<AccessContextValue>({});
         const [retryToken, setRetryToken] = useState(0);
+        const [accessOverrides, setAccessOverrides] = useState<AccessDebugOverrides>({});
         const handleError = useErrorHandler(useMemo(() => ({context: "withAccess"}), []));
         /** After first successful load; avoids full-page loader on effect re-runs (e.g. parent re-renders when auth is outermost). */
         const accessHydratedRef = useRef(false);
         /** Matches `retryToken` of the last successful fetch so user-initiated retries still show the loader. */
         const lastSuccessRetryRef = useRef(0);
+        const accessDebugOverrideValue = useMemo(
+            () => ({overrides: accessOverrides, setOverrides: setAccessOverrides}),
+            [accessOverrides],
+        );
 
         useEffect(() => {
             const abortController = new AbortController();
@@ -229,11 +500,13 @@ const withAccess = () => <TProps extends object>(
 
         return (
             <AccessContext.Provider value={accessMap}>
-                <WrappedComponent
-                    {...props}
-                    canAccess={Boolean(authToken) && !error && !loading}
-                    withAccess={siteAccessShell}
-                />
+                <AccessDebugOverrideContext.Provider value={accessDebugOverrideValue}>
+                    <WrappedComponent
+                        {...props}
+                        canAccess={Boolean(authToken) && !error && !loading}
+                        withAccess={siteAccessShell}
+                    />
+                </AccessDebugOverrideContext.Provider>
             </AccessContext.Provider>
         );
     }

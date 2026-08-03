@@ -130,13 +130,7 @@ const StateCard = memo(function StateCard({
     return (
         <>
             {!sheetOnly && (
-                <Card
-                    className={cn(
-                        "group p-0 h-full relative transition-all duration-300 hover:shadow-md hover:cursor-pointer",
-                        small && "hover:shadow-sm"
-                    )}
-                    onClick={() => setAction("view")}
-                >
+                <Card className={cn("group p-0 h-full relative transition-all duration-300 hover:shadow-md hover:cursor-pointer", small && "hover:shadow-sm")} onClick={() => setAction("view")}>
                     <div className="flex w-full items-stretch">
                         {(read.deletedBy || read.deletedAt) && (
                             <DeletedInfo deletedAt={state.deletedAt} deletedBy={state.deletedBy} />
@@ -149,7 +143,7 @@ const StateCard = memo(function StateCard({
                                 )}
                             >
                                 <div className="min-w-0 flex-1">
-                                    <HiddenElement showLock randomLength={0}>
+                                    <HiddenElement randomLength={10}>
                                         {read?.name && (
                                             <>
                                                 {state.name ? (
@@ -200,25 +194,40 @@ const StateCard = memo(function StateCard({
                                     <InfoRow
                                         icon={Tag}
                                         label={resolveLanguageKey("code")}
-                                        tooltip={String(resolveLanguageKey("code"))}
+                                        tooltip={resolveLanguageKey("code")}
                                         show={!!read?.code}
                                         value={
-                                            state.code != null && state.code !== "" ? (
-                                                <Badge variant="secondary" className="text-xs font-normal">
-                                                    {state.code}
-                                                </Badge>
-                                            ) : null
+                                            state.code != null && state.code !== "" ?
+                                            <Badge variant="secondary" className="text-xs font-normal">
+                                                {state.code}
+                                            </Badge>
+                                            :
+                                            null
                                         }
                                     />
                                     <InfoRow
                                         label={resolveLanguageKey("country")}
                                         icon={IconFlag}
-                                        show={read?.country}
+                                        show={!!read?.country}
                                         value={
                                             state.country ?
                                             <div className="flex items-center space-x-1.5">
-                                                <p>{state.country.name}</p>
-                                                <CountryFlag code={state.country.code} />
+                                                <HiddenElement showLock>
+                                                    {
+                                                        read?.country?.keys?.code ?
+                                                        <CountryFlag code={state.country.code} />
+                                                        :
+                                                        null
+                                                    }
+                                                </HiddenElement>
+                                                <HiddenElement randomLength={6}>
+                                                    {
+                                                        read?.country?.keys?.name ?
+                                                        <p>{state.country.name}</p>
+                                                        :
+                                                        null
+                                                    }
+                                                </HiddenElement>
                                             </div>
                                             :
                                             undefined

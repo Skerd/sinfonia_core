@@ -1,3 +1,4 @@
+import {useMemo} from "react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -47,10 +48,13 @@ function AllCities({
 
     const headerTitle = buildTitleBreadcrumb(resolveLanguageKey("title") as string, [countryName, stateName]);
 
-    const extraParams = {
-        country: countryId ?? undefined,
-        state: stateId ?? undefined,
-    };
+    const extraParams = useMemo(() => {
+        if (!countryId && !stateId) return undefined;
+        return {
+            ...(countryId ? {country: countryId} : {}),
+            ...(stateId ? {state: stateId} : {}),
+        };
+    }, [countryId, stateId]);
 
     return (
         <EntityListPage<City>
@@ -65,7 +69,7 @@ function AllCities({
             resolveLanguageKey={resolveLanguageKey}
             headerTitle={headerTitle}
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-            configurations={{limit: 200}}
+            configurations={{limit: 20}}
             renderCard={(city, onDelete, onRestore) => (
                 <CityCard
                     countryId={countryId}
@@ -97,5 +101,5 @@ function AllCities({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "cities")
 )(AllCities);

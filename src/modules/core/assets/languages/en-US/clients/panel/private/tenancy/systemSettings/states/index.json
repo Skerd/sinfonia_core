@@ -17,6 +17,8 @@
     "name": "Name",
     "code": "Code",
     "country": "Country",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
     "createdBy": "Created by",
     "company": "Company",
     "deletedAt": "Status",

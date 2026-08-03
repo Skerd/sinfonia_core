@@ -194,7 +194,7 @@ export default function SmallInfoCard({
                                 value ? valueTextStyles[variant] : undefined,
                             )}
                         >
-                            <HiddenElement>
+                            <HiddenElement randomLength={show ? 0 : 8}>
                                 {
                                     !!show &&
                                     <>

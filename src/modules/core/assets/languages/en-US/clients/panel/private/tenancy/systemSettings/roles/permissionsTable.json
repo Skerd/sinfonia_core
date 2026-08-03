@@ -59,7 +59,6 @@
     "Paymentplans": "Payment Plans",
     "Projects": "Projects",
     "Promotions": "Promotions",
-    "Provideravailabilities": "Provider Availabilities",
     "Providerprofiles": "Provider Profiles",
     "Reservations": "Reservations",
     "Reviews": "Reviews",
@@ -539,6 +538,7 @@
       "price": "Price",
       "price_amount": "Price Amount",
       "price_currency": "Price Currency",
+      "provider": "Provider",
       "updatedAt": "UpdatedAt"
     },
     "Listingcategories": {
@@ -549,7 +549,7 @@
       "listingcategories": "Listingcategories",
       "name": "Name",
       "order": "Order",
-      "parent": "Parent",
+      "parentListingCategory": "Parent",
       "slug": "Slug",
       "updatedAt": "UpdatedAt"
     },
@@ -579,6 +579,7 @@
       "price": "Price",
       "price_amount": "Price Amount",
       "price_currency": "Price Currency",
+      "provider": "Provider",
       "updatedAt": "UpdatedAt"
     },
     "Listings": {
@@ -948,19 +949,6 @@
       "type": "Type",
       "updatedAt": "UpdatedAt"
     },
-    "Provideravailabilities": {
-      "createdAt": "CreatedAt",
-      "createdBy": "CreatedBy",
-      "dayOfWeek": "DayOfWeek",
-      "deletedAt": "DeletedAt",
-      "deletedBy": "DeletedBy",
-      "endTime": "EndTime",
-      "provider": "Provider",
-      "provideravailabilities": "Provideravailabilities",
-      "startTime": "StartTime",
-      "timezone": "Timezone",
-      "updatedAt": "UpdatedAt"
-    },
     "Providerprofiles": {
       "bio": "Bio",
       "createdAt": "CreatedAt",
@@ -971,7 +959,8 @@
       "providerprofiles": "Providerprofiles",
       "skills": "Skills",
       "updatedAt": "UpdatedAt",
-      "user": "User"
+      "user": "User",
+      "availability": "Availability"
     },
     "Reservations": {
       "additionalDocuments": "Additional Documents",

@@ -86,5 +86,5 @@ function AllStates({resolveLanguageKey, countryId, countryName}: AllStatesProps)
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "states")
 )(AllStates);

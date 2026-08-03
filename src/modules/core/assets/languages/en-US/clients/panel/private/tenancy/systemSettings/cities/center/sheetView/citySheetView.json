@@ -3,8 +3,12 @@
   "name": "Name",
   "city": "City",
   "overview": "Overview",
-  "metadata": "Metadata",
+  "lifecycle": "Lifecycle",
   "state": "State / Region",
   "country": "Country",
-  "createdBy": "Created by"
+  "createdAt": "Created at",
+  "updatedAt": "Updated at",
+  "createdBy": "Created by",
+  "deletedAt": "Deleted at",
+  "deletedBy": "Deleted by"
 }

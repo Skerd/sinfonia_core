@@ -23,6 +23,13 @@
     "encryption": "Encryption",
     "authType": "Authentication",
     "fromEmail": "From email",
-    "lastTestStatus": "Last test"
+    "lastTestedAt": "Last tested",
+    "lastTestStatus": "Last test",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "createdBy": "Created by",
+    "company": "Company",
+    "deletedAt": "Status",
+    "deletedBy": "Deleted by"
   }
 }

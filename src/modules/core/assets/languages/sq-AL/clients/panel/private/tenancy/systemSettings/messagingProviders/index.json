@@ -23,6 +23,13 @@
     "fromPhone": "Dërgues SMS",
     "fromWhatsapp": "Dërgues WhatsApp",
     "active": "Aktiv",
-    "lastTestStatus": "Testi i fundit"
+    "lastTestedAt": "Testuar më",
+    "lastTestStatus": "Testi i fundit",
+    "createdAt": "Krijuar më",
+    "updatedAt": "Përditësuar më",
+    "createdBy": "Krijuar nga",
+    "company": "Kompania",
+    "deletedAt": "Statusi",
+    "deletedBy": "Fshirë nga"
   }
 }

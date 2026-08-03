@@ -156,7 +156,7 @@ const CityCard = memo(function CityCard({
                         <div className="w-full min-w-0 py-3">
                             <div className="flex justify-between items-center ps-4 pe-2 pb-2 gap-2">
                                 <div className="min-w-0 flex-1">
-                                    <HiddenElement showLock randomLength={0}>
+                                    <HiddenElement randomLength={10}>
                                         {read?.name && (
                                             <>
                                                 {city.name ? (
@@ -186,18 +186,44 @@ const CityCard = memo(function CityCard({
                                     <InfoRow
                                         label={resolveLanguageKey("state")}
                                         icon={IconGridDots}
-                                        show={read?.state}
-                                        value={city.state?.name}
+                                        show={!!read?.state}
+                                        value={
+                                            city.state ?
+                                            <HiddenElement randomLength={6}>
+                                                {
+                                                    read?.state?.keys?.name ?
+                                                    <p>{city.state.name}</p>
+                                                    :
+                                                    null
+                                                }
+                                            </HiddenElement>
+                                            :
+                                            undefined
+                                        }
                                     />
                                     <InfoRow
                                         label={resolveLanguageKey("country")}
                                         icon={IconFlag}
-                                        show={read?.country}
+                                        show={!!read?.country}
                                         value={
                                             city.country ?
                                             <div className="flex items-center space-x-1.5">
-                                                <p>{city.country.name}</p>
-                                                <CountryFlag code={city.country.code} />
+                                                <HiddenElement showLock>
+                                                    {
+                                                        read?.country?.keys?.code ?
+                                                        <CountryFlag code={city.country.code} />
+                                                        :
+                                                        null
+                                                    }
+                                                </HiddenElement>
+                                                <HiddenElement randomLength={6}>
+                                                    {
+                                                        read?.country?.keys?.name ?
+                                                        <p>{city.country.name}</p>
+                                                        :
+                                                        null
+                                                    }
+                                                </HiddenElement>
                                             </div>
                                             :
                                             undefined

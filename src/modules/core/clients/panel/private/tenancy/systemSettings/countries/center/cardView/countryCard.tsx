@@ -141,49 +141,71 @@ function CountryCard({
                 <Card
                     className={cn(
                         "group p-0 h-full relative transition-all duration-300 hover:shadow-md hover:cursor-pointer",
-                        small && "hover:shadow-sm"
+                        small && "hover:shadow-sm",
                     )}
                     onClick={() => setAction("view")}
                 >
                     <div className="flex w-full items-stretch">
                         {(read.deletedBy || read.deletedAt) && (
-                            <DeletedInfo deletedAt={country.deletedAt} deletedBy={country.deletedBy} />
+                            <DeletedInfo
+                                deletedAt={country.deletedAt}
+                                deletedBy={country.deletedBy}
+                            />
                         )}
                         <div
-                            className={cn("w-full min-w-0", small ? "py-2" : "py-3")}
+                            className={cn(
+                                "w-full min-w-0",
+                                small ? "py-2" : "py-3",
+                            )}
                         >
                             <div
                                 className={cn(
                                     "flex justify-between items-center",
-                                    small ? "ps-3 pe-1.5 pb-1.5" : "ps-4 pe-2 pb-2"
+                                    small
+                                        ? "ps-3 pe-1.5 pb-1.5"
+                                        : "ps-4 pe-2 pb-2",
                                 )}
                             >
                                 <div className="flex items-center gap-2 flex-wrap min-w-0">
-                                    {!!read?.code && (
-                                        <TooltipDisplayer tooltip={String(resolveLanguageKey("flag"))}>
-                                            {country.code ? (
-                                                <CountryFlag code={country.code} />
-                                            ) : (
-                                                <ValueNotSet />
-                                            )}
-                                        </TooltipDisplayer>
-                                    )}
-                                    {!!read?.name && (
-                                        <TooltipDisplayer tooltip={String(resolveLanguageKey("name"))}>
-                                            {country.name ? (
-                                                <div
-                                                    className={cn(
-                                                        "font-semibold leading-tight",
-                                                        small ? "text-sm" : "text-base"
-                                                    )}
-                                                >
-                                                    {country.name}
-                                                </div>
-                                            ) : (
-                                                <ValueNotSet />
-                                            )}
-                                        </TooltipDisplayer>
-                                    )}
+                                    <HiddenElement showLock>
+                                        {!!read?.code && (
+                                            <TooltipDisplayer
+                                                tooltip={resolveLanguageKey(
+                                                    "flag",
+                                                )}
+                                            >
+                                                {country.code ? (
+                                                    <CountryFlag
+                                                        code={country.code}
+                                                    />
+                                                ) : (
+                                                    <ValueNotSet />
+                                                )}
+                                            </TooltipDisplayer>
+                                        )}
+                                    </HiddenElement>
+
+                                    <HiddenElement randomLength={10}>
+                                        {!!read?.name &&
+                                            <TooltipDisplayer tooltip={resolveLanguageKey("name")}>
+                                                {
+                                                    country.name ?
+                                                    <div
+                                                        className={cn(
+                                                            "font-semibold leading-tight",
+                                                            small
+                                                                ? "text-sm"
+                                                                : "text-base",
+                                                        )}
+                                                    >
+                                                        {country.name}
+                                                    </div>
+                                                    :
+                                                    <ValueNotSet />
+                                                }
+                                            </TooltipDisplayer>
+                                        }
+                                    </HiddenElement>
                                 </div>
                                 {!hideActions && (
                                     <div
@@ -194,45 +216,57 @@ function CountryCard({
                                         <ActionMenu
                                             accessModel="countries"
                                             deletedData={country}
-                                            onAction={(a: string) => setAction(a)}
+                                            onAction={(a: string) =>
+                                                setAction(a)
+                                            }
                                             editPath={countryEditPath(country)}
                                         >
                                             {readState && (
-                                                <ViewStates countryId={country._id} countryName={country.name} />
+                                                <ViewStates
+                                                    countryId={country._id}
+                                                    countryName={country.name}
+                                                />
                                             )}
                                             {readCity && (
-                                                <ViewCities countryId={country._id} countryName={country.name} />
+                                                <ViewCities
+                                                    countryId={country._id}
+                                                    countryName={country.name}
+                                                />
                                             )}
                                         </ActionMenu>
                                     </div>
                                 )}
                             </div>
                             <div className={cn("space-y-2 text-sm pt-0", small ? "px-3" : "px-4")}>
-                                <div className={cn("flex gap-1.5", small ? "flex" : "flex-col")}>
+                                <div className={cn("flex gap-1.5", small ? "flex" : "flex-col",)}>
                                     <InfoRow
                                         icon={Tag}
                                         label={resolveLanguageKey("code")}
-                                        tooltip={String(resolveLanguageKey("code"))}
+                                        tooltip={resolveLanguageKey("code")}
                                         className="w-fit"
                                         show={!!read?.code}
                                         value={
-                                            country.code ? (
-                                                <Badge variant="secondary" className="text-xs font-normal">
-                                                    {country.code}
-                                                </Badge>
-                                            ) : null
+                                            country.code ?
+                                            <Badge variant="secondary" className="text-xs font-normal">
+                                                {country.code}
+                                            </Badge>
+                                            :
+                                            null
                                         }
                                     />
                                     <InfoRow
                                         icon={Phone}
                                         label={resolveLanguageKey("phoneCode")}
-                                        tooltip={String(resolveLanguageKey("phoneCode"))}
+                                        tooltip={resolveLanguageKey("phoneCode")}
                                         show={!!read?.phoneCode}
                                         className="w-fit"
                                         value={
-                                            phoneDisplay != null ? (
-                                                <span className="text-muted-foreground text-xs">{phoneDisplay}</span>
-                                            ) : null
+                                            phoneDisplay != null ?
+                                            <span className="text-muted-foreground text-xs">
+                                                {phoneDisplay}
+                                            </span>
+                                            :
+                                            null
                                         }
                                     />
                                 </div>
