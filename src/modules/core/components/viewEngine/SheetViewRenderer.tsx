@@ -388,7 +388,7 @@ export function SheetViewRenderer({
                                     />
                                 </div>
                                 :
-                                <div className="flex-full px-4 pb-6 mt-4 space-y-4">
+                                <div className="flex-full px-4 pb-6 mt-4 gap-y-4">
                                     <ViewRenderer nodes={config.nodes} ctx={ctx} />
                                     {children}
                                 </div>

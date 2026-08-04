@@ -5,7 +5,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconBuildingPlus} from "@tabler/icons-react";
-import {buildTitleBreadcrumb} from "@coreModule/helpers/general";
+import {buildPageTitle} from "@coreModule/helpers/general";
 import CityCard from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx";
 import CitySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx";
 import EntityListPage from "@coreModule/components/entityPage/EntityListPage.tsx";
@@ -46,7 +46,7 @@ function AllCities({
     countryName,
 }: AllCitiesProps) {
 
-    const headerTitle = buildTitleBreadcrumb(resolveLanguageKey("title") as string, [countryName, stateName]);
+    const headerTitle = buildPageTitle(resolveLanguageKey("title") as string, [countryName, stateName]);
 
     const extraParams = useMemo(() => {
         if (!countryId && !stateId) return undefined;

@@ -34,7 +34,7 @@ export function MainImageField({ resolveLanguageKey, loading = false, editMode =
                     <FormLabel>{resolveLanguageKey("form.mainImageLabel")}{!editMode ? " *" : ""}</FormLabel>
                     <FormControl>
                         <div>
-                            <div className="space-y-2">
+                            <div className="flex flex-col gap-y-2">
                                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-10 gap-2">
                                     {
                                         isExistingString &&

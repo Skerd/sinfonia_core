@@ -99,7 +99,7 @@ const AccountSecurityDeactivateOtpForm = ({
     }
 
     return (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-y-4">
             {
                 (!!specificUserId) ?
                     <div className="flex w-full justify-end">
@@ -113,7 +113,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                 type="button"
                                 variant="outline"
                                 size="icon"
-                                className="px-2 hover:bg-success hover:text-white"
+                                className="px-2 hover:bg-success hover:text-success-foreground"
                                 onClick={handleAdminDeactivate}
                                 disabled={loading}
                             >
@@ -124,7 +124,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                 type="button"
                                 variant="outline"
                                 size="icon"
-                                className="px-2 hover:bg-destructive/20 hover:text-white"
+                                className="px-2 hover:bg-destructive/20 hover:text-destructive"
                                 onClick={() => {
                                     onCancel();
                                 }}
@@ -136,7 +136,7 @@ const AccountSecurityDeactivateOtpForm = ({
                     </div>
                     :
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
                             <p className="text-sm text-muted-foreground">1. {resolveLanguageKey("withOTPCodeDescription")}</p>
 
                             <div className="flex flex-col lg:flex-row gap-2">
@@ -147,7 +147,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>{resolveLanguageKey("form.mfaCodeLabel")}</FormLabel>
-                                                <div className="flex items-center space-x-1">
+                                                <div className="flex items-center gap-x-1">
                                                     <FormControl>
                                                         <Input
                                                             id="token"

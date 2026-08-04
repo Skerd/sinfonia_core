@@ -154,7 +154,7 @@ export function ModelGraph({dataset, onSelectModel}: ModelGraphProps) {
                                     key={cluster}
                                     type="button"
                                     onClick={() => toggleCluster(cluster)}
-                                    className="rounded-md border px-2 py-1 text-[11px] font-medium transition-opacity"
+                                    className="rounded-md border px-2 py-1 text-2xs font-medium transition-opacity"
                                     style={{
                                         background: on ? meta.bg : "transparent",
                                         borderColor: meta.border,
@@ -167,7 +167,7 @@ export function ModelGraph({dataset, onSelectModel}: ModelGraphProps) {
                             );
                         })}
                     </div>
-                    <span className="ml-auto text-[11px] text-muted-foreground">
+                    <span className="ml-auto text-2xs text-muted-foreground">
                         {nodes.length} models · {edges.length} links · pan / zoom / click
                     </span>
                 </div>

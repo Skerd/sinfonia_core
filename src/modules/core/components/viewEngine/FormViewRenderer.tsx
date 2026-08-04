@@ -13,7 +13,7 @@ import Header from "@coreModule/components/custom/header.tsx";
 import ViewRenderer, { type ViewRendererContext } from "./ViewRenderer.tsx";
 import { resolveWidget } from "./widgetRegistry.ts";
 import { renderFormWidget, isCompoundFormWidget, renderCompoundWidget } from "./renderFormWidget.tsx";
-import {buildTitleBreadcrumb} from "@coreModule/helpers/general";
+import {buildPageTitle} from "@coreModule/helpers/general";
 
 export type FormViewRendererProps<T extends FieldValues = FieldValues> = {
     config: ViewConfig;
@@ -150,13 +150,18 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
         <div className="flex flex-col gap-4">
             {!hideChrome && (
                 <Header
-                    title={buildTitleBreadcrumb(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
+                    title={buildPageTitle(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
                     description={resolveLanguageKey("formHeader.description")}
                 />
             )}
-            <div className={`space-y-4 ${hideChrome ? "px-0 pb-2" : "px-2 pb-[100px]"}`}>
+            <div className={`flex flex-col gap-4 ${hideChrome ? "px-0 pb-2" : "px-2 pb-[100px]"}`}>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit as any)}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit as any, (errors) => {
+                            const first = Object.keys(errors)[0];
+                            if (first) form.setFocus(first as any);
+                        })}
+                    >
                         <FieldGroup>
                             {formExtras?.renderChildrenFirst ? renderChildren?.(form) : null}
 

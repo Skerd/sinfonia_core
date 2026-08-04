@@ -119,7 +119,7 @@ function MediaPreviewWithRemove({
                             </p>
                         </div>
                     )}
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
+                    <div className="absolute inset-0 bg-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
                         <Button
                             type="button"
                             variant="secondary"
@@ -160,7 +160,7 @@ function MediaPreviewWithRemove({
                                 className="max-h-[85vh] max-w-full object-contain rounded-lg"
                             />
                         ) : isFileType ? (
-                            <div className="rounded-lg border border-border bg-muted/30 p-6 min-w-[280px] space-y-2">
+                            <div className="flex flex-col rounded-lg border border-border bg-muted/30 p-6 min-w-[280px] gap-y-2">
                                 <p className="font-medium break-all">{alt}</p>
                                 {fileType != null && fileType !== "" && (
                                     <p className="text-sm text-muted-foreground">{fileType}</p>
@@ -403,7 +403,7 @@ function MediaField({
                     )}
                     onClick={() => inputRef.current?.click()}
                 >
-                    <div className="text-center space-y-1">
+                    <div className="flex flex-col text-center gap-y-1">
                         <Plus className="mx-auto text-muted-foreground" />
                         <p className="text-xs text-muted-foreground px-2">
                             {uploadHint}
@@ -479,7 +479,7 @@ function MediaField({
                     <FormItem>
                         <FormLabel>{label}</FormLabel>
                         <FormControl>
-                            <div className="space-y-2">
+                            <div className="flex flex-col gap-y-2">
                                 {gridContent}
                             </div>
                         </FormControl>

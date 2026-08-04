@@ -156,15 +156,15 @@ function SelectedMembers({
     return (
         <Collapsible open={selectedUserIds.length > 0}>
             <CollapsibleContent className="collapsible-content ">
-                <div className="rounded-lg border px-2 py-3 space-y-1">
-                    <div className="max-w-full hide-scrollbar space-y-2">
+                <div className="flex flex-col rounded-lg border px-2 py-3 gap-y-1">
+                    <div className="flex flex-col max-w-full hide-scrollbar gap-y-2">
                         <FormLabel>{resolveLanguageKey("title")}:</FormLabel>
-                        <div className='flex px-2 flex-nowrap items-center gap-4 max-w-full overflow-x-scroll space-y-1'>
+                        <div className='flex px-2 flex-nowrap items-center gap-4 max-w-full overflow-x-scroll gap-y-1'>
                             {
                                 selectedUsers.map((user) => {
                                     return (
-                                        <div className="relative space-y-1" key={user._id}>
-                                            <div className="absolute p-0.5 right-0 top-0 hover:cursor-pointer rounded-full bg-muted-foreground text-white hover:bg-foreground" style={{zIndex: 1}} onClick={() => onToggleMember(user)}>
+                                        <div className="flex flex-col relative gap-y-1" key={user._id}>
+                                            <div className="absolute p-0.5 right-0 top-0 hover:cursor-pointer rounded-full bg-muted-foreground text-background hover:bg-foreground" style={{zIndex: 1}} onClick={() => onToggleMember(user)}>
                                                 <X size={12}/>
                                             </div>
                                             <CustomAvatar user={user} avatarClassName={"size-14"}/>
@@ -247,7 +247,7 @@ function NewMembers({
         <div className='max-w-full overflow-hidden'>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(addMembers)} className="flex flex-col">
-                    <div className="border rounded-lg overflow-hidden space-y-2">
+                    <div className="flex flex-col border rounded-lg overflow-hidden gap-y-2">
                         <InputWithIcon
                             icon={<UserRoundSearch size={16} className="text-muted-foreground" />}
                             type="text"

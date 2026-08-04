@@ -74,7 +74,7 @@ export default function LimitUpdater({
         <span
           ref={mirrorRef}
           aria-hidden
-          className="invisible absolute text-[16px]"
+          className="invisible absolute text-base"
           style={{}}
         >
           {inputValue || placeholder}

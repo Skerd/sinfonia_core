@@ -96,7 +96,7 @@ export default function FormMultiLocalFileField({
                                 <FormLabel>{String(resolveLanguageKey(labelKey))}</FormLabel>
                             ) : null}
                             {ids.length > 0 ? (
-                                <div className="space-y-2">
+                                <div className="flex flex-col gap-y-2">
                                     <p className="text-sm text-muted-foreground">
                                         {String(resolveLanguageKey(existingFilesLabelKey))}
                                     </p>

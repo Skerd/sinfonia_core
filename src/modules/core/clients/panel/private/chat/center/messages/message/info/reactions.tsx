@@ -81,12 +81,12 @@ function Reactions({
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <div className={cn("flex grow items-center space-x-1 mt-0.5", {"justify-end": owner, "justify-start": !owner})}>
+                <div className={cn("flex grow items-center gap-x-1 mt-0.5", {"justify-end": owner, "justify-start": !owner})}>
                     {
                         visibleEmojis.map((emoji) => {
                             const count = grouped[emoji]?.length || 0;
                             return (
-                                <div key={emoji} className="flex items-center justify-center cursor-pointer space-x-0.5 border border-transparent hover:border-muted-foreground rounded-lg p-0.5" onClick={() => setSelectedEmoji(emoji)}>
+                                <div key={emoji} className="flex items-center justify-center cursor-pointer gap-x-0.5 border border-transparent hover:border-muted-foreground rounded-lg p-0.5" onClick={() => setSelectedEmoji(emoji)}>
                                     {
                                         reactionRead.emoji &&
                                         <p>{emoji}</p>
@@ -130,7 +130,7 @@ function Reactions({
                             reactions.map((r, index) => {
                                 return (
                                     <div key={`${r.user?._id ?? ""}-${String(r.date ?? "")}-${index}`} className="flex justify-between px-2 py-1 rounded hover:bg-muted/50 hover:cursor-pointer" onClick={() => r.user?._id && removeReaction(messageId, r.emoji ?? "", r.user._id)}>
-                                        <div className="flex items-center space-x-1">
+                                        <div className="flex items-center gap-x-1">
                                             {
                                                 reactionRead.user && r.user &&
                                                 <CustomAvatar avatarClassName="size-7" user={r.user} />
@@ -180,7 +180,7 @@ function Reactions({
                                         grouped[emoji].map((r, index) => {
                                             return (
                                                 <div key={`${r.user?._id ?? ""}-${String(r.date ?? "")}-${index}`} className="flex justify-between px-2 py-1 rounded hover:bg-muted/50 hover:cursor-pointer" onClick={() => r.user?._id && removeReaction(messageId, r.emoji ?? "", r.user._id)}>
-                                                    <div className="flex items-center space-x-1">
+                                                    <div className="flex items-center gap-x-1">
                                                         {
                                                             reactionRead.user && r.user &&
                                                             <CustomAvatar avatarClassName="size-7" user={r.user} />

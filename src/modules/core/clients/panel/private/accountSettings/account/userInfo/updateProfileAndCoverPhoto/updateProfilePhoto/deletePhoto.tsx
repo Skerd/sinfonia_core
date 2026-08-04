@@ -54,7 +54,7 @@ function DeletePhoto({
         <div className="flex justify-end">
             {
                 open ?
-                <div className="flex grow items-center justify-end space-x-2">
+                <div className="flex grow items-center justify-end gap-x-2">
                     <Button
                         disabled={loading}
                         variant="destructive"

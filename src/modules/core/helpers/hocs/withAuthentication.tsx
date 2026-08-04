@@ -126,7 +126,7 @@ const withAuthentication = () => <TProps extends object>(
                 <AlertDialog open={true}>
                     <AlertDialogContent>
                         <AlertDialogHeader>
-                            <div className="flex items-center space-x-1">
+                            <div className="flex items-center gap-x-1">
                                 <LoaderCircle className="h-4 w-4 animate-spin"/>
                                 <AlertDialogTitle
                                     className="">{props.resolveLanguageKey("verifying")}</AlertDialogTitle>

@@ -1,5 +1,10 @@
 import {JSX, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {
+    clearQuickFilterParams,
+    readQuickFiltersFromUrl,
+    writeQuickFilterParam,
+} from "@coreModule/helpers/hooks/useListUrlState.ts";
 import {useAccess, type AccessObject} from "@coreModule/helpers/hocs/withAccess.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
@@ -13,9 +18,10 @@ import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import {useDynamicLanguage} from "@coreModule/components/entityPage/useDynamicLanguage.ts";
 import type {DeletedData, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import type {FilterGroup, FilterValue} from "armonia/src/modules/core/database/filter";
-import {generateUUID} from "@coreModule/helpers/general";
+import {generateUUID, type PageTitle} from "@coreModule/helpers/general";
 import {mergeAndFilterDSL} from "@coreModule/helpers/filter/mergeFilterDsl.ts";
 import QuickFilterBar, {buildQuickFilterDSL, type QuickFilterDef} from "@coreModule/components/entityPage/quickFilterBar.tsx";
+import {GRID_TRANSACTIONAL} from "@coreModule/components/custom/cards/entityCard.constants.ts";
 
 export type {QuickFilterDef};
 
@@ -123,8 +129,12 @@ export type EntityListPageProps<T extends BaseEntity> = {
     hideCreate?: boolean;
     buildEditPath: (entity: T) => string;
     resolveLanguageKey: (key: string) => unknown;
-    /** Overrides `resolveLanguageKey("title")` for the page header (e.g. breadcrumb title). */
-    headerTitle?: string;
+    /**
+     * Overrides `resolveLanguageKey("title")`. Pass {@link buildPageTitle} when
+     * the list is scoped to a parent entity, so those names reach the shell
+     * breadcrumb as links instead of being printed into the heading.
+     */
+    headerTitle?: string | PageTitle;
     /** Overrides `resolveLanguageKey("description")` for the page header. */
     headerDescription?: string;
     /** Hide page header chrome (e.g. embedded dashboard / overview tabs). */
@@ -166,11 +176,13 @@ export type EntityListPageProps<T extends BaseEntity> = {
     createLanguageKey?: string;
     /** Extra controls rendered in the page header beside the create button. */
     headerActions?: ReactNode;
+    /**
+     * Defaults to {@link GRID_TRANSACTIONAL}. Pass {@link GRID_HIERARCHY} for
+     * media-led cards; both are CSS multi-column masonry driven by density
+     * min-widths, so do not add breakpoint column counts on top - they would
+     * pin back the column count that these exist to derive.
+     */
     cardViewClassName?: string;
-    /** Pinterest-style packing for card view (default `grid`). */
-    cardLayout?: "grid" | "masonry";
-    /** Column breakpoints when `cardLayout="masonry"`. */
-    masonryBreakpointCols?: number | {default: number; [key: number]: number};
     configurations?: {limit?: number; columnVisibility?: Record<string, boolean>};
     /** Forwarded to the list POST (e.g. parent filter `{ country }`). */
     extraParams?: Record<string, unknown>;
@@ -226,9 +238,7 @@ export default function EntityListPage<T extends BaseEntity>({
     createIcon,
     createLanguageKey = "create",
     headerActions,
-    cardViewClassName = "grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 pe-1",
-    cardLayout = "grid",
-    masonryBreakpointCols,
+    cardViewClassName = GRID_TRANSACTIONAL,
     configurations,
     extraParams,
     extraFilters,
@@ -257,6 +267,41 @@ export default function EntityListPage<T extends BaseEntity>({
     }, [extraFilters]);
 
     const [quickFilterValues, setQuickFilterValues] = useState<Record<string, FilterValue | null>>({});
+    const [searchParams, setSearchParams] = useSearchParams();
+    const quickFilterFields = useMemo(() => (quickFilters ?? []).map((d) => d.field), [quickFilters]);
+
+    useEffect(() => {
+        if (!quickFilterFields.length) return;
+        const fromUrl = readQuickFiltersFromUrl(searchParams, quickFilterFields);
+        setQuickFilterValues((prev) => {
+            let changed = false;
+            const next = {...prev};
+            for (const field of quickFilterFields) {
+                const urlVal = fromUrl[field];
+                if ((prev[field] ?? null) !== urlVal) {
+                    next[field] = urlVal;
+                    changed = true;
+                }
+            }
+            return changed ? next : prev;
+        });
+        // Only hydrate from the URL when the param set changes.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams.toString(), quickFilterFields.join("|")]);
+
+    const setQuickFilterValue = (field: string, value: FilterValue | null) => {
+        setQuickFilterValues((prev) => ({...prev, [field]: value}));
+        writeQuickFilterParam(
+            setSearchParams,
+            field,
+            value == null ? null : String(value),
+        );
+    };
+
+    const clearQuickFilters = () => {
+        setQuickFilterValues({});
+        clearQuickFilterParams(setSearchParams, quickFilterFields);
+    };
 
     const quickFilterDSL = useMemo(
         () => buildQuickFilterDSL(quickFilters ?? [], quickFilterValues),
@@ -321,10 +366,10 @@ export default function EntityListPage<T extends BaseEntity>({
 
             {!hideHeader && (
             <Header
-                title={(headerTitle ?? resolveLanguageKey("title")) as string}
+                title={headerTitle ?? (resolveLanguageKey("title") as string)}
                 description={(headerDescription ?? resolveLanguageKey("description")) as string}
             >
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-2">
                     <HiddenElement hideAll={true}>
                         {headerActions}
                         {
@@ -355,10 +400,8 @@ export default function EntityListPage<T extends BaseEntity>({
                                     <QuickFilterBar
                                         defs={quickFilters}
                                         values={quickFilterValues}
-                                        onChange={(field: string, value: FilterValue | null) =>
-                                            setQuickFilterValues((prev) => ({...prev, [field]: value}))
-                                        }
-                                        onClearAll={() => setQuickFilterValues({})}
+                                        onChange={setQuickFilterValue}
+                                        onClearAll={clearQuickFilters}
                                         extraParams={extraParams}
                                     />
                                 </>
@@ -371,8 +414,6 @@ export default function EntityListPage<T extends BaseEntity>({
                             },
                         }}
                         configurations={{limit: 20, ...configurations}}
-                        cardLayout={cardLayout}
-                        masonryBreakpointCols={masonryBreakpointCols}
                         containersClassName={{
                             cardViewClassName,
                             scrollRootClassName: "flex-full",
@@ -388,6 +429,10 @@ export default function EntityListPage<T extends BaseEntity>({
                                         listRef as EntityListRefs<T>,
                                     ) as JSX.Element)
                                     : (<></> as unknown as JSX.Element),
+                            onRowClick: (entity) => {
+                                setAction("view");
+                                setSheetEntity(entity);
+                            },
                             action: (entity) => (
                                 <ActionMenu
                                     accessModel={accessModel}

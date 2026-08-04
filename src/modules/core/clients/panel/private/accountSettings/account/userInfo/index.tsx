@@ -78,14 +78,14 @@ function UserAccountProfileUserInfo({
     }
 
     return (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-y-4">
             <AccountProfileAndCoverPhoto
                 hideCondition={!read?.photo && !read?.cover}
                 specificUserId={specificUserId}
                 onPhotoUpdate={(updates: any) => updateRow?.(specificUserId ?? id, updates)}
             />
 
-            <div className="flex items-center flex-wrap space-x-0.5">
+            <div className="flex items-center flex-wrap gap-x-0.5">
                 <HiddenElement>
                     {
                         !!read?.roles?.keys?.active &&

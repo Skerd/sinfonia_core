@@ -47,7 +47,7 @@ function Users({resolveLanguageKey, administration}: UsersProps) {
                     title={resolveLanguageKey(administration ? "administrationTitle" : "title")}
                     description={resolveLanguageKey(administration ? "administrationDescription" : "description")}
                 >
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-x-2">
                         <UsersInviteDialog administration={administration} />
                         <CreateUsers administration={administration} />
                     </div>

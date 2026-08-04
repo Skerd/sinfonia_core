@@ -63,14 +63,14 @@ export default function FormTabbedRepeater({
     if (tabs.length === 0) return null;
 
     return (
-        <Tabs defaultValue={tabs[0].key} orientation="horizontal" className="space-y-0">
+        <Tabs defaultValue={tabs[0].key} orientation="horizontal" className="flex flex-col gap-y-0">
             <div className="relative mb-1 h-10 overflow-x-auto rounded-sm bg-muted">
                 <TabsList className="absolute mb-0 flex w-full flex-row justify-stretch pb-0 pt-1">
                     {tabs.map((tab, i) => (
                         <TabsTrigger key={tab.key} value={tab.key} className="hover:cursor-pointer gap-1">
                             <span className="truncate">{String(resolveLanguageKey(tab.label))}</span>
                             <span
-                                className="inline-flex min-w-5 shrink-0 items-center justify-center rounded-full bg-foreground/10 px-1 py-px text-[10px] font-semibold tabular-nums text-foreground/80"
+                                className="inline-flex min-w-5 shrink-0 items-center justify-center rounded-full bg-foreground/10 px-1 py-px text-3xs font-semibold tabular-nums text-foreground/80"
                                 aria-hidden
                             >
                                 {counts[i]}

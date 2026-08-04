@@ -43,7 +43,7 @@ function ProfilePhoto({
     }, [photoUrl]);
 
     return (
-        <div className="text-white rounded-full flex grow items-center justify-center h-full w-full">
+        <div className="text-background rounded-full flex grow items-center justify-center h-full w-full">
             {
                 loading ?
                 <Loader className="border-0"/>

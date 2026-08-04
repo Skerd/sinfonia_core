@@ -23,7 +23,7 @@ function Security({
             title={resolveLanguageKey("title")}
             desc={resolveLanguageKey("description")}
         >
-            <div className="space-y-4">
+            <div className="flex flex-col gap-y-4">
                 <UserAccountSecurityChangePassword hideCondition={!write.password} specificUserId={specificUserId}/>
                 <UserAccountSecurityOTP hideCondition={!read?.mfaStatus}  specificUserId={specificUserId}/>
                 <UserAccountSecurityUserSession specificUserId={specificUserId}/>

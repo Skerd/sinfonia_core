@@ -247,7 +247,7 @@ function CreateUserForm({
                     )}
                 />
 
-                <div className='flex items-center justify-end space-x-2'>
+                <div className='flex items-center justify-end gap-x-2'>
                     <Button
                         variant='outline'
                         disabled={loading}

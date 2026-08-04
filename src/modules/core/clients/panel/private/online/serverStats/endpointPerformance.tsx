@@ -59,7 +59,7 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
         : ((stats.endpoints.highestErrorRate || []) as EndpointStat[]);
 
     return (
-        <Card className="w-full shadow-md px-3 py-2 space-y-1">
+        <Card className="flex flex-col w-full shadow-md px-3 py-2 gap-y-1">
             <CardHeader className="p-0">
                 <div className="flex items-center justify-between">
                     <CardTitle className="text-xl font-semibold">{resolveLanguageKey("endpointPerformanceTitle")}</CardTitle>
@@ -72,20 +72,20 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
                 </CardDescription>
             </CardHeader>
             <CardContent style={{padding: 0}}>
-                <div className="space-y-4 pt-2">
+                <div className="flex flex-col gap-y-4 pt-2">
                     {/* Summary Stats */}
                     <div className="grid grid-cols-3 gap-2">
-                        <div className="flex flex-col items-center justify-center space-y-1 rounded-lg border bg-background p-3">
+                        <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <BarChart3 className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("totalMetrics")}</span>
                             <span className="font-medium text-sm">{(stats.summary.totalMetrics || 0).toLocaleString()}</span>
                         </div>
-                        <div className="flex flex-col items-center justify-center space-y-1 rounded-lg border bg-background p-3">
+                        <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <Zap className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("uniqueEndpoints")}</span>
                             <span className="font-medium text-sm">{(stats.summary.uniqueEndpoints || 0).toLocaleString()}</span>
                         </div>
-                        <div className="flex flex-col items-center justify-center space-y-1 rounded-lg border bg-background p-3">
+                        <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <Activity className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("tracked")}</span>
                             <span className="font-medium text-sm">{(stats.summary.totalEndpointsTracked || 0).toLocaleString()}</span>
@@ -93,7 +93,7 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
                     </div>
 
                     {/* Tabs */}
-                    <div className="flex space-x-2 border-b">
+                    <div className="flex gap-x-2 border-b">
                         <button
                             onClick={() => setActiveTab('slowest')}
                             className={clsx(

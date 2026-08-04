@@ -912,7 +912,7 @@ function wrapSheetMediaWithLabel(
             : null,
         createElement("p", {className: "text-sm font-medium text-muted-foreground"}, label),
     );
-    return createElement("div", {key, className: "space-y-1.5"}, heading, content);
+    return createElement("div", {key, className: "flex flex-col gap-1.5"}, heading, content);
 }
 
 function formatSheetSmallInfoTemporal(value: unknown, mode: "date" | "dateTime"): string | null {
@@ -1118,7 +1118,7 @@ function renderLinkedObjectRefCardList(
         fromPreset ??
         (typeof wp.listClassName === "string" && wp.listClassName.length > 0
             ? wp.listClassName
-            : "space-y-2");
+            : "flex flex-col gap-2");
 
     const cards: ReactNode[] = [];
     rawList.forEach((rawItem: unknown, rowIndex: number) => {
@@ -1439,7 +1439,7 @@ function renderStringBadgeList(
     const visible = list.slice(0, limit);
     const remaining = list.length - visible.length;
     return (
-        <div className="flex flex-wrap space-y-1 space-x-1 mt-0.5">
+        <div className="flex flex-wrap gap-y-1 gap-x-1 mt-0.5">
             {visible.map((item: unknown, i: number) => (
                 <Badge key={i} variant="outline">
                     {String(item)}
@@ -1463,7 +1463,7 @@ function renderObjectNameBadgeList(
     const list = resolvePath(data, fieldName);
     if (!Array.isArray(list) || list.length === 0) return null;
     return (
-        <div className="flex flex-wrap space-y-1 space-x-1 mt-0.5">
+        <div className="flex flex-wrap gap-y-1 gap-x-1 mt-0.5">
             {list.map((item: any, i: number) => {
                 const label = labelField.includes(".") ? resolvePath(item, labelField) : item?.[labelField];
                 if (label == null || label === "") return null;
@@ -1517,7 +1517,7 @@ function renderUnitTypeBadgeList(
     });
 
     if (badges.length === 0) return <div className="mt-0.5"><ValueNotSet /></div>;
-    return <div className="flex flex-wrap space-y-1 space-x-1 mt-0.5">{badges}</div>;
+    return <div className="flex flex-wrap gap-y-1 gap-x-1 mt-0.5">{badges}</div>;
 }
 
 function renderCurrencyList(
@@ -1535,7 +1535,7 @@ function renderCurrencyList(
           : [];
     if (list.length === 0) {
         return (
-            <div className="flex items-center space-x-0.5">
+            <div className="flex items-center gap-x-0.5">
                 <p>{resolveLanguageKey("none")}</p>
             </div>
         );
@@ -1544,7 +1544,7 @@ function renderCurrencyList(
     const andKey = wp.andKey ?? "and";
 
     return (
-        <div className="text-success flex flex-wrap space-x-1">
+        <div className="text-success flex flex-wrap gap-x-1">
             {list.map((item: any, i: number) => {
                 const currency = item.currency;
                 const currencyName = currency?.abbreviation ?? currency?.symbol ?? currency?.name ?? "";
@@ -1552,7 +1552,7 @@ function renderCurrencyList(
                 const isLast = i === list.length - 1;
                 const hasMultiple = list.length > 1;
                 return (
-                    <div className="flex items-center space-x-0.5" key={i}>
+                    <div className="flex items-center gap-x-0.5" key={i}>
                         {isLast && hasMultiple && <span> {resolveLanguageKey(andKey)} </span>}
                         <p>{String(currencyName)}</p>
                         <p>{value.toLocaleString()}</p>

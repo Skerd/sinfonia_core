@@ -21,10 +21,10 @@ export default function TitleWithCollapse({children, title, description, inBetwe
             onOpenChange={setOpen}
         >
             <CollapsibleTrigger asChild>
-                <div className={`${open ? "" : ""} hover:cursor-pointer space-y-2`}>
+                <div className={`${open ? "" : ""} hover:cursor-pointer flex flex-col gap-2`}>
                     <div className="flex items-center">
                         <div className='flex-none grow'>
-                            <h3 className={cn('flex items-center space-x-1.5 text-md font-medium', {"text-destructive": danger})}>
+                            <h3 className={cn('flex items-center gap-x-1.5 text-md font-medium', {"text-destructive": danger})}>
                                 {title}
                             </h3>
                             <p className={cn('text-muted-foreground text-sm', {"text-destructive": danger})}>{description}</p>

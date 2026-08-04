@@ -50,7 +50,7 @@ function SaveNewCompanyRoles({
             <>
                 {
                     isOpen ?
-                    <div className="space-x-1">
+                    <div className="flex gap-x-1">
                         <TooltipDisplayer tooltip={resolveLanguageKey("confirm")} contentClassName="text-sm">
                             <Button
                                 variant="outline"

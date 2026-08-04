@@ -18,7 +18,8 @@ import {
     ShieldQuestionMark,
     UserPlus,
 } from "lucide-react";
-import {Card} from "@coreModule/components/ui/card.tsx";
+import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
+import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
 import CoverPhoto
     from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/coverPhoto.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -240,7 +241,7 @@ function UserProfileCardInner({
 
     return (
         <div>
-            <Card className="p-0 gap-6 transition-[box-shadow,--tw-ring-color] duration-200 hover:shadow-md hover:ring-primary/40">
+            <EntityCardShell disableClick className="gap-6">
 
                 <HiddenElement>
                     {
@@ -253,7 +254,7 @@ function UserProfileCardInner({
                                 hideCondition={!read.cover}
                             />
                             <div
-                                className="flex items-center justify-center bg-muted-foreground border-4 border-white absolute bottom-[-25px] left-8 rounded-full"
+                                className="flex items-center justify-center bg-muted-foreground border-4 border-background absolute bottom-[-25px] left-8 rounded-full"
                                 style={{width: avatarSize, height: avatarSize}}>
                                 <div className="w-full h-full rounded-full">
                                     <ProfilePhoto
@@ -267,7 +268,7 @@ function UserProfileCardInner({
                     }
                 </HiddenElement>
 
-                <div className="px-4 space-y-2">
+                <div className="flex flex-col px-4 gap-y-2">
                     <HiddenElement>
                         {
                             (read.name || read.surname || read.online || read.mfaStatus) &&
@@ -325,7 +326,7 @@ function UserProfileCardInner({
                         </TabsList>
 
                         <TabsContent value="about" className="rounded-md border bg-muted/30 p-3 text-sm">
-                            <div className="space-y-1.5">
+                            <InfoRowGroup className="flex-col !gap-y-1.5">
                                 <InfoRow
                                     iconReplacement={<div>
                                         <HiddenElement>
@@ -496,12 +497,12 @@ function UserProfileCardInner({
                                         </HiddenElement>
                                     }
                                 />
-                                <div className="space-y-2">
+                                <div className="flex flex-col w-full gap-y-2">
                                     <p className="text-sm text-muted-foreground">{resolveLanguageKey("roles")}</p>
                                     <HiddenElement>
                                         {
                                             read?.roles?.keys?.roles?.keys?.name &&
-                                            <div className="flex items-center flex-wrap space-x-1 space-y-0.5">
+                                            <div className="flex items-center flex-wrap gap-x-1 gap-y-0.5">
                                                 {
                                                     data.roles?.map((r, i: number) => {
                                                         return (
@@ -515,10 +516,10 @@ function UserProfileCardInner({
                                         }
                                     </HiddenElement>
                                 </div>
-                            </div>
+                            </InfoRowGroup>
                         </TabsContent>
                         <TabsContent value="info" className="rounded-md border bg-muted/30 p-3 text-sm">
-                            <div className="space-y-1.5">
+                            <InfoRowGroup className="flex-col !gap-y-1.5">
                                 <InfoRow
                                     icon={Ampersand}
                                     label={resolveLanguageKey("registeredDate")}
@@ -639,7 +640,7 @@ function UserProfileCardInner({
                                         </HiddenElement>
                                     }
                                 />
-                            </div>
+                            </InfoRowGroup>
                         </TabsContent>
                         {
                             data?.requests?.invitation &&
@@ -679,7 +680,7 @@ function UserProfileCardInner({
                         }
                     </Tabs>
                 </div>
-            </Card>
+            </EntityCardShell>
         </div>
     );
 }

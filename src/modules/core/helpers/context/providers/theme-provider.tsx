@@ -85,6 +85,11 @@ export function ThemeProvider({
       root.classList.remove('light', 'dark') // Remove existing theme classes
       root.classList.add(currentResolvedTheme) // Add the new theme class
 
+      // The class alone only themes our own CSS. Native chrome -- scrollbars,
+      // select popups, date pickers, autofill backgrounds -- follows
+      // color-scheme, and stays light-on-dark without this.
+      root.style.colorScheme = currentResolvedTheme
+
       // Read back after the class lands so browser chrome tracks the resolved
       // --background. Owned here rather than in the theme switcher, whose child
       // effect would run before this one and read the previous theme's value.

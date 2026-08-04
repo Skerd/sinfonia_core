@@ -38,7 +38,7 @@ function ChatMember({
     return (
         <>
             <div className={cn("flex items-center", {"mb-2": hasSeparator})}>
-                <div className="flex items-center grow space-x-2">
+                <div className="flex items-center grow gap-x-2">
                     <HiddenElement Render={<Avatar className="flex items-center justify-center border size-10"><Users size={18} /></Avatar>}>
                         {
                             sanitizedUsers.photo &&
@@ -52,7 +52,7 @@ function ChatMember({
                         }
                     </HiddenElement>
                 </div>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center gap-x-1">
                     {/*<pre>{JSON.stringify(whoAmI, null, 2)}</pre>*/}
                     <HiddenElement>
                         {
@@ -70,7 +70,7 @@ function ChatMember({
                                     <div className="pe-2">
                                         {
                                             (member._id === whoAmI?._id || member?.userType === "owner") ?
-                                            <div className="flex items-center space-x-1">
+                                            <div className="flex items-center gap-x-1">
                                                 <p className="text-muted-foreground text-sm">{resolveLanguageKey(member.userType!)}</p>
                                                 {
                                                     member.userType === "owner" &&
@@ -80,7 +80,7 @@ function ChatMember({
                                                 }
                                             </div>
                                             :
-                                            <div className="flex items-center space-x-0 ">
+                                            <div className="flex items-center gap-x-0 ">
                                                 <p className="text-muted-foreground text-sm">{resolveLanguageKey(member.userType!)}</p>
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>

@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/custom/infoRowGroup.tsx",
+  "one": "1 fushë e kufizuar",
+  "many": "{count} fusha të kufizuara",
+  "tooltip": "Ju nuk keni leje për të parë këto fusha"
+}

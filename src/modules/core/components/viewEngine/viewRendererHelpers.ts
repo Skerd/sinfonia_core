@@ -68,10 +68,16 @@ export type SmallInfoCardAccessSpec = {
  * - `parent` + `valuePath` joins (e.g. createdBy name+surname)
  *
  * Card visibility stays on explicit `node.permissions` in the sheet renderer.
+ * Set `field.skipReadAccessGate` (or use a `statistics.*` path) to skip value gating
+ * for computed aggregates that are not real ACL keys.
  */
 export function resolveSmallInfoCardValueAccessSpec(
     binding: FieldBinding | undefined,
 ): SmallInfoCardAccessSpec | null {
+    if (binding?.skipReadAccessGate) {
+        return null;
+    }
+
     const wp = binding?.widgetProps ?? {};
     const parent = typeof wp.parent === "string" && wp.parent.length > 0 ? wp.parent : undefined;
     const valuePath = Array.isArray(wp.valuePath)
@@ -87,6 +93,11 @@ export function resolveSmallInfoCardValueAccessSpec(
 
     const fieldName = typeof binding?.name === "string" ? binding.name : undefined;
     if (fieldName) {
+        // Computed listing aggregates — not model ACL keys. Backend sanitizeStatistics
+        // already strips values the caller cannot see.
+        if (fieldName === "statistics" || fieldName.startsWith("statistics.")) {
+            return null;
+        }
         return {paths: [fieldName], mode: "all"};
     }
 

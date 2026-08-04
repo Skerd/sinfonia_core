@@ -82,7 +82,7 @@ function UserAccountSecurityDisableAccountForm({
     }
 
     return (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-y-4">
             <Alert>
                 <TriangleAlert className="h-4 w-4"/>
                 <AlertTitle>{resolveLanguageKey("title")}</AlertTitle>
@@ -92,7 +92,7 @@ function UserAccountSecurityDisableAccountForm({
             {
                 !specificUserId ?
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
                         <div>
                             {
                                 Object.values(resolveLanguageKey("steps") || {})?.map((step: string, index: number) => {

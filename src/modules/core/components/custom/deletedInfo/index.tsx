@@ -37,7 +37,7 @@ function DeletedInfo({
     if( bottom ){
         return (
             <DeletedTooltip deletedAt={deletedAt} deletedBy={deletedBy}>
-                <div className="w-full py-0.5 flex justify-center items-center bg-destructive text-center text-white text-xs">
+                <div className="w-full py-0.5 flex justify-center items-center bg-destructive text-center text-destructive-foreground text-xs">
                     {resolveLanguageKey("deleted")}
                 </div>
             </DeletedTooltip>

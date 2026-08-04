@@ -83,8 +83,8 @@ function AccountProfileName({
     }
     if( !!read.name && !write.name ){
         return (
-            <div className="space-y-2">
-                <div className="flex items-center space-x-1">
+            <div className="flex flex-col gap-y-2">
+                <div className="flex items-center gap-x-1">
                     <p className="text-sm leading-none font-medium">
                         {resolveLanguageKey("form.nameLabel")}
                     </p>
@@ -98,7 +98,7 @@ function AccountProfileName({
 
     return(
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(() => { setFireUpdate(Date.now()); })} className="space-y-8">
+            <form onSubmit={form.handleSubmit(() => { setFireUpdate(Date.now()); })} className="flex flex-col gap-y-8">
                 <FormField
                     control={form.control}
                     name="name"
@@ -106,8 +106,8 @@ function AccountProfileName({
                         <FormItem>
                             <FormLabel>{resolveLanguageKey("form.nameLabel")}</FormLabel>
                             <FormControl>
-                                <div className="flex space-x-1.5">
-                                    <div className="flex grow space-x-1">
+                                <div className="flex gap-x-1.5">
+                                    <div className="flex grow gap-x-1">
                                         <Input
                                             id="name"
                                             type="text"

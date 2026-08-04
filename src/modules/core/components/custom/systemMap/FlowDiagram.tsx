@@ -140,7 +140,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                 <aside className="w-72 shrink-0 border-l bg-background p-4 text-sm overflow-y-auto">
                     {selectedStep ? (
                         <>
-                            <div className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                            <div className="text-3xs font-medium uppercase tracking-wide text-muted-foreground">
                                 Step
                             </div>
                             <h3 className="text-base font-semibold mt-0.5">{selectedStep.label}</h3>
@@ -148,7 +148,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                                 {selectedStep.description}
                             </p>
                             {selectedStep.detail && (
-                                <p className="mt-3 text-[12px] leading-relaxed border-t pt-3 text-foreground">
+                                <p className="mt-3 text-xs leading-relaxed border-t pt-3 text-foreground">
                                     {selectedStep.detail}
                                 </p>
                             )}
@@ -159,7 +159,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                             <p className="text-muted-foreground mt-1">
                                 Click a step to see what happens at that stage.
                             </p>
-                            <ol className="mt-3 flex flex-col gap-1.5 list-decimal list-inside text-[12px]">
+                            <ol className="mt-3 flex flex-col gap-1.5 list-decimal list-inside text-xs">
                                 {flow.steps.map((s) => (
                                     <li key={s.id}>
                                         <button

@@ -887,7 +887,7 @@ function ApiSelectCore({
                 <CommandItem
                     key={option.value}
                     value={option.value}
-                    className="space-x-0"
+                    className="flex gap-x-0"
                     aria-selected={multiple ? isSelected : undefined}
                     onSelect={() => handleOptionSelect(option)}
                 >
@@ -1003,7 +1003,7 @@ function ApiSelectCore({
                                 <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
                                     {selectedValues.length}
                                 </Badge>
-                                <div className="hidden space-x-1 lg:flex">
+                                <div className="hidden gap-x-1 lg:flex">
                                     {selectedValues.length > 2 ? (
                                         <Badge variant="secondary" className="rounded-sm px-1 font-normal">
                                             {selectedValues.length} selected

@@ -110,5 +110,11 @@
         }
       }
     }
+  },
+  "commandPalette": {
+    "title": "Befehlspalette",
+    "description": "Zu einer Seite springen",
+    "placeholder": "Seiten suchen…",
+    "empty": "Keine passenden Seiten"
   }
 }

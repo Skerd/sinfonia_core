@@ -45,14 +45,14 @@ function ChannelsInfiniteList({
             error={error}
             onFilterChange={onFilterChange}
             limit={50}
-            scrollRootClassName="max-h-60 overflow-y-auto space-y-0 border rounded-lg p-2"
+            scrollRootClassName="max-h-60 overflow-y-auto flex flex-col gap-0 border rounded-lg p-2"
             getId={(item) => item._id}
             renderItem={(channel) => (
                 <div
                     role="button"
                     tabIndex={0}
                     key={channel._id}
-                    className="flex items-center space-x-2 p-2 hover:bg-muted rounded cursor-pointer"
+                    className="flex items-center gap-x-2 p-2 hover:bg-muted rounded cursor-pointer"
                     onClick={() => onChannelToggle(channel._id)}
                     onKeyDown={(e) => e.key === "Enter" && onChannelToggle(channel._id)}
                 >
@@ -173,7 +173,7 @@ function ForwardMessageDialog({
                     </DialogDescription>
                 </DialogHeader>
 
-                <div className="space-y-4">
+                <div className="flex flex-col gap-y-4">
                     {/* Message preview */}
                     <div className="bg-muted rounded-lg p-3 border-l-4 border-info/50">
                         <div className="text-xs text-muted-foreground mb-1">

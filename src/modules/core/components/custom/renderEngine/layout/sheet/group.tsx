@@ -151,7 +151,7 @@ export function SheetGroup({
 
     if (!canCollapse) {
         return (
-            <div className="space-y-2">
+            <div className="flex flex-col gap-y-2">
                 {label ? headerRow() : null}
                 {children}
             </div>
@@ -159,9 +159,9 @@ export function SheetGroup({
     }
 
     return (
-        <Collapsible open={open} onOpenChange={onOpenChange} className="space-y-2">
+        <Collapsible open={open} onOpenChange={onOpenChange} className="flex flex-col gap-y-2">
             {headerRow({collapsible: true})}
-            <CollapsibleContent className="space-y-2 data-[state=closed]:animate-none">
+            <CollapsibleContent className="flex flex-col gap-y-2 data-[state=closed]:animate-none">
                 {children}
             </CollapsibleContent>
         </Collapsible>

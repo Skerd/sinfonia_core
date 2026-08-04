@@ -54,13 +54,13 @@ function NotificationsForm({
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(() => {})}
-                    className='space-y-8'
+                    className='flex flex-col gap-y-8'
                 >
                     <FormField
                         control={form.control}
                         name='type'
                         render={({ field }) => (
-                            <FormItem className='relative space-y-3'>
+                            <FormItem className='flex flex-col relative gap-y-3'>
                                 <FormLabel>{resolveLanguageKey("notifyAbout.title")}</FormLabel>
                                 <FormControl>
                                     <RadioGroup
@@ -98,13 +98,13 @@ function NotificationsForm({
                     />
                     <div className='relative'>
                         <h3 className='mb-4 text-lg font-medium'>{resolveLanguageKey("emailNotifications.title")}</h3>
-                        <div className='space-y-4'>
+                        <div className='flex flex-col gap-y-4'>
                             <FormField
                                 control={form.control}
                                 name='communication_emails'
                                 render={({ field }) => (
                                     <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
-                                        <div className='space-y-0.5'>
+                                        <div className='flex flex-col gap-y-0.5'>
                                             <FormLabel className='text-base'>
                                                 {resolveLanguageKey("emailNotifications.communication.title")}
                                             </FormLabel>
@@ -126,7 +126,7 @@ function NotificationsForm({
                                 name='marketing_emails'
                                 render={({ field }) => (
                                     <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
-                                        <div className='space-y-0.5'>
+                                        <div className='flex flex-col gap-y-0.5'>
                                             <FormLabel className='text-base'>
                                                 {resolveLanguageKey("emailNotifications.marketing.title")}
                                             </FormLabel>
@@ -148,7 +148,7 @@ function NotificationsForm({
                                 name='security_emails'
                                 render={({ field }) => (
                                     <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
-                                        <div className='space-y-0.5'>
+                                        <div className='flex flex-col gap-y-0.5'>
                                             <FormLabel className='text-base'>
                                                 {resolveLanguageKey("emailNotifications.security.title")}
                                             </FormLabel>

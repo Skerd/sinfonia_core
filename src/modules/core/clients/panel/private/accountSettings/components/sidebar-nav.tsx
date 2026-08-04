@@ -72,7 +72,7 @@ export function SidebarNav({
             type='always'
             className='bg-background hidden w-full min-w-40 md:block'
         >
-            <nav className={cn('flex space-x-2 lg:flex-col lg:space-y-1 lg:space-x-0', className)} {...props}>
+            <nav className={cn('flex gap-x-2 lg:flex-col lg:gap-y-1 lg:gap-x-0', className)} {...props}>
                 {
                     items.map((item) => {
                         return (

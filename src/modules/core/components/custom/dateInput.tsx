@@ -167,7 +167,7 @@ function DateInputTimePanel({
   return (
     <div
       className={cn(
-        "flex flex-col px-2 space-y-1.5",
+        "flex flex-col px-2 gap-y-1.5",
         !standalone && "border-l border-border",
       )}
     >

@@ -158,7 +158,7 @@ function SingleFile({
         if (type.startsWith("audio/") && !controls) {
             return (
                 <div className="w-full h-full flex items-center justify-center">
-                    <div className="h-full w-full flex flex-col items-center justify-center space-x-1">
+                    <div className="h-full w-full flex flex-col items-center justify-center gap-x-1">
                         <Music className={cn({"w-16 h-16": isBig, "w-10 h-10": !isBig})}/>
                         <p className="">{formatSeconds(duration || 0)}</p>
                     </div>
@@ -179,7 +179,7 @@ function SingleFile({
                         :
                         <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-2 text-center">
                             <FileText className={cn({"w-16 h-16": isBig && !isChat, "w-10 h-10": !isBig || isChat})}/>
-                            <span className="max-w-full truncate text-[10px] opacity-80">
+                            <span className="max-w-full truncate text-3xs opacity-80">
                                 .{getFileExtension(displayName)}
                             </span>
                         </div>
@@ -195,7 +195,7 @@ function SingleFile({
             )}>
                 <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-2 text-center">
                     <LucidFile className={cn({"w-16 h-16": isBig && !isChat, "w-10 h-10": !isBig || isChat})}/>
-                    <span className="max-w-full truncate text-[10px] opacity-80">
+                    <span className="max-w-full truncate text-3xs opacity-80">
                         .{getFileExtension(displayName)}
                     </span>
                 </div>

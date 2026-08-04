@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, HTMLAttributes } from "react";
 import type { FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type { Unit as UnitDto } from "armonia/src/modules/propertyManagement/api/realEstate/private/unit/unit/unit.dto.ts";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -377,6 +377,35 @@ export function renderCompoundWidget(
  * Shared between FormViewRenderer (create) and EditFormViewRenderer (edit)
  * so widget-to-prop mapping lives in exactly one place.
  */
+/** Domain defaults for native input attributes when the view config omits them. */
+function inputA11yDefaults(type: string | undefined, name: string): {
+    type?: string;
+    inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
+    autoComplete?: string;
+} {
+    const n = name.toLowerCase();
+    const t = (type ?? "").toLowerCase();
+    if (t === "email" || n.includes("email")) {
+        return { type: "email", inputMode: "email", autoComplete: "email" };
+    }
+    if (t === "tel" || n.includes("phone") || n.includes("mobile") || n.includes("tel")) {
+        return { type: "tel", inputMode: "tel", autoComplete: "tel" };
+    }
+    if (t === "url" || n.includes("website") || n.includes("url") || n.endsWith("uri")) {
+        return { type: "url", inputMode: "url", autoComplete: "url" };
+    }
+    if (t === "password" || n.includes("password")) {
+        return { type: "password", autoComplete: "current-password" };
+    }
+    if (t === "number" || t === "decimal") {
+        return { type: "number", inputMode: t === "decimal" ? "decimal" : "numeric" };
+    }
+    if (n.includes("search")) {
+        return { type: "search", inputMode: "search", autoComplete: "off" };
+    }
+    return { type: type ?? "text" };
+}
+
 export function renderFormWidget(
     Widget: React.ComponentType<any>,
     binding: FieldBinding,
@@ -560,6 +589,7 @@ export function renderFormWidget(
                 {...field}
                 {...numericRest}
                 type="number"
+                inputMode={widgetProps.type === "decimal" ? "decimal" : "numeric"}
                 step={step !== undefined ? step : widgetProps.type === "decimal" ? "0.01" : undefined}
                 value={field.value ?? ""}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -570,14 +600,24 @@ export function renderFormWidget(
     }
 
     if (binding.widget === "#Input" || binding.widget === "#Textarea") {
-        const { type, ...restWp } = widgetProps;
+        const { type, autoComplete, inputMode, ...restWp } = widgetProps;
+        const defaults = inputA11yDefaults(
+            typeof type === "string" ? type : undefined,
+            binding.name,
+        );
         const emptyValue = extra?.editMode ? null : undefined;
         return (
             <Widget
                 placeholder={placeholder}
                 {...field}
                 {...restWp}
-                {...(binding.widget === "#Input" ? { type: type ?? "text" } : {})}
+                {...(binding.widget === "#Input"
+                    ? {
+                          type: defaults.type ?? "text",
+                          inputMode: inputMode ?? defaults.inputMode,
+                          autoComplete: autoComplete ?? defaults.autoComplete,
+                      }
+                    : {})}
                 value={field.value ?? ""}
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
                     field.onChange(e.target.value === "" ? emptyValue : e.target.value)

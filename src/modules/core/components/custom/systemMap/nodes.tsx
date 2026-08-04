@@ -23,11 +23,11 @@ function ModelNodeComponent({data, selected}: NodeProps<ModelFlowNode>) {
             }}
         >
             <Handle type="target" position={Position.Left} className="!bg-muted-foreground !w-2 !h-2" />
-            <div className="text-[10px] font-medium uppercase tracking-wide" style={{color: meta.color}}>
+            <div className="text-3xs font-medium uppercase tracking-wide" style={{color: meta.color}}>
                 {meta.label}
             </div>
             <div className="text-sm font-semibold text-foreground leading-tight mt-0.5">{data.label}</div>
-            <div className="text-[10px] text-muted-foreground mt-0.5 truncate">{data.module}</div>
+            <div className="text-3xs text-muted-foreground mt-0.5 truncate">{data.module}</div>
             <Handle type="source" position={Position.Right} className="!bg-muted-foreground !w-2 !h-2" />
         </div>
     );
@@ -54,7 +54,7 @@ function FlowStepNodeComponent({data, selected}: NodeProps<FlowStepFlowNode>) {
         >
             <Handle type="target" position={Position.Left} className="!bg-muted-foreground !w-2 !h-2" />
             <div className="text-sm font-semibold text-foreground">{data.label}</div>
-            <div className="text-[11px] text-muted-foreground mt-0.5 leading-snug">{data.description}</div>
+            <div className="text-2xs text-muted-foreground mt-0.5 leading-snug">{data.description}</div>
             <Handle type="source" position={Position.Right} className="!bg-muted-foreground !w-2 !h-2" />
             <Handle type="source" position={Position.Bottom} id="bottom" className="!bg-muted-foreground !w-2 !h-2" />
             <Handle type="target" position={Position.Top} id="top" className="!bg-muted-foreground !w-2 !h-2" />

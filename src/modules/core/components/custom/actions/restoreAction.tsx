@@ -77,7 +77,7 @@ function RestoreAction({
                         confirmName &&
                         <div className="mb-2" style={{border: "0px solid red"}}>
                             {/*<Separator className="mb-2" />*/}
-                            <div className="space-y-2">
+                            <div className="flex flex-col gap-y-2">
                                 <Label htmlFor="confirm-project-name">{resolveLanguageKey("typeToConfirm").replace("{}", confirmName)}</Label>
                                 <Input
                                     id={`confirm-name-${confirmName}`}

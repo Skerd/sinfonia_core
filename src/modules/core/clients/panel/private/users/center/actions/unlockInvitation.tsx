@@ -67,7 +67,7 @@ function UnlockInvitationAction({user, resolveLanguageKey, onFilterChange, loadi
                 handleConfirm={() => onFilterChange({ resendEmail })}
                 isLoading={loading}
             >
-                <div className="flex items-center space-x-2 mt-4">
+                <div className="flex items-center gap-x-2 mt-4">
                     <Checkbox
                         id="unlock-invitation-resend"
                         checked={resendEmail}

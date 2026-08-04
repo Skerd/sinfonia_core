@@ -70,7 +70,7 @@ function RoomUsersList({users, resolveLanguageKey}: RoomUsersListProps) {
     }
 
     return (
-        <div className="space-y-2">
+        <div className="flex flex-col gap-y-2">
             {showControls && (
                 <div className="relative">
                     <Search className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
@@ -87,7 +87,7 @@ function RoomUsersList({users, resolveLanguageKey}: RoomUsersListProps) {
             {filtered.length === 0 ? (
                 <p className="text-xs text-muted-foreground">{resolveLanguageKey("noUsersMatchSearch")}</p>
             ) : (
-                <ul className="space-y-1">
+                <ul className="flex flex-col gap-y-1">
                     {pageUsers.map((user) => (
                         <li
                             key={user.id}
@@ -196,7 +196,7 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
     }
 
     return (
-        <Card className="w-full shadow-md px-3 py-2 space-y-1">
+        <Card className="flex flex-col w-full shadow-md px-3 py-2 gap-y-1">
             <CardHeader className="p-0">
                 <div className="flex items-center justify-between">
                     <CardTitle className="text-xl font-semibold">{resolveLanguageKey("userActivityTitle")}</CardTitle>
@@ -210,19 +210,19 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                 </CardDescription>
             </CardHeader>
             <CardContent style={{padding: 0}}>
-                <div className="space-y-4 pt-2">
+                <div className="flex flex-col gap-y-4 pt-2">
                     <div className="grid grid-cols-3 gap-2">
-                        <div className="flex flex-col items-center justify-center space-y-1 rounded-lg border bg-background p-3">
+                        <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <Users className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("activeUsers")}</span>
                             <span className="font-medium text-sm">{(wsStats.totalUsers || 0).toLocaleString()}</span>
                         </div>
-                        <div className="flex flex-col items-center justify-center space-y-1 rounded-lg border bg-background p-3">
+                        <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <Globe className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("connections")}</span>
                             <span className="font-medium text-sm">{(wsStats.totalConnections || 0).toLocaleString()}</span>
                         </div>
-                        <div className="flex flex-col items-center justify-center space-y-1 rounded-lg border bg-background p-3">
+                        <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <MessageSquare className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("activeRooms")}</span>
                             <span className="font-medium text-sm">{(wsStats.totalRooms || 0).toLocaleString()}</span>
@@ -230,7 +230,7 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                     </div>
 
                     {rooms.length > 0 && (
-                        <div className="space-y-2">
+                        <div className="flex flex-col gap-y-2">
                             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                                 <h4 className="text-sm font-semibold">{resolveLanguageKey("whoIsWhere")}</h4>
                                 <div className="relative w-full sm:max-w-xs">
@@ -243,7 +243,7 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                                     />
                                 </div>
                             </div>
-                            <div className="space-y-2 max-h-96 overflow-y-auto">
+                            <div className="flex flex-col gap-y-2 max-h-96 overflow-y-auto">
                                 {filteredRooms.length === 0 ? (
                                     <p className="py-4 text-center text-xs text-muted-foreground">
                                         {resolveLanguageKey("noRoomsMatchSearch")}
@@ -272,7 +272,7 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                                                         )}
                                                     </div>
                                                 </div>
-                                                <div className="flex shrink-0 items-center space-x-3">
+                                                <div className="flex shrink-0 items-center gap-x-3">
                                                     <div className="text-right">
                                                         <p className="text-xs text-muted-foreground">{resolveLanguageKey("users")}</p>
                                                         <p className="text-sm font-medium">{room.userCount || 0}</p>

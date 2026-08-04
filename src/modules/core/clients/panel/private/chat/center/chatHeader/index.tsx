@@ -66,7 +66,7 @@ function ChatHeader({}: MessageHeaderProps ){
                                 {
                                     channel?.metaData?.isGroup ?
                                     <div className="flex flex-row flex-wrap items-center gap-12">
-                                        <div className="*:data-[slot=avatar]:ring-background flex -space-x-4 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+                                        <div className="*:data-[slot=avatar]:ring-background flex -gap-x-4 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
                                             {
                                                 channel.users?.map((channelUser, index) => {
                                                     if( index > howManyAvatars && howManyAvatars < channel.users.length ){

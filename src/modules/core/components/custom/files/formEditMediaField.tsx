@@ -52,9 +52,9 @@ export default function FormEditMediaField({
     const currentIds = (useWatch({ control: form.control, name: currentMediaField as never }) as string[] | undefined) ?? [];
 
     return (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-y-4">
             {currentIds.length > 0 && (
-                <div className="space-y-2">
+                <div className="flex flex-col gap-y-2">
                     <p className="text-sm text-muted-foreground">{String(resolveLanguageKey(existingFilesLabelKey))}</p>
                     <div className="flex flex-wrap gap-2">
                         {currentIds.map((mediaId) => {

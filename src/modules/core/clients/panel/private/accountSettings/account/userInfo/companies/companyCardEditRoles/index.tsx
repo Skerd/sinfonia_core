@@ -132,7 +132,7 @@ function AccountCompaniesCardEditRoles({
     }
     if( !data || data?.data?.length === 0 ){
         return (
-            <div className="w-full item space-y-2 font-bold">
+            <div className="flex flex-col w-full item gap-y-2 font-bold">
                 <p>{resolveLanguageKey("roles")}</p>
                 <div className="flex grow flex-wrap gap-1">
                     {
@@ -150,7 +150,7 @@ function AccountCompaniesCardEditRoles({
     }
 
     return (
-        <div className="w-full space-y-1">
+        <div className="flex flex-col w-full gap-y-1">
             <div className="flex items-center justify-between w-full font-bold">
                 {write?.roles?.keys?.roles && <p>{resolveLanguageKey("roles")}</p>}
                 {
@@ -197,7 +197,7 @@ function AccountCompaniesCardEditRoles({
                     </div>
                 </div>
                 :
-                <div className="flex flex-col items-start w-full space-y-2 gap-2">
+                <div className="flex flex-col items-start w-full gap-y-2 gap-2">
                     <div className="flex grow flex-wrap gap-1">
                         {
                             allCompanyRoles?.map((role: any, index) => {

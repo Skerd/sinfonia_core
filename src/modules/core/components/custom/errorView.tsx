@@ -37,7 +37,7 @@ export function ErrorView({
                         <AlertCircle/>
                         <AlertTitle>{error.message}</AlertTitle>
                         <AlertDescription>
-                            <div className="flex items-center space-x-1">
+                            <div className="flex items-center gap-x-1">
                                 <div>{resolveLanguageKey("waitLimit")}</div>
                                 <Countdown seconds={error.availableIn ?? 0} onComplete={() => {setCanRetry(true);}}/>
                             </div>

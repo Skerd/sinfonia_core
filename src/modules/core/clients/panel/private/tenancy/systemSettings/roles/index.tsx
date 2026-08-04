@@ -56,7 +56,7 @@ function Roles({resolveLanguageKey}: RolesProps) {
     return (
         <div className="min-w-0 flex-full gap-4">
             <Header title={resolveLanguageKey("title")} description={resolveLanguageKey("description")}>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-x-2">
                     <HiddenElement hideAll={true}>
                         {create && (
                             <Button

@@ -46,18 +46,23 @@ function CommandDialog({
 }) {
   return (
     <Dialog {...props}>
-      <DialogHeader className="sr-only">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
-      </DialogHeader>
       <DialogContent
         className={cn(
-          "top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0",
+          "top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0 sm:max-w-lg",
           className
         )}
         showCloseButton={showCloseButton}
       >
-        {children}
+        {/*
+         * Title/description must live inside DialogContent for Radix a11y.
+         * Children must be wrapped in Command — cmdk Input/List/Item subscribe
+         * to that context; without it the tree throws on open and blanks the app.
+         */}
+        <DialogHeader className="sr-only">
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
+        </DialogHeader>
+        <Command className="max-h-[min(70vh,28rem)]">{children}</Command>
       </DialogContent>
     </Dialog>
   )

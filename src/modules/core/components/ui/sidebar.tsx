@@ -576,7 +576,7 @@ function SidebarMenuBadge({
       data-sidebar="menu-badge"
       className={cn(
         "pointer-events-none absolute right-1 top-1.5 z-10 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium text-sidebar-foreground tabular-nums select-none peer-hover/menu-button:text-sidebar-accent-foreground peer-data-active/menu-button:text-sidebar-accent-foreground",
-        "group-data-[collapsible=icon]:top-0 group-data-[collapsible=icon]:right-0 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:min-w-4 group-data-[collapsible=icon]:max-w-[min(100%,2.75rem)] group-data-[collapsible=icon]:translate-x-px group-data-[collapsible=icon]:-translate-y-px group-data-[collapsible=icon]:rounded-full group-data-[collapsible=icon]:px-1 group-data-[collapsible=icon]:py-0 group-data-[collapsible=icon]:text-[10px] group-data-[collapsible=icon]:leading-none",
+        "group-data-[collapsible=icon]:top-0 group-data-[collapsible=icon]:right-0 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:min-w-4 group-data-[collapsible=icon]:max-w-[min(100%,2.75rem)] group-data-[collapsible=icon]:translate-x-px group-data-[collapsible=icon]:-translate-y-px group-data-[collapsible=icon]:rounded-full group-data-[collapsible=icon]:px-1 group-data-[collapsible=icon]:py-0 group-data-[collapsible=icon]:text-3xs group-data-[collapsible=icon]:leading-none",
         className
       )}
       {...props}

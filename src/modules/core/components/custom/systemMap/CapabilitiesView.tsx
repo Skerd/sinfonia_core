@@ -42,7 +42,7 @@ export function CapabilitiesView({capabilities}: CapabilitiesViewProps) {
                                 {mod.offers.map((offer) => (
                                     <li key={offer.title}>
                                         <div className="text-sm font-medium">{offer.title}</div>
-                                        <div className="text-[12px] text-muted-foreground leading-snug">
+                                        <div className="text-xs text-muted-foreground leading-snug">
                                             {offer.description}
                                         </div>
                                     </li>
@@ -58,7 +58,7 @@ export function CapabilitiesView({capabilities}: CapabilitiesViewProps) {
                                 {mod.apis.map((api) => (
                                     <li
                                         key={api}
-                                        className="font-mono text-[11px] text-foreground break-all"
+                                        className="font-mono text-2xs text-foreground break-all"
                                     >
                                         {api}
                                     </li>
@@ -75,7 +75,7 @@ export function CapabilitiesView({capabilities}: CapabilitiesViewProps) {
                                     {mod.crons.map((cron) => (
                                         <li
                                             key={cron}
-                                            className="rounded border bg-muted/40 px-2 py-0.5 text-[11px]"
+                                            className="rounded border bg-muted/40 px-2 py-0.5 text-2xs"
                                         >
                                             {cron}
                                         </li>
@@ -93,7 +93,7 @@ export function CapabilitiesView({capabilities}: CapabilitiesViewProps) {
                                     {mod.publicRoutes.map((route) => (
                                         <li
                                             key={route}
-                                            className="rounded border bg-muted/40 px-2 py-0.5 font-mono text-[11px]"
+                                            className="rounded border bg-muted/40 px-2 py-0.5 font-mono text-2xs"
                                         >
                                             {route}
                                         </li>

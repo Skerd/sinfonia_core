@@ -56,13 +56,25 @@ function TrendBadge({ trend }: { trend: NonNullable<KPICardProps['trend']> }) {
   );
 }
 
-function DrillDownIndicator({ linkLabel }: { linkLabel?: string }) {
+/**
+ * Chevron only in the compact card: the label that used to sit beside it was
+ * competing with the KPI title for the same line, and the title lost — every
+ * compact card on the overview read `Activ…` or `Cos…`. The label survives as
+ * the overlay link's accessible name, so nothing is lost to assistive tech.
+ */
+function DrillDownIndicator({
+  linkLabel,
+  showLabel = true,
+}: {
+  linkLabel?: string;
+  showLabel?: boolean;
+}) {
   return (
     <span
-      className="inline-flex shrink-0 items-center gap-0.5 text-[10px] font-medium text-muted-foreground"
+      className="inline-flex shrink-0 items-center gap-0.5 text-3xs font-medium text-muted-foreground"
       aria-hidden
     >
-      {linkLabel != null && linkLabel !== '' ? (
+      {showLabel && linkLabel != null && linkLabel !== '' ? (
         <span className="hidden max-w-[5rem] truncate sm:inline">{linkLabel}</span>
       ) : null}
       <ChevronRight size={14} className="shrink-0" />
@@ -114,26 +126,36 @@ export function KpiCard({
 
   if (compact) {
     return (
-      <Card size="sm" className={cn(shellClass, 'gap-2')}>
+      <Card size="sm" className={cn(shellClass, 'gap-1.5')}>
         {interactive && <DrillDownOverlayLink href={href} title={title} linkLabel={linkLabel} />}
-        {/* Flex row rather than the header's default grid: icon, label and value share one line. */}
-        <CardHeader className="flex items-center gap-1.5">
+        {/*
+          * Label above value rather than beside it. The previous single row put
+          * icon, title, value, trend and chevron in one flex line with the title
+          * as the only shrinkable element, so at five columns the title was the
+          * first thing to truncate - the card kept the number and threw away
+          * what the number meant.
+          */}
+        <CardHeader className="flex items-start gap-1.5">
           <div className={cn('shrink-0 rounded-md p-1.5', iconVariantStyles[variant])}>
             <Icon size={16} />
           </div>
-          <CardTitle className="min-w-0 flex-1 truncate font-medium text-muted-foreground">
+          <CardTitle className="min-w-0 flex-1 text-xs leading-tight font-medium text-balance text-muted-foreground">
             {title}
           </CardTitle>
-          <CardAction className="flex items-center gap-1.5 self-center">
-            <span className="font-display text-lg leading-tight font-bold tracking-tight text-foreground">
-              {value}
-            </span>
-            {trend != null && <TrendBadge trend={trend} />}
-            {interactive && <DrillDownIndicator linkLabel={linkLabel} />}
-          </CardAction>
+          {interactive && (
+            <CardAction className="self-start">
+              <DrillDownIndicator linkLabel={linkLabel} showLabel={false} />
+            </CardAction>
+          )}
         </CardHeader>
+        <CardContent className="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
+          <span className="font-display text-lg leading-tight font-bold tracking-tight tabular-nums text-foreground">
+            {value}
+          </span>
+          {trend != null && <TrendBadge trend={trend} />}
+        </CardContent>
         {subtitle != null && (
-          <CardContent className="text-xs leading-tight text-muted-foreground">
+          <CardContent className="text-2xs leading-tight text-muted-foreground">
             {subtitle}
           </CardContent>
         )}
@@ -157,7 +179,9 @@ export function KpiCard({
       </CardHeader>
       <CardContent className="px-6">
         <p className="text-sm leading-tight font-medium text-muted-foreground">{title}</p>
-        <p className="font-display text-3xl leading-tight font-bold text-foreground">{value}</p>
+        <p className="font-display text-3xl leading-tight font-bold tabular-nums text-foreground">
+          {value}
+        </p>
         {subtitle != null && (
           <p className="mt-1 text-sm leading-tight text-muted-foreground">{subtitle}</p>
         )}

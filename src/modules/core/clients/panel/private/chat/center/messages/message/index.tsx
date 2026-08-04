@@ -170,7 +170,7 @@ function Message({
                     >
                         {
                             !!foundMention &&
-                            <div className="flex items-center space-x-1">
+                            <div className="flex items-center gap-x-1">
                                 <CustomAvatar user={foundMention} />
                                 <p>{getName(foundMention)}</p>
                             </div>
@@ -248,7 +248,7 @@ function Message({
                 {
                     read.createdAt &&
                     <span className={cn(
-                        "text-[10px] tabular-nums leading-none",
+                        "text-3xs tabular-nums leading-none",
                         owner ? "text-primary-foreground/70" : "text-muted-foreground",
                     )}>
                         {formatDate(message.date, {timeZone: user.timezone, format: {hour: "2-digit", minute: "2-digit"}})}
@@ -273,7 +273,7 @@ function Message({
 
         const receiptTooltip = () => (
             <div className="w-full min-w-0">
-                <p className="border-b border-background/20 pb-1 text-[10px] font-semibold uppercase tracking-wide text-background/85">
+                <p className="border-b border-background/20 pb-1 text-3xs font-semibold uppercase tracking-wide text-background/85">
                     {resolveLanguageKey("readReceipts")}
                 </p>
                 <ul className="mt-0.5 flex list-none flex-col p-0">
@@ -514,7 +514,7 @@ function Message({
                         }
                     }}
                 >
-                    <div className="space-y-0.5">
+                    <div className="flex flex-col gap-y-0.5">
                         <HiddenElement>
                             {
                                 read?.replyTo?.keys?.sender &&
@@ -554,7 +554,7 @@ function Message({
                     "mb-1 overflow-hidden rounded-md border-l-4 px-2 py-1 text-xs italic",
                     owner ? "border-primary-foreground/40 bg-primary-foreground/10" : "border-muted-foreground/50 bg-background/40"
                 )}>
-                    <div className="space-y-0.5">
+                    <div className="flex flex-col gap-y-0.5">
                         <div className="flex items-center font-medium not-italic">
                             <Forward size={12} className="mr-1 inline" />
                             <p>{resolveLanguageKey("forwarded")}</p>
@@ -592,7 +592,7 @@ function Message({
                                         !!message.pinned &&
                                         <>
                                             <InfoRow
-                                                className="dark:text-black text-white"
+                                                className="text-background"
                                                 icon={User}
                                                 label={resolveLanguageKey("pinnedBy")}
                                                 value={
@@ -607,7 +607,7 @@ function Message({
                                                 }
                                             />
                                             <InfoRow
-                                                className="dark:text-black text-white"
+                                                className="text-background"
                                                 icon={Calendar}
                                                 label={resolveLanguageKey("pinnedAt")}
                                                 value={
@@ -648,7 +648,7 @@ function Message({
         >
             {messageIsPinned()}
             {(message.status === "edited") && (
-                <span className="text-[10px] leading-none opacity-80">{resolveLanguageKey("edited")}</span>
+                <span className="text-3xs leading-none opacity-80">{resolveLanguageKey("edited")}</span>
             )}
             {messageTime()}
             {messageReceiptTicks()}

@@ -94,7 +94,7 @@ function ActivationRequestTabContentInner({
         <TabsContent value="activation" className="rounded-md border bg-muted/30 p-3 text-sm">
             <div className="relative group/activation-row">
                 <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0 space-y-1.5">
+                    <div className="flex-1 min-w-0 gap-y-1.5">
                         <InfoRow
                             icon={Mail}
                             label={resolveLanguageKey("activationEmail")}

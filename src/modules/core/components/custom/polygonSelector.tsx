@@ -165,15 +165,16 @@ function PolygonSelector({
     // Keep zoomRef in sync so the native wheel handler always sees the current zoom value.
     useEffect(() => { zoomRef.current = zoom; }, [zoom]);
 
-    // Non-passive native wheel listener — prevents both browser page-zoom (Ctrl+scroll)
-    // and page scroll when the pointer is inside the container.
+    /**
+     * Non-passive wheel listener for ctrl/meta image-zoom and for panning when
+     * the container itself overflows. At min zoom with no overflow we must NOT
+     * call preventDefault — otherwise the page (and dialog) cannot scroll while
+     * the pointer is over the polygon viewer (desktop + trackpad).
+     */
     useEffect(() => {
         const el = containerRef.current;
         if (!el) return;
         const onWheel = (e: WheelEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
-
             const containerRect = el.getBoundingClientRect();
             if (
                 e.clientX < containerRect.left || e.clientX > containerRect.right ||
@@ -181,6 +182,9 @@ function PolygonSelector({
             ) return;
 
             if (e.metaKey || e.ctrlKey) {
+                e.preventDefault();
+                e.stopPropagation();
+
                 const currentZoom = zoomRef.current;
                 const viewportX = e.clientX - containerRect.left;
                 const viewportY = e.clientY - containerRect.top;
@@ -197,12 +201,44 @@ function PolygonSelector({
                     };
                     setZoom(newZoom);
                 }
-            } else {
-                // Manual scroll: preventDefault killed the browser's own scroll so drive it ourselves.
-                const multiplier = e.deltaMode === 1 ? 20 : e.deltaMode === 2 ? el.clientHeight : 1;
-                el.scrollLeft += e.deltaX * multiplier;
-                el.scrollTop  += e.deltaY * multiplier;
+                return;
             }
+
+            const canScrollY = el.scrollHeight > el.clientHeight + 1;
+            const canScrollX = el.scrollWidth > el.clientWidth + 1;
+            if (!canScrollY && !canScrollX) {
+                // Content fits: let the page/dialog scroll.
+                return;
+            }
+
+            const eps = 1;
+            const atTop = el.scrollTop <= eps;
+            const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - eps;
+            const atLeft = el.scrollLeft <= eps;
+            const atRight = el.scrollLeft + el.clientWidth >= el.scrollWidth - eps;
+
+            const wantsDown = e.deltaY > 0;
+            const wantsUp = e.deltaY < 0;
+            const wantsRight = e.deltaX > 0;
+            const wantsLeft = e.deltaX < 0;
+
+            const absorbY =
+                canScrollY &&
+                ((wantsDown && !atBottom) || (wantsUp && !atTop));
+            const absorbX =
+                canScrollX &&
+                ((wantsRight && !atRight) || (wantsLeft && !atLeft));
+
+            if (!absorbY && !absorbX) {
+                // Edge of the internal scroller — chain scroll to the page.
+                return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+            const multiplier = e.deltaMode === 1 ? 20 : e.deltaMode === 2 ? el.clientHeight : 1;
+            el.scrollLeft += e.deltaX * multiplier;
+            el.scrollTop  += e.deltaY * multiplier;
         };
         el.addEventListener('wheel', onWheel, { passive: false });
         return () => el.removeEventListener('wheel', onWheel);
@@ -592,6 +628,14 @@ function PolygonSelector({
 
     const hasContentToShow = points.length > 0 || phantomPoints.some((p) => p.polygonCoordinates?.length );
 
+    /*
+     * View-only (disabled) at 100% zoom: allow the page/dialog to scroll under
+     * the finger. Zoomed-in or edit mode still needs touch-action:none so pans
+     * and vertex drags do not fight the browser scroll.
+     */
+    const allowPageTouchScroll = disabled && zoom <= MIN_ZOOM;
+    const touchActionStyle = allowPageTouchScroll ? "pan-y" : "none";
+
     return (
         <>
             {
@@ -638,7 +682,7 @@ function PolygonSelector({
                             height: '100%',
                             width: '100%',
                             cursor: (disabled) ? 'default' : ( isPanning ? 'grabbing' : 'default' ),
-                            touchAction: 'none',
+                            touchAction: touchActionStyle,
                             userSelect: 'none',
                             WebkitUserSelect: 'none',
                         }}
@@ -669,7 +713,7 @@ function PolygonSelector({
                                         width: svgCoordinates.width > 0 ? `${svgCoordinates.width}px` : undefined,
                                         height: svgCoordinates.height > 0 ? `${svgCoordinates.height}px` : undefined,
                                         cursor: disabled ? 'default' : (isPanning ? 'grabbing' : 'crosshair'),
-                                        touchAction: 'none',
+                                        touchAction: touchActionStyle,
                                         userSelect: 'none',
                                         WebkitUserSelect: 'none',
                                         WebkitTouchCallout: 'none',
@@ -952,7 +996,7 @@ function PolygonSelector({
 
                             {
                                 !disabled && points.length !== 0 &&
-                                <div className="flex grow items-center justify-end space-x-2">
+                                <div className="flex grow items-center justify-end gap-x-2">
 
                                     <TooltipDisplayer tooltip={resolveLanguageKey("revert")}>
                                         <Button

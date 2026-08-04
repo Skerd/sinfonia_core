@@ -25,7 +25,7 @@ import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
-import {buildTitleBreadcrumb} from "@coreModule/helpers/general";
+import {buildPageTitle} from "@coreModule/helpers/general";
 import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
 import {z} from "zod";
 
@@ -191,7 +191,7 @@ function EditRole({
     return (
         <div className="flex-full gap-4">
             <Header
-                title={buildTitleBreadcrumb(resolveLanguageKey("title"), [roleName || ""])}
+                title={buildPageTitle(resolveLanguageKey("title"), [roleName || ""])}
                 description={resolveLanguageKey("description")}
             />
 
@@ -206,10 +206,10 @@ function EditRole({
                             onClick={() => setForceReloadRole((v) => v + 1)}
                         />
                     ) : (
-                        <div className="flex-full px-2 pb-[100px] space-y-4">
+                        <div className="flex-full px-2 pb-[100px] gap-y-4">
                             <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                                    <div className="flex space-x-2 pe-2">
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
+                                    <div className="flex gap-x-2 pe-2">
                                         <div className="flex grow">
                                             <FormField
                                                 control={form.control}

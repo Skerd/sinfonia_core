@@ -42,10 +42,10 @@ export function FilterRuleComponent({
                 onOpenChange={setOpen}
             >
                 <CollapsibleTrigger asChild>
-                    <div className={`${open ? "border-b-0 rounded-b-none" : ""} hover:cursor-pointer space-y-0 px-3 py-1 border rounded-md`}>
+                    <div className={`${open ? "border-b-0 rounded-b-none" : ""} hover:cursor-pointer flex flex-col gap-0 px-3 py-1 border rounded-md`}>
                         <div className="flex items-center">
                             <div className='flex-none grow'>
-                                <h3 className={cn('flex items-center space-x-1.5 text-md font-medium')}>
+                                <h3 className={cn('flex items-center gap-x-1.5 text-md font-medium')}>
                                     {resolveLanguageKey("rule")} {index + 1}
                                 </h3>
                             </div>
@@ -80,13 +80,13 @@ export function FilterRuleComponent({
                 <CollapsibleContent>
                     <div className="pt-1 px-2 pb-2 rounded-md rounded-t-none border border-t-0">
                         <div className="border-s-2 border-dashed border-primary/15 ps-1 md:ps-2">
-                            <div className="space-y-2 py-2 rounded-md px-2 border border-dashed border-border bg-muted/5">
+                            <div className="flex flex-col gap-y-2 py-2 rounded-md px-2 border border-dashed border-border bg-muted/5">
                                 <div
                                     role="group"
                                     aria-label={resolveLanguageKey("filterRule")}
-                                    className="flex flex-col items-center space-y-2 rounded-md min-w-0 group/rule hover:border-border/70"
+                                    className="flex flex-col items-center gap-y-2 rounded-md min-w-0 group/rule hover:border-border/70"
                                 >
-                                    <div className="flex space-x-2 w-full">
+                                    <div className="flex gap-x-2 w-full">
                                         <SimpleSelect
                                             options={fields.map((f) => ({ value: f.path, label: findFromLanguage(fieldsLanguage, f.path) ?? f.label ?? f.path }))}
                                             value={rule.field}

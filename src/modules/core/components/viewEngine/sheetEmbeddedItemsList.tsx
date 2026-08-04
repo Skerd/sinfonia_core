@@ -64,7 +64,7 @@ function cardColumnsClass(columns: number | undefined): string {
     if (columns === 2) return "grid grid-cols-2 gap-2";
     if (columns === 3) return "grid grid-cols-3 gap-2";
     if (columns === 4) return "grid grid-cols-4 gap-2";
-    return "space-y-2";
+    return "flex flex-col gap-2";
 }
 
 function formatAmountWithCurrency(amountText: string, currency: unknown): string {
@@ -330,7 +330,7 @@ function SheetEmbeddedItemsList({
 
     const listBody =
         displayMode === "compact" ? (
-            <div className="space-y-1">
+            <div className="flex flex-col gap-y-1">
                 {pagination.slice.map((item, i) => {
                     const summary = buildCompactSummary(
                         item,
@@ -349,7 +349,7 @@ function SheetEmbeddedItemsList({
                 })}
             </div>
         ) : (
-            <div className="space-y-2">
+            <div className="flex flex-col gap-y-2">
                 {pagination.slice.map((item, i) => {
                     const globalIndex =
                         pagination.pageSize < pagination.total
@@ -358,7 +358,7 @@ function SheetEmbeddedItemsList({
                     return (
                     <div
                         key={itemKey(item, i)}
-                        className="rounded-lg border border-border/60 bg-card p-3 space-y-2"
+                        className="flex flex-col rounded-lg border border-border/60 bg-card p-3 gap-y-2"
                     >
                         <span className="text-xs font-medium text-muted-foreground">#{globalIndex}</span>
                         <div className={fieldsLayoutClass}>
@@ -416,8 +416,8 @@ function SheetEmbeddedItemsList({
         );
 
     return (
-        <div className="space-y-2">
-            <div className={cn("gap-2 space-y-2 max-h-[350px] overflow-y-auto", listClassName)}>{listBody}</div>
+        <div className="flex flex-col gap-y-2">
+            <div className={cn("flex flex-col gap-2 gap-y-2 max-h-[350px] overflow-y-auto", listClassName)}>{listBody}</div>
             <SheetListPaginationFooter
                 rangeLabel={pagination.rangeLabel}
                 pageIndex={pagination.pageIndex}

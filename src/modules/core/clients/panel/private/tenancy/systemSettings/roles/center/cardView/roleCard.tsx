@@ -1,10 +1,10 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {CompanyRole as CompanyRoleType} from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
+import {CardContent} from "@coreModule/components/ui/card.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import PermissionsTable from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/permissionsTable.tsx";
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useMemo, useState} from "react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import DeletedInfo from "@coreModule/components/custom/deletedInfo";
@@ -17,6 +17,9 @@ import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
 import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
+import {useEntityCard} from "@coreModule/helpers/hooks/useEntityCard.ts";
+import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
+import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
 
 function roleEditPath(role: CompanyRoleType) {
     const params = new URLSearchParams();
@@ -38,9 +41,18 @@ const RoleCard = React.memo(function RoleCard({
     resolveLanguageKey: _resolveLanguageKey,
 }: RoleCardProps) {
     const [open, setOpen] = useState(false);
-    const [action, setAction] = useState("");
-    const [role, setRole] = useState<CompanyRoleType>(roleProp);
-    const [hideAfterDeletion, setHideAfterDeletion] = useState(false);
+    const {
+        action,
+        setAction,
+        entity: role,
+        hideAfterDeletion,
+        onDelete,
+        onRestore,
+    } = useEntityCard({
+        entityProp: roleProp,
+        onDeleteProp,
+        onRestoreProp,
+    });
 
     const {read, restore} = useAccess("roles");
 
@@ -48,32 +60,6 @@ const RoleCard = React.memo(function RoleCard({
         if (!role.permissions || !read?.permissions) return undefined;
         return <PermissionsTable permissions={role.permissions} />;
     }, [role.permissions, read?.permissions]);
-
-    const onDelete = (data: DeletedData) => {
-        if (!data.deletedBy && !data.deletedAt) {
-            setHideAfterDeletion(true);
-        } else if (onDeleteProp) {
-            onDeleteProp(role, data);
-        } else {
-            setRole({...role, ...data});
-        }
-    };
-
-    const onRestore = () => {
-        if (onRestoreProp) {
-            onRestoreProp();
-        } else {
-            setRole({
-                ...role,
-                deletedAt: undefined,
-                deletedBy: undefined,
-            });
-        }
-    };
-
-    useEffect(() => {
-        setRole(roleProp);
-    }, [roleProp]);
 
     if (hideAfterDeletion || !restore) {
         return <></>;
@@ -83,57 +69,53 @@ const RoleCard = React.memo(function RoleCard({
     }
 
     return (
-        // Hover lives on the Card, not this layout wrapper, so the accent follows the ring it already draws.
-        <div className="group rounded-xl relative overflow-hidden cursor-pointer flex w-full items-stretch">
-            {(read.deletedBy || read.deletedAt) && (
-                <DeletedInfo deletedAt={role.deletedAt} deletedBy={role.deletedBy} />
-            )}
-
-            <Card className="p-0 bg-muted/50 flex-1 min-w-0 transition-[box-shadow,--tw-ring-color] duration-200 group-hover:shadow-md group-hover:ring-primary/40">
-                <CardHeader className="group pt-3 pb-2">
-                    <div className="flex items-center space-x-1 gap-2">
-                        <div className="grow min-w-0">
-                            <HiddenElement showLock randomLength={0}>
-                                {read?.name && (
-                                    <>
-                                        {role.name ? <CardTitle>{role.name}</CardTitle> : <ValueNotSet />}
-                                    </>
-                                )}
-                            </HiddenElement>
-                            <HiddenElement showLock randomLength={0}>
-                                {read?.slug && (
-                                    <>
-                                        {role.slug ? <CardDescription>{role.slug}</CardDescription> : <ValueNotSet />}
-                                    </>
-                                )}
-                            </HiddenElement>
-                        </div>
-                        <div onClick={(e) => e.stopPropagation()}>
-                            <ActionMenu
-                                accessModel="roles"
-                                deletedData={role}
-                                onAction={(a: string) => setAction(a)}
-                                editPath={roleEditPath(role)}
-                                hideEdit={!role.canEdit}
-                                hideDelete={!role.canDelete}
-                            />
-                        </div>
-                        <Button variant="outline" size="icon-sm" onClick={(e) => { e.stopPropagation(); setOpen(!open); }}>
-                            {open ? <ChevronUp /> : <ChevronDown />}
-                        </Button>
+        <>
+            <EntityCardShell onClick={() => setAction("view")} className="bg-muted/50">
+                <div className="flex w-full items-stretch">
+                    {(read.deletedBy || read.deletedAt) && (
+                        <DeletedInfo deletedAt={role.deletedAt} deletedBy={role.deletedBy} />
+                    )}
+                    <div className="w-full min-w-0">
+                        <EntityTextCardHeader
+                            title={role.name ? role.name : <ValueNotSet />}
+                            subtitle={role.slug ? role.slug : undefined}
+                            showTitle={!!read?.name}
+                            showSubtitle={!!read?.slug}
+                            actionMenu={
+                                <div className="flex items-center gap-1">
+                                    <ActionMenu
+                                        accessModel="roles"
+                                        deletedData={role}
+                                        onAction={(a: string) => setAction(a)}
+                                        editPath={roleEditPath(role)}
+                                        hideEdit={!role.canEdit}
+                                        hideDelete={!role.canDelete}
+                                    />
+                                    <Button
+                                        variant="outline"
+                                        size="icon-sm"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setOpen(!open);
+                                        }}
+                                    >
+                                        {open ? <ChevronUp /> : <ChevronDown />}
+                                    </Button>
+                                </div>
+                            }
+                        />
+                        <Collapsible open={open} onOpenChange={setOpen} className="w-full">
+                            <CollapsibleContent className="p-0">
+                                <CardContent className="flex flex-col gap-y-2 text-sm px-2 pt-0 pb-2">
+                                    <HiddenElement>
+                                        {read?.permissions && memoizedPermissionsTable}
+                                    </HiddenElement>
+                                </CardContent>
+                            </CollapsibleContent>
+                        </Collapsible>
                     </div>
-
-                    <Collapsible open={open} onOpenChange={setOpen} className="w-full">
-                        <CollapsibleContent className="p-0">
-                            <CardContent className="space-y-2 text-sm px-0 pt-0">
-                                <HiddenElement>
-                                    {read?.permissions && memoizedPermissionsTable}
-                                </HiddenElement>
-                            </CardContent>
-                        </CollapsibleContent>
-                    </Collapsible>
-                </CardHeader>
-            </Card>
+                </div>
+            </EntityCardShell>
 
             {!!action && (
                 <>
@@ -172,7 +154,7 @@ const RoleCard = React.memo(function RoleCard({
                     )}
                 </>
             )}
-        </div>
+        </>
     );
 });
 

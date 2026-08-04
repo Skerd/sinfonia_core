@@ -43,7 +43,7 @@ function KafkaBrokerCount({title, resolveLanguageKey}:{title: string, resolveLan
                     </Badge>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <div className="text-xs space-y-1 max-w-xs">
+                    <div className="flex flex-col text-xs gap-y-1 max-w-xs">
                         <div className="opacity-70">{resolveLanguageKey("brokersOnline")}:</div>
                         {list.length === 0 ? (
                             <div className="font-medium">{resolveLanguageKey("none")}</div>
@@ -76,7 +76,7 @@ function KafkaTopicCount({title, resolveLanguageKey}:{title: string, resolveLang
                     </Badge>
                 </TooltipTrigger>
                 <TooltipContent className="min-w-md">
-                    <div className="text-xs space-y-1 max-h-64 overflow-y-auto">
+                    <div className="flex flex-col text-xs gap-y-1 max-h-64 overflow-y-auto">
                         <div className="opacity-70">{resolveLanguageKey("topics")}:</div>
                         {list.length === 0 ? (
                             <div className="font-medium">{resolveLanguageKey("none")}</div>
@@ -138,7 +138,7 @@ function KafkaBrokers({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguage
                     </p>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <div className="text-xs space-y-1 max-w-xs">
+                    <div className="flex flex-col text-xs gap-y-1 max-w-xs">
                         {!!clusterId && (
                             <div>
                                 <span className="opacity-70">{resolveLanguageKey("clusterId")}: </span>
@@ -164,10 +164,10 @@ function KafkaResource({resolveLanguageKey}: KafkaResourceProps){
 
     return (
         <div className={cn(
-            "flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background space-y-1",
+            "flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background gap-y-1",
             {"border-destructive animate-pulse": !online}
         )}>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-x-2">
                 <KafkaOnline resolveLanguageKey={resolveLanguageKey} />
                 <div>
                     <p className={cn("text-sm font-medium", {"text-destructive": !online})}>{resolveLanguageKey("kafkaClusterTitle")}</p>

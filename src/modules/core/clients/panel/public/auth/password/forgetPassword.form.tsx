@@ -128,7 +128,7 @@ function ForgotPassword({
                     </form>
                 </Form>
             </CardContent>
-            <CardFooter className="flex flex-col space-y-2">
+            <CardFooter className="flex flex-col gap-y-2">
                 {
                     config.layout.activateSignup &&
                     <>

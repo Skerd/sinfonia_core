@@ -54,7 +54,7 @@ function AccountSettings({
                 description={resolveLanguageKey("description")}
             />
 
-            <div className='flex flex-1 flex-col space-y-2 overflow-hidden lg:flex-row lg:space-y-0 lg:space-x-6'>
+            <div className='flex flex-1 flex-col gap-y-2 overflow-hidden lg:flex-row lg:gap-y-0 lg:gap-x-6'>
                 <aside className='top-0 lg:sticky lg:w-1/5'>
                     <SidebarNav
                         items={sidebarNavItems}

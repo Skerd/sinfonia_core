@@ -50,7 +50,7 @@ function HiddenElement({
     if (!hasContent) {
         if (hideAll) return null;
         return (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-x-2">
                 {showLock && (
                     <TooltipDisplayer tooltip={resolveLanguageKey("tooltip")}>
                         <LockKeyhole

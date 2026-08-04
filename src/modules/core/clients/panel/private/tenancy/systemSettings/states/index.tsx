@@ -4,7 +4,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {State} from "armonia/src/modules/core/api/auxiliary/private/state/state.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconMapPlus} from "@tabler/icons-react";
-import {buildTitleBreadcrumb} from "@coreModule/helpers/general";
+import {buildPageTitle} from "@coreModule/helpers/general";
 import StateCard from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/actions/viewCities.tsx";
 import StateSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx";
@@ -56,7 +56,7 @@ function AllStates({resolveLanguageKey, countryId, countryName}: AllStatesProps)
             createLanguageKey="createState"
             buildEditPath={(state) => stateEditPath(countryId, countryName, state)}
             resolveLanguageKey={resolveLanguageKey}
-            headerTitle={buildTitleBreadcrumb(resolveLanguageKey("title"), [countryName])}
+            headerTitle={buildPageTitle(resolveLanguageKey("title"), [countryName])}
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
             renderCard={(state, onDelete, onRestore) => (
                 <StateCard

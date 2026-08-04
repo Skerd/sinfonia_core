@@ -44,7 +44,7 @@ export function FilterGroup({
             role="group"
             aria-label={depth > 0 ? (resolveLanguageKey("filterGroup")) : undefined}
             className={cn(
-                "space-y-2",
+                "flex flex-col gap-y-2",
                 depth > 0 && "border border-l-6 rounded-md bg-muted/5 p-3 my-2"
             )}
         >
@@ -90,7 +90,7 @@ export function FilterGroup({
                 }
             </div>
 
-            <div className="space-y-2 ">
+            <div className="flex flex-col gap-y-2 ">
 
                 {
                     group.rules.map((rule: import("armonia/src/modules/core/database/filter").FilterRule, index: number) => {
@@ -131,7 +131,7 @@ export function FilterGroup({
                     })
                 }
 
-                <div className={cn("flex items-center space-x-1", {"mt-6": depth === 0})}>
+                <div className={cn("flex items-center gap-x-1", {"mt-6": depth === 0})}>
                     <div className="flex-1">
                         <Button
                             type="button"

@@ -373,7 +373,7 @@ function PermissionsTable({
     const totalRows = filteredData.length;
 
     return (
-        <div className="space-y-2 mt-2">
+        <div className="flex flex-col gap-y-2 mt-2">
             <div className="flex flex-wrap items-center justify-between gap-2" style={{border: "0px solid red"}}>
                 <div className="flex grow flex-wrap gap-2" style={{border: "0px solid red"}}>
 

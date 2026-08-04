@@ -77,10 +77,10 @@ function SheetPaginatedReferenceCardList({
     const slice = pagination.slice as ReferenceStub[];
 
     return (
-        <div className="space-y-2">
+        <div className="flex flex-col gap-y-2">
             <div
                 className={cn(
-                    "gap-2 space-y-2 max-h-[350px] overflow-y-auto",
+                    "flex flex-col gap-2 gap-y-2 max-h-[350px] overflow-y-auto",
                     listClassName,
                 )}
             >

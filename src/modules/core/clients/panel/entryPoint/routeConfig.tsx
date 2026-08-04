@@ -31,6 +31,7 @@ import AllMessagingProviders from "@coreModule/clients/panel/private/tenancy/sys
 import CreateMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/createMessagingProvider.tsx";
 import EditMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/editMessagingProvider.tsx";
 import Apps from "@coreModule/clients/panel/private/apps";
+import PanelHomePage from "@coreModule/clients/panel/private/home/PanelHomePage.tsx";
 
 function safeDecode(value: string | null): string | undefined {
     if (value == null || value === "") return undefined;
@@ -42,6 +43,15 @@ function safeDecode(value: string | null): string | undefined {
 }
 
 export function renderCenterPanelContent(args: RouteConfigArgs) {
+    /*
+     * Home is matched before the module contributions rather than being mounted
+     * as a `z-50` overlay outside the shell. As an overlay it had to render
+     * `<></>` on every other route while staying mounted, and it carried its own
+     * copy of the notification / theme / language cluster because it sat above
+     * the shell header that already provides them.
+     */
+    if (!args.menu || args.menu === "home") return <PanelHomePage />;
+
     const fromModules = runRouteConfigContributions(args);
     if (fromModules !== undefined) return fromModules;
     return renderCoreCenterPanelContent(args);

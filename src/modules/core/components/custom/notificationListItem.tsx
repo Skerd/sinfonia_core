@@ -26,7 +26,7 @@ export function NotificationListItem({notification, resolveLanguageKey}: Notific
                 <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
                     {notification.description ?? notification.code}
                 </p>
-                <time className="pt-0.5 text-[11px] tabular-nums leading-none text-muted-foreground/90">
+                <time className="pt-0.5 text-2xs tabular-nums leading-none text-muted-foreground/90">
                     {notificationDateFormatter(notification.date, resolveLanguageKey)}
                 </time>
             </div>

@@ -148,7 +148,7 @@ function SheetAuditHistoryDrawerInner({
             <div
                 key={c.field}
                 className={cn(
-                    "rounded-md border px-3 py-2 text-xs space-y-1",
+                    "flex flex-col rounded-md border px-3 py-2 text-xs gap-y-1",
                     "border-sidebar-border/70 bg-sidebar-accent/25 text-sidebar-foreground",
                 )}
             >
@@ -196,7 +196,7 @@ function SheetAuditHistoryDrawerInner({
                                 >
                                     <AuditActivityIcon className="size-5" />
                                 </div>
-                                <div className="min-w-0 flex-1 space-y-1">
+                                <div className="min-w-0 flex-1 gap-y-1">
                                     <SheetTitle className="text-base font-medium md:text-lg">
                                         {resolveLanguageKey("drawerTitle")}
                                     </SheetTitle>
@@ -213,7 +213,7 @@ function SheetAuditHistoryDrawerInner({
                         </div>
                     </SheetHeader>
 
-                    <div className="flex-full min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pb-6 mt-4">
+                    <div className="flex-full min-h-0 flex-1 gap-y-4 overflow-y-auto px-4 pb-6 mt-4">
                         {loading && entries.length === 0 ? (
                             <div className="flex justify-center py-8">
                                 <Loader />
@@ -222,7 +222,7 @@ function SheetAuditHistoryDrawerInner({
                         ) : null}
 
                         {error && !loading && entries.length === 0 ? (
-                            <div className="space-y-3 py-8 text-center">
+                            <div className="flex flex-col gap-y-3 py-8 text-center">
                                 <p className="text-sm font-medium text-sidebar-foreground">{resolveLanguageKey("errorTitle")}</p>
                                 <Button variant="outline" size="sm" type="button" onClick={() => void fetchPage(null, false)}>
                                     {resolveLanguageKey("retry")}
@@ -235,13 +235,13 @@ function SheetAuditHistoryDrawerInner({
                         ) : null}
 
                         {entries.length > 0 ? (
-                            <ul className="relative ml-2 space-y-6 border-l border-sidebar-border/80 pl-3">
+                            <ul className="flex flex-col relative ml-2 gap-y-6 border-l border-sidebar-border/80 pl-3">
                                 {entries.map((e) => {
                                     const when = formatDistanceToNow(new Date(e.createdAt), {addSuffix: true});
                                     const who = e.actor?.displayName ?? String(resolveLanguageKey("systemActor"));
                                     const verb = actionVerb(e.action, resolveLanguageKey);
                                     return (
-                                        <li key={e.id} className="space-y-2 pl-5 -translate-x-[1px]">
+                                        <li key={e.id} className="flex flex-col gap-y-2 pl-5 -translate-x-[1px]">
                                             <div className="relative">
                                                 <span
                                                     className="pointer-events-none absolute -left-[1.375rem] top-1.5 size-2.5 rounded-full border border-sidebar-border bg-sidebar shadow-[0_0_0_4px_var(--color-sidebar)]"
@@ -259,7 +259,7 @@ function SheetAuditHistoryDrawerInner({
                                                         {resolveLanguageKey("noFieldChanges")}
                                                     </p>
                                                 ) : (
-                                                    <div className="space-y-2">{e.changes.map((c) => renderChangeRow(c))}</div>
+                                                    <div className="flex flex-col gap-y-2">{e.changes.map((c) => renderChangeRow(c))}</div>
                                                 ))}
                                         </li>
                                     );

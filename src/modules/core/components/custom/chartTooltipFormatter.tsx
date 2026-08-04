@@ -22,7 +22,7 @@ export function chartTooltipValueFormatter(
         return (
             <>
                 <div
-                    className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
+                    className="h-2.5 w-2.5 shrink-0 rounded-xs"
                     style={{ backgroundColor: indicatorColor }}
                 />
                 <div className="flex flex-1 items-center justify-between gap-3 leading-none">

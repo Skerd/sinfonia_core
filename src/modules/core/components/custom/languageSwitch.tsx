@@ -31,7 +31,7 @@ function LanguageSwitch({resolveLanguageKey, showTitles = false}: LanguageSwitch
                     {
                         supportedLanguages?.filter((tempLanguage: any) => tempLanguage.languageCode === languageCode).map((language: any, index: number) => {
                             return (
-                                <div className="flex items-center justify-center hover:cursor-pointer space-x-1" key={"generated_language_select_" + index}>
+                                <div className="flex items-center justify-center hover:cursor-pointer gap-x-1" key={"generated_language_select_" + index}>
                                     <img alt="supported_language_flag" className="size-[1.2rem]" src={`/flags/${language.languageCode}.png`}/>
                                     {
                                         showTitles &&
@@ -59,7 +59,7 @@ function LanguageSwitch({resolveLanguageKey, showTitles = false}: LanguageSwitch
                                 key={"generated_language_select_" + index}
                                 onClick={() => {dispatch(changeLanguage(language.languageCode));}}
                             >
-                                <div className="flex items-center space-x-1">
+                                <div className="flex items-center gap-x-1">
                                     <img alt="supported_language_flag" className="ms-auto size-4" src={`/flags/${language.languageCode}.png`}/>
                                     <p>{language.name}</p>
                                 </div>

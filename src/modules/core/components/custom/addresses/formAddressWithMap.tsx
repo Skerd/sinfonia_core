@@ -197,7 +197,7 @@ export function SingleFormAddressWithMap({
                     : "grid grid-cols-1 gap-4 pe-4 items-start"
             }
         >
-            <div className={showMap ? "lg:col-span-2 space-y-4 min-w-0" : "space-y-4"}>
+            <div className={showMap ? "lg:col-span-2 flex flex-col gap-4 min-w-0" : "flex flex-col gap-4"}>
                 {showCascade && (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
@@ -480,7 +480,7 @@ function FormAddressArrayWithMap({
                 </Button>
             </div>
             {fields.map((field, index) => (
-                <div key={field.id} className="rounded-lg border border-border/60 p-3 space-y-3" style={{border: "2px solid red"}}>
+                <div key={field.id} className="flex flex-col rounded-lg border border-border/60 p-3 gap-y-3" style={{border: "2px solid red"}}>
                     <div className="flex justify-end">
                         <Button
                             type="button"

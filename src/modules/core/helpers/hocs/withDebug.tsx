@@ -154,7 +154,7 @@ const withDebug = (
         return (
             <>
                 <div
-                    className="flex items-center space-x-0.5 z-10 px-0.5 py-1 border bg-muted rounded-lg text-xs"
+                    className="flex items-center gap-x-0.5 z-10 px-0.5 py-1 border bg-muted rounded-lg text-xs"
                     onClick={(e) => {
                         e.stopPropagation();
                         e.preventDefault();
@@ -187,7 +187,7 @@ const withDebug = (
                                             <p className="font-semibold">{props.withLanguage?.languageCode}</p>
 
                                             <p>path:</p>
-                                            <div className="flex items-center space-x-1">
+                                            <div className="flex items-center gap-x-1">
                                                 <span className="font-semibold">{props.withLanguage?.path}</span>
                                                 <CopyTooltip text={props.withLanguage?.path}/>
                                             </div>
@@ -330,7 +330,7 @@ const withDebug = (
                                         </div>
 
                                         {hasAxiosToastLanguageBlocks && props.withAxios && (
-                                        <div className="w-full border-t pt-2 mt-2 space-y-2">
+                                        <div className="flex flex-col w-full border-t pt-2 mt-2 gap-y-2">
                                             <p className="text-xs font-semibold w-full">
                                                 Toast previews (useHttpRequest / withAxios)
                                             </p>
@@ -408,7 +408,7 @@ const withDebug = (
                                             <p>Error-Render:</p>
                                             <p className="font-semibold">{props.withClearance?.renderComponentOnError ? "true" : "false"}</p>
                                             <p>In behalf of:</p>
-                                            <div className="flex items-center space-x-1">
+                                            <div className="flex items-center gap-x-1">
                                                 <span
                                                     className="font-semibold">{props.withClearance.ifPropValue || "-"}</span>
                                                 {
@@ -444,7 +444,7 @@ const withDebug = (
                                                 </pre>
                                             </p>
                                             <p>In behalf of:</p>
-                                            <div className="flex items-center space-x-1">
+                                            <div className="flex items-center gap-x-1">
                                                 <span
                                                     className="font-semibold">{props.withResourceAccess.ifPropValue || "-"}</span>
                                                 {

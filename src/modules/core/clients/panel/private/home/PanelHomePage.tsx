@@ -1,20 +1,17 @@
 import {compose} from "redux";
-import {useEffect, useMemo, useRef, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useEffect, useMemo, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {getPanelNavGroups} from "@coreModule/helpers/panel/panelNavGroups.ts";
 import {flattenPanelNavLinks, type FlatPanelNavLink} from "@coreModule/helpers/panel/flattenPanelNavLinks.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import {Input} from "@coreModule/components/ui/input.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import ThemeSwitch from "@coreModule/components/custom/themeSwitch.tsx";
-import LanguageSwitch from "@coreModule/components/custom/languageSwitch.tsx";
-import NotificationBell from "@coreModule/components/custom/notificationBell";
+import {Empty, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import {LayoutGrid, Search} from "lucide-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Separator} from "@coreModule/components/ui/separator.tsx";
+import {Kbd, KbdGroup} from "@coreModule/components/ui/kbd.tsx";
 
 const TILE_COLORS = [
     {
@@ -194,7 +191,7 @@ function AppTile({
                         {link.title}
                     </span>
                     {link.badge != null && (
-                        <Badge variant="secondary" className="px-1.5 py-0 text-[10px]">
+                        <Badge variant="secondary" className="px-1.5 py-0 text-3xs">
                             {link.badge}
                         </Badge>
                     )}
@@ -254,11 +251,8 @@ function RecentChip({
 
 function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
 
-    const {menu} = useParams();
     const navigate = useNavigate();
-    const [query, setQuery] = useState("");
     const [launchingUrl, setLaunchingUrl] = useState<string | null>(null);
-    const searchRef = useRef<HTMLInputElement>(null);
 
     const user = useSelector((state: RootState) => state.authentication.user);
     const channelsUnread = useSelector((state: RootState) => state.chat.channelsUnread);
@@ -271,19 +265,8 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
 
     const {recentLinks, trackVisit} = useRecentLinks(allLinks);
 
-    const sections = useMemo(() => {
-        const q = query.trim().toLowerCase();
-        const filtered = q
-            ? allLinks.filter(
-                  (l) =>
-                      l.title.toLowerCase().includes(q) ||
-                      l.groupTitle.toLowerCase().includes(q),
-              )
-            : allLinks;
-        return groupLinksBySection(filtered);
-    }, [allLinks, query]);
+    const sections = useMemo(() => groupLinksBySection(allLinks), [allLinks]);
 
-    const isSearching = query.trim().length > 0;
     const hasResults = sections.size > 0;
     const greeting = buildGreeting(user?.name ?? "", resolveLanguageKey);
 
@@ -291,29 +274,17 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
     useEffect(() => {
         if (!launchingUrl) return;
         navigate(launchingUrl);
-        // const timer = setTimeout(() => navigate(launchingUrl), LAUNCH_DELAY_MS);
-        // return () => clearTimeout(timer);
-    }, [launchingUrl]);
+    }, [launchingUrl, navigate]);
 
     function handleLaunch(url: string) {
         trackVisit(url);
         setLaunchingUrl(url);
     }
 
-    useEffect(() => {
-        if( !!menu ){
-            setLaunchingUrl(null);
-        }
-    }, [menu]);
-
     let staggerIndex = 0;
 
-    if( !!menu ){
-        return <></>
-    }
-
     return (
-        <div className="absolute top-0 left-0 flex h-full flex-col overflow-y-auto bg-background flex-full max-h-dvh min-h-dvh min-w-dvw z-50">
+        <div className="relative flex min-h-0 flex-1 flex-col gap-4">
 
             <div className="pointer-events-none absolute inset-x-0 top-0 h-[200px] overflow-hidden" aria-hidden>
                 <div
@@ -322,110 +293,88 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
                 />
             </div>
 
-            <header className="relative z-50 flex shrink-0 items-center border-b bg-background/80 px-2 py-1 backdrop-blur supports-backdrop-filter:bg-background/60">
-                <div className="ms-auto flex items-center gap-2">
-                    <NotificationBell />
-                    <Separator orientation="vertical" className="my-1 h-6 shrink-0" />
-                    <ThemeSwitch />
-                    <LanguageSwitch />
-                </div>
-            </header>
-
-            <div className="flex-full gap-4">
-
+            <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-4 pt-6 md:pb-16">
                 <div className="text-center">
-                    <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">{greeting}</h1>
+                    <h1 className="font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl">{greeting}</h1>
                     <p className="mt-2 text-sm text-muted-foreground md:text-base">{resolveLanguageKey("home.subtitle")}</p>
                 </div>
 
-                <div className="relative mx-auto w-full max-w-5xl px-4">
-                    <Search className="pointer-events-none absolute start-8 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                        ref={searchRef}
-                        type="search"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder={resolveLanguageKey("home.searchPlaceholder")}
+                <div className="relative w-full">
+                    <button
+                        type="button"
                         className={cn(
-                            "h-12 rounded-2xl pe-16 ps-11 text-sm",
-                            "border-border/60 bg-card shadow-sm",
-                            "transition-shadow duration-200",
-                            "focus-visible:border-primary/40 focus-visible:shadow-md focus-visible:ring-0",
+                            "flex h-12 w-full items-center gap-3 rounded-2xl pe-4 ps-11 text-start text-sm",
+                            "border border-border/60 bg-card shadow-e1 text-muted-foreground",
+                            "transition-shadow duration-200 hover:shadow-e2",
+                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                         )}
-                        aria-label={resolveLanguageKey("home.searchPlaceholder")}
-                    />
-                    {/*<kbd className="pointer-events-none absolute end-7.5 top-1/2 hidden -translate-y-1/2 items-center rounded-lg border bg-muted/70 px-2 py-1 font-mono text-[10px] text-muted-foreground sm:flex">*/}
-                    {/*    ⌘K*/}
-                    {/*</kbd>*/}
+                        onClick={() => window.dispatchEvent(new CustomEvent("panel:open-command-palette"))}
+                        aria-label={String(resolveLanguageKey("home.searchPlaceholder") || "Search")}
+                    >
+                        <Search className="pointer-events-none absolute start-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                        <span className="flex-1 truncate">{resolveLanguageKey("home.searchPlaceholder")}</span>
+                        <KbdGroup className="pointer-events-none hidden sm:inline-flex">
+                            <Kbd>⌘</Kbd>
+                            <Kbd>K</Kbd>
+                        </KbdGroup>
+                    </button>
                 </div>
 
-                <div className="mx-auto w-full max-w-5xl flex-1 px-4 z-10">
-                    {
-                        !isSearching && recentLinks.length > 0 &&
-                        <>
-                            <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
-                                {recentLinks.map((link, i) => (
-                                    <RecentChip
-                                        key={link.url}
-                                        link={link}
-                                        color={TILE_COLORS[i % TILE_COLORS.length]}
-                                        launchingUrl={launchingUrl}
-                                        onLaunch={handleLaunch}
-                                    />
-                                ))}
-                            </div>
-                        </>
-                    }
-                </div>
-
-                <div className="flex-full">
-                    <div className="relative mx-auto w-full max-w-5xl flex-1 px-4 md:pb-16">
-
-                        {/* No results */}
-                        {!hasResults && (
-                            <div className="flex flex-col items-center gap-3 py-20 text-center">
-                                <Search className="size-10 text-muted-foreground/25" strokeWidth={1} />
-                                <p className="text-sm text-muted-foreground">
-                                    {resolveLanguageKey("home.noResults")}
-                                </p>
-                            </div>
-                        )}
-
-                        {/* Sections */}
-                        <div className="space-y-10">
-                            {[...sections.entries()].map(([sectionTitle, links], sectionIndex) => (
-                                <section key={sectionTitle}>
-                                    <div className="mb-4 flex items-center gap-2.5">
-                                        <span className="size-1.5 shrink-0 rounded-full bg-muted-foreground/30" />
-                                        <h2 className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-                                            {sectionTitle}
-                                        </h2>
-                                        <span className="text-[10px] text-muted-foreground/40">{links.length}</span>
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                                        {links.map((link, linkIndex) => {
-                                            const tile = (
-                                                <AppTile
-                                                    key={`${link.url}-${link.title}`}
-                                                    link={link}
-                                                    color={TILE_COLORS[(sectionIndex + linkIndex) % TILE_COLORS.length]}
-                                                    staggerIndex={staggerIndex}
-                                                    launchingUrl={launchingUrl}
-                                                    onLaunch={handleLaunch}
-                                                />
-                                            );
-                                            staggerIndex++;
-                                            return tile;
-                                        })}
-                                    </div>
-                                </section>
-                            ))}
-                        </div>
+                {recentLinks.length > 0 && (
+                    <div className="z-10 flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
+                        {recentLinks.map((link, i) => (
+                            <RecentChip
+                                key={link.url}
+                                link={link}
+                                color={TILE_COLORS[i % TILE_COLORS.length]}
+                                launchingUrl={launchingUrl}
+                                onLaunch={handleLaunch}
+                            />
+                        ))}
                     </div>
+                )}
+
+                {!hasResults && (
+                    <Empty className="py-20">
+                        <EmptyHeader>
+                            <EmptyMedia variant="icon">
+                                <Search />
+                            </EmptyMedia>
+                            <EmptyTitle>{resolveLanguageKey("home.noResults")}</EmptyTitle>
+                        </EmptyHeader>
+                    </Empty>
+                )}
+
+                <div className="flex flex-col gap-10">
+                    {[...sections.entries()].map(([sectionTitle, links], sectionIndex) => (
+                        <section key={sectionTitle}>
+                            <div className="mb-4 flex items-center gap-2.5">
+                                <span className="size-1.5 shrink-0 rounded-full bg-muted-foreground/30" />
+                                <h2 className="text-2xs font-semibold uppercase tracking-widest text-muted-foreground">
+                                    {sectionTitle}
+                                </h2>
+                                <span className="text-3xs text-muted-foreground/40">{links.length}</span>
+                            </div>
+                            {/* Same intrinsic policy as the entity grids, at tile scale. */}
+                            <div className="grid gap-3 grid-cols-[repeat(auto-fill,minmax(min(9rem,100%),1fr))]">
+                                {links.map((link, linkIndex) => {
+                                    const tile = (
+                                        <AppTile
+                                            key={`${link.url}-${link.title}`}
+                                            link={link}
+                                            color={TILE_COLORS[(sectionIndex + linkIndex) % TILE_COLORS.length]}
+                                            staggerIndex={staggerIndex}
+                                            launchingUrl={launchingUrl}
+                                            onLaunch={handleLaunch}
+                                        />
+                                    );
+                                    staggerIndex++;
+                                    return tile;
+                                })}
+                            </div>
+                        </section>
+                    ))}
                 </div>
-
-
-
             </div>
         </div>
     );

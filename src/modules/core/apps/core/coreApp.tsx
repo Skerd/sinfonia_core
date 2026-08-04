@@ -2,6 +2,7 @@ import {Toaster} from "@coreModule/components/ui/sonner.tsx";
 import {Provider} from "react-redux";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {ThemeProvider} from "@coreModule/helpers/context/providers/theme-provider.tsx";
+import {DensityProvider} from "@coreModule/helpers/context/providers/density-provider.tsx";
 import {LanguageProvider} from "@coreModule/helpers/context/providers/language-provider.tsx";
 import {TableConfigProvider} from "@coreModule/helpers/context/tableConfigContext";
 import {ViewConfigProvider} from "@coreModule/helpers/context/viewConfigContext";
@@ -12,7 +13,6 @@ import Loader from "@coreModule/components/custom/loader.tsx";
 import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {getLocalStorageValue, setLocalStorageValue} from "@coreModule/helpers/context/localStorage/localStorageProvider.ts";
 import {generateUUID} from "@coreModule/helpers/general";
-import PanelHomePage from "@coreModule/clients/panel/private/home/PanelHomePage.tsx";
 import {SidebarProvider} from "@coreModule/components/ui/sidebar.tsx";
 import {sinfoniaRouterBasename} from "@coreModule/helpers/sinfoniaRouterBasename";
 
@@ -49,28 +49,27 @@ function CoreApp() {
                 <ViewConfigProvider>
                     <LanguageProvider storageKey="vite-ui-language">
                         <ThemeProvider storageKey="vite-ui-theme">
-                            <BrowserRouter basename={sinfoniaRouterBasename()}>
-                                <Suspense fallback={<Loader />}>
-                                    <Routes>
-                                        <Route path="/authenticate/:panel/:platform?" element={<ErrorBoundary><AuthenticationPage/></ErrorBoundary>}/>
-                                        <Route element={<PrivatePage />}>
-                                            <Route path="/:menu?/:subview?/:id?/*" element={
-                                                <>
-                                                    <PanelHomePage />
+                            <DensityProvider>
+                                <BrowserRouter basename={sinfoniaRouterBasename()}>
+                                    <Suspense fallback={<Loader />}>
+                                        <Routes>
+                                            <Route path="/authenticate/:panel/:platform?" element={<ErrorBoundary><AuthenticationPage/></ErrorBoundary>}/>
+                                            <Route element={<PrivatePage />}>
+                                                <Route path="/:menu?/:subview?/:id?/*" element={
                                                     <SidebarProvider className="h-svh max-h-svh min-h-0 overflow-hidden">
                                                         <AdministrativePanelSideBar />
                                                         <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
                                                             <CenterPanel />
                                                         </div>
                                                     </SidebarProvider>
-                                                </>
-                                            } />
-                                        </Route>
-                                    </Routes>
-                                </Suspense>
-                            </BrowserRouter>
-                            {/* Inside ThemeProvider so toasts resolve the same theme as the app. */}
-                            <ToasterContainer />
+                                                } />
+                                            </Route>
+                                        </Routes>
+                                    </Suspense>
+                                </BrowserRouter>
+                                {/* Inside ThemeProvider so toasts resolve the same theme as the app. */}
+                                <ToasterContainer />
+                            </DensityProvider>
                         </ThemeProvider>
                     </LanguageProvider>
                 </ViewConfigProvider>

@@ -82,7 +82,7 @@ function AccountSecurityEnableOtpForm({
 
     return(
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
                 <div>
                     {
                         Object.values(resolveLanguageKey("steps") || {})?.map((step: string, index: number) => {
@@ -98,7 +98,7 @@ function AccountSecurityEnableOtpForm({
                     }
                 </div>
 
-                <div className="w-full flex flex-col items-center space-y-2">
+                <div className="w-full flex flex-col items-center gap-y-2">
                     <img src={generatedOtpData?.data_url} alt="QR Code"/>
                 </div>
 
@@ -114,7 +114,7 @@ function AccountSecurityEnableOtpForm({
                             render={({ field }) => (
                                 <FormItem className="w-full">
                                     <FormLabel>{resolveLanguageKey("form.tokenLabel")}</FormLabel>
-                                    <div className="flex items-center space-x-2">
+                                    <div className="flex items-center gap-x-2">
 
                                         <FormControl>
                                             <Input

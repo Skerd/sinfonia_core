@@ -21,7 +21,7 @@ type FilterValueInputProps = WithLanguageType & {
 };
 
 const inputBase = "w-full";
-// const inputBase = "h-6 text-[11px]";
+// const inputBase = "h-6 text-2xs";
 
 export function FilterValueInput({
     fieldConfig,
