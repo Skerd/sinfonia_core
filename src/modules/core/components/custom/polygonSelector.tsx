@@ -34,13 +34,19 @@ interface PolygonSelectorProps {
     onFloorClick?: (floor: any) => void;
     /** Optional content to show when hovering over a phantom polygon (e.g. floor card) */
     phantomHoverContent?: (item: {_id: string, name: string, polygonCoordinates: PolygonPoint[]}) => React.ReactNode;
+    /** Fired when pointer enters/leaves a phantom polygon (dashboard hover sync). */
+    onPhantomHoverChange?: (id: string | null) => void;
+    /** External highlight id (e.g. sidebar hover) — same fill treatment as stayHovered. */
+    externalHoveredId?: string;
     onPointsChange: (points: PolygonPoint[]) => void;
     onClosedChange?: (isClosed: boolean) => void;
     disabled?: boolean;
     className?: string;
     dashboard?: boolean;
     stayHovered?: string;
-    fillHeight?: boolean
+    fillHeight?: boolean;
+    /** Strip Card chrome (border/ring/padding) for embedded marketing viewers. */
+    borderless?: boolean;
 }
 
 const MIN_ZOOM = 100;
@@ -72,7 +78,13 @@ const ZOOM_RANGES = [
     { min: 630, max: MAX_ZOOM, value: 70 },
 ];
 
-function getRenderedImageSize(naturalWidth: number, naturalHeight: number, containerWidth: number, containerHeight: number): { width: number; height: number; left: number; top: number } {
+function getRenderedImageSize(
+    naturalWidth: number,
+    naturalHeight: number,
+    containerWidth: number,
+    containerHeight: number,
+    fit: "contain" | "cover" = "contain",
+): { width: number; height: number; left: number; top: number } {
     if (naturalWidth <= 0 || naturalHeight <= 0 || containerWidth <= 0 || containerHeight <= 0) {
         return { width: 0, height: 0, left: 0, top: 0 };
     }
@@ -82,7 +94,15 @@ function getRenderedImageSize(naturalWidth: number, naturalHeight: number, conta
     let renderedWidth: number;
     let renderedHeight: number;
 
-    if (imageAspect > containerAspect) {
+    if (fit === "cover") {
+        if (imageAspect > containerAspect) {
+            renderedHeight = containerHeight;
+            renderedWidth = containerHeight * imageAspect;
+        } else {
+            renderedWidth = containerWidth;
+            renderedHeight = containerWidth / imageAspect;
+        }
+    } else if (imageAspect > containerAspect) {
         renderedWidth = containerWidth;
         renderedHeight = containerWidth / imageAspect;
     } else {
@@ -112,6 +132,8 @@ function PolygonSelector({
     initialPoints = [],
     phantomPoints = [],
     phantomHoverContent,
+    onPhantomHoverChange,
+    externalHoveredId = "",
     onFloorClick = () => {},
     onPointsChange,
     onClosedChange,
@@ -120,9 +142,11 @@ function PolygonSelector({
     resolveLanguageKey,
     dashboard = false,
     stayHovered = "",
-    fillHeight = false
+    fillHeight = false,
+    borderless = false,
 }: PolygonSelectorProps & WithLanguageType) {
 
+    const imagePadding = borderless ? 0 : IMAGE_PADDING;
     const [zoom, setZoom] = useState(MIN_ZOOM);
     const [isPanning, setIsPanning] = useState(false);
     const [small, setSmall] = useState(!dashboard);
@@ -149,8 +173,11 @@ function PolygonSelector({
     const [containerDimensions, setContainerDimensions] = useState<{ width: number; height: number } | null>(null);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [naturalSize, setNaturalSize] = useState<{ width: number; height: number } | null>(null);
+    /** Only swap the visible <img> src once natural size is known — avoids stretch→snap “zoom”. */
+    const [renderedImageUrl, setRenderedImageUrl] = useState(imageUrl);
 
     const imageRef = useRef<HTMLImageElement>(null);
+    const stageRef = useRef<HTMLDivElement>(null);
     const pendingScrollRef = useRef<{ x: number; y: number } | null>(null);
     const hasHadPointsRef = useRef(false);
 
@@ -303,9 +330,8 @@ function PolygonSelector({
 
         // this is for drag
         if( dragActive ){
-            const img = imageRef.current;
-            if (!img) return;
-            const rect = img.getBoundingClientRect();
+            const content = getContentRect();
+            if (!content) return;
             const dx = e.clientX - startX.current;
             const dy = e.clientY - startY.current;
 
@@ -319,14 +345,14 @@ function PolygonSelector({
 
             if (dragIndex < 0 || dragIndex >= points.length || Number.isNaN(dragIndex)) return;
 
-            const newX = Math.max(0, Math.min(rect.width, points[dragIndex].x + dx));
-            const newY = Math.max(0, Math.min(rect.height, points[dragIndex].y + dy));
+            const newX = Math.max(0, Math.min(content.width, points[dragIndex].x + dx));
+            const newY = Math.max(0, Math.min(content.height, points[dragIndex].y + dy));
 
             const newPoint = {
                 x: newX,
                 y: newY,
-                xCoeff: Math.max(0, Math.min(1, newX / rect.width)),
-                yCoeff: Math.max(0, Math.min(1, newY / rect.height)),
+                xCoeff: Math.max(0, Math.min(1, newX / content.width)),
+                yCoeff: Math.max(0, Math.min(1, newY / content.height)),
             }
             const updatedPoints = [...points];
             updatedPoints[dragIndex] = newPoint;
@@ -385,9 +411,8 @@ function PolygonSelector({
 
         if (circleTarget?.id?.includes("phantom-point") && circleTarget.cx && circleTarget.cy) {
             setIsClosed(false);
-            const img = imageRef.current;
-            if (!img) return;
-            const rect = img.getBoundingClientRect();
+            const content = getContentRect();
+            if (!content) return;
 
             console.log(circleTarget.cx);
             const x = parseFloat(circleTarget.cx.animVal.valueAsString);
@@ -398,27 +423,27 @@ function PolygonSelector({
                 {
                     x,
                     y,
-                    xCoeff: Math.max(0, Math.min(1, x / rect.width)),
-                    yCoeff: Math.max(0, Math.min(1, y / rect.height)),
+                    xCoeff: Math.max(0, Math.min(1, x / content.width)),
+                    yCoeff: Math.max(0, Math.min(1, y / content.height)),
                 },
             ]);
 
         }
         else if (e.target === imageRef?.current && (e.clientX === startX.current || e.clientY === startY.current) ) {
             setIsClosed(false);
-            const img = imageRef.current;
-            if (!img) return;
-            const rect = img.getBoundingClientRect();
-            const localX = e.clientX - rect.left;
-            const localY = e.clientY - rect.top;
+            const content = getContentRect();
+            if (!content) return;
+            const localX = e.clientX - content.left;
+            const localY = e.clientY - content.top;
+            if (localX < 0 || localY < 0 || localX > content.width || localY > content.height) return;
 
             setPoints((prev) => [
                 ...prev,
                 {
                     x: localX,
                     y: localY,
-                    xCoeff: Math.max(0, Math.min(1, localX / rect.width)),
-                    yCoeff: Math.max(0, Math.min(1, localY / rect.height)),
+                    xCoeff: Math.max(0, Math.min(1, localX / content.width)),
+                    yCoeff: Math.max(0, Math.min(1, localY / content.height)),
                 },
             ]);
         }
@@ -451,6 +476,21 @@ function PolygonSelector({
         return (ZOOM_RANGES.find(r => currentZoom >= r.min && currentZoom <= r.max)?.value ?? 10);
     }
 
+    /** Content (drawn image) box in viewport coords — correct for contain-sized / object-fit imgs. */
+    const getContentRect = () => {
+        const stage = stageRef.current;
+        if (!stage || svgCoordinates.width <= 0 || svgCoordinates.height <= 0) {
+            return null;
+        }
+        const stageRect = stage.getBoundingClientRect();
+        return {
+            left: stageRect.left + svgCoordinates.left,
+            top: stageRect.top + svgCoordinates.top,
+            width: svgCoordinates.width,
+            height: svgCoordinates.height,
+        };
+    };
+
     useEffect(() => {
         const el = containerRef.current;
         if (!el) return;
@@ -466,16 +506,52 @@ function PolygonSelector({
         return () => observer.disconnect();
     }, [small, containerHeight]);
 
+    // Preload the next image and only commit src + natural size together so the
+    // fitted box never briefly uses the previous image’s aspect (looks like a zoom).
+    useLayoutEffect(() => {
+        let cancelled = false;
+        setZoom(MIN_ZOOM);
+        setHoveredPhantomIndex(null);
+        setPhantomHoverPosition(null);
+        onPhantomHoverChange?.(null);
+
+        const commit = (width: number, height: number, url: string) => {
+            if (cancelled || width <= 0 || height <= 0) return;
+            setNaturalSize({width, height});
+            setRenderedImageUrl(url);
+            setImageLoaded(true);
+        };
+
+        const preload = new Image();
+        preload.onload = () => commit(preload.naturalWidth, preload.naturalHeight, imageUrl);
+        preload.onerror = () => {
+            if (cancelled) return;
+            setRenderedImageUrl(imageUrl);
+            setImageLoaded(true);
+        };
+        preload.src = imageUrl;
+        if (preload.complete && preload.naturalWidth > 0) {
+            commit(preload.naturalWidth, preload.naturalHeight, imageUrl);
+        }
+
+        return () => {
+            cancelled = true;
+        };
+        // intentionally omit onPhantomHoverChange — parent often passes an unstable callback
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [imageUrl]);
+
     useLayoutEffect(() => {
         if (!imageLoaded || !naturalSize || !containerDimensions) return;
 
-        const contentWidth = (zoom / 100) * (containerDimensions.width - IMAGE_PADDING);
-        const contentHeight = (zoom / 100) * (containerDimensions.height - IMAGE_PADDING);
+        const contentWidth = (zoom / 100) * (containerDimensions.width - imagePadding);
+        const contentHeight = (zoom / 100) * (containerDimensions.height - imagePadding);
         const newSvgCoordinates = getRenderedImageSize(
             naturalSize.width,
             naturalSize.height,
             contentWidth,
-            contentHeight
+            contentHeight,
+            "contain",
         );
 
         setSvgCoordinates((prev) => {
@@ -494,7 +570,7 @@ function PolygonSelector({
             }
             return newSvgCoordinates;
         });
-    }, [imageLoaded, naturalSize, containerDimensions, zoom]);
+    }, [imageLoaded, naturalSize, containerDimensions, zoom, imagePadding]);
     useEffect(() => {
         return () => {
             window.removeEventListener("pointerup", onPointerUp);
@@ -548,6 +624,7 @@ function PolygonSelector({
     }, [isClosed]);
 
     const canPhantomHover = !!phantomHoverContent || dashboard;
+    const forcedHighlightId = externalHoveredId || stayHovered;
 
     const phantomPolygonsMemo = useMemo(() => {
         return (
@@ -555,6 +632,8 @@ function PolygonSelector({
                 {
                     phantomPoints.map((floorCoordinates, index) => {
                         const { fill, stroke } = getPhantomColor(index);
+                        const isForced = forcedHighlightId === phantomPoints[index]._id;
+                        const isHovered = hoveredPhantomIndex === index;
                         if( floorCoordinates.polygonCoordinates?.length > 0 ){
                             return (
                                 <React.Fragment key={floorCoordinates._id + "_" + index}>
@@ -586,6 +665,7 @@ function PolygonSelector({
                                                 }
                                                 setHoveredPhantomIndex(index);
                                                 setPhantomHoverPosition({ x: e.clientX, y: e.clientY });
+                                                onPhantomHoverChange?.(phantomPoints[index]._id);
                                             }
                                         }}
                                         onMouseMove={(e) => {
@@ -598,6 +678,7 @@ function PolygonSelector({
                                                 phantomHoverHideTimeoutRef.current = setTimeout(() => {
                                                     setHoveredPhantomIndex(null);
                                                     setPhantomHoverPosition(null);
+                                                    onPhantomHoverChange?.(null);
                                                 }, 150);
                                             }
                                         }}
@@ -610,8 +691,8 @@ function PolygonSelector({
                                     >
                                         <path
                                             d={`${floorCoordinates.polygonCoordinates.map((coord) => ({x: coord.x * svgCoordinates.width, y: coord.y * svgCoordinates.height})).map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ')} Z`}
-                                            fill={ (stayHovered === phantomPoints[index]._id) ? fill : (!dashboard ? (hoveredPhantomIndex !== index ? fill : "none") : (hoveredPhantomIndex === index ? fill : "none")) }
-                                            stroke={ !dashboard ? (hoveredPhantomIndex !== index ? stroke : "none") : (hoveredPhantomIndex === index ? stroke : "none") }
+                                            fill={ isForced || (dashboard ? isHovered : !isHovered) ? fill : "none" }
+                                            stroke={ isForced || (dashboard ? isHovered : !isHovered) ? stroke : "none" }
                                             strokeWidth="2"
                                             strokeDasharray="0"
                                         />
@@ -624,9 +705,12 @@ function PolygonSelector({
             </>
         )
 
-    }, [phantomPoints, svgCoordinates, canPhantomHover, hoveredPhantomIndex]);
+    }, [phantomPoints, svgCoordinates, canPhantomHover, hoveredPhantomIndex, forcedHighlightId, dashboard, onFloorClick, onPhantomHoverChange]);
 
-    const hasContentToShow = points.length > 0 || phantomPoints.some((p) => p.polygonCoordinates?.length );
+    const imageSyncReady = renderedImageUrl === imageUrl && imageLoaded;
+    const hasContentToShow =
+        imageSyncReady &&
+        (points.length > 0 || phantomPoints.some((p) => p.polygonCoordinates?.length));
 
     /*
      * View-only (disabled) at 100% zoom: allow the page/dialog to scroll under
@@ -635,6 +719,9 @@ function PolygonSelector({
      */
     const allowPageTouchScroll = disabled && zoom <= MIN_ZOOM;
     const touchActionStyle = allowPageTouchScroll ? "pan-y" : "none";
+    // At 100% zoom, overflow:auto can introduce a sub-pixel scrollbar and shrink
+    // the container → ResizeObserver → fitted image “zooms”. Only scroll when zoomed.
+    const containerOverflow = zoom > MIN_ZOOM ? "auto" : "hidden";
 
     return (
         <>
@@ -642,7 +729,7 @@ function PolygonSelector({
                 canPhantomHover && hoveredPhantomIndex !== null && phantomHoverPosition && phantomHoverContent && phantomPoints[hoveredPhantomIndex] && createPortal(
                     <div className="fixed z-9999 pointer-events-none" style={{left: phantomHoverPosition.x + 12, top: phantomHoverPosition.y + 12,}}>
                         <div
-                            className="pointer-events-auto rounded-lg border bg-card shadow-lg overflow-hidden"
+                            className="pointer-events-auto overflow-hidden rounded-[5px] border border-black/10 bg-white shadow-lg"
                             onMouseEnter={() => {
                                 if (phantomHoverHideTimeoutRef.current) {
                                     clearTimeout(phantomHoverHideTimeoutRef.current);
@@ -652,6 +739,7 @@ function PolygonSelector({
                             onMouseLeave={() => {
                                 setHoveredPhantomIndex(null);
                                 setPhantomHoverPosition(null);
+                                onPhantomHoverChange?.(null);
                             }}
                         >
                             {phantomHoverContent(phantomPoints[hoveredPhantomIndex])}
@@ -666,10 +754,10 @@ function PolygonSelector({
               In forms, `h-full` resolves against the panel scrollport and forces a
               second scrollbar alongside the page scroll once the selector mounts.
             */}
-            <div className={cn("w-full max-w-3xl mx-auto", fillHeight && "h-full max-h-full")}>
+            <div className={cn("w-full", fillHeight ? "h-full max-h-full" : "max-w-3xl mx-auto")}>
 
                 <div
-                    className={cn("relative w-full max-w-3xl mx-auto", className)}
+                    className={cn("relative w-full", !fillHeight && "max-w-3xl mx-auto", className)}
                     style={{
                         height:    fillHeight ? "100%" : `${containerHeight}px`,
                         minHeight: fillHeight ? "100%" : `${MIN_CONTAINER_HEIGHT}px`,
@@ -677,10 +765,16 @@ function PolygonSelector({
                     }}
                 >
                     <Card
-                        className="relative flex border overflow-auto scrollbar-thin-custom rounded-lg bg-muted/60 p-1"
+                        className={cn(
+                            "relative flex scrollbar-thin-custom",
+                            borderless
+                                ? "gap-0 rounded-[5px] border-0 bg-transparent p-0 py-0 shadow-none ring-0"
+                                : "rounded-lg border bg-muted/60 p-1",
+                        )}
                         style={{
                             height: '100%',
                             width: '100%',
+                            overflow: containerOverflow,
                             cursor: (disabled) ? 'default' : ( isPanning ? 'grabbing' : 'default' ),
                             touchAction: touchActionStyle,
                             userSelect: 'none',
@@ -691,33 +785,44 @@ function PolygonSelector({
                         ref={containerRef}
                     >
                             <div
-                                className="absolute top-1 left-1 flex items-center justify-center"
+                                ref={stageRef}
+                                className={cn(
+                                    "absolute overflow-hidden",
+                                    borderless ? "top-0 left-0" : "top-1 left-1",
+                                    !borderless && "flex items-center justify-center",
+                                )}
                                 style={{
-                                    width:  (zoom / 100) * Math.max(0, (containerDimensions?.width ?? 0) - IMAGE_PADDING),
-                                    height: (zoom / 100) * Math.max(0, (containerDimensions?.height ?? 0) - IMAGE_PADDING)
+                                    width:  (zoom / 100) * Math.max(0, (containerDimensions?.width ?? 0) - imagePadding),
+                                    height: (zoom / 100) * Math.max(0, (containerDimensions?.height ?? 0) - imagePadding)
                                 }}
                             >
                                 <img
                                     ref={imageRef}
-                                    src={imageUrl}
+                                    src={renderedImageUrl}
                                     alt="Image for polygon selection"
-                                    className="block rounded-lg"
-                                    onLoad={() => {
-                                        const img = imageRef.current;
-                                        if (img && img.naturalWidth > 0 && img.naturalHeight > 0) {
-                                            setNaturalSize({ width: img.naturalWidth, height: img.naturalHeight });
-                                            setImageLoaded(true);
-                                        }
-                                    }}
-                                    style={{
-                                        width: svgCoordinates.width > 0 ? `${svgCoordinates.width}px` : undefined,
-                                        height: svgCoordinates.height > 0 ? `${svgCoordinates.height}px` : undefined,
-                                        cursor: disabled ? 'default' : (isPanning ? 'grabbing' : 'crosshair'),
-                                        touchAction: touchActionStyle,
-                                        userSelect: 'none',
-                                        WebkitUserSelect: 'none',
-                                        WebkitTouchCallout: 'none',
-                                    }}
+                                    className={cn(
+                                        "block",
+                                        borderless ? "absolute inset-0 size-full rounded-[5px] object-contain" : "rounded-lg",
+                                    )}
+                                    style={
+                                        borderless
+                                            ? {
+                                                  cursor: disabled ? 'default' : (isPanning ? 'grabbing' : 'crosshair'),
+                                                  touchAction: touchActionStyle,
+                                                  userSelect: 'none',
+                                                  WebkitUserSelect: 'none',
+                                                  WebkitTouchCallout: 'none',
+                                              }
+                                            : {
+                                                  width: svgCoordinates.width > 0 ? `${svgCoordinates.width}px` : undefined,
+                                                  height: svgCoordinates.height > 0 ? `${svgCoordinates.height}px` : undefined,
+                                                  cursor: disabled ? 'default' : (isPanning ? 'grabbing' : 'crosshair'),
+                                                  touchAction: touchActionStyle,
+                                                  userSelect: 'none',
+                                                  WebkitUserSelect: 'none',
+                                                  WebkitTouchCallout: 'none',
+                                              }
+                                    }
                                     draggable={false}
                                     onContextMenu={(e) => e.preventDefault()}
                                 />

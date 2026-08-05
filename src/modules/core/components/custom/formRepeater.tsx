@@ -495,7 +495,7 @@ function FormRepeater({
             {fields.map((field, index) => (
                 <div
                     key={field.id}
-                    className="rounded-lg border border-border/60 p-3"
+                    className="rounded-lg border border-border/60 p-4"
                 >
                     {rowCascades && rowCascades.length > 0 && (
                         <RowCascadeEffects

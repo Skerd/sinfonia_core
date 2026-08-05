@@ -70,6 +70,44 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     }
 }
 
+/*
+ * Marketing pages: force arrow over copy so headings/prose don't show the
+ * text I-beam. Interactive controls opt back in; grab/none/not-allowed on
+ * specific elements still win via their own utility classes.
+ */
+.public-page-shell {
+    cursor: default;
+}
+
+.public-page-shell :is(a, button:not(:disabled), summary, [role="button"]) {
+    cursor: pointer;
+}
+
+.public-page-shell :is(
+    input:not([type]),
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="search"],
+    input[type="url"],
+    input[type="password"],
+    input[type="number"],
+    textarea
+) {
+    cursor: text;
+}
+
+.public-page-shell :is(
+    input[type="range"],
+    input[type="checkbox"],
+    input[type="radio"],
+    input[type="submit"],
+    input[type="button"],
+    input[type="file"]
+) {
+    cursor: pointer;
+}
+
 @layer utilities {
     .hide-scrollbar {
         -ms-overflow-style: none;    /* IE / Edge */

@@ -37,6 +37,11 @@ type SmallInfoCardProps = {
     /** When true, only icon and title are shown (no value / ValueNotSet row). */
     dontRenderValue?: boolean;
     /**
+     * External URL: shows a link badge that opens the URL in a new tab.
+     * Prefer with `dontRenderValue` so long URLs do not overflow the sheet.
+     */
+    externalHref?: string;
+    /**
      * Linked ref: badge uses `useAccess(resourceId)`; `LinkedSheet` comes from config `linkedSheetWidget`
      * (resolved in the view renderer).
      */
@@ -119,6 +124,24 @@ function SmallInfoCardNestedSheets({
     );
 }
 
+function normalizeExternalHref(href: string): string | null {
+    const trimmed = href.trim();
+    if (!trimmed) {
+        return null;
+    }
+    if (/^https?:\/\//i.test(trimmed)) {
+        return trimmed;
+    }
+    if (/^\/\//.test(trimmed)) {
+        return `https:${trimmed}`;
+    }
+    // Block javascript: and other non-http schemes
+    if (/^[a-z][a-z0-9+.-]*:/i.test(trimmed) && !/^https?:/i.test(trimmed)) {
+        return null;
+    }
+    return `https://${trimmed}`;
+}
+
 export default function SmallInfoCard({
     show = true,
     variant = "default",
@@ -127,6 +150,7 @@ export default function SmallInfoCard({
     value,
     tooltip,
     dontRenderValue = false,
+    externalHref,
     linkedReferenceSheet,
 }: SmallInfoCardProps) {
 
@@ -138,6 +162,10 @@ export default function SmallInfoCard({
         LinkedSheet != null &&
         accessResourceId.length > 0 &&
         resourceHasPositiveRead(linkedAccess.read);
+
+    const resolvedExternalHref =
+        typeof externalHref === "string" ? normalizeExternalHref(externalHref) : null;
+    const showExternalBadge = resolvedExternalHref != null;
 
     const [linkedSheetOpen, setLinkedSheetOpen] = useState(false);
     const tooltipText = tooltip != null ? String(tooltip).trim() : "";
@@ -214,26 +242,47 @@ export default function SmallInfoCard({
                         </div>
                     )}
                 </ItemContent>
-                {showLinkedBadge && LinkedSheet != null && (
+                {(showExternalBadge || (showLinkedBadge && LinkedSheet != null)) && (
                     <ItemActions>
-                        <TooltipDisplayer tooltip={title}>
-                            <button
-                                type="button"
-                                className={cn(
-                                    "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
-                                    "bg-background text-sm font-semibold text-muted-foreground",
-                                    "hover:bg-muted hover:text-foreground hover:cursor-pointer",
-                                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                                )}
-                                aria-label={title}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setLinkedSheetOpen(true);
-                                }}
-                            >
-                                <IconLink size={16} />
-                            </button>
-                        </TooltipDisplayer>
+                        {showExternalBadge && resolvedExternalHref != null ? (
+                            <TooltipDisplayer tooltip={resolvedExternalHref}>
+                                <a
+                                    href={resolvedExternalHref}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={cn(
+                                        "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
+                                        "bg-background text-sm font-semibold text-muted-foreground",
+                                        "hover:bg-muted hover:text-foreground hover:cursor-pointer",
+                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                    )}
+                                    aria-label={title}
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <IconLink size={16} />
+                                </a>
+                            </TooltipDisplayer>
+                        ) : null}
+                        {showLinkedBadge && LinkedSheet != null ? (
+                            <TooltipDisplayer tooltip={title}>
+                                <button
+                                    type="button"
+                                    className={cn(
+                                        "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
+                                        "bg-background text-sm font-semibold text-muted-foreground",
+                                        "hover:bg-muted hover:text-foreground hover:cursor-pointer",
+                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                    )}
+                                    aria-label={title}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setLinkedSheetOpen(true);
+                                    }}
+                                >
+                                    <IconLink size={16} />
+                                </button>
+                            </TooltipDisplayer>
+                        ) : null}
                     </ItemActions>
                 )}
             </Item>

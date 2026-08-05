@@ -1412,6 +1412,13 @@ function renderSmallInfoCard(
         }
     }
 
+    const externalLinkValue =
+        wp.externalLink === true &&
+        typeof displayValue === "string" &&
+        displayValue.trim().length > 0
+            ? displayValue.trim()
+            : undefined;
+
     return (
         <Component
             key={index}
@@ -1421,7 +1428,8 @@ function renderSmallInfoCard(
             Icon={Icon ?? undefined}
             value={displayValue}
             variant={variant}
-            dontRenderValue={!!wp.dontRenderValue}
+            dontRenderValue={!!wp.dontRenderValue || !!externalLinkValue}
+            externalHref={externalLinkValue}
             linkedReferenceSheet={linkedReferenceSheet}
         />
     );
