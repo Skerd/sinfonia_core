@@ -22,6 +22,16 @@
         "loadingText": "Sprache",
         "failedLoadingTitle": "Sprache konnte nicht geladen werden",
         "maxRetriesExceededText": "Bitte laden Sie die Seite neu, um die Sprache erneut zu laden"
+      },
+      "it-IT": {
+        "loadingText": "Lingua",
+        "failedLoadingTitle": "Impossibile caricare la lingua",
+        "maxRetriesExceededText": "Aggiorna la pagina per ricaricare la lingua"
+      },
+      "fr-FR": {
+        "loadingText": "Langue",
+        "failedLoadingTitle": "Échec du chargement de la langue",
+        "maxRetriesExceededText": "Veuillez actualiser la page pour recharger la langue"
       }
     },
     "clearanceLoaderHoc": {
@@ -38,6 +48,16 @@
       "de-CH": {
         "noClearance": "Nicht berechtigt, diesen Inhalt anzuzeigen.",
         "neededClearances": "Benötigte Berechtigungen: [$].",
+        "showNeededClearances": true
+      },
+      "it-IT": {
+        "noClearance": "Non autorizzato a visualizzare il contenuto.",
+        "neededClearances": "Autorizzazioni necessarie: [$].",
+        "showNeededClearances": true
+      },
+      "fr-FR": {
+        "noClearance": "Non autorisé à afficher ce contenu.",
+        "neededClearances": "Autorisations requises : [$].",
         "showNeededClearances": true
       }
     },
@@ -56,21 +76,44 @@
         "loading": "Verbindung zum Live-Updater wird hergestellt",
         "error": "Verbindung zum Live-Updater fehlgeschlagen, erneuter Versuch...",
         "success": "Verbindung zum Live-Updater erfolgreich hergestellt"
+      },
+      "it-IT": {
+        "loading": "Connessione all'updater remoto",
+        "error": "Connessione all'updater remoto non riuscita, nuovo tentativo...",
+        "success": "Connessione all'updater remoto riuscita"
+      },
+      "fr-FR": {
+        "loading": "Connexion à l'updater distant",
+        "error": "Échec de la connexion à l'updater distant, nouvelle tentative...",
+        "success": "Connexion à l'updater distant réussie"
       }
     }
   },
   "supportedLanguages": [
     {
-      "languageCode": "sq-AL",
-      "name": "Shqip"
+      "languageCode": "en-US",
+      "name": "English",
+      "shortCode": "EN"
     },
     {
-      "languageCode": "en-US",
-      "name": "English"
+      "languageCode": "it-IT",
+      "name": "Italiano",
+      "shortCode": "IT"
     },
     {
       "languageCode": "de-CH",
-      "name": "Deutsch (Schweiz)"
+      "name": "Deutsch (Schweiz)",
+      "shortCode": "DE"
+    },
+    {
+      "languageCode": "fr-FR",
+      "name": "Français",
+      "shortCode": "FR"
+    },
+    {
+      "languageCode": "sq-AL",
+      "name": "Shqip",
+      "shortCode": "AL"
     }
   ],
   "components": {
@@ -83,6 +126,12 @@
       },
       "de-CH": {
         "all": "Alle"
+      },
+      "it-IT": {
+        "all": "Tutti"
+      },
+      "fr-FR": {
+        "all": "Tous"
       }
     },
     "languageSelector": {
@@ -94,6 +143,12 @@
       },
       "de-CH": {
         "selectLanguage": "Sprache auswählen"
+      },
+      "it-IT": {
+        "selectLanguage": "Seleziona la lingua"
+      },
+      "fr-FR": {
+        "selectLanguage": "Sélectionner la langue"
       }
     },
     "passwordStrength": {
@@ -108,6 +163,14 @@
       "de-CH": {
         "passwordTooShort": "Kurzes Passwort",
         "passwordStages": ["Kurz", "Schwach", "Mittel", "Gut", "Ausgezeichnet"]
+      },
+      "it-IT": {
+        "passwordTooShort": "Password corta",
+        "passwordStages": ["Corta", "Debole", "Media", "Buona", "Eccellente"]
+      },
+      "fr-FR": {
+        "passwordTooShort": "Mot de passe court",
+        "passwordStages": ["Court", "Faible", "Moyen", "Bon", "Excellent"]
       }
     },
     "tableWithIntegration": {
@@ -128,6 +191,18 @@
         "noDataAtAll": "Es können keine Daten angezeigt werden. Diese Tabelle ist leer.",
         "noDataDescription": "Bitte passen Sie die Suchfilter an, um mehr Daten anzuzeigen.",
         "loading": "Tabellendaten werden geladen"
+      },
+      "it-IT": {
+        "noData": "Nessun dato",
+        "noDataAtAll": "Nessun dato da mostrare. Questa tabella è vuota.",
+        "noDataDescription": "Aggiorna i filtri di ricerca per mostrare più dati.",
+        "loading": "Caricamento dati tabella"
+      },
+      "fr-FR": {
+        "noData": "Aucune donnée",
+        "noDataAtAll": "Aucune donnée à afficher. Ce tableau est vide.",
+        "noDataDescription": "Veuillez mettre à jour les filtres de recherche pour afficher plus de données.",
+        "loading": "Chargement des données du tableau"
       }
     },
     "uploadFile": {
@@ -166,6 +241,30 @@
         "files": "Dateien",
         "each": "je",
         "remove": "Datei entfernen"
+      },
+      "it-IT": {
+        "dropOnly": "Trascina i file qui",
+        "dragAndDrop": "Trascina e rilascia i file qui",
+        "or": "oppure",
+        "browse": "sfoglia",
+        "upload": "per caricare",
+        "oneFile": "Un solo file",
+        "upTo": "Fino a",
+        "files": "file",
+        "each": "ciascuno",
+        "remove": "Rimuovi file"
+      },
+      "fr-FR": {
+        "dropOnly": "Déposez les fichiers ici",
+        "dragAndDrop": "Glissez-déposez les fichiers ici",
+        "or": "ou",
+        "browse": "parcourir",
+        "upload": "pour téléverser",
+        "oneFile": "Un seul fichier",
+        "upTo": "Jusqu'à",
+        "files": "fichiers",
+        "each": "chacun",
+        "remove": "Supprimer le fichier"
       }
     }
   },
