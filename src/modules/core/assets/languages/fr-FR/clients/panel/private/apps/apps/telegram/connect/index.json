@@ -9,15 +9,15 @@
   "cancel": "Annuler",
   "axios": {
     "start": {
-      "title": "Télégramme de connexion",
+      "title": "Connexion de Telegram",
       "time": 3000
     },
     "success": {
-      "title": "Télégramme connecté avec succès",
+      "title": "Telegram connecté avec succès",
       "time": 3000
     },
     "error": {
-      "title": "La connexion au télégramme a échoué",
+      "title": "Échec de la connexion Telegram",
       "time": 3000
     }
   }

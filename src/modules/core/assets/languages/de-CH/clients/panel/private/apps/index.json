@@ -1,12 +1,12 @@
 {
   "path": "src/modules/core/clients/panel/private/apps/index.tsx",
-  "title": "App Integrations",
-  "description": "Here's a liste von ihr apps für die integration!",
-  "filterApps": "Filter apps",
+  "title": "App-Integrationen",
+  "description": "Hier finden Sie die Liste Ihrer Apps für die Integration.",
+  "filterApps": "Apps filtern",
   "dropDown": {
     "allApps": "Alle Apps",
-    "connected": "Connected",
-    "notConnected": "Nicht connected"
+    "connected": "Verbunden",
+    "notConnected": "Nicht verbunden"
   },
   "order": {
     "ascending": "Aufsteigend",
@@ -17,7 +17,7 @@
       "key": "telegram",
       "name": "Telegram",
       "logo": "IconTelegram",
-      "desc": "Connect mit Telegram für real-time communication.",
+      "desc": "Verbinden Sie Telegram für Echtzeitkommunikation.",
       "connected": false
     }
   }

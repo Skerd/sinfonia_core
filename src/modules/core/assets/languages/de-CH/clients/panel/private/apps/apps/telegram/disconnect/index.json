@@ -1,22 +1,22 @@
 {
   "path": "src/modules/core/clients/panel/private/apps/apps/telegram/disconnect/index.tsx",
-  "title": "Sind sie sicher sie want bis unlink Telegram?",
-  "description": "Sie will nicht receive benachrichtigungen anymore",
-  "usersTitle": "Sind sie sicher sie want bis unlink Telegram?",
-  "usersDescription": "Die benutzer will nicht receive benachrichtigungen anymore",
+  "title": "Möchten Sie Telegram wirklich trennen?",
+  "description": "Sie erhalten danach keine Benachrichtigungen mehr",
+  "usersTitle": "Möchten Sie Telegram wirklich trennen?",
+  "usersDescription": "Der Benutzer erhält danach keine Benachrichtigungen mehr",
   "button": "Bestätigen",
   "backButton": "Abbrechen",
   "axios": {
     "start": {
-      "title": "Disconnecting Telegram",
+      "title": "Telegram wird getrennt",
       "time": 3000
     },
     "success": {
-      "title": "Telegram disconnected erfolgreich",
+      "title": "Telegram erfolgreich getrennt",
       "time": 3000
     },
     "error": {
-      "title": "Telegram disconnect fehlgeschlagen",
+      "title": "Trennen von Telegram fehlgeschlagen",
       "time": 3000
     }
   }
