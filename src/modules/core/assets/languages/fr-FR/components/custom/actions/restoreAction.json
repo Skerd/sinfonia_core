@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/components/custom/actions/restoreAction.tsx",
+  "title": "Restaurer",
+  "description": "Voulez-vous vraiment restaurer",
+  "item": "l'élément",
+  "typeToConfirm": "Tapez « {} » pour confirmer",
+  "typeDelete": "Supprimer",
+  "cancel": "Annuler",
+  "restore": "Restaurer",
+  "axios": {
+    "start": {
+      "title": "Restauration en cours",
+      "time": 3000
+    },
+    "success": {
+      "title": "Élément restauré avec succès !",
+      "time": 3000
+    },
+    "error": {
+      "title": "L'élément n'a pas pu être restauré, veuillez réessayer !",
+      "time": 3000
+    }
+  }
+}

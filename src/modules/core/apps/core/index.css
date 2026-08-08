@@ -236,12 +236,10 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
 }
 
 /*
- * Brand palette. Anchored on the Pronix brand blue #0247fe = oklch(0.510 0.273 263.6),
- * so the admin panel reads as the same product as the public site. Every neutral carries
- * a trace of hue 264 rather than being pure gray, which is what stops the UI looking flat.
+ * Neutral zinc theme (shadcnuikit export, colors only). Radius / spacing /
+ * fonts stay Arpeggio defaults — generator --spacing would break Tailwind v4.
  *
- * --status-* are domain tokens (unit availability), deliberately kept on their own hues
- * and unchanged by the rebrand.
+ * --status-* are domain tokens (unit availability), kept on their own hues.
  */
 :root {
     --radius: 0.625rem;
@@ -282,48 +280,46 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
      * below the card in luminance, which does most of the separation already.
      */
     --elevation-0: 0 0 transparent;
-    --elevation-1: 0 1px 2px -1px oklch(0.21 0.024 264 / 0.08);
-    --elevation-2: 0 4px 12px -2px oklch(0.21 0.024 264 / 0.1);
-    --elevation-3: 0 12px 28px -6px oklch(0.21 0.024 264 / 0.14);
+    --elevation-1: 0 1px 2px -1px oklch(0.145 0 0 / 0.08);
+    --elevation-2: 0 4px 12px -2px oklch(0.145 0 0 / 0.1);
+    --elevation-3: 0 12px 28px -6px oklch(0.145 0 0 / 0.14);
 
-    /* Page sits slightly below card so elevated surfaces read without heavy shadows. */
-    --background: oklch(0.985 0.003 264);
-    --foreground: oklch(0.21 0.024 264);
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.21 0.024 264);
+    --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.21 0.024 264);
+    --popover-foreground: oklch(0.145 0 0);
 
-    --primary: oklch(0.51 0.273 264);
-    --primary-foreground: oklch(0.99 0 0);
-    --secondary: oklch(0.962 0.009 264);
-    --secondary-foreground: oklch(0.30 0.035 264);
-    --muted: oklch(0.966 0.006 264);
-    --muted-foreground: oklch(0.535 0.021 264);
-    --accent: oklch(0.948 0.022 264);
-    --accent-foreground: oklch(0.36 0.07 264);
-    --destructive: oklch(0.58 0.22 27);
-    --destructive-foreground: oklch(0.99 0 0);
+    --primary: oklch(0.145 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.145 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.145 0 0);
+    --destructive: oklch(0.637 0.208 25.331);
+    --destructive-foreground: oklch(0.985 0 0);
 
-    --border: oklch(0.918 0.008 264);
-    --input: oklch(0.918 0.008 264);
-    --ring: oklch(0.51 0.273 264);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.87 0 0);
 
-    /* Categorical, not a monochrome ramp: series stay distinguishable at any count. */
-    --chart-1: oklch(0.51 0.273 264);
-    --chart-2: oklch(0.66 0.14 196);
-    --chart-3: oklch(0.62 0.17 150);
-    --chart-4: oklch(0.75 0.16 76);
-    --chart-5: oklch(0.62 0.21 16);
+    --chart-1: oklch(0.652 0.124 284.594);
+    --chart-2: oklch(0.779 0.097 155.935);
+    --chart-3: oklch(0.858 0.141 81.233);
+    --chart-4: oklch(0.738 0.16 21.742);
+    --chart-5: oklch(0.821 0.072 214.103);
 
-    --sidebar: oklch(0.995 0.002 264);
-    --sidebar-foreground: oklch(0.30 0.025 264);
-    --sidebar-primary: oklch(0.51 0.273 264);
-    --sidebar-primary-foreground: oklch(0.99 0 0);
-    --sidebar-accent: oklch(0.948 0.022 264);
-    --sidebar-accent-foreground: oklch(0.36 0.07 264);
-    --sidebar-border: oklch(0.918 0.008 264);
-    --sidebar-ring: oklch(0.51 0.273 264);
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.145 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.145 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.87 0 0);
 
     /*
      * Feedback tokens, distinct from --status-* above. These describe outcome
@@ -358,24 +354,23 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
 }
 
 .dark {
-    --background: oklch(0.172 0.013 264);
-    --foreground: oklch(0.971 0.004 264);
-    --card: oklch(0.215 0.015 264);
-    --card-foreground: oklch(0.971 0.004 264);
-    --popover: oklch(0.215 0.015 264);
-    --popover-foreground: oklch(0.971 0.004 264);
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.21 0.006 285.885);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.21 0.006 285.885);
+    --popover-foreground: oklch(0.985 0 0);
 
-    /* Lifted and desaturated: the light-mode blue fails contrast on a dark surface. */
-    --primary: oklch(0.70 0.175 264);
-    --primary-foreground: oklch(0.165 0.022 264);
-    --secondary: oklch(0.272 0.017 264);
-    --secondary-foreground: oklch(0.971 0.004 264);
-    --muted: oklch(0.272 0.017 264);
-    --muted-foreground: oklch(0.715 0.017 264);
-    --accent: oklch(0.325 0.032 264);
-    --accent-foreground: oklch(0.971 0.004 264);
-    --destructive: oklch(0.704 0.191 22.216);
-    --destructive-foreground: oklch(0.165 0.022 264);
+    --primary: oklch(0.985 0 0);
+    --primary-foreground: oklch(0.145 0 0);
+    --secondary: oklch(0.274 0.005 286.033);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.274 0.005 286.033);
+    --muted-foreground: oklch(0.712 0.013 286.067);
+    --accent: oklch(0.274 0.005 286.033);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.637 0.208 25.331);
+    --destructive-foreground: oklch(0.985 0 0);
 
     /*
      * A shadow tuned for a white page is invisible on a dark one. Same ramp,
@@ -385,24 +380,24 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     --elevation-2: 0 4px 12px -2px oklch(0 0 0 / 0.55);
     --elevation-3: 0 12px 28px -6px oklch(0 0 0 / 0.65);
 
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.70 0.175 264);
+    --border: oklch(0.274 0.005 286.033);
+    --input: oklch(0.274 0.005 286.033);
+    --ring: oklch(0.37 0.012 285.805);
 
-    --chart-1: oklch(0.70 0.175 264);
-    --chart-2: oklch(0.72 0.13 196);
-    --chart-3: oklch(0.70 0.16 150);
-    --chart-4: oklch(0.79 0.15 76);
-    --chart-5: oklch(0.68 0.19 16);
+    --chart-1: oklch(0.652 0.124 284.594);
+    --chart-2: oklch(0.779 0.097 155.935);
+    --chart-3: oklch(0.858 0.141 81.233);
+    --chart-4: oklch(0.738 0.16 21.742);
+    --chart-5: oklch(0.821 0.072 214.103);
 
-    --sidebar: oklch(0.196 0.014 264);
-    --sidebar-foreground: oklch(0.925 0.006 264);
-    --sidebar-primary: oklch(0.70 0.175 264);
-    --sidebar-primary-foreground: oklch(0.165 0.022 264);
-    --sidebar-accent: oklch(0.292 0.022 264);
-    --sidebar-accent-foreground: oklch(0.971 0.004 264);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.70 0.175 264);
+    --sidebar: oklch(0.21 0.006 285.885);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.274 0.005 286.033);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.274 0.005 286.033);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(0.274 0.005 286.033);
+    --sidebar-ring: oklch(0.37 0.012 285.805);
 
     --success: oklch(0.72 0.16 152);
     --success-foreground: oklch(0.17 0.03 152);

@@ -47,6 +47,8 @@ interface PolygonSelectorProps {
     fillHeight?: boolean;
     /** Strip Card chrome (border/ring/padding) for embedded marketing viewers. */
     borderless?: boolean;
+    /** Hide zoom / edit toolbar (marketing viewers). */
+    hideControls?: boolean;
 }
 
 const MIN_ZOOM = 100;
@@ -83,7 +85,6 @@ function getRenderedImageSize(
     naturalHeight: number,
     containerWidth: number,
     containerHeight: number,
-    fit: "contain" | "cover" = "contain",
 ): { width: number; height: number; left: number; top: number } {
     if (naturalWidth <= 0 || naturalHeight <= 0 || containerWidth <= 0 || containerHeight <= 0) {
         return { width: 0, height: 0, left: 0, top: 0 };
@@ -94,15 +95,7 @@ function getRenderedImageSize(
     let renderedWidth: number;
     let renderedHeight: number;
 
-    if (fit === "cover") {
-        if (imageAspect > containerAspect) {
-            renderedHeight = containerHeight;
-            renderedWidth = containerHeight * imageAspect;
-        } else {
-            renderedWidth = containerWidth;
-            renderedHeight = containerWidth / imageAspect;
-        }
-    } else if (imageAspect > containerAspect) {
+    if (imageAspect > containerAspect) {
         renderedWidth = containerWidth;
         renderedHeight = containerWidth / imageAspect;
     } else {
@@ -144,6 +137,7 @@ function PolygonSelector({
     stayHovered = "",
     fillHeight = false,
     borderless = false,
+    hideControls = false,
 }: PolygonSelectorProps & WithLanguageType) {
 
     const imagePadding = borderless ? 0 : IMAGE_PADDING;
@@ -167,6 +161,9 @@ function PolygonSelector({
     const draggingPointRef = useRef(-1);
     const [hoveredMidpointIndex, setHoveredMidpointIndex] = useState<number | null>(null);
     const midpointClickRef = useRef(-1);
+    /** Suppress phantom onClick after a drag-pan so releasing over a unit does not navigate. */
+    const didPanRef = useRef(false);
+    const phantomPointerDownRef = useRef<{ x: number; y: number } | null>(null);
 
     const [isClosed, setIsClosed] = useState(initialPoints?.length >= 3);
 
@@ -285,9 +282,12 @@ function PolygonSelector({
 
     const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
 
-        if (!containerRef.current || disabled || e.button !== 0) return; // Only left mouse button
+        if (!containerRef.current || e.button !== 0) return; // Only left mouse button
+        // View-only: allow pan when zoomed; block draw/edit interactions.
+        if (disabled && zoom <= MIN_ZOOM) return;
+
         const targetEl = e.target as HTMLElement | null;
-        if (targetEl && (targetEl.tagName === 'circle' || targetEl.tagName === 'text') && !targetEl.id?.includes('phantom-point')) {
+        if (!disabled && targetEl && (targetEl.tagName === 'circle' || targetEl.tagName === 'text') && !targetEl.id?.includes('phantom-point')) {
             const parsed = parseInt(targetEl.id, 10);
             if (!Number.isNaN(parsed)) {
                 draggingPointRef.current = parsed;
@@ -296,7 +296,7 @@ function PolygonSelector({
             // return;
         } // Don't pan when clicking points
 
-        if (targetEl?.id?.startsWith('mid-')) {
+        if (!disabled && targetEl?.id?.startsWith('mid-')) {
             const mi = parseInt(targetEl.id.replace('mid-', ''), 10);
             if (!isNaN(mi)) {
                 midpointClickRef.current = mi;
@@ -307,6 +307,7 @@ function PolygonSelector({
         startY.current = e.clientY;
         startScrollLeft.current = containerRef.current.scrollLeft;
         startScrollTop.current = containerRef.current.scrollTop;
+        didPanRef.current = false;
 
         document.body.style.userSelect = "none";
 
@@ -329,7 +330,7 @@ function PolygonSelector({
                !moveTarget.id?.startsWith('mid-'));
 
         // this is for drag
-        if( dragActive ){
+        if( !disabled && dragActive ){
             const content = getContentRect();
             if (!content) return;
             const dx = e.clientX - startX.current;
@@ -359,10 +360,10 @@ function PolygonSelector({
             setPoints(updatedPoints);
         }
         else if( midpointClickRef.current < 0 && (e.clientX !== startX.current || e.clientY !== startY.current) ){
+            didPanRef.current = true;
             setIsPanning(true);
             const dx = e.clientX - startX.current;
             const dy = e.clientY - startY.current;
-
             containerRef.current.scrollLeft = startScrollLeft.current - dx;
             containerRef.current.scrollTop = startScrollTop.current - dy;
         }
@@ -374,6 +375,18 @@ function PolygonSelector({
         setIsPanning(false);
         document.body.style.userSelect = "";
         setDraggingPointIndex(null);
+
+        // View-only: pan is allowed when zoomed, but never edit / add points.
+        if (disabled) {
+            if (Math.hypot(e.clientX - startX.current, e.clientY - startY.current) > 0) {
+                didPanRef.current = true;
+            }
+            draggingPointRef.current = -1;
+            midpointClickRef.current = -1;
+            window.removeEventListener("pointermove", onPointerMove);
+            window.removeEventListener("pointerup", onPointerUp);
+            return;
+        }
 
         if (midpointClickRef.current >= 0) {
             const midIndex = midpointClickRef.current;
@@ -429,7 +442,7 @@ function PolygonSelector({
             ]);
 
         }
-        else if (e.target === imageRef?.current && (e.clientX === startX.current || e.clientY === startY.current) ) {
+        else if (e.target === imageRef?.current && e.clientX === startX.current && e.clientY === startY.current) {
             setIsClosed(false);
             const content = getContentRect();
             if (!content) return;
@@ -452,7 +465,7 @@ function PolygonSelector({
             draggingPointIndex !== null ||
             (e.target && ((e.target as HTMLElement).tagName === 'circle' || (e.target as HTMLElement).tagName === 'text'))
         ){
-            if( (e.clientX === startX.current || e.clientY === startY.current) ){
+            if( e.clientX === startX.current && e.clientY === startY.current ){
                 const upEl = e.target as HTMLElement;
                 const circleId =
                     draggingPointRef.current >= 0
@@ -551,7 +564,6 @@ function PolygonSelector({
             naturalSize.height,
             contentWidth,
             contentHeight,
-            "contain",
         );
 
         setSvgCoordinates((prev) => {
@@ -682,10 +694,18 @@ function PolygonSelector({
                                                 }, 150);
                                             }
                                         }}
-                                        onClick={() => {
-                                            if( !!dashboard ){
-                                                onFloorClick(phantomPoints[index]);
-                                            }
+                                        onPointerDown={(e) => {
+                                            phantomPointerDownRef.current = { x: e.clientX, y: e.clientY };
+                                            didPanRef.current = false;
+                                        }}
+                                        onClick={(e) => {
+                                            if (!dashboard) return;
+                                            const down = phantomPointerDownRef.current;
+                                            phantomPointerDownRef.current = null;
+                                            // If panned, don't treat release as a click.
+                                            if (didPanRef.current) return;
+                                            if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) > 4) return;
+                                            onFloorClick(phantomPoints[index]);
                                         }}
                                         style={{ pointerEvents: canPhantomHover ? 'visible' : 'none' }}
                                     >
@@ -722,6 +742,25 @@ function PolygonSelector({
     // At 100% zoom, overflow:auto can introduce a sub-pixel scrollbar and shrink
     // the container → ResizeObserver → fitted image “zooms”. Only scroll when zoomed.
     const containerOverflow = zoom > MIN_ZOOM ? "auto" : "hidden";
+    const viewOnlyPan = disabled && zoom > MIN_ZOOM;
+    // Full-bleed marketing stage: lock to inset at 100% (stable), grow with zoom above that.
+    const fullBleedLocked = borderless && fillHeight && zoom <= MIN_ZOOM;
+    const stageZoomStyle = fullBleedLocked
+        ? undefined
+        : {
+              width:  (zoom / 100) * Math.max(0, (containerDimensions?.width ?? 0) - imagePadding),
+              height: (zoom / 100) * Math.max(0, (containerDimensions?.height ?? 0) - imagePadding),
+          };
+    const cardCursor = viewOnlyPan
+        ? (isPanning ? "grabbing" : "grab")
+        : disabled
+          ? "default"
+          : (isPanning ? "grabbing" : "default");
+    const imageCursor = viewOnlyPan
+        ? (isPanning ? "grabbing" : "grab")
+        : disabled
+          ? "default"
+          : (isPanning ? "grabbing" : "crosshair");
 
     return (
         <>
@@ -768,14 +807,14 @@ function PolygonSelector({
                         className={cn(
                             "relative flex scrollbar-thin-custom",
                             borderless
-                                ? "gap-0 rounded-[5px] border-0 bg-transparent p-0 py-0 shadow-none ring-0"
+                                ? "gap-0 rounded-none border-0 bg-transparent p-0 py-0 shadow-none ring-0"
                                 : "rounded-lg border bg-muted/60 p-1",
                         )}
                         style={{
                             height: '100%',
                             width: '100%',
                             overflow: containerOverflow,
-                            cursor: (disabled) ? 'default' : ( isPanning ? 'grabbing' : 'default' ),
+                            cursor: cardCursor,
                             touchAction: touchActionStyle,
                             userSelect: 'none',
                             WebkitUserSelect: 'none',
@@ -788,13 +827,14 @@ function PolygonSelector({
                                 ref={stageRef}
                                 className={cn(
                                     "absolute overflow-hidden",
-                                    borderless ? "top-0 left-0" : "top-1 left-1",
+                                    fullBleedLocked
+                                        ? "inset-0 size-full"
+                                        : borderless
+                                          ? "top-0 left-0"
+                                          : "top-1 left-1",
                                     !borderless && "flex items-center justify-center",
                                 )}
-                                style={{
-                                    width:  (zoom / 100) * Math.max(0, (containerDimensions?.width ?? 0) - imagePadding),
-                                    height: (zoom / 100) * Math.max(0, (containerDimensions?.height ?? 0) - imagePadding)
-                                }}
+                                style={stageZoomStyle}
                             >
                                 <img
                                     ref={imageRef}
@@ -802,12 +842,17 @@ function PolygonSelector({
                                     alt="Image for polygon selection"
                                     className={cn(
                                         "block",
-                                        borderless ? "absolute inset-0 size-full rounded-[5px] object-contain" : "rounded-lg",
+                                        borderless
+                                            ? cn(
+                                                  "absolute inset-0 size-full object-contain",
+                                                  borderless && fillHeight ? "rounded-none" : "rounded-[5px]",
+                                              )
+                                            : "rounded-lg",
                                     )}
                                     style={
                                         borderless
                                             ? {
-                                                  cursor: disabled ? 'default' : (isPanning ? 'grabbing' : 'crosshair'),
+                                                  cursor: imageCursor,
                                                   touchAction: touchActionStyle,
                                                   userSelect: 'none',
                                                   WebkitUserSelect: 'none',
@@ -816,7 +861,7 @@ function PolygonSelector({
                                             : {
                                                   width: svgCoordinates.width > 0 ? `${svgCoordinates.width}px` : undefined,
                                                   height: svgCoordinates.height > 0 ? `${svgCoordinates.height}px` : undefined,
-                                                  cursor: disabled ? 'default' : (isPanning ? 'grabbing' : 'crosshair'),
+                                                  cursor: imageCursor,
                                                   touchAction: touchActionStyle,
                                                   userSelect: 'none',
                                                   WebkitUserSelect: 'none',
@@ -1033,15 +1078,22 @@ function PolygonSelector({
                         </div>
                     )}
 
-                    <div className={cn("absolute bottom-2 left-0 w-full flex items-center justify-center", {"bottom-4 ":  zoom !== 100})}>
-                        <Card className="flex flex-row items-center gap-2 p-1 bg-card/60">
-
+                    {!hideControls && (
+                    <div className={cn("absolute bottom-2 left-0 z-20 w-full flex items-center justify-center", {"bottom-4 ":  zoom !== 100})}>
+                        <div
+                            data-polygon-zoom-controls
+                            className="flex flex-row items-center gap-2 rounded-lg border border-border bg-background p-1 shadow-md"
+                        >
                             <TooltipDisplayer tooltip={resolveLanguageKey("zoomOut")}>
                                 <Button
                                     type="button"
-                                    variant="outline"
+                                    variant="secondary"
                                     size="icon"
-                                    onClick={() => {setZoom(prev => Math.max(MIN_ZOOM, prev - getZoomValue(prev)))}}
+                                    className="bg-muted text-foreground hover:bg-muted/80"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setZoom(prev => Math.max(MIN_ZOOM, prev - getZoomValue(prev)));
+                                    }}
                                     disabled={zoom <= MIN_ZOOM}
                                 >
                                     <ZoomOut />
@@ -1051,9 +1103,13 @@ function PolygonSelector({
                             <TooltipDisplayer tooltip={resolveLanguageKey("zoomIn")}>
                                 <Button
                                     type="button"
-                                    variant="outline"
+                                    variant="secondary"
                                     size="icon"
-                                    onClick={() => {setZoom(prev => Math.min(MAX_ZOOM, prev + getZoomValue(prev)))}}
+                                    className="bg-muted text-foreground hover:bg-muted/80"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setZoom(prev => Math.min(MAX_ZOOM, prev + getZoomValue(prev)));
+                                    }}
                                     disabled={zoom >= MAX_ZOOM}
                                 >
                                     <ZoomIn className="h-4 w-4" />
@@ -1063,18 +1119,20 @@ function PolygonSelector({
                             <TooltipDisplayer tooltip={resolveLanguageKey("resetZoom")}>
                                 <Button
                                     type="button"
-                                    variant="outline"
+                                    variant="secondary"
                                     size="sm"
-                                    onClick={() => {
+                                    className="bg-muted text-foreground hover:bg-muted/80"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
                                         setZoom(MIN_ZOOM);
                                     }}
-                                    disabled={(zoom === 1)}
+                                    disabled={zoom <= MIN_ZOOM}
                                 >
                                     <RotateCcw className="h-4 w-4" />
                                 </Button>
                             </TooltipDisplayer>
 
-                            <p className="text-sm text-center">
+                            <p className="min-w-10 rounded-md bg-muted px-2 py-1.5 text-center text-sm font-medium text-foreground">
                                 {Math.round(zoom)}%
                             </p>
 
@@ -1097,7 +1155,10 @@ function PolygonSelector({
                                 </TooltipDisplayer>
                             }
 
-                            <Separator orientation="vertical" className="h-6" />
+                            {
+                                (!dashboard || (!disabled && points.length !== 0)) &&
+                                <Separator orientation="vertical" className="h-6" />
+                            }
 
                             {
                                 !disabled && points.length !== 0 &&
@@ -1142,8 +1203,9 @@ function PolygonSelector({
 
                                 </div>
                             }
-                        </Card>
+                        </div>
                     </div>
+                    )}
                 </div>
 
                 {

@@ -6,7 +6,7 @@ import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.t
 import type { WithAxiosLifecycleRef } from "@coreModule/helpers/hocs/withAxios.tsx";
 import type { RefObject } from "react";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";
-import { FieldGroup, FieldSeparator } from "@coreModule/components/ui/field.tsx";
+import { FieldGroup } from "@coreModule/components/ui/field.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { LoaderCircle, Save } from "lucide-react";
 import Header from "@coreModule/components/custom/header.tsx";
@@ -170,8 +170,6 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
                             {!formExtras?.renderChildrenFirst ? renderChildren?.(form) : null}
 
                             {children}
-
-                            <FieldSeparator />
 
                             <div className="flex items-center justify-end gap-2">
                                 <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>

@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/navUser/index.tsx",
+  "profile": "Profilo",
+  "security": "Sicurezza",
+  "account": "Account",
+  "notifications": "Notifiche",
+  "signOut": "Esci",
+  "dialog": {
+    "title": "Esci",
+    "description": "Vuoi davvero uscire? Dovrai accedere di nuovo per usare il tuo account.",
+    "confirmText": "Esci",
+    "cancelText": "Annulla"
+  }
+}

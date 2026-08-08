@@ -4,104 +4,104 @@
     "title": "Apps"
   },
   "common": {
-    "create": "Erstellen",
-    "edit": "Bearbeiten",
-    "delete": "Löschen"
+    "create": "Créer",
+    "edit": "Modifier",
+    "delete": "Supprimer"
   },
   "menus": {
     "account": {
-      "mainTitle": "Mein Konto",
-      "title": "Mein Konto",
+      "mainTitle": "Mon compte",
+      "title": "Mon compte",
       "accountSettings": {
-        "title": "Einstellungen"
+        "title": "Paramètres"
       },
       "profile": {
         "title": "Profil"
       },
       "security": {
-        "title": "Sicherheit"
+        "title": "Sécurité"
       },
       "account": {
-        "title": "Konto"
+        "title": "Compte"
       },
       "notifications": {
-        "title": "Benachrichtigungen"
+        "title": "Notifications"
       },
       "notificationCenter": {
-        "title": "Aktivität"
+        "title": "Activité"
       },
       "apps": {
-        "title": "Verbundene Apps"
+        "title": "Applications connectées"
       }
     },
     "tenancy": {
-      "title": "Mandantenverwaltung",
+      "title": "Gestion des locataires",
       "companies": {
-        "title": "Alle Firmen"
+        "title": "Toutes les sociétés"
       },
       "serverPerformance": {
         "title": "Performance"
       },
       "cronJobs": {
-        "title": "Scheduled massnahmen"
+        "title": "Actions planifiées"
       },
       "systemSettings": {
-        "title": "Konfigurationen",
+        "title": "Configurations",
         "roles": {
-          "title": "Rollen"
+          "title": "Rôles"
         },
         "countries": {
-          "title": "Länder"
+          "title": "Pays"
         },
         "states": {
-          "title": "Kantone / Staaten"
+          "title": "États / cantons"
         },
         "cities": {
-          "title": "Städte"
+          "title": "Villes"
         },
         "currencies": {
-          "title": "Währungen"
+          "title": "Devises"
         },
         "companies": {
-          "title": "Firmen"
+          "title": "Sociétés"
         },
         "smtpServers": {
-          "title": "Mailserver"
+          "title": "Serveurs mail"
         },
         "messagingProviders": {
-          "title": "Messaging-Anbieter"
+          "title": "Fournisseurs de messagerie"
         }
       }
     },
     "company": {
-      "title": "Firma",
+      "title": "Société",
       "dashboard": {
-        "title": "Übersicht"
+        "title": "Aperçu"
       },
       "administration": {
         "title": "Administration"
       },
       "users": {
-        "title": "Benutzer"
+        "title": "Utilisateurs"
       },
       "chats": {
-        "title": "Chats"
+        "title": "Discussions"
       },
       "info": {
-        "title": "Firma"
+        "title": "Société"
       },
       "editCompany": {
-        "title": "Firma bearbeiten"
+        "title": "Modifier la société"
       },
       "createCompany": {
-        "title": "Firma erstellen"
+        "title": "Créer une société"
       }
     }
   },
   "commandPalette": {
-    "title": "Befehlspalette",
-    "description": "Zu einer Seite springen",
-    "placeholder": "Seiten suchen…",
-    "empty": "Keine passenden Seiten"
+    "title": "Palette de commandes",
+    "description": "Aller à n'importe quelle page",
+    "placeholder": "Rechercher des pages…",
+    "empty": "Aucune page correspondante"
   }
 }

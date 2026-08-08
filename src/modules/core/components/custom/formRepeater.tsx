@@ -269,15 +269,20 @@ function renderRowNode(
         if (!WidgetComponent) return null;
 
         if (isCompoundFormWidget(binding.widget)) {
+            // Name-based compounds (#MediaField, #StringArrayField, …) write via `name`.
+            // Prefix-based compounds (#FormAddressRow, …) use `fieldPrefix`. Set both so
+            // either style resolves to `socialLinks.0.logo` / `addresses.0.*`, not a root key.
+            const rowPrefix = `${arrayField}.${index}`;
             const prefixedBinding: FieldBinding = {
                 ...binding,
+                name: `${rowPrefix}.${binding.name}`,
                 widgetProps: {
                     ...binding.widgetProps,
-                    fieldPrefix: `${arrayField}.${index}`,
+                    fieldPrefix: rowPrefix,
                 },
             };
             return (
-                <div key={`compound-${nodeIndex}`}>
+                <div key={`compound-${nodeIndex}-${binding.name}`}>
                     {renderCompoundWidget(WidgetComponent, prefixedBinding, resolveLanguageKey, extra)}
                 </div>
             );

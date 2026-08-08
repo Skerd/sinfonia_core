@@ -44,7 +44,10 @@ function LanguageSwitch({resolveLanguageKey, showTitles = false}: LanguageSwitch
                     <span className='sr-only'>{resolveLanguageKey("selectLanguage")}</span>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align={showTitles ? "center" : "end"}>
+            <DropdownMenuContent
+                align={showTitles ? "center" : "end"}
+                className="w-max"
+            >
                 {
                     showTitles &&
                     <>
@@ -57,6 +60,7 @@ function LanguageSwitch({resolveLanguageKey, showTitles = false}: LanguageSwitch
                         return (
                             <DropdownMenuItem
                                 key={"generated_language_select_" + index}
+                                className="whitespace-nowrap"
                                 onClick={() => {dispatch(changeLanguage(language.languageCode));}}
                             >
                                 <div className="flex items-center gap-x-1">

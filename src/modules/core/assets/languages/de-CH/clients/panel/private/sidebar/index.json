@@ -2,13 +2,13 @@
   "path": "src/modules/core/clients/panel/private/sidebar/index.tsx",
   "home": {
     "title": "Apps",
-    "subtitle": "Choose ein app bis offen",
-    "searchPlaceholder": "Suchen apps…",
-    "noResults": "Keine apps match ihr suchen.",
-    "recent": "Recent",
-    "greetingMorning": "Good morning",
-    "greetingAfternoon": "Good afternoon",
-    "greetingEvening": "Good evening"
+    "subtitle": "App auswählen zum Öffnen",
+    "searchPlaceholder": "Apps suchen…",
+    "noResults": "Keine Apps entsprechen Ihrer Suche.",
+    "recent": "Zuletzt",
+    "greetingMorning": "Guten Morgen",
+    "greetingAfternoon": "Guten Tag",
+    "greetingEvening": "Guten Abend"
   },
   "menus": {
     "account": {
@@ -53,36 +53,36 @@
         }
       },
       "resources": {
-        "title": "Resources",
+        "title": "Ressourcen",
         "serverPerformance": {
           "title": "Performance"
         },
         "cronJobs": {
-          "title": "Scheduled massnahmen"
+          "title": "Geplante Aktionen"
         }
       },
       "systemSettings": {
         "smtpServers": {
-          "title": "Mail servers"
+          "title": "Mailserver"
         },
         "cities": {
-          "title": "Cities"
+          "title": "Städte"
         },
         "states": {
-          "title": "States"
+          "title": "Kantone / Staaten"
         },
-        "title": "Configurations",
+        "title": "Konfigurationen",
         "messagingProviders": {
-          "title": "Messaging providers"
+          "title": "Messaging-Anbieter"
         },
         "core": {
           "title": "Core"
         },
         "countries": {
-          "title": "Countries"
+          "title": "Länder"
         },
         "currencies": {
-          "title": "Currencies"
+          "title": "Währungen"
         }
       }
     },

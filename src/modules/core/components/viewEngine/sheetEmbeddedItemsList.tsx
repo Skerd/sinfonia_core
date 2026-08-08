@@ -133,7 +133,8 @@ function resolveLinkedRefStub(item: Record<string, any>, field: EmbeddedItemFiel
 function fieldHasValue(item: Record<string, any>, field: EmbeddedItemFieldConfig): boolean {
     if (field.type === "mediaStrip") {
         const v = resolvePath(item, field.name);
-        return Array.isArray(v) && v.length > 0;
+        if (Array.isArray(v)) return v.length > 0;
+        return v != null && typeof v === "object";
     }
     if (field.type === "linkedRef") {
         return resolveLinkedRefStub(item, field) != null;
@@ -365,11 +366,31 @@ function SheetEmbeddedItemsList({
                         {fields.map((f, fi) => {
                             if (f.type === "mediaStrip") {
                                 const value = resolvePath(item, f.name);
-                                if (!Array.isArray(value) || value.length === 0) return null;
+                                const mediaList = Array.isArray(value)
+                                    ? value
+                                    : value != null && typeof value === "object"
+                                      ? [value]
+                                      : [];
+                                if (mediaList.length === 0) return null;
+                                const label =
+                                    typeof f.labelKey === "string" && f.labelKey.length > 0
+                                        ? resolveSheet(f.labelKey)
+                                        : null;
                                 return (
-                                    <div key={fi} className={cardColumns ? "col-span-full" : undefined}>
+                                    <div
+                                        key={fi}
+                                        className={cn(
+                                            "flex flex-col gap-1",
+                                            cardColumns ? "col-span-full" : undefined,
+                                        )}
+                                    >
+                                        {label ? (
+                                            <span className="text-xs font-medium text-muted-foreground">
+                                                {label}
+                                            </span>
+                                        ) : null}
                                         <SheetMediaFilesStrip
-                                            media={value as Media[]}
+                                            media={mediaList as Media[]}
                                             resolveLanguageKey={resolveSheet}
                                             canDownload
                                             canRemove={false}
