@@ -445,7 +445,6 @@ function ApiSelectCore({
 
     const triggerRef = useRef<HTMLButtonElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
-    const [popoverWidth, setPopoverWidth] = useState<number>();
     const notifiedValueRef = useRef<string | undefined>(undefined);
     const notifiedMultiValuesKeyRef = useRef<string>("");
 
@@ -729,7 +728,6 @@ function ApiSelectCore({
     const handleOpenChange = useCallback((nextOpen: boolean) => {
         if( disabled ) return;
         if (!nextOpen) setSearchText('');
-        else if (triggerRef.current) setPopoverWidth(triggerRef.current.offsetWidth);
         setOpen(nextOpen);
     }, [disabled]);
 
@@ -906,7 +904,7 @@ function ApiSelectCore({
                     {option.photo ? (
                         <SelectOptionAvatar photo={option.photo} label={option.label} />
                     ) : null}
-                    <p>{option.label}</p>
+                    <p className="whitespace-nowrap">{option.label}</p>
                 </CommandItem>
             );
         },
@@ -1051,11 +1049,14 @@ function ApiSelectCore({
                 )}
             </PopoverTrigger>
             <PopoverContent
-                className={cn(forTable ? 'w-[200px] p-0' : 'w-full p-0')}
-                style={forTable ? undefined : { width: popoverWidth }}
+                className={cn(
+                    forTable
+                        ? 'w-[200px] p-0'
+                        : 'w-max min-w-[var(--radix-popover-trigger-width)] max-w-[min(90vw,32rem)] p-0',
+                )}
                 align="start"
             >
-                <Command className="w-full" shouldFilter={false}>
+                <Command className="h-auto w-max min-w-full overflow-hidden" shouldFilter={false}>
                     <div className="relative">
                         <CommandInput
                             placeholder={`${resolveLanguageKey("search")}...`}

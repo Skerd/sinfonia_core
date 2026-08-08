@@ -68,7 +68,6 @@ function SimpleSelectRender({
 
     const [open, setOpen] = useState(false);
     const [searchText, setSearchText] = useState('');
-    const [popoverWidth, setPopoverWidth] = useState<number | undefined>();
     const triggerRef = useRef<HTMLButtonElement>(null);
 
     const searchLower = useMemo(() => searchText.trim().toLowerCase(), [searchText]);
@@ -113,7 +112,6 @@ function SimpleSelectRender({
         (nextOpen: boolean) => {
             if (disabled) return;
             if (!nextOpen) setSearchText('');
-            else if (triggerRef.current) setPopoverWidth(triggerRef.current.offsetWidth);
             setOpen(nextOpen);
         },
         [disabled],
@@ -143,7 +141,7 @@ function SimpleSelectRender({
                     ) : (
                         <CheckIcon className={cn('text-primary h-4 w-4', isSelected ? 'opacity-100' : 'opacity-0')} />
                     )}
-                    <p>{option.label}</p>
+                    <p className="whitespace-nowrap">{option.label}</p>
                 </CommandItem>
             );
         },
@@ -232,12 +230,15 @@ function SimpleSelectRender({
                 )}
             </PopoverTrigger>
             <PopoverContent
-                className={cn(forTable ? 'w-[200px] p-0' : 'w-full p-0')}
-                style={forTable ? undefined : { width: popoverWidth }}
+                className={cn(
+                    forTable
+                        ? 'w-[200px] p-0'
+                        : 'w-max min-w-[var(--radix-popover-trigger-width)] max-w-[min(90vw,32rem)] p-0',
+                )}
                 align="start"
                 container={drawerPortalContainer?.current ?? undefined}
             >
-                <Command className="w-full" shouldFilter={false}>
+                <Command className="h-auto w-max min-w-full overflow-hidden" shouldFilter={false}>
                     <div className="relative">
                         <CommandInput
                             placeholder={String(searchPlaceholder ?? resolveLanguageKey('searchPlaceholder'))}

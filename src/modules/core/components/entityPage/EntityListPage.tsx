@@ -20,7 +20,12 @@ import type {DeletedData, TableResponse} from "armonia/src/modules/core/types/sh
 import type {FilterGroup, FilterValue} from "armonia/src/modules/core/database/filter";
 import {generateUUID, type PageTitle} from "@coreModule/helpers/general";
 import {mergeAndFilterDSL} from "@coreModule/helpers/filter/mergeFilterDsl.ts";
-import QuickFilterBar, {buildQuickFilterDSL, type QuickFilterDef} from "@coreModule/components/entityPage/quickFilterBar.tsx";
+import QuickFilterBar, {
+    buildQuickFilterDSL,
+    buildQuickFilterExtraParams,
+    collectDependentQuickFilterFields,
+    type QuickFilterDef,
+} from "@coreModule/components/entityPage/quickFilterBar.tsx";
 import {GRID_TRANSACTIONAL} from "@coreModule/components/custom/cards/entityCard.constants.ts";
 
 export type {QuickFilterDef};
@@ -290,12 +295,20 @@ export default function EntityListPage<T extends BaseEntity>({
     }, [searchParams.toString(), quickFilterFields.join("|")]);
 
     const setQuickFilterValue = (field: string, value: FilterValue | null) => {
-        setQuickFilterValues((prev) => ({...prev, [field]: value}));
+        const dependents = collectDependentQuickFilterFields(quickFilters ?? [], field);
+        setQuickFilterValues((prev) => {
+            const next = {...prev, [field]: value};
+            for (const dep of dependents) next[dep] = null;
+            return next;
+        });
         writeQuickFilterParam(
             setSearchParams,
             field,
             value == null ? null : String(value),
         );
+        for (const dep of dependents) {
+            writeQuickFilterParam(setSearchParams, dep, null);
+        }
     };
 
     const clearQuickFilters = () => {
@@ -306,6 +319,16 @@ export default function EntityListPage<T extends BaseEntity>({
     const quickFilterDSL = useMemo(
         () => buildQuickFilterDSL(quickFilters ?? [], quickFilterValues),
         [quickFilters, quickFilterValues],
+    );
+
+    const quickFilterExtraParams = useMemo(
+        () => buildQuickFilterExtraParams(quickFilters ?? [], quickFilterValues),
+        [quickFilters, quickFilterValues],
+    );
+
+    const mergedExtraParams = useMemo(
+        () => ({...(extraParams ?? {}), ...quickFilterExtraParams}),
+        [extraParams, quickFilterExtraParams],
     );
 
     const combinedToolbarDSL = useMemo(
@@ -391,7 +414,7 @@ export default function EntityListPage<T extends BaseEntity>({
                         url={apiUrl}
                         tableConfigKey={tableConfigKey}
                         access={accessModel}
-                        extraParams={extraParams}
+                        extraParams={mergedExtraParams}
                         toolbarFilterDSL={combinedToolbarDSL}
                         aboveToolbar={
                             quickFilters?.length ? (
@@ -402,7 +425,7 @@ export default function EntityListPage<T extends BaseEntity>({
                                         values={quickFilterValues}
                                         onChange={setQuickFilterValue}
                                         onClearAll={clearQuickFilters}
-                                        extraParams={extraParams}
+                                        extraParams={mergedExtraParams}
                                     />
                                 </>
                             ) : aboveToolbar

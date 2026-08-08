@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import {compose} from "redux";
 import {X, CalendarIcon} from "lucide-react";
 import {format, isValid, parse} from "date-fns";
@@ -23,7 +23,40 @@ export type QuickFilterDef = {
     enumValues?: Array<{value: string; label: string}>;
     apiUrl?: string;
     postBodyKeys?: string[];
+    /**
+     * Filter select options by one or more other quick-filter fields.
+     * Active parents are combined with AND (e.g. floor → edifice and/or project).
+     */
+    dependsOn?: string | string[];
+    /**
+     * When true, the value is sent as a list `extraParam` instead of a DSL filter rule.
+     * Use for fields that are not on the collection (e.g. project on inspections).
+     */
+    asExtraParam?: boolean;
 };
+
+function dependsOnFields(def: QuickFilterDef): string[] {
+    if (!def.dependsOn) return [];
+    return Array.isArray(def.dependsOn) ? def.dependsOn : [def.dependsOn];
+}
+
+/** Fields that cascade off `field` (direct + transitive), for clearing on parent change. */
+export function collectDependentQuickFilterFields(defs: QuickFilterDef[], field: string): string[] {
+    const result: string[] = [];
+    let frontier = [field];
+    while (frontier.length) {
+        const next: string[] = [];
+        for (const d of defs) {
+            const parents = dependsOnFields(d);
+            if (parents.some((p) => frontier.includes(p)) && !result.includes(d.field)) {
+                result.push(d.field);
+                next.push(d.field);
+            }
+        }
+        frontier = next;
+    }
+    return result;
+}
 
 type QuickFilterBarProps = WithLanguageType & {
     defs: QuickFilterDef[];
@@ -51,6 +84,7 @@ export function buildQuickFilterDSL(
 ): FilterGroup | undefined {
     const rules: FilterRule[] = [];
     for (const def of defs) {
+        if (def.asExtraParam) continue;
         const val = values[def.field];
         if (!hasActiveValue(val)) continue;
         rules.push({
@@ -64,6 +98,21 @@ export function buildQuickFilterDSL(
     return {id: generateUUID(), operator: "and", rules, groups: []};
 }
 
+/** Active asExtraParam quick-filter values for the list request body. */
+export function buildQuickFilterExtraParams(
+    defs: QuickFilterDef[],
+    values: Record<string, FilterValue | null>,
+): Record<string, unknown> {
+    const out: Record<string, unknown> = {};
+    for (const def of defs) {
+        if (!def.asExtraParam) continue;
+        const val = values[def.field];
+        if (!hasActiveValue(val)) continue;
+        out[def.field] = val;
+    }
+    return out;
+}
+
 // ---------------------------------------------------------------------------
 // Individual input types
 // ---------------------------------------------------------------------------
@@ -72,6 +121,7 @@ type QuickFilterInputProps = {
     def: QuickFilterDef;
     value: FilterValue | null;
     onChange: (value: FilterValue | null) => void;
+    values: Record<string, FilterValue | null>;
     extraParams?: Record<string, unknown>;
     resolveLanguageKey: WithLanguageType["resolveLanguageKey"];
 };
@@ -175,14 +225,47 @@ function BooleanInput({def, value, onChange, resolveLanguageKey}: QuickFilterInp
     );
 }
 
-function ObjectIdInput({def, value, onChange, extraParams}: QuickFilterInputProps) {
+function ObjectIdInput({def, value, onChange, values, extraParams}: QuickFilterInputProps) {
+    const parentFields = dependsOnFields(def);
+    const activeParents = parentFields
+        .map((field) => {
+            const raw = values[field] ?? null;
+            if (!hasActiveValue(raw) || raw == null) return null;
+            return {field, value: String(raw)};
+        })
+        .filter((p): p is {field: string; value: string} => p != null);
+    const remountKey = activeParents.map((p) => `${p.field}:${p.value}`).join("|") || "none";
+
+    const postBody = useMemo(() => {
+        const base = Object.fromEntries(
+            (def.postBodyKeys ?? []).map((k) => [k, extraParams?.[k]]),
+        );
+        if (activeParents.length === 0) {
+            return Object.keys(base).length ? base : undefined;
+        }
+        return {
+            ...base,
+            filters: {
+                id: `qf-${def.field}-deps`,
+                operator: "and" as const,
+                rules: activeParents.map((p) => ({
+                    id: `qf-${def.field}-dep-${p.field}`,
+                    field: p.field,
+                    operator: "equals" as const,
+                    value: p.value,
+                })),
+                groups: [],
+            },
+        };
+        // remountKey encodes active parent field/value pairs
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [def.field, def.postBodyKeys, extraParams, remountKey]);
+
     if (!def.apiUrl) return null;
-    const postBody = Object.fromEntries(
-        (def.postBodyKeys ?? []).map((k) => [k, extraParams?.[k]]),
-    );
     const strVal = typeof value === "string" ? value : undefined;
     return (
         <ApiSelect
+            key={`${def.field}-${remountKey}`}
             apiUrl={def.apiUrl}
             postBody={postBody}
             value={strVal}
@@ -242,6 +325,7 @@ function QuickFilterBar({
                                 def={def}
                                 value={values[def.field] ?? null}
                                 onChange={(v) => onChange(def.field, v)}
+                                values={values}
                                 extraParams={extraParams}
                                 resolveLanguageKey={resolveLanguageKey}
                             />
