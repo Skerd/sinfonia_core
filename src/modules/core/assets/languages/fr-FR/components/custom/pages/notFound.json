@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/pages/notFound.tsx",
+  "title": "Oups ! Page introuvable !",
+  "description": "Il semble que ce soit la page que vous recherchez\nn’existe pas ou a peut-être été supprimé.",
+  "backLabel": "Retour",
+  "backHome": "Retour à la maison"
+}

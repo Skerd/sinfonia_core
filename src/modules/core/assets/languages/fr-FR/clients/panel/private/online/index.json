@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/index.tsx",
+  "title": "Surveillance du serveur",
+  "description": "Surveillance de l'état du serveur en temps réel, des mesures de performances et de l'activité des utilisateurs"
+}

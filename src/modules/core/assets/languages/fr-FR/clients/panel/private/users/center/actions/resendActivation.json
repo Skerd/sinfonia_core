@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/resendActivation.tsx",
+  "resendActivationEmail": "Renvoyer l'e-mail d'activation",
+  "resendActivationEmailConfirm": "Renvoyer l'e-mail d'activation ?",
+  "resendActivationEmailConfirmDesc": "Un nouvel email d'activation sera envoyé à l'utilisateur.",
+  "resendActivationEmailSuccess": "E-mail d'activation envoyé avec succès",
+  "resendActivationEmailError": "Échec de l'envoi de l'e-mail d'activation",
+  "axios": {
+    "start": {
+      "title": "Envoi d'un email d'activation",
+      "time": 3000
+    },
+    "success": {
+      "title": "E-mail d'activation envoyé avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de l'envoi de l'e-mail d'activation",
+      "time": 3000
+    }
+  }
+}

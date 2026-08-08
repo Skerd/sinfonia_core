@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/sidebar/index.tsx",
   "home": {
-    "title": "Apps",
+    "title": "Applications",
     "subtitle": "Choisissez une application à ouvrir",
     "searchPlaceholder": "Rechercher des apps…",
     "noResults": "Aucune application ne correspond à votre recherche.",
@@ -32,7 +32,7 @@
         }
       },
       "apps": {
-        "title": "Apps",
+        "title": "Applications",
         "connectedApps": {
           "title": "Applications connectées"
         }
@@ -76,7 +76,7 @@
           "title": "Fournisseurs de messagerie"
         },
         "core": {
-          "title": "Core"
+          "title": "Cœur"
         },
         "countries": {
           "title": "Pays"
@@ -87,7 +87,7 @@
       }
     },
     "company": {
-      "title": "Société",
+      "title": "Entreprise",
       "dashboard": {
         "title": "Aperçu"
       },
@@ -103,7 +103,7 @@
       "settings": {
         "title": "Paramètres",
         "company": {
-          "title": "Société"
+          "title": "Entreprise"
         },
         "roles": {
           "title": "Rôles"

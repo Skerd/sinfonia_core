@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/ui/table/view-options.tsx",
+  "toggleColumns": "Attiva/disattiva colonne",
+  "searchColumns": "Cerca colonne...",
+  "noColumnsMatch": "Nessuna colonna corrisponde"
+}

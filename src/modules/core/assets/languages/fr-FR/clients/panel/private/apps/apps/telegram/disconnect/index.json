@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/disconnect/index.tsx",
+  "title": "Êtes-vous sûr de vouloir dissocier Telegram ?",
+  "description": "Vous ne recevrez plus de notifications",
+  "usersTitle": "Êtes-vous sûr de vouloir dissocier Telegram ?",
+  "usersDescription": "L'utilisateur ne recevra plus de notifications",
+  "button": "Confirmer",
+  "backButton": "Annuler",
+  "axios": {
+    "start": {
+      "title": "Déconnexion du télégramme",
+      "time": 3000
+    },
+    "success": {
+      "title": "Télégramme déconnecté avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la déconnexion du télégramme",
+      "time": 3000
+    }
+  }
+}

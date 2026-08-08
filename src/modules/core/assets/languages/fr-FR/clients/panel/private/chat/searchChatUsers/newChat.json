@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/searchChatUsers/newChat.tsx",
+  "members": "Membres",
+  "searchPeople": "Rechercher des personnes",
+  "failTitle": "Échec du chargement des utilisateurs",
+  "failTitleTooltip": "Cliquez pour réessayer de charger les utilisateurs",
+  "noDataTitle": "Personne n'a été trouvé.",
+  "form": {
+    "nameLabel": "Nom du groupe",
+    "namePlaceholder": "Nom du groupe"
+  }
+}

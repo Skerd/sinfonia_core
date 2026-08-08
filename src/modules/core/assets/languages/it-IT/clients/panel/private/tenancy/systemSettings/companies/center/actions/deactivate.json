@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx",
+  "title": "Disattiva azienda",
+  "description": "Sei sicuro di voler disattivare questa azienda? Gli utenti non saranno in grado di accedere al sistema dopo la disattivazione.",
+  "confirm": "Disattiva",
+  "confirmNameLabel": "Digita il nome dell'azienda per confermare",
+  "cancel": "Annulla",
+  "axios": {
+    "start": {
+      "title": "Disattivazione azienda",
+      "time": 3000
+    },
+    "success": {
+      "title": "Azienda disattivata con successo.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile disattivare la società",
+      "time": 3000
+    }
+  }
+}

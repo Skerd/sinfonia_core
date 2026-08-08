@@ -2,7 +2,7 @@
   "path": "src/modules/core/components/custom/actions/deleteAction.tsx",
   "title": "Elimina",
   "description": "Vuoi davvero eliminare",
-  "item": "l'elemento",
+  "item": "elemento",
   "typeToConfirm": "Digita « {} » per confermare",
   "typeDelete": "Elimina",
   "cancel": "Annulla",

@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx",
+  "markAllAsRead": "Segna tutto come letto",
+  "confirmTitle": "Segna tutto come letto",
+  "confirmDescription": "Sei sicuro di voler contrassegnare tutte le notifiche come lette?",
+  "cancel": "Annulla",
+  "confirm": "Segna come letto",
+  "axios": {
+    "start": {
+      "title": "Contrassegnare tutto come letto",
+      "time": 3000
+    },
+    "success": {
+      "title": "Tutte le notifiche contrassegnate come lette.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile contrassegnare le notifiche come lette",
+      "time": 3000
+    }
+  }
+}

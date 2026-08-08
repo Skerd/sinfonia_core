@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx",
+  "currency": "Valuta",
+  "overview": "Panoramica",
+  "lifecycle": "Ciclo di vita",
+  "symbol": "Simbolo",
+  "abbreviation": "Abbreviazione",
+  "decimalPlaces": "Posti decimali",
+  "createdAt": "Creato il",
+  "updatedAt": "Aggiornato il",
+  "createdBy": "Creato da",
+  "deletedAt": "Eliminato il",
+  "deletedBy": "Eliminato da"
+}

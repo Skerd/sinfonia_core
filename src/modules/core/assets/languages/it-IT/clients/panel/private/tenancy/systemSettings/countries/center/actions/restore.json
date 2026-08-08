@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/restore.tsx",
+  "title": "Ripristina",
+  "restoreConfirmTitle": "Ripristina il paese",
+  "restoreConfirmDescription": "Sei sicuro di voler ripristinare questo paese?",
+  "cancel": "Annulla",
+  "confirmRestore": "Ripristina",
+  "axios": {
+    "start": {
+      "title": "Ripristinare il paese",
+      "time": 3000
+    },
+    "success": {
+      "title": "Paese ripristinato con successo!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile ripristinare il Paese, riprova!",
+      "time": 3000
+    }
+  }
+}

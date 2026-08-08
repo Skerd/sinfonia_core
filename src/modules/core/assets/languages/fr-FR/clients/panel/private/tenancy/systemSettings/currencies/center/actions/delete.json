@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/actions/delete.tsx",
+  "title": "Supprimer",
+  "deleteConfirmTitle": "Supprimer la devise",
+  "deleteConfirmDescription": "Etes-vous sûr de vouloir supprimer cette devise ?",
+  "confirmNameLabel": "Tapez le nom de la devise pour confirmer",
+  "cancel": "Annuler",
+  "confirmDelete": "Supprimer",
+  "axios": {
+    "start": {
+      "title": "Supprimer une devise",
+      "time": 3000
+    },
+    "success": {
+      "title": "Devise supprimée avec succès.",
+      "time": 3000
+    },
+    "error": {
+      "title": "La devise n'a pas pu être supprimée",
+      "time": 3000
+    }
+  }
+}

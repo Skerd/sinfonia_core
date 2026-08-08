@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/name/index.tsx",
+  "form": {
+    "nameLabel": "Nome",
+    "nameDescription": "Questo è il nome che verrà visualizzato nel sistema."
+  },
+  "failTitle": "Impossibile caricare il nome",
+  "failTitleTooltip": "Fare clic per riprovare a caricare il nome"
+}

@@ -1,0 +1,40 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/editState.tsx",
+  "title": "Modifier l'état",
+  "description": "Mettre à jour les détails de l'état",
+  "errorTitle": "Échec du chargement des données d'état",
+  "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données d'état",
+  "form": {
+    "idLabel": "ID d'État",
+    "nameLabel": "Nom",
+    "namePlaceholder": "Nom de l'État",
+    "codeLabel": "Code",
+    "codePlaceholder": "par ex. Californie",
+    "countryLabel": "Pays",
+    "countryPlaceholder": "Sélectionner le pays"
+  },
+  "noId": "Aucun état sélectionné.",
+  "backToList": "Retour à la liste",
+  "axios": {
+    "start": {
+      "title": "État de sauvegarde",
+      "time": 3000
+    },
+    "success": {
+      "title": "État mis à jour avec succès !",
+      "time": 3000
+    },
+    "error": {
+      "title": "L'état n'a pas pu être mis à jour, veuillez réessayer !",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Modifier l'état",
+    "description": "Mettre à jour les détails de l'état"
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Enregistrer"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/center/actions/restore.tsx",
+  "title": "Restaurer",
+  "restoreConfirmTitle": "Restaurer le rôle",
+  "restoreConfirmDescription": "Êtes-vous sûr de vouloir restaurer ce rôle ?",
+  "cancel": "Annuler",
+  "confirmRestore": "Restaurer",
+  "axios": {
+    "start": {
+      "title": "Rôle de restauration",
+      "time": 3000
+    },
+    "success": {
+      "title": "Rôle restauré avec succès !",
+      "time": 3000
+    },
+    "error": {
+      "title": "Le rôle n'a pas pu être restauré, veuillez réessayer !",
+      "time": 3000
+    }
+  }
+}

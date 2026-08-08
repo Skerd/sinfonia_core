@@ -1,0 +1,61 @@
+{
+  "backToList": "Retour à la liste",
+  "description": "Mettez à jour les paramètres de planification, de portée et d’exécution.",
+  "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données du travail.",
+  "errorTitle": "Échec du chargement de l'action planifiée",
+  "form": {
+    "activeLabel": "Actif",
+    "codeLabel": "Code",
+    "companyLabel": "Entreprise",
+    "companyPlaceholder": "Sélectionner l'entreprise",
+    "cronExpressionLabel": "Expression Cron",
+    "cronExpressionPlaceholder": "0 0 * * * *",
+    "descriptionLabel": "Description",
+    "handlerLabel": "Gestionnaire",
+    "intervalUnit": {
+      "days": "Jours",
+      "hours": "Heures",
+      "minutes": "Minutes",
+      "seconds": "Secondes"
+    },
+    "intervalUnit.days": "Jours",
+    "intervalUnit.hours": "Heures",
+    "intervalUnit.minutes": "Minutes",
+    "intervalUnit.seconds": "Secondes",
+    "intervalUnitLabel": "Unité d'intervalle",
+    "intervalValueLabel": "Valeur d'intervalle",
+    "intervalValuePlaceholder": "5",
+    "maxRetriesLabel": "Nombre maximal de tentatives",
+    "nameLabel": "Nom",
+    "priorityLabel": "Priorité",
+    "scope": {
+      "company": "Entreprise",
+      "global": "Mondial"
+    },
+    "scope.company": "Entreprise",
+    "scope.global": "Mondial (plateforme)",
+    "scopeLabel": "Périmètre",
+    "type": {
+      "cron": "Cron",
+      "interval": "Intervalle",
+      "once": "Une fois",
+      "queue": "File d'attente"
+    },
+    "type.cron": "Expression Cron",
+    "type.interval": "Intervalle",
+    "type.once": "Une fois",
+    "type.queue": "File d'attente",
+    "typeLabel": "Type d'horaire"
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Enregistrer"
+  },
+  "formHeader": {
+    "description": "Mettez à jour les paramètres de planification, de portée et d’exécution.",
+    "title": "Modifier l'action planifiée"
+  },
+  "noId": "Aucune action planifiée sélectionnée.",
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/editCronJob.tsx",
+  "title": "Modifier l'action planifiée"
+}

@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/timezone/index.tsx",
+  "form": {
+    "newTimeZoneLabel": "Fuseau horaire",
+    "newTimeZoneDescription": "Il s'agit du fuseau horaire qui sera utilisé pour afficher l'heure dans le système."
+  },
+  "failTitle": "Échec du chargement du fuseau horaire",
+  "failTitleTooltip": "Cliquez pour réessayer de charger le fuseau horaire"
+}

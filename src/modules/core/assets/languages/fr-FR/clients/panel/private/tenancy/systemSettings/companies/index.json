@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/index.tsx",
+  "title": "Sociétés",
+  "description": "Gérer des entreprises",
+  "createCompany": "Créer une société",
+  "searchPlaceholder": "Recherchez par nom, e-mail ou ajoutez des filtres...",
+  "noData": "Aucune entreprise trouvée",
+  "failTitle": "Échec du chargement des entreprises",
+  "failDescription": "Une erreur s'est produite lors du chargement des entreprises. Veuillez réessayer.",
+  "name": "Nom",
+  "email": "E-mail",
+  "website": "Site web",
+  "vat": "TVA",
+  "isActive": "Statut",
+  "fields": {
+    "name": "Nom",
+    "email": "E-mail",
+    "phoneNumber": "Numéro de téléphone",
+    "addresses": "Adresses",
+    "description": "Description",
+    "logo": "Logo",
+    "website": "Site web",
+    "vat": "TVA",
+    "company": "Société mère",
+    "isActive": "Statut",
+    "allowedDomains": "Domaines autorisés",
+    "createdBy": "Créé par",
+    "deletedAt": "Supprimé le",
+    "deletedBy": "Supprimé par"
+  }
+}

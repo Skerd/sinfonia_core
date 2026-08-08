@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/center/actions/delete.tsx",
+  "title": "Supprimer",
+  "deleteConfirmTitle": "Supprimer le rôle",
+  "deleteConfirmDescription": "Êtes-vous sûr de vouloir supprimer ce rôle ? Cela supprimera le rôle de tous les utilisateurs auxquels il est attribué.",
+  "confirmNameLabel": "Tapez le nom du rôle pour confirmer",
+  "cancel": "Annuler",
+  "confirmDelete": "Supprimer",
+  "axios": {
+    "start": {
+      "title": "Supprimer un rôle",
+      "time": 3000
+    },
+    "success": {
+      "title": "Rôle supprimé avec succès !",
+      "time": 3000
+    },
+    "error": {
+      "title": "Le rôle n'a pas pu être supprimé, veuillez réessayer !",
+      "time": 3000
+    }
+  }
+}

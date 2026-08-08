@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/editCurrency.tsx",
+  "title": "Modifier la devise",
+  "description": "Mettre à jour les détails de la devise",
+  "errorTitle": "Échec du chargement des données de devise",
+  "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données sur les devises.",
+  "form": {
+    "nameLabel": "Nom",
+    "namePlaceholder": "Nom de la devise",
+    "symbolLabel": "Symbole",
+    "symbolPlaceholder": "par ex. $",
+    "abbreviationLabel": "Abréviation",
+    "abbreviationPlaceholder": "par ex. USD",
+    "decimalPlacesLabel": "Décimales",
+    "decimalPlacesPlaceholder": "2"
+  },
+  "noId": "Aucune devise sélectionnée.",
+  "backToList": "Retour à la liste",
+  "formHeader": {
+    "title": "Modifier la devise",
+    "description": "Mettre à jour les détails de la devise"
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Enregistrer"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/userFilters.tsx",
+  "filterSearch": "Cerca per nome, email, telefono",
+  "filterStatus": "Stato",
+  "filterStatusAll": "Tutti gli stati",
+  "filterRoles": "Filtra per ruolo",
+  "clearFilters": "Cancella filtri",
+  "statuses": {
+    "active": "Attivo",
+    "inactive": "Inattiva",
+    "invited": "Invitato"
+  }
+}

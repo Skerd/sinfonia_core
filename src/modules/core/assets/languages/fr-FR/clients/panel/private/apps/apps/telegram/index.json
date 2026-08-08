@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/index.tsx",
+  "name": "Télégramme",
+  "description": "Connectez-vous avec Telegram pour une communication en temps réel.",
+  "connected": "Connecté",
+  "notConnected": "Connecter",
+  "connect": "Connecter",
+  "disconnect": "Déconnecter",
+  "failTitle": "Échec du chargement de l'état",
+  "failTitleTooltip": "Cliquez ici pour réessayer de récupérer le statut",
+  "linked": {
+    "title": "Télégramme lié avec succès",
+    "description": "Cliquez sur le bouton ci-dessous pour dissocier Telegram",
+    "button": "Dissocier"
+  },
+  "notLinked": {
+    "title": "Télégramme non lié",
+    "description": "Cliquez sur le bouton ci-dessous pour lier Telegram",
+    "button": "Lien"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/index.tsx",
+  "serverHealthTitle": "Integrità del server",
+  "waitingForHealthData": "In attesa dei dati sanitari...",
+  "failTitle": "Impossibile caricare i dati sull'integrità del server",
+  "failTitleTooltip": "Impossibile caricare i dati sullo stato del server, fai clic qui per riprovare",
+  "healthy": "Salutare",
+  "degraded": "Degradato",
+  "error": "Errore",
+  "notAvailable": "Non disponibile",
+  "connected": "Collegato",
+  "disconnected": "Disconnesso",
+  "version": "Versione",
+  "lastUpdated": "Ultimo aggiornamento",
+  "enabled": "Abilitato",
+  "disabled": "Disabilitato",
+  "readyState": "Stato pronto",
+  "infrastructureServers": "Server dell'infrastruttura",
+  "serviceServers": "Server di servizio"
+}

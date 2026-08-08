@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/login/index.tsx",
+  "signInHeader": {
+    "title": "Accedi",
+    "descriptionOne": "Inserisci la tua email e la password qui sotto per",
+    "descriptionTwo": "accedi al tuo account"
+  },
+  "mfaHeader": {
+    "title": "Autenticazione a due fattori",
+    "descriptionOne": "Inserisci il codice di autenticazione.",
+    "descriptionTwo": "Puoi trovare il codice nella tua app di autenticazione."
+  },
+  "mfaFooter": {
+    "forgot": "Non riesci ad accedere a 2FA?",
+    "reset": "Resettalo",
+    "or": "O",
+    "goLogin": "Torna al login"
+  }
+}

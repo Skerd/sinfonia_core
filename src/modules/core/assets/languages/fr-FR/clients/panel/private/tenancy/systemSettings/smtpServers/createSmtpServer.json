@@ -1,0 +1,45 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/createSmtpServer.tsx",
+  "title": "Ajouter un serveur SMTP",
+  "description": "Le courrier sortant est envoyé à l'aide de serveurs actifs par ordre de priorité (la séquence la plus basse en premier).",
+  "form": {
+    "nameLabel": "Nom",
+    "namePlaceholder": "par ex. SMTP principal",
+    "sequenceLabel": "Priorité (séquence)",
+    "sequencePlaceholder": "10",
+    "activeLabel": "Actif",
+    "hostLabel": "Hôte SMTP",
+    "hostPlaceholder": "smtp.exemple.com",
+    "portLabel": "Port",
+    "portPlaceholder": "587",
+    "encryptionLabel": "Cryptage",
+    "authTypeLabel": "Authentification",
+    "usernameLabel": "Nom d'utilisateur",
+    "usernamePlaceholder": "utilisateur@exemple.com",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "••••••••",
+    "fromEmailLabel": "À partir d'un e-mail",
+    "fromEmailPlaceholder": "noreply@example.com",
+    "fromNameLabel": "Du nom",
+    "fromNamePlaceholder": "Mon entreprise",
+    "replyToLabel": "Répondre à",
+    "replyToPlaceholder": "support@exemple.com",
+    "encryption": {
+      "none": "Aucun",
+      "ssl": "SSL",
+      "starttls": "DÉMARRAGES"
+    },
+    "authType": {
+      "login": "Nom d'utilisateur/mot de passe",
+      "none": "Aucun"
+    }
+  },
+  "formHeader": {
+    "title": "Ajouter un serveur SMTP",
+    "description": "Le courrier sortant est envoyé à l'aide de serveurs actifs par ordre de priorité (la séquence la plus basse en premier)."
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Créer"
+  }
+}

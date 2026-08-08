@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/index.tsx",
+  "title": "Paramètres",
+  "description": "Gérez les paramètres de votre compte et définissez vos préférences de messagerie.",
+  "account": "Compte",
+  "security": "Sécurité",
+  "notifications": "Notifications"
+}

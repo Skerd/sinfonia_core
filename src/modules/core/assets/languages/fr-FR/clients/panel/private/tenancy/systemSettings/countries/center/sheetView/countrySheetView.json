@@ -1,0 +1,15 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx",
+  "overview": "Aperçu",
+  "lifecycle": "Cycle de vie",
+  "country": "Pays",
+  "name": "Nom",
+  "code": "Code",
+  "phoneCode": "Code de téléphone",
+  "currency": "Devise",
+  "createdAt": "Créé le",
+  "updatedAt": "Mis à jour le",
+  "createdBy": "Créé par",
+  "deletedAt": "Supprimé le",
+  "deletedBy": "Supprimé par"
+}

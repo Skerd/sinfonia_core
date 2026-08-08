@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/pages/forbidden.tsx",
+  "title": "ACCÈS FORMELLEMENT INTERDIT",
+  "description": "Vous n'avez pas l'autorisation nécessaire\n pour consulter cette ressource.",
+  "backLabel": "Retourner",
+  "backHome": "Retour à la maison"
+}

@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx",
+  "title": "Centre de notifications",
+  "description": "Afficher et gérer vos notifications",
+  "unreadOnly": "Non lu uniquement",
+  "failTitle": "Échec du chargement de la notification",
+  "failDescription": "Cliquez ici pour réessayer de récupérer les notifications",
+  "loading": "Chargement...",
+  "noNotifications": "Aucune notification",
+  "error": "Échec du chargement des notifications",
+  "loadMore": "Charger plus",
+  "system": "Système"
+}

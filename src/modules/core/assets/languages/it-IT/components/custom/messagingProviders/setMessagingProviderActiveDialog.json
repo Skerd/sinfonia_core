@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/components/custom/messagingProviders/setMessagingProviderActiveDialog.tsx",
+  "activate": {
+    "title": "Attiva il provider di messaggistica",
+    "description": "Questo provider verrà utilizzato per gli SMS in uscita e i messaggi WhatsApp."
+  },
+  "deactivate": {
+    "title": "Disattiva il provider di messaggistica",
+    "description": "Questo provider non verrà più utilizzato per i messaggi in uscita finché non verrà nuovamente attivato."
+  }
+}

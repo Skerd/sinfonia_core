@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/index.tsx",
+  "title": "Aziende",
+  "description": "Gestire le aziende",
+  "createCompany": "Crea azienda",
+  "searchPlaceholder": "Cerca per nome, email o aggiungi filtri...",
+  "noData": "Nessuna azienda trovata",
+  "failTitle": "Impossibile caricare le aziende",
+  "failDescription": "Si è verificato un errore durante il caricamento delle aziende. Per favore riprova.",
+  "name": "Nome",
+  "email": "E-mail",
+  "website": "Sito web",
+  "vat": "IVA",
+  "isActive": "Stato",
+  "fields": {
+    "name": "Nome",
+    "email": "E-mail",
+    "phoneNumber": "Numero di telefono",
+    "addresses": "Indirizzi",
+    "description": "Descrizione",
+    "logo": "Logo",
+    "website": "Sito web",
+    "vat": "IVA",
+    "company": "Società madre",
+    "isActive": "Stato",
+    "allowedDomains": "Domini consentiti",
+    "createdBy": "Creato da",
+    "deletedAt": "Eliminato il",
+    "deletedBy": "Eliminato da"
+  }
+}

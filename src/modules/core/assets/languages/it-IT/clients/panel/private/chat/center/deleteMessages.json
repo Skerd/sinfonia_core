@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/deleteMessages.tsx",
+  "selected": "Selezionato",
+  "cancel": "Annulla",
+  "delete": "Elimina",
+  "axios": {
+    "start": {
+      "title": "Eliminazione di messaggi",
+      "time": 3000
+    },
+    "success": {
+      "title": "Messaggi eliminati con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile eliminare i messaggi",
+      "time": 3000
+    }
+  }
+}

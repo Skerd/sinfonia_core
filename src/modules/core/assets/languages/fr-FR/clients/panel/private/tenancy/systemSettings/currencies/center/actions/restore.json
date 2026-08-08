@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/actions/restore.tsx",
+  "title": "Restaurer",
+  "restoreConfirmTitle": "Restaurer la devise",
+  "restoreConfirmDescription": "Êtes-vous sûr de vouloir restaurer cette devise ?",
+  "cancel": "Annuler",
+  "confirmRestore": "Restaurer",
+  "axios": {
+    "start": {
+      "title": "Restaurer la monnaie",
+      "time": 3000
+    },
+    "success": {
+      "title": "Monnaie restaurée avec succès.",
+      "time": 3000
+    },
+    "error": {
+      "title": "La monnaie n'a pas pu être restaurée",
+      "time": 3000
+    }
+  }
+}

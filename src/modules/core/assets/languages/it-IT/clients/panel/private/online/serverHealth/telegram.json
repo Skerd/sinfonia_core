@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/telegram.tsx",
+  "telegramServerTitle": "Server Telegramma",
+  "online": "Online",
+  "offline": "Non in linea",
+  "messages": "Messaggi",
+  "failed": "Non riuscito",
+  "avgTime": "Media Tempo",
+  "uptime": "Tempo di attività",
+  "day": "giorno",
+  "days": "giorni",
+  "hour": "ora",
+  "hours": "ore",
+  "minute": "minuto",
+  "minutes": "minuti",
+  "second": "secondo",
+  "seconds": "secondi"
+}

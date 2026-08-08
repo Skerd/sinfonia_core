@@ -1,0 +1,74 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/editCompany.tsx",
+  "title": "Modifier la société",
+  "description": "Mettre à jour les détails de l'entreprise",
+  "editTitle": "Mettre à jour l'entreprise",
+  "editDescription": "Mettre à jour les informations sur l'entreprise",
+  "generalInfo": "Informations générales",
+  "howToReach": "Coordonnées",
+  "whoAreWe": "Qui sommes-nous",
+  "addAddress": "Ajouter une adresse",
+  "address": "Adresse",
+  "remove": "Supprimer",
+  "errorTitle": "Échec du chargement de la société",
+  "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données de l'entreprise",
+  "form": {
+    "nameLabel": "Nom",
+    "namePlaceholder": "Nom",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "E-mail",
+    "phoneNumberNumberLabel": "Numéro de téléphone",
+    "phoneNumberNumberPlaceholder": "Numéro de téléphone",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Description",
+    "logoLabel": "Logo",
+    "websiteLabel": "Site web",
+    "websitePlaceholder": "Site web",
+    "linkedinLabel": "LinkedIn",
+    "linkedinPlaceholder": "https://linkedin.com/company/...",
+    "instagramLabel": "Instagram",
+    "instagramPlaceholder": "https://instagram.com/...",
+    "facebookLabel": "Facebook",
+    "facebookPlaceholder": "https://facebook.com/...",
+    "vatLabel": "TVA",
+    "vatPlaceholder": "TVA",
+    "allowedDomainsLabel": "Domaines autorisés",
+    "allowedDomainsPlaceholder": "Ajouter un domaine",
+    "streetLabel": "Rue",
+    "streetPlaceholder": "Rue",
+    "postalCodeLabel": "Code postal",
+    "postalCodePlaceholder": "Code postal",
+    "cityLabel": "Ville",
+    "cityPlaceholder": "Ville",
+    "stateLabel": "Canton / État",
+    "statePlaceholder": "Canton / État",
+    "countryLabel": "Pays",
+    "countryPlaceholder": "Pays",
+    "latitudeLabel": "Latitude",
+    "latitudePlaceholder": "Latitude",
+    "longitudeLabel": "Longitude",
+    "longitudePlaceholder": "Longitude"
+  },
+  "axios": {
+    "start": {
+      "title": "Société de mise à jour",
+      "time": 3000
+    },
+    "success": {
+      "title": "Entreprise mise à jour avec succès !",
+      "time": 3000
+    },
+    "error": {
+      "title": "L'entreprise n'a pas pu être mise à jour, veuillez réessayer !",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Mettre à jour l'entreprise",
+    "description": "Mettre à jour les informations sur l'entreprise"
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Enregistrer"
+  }
+}

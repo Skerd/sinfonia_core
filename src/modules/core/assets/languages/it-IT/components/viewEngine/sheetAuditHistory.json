@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/components/viewEngine/sheetAuditHistory.tsx",
+  "menuItem": "Attività",
+  "drawerTitle": "Attività",
+  "drawerDescription": "Modifiche a questo record nel tempo.",
+  "loadMore": "Carica di più",
+  "loading": "Caricamento…",
+  "empty": "Nessuna attività ancora",
+  "errorTitle": "Impossibile caricare l'attività",
+  "retry": "Riprova",
+  "actionCreate": "ha creato questo record",
+  "actionUpdate": "aggiornato",
+  "actionDelete": "cancellato questo record",
+  "actionRestore": "ripristinato questo record",
+  "systemActor": "Sistema",
+  "unknownField": "Campo",
+  "from": "Da",
+  "to": "A",
+  "noFieldChanges": "Nessuna modifica visibile al campo (diff limitato o vuoto)."
+}

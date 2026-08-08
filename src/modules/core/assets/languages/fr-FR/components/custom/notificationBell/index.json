@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/components/custom/notificationBell/index.tsx",
+  "title": "Notifications",
+  "markAllRead": "Marquer tout comme lu",
+  "loading": "Chargement...",
+  "noNotifications": "Aucune notification",
+  "viewAll": "Tout voir",
+  "system": "Système",
+  "justNow": "Tout à l' heure",
+  "minutesAgo": "il y a {} m",
+  "minutesAgoUnit": "il y a m",
+  "hoursAgo": "il y a {}h",
+  "hoursAgoUnit": "il y a h"
+}

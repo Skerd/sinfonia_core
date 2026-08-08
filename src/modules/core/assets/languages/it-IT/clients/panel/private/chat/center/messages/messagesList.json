@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/messagesList.tsx",
+  "failTitle": "Impossibile caricare i messaggi",
+  "failTitleTooltip": "Fare clic per ricaricare i messaggi",
+  "welcome": "Benvenuto in chat",
+  "today": "Oggi",
+  "yesterday": "Ieri",
+  "weekDays": [
+    "Domenica",
+    "Lunedi",
+    "Martedì",
+    "Mercoledì",
+    "Giovedì",
+    "Venerdì",
+    "Sabato"
+  ]
+}

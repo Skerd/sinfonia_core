@@ -1,0 +1,40 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatHeader/dropdown/leaveChannel.tsx",
+  "leaveGroup": "Quitter le groupe",
+  "deleteChat": "Supprimer le chat",
+  "dialog": {
+    "titleLeave": "Quitter le chat",
+    "titleDelete": "Supprimer le chat",
+    "descriptionLeave": "Êtes-vous sûr de vouloir quitter ce chat ?",
+    "descriptionDelete": "Etes-vous sûr de vouloir supprimer ce chat ?",
+    "confirmTextLeave": "Quitter",
+    "confirmTextDelete": "Supprimer",
+    "cancelText": "Annuler"
+  },
+  "axiosOnFunction": {
+    "startLeave": {
+      "title": "Quitter le chat",
+      "time": 3000
+    },
+    "startDelete": {
+      "title": "Supprimer le chat",
+      "time": 3000
+    },
+    "successLeave": {
+      "title": "Vous avez quitté le chat avec succès",
+      "time": 3000
+    },
+    "successDelete": {
+      "title": "Chat supprimé avec succès",
+      "time": 3000
+    },
+    "errorLeave": {
+      "title": "Impossible de quitter le chat, veuillez réessayer !",
+      "time": 3000
+    },
+    "errorDelete": {
+      "title": "Échec de la suppression du chat, veuillez réessayer !",
+      "time": 3000
+    }
+  }
+}

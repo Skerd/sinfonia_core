@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx",
+  "title": "Centro notifiche",
+  "description": "Visualizza e gestisci le tue notifiche",
+  "unreadOnly": "Solo non letto",
+  "failTitle": "Impossibile caricare la notifica",
+  "failDescription": "Fai clic qui per riprovare a recuperare le notifiche",
+  "loading": "Caricamento...",
+  "noNotifications": "Nessuna notifica",
+  "error": "Impossibile caricare le notifiche",
+  "loadMore": "Carica di più",
+  "system": "Sistema"
+}

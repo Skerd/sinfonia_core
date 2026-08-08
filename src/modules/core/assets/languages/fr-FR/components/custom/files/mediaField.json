@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/components/custom/files/mediaField.tsx",
+  "uploadImageHint": "Télécharger une image",
+  "uploadVideoHint": "Télécharger la vidéo",
+  "uploadFileHint": "Télécharger le fichier",
+  "imageAlt": "Image",
+  "videoAlt": "Vidéo",
+  "fileAlt": "Fichier",
+  "videoUnsupported": "Votre navigateur ne prend pas en charge la balise vidéo."
+}

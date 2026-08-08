@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/mongo.tsx",
+  "mongoDbTitle": "MongoDB",
+  "online": "Online",
+  "offline": "Non in linea",
+  "uptime": "Tempo di attività",
+  "db": "DB",
+  "storage": "Magazzinaggio",
+  "index": "Indice",
+  "day": "giorno",
+  "days": "giorni",
+  "hour": "ora",
+  "hours": "ore",
+  "minute": "minuto",
+  "minutes": "minuti",
+  "second": "secondo",
+  "seconds": "secondi"
+}

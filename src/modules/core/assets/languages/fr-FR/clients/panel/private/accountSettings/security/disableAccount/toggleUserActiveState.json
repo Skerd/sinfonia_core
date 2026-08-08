@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx",
+  "titleActivate": "Activer l'utilisateur [!!!] ?",
+  "titleDeactivate": "Bloquer l'utilisateur [!!!] ?",
+  "descriptionActivate": "Êtes-vous sûr de vouloir activer l'utilisateur [!!!]. L'utilisateur peut se reconnecter au système après l'activation.",
+  "descriptionDeactivate": "Êtes-vous sûr de vouloir bloquer l'utilisateur [!!!] ? L'utilisateur ne peut pas accéder au système après le blocage.",
+  "activate": "Activer",
+  "deactivate": "Bloc",
+  "axios": {
+    "start": {
+      "title": "Changer le statut de l'utilisateur",
+      "time": 3000
+    },
+    "success": {
+      "title": "Le statut de l'utilisateur a été modifié avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec du changement de statut de l'utilisateur",
+      "time": 3000
+    }
+  }
+}

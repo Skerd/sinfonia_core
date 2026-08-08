@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/deletePhoto.tsx",
+  "confirm": "Supprimer",
+  "cancel": "Annuler",
+  "deletePhoto": "Supprimer la photo",
+  "axios": {
+    "start": {
+      "title": "Supprimer la photo de couverture",
+      "time": 3000
+    },
+    "success": {
+      "title": "Photo de couverture supprimée avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la suppression de la photo de couverture",
+      "time": 3000
+    }
+  }
+}

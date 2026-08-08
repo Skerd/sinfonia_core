@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockInvitation.tsx",
+  "unlockInvitation": "Débloquer l'invitation",
+  "unlockInvitationConfirm": "Déverrouiller le verrouillage des invitations ?",
+  "unlockInvitationConfirmDesc": "Cela effacera le verrouillage de l'invitation. L'utilisateur pourra recevoir un nouvel email d'invitation.",
+  "unlockInvitationResendEmail": "Renvoyer l'e-mail d'invitation",
+  "unlockInvitationSuccess": "Le verrouillage des invitations a été supprimé avec succès",
+  "unlockInvitationError": "Échec de la suppression du verrouillage de l'invitation",
+  "axios": {
+    "start": {
+      "title": "Déverrouillage de l'invitation",
+      "time": 3000
+    },
+    "success": {
+      "title": "Le verrouillage des invitations a été supprimé avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la suppression du verrouillage de l'invitation",
+      "time": 3000
+    }
+  }
+}

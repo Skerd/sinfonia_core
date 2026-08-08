@@ -1,0 +1,15 @@
+{
+  "path": "src/modules/core/components/custom/polygonSelector.tsx",
+  "zoomOut": "Rimpicciolisci",
+  "zoomIn": "Ingrandisci",
+  "resetZoom": "Reimposta lo zoom",
+  "expand": "Espandi l'immagine",
+  "collapse": "Comprimi immagine",
+  "clear": "Cancella tutti i punti",
+  "revert": "Ripristina l'ultimo punto",
+  "info": "Clicca sull'immagine per aggiungere punti. ⌘/Ctrl + Scorri per ingrandire e trascina l'immagine per eseguire la panoramica.",
+  "currentPolygon": "Poligono attuale:",
+  "point": "punto",
+  "points": "punti",
+  "clickToClose": "Fare clic sul primo punto per chiudere il poligono."
+}

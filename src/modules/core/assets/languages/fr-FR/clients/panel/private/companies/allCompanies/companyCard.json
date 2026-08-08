@@ -1,0 +1,30 @@
+{
+  "path": "src/modules/core/clients/panel/private/companies/allCompanies/companyCard.tsx",
+  "contactInfo": "Coordonnées",
+  "location": "Emplacement",
+  "aboutUs": "À propos",
+  "notActive": "Pas actif",
+  "deactivated": "Désactivé",
+  "openInGoogleMaps": "Google Cartes",
+  "openInAppleMaps": "Cartes Apple",
+  "downloadCard": "Télécharger la carte d'entreprise",
+  "expand": "Développer",
+  "collapse": "Réduire",
+  "_id": "Identifiant",
+  "name": "Nom",
+  "email": "E-mail",
+  "phone": "Téléphone",
+  "phoneNumber": {
+    "prefix": "Préfixe",
+    "number": "Numéro"
+  },
+  "address": "Adresse",
+  "city": "Ville",
+  "country": "Pays",
+  "postalCode": "Code postal",
+  "description": "Description",
+  "website": "Site web",
+  "vat": "TVA",
+  "allowedDomains": "Domaines autorisés",
+  "edit": "Mettre à jour"
+}

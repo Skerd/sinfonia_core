@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/pinMessage.tsx",
+  "pin": "Fissa",
+  "axios": {
+    "start": {
+      "title": "Appuntare il messaggio",
+      "time": 3000
+    },
+    "success": {
+      "title": "Messaggio bloccato con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile bloccare il messaggio.",
+      "time": 3000
+    }
+  }
+}

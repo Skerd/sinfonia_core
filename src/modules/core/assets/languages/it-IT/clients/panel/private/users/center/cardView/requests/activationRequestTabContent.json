@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/cardView/requests/activationRequestTabContent.tsx",
+  "activationEmail": "E-mail di attivazione",
+  "attempts": "Tentativi",
+  "date": "Data",
+  "lockedUntil": "Bloccato fino al"
+}

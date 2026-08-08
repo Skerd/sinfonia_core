@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/helpers/hocs/withAccess.tsx",
+  "loading": "Chargement des ressources d'accès au site...",
+  "noClearance": "Non autorisé à afficher le contenu.",
+  "failTitle": "Impossible de charger les autorisations d'accès",
+  "failDescription": "Appuyez pour réessayer. Si le problème persiste, actualisez la page ou reconnectez-vous.",
+  "tooltipDescription": "Réessayez de charger les autorisations pour cette session."
+}

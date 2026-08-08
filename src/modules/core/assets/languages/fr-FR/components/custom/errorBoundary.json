@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/errorBoundary.tsx",
+  "title": "Une erreur s'est produite",
+  "description": "Une erreur inattendue s'est produite lors du rendu de cette page.",
+  "retry": "Réessayer",
+  "goHome": "Rentre chez toi"
+}

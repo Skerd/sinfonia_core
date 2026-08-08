@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/companyDropDownItems.tsx",
+  "failTitle": "Impossibile caricare le aziende",
+  "failTitleTooltip": "Fare clic per ricaricare le aziende",
+  "noData": "Nessun risultato"
+}

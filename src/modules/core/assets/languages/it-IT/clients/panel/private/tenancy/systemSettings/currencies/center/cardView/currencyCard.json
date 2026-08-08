@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/cardView/currencyCard.tsx",
+  "name": "Nome",
+  "symbol": "Simbolo",
+  "abbreviation": "Abbreviazione",
+  "decimalPlaces": "Posti decimali",
+  "deleted": "Eliminato",
+  "active": "Attivo",
+  "failedTitle": "Impossibile caricare la valuta",
+  "failedDescription": "Tocca per riprovare."
+}

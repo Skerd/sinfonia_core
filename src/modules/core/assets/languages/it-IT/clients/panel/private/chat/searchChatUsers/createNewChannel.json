@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/searchChatUsers/createNewChannel.tsx",
+  "chat": "Inizia a chattare",
+  "axios": {
+    "start": {
+      "title": "Creazione del canale",
+      "time": 3000
+    },
+    "success": {
+      "title": "Canale creato con successo!",
+      "time": 3000
+    },
+    "successExists": {
+      "title": "Il canale esiste già!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile creare il canale, riprova!",
+      "time": 3000
+    }
+  }
+}

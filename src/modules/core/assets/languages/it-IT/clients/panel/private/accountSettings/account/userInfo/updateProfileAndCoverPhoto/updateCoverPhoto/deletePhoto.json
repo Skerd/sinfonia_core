@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/deletePhoto.tsx",
+  "confirm": "Elimina",
+  "cancel": "Annulla",
+  "deletePhoto": "Elimina foto",
+  "axios": {
+    "start": {
+      "title": "Eliminazione della foto di copertina",
+      "time": 3000
+    },
+    "success": {
+      "title": "Foto di copertina eliminata con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile eliminare la foto di copertina",
+      "time": 3000
+    }
+  }
+}

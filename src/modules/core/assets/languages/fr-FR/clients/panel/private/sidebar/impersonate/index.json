@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/impersonate/index.tsx",
+  "impersonate": "Imiter",
+  "exit": "Quitter l'usurpation d'identité",
+  "failTitle": "Échec du chargement des informations",
+  "failTitleTooltip": "Cliquez pour réessayer, si 5 tentatives infructueuses, l'usurpation d'identité se terminera"
+}

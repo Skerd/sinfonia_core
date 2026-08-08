@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/actions/delete.tsx",
+  "title": "Elimina",
+  "deleteConfirmTitle": "Elimina valuta",
+  "deleteConfirmDescription": "Sei sicuro di voler eliminare questa valuta?",
+  "confirmNameLabel": "Digita il nome della valuta per confermare",
+  "cancel": "Annulla",
+  "confirmDelete": "Elimina",
+  "axios": {
+    "start": {
+      "title": "Eliminazione valuta",
+      "time": 3000
+    },
+    "success": {
+      "title": "Valuta eliminata con successo.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile eliminare la valuta",
+      "time": 3000
+    }
+  }
+}

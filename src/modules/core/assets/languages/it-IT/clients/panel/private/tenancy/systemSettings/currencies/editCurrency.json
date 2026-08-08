@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/editCurrency.tsx",
+  "title": "Modifica valuta",
+  "description": "Aggiorna i dettagli della valuta",
+  "errorTitle": "Impossibile caricare i dati sulla valuta",
+  "errorDescription": "Fare clic qui per riprovare a recuperare i dati sulla valuta",
+  "form": {
+    "nameLabel": "Nome",
+    "namePlaceholder": "Nome della valuta",
+    "symbolLabel": "Simbolo",
+    "symbolPlaceholder": "per esempio. $",
+    "abbreviationLabel": "Abbreviazione",
+    "abbreviationPlaceholder": "per esempio. Dollaro statunitense",
+    "decimalPlacesLabel": "Posti decimali",
+    "decimalPlacesPlaceholder": "2"
+  },
+  "noId": "Nessuna valuta selezionata.",
+  "backToList": "Torna all'elenco",
+  "formHeader": {
+    "title": "Modifica valuta",
+    "description": "Aggiorna i dettagli della valuta"
+  },
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Salva"
+  }
+}

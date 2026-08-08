@@ -1,0 +1,6 @@
+{
+  "selected": "Selezionato",
+  "delete": "Elimina",
+  "cancel": "Annulla",
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/actions/deleteMessages.tsx"
+}

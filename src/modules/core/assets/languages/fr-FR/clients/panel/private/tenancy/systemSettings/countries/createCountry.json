@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/createCountry.tsx",
+  "title": "Créer un pays",
+  "description": "Ajouter un nouveau pays",
+  "form": {
+    "nameLabel": "Nom",
+    "namePlaceholder": "Nom du pays",
+    "codeLabel": "Code",
+    "codePlaceholder": "par ex. USA",
+    "phoneCodeLabel": "Code de téléphone",
+    "phoneCodePlaceholder": "+1",
+    "currencyLabel": "Devise",
+    "currencyPlaceholder": "Sélectionner une devise"
+  },
+  "axios": {
+    "start": {
+      "title": "Pays créateur",
+      "time": 3000
+    },
+    "success": {
+      "title": "Pays créé avec succès !",
+      "time": 3000
+    },
+    "error": {
+      "title": "Le pays n'a pas pu être créé, veuillez réessayer !",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Créer un pays",
+    "description": "Ajouter un nouveau pays"
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Créer"
+  }
+}

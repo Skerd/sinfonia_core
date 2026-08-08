@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/delete.tsx",
+  "title": "Supprimer",
+  "deleteConfirmTitle": "Supprimer le pays",
+  "deleteConfirmDescription": "Êtes-vous sûr de vouloir supprimer ce pays ?",
+  "confirmNameLabel": "Tapez le nom du pays pour confirmer",
+  "cancel": "Annuler",
+  "confirmDelete": "Supprimer",
+  "axios": {
+    "start": {
+      "title": "Supprimer un pays",
+      "time": 3000
+    },
+    "success": {
+      "title": "Pays supprimé avec succès !",
+      "time": 3000
+    },
+    "error": {
+      "title": "Le pays n'a pas pu être supprimé, veuillez réessayer !",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/cardView/userProfileCard.tsx",
+  "failTitle": "Échec du chargement des données utilisateur",
+  "failTitleTooltip": "Cliquez ici pour réessayer de charger les données utilisateur",
+  "about": "À propos",
+  "info": "Informations",
+  "email": "E-mail",
+  "emailVerified": "Adresse e-mail vérifiée actuelle",
+  "invitedUser": "Veuillez vérifier l'e-mail en acceptant la demande d'invitation",
+  "emailNotVerified": "Veuillez vérifier votre nouvel e-mail en cliquant sur le lien envoyé dans votre boîte de réception",
+  "timezone": "Fuseau horaire",
+  "birthday": "Anniversaire",
+  "phoneNumber": "Numéro de téléphone",
+  "registeredDate": "Date d'inscription",
+  "registeredFrom": "Inscrit depuis",
+  "emailVerifiedAt": "E-mail vérifié à",
+  "lockedOutUntil": "En lock-out jusqu'à",
+  "online": "En ligne",
+  "offline": "Hors ligne",
+  "createdBy": "Créé par",
+  "status": "Statut",
+  "statuses": {
+    "active": "Actif",
+    "inactive": "Inactif",
+    "invited": "Invité"
+  },
+  "mfaStatuses": {
+    "active": "MFA actif",
+    "notActive": "MFA non actif"
+  },
+  "roles": "Rôles",
+  "unsuccessfulLogins": "Connexions infructueuses",
+  "lastLoginDate": "Dernière connexion",
+  "requests": "Demandes",
+  "requestsInvitation": "Invitation",
+  "requestsActivation": "Activation",
+  "requestsPasswordReset": "Réinitialisation du mot de passe",
+  "requestsMfaDeactivation": "Désactivation de l'AMF"
+}

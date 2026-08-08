@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/actions/delete.tsx",
+  "title": "Supprimer",
+  "deleteConfirmTitle": "Supprimer l'état",
+  "deleteConfirmDescription": "Êtes-vous sûr de vouloir supprimer cet état ?",
+  "confirmNameLabel": "Tapez le nom de l'état pour confirmer",
+  "cancel": "Annuler",
+  "confirmDelete": "Supprimer",
+  "axios": {
+    "start": {
+      "title": "Suppression de l'état",
+      "time": 3000
+    },
+    "success": {
+      "title": "État supprimé avec succès.",
+      "time": 3000
+    },
+    "error": {
+      "title": "L'état n'a pas pu être supprimé",
+      "time": 3000
+    }
+  }
+}

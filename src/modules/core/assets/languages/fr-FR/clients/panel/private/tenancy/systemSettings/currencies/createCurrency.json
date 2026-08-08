@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/createCurrency.tsx",
+  "title": "Créer une devise",
+  "description": "Ajouter une nouvelle devise",
+  "form": {
+    "nameLabel": "Nom",
+    "namePlaceholder": "Nom de la devise",
+    "symbolLabel": "Symbole",
+    "symbolPlaceholder": "par ex. $",
+    "abbreviationLabel": "Abréviation",
+    "abbreviationPlaceholder": "par ex. USD",
+    "decimalPlacesLabel": "Décimales",
+    "decimalPlacesPlaceholder": "2"
+  },
+  "formHeader": {
+    "title": "Créer une devise",
+    "description": "Ajouter une nouvelle devise"
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Créer"
+  }
+}

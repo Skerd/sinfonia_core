@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
+  "title": "États / cantons",
+  "description": "Gérer les états",
+  "createState": "Créer un état",
+  "searchPlaceholder": "Recherchez par nom, code ou ajoutez des filtres...",
+  "noData": "Aucun état trouvé",
+  "failTitle": "Échec du chargement des états",
+  "failDescription": "Une erreur s'est produite lors du chargement des états. Veuillez réessayer.",
+  "status": "Statut",
+  "name": "Nom",
+  "code": "Code",
+  "country": "Pays",
+  "deleted": "Supprimé",
+  "active": "Actif",
+  "fields": {
+    "name": "Nom",
+    "code": "Code",
+    "country": "Pays",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "createdBy": "Créé par",
+    "company": "Entreprise",
+    "deletedAt": "Statut",
+    "deletedBy": "Supprimé par"
+  }
+}

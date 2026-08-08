@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/forwardMessageDialog.tsx",
+  "failTitle": "Impossibile caricare i canali",
+  "failTitleTooltip": "Tocca per provare a caricare nuovamente i canali.",
+  "noDataTitle": "Nessun canale disponibile.",
+  "forward": "Inoltra",
+  "message": "Messaggio",
+  "selectChannelsToForward": "Seleziona i canali a cui inoltrare questo messaggio",
+  "addComment": "Aggiungi un commento (facoltativo)",
+  "addCommentPlaceholder": "Aggiungi un commento...",
+  "selectChannels": "Seleziona i canali",
+  "cancel": "Annulla",
+  "sending": "Invio...",
+  "axios": {
+    "start": {
+      "title": "Inoltro del messaggio",
+      "time": 3000
+    },
+    "success": {
+      "title": "Messaggio inoltrato con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile inoltrare il messaggio",
+      "time": 3000
+    }
+  },
+  "messageDeleted": "Messaggio eliminato"
+}

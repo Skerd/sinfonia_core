@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/otp/index.tsx",
+  "title": "Modifica le impostazioni 2FA",
+  "description": "Modifica le impostazioni 2FA del tuo account",
+  "failTitle": "Impossibile caricare lo stato 2FA",
+  "failTitleTooltip": "Fai clic qui per riprovare a caricare lo stato 2FA",
+  "otpDisabled": {
+    "title": "2FA non attivato",
+    "description": "Il tuo account non è protetto 2FA (autenticazione a due fattori).",
+    "button": "Attiva la 2FA"
+  },
+  "otpEnabled": {
+    "title": "2FA attivato",
+    "description": "Il tuo account è protetto 2FA (autenticazione a due fattori).",
+    "button": "Disattiva 2FA"
+  }
+}

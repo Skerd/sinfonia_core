@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/demoteToUser.tsx",
+  "removeFromAdmin": "Ignorer en tant qu'administrateur",
+  "axios": {
+    "start": {
+      "title": "Rétrograder un membre en utilisateur",
+      "time": 3000
+    },
+    "success": {
+      "title": "Membre rétrogradé avec succès au rang d'utilisateur",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la rétrogradation d'utilisateur en utilisateur",
+      "time": 3000
+    }
+  }
+}

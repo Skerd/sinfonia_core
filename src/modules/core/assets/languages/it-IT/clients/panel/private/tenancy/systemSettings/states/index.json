@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
+  "title": "Stati / cantoni",
+  "description": "Gestisci gli stati",
+  "createState": "Crea stato",
+  "searchPlaceholder": "Cerca per nome, codice o aggiungi filtri...",
+  "noData": "Nessuno stato trovato",
+  "failTitle": "Impossibile caricare gli stati",
+  "failDescription": "Si è verificato un errore durante il caricamento degli stati. Per favore riprova.",
+  "status": "Stato",
+  "name": "Nome",
+  "code": "Codice",
+  "country": "Paese",
+  "deleted": "Eliminato",
+  "active": "Attivo",
+  "fields": {
+    "name": "Nome",
+    "code": "Codice",
+    "country": "Paese",
+    "createdAt": "Creato il",
+    "updatedAt": "Aggiornato il",
+    "createdBy": "Creato da",
+    "company": "Azienda",
+    "deletedAt": "Stato",
+    "deletedBy": "Eliminato da"
+  }
+}

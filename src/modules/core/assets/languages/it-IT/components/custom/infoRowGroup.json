@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/custom/infoRowGroup.tsx",
+  "one": "1 campo limitato",
+  "many": "{count} campi limitati",
+  "tooltip": "Non hai il permesso per visualizzare questi campi"
+}

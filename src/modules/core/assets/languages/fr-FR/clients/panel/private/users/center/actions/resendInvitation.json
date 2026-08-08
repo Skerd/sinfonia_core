@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/resendInvitation.tsx",
+  "resendInvitationEmail": "Renvoyer l'e-mail d'invitation",
+  "resendInvitationEmailConfirm": "Renvoyer l'e-mail d'invitation ?",
+  "resendInvitationEmailConfirmDesc": "Un nouvel email d'invitation sera envoyé à l'utilisateur.",
+  "resendInvitationEmailSuccess": "E-mail d'invitation envoyé avec succès",
+  "resendInvitationEmailError": "Échec de l'envoi de l'e-mail d'invitation",
+  "axios": {
+    "start": {
+      "title": "Envoi d'un email d'invitation",
+      "time": 3000
+    },
+    "success": {
+      "title": "E-mail d'invitation envoyé avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de l'envoi de l'e-mail d'invitation",
+      "time": 3000
+    }
+  }
+}

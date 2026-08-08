@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/createUser/createUser.form.tsx",
+  "form": {
+    "nameLabel": "Nome",
+    "namePlaceholder": "Nome",
+    "surnameLabel": "Cognome",
+    "surnamePlaceholder": "Cognome",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "email@esempio.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "confirmPasswordLabel": "Conferma password",
+    "confirmPasswordPlaceholder": "Conferma password",
+    "userRoleLabel": "Ruolo",
+    "userRolePlaceholder": "Ruolo"
+  },
+  "cancel": "Annulla",
+  "confirmButton": "Creare un account",
+  "axios": {
+    "start": {
+      "title": "Creazione utente",
+      "time": 3000
+    },
+    "success": {
+      "title": "Utente creato con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Creazione dell'utente non riuscita",
+      "time": 3000
+    }
+  }
+}

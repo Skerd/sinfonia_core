@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/email/index.tsx",
+  "form": {
+    "newEmailLabel": "E-mail",
+    "newEmailDescription": "Il s'agit de l'e-mail qui sera utilisé pour se connecter au système."
+  },
+  "failTitle": "Échec du chargement du courrier électronique",
+  "failTitleTooltip": "Cliquez pour réessayer de charger l'e-mail",
+  "emailVerified": "Adresse e-mail vérifiée actuelle",
+  "invitedUser": "Veuillez vérifier l'e-mail en acceptant la demande d'invitation",
+  "emailNotVerified": "Veuillez vérifier votre nouvel e-mail en cliquant sur le lien envoyé dans votre boîte de réception",
+  "emailNotVerifiedSmall": "Veuillez vérifier votre nouvel e-mail"
+}

@@ -1,0 +1,40 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/editState.tsx",
+  "title": "Modifica stato",
+  "description": "Aggiorna i dettagli dello stato",
+  "errorTitle": "Impossibile caricare i dati sullo stato",
+  "errorDescription": "Fai clic qui per riprovare a recuperare i dati sullo stato",
+  "form": {
+    "idLabel": "ID dello stato",
+    "nameLabel": "Nome",
+    "namePlaceholder": "Nome dello stato",
+    "codeLabel": "Codice",
+    "codePlaceholder": "per esempio. CA",
+    "countryLabel": "Paese",
+    "countryPlaceholder": "Seleziona il paese"
+  },
+  "noId": "Nessuno stato selezionato.",
+  "backToList": "Torna all'elenco",
+  "axios": {
+    "start": {
+      "title": "Stato di salvataggio",
+      "time": 3000
+    },
+    "success": {
+      "title": "Stato aggiornato con successo!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare lo stato, riprova!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Modifica stato",
+    "description": "Aggiorna i dettagli dello stato"
+  },
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Salva"
+  }
+}

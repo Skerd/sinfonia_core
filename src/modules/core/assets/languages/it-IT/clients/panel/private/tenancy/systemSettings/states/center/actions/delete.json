@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/actions/delete.tsx",
+  "title": "Elimina",
+  "deleteConfirmTitle": "Elimina stato",
+  "deleteConfirmDescription": "Sei sicuro di voler eliminare questo stato?",
+  "confirmNameLabel": "Digita il nome dello stato per confermare",
+  "cancel": "Annulla",
+  "confirmDelete": "Elimina",
+  "axios": {
+    "start": {
+      "title": "Stato di eliminazione",
+      "time": 3000
+    },
+    "success": {
+      "title": "Stato eliminato con successo.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile eliminare lo stato",
+      "time": 3000
+    }
+  }
+}

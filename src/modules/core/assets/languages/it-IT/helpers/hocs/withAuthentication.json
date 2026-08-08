@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/helpers/hocs/withAuthentication.tsx",
+  "verifying": "Controllo di sicurezza",
+  "loadingUser": "Caricamento utente precedentemente registrato",
+  "sessionExpiredTitle": "La tua sessione è scaduta",
+  "sessionExpiredDescription": "La tua sessione è scaduta, accedi nuovamente",
+  "sessionExpiredOkButton": "OK"
+}

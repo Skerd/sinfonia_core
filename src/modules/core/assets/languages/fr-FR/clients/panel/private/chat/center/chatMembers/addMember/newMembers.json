@@ -1,0 +1,14 @@
+{
+  "title": "Nouveaux membres",
+  "to": "Ajouter",
+  "searchPeople": "Rechercher des personnes",
+  "noPeopleFound": "Personne n'a été trouvé.",
+  "failTitle": "Échec du chargement des utilisateurs",
+  "failTitleTooltip": "Cliquez pour réessayer de charger les utilisateurs",
+  "noDataTitle": "Aucun utilisateur trouvé",
+  "form": {
+    "nameLabel": "Nom de la chaîne",
+    "namePlaceholder": "Entrez le nom de la chaîne"
+  },
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx"
+}

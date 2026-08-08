@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/createCurrency.tsx",
+  "title": "Crea valuta",
+  "description": "Aggiungi una nuova valuta",
+  "form": {
+    "nameLabel": "Nome",
+    "namePlaceholder": "Nome della valuta",
+    "symbolLabel": "Simbolo",
+    "symbolPlaceholder": "per esempio. $",
+    "abbreviationLabel": "Abbreviazione",
+    "abbreviationPlaceholder": "per esempio. Dollaro statunitense",
+    "decimalPlacesLabel": "Posti decimali",
+    "decimalPlacesPlaceholder": "2"
+  },
+  "formHeader": {
+    "title": "Crea valuta",
+    "description": "Aggiungi una nuova valuta"
+  },
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Crea"
+  }
+}

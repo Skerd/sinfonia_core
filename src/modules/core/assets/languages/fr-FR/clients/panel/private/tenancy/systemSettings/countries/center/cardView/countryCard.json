@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx",
+  "name": "Nom",
+  "flag": "Drapeau",
+  "code": "Code",
+  "phoneCode": "Code de téléphone",
+  "currency": "Devise",
+  "deleted": "Supprimé",
+  "active": "Actif",
+  "failedTitle": "Échec du chargement du pays",
+  "failedDescription": "Appuyez pour réessayer."
+}

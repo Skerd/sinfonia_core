@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
+  "title": "Azioni pianificate",
+  "description": "Gestisci i lavori cron e le attività pianificate",
+  "createCronJob": "Crea un'azione pianificata",
+  "searchPlaceholder": "Cerca per nome, codice o gestore...",
+  "noData": "Nessuna azione pianificata trovata",
+  "failTitle": "Impossibile caricare le azioni pianificate",
+  "failDescription": "Si è verificato un errore durante il caricamento delle azioni pianificate. Per favore riprova.",
+  "tooltipDescription": "Fare clic per riprovare a recuperare le azioni pianificate.",
+  "fields": {
+    "code": "Codice",
+    "name": "Nome",
+    "handler": "Gestore",
+    "type": "Tipo di pianificazione",
+    "active": "Attivo",
+    "scope": "Ambito",
+    "priority": "Priorità",
+    "nextRunAt": "Prossima corsa",
+    "lastRunAt": "Ultima corsa"
+  }
+}

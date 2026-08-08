@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notifications/index.tsx",
+  "title": "Notifications",
+  "description": "Configurez la façon dont vous recevez les notifications.",
+  "notifyAbout": {
+    "title": "Informez-moi de...",
+    "all": "Tous les nouveaux messages",
+    "direct": "Messages directs et mentions",
+    "nothing": "Rien"
+  },
+  "emailNotifications": {
+    "title": "Notifications par courrier électronique",
+    "communication": {
+      "title": "E-mails de communication",
+      "description": "Recevez des e-mails sur l'activité de votre compte."
+    },
+    "marketing": {
+      "title": "E-mails marketing",
+      "description": "Recevez des e-mails sur nos produits, fonctionnalités et plus encore."
+    },
+    "security": {
+      "title": "E-mails de sécurité",
+      "description": "Recevez des e-mails sur l'activité et la sécurité de votre compte."
+    }
+  },
+  "update": "Notifications de mise à jour"
+}

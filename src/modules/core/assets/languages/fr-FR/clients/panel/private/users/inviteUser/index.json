@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/inviteUser/index.tsx",
+  "title": "Inviter un utilisateur",
+  "administrationTitle": "Inviter un utilisateur",
+  "description": "Invitez un nouvel utilisateur à accéder à votre site en lui envoyant une invitation par e-mail. Attribuez un rôle pour définir leur niveau d’accès.",
+  "administrationDescription": "Invitez un nouvel utilisateur à rejoindre votre équipe en lui envoyant une invitation par e-mail. Attribuez un rôle pour définir leur niveau d’accès.",
+  "inviteUser": "Inviter un utilisateur"
+}

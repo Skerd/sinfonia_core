@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/messagesFetcher.tsx",
+  "noMessages": "Sembra solo qui",
+  "failTitle": "Impossibile caricare i messaggi del canale",
+  "failTitleTooltip": "Fare clic per ricaricare i messaggi del canale"
+}

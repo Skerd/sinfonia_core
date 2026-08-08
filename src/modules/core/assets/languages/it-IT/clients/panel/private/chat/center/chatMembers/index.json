@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/index.tsx",
+  "title": "Membri",
+  "failTitle": "Impossibile caricare i membri del canale",
+  "failTitleTooltip": "Fai clic qui per riprovare a recuperare i membri del canale",
+  "noData": "Nessun membro trovato"
+}

@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/unpinMessage.tsx",
+  "unpin": "Sblocca",
+  "axios": {
+    "start": {
+      "title": "Sblocco del messaggio",
+      "time": 3000
+    },
+    "success": {
+      "title": "Messaggio sbloccato correttamente",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile sbloccare il messaggio.",
+      "time": 3000
+    }
+  }
+}

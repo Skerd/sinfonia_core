@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/restore.tsx",
+  "title": "Restaurer",
+  "restoreConfirmTitle": "Restaurer le pays",
+  "restoreConfirmDescription": "Êtes-vous sûr de vouloir restaurer ce pays ?",
+  "cancel": "Annuler",
+  "confirmRestore": "Restaurer",
+  "axios": {
+    "start": {
+      "title": "Pays en restauration",
+      "time": 3000
+    },
+    "success": {
+      "title": "Pays restauré avec succès !",
+      "time": 3000
+    },
+    "error": {
+      "title": "Le pays n'a pas pu être restauré, veuillez réessayer !",
+      "time": 3000
+    }
+  }
+}

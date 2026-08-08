@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/timezone/index.tsx",
+  "form": {
+    "newTimeZoneLabel": "Fuso orario",
+    "newTimeZoneDescription": "Questo è il fuso orario che verrà utilizzato per visualizzare l'ora nel sistema."
+  },
+  "failTitle": "Impossibile caricare il fuso orario",
+  "failTitleTooltip": "Fare clic per riprovare a caricare il fuso orario"
+}

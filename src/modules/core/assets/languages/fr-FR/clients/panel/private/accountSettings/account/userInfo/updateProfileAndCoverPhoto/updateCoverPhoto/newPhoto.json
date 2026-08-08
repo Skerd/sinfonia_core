@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/newPhoto.tsx",
+  "confirm": "Enregistrer",
+  "cancel": "Annuler",
+  "updatePhoto": "Mettre à jour la photo",
+  "axios": {
+    "start": {
+      "title": "Téléchargement de la photo de couverture",
+      "time": 3000
+    },
+    "success": {
+      "title": "Photo de couverture téléchargée avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec du téléchargement de la photo de couverture",
+      "time": 3000
+    }
+  }
+}

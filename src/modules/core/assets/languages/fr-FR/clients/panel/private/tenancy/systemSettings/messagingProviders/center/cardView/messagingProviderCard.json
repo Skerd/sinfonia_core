@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/cardView/messagingProviderCard.tsx",
+  "name": "Nom",
+  "providerType": "Fournisseur",
+  "fromPhone": "Expéditeur de SMS",
+  "fromWhatsapp": "Expéditeur WhatsApp",
+  "active": "Actif",
+  "yes": "Oui",
+  "no": "Non",
+  "providerTypeValues": {
+    "twilio": "Twilio"
+  },
+  "deleted": "Supprimé",
+  "failedTitle": "Échec du chargement du fournisseur de messagerie",
+  "failedDescription": "Appuyez pour réessayer."
+}

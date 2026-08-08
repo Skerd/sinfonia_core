@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/components/custom/addresses/formAddressWithMap.tsx",
+  "addAddress": "Aggiungi indirizzo",
+  "remove": "Rimuovi indirizzo",
+  "form": {
+    "countryLabel": "Paese",
+    "countryPlaceholder": "Seleziona il paese",
+    "stateLabel": "Cantone / Stato",
+    "statePlaceholder": "Seleziona il cantone",
+    "cityLabel": "Città",
+    "cityPlaceholder": "Seleziona la città",
+    "streetLabel": "Via",
+    "streetPlaceholder": "Via",
+    "postalCodeLabel": "CAP",
+    "postalCodePlaceholder": "CAP",
+    "latitudeLabel": "Latitudine",
+    "latitudePlaceholder": "Latitudine",
+    "longitudeLabel": "Longitudine",
+    "longitudePlaceholder": "Longitudine"
+  }
+}

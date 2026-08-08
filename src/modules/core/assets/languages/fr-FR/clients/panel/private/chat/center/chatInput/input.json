@@ -1,0 +1,11 @@
+{
+  "message": "Tapez vos messages...",
+  "send": "Envoyer",
+  "reply": "Répondre",
+  "attach": "Joindre un ou plusieurs fichiers. Taille maximale par fichier : {}",
+  "noLongerMember": "Vous ne pouvez pas envoyer de messages à ce groupe car vous n'en êtes plus membre.",
+  "messageDeleted": "Message supprimé",
+  "fileTooLarge": "Un ou plusieurs fichiers dépassent la limite de 50 Mo et n'ont pas été ajoutés.",
+  "mentionSuggestions": "Mentionner un membre de la chaîne",
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/input.tsx"
+}

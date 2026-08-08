@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterBuilderContext.tsx",
+  "loadingFilters": "Caricamento filtri...",
+  "filterLoadError": "Impossibile caricare i campi filtro",
+  "filterLoadErrorDescription": "Fare clic per riprovare a recuperare i campi filtro!"
+}

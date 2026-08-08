@@ -1,0 +1,15 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/center/sheetView/loginHistorySheetView.tsx",
+  "loginHistory": "Cronologia degli accessi",
+  "ip": "Indirizzo IP",
+  "loginDetails": "Dettagli di accesso",
+  "clientInfo": "Cliente",
+  "user": "Utente",
+  "time": "Ora",
+  "status": "Stato",
+  "mfa": "MAE",
+  "device": "Dispositivo",
+  "os": "Sistema operativo",
+  "browser": "Navigatore",
+  "userAgent": "Agente utente"
+}

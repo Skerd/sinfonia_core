@@ -1,0 +1,88 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/index.tsx",
+  "title": "Elenco utenti",
+  "searchPlaceholder": "Cerca per nome, email o aggiungi filtri...",
+  "activeFilters": "attivo",
+  "administrationTitle": "Elenco degli utenti di amministrazione",
+  "description": "Gestisci i tuoi utenti e i loro ruoli qui.",
+  "administrationDescription": "Gestisci gli utenti dell'amministrazione aziendale e i loro ruoli qui.",
+  "photo": "Foto",
+  "emailVerified": "E-mail attuale",
+  "invitedUser": "Verifica l'e-mail accettando la richiesta di invito",
+  "emailNotVerified": "Verifica la tua nuova email facendo clic sul collegamento inviato alla tua casella di posta",
+  "statuses": {
+    "active": "Attivo",
+    "inactive": "Inattiva",
+    "invited": "Invitato"
+  },
+  "companies": "Aziende",
+  "fields": {
+    "!enums": {
+      "roles": {
+        "active": {
+          "active": "Attivo",
+          "inactive": "Inattiva",
+          "invited": "Invitato"
+        }
+      },
+      "mfaStatus": {
+        "active": "Attivo",
+        "notActive": "Non attivo"
+      }
+    },
+    "username": "E-mail",
+    "name": "Nome",
+    "surname": "Cognome",
+    "timezone": "Fuso orario",
+    "birthday": "Compleanno",
+    "phoneNumber": "Numero di telefono",
+    "photo": "Foto",
+    "cover": "Copertina",
+    "isEmailVerified": "E-mail verificata",
+    "emailVerifiedAt": "E-mail verificata su",
+    "registeredFrom": "Registrato da",
+    "registerDate": "Iscritto",
+    "online": "Online",
+    "roles": {
+      "active": "Stato",
+      "unsuccessfulLogins": "Accessi non riusciti",
+      "lockedOutUntil": "Bloccato fino al",
+      "lastLogin": "Ultimo accesso",
+      "roles": "Ruoli"
+    },
+    "finance": "Finanza",
+    "mfaStatus": "Stato dell'AMF",
+    "requests": {
+      "mfaDeactivation": {
+        "opened": "È stata aperta la disattivazione dell'MFA",
+        "attempts": "Tentativi di disattivazione dell'MFA",
+        "date": "Data di disattivazione dell'AMF",
+        "lockedUntil": "Disattivazione MFA bloccata fino al"
+      },
+      "passwordReset": {
+        "opened": "Reimpostazione della password aperta",
+        "attempts": "Tentativi di reimpostazione della password",
+        "date": "Data di reimpostazione della password",
+        "lockedUntil": "Reimpostazione della password bloccata fino al"
+      },
+      "activation": {
+        "email": "E-mail di attivazione",
+        "attempts": "Tentativi di attivazione",
+        "date": "Data di attivazione",
+        "lockedUntil": "Attivazione bloccata fino al"
+      },
+      "invitation": {
+        "opened": "Invito aperto",
+        "attempts": "Tentativi di invito",
+        "date": "Data dell'invito",
+        "lockedUntil": "Invito bloccato fino al",
+        "invitedBy": "Invitato da",
+        "invitedAt": "Invitato a",
+        "invitationExpiresAt": "L'invito scade alle",
+        "accepted": "Accettato",
+        "acceptedAt": "Accettato a",
+        "welcomeMessage": "Messaggio di benvenuto"
+      }
+    }
+  }
+}

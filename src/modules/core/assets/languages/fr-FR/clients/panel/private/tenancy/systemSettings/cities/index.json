@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx",
+  "title": "Villes",
+  "description": "Gérer les villes",
+  "createCity": "Créer une ville",
+  "searchPlaceholder": "Recherchez par nom ou ajoutez des filtres...",
+  "noData": "Aucune ville trouvée",
+  "failTitle": "Échec du chargement des villes",
+  "failDescription": "Une erreur s'est produite lors du chargement des villes. Veuillez réessayer.",
+  "status": "Statut",
+  "name": "Nom",
+  "state": "Canton / État",
+  "country": "Pays",
+  "deleted": "Supprimé",
+  "active": "Actif",
+  "fields": {
+    "name": "Nom",
+    "state": "Canton / État",
+    "country": "Pays",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "createdBy": "Créé par",
+    "company": "Entreprise",
+    "deletedAt": "Statut",
+    "deletedBy": "Supprimé par"
+  }
+}

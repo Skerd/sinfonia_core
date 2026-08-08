@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx",
+  "failedTitle": "Impossibile caricare il provider di messaggistica",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento di questo provider. Fare clic per riprovare.",
+  "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
+  "overview": "Panoramica",
+  "credentials": "Credenziali",
+  "senders": "Mittenti",
+  "lastTest": "Ultimo test di connessione",
+  "lifecycle": "Ciclo di vita",
+  "providerType": "Fornitore",
+  "active": "Attivo",
+  "accountSid": "SID dell'account",
+  "hasAuthToken": "Token di autenticazione memorizzato",
+  "fromPhone": "Mittente dell'SMS",
+  "fromWhatsapp": "Mittente di WhatsApp",
+  "yes": "Sì",
+  "no": "No",
+  "lastTestStatus": "Ultima prova",
+  "lastTestedAt": "Ultimo testato",
+  "lastTestMessage": "Messaggio di prova",
+  "createdAt": "Creato il",
+  "updatedAt": "Aggiornato il",
+  "createdBy": "Creato da",
+  "deletedAt": "Eliminato il",
+  "deletedBy": "Eliminato da",
+  "providerTypeValues": {
+    "twilio": "Twilio"
+  },
+  "lastTestStatusValues": {
+    "ok": "OK",
+    "failed": "Non riuscito"
+  }
+}

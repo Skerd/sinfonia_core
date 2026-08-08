@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/userSession/center/sheetView/userSessionSheetView.tsx",
+  "userSession": "Sessione utente",
+  "sessionId": "Identificativo della sessione",
+  "sessionDetails": "Dettagli della sessione",
+  "networkInfo": "Rete",
+  "user": "Utente",
+  "deviceId": "ID del dispositivo",
+  "isActive": "Attivo",
+  "lastActiveAt": "Ultimo attivo",
+  "ipAddress": "Indirizzo IP",
+  "userAgent": "Agente utente",
+  "revoke": "Revoca l'accesso"
+}

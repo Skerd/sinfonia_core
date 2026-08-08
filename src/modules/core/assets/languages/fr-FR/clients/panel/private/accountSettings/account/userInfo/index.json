@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/index.tsx",
+  "status": {
+    "title": "Statut:",
+    "active": "Actif",
+    "blocked": "Bloqué",
+    "invited": "Invité"
+  },
+  "registeredDate": "Inscrit:",
+  "failTitle": "Échec du chargement des données",
+  "failTitleTooltip": "Cliquez pour réessayer de charger les données",
+  "requestsInvitation": "Invitation",
+  "requestsActivation": "Activation",
+  "requestsPasswordReset": "Réinitialisation du mot de passe",
+  "requestsMfaDeactivation": "Désactivation de l'AMF"
+}

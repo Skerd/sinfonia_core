@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/disableAccount.form.tsx",
+  "form": {
+    "usernameLabel": "Nome utente",
+    "usernamePlaceholder": "Nome utente",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "statusLabel": "Stato",
+    "statusPlaceholder": "Stato"
+  },
+  "title": "L'account utente è attivo",
+  "description": "Se desideri disattivare l'account, segui i passaggi seguenti.",
+  "steps": {
+    "one": "Inserisci la tua password",
+    "two": "Clicca su '!!!!' pulsante per disattivare il tuo account",
+    "three": "Attenzione, se disattivi il tuo account, devi contattare l'amministratore di sistema per riattivarlo!"
+  },
+  "deactivateButton": "Bloccare",
+  "axios": {
+    "start": {
+      "title": "Disattivazione dell'account",
+      "time": 3000
+    },
+    "success": {
+      "title": "Account disattivato con successo",
+      "time": 1000
+    },
+    "error": {
+      "title": "Disattivazione dell'account non riuscita",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/index.tsx",
+  "title": "Compte",
+  "description": "Mettez à jour les paramètres de votre compte, votre e-mail, vos informations, votre fuseau horaire"
+}

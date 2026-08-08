@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/currencyFilters.tsx",
+  "filterName": "Filtrer par nom",
+  "filterAbbreviation": "Filtrer par abréviation",
+  "clearFilters": "Effacer les filtres"
+}

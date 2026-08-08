@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/table/usersTableBody.tsx",
+  "noResult": "Aucun résultat",
+  "failTitle": "Échec du chargement des données des utilisateurs",
+  "failTitleTooltip": "Cliquez ici pour réessayer de charger les données des utilisateurs"
+}

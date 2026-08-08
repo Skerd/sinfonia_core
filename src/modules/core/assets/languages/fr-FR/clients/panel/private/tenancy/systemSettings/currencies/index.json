@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
+  "title": "Devises",
+  "description": "Gérer les devises",
+  "createCurrency": "Créer une devise",
+  "searchPlaceholder": "Recherchez par nom, abréviation ou ajoutez des filtres...",
+  "noData": "Aucune devise trouvée",
+  "failTitle": "Échec du chargement des devises",
+  "failDescription": "Une erreur s'est produite lors du chargement des devises. Veuillez réessayer.",
+  "status": "Statut",
+  "name": "Nom",
+  "symbol": "Symbole",
+  "abbreviation": "Abréviation",
+  "decimalPlaces": "Décimales",
+  "deleted": "Supprimé",
+  "active": "Actif",
+  "fields": {
+    "name": "Nom",
+    "symbol": "Symbole",
+    "abbreviation": "Abréviation",
+    "decimalPlaces": "Décimales",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "createdBy": "Créé par",
+    "company": "Entreprise",
+    "deletedAt": "Statut",
+    "deletedBy": "Supprimé par"
+  }
+}

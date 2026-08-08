@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/shared/termsAndConditions.tsx",
+  "byClickingYouAgree": "Utilizzando i nostri servizi, accetti i nostri",
+  "termsOfService": "Termini di servizio",
+  "and": "e",
+  "privacyPolicy": "Informativa sulla privacy",
+  "termsContent": "I presenti Termini di servizio regolano l'utilizzo di questa applicazione.\n\nLa tua organizzazione potrebbe fornire termini aggiuntivi; contatta il tuo amministratore per il contratto completo applicabile al tuo caso.",
+  "privacyContent": "La presente Informativa sulla privacy spiega quali informazioni elaboriamo quando utilizzi questa applicazione e come la utilizziamo.\n\nPer dettagli specifici per la tua organizzazione e regione, contatta l'amministratore."
+}

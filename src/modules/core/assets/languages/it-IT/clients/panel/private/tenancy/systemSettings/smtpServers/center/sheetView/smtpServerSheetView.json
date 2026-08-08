@@ -1,0 +1,45 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx",
+  "failedTitle": "Impossibile caricare il server SMTP",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento di questo server. Fare clic per riprovare.",
+  "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
+  "host": "Ospite",
+  "overview": "Panoramica",
+  "connection": "Connessione",
+  "sender": "Mittente",
+  "lastTest": "Ultimo test di connessione",
+  "lifecycle": "Ciclo di vita",
+  "sequence": "Priorità",
+  "active": "Attivo",
+  "port": "Porta",
+  "encryption": "Crittografia",
+  "authType": "Autenticazione",
+  "username": "Nome utente",
+  "hasPassword": "Password memorizzata",
+  "fromEmail": "Dall'e-mail",
+  "fromName": "Dal nome",
+  "replyTo": "Rispondi a",
+  "yes": "Sì",
+  "no": "No",
+  "lastTestStatus": "Ultima prova",
+  "lastTestedAt": "Ultimo testato",
+  "lastTestMessage": "Messaggio di prova",
+  "createdAt": "Creato il",
+  "updatedAt": "Aggiornato il",
+  "createdBy": "Creato da",
+  "deletedAt": "Eliminato il",
+  "deletedBy": "Eliminato da",
+  "encryptionValues": {
+    "none": "Nessuno",
+    "ssl": "SSL",
+    "starttls": "STARTTLS"
+  },
+  "authTypeValues": {
+    "login": "Nome utente/password",
+    "none": "Nessuno"
+  },
+  "lastTestStatusValues": {
+    "ok": "OK",
+    "failed": "Non riuscito"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/surname/updateSurname.tsx",
+  "confirm": "Conferma il cambio cognome",
+  "cancel": "Annulla",
+  "axios": {
+    "start": {
+      "title": "Aggiornamento cognome",
+      "time": 3000
+    },
+    "success": {
+      "title": "Cognome aggiornato con successo.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare il cognome",
+      "time": 3000
+    }
+  }
+}

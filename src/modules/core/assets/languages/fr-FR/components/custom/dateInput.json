@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/components/custom/dateInput.tsx",
+  "placeholder": "Choisissez une date",
+  "timePlaceholder": "Choisissez une heure",
+  "hourLabel": "Heure",
+  "minuteLabel": "Min.",
+  "secondLabel": "Seconde",
+  "months": [
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Peut",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre"
+  ],
+  "weekdays": [
+    "Su",
+    "Mo",
+    "Tu",
+    "Nous",
+    "Ème",
+    "Fr",
+    "Sa"
+  ]
+}

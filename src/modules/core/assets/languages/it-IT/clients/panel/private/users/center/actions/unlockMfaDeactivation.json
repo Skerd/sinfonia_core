@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockMfaDeactivation.tsx",
+  "unlockMfaDeactivation": "Sblocca la disattivazione dell'MFA",
+  "unlockMfaDeactivationConfirm": "Sbloccare il blocco di disattivazione MFA?",
+  "unlockMfaDeactivationConfirmDesc": "Ciò eliminerà il blocco di disattivazione dell'MFA. L'utente potrà richiedere un nuovo codice di disattivazione MFA.",
+  "unlockMfaDeactivationResendEmail": "Invia nuovamente l'e-mail di disattivazione dell'MFA",
+  "unlockMfaDeactivationSuccess": "Il blocco della disattivazione dell'MFA è stato cancellato correttamente",
+  "unlockMfaDeactivationError": "Impossibile eliminare il blocco di disattivazione MFA",
+  "axios": {
+    "start": {
+      "title": "Sblocco della disattivazione dell'MFA",
+      "time": 3000
+    },
+    "success": {
+      "title": "Il blocco della disattivazione dell'MFA è stato cancellato correttamente",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile eliminare il blocco di disattivazione MFA",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/cardView/userProfile.tsx",
+  "failTitle": "Impossibile caricare i dati utente",
+  "failTitleTooltip": "Fare clic qui per riprovare a caricare i dati dell'utente",
+  "about": "Di",
+  "info": "Informazioni",
+  "email": "E-mail",
+  "emailVerified": "Email verificata attuale",
+  "invitedUser": "Verifica l'e-mail accettando la richiesta di invito",
+  "emailNotVerified": "Verifica la tua nuova email facendo clic sul collegamento inviato alla tua casella di posta",
+  "timezone": "Fuso orario",
+  "birthday": "Compleanno",
+  "phoneNumber": "Numero di telefono",
+  "registeredDate": "Data di registrazione",
+  "registeredFrom": "Registrato da",
+  "emailVerifiedAt": "E-mail verificata su",
+  "lockedOutUntil": "Bloccato fino al",
+  "online": "Online",
+  "offline": "Non in linea",
+  "createdBy": "Creato da",
+  "status": "Stato",
+  "statuses": {
+    "active": "Attivo",
+    "inactive": "Inattiva",
+    "invited": "Invitato"
+  },
+  "mfaStatuses": {
+    "active": "MFA attiva",
+    "notActive": "MFA non attivo"
+  },
+  "roles": "Ruoli",
+  "unsuccessfulLogins": "Accessi non riusciti",
+  "lastLoginDate": "Ultimo accesso",
+  "requests": "Richieste",
+  "requestsInvitation": "Invito",
+  "requestsActivation": "Attivazione",
+  "requestsPasswordReset": "Reimpostazione della password",
+  "requestsMfaDeactivation": "Disattivazione dell'MFA"
+}

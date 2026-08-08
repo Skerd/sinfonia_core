@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/index.tsx",
+  "roles": "Ruoli",
+  "update": "Aggiorna",
+  "cancel": "Annulla",
+  "failTitle": "Impossibile caricare i ruoli aziendali",
+  "failTitleTooltip": "Fare clic qui per riprovare a caricare i ruoli aziendali",
+  "clarification": "Chiarimento",
+  "clarificationDescription": "Il verde è attivo o in attivazione, il rosso è inattivo o in disattivazione"
+}
