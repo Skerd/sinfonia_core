@@ -49,6 +49,52 @@ function sinfoniaAppHtmlPlugin(appHtmlPath: string, appId: string): Plugin {
 }
 
 /**
+ * Serve / copy each client's `apps/<id>/assets/favIcon.png` as `/favIcon.png`,
+ * overriding the shared `public/favIcon.png` when the per-app file exists.
+ */
+function sinfoniaAppFaviconPlugin(appRoot: string, viteBase: string): Plugin {
+    const faviconPath = path.join(appRoot, "assets", "favIcon.png");
+    let outDir = path.resolve(__dirname, "dist");
+
+    const isFaviconRequest = (rawUrl: string | undefined): boolean => {
+        const pathname = (rawUrl ?? "").split("?")[0] ?? "";
+        if (pathname === "/favIcon.png") {
+            return true;
+        }
+        const basePath = viteBase.endsWith("/") ? viteBase.slice(0, -1) : viteBase;
+        return pathname === `${basePath}/favIcon.png`;
+    };
+
+    return {
+        name: "sinfonia-app-favicon",
+        configResolved(config) {
+            outDir = path.resolve(config.root, config.build.outDir);
+        },
+        configureServer(server) {
+            if (!fs.existsSync(faviconPath)) {
+                return;
+            }
+            server.middlewares.use((req, res, next) => {
+                if (!isFaviconRequest(req.url)) {
+                    next();
+                    return;
+                }
+                res.setHeader("Content-Type", "image/png");
+                res.setHeader("Cache-Control", "no-cache");
+                fs.createReadStream(faviconPath).pipe(res);
+            });
+        },
+        writeBundle() {
+            if (!fs.existsSync(faviconPath)) {
+                return;
+            }
+            fs.mkdirSync(outDir, {recursive: true});
+            fs.copyFileSync(faviconPath, path.join(outDir, "favIcon.png"));
+        },
+    };
+}
+
+/**
  * When `VITE_ENABLED_MODULES` is set, stub files under disabled `src/modules/<name>`
  * packages so eager contribution globs do not pull them into the graph.
  * `core` is always kept.
@@ -120,6 +166,7 @@ export default defineConfig(({ mode }) => {
         plugins: [
             enabledModulesExcludePlugin(enabledModulesRaw),
             sinfoniaAppHtmlPlugin(sinfoniaApp.indexHtml, sinfoniaApp.appId),
+            sinfoniaAppFaviconPlugin(sinfoniaApp.appRoot, viteBase),
             // checker({
             //     typescript: true
             // }),
