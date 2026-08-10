@@ -49,6 +49,13 @@ interface PolygonSelectorProps {
     borderless?: boolean;
     /** Hide zoom / edit toolbar (marketing viewers). */
     hideControls?: boolean;
+    /**
+     * How the image fills the stage. `cover` fills the container (crops overflow);
+     * polygon math stays aligned. Marketing full-bleed viewers typically want `cover`.
+     */
+    objectFit?: "contain" | "cover";
+    /** Keep phantom polygons faintly visible even when not hovered (marketing explorers). */
+    phantomsAlwaysVisible?: boolean;
 }
 
 const MIN_ZOOM = 100;
@@ -85,6 +92,7 @@ function getRenderedImageSize(
     naturalHeight: number,
     containerWidth: number,
     containerHeight: number,
+    objectFit: "contain" | "cover" = "contain",
 ): { width: number; height: number; left: number; top: number } {
     if (naturalWidth <= 0 || naturalHeight <= 0 || containerWidth <= 0 || containerHeight <= 0) {
         return { width: 0, height: 0, left: 0, top: 0 };
@@ -95,7 +103,15 @@ function getRenderedImageSize(
     let renderedWidth: number;
     let renderedHeight: number;
 
-    if (imageAspect > containerAspect) {
+    if (objectFit === "cover") {
+        if (imageAspect > containerAspect) {
+            renderedHeight = containerHeight;
+            renderedWidth = containerHeight * imageAspect;
+        } else {
+            renderedWidth = containerWidth;
+            renderedHeight = containerWidth / imageAspect;
+        }
+    } else if (imageAspect > containerAspect) {
         renderedWidth = containerWidth;
         renderedHeight = containerWidth / imageAspect;
     } else {
@@ -138,6 +154,8 @@ function PolygonSelector({
     fillHeight = false,
     borderless = false,
     hideControls = false,
+    objectFit = "contain",
+    phantomsAlwaysVisible = false,
 }: PolygonSelectorProps & WithLanguageType) {
 
     const imagePadding = borderless ? 0 : IMAGE_PADDING;
@@ -564,6 +582,7 @@ function PolygonSelector({
             naturalSize.height,
             contentWidth,
             contentHeight,
+            objectFit,
         );
 
         setSvgCoordinates((prev) => {
@@ -582,7 +601,7 @@ function PolygonSelector({
             }
             return newSvgCoordinates;
         });
-    }, [imageLoaded, naturalSize, containerDimensions, zoom, imagePadding]);
+    }, [imageLoaded, naturalSize, containerDimensions, zoom, imagePadding, objectFit]);
     useEffect(() => {
         return () => {
             window.removeEventListener("pointerup", onPointerUp);
@@ -646,6 +665,8 @@ function PolygonSelector({
                         const { fill, stroke } = getPhantomColor(index);
                         const isForced = forcedHighlightId === phantomPoints[index]._id;
                         const isHovered = hoveredPhantomIndex === index;
+                        const isActive = isForced || isHovered;
+                        const mutedFill = fill.replace(/,\s*[\d.]+\)$/, ", 0.16)");
                         if( floorCoordinates.polygonCoordinates?.length > 0 ){
                             return (
                                 <React.Fragment key={floorCoordinates._id + "_" + index}>
@@ -711,9 +732,21 @@ function PolygonSelector({
                                     >
                                         <path
                                             d={`${floorCoordinates.polygonCoordinates.map((coord) => ({x: coord.x * svgCoordinates.width, y: coord.y * svgCoordinates.height})).map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ')} Z`}
-                                            fill={ isForced || (dashboard ? isHovered : !isHovered) ? fill : "none" }
-                                            stroke={ isForced || (dashboard ? isHovered : !isHovered) ? stroke : "none" }
-                                            strokeWidth="2"
+                                            fill={
+                                                isActive
+                                                    ? fill
+                                                    : phantomsAlwaysVisible
+                                                      ? mutedFill
+                                                      : dashboard
+                                                        ? "none"
+                                                        : fill
+                                            }
+                                            stroke={
+                                                isActive || phantomsAlwaysVisible || !dashboard
+                                                    ? stroke
+                                                    : "none"
+                                            }
+                                            strokeWidth={isActive ? "2.5" : "2"}
                                             strokeDasharray="0"
                                         />
                                     </g>
@@ -725,7 +758,7 @@ function PolygonSelector({
             </>
         )
 
-    }, [phantomPoints, svgCoordinates, canPhantomHover, hoveredPhantomIndex, forcedHighlightId, dashboard, onFloorClick, onPhantomHoverChange]);
+    }, [phantomPoints, svgCoordinates, canPhantomHover, hoveredPhantomIndex, forcedHighlightId, dashboard, phantomsAlwaysVisible, onFloorClick, onPhantomHoverChange]);
 
     const imageSyncReady = renderedImageUrl === imageUrl && imageLoaded;
     const hasContentToShow =
@@ -844,28 +877,45 @@ function PolygonSelector({
                                         "block",
                                         borderless
                                             ? cn(
-                                                  "absolute inset-0 size-full object-contain",
-                                                  borderless && fillHeight ? "rounded-none" : "rounded-[5px]",
+                                                  "absolute",
+                                                  fillHeight ? "rounded-none" : "rounded-[5px]",
                                               )
                                             : "rounded-lg",
                                     )}
                                     style={
                                         borderless
-                                            ? {
-                                                  cursor: imageCursor,
-                                                  touchAction: touchActionStyle,
-                                                  userSelect: 'none',
-                                                  WebkitUserSelect: 'none',
-                                                  WebkitTouchCallout: 'none',
-                                              }
+                                            ? svgCoordinates.width > 0 && svgCoordinates.height > 0
+                                                ? {
+                                                      top: svgCoordinates.top,
+                                                      left: svgCoordinates.left,
+                                                      width: `${svgCoordinates.width}px`,
+                                                      height: `${svgCoordinates.height}px`,
+                                                      maxWidth: "none",
+                                                      cursor: imageCursor,
+                                                      touchAction: touchActionStyle,
+                                                      userSelect: "none",
+                                                      WebkitUserSelect: "none",
+                                                      WebkitTouchCallout: "none",
+                                                  }
+                                                : {
+                                                      inset: 0,
+                                                      width: "100%",
+                                                      height: "100%",
+                                                      objectFit,
+                                                      cursor: imageCursor,
+                                                      touchAction: touchActionStyle,
+                                                      userSelect: "none",
+                                                      WebkitUserSelect: "none",
+                                                      WebkitTouchCallout: "none",
+                                                  }
                                             : {
                                                   width: svgCoordinates.width > 0 ? `${svgCoordinates.width}px` : undefined,
                                                   height: svgCoordinates.height > 0 ? `${svgCoordinates.height}px` : undefined,
                                                   cursor: imageCursor,
                                                   touchAction: touchActionStyle,
-                                                  userSelect: 'none',
-                                                  WebkitUserSelect: 'none',
-                                                  WebkitTouchCallout: 'none',
+                                                  userSelect: "none",
+                                                  WebkitUserSelect: "none",
+                                                  WebkitTouchCallout: "none",
                                               }
                                     }
                                     draggable={false}
