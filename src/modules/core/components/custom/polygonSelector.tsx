@@ -30,7 +30,15 @@ interface PolygonSelectorProps {
     /** Points with x,y as percentages (0-1) */
     initialPoints?: PolygonPoint[];
     /** Other polygons to show grayed out (view only). Each polygon is an array of points with x,y as percentages (0-1) */
-    phantomPoints?: {_id: string, name: string, polygonCoordinates: PolygonPoint[]}[];
+    phantomPoints?: {
+        _id: string;
+        name: string;
+        polygonCoordinates: PolygonPoint[];
+        /** Optional override fill (e.g. unit status). Prefer rgba/hsla so muted alpha rewrite works. */
+        fill?: string;
+        /** Optional override stroke; defaults to fill when only fill is set. */
+        stroke?: string;
+    }[];
     onFloorClick?: (floor: any) => void;
     /** Optional content to show when hovering over a phantom polygon (e.g. floor card) */
     phantomHoverContent?: (item: {_id: string, name: string, polygonCoordinates: PolygonPoint[]}) => React.ReactNode;
@@ -134,6 +142,17 @@ function getPhantomColor(index: number): { fill: string; stroke: string } {
         fill: `hsla(${hue}, 50%, 45%, 0.5)`,
         stroke: `hsl(${hue}, 50%, 45%, 0.5)`,
     };
+}
+
+function resolvePhantomColor(
+    item: {_id: string; fill?: string; stroke?: string},
+    index: number,
+): { fill: string; stroke: string } {
+    if (item.fill || item.stroke) {
+        const color = item.fill ?? item.stroke!;
+        return {fill: item.fill ?? color, stroke: item.stroke ?? color};
+    }
+    return getPhantomColor(index);
 }
 
 function PolygonSelector({
@@ -662,7 +681,7 @@ function PolygonSelector({
             <>
                 {
                     phantomPoints.map((floorCoordinates, index) => {
-                        const { fill, stroke } = getPhantomColor(index);
+                        const { fill, stroke } = resolvePhantomColor(floorCoordinates, index);
                         const isForced = forcedHighlightId === phantomPoints[index]._id;
                         const isHovered = hoveredPhantomIndex === index;
                         const isActive = isForced || isHovered;
