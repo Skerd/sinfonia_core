@@ -1,0 +1,120 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/index.tsx",
+  "home": {
+    "title": "App",
+    "subtitle": "Scegli un'app da aprire",
+    "searchPlaceholder": "Cerca app…",
+    "noResults": "Nessuna app corrisponde alla ricerca.",
+    "recent": "Recenti",
+    "greetingMorning": "Buongiorno",
+    "greetingAfternoon": "Buon pomeriggio",
+    "greetingEvening": "Buonasera"
+  },
+  "menus": {
+    "account": {
+      "title": "Il mio account",
+      "accountSettings": {
+        "title": "Impostazioni",
+        "profile": {
+          "title": "Profilo"
+        },
+        "security": {
+          "title": "Sicurezza"
+        },
+        "account": {
+          "title": "Account"
+        },
+        "notifications": {
+          "title": "Notifiche"
+        },
+        "notificationCenter": {
+          "title": "Attività"
+        }
+      },
+      "apps": {
+        "title": "App",
+        "connectedApps": {
+          "title": "App collegate"
+        }
+      }
+    },
+    "tenancy": {
+      "title": "Gestione tenant",
+      "companies": {
+        "title": "Aziende",
+        "allCompanies": {
+          "title": "Aziende",
+          "editCompany": {
+            "title": "Modifica azienda"
+          },
+          "createCompany": {
+            "title": "Crea azienda"
+          }
+        }
+      },
+      "resources": {
+        "title": "Risorse",
+        "serverPerformance": {
+          "title": "Prestazioni"
+        },
+        "cronJobs": {
+          "title": "Azioni pianificate"
+        }
+      },
+      "systemSettings": {
+        "smtpServers": {
+          "title": "Server mail"
+        },
+        "cities": {
+          "title": "Città"
+        },
+        "states": {
+          "title": "Stati / cantoni"
+        },
+        "title": "Configurazioni",
+        "messagingProviders": {
+          "title": "Provider di messaggistica"
+        },
+        "core": {
+          "title": "Nucleo"
+        },
+        "countries": {
+          "title": "Paesi"
+        },
+        "currencies": {
+          "title": "Valute"
+        }
+      }
+    },
+    "company": {
+      "title": "Azienda",
+      "dashboard": {
+        "title": "Panoramica"
+      },
+      "administration": {
+        "title": "Amministrazione"
+      },
+      "users": {
+        "title": "Utenti"
+      },
+      "chats": {
+        "title": "Chat"
+      },
+      "settings": {
+        "title": "Impostazioni",
+        "company": {
+          "title": "Azienda"
+        },
+        "roles": {
+          "title": "Ruoli"
+        }
+      }
+    }
+  },
+  "commandPalette": {
+    "title": "Palette comandi",
+    "description": "Vai a qualsiasi pagina",
+    "placeholder": "Cerca pagine…",
+    "empty": "Nessuna pagina corrispondente"
+  }
+}

@@ -3,5 +3,9 @@
   "toggleTheme": "Toggle theme",
   "light": "Light",
   "dark": "Dark",
-  "system": "System"
+  "system": "System",
+  "appearance": "Appearance",
+  "density": "Density",
+  "comfortable": "Comfortable",
+  "compact": "Compact"
 }

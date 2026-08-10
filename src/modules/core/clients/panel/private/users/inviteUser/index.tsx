@@ -29,7 +29,7 @@ function UsersInviteDialog({
         <>
             <Button
                 variant='outline'
-                className='space-x-1'
+                className='flex gap-x-1'
                 onClick={() => setOpen(true)}
             >
                 <MailPlus size={18} />

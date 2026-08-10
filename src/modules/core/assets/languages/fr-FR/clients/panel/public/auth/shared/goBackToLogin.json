@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/shared/goBackToLogin.tsx",
+  "goBack": "Retourne à",
+  "alreadyHaveAccount": "Vous avez déjà un compte ?",
+  "logIn": "Se connecter"
+}

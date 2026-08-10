@@ -6,7 +6,6 @@ import { getModuleSidebarNavGroups } from "@coreModule/clients/panel/moduleContr
 
 function renderOneNavGroup(nav: NavGroupDef, index: number) {
     const NavGroupProtectedRender = ProtectNavigation(
-        1,
         nav.permissions,
         nav.usersPermissions,
         true,

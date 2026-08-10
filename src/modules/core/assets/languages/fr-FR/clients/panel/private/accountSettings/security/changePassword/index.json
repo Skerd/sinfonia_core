@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/changePassword/index.tsx",
+  "title": "Changer le mot de passe",
+  "description": "Changer le mot de passe du compte"
+}

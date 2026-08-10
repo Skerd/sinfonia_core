@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/newPhoto.tsx",
+  "confirm": "Salva",
+  "cancel": "Annulla",
+  "updatePhoto": "Aggiorna foto",
+  "axios": {
+    "start": {
+      "title": "Caricamento foto di copertina",
+      "time": 3000
+    },
+    "success": {
+      "title": "Foto di copertina caricata con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile caricare la foto di copertina",
+      "time": 3000
+    }
+  }
+}

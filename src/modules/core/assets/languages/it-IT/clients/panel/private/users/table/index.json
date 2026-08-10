@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/table/index.tsx",
+  "filter": "Filtra gli utenti",
+  "status": "Stato",
+  "roles": {
+    "no_role": "Nessun ruolo"
+  },
+  "statuses": {
+    "active": "Attivo",
+    "inactive": "Inattiva",
+    "invited": "Invitato"
+  },
+  "role": "Ruolo",
+  "username": "E-mail",
+  "name": "Nome e cognome",
+  "view": "Visualizza",
+  "toggleColumns": "Attiva/disattiva colonne",
+  "email": "E-mail",
+  "phoneNumber": "Numero di telefono"
+}

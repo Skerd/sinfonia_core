@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/pages/forbidden.tsx",
+  "title": "Accesso vietato",
+  "description": "Non hai il permesso necessario\n per visualizzare questa risorsa.",
+  "backLabel": "Torna indietro",
+  "backHome": "Ritorno a casa"
+}

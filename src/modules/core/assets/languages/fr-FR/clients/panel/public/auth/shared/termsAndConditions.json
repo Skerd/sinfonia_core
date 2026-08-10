@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/shared/termsAndConditions.tsx",
+  "byClickingYouAgree": "En utilisant nos services, vous acceptez notre",
+  "termsOfService": "Conditions d'utilisation",
+  "and": "et",
+  "privacyPolicy": "Politique de confidentialité",
+  "termsContent": "Ces conditions d'utilisation régissent votre utilisation de cette application.\n\nVotre organisation peut fournir des conditions supplémentaires ; contactez votre administrateur pour connaître l'accord complet qui vous concerne.",
+  "privacyContent": "Cette politique de confidentialité explique quelles informations nous traitons lorsque vous utilisez cette application et comment nous les utilisons.\n\nPour plus de détails spécifiques à votre organisation et à votre région, contactez votre administrateur."
+}

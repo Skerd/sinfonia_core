@@ -81,14 +81,14 @@ function KafkaServerConsumers({title, resolveLanguageKey}:{title: string, resolv
                     </Badge>
                 </TooltipTrigger>
                 <TooltipContent className="min-w-md">
-                    <div className="text-xs space-y-1 w-full">
+                    <div className="flex flex-col text-xs gap-y-1 w-full">
                         {list.length === 0 ? (
                             <p>{resolveLanguageKey("noConsumersRegistered")}</p>
                         ) : (
                             list.map((c: KafkaConsumerStatus) => (
                                 <div key={c.name} className="flex items-center justify-between gap-2">
-                                    <div className="flex items-center space-x-1 text-nowrap">
-                                        <p className={clsx("h-2 w-2 rounded-full", c.alive ? "bg-green-500" : "bg-red-500")} />
+                                    <div className="flex items-center gap-x-1 text-nowrap">
+                                        <p className={clsx("h-2 w-2 rounded-full", c.alive ? "bg-success" : "bg-destructive")} />
                                         <p className="font-medium">{c.displayName || c.name}</p>
                                     </div>
                                     <p className="opacity-70 text-nowrap">({c.groupId})</p>
@@ -108,7 +108,7 @@ function KafkaServerOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLan
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Layers className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
+                    <Layers className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>
@@ -137,10 +137,10 @@ function KafkaServerResource({resolveLanguageKey}: KafkaServerResourceProps){
 
     return (
         <div className={cn(
-            "flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background space-y-1",
+            "flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background gap-y-1",
             {"border-destructive animate-pulse": !connected || consumersDegraded}
         )}>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-x-2">
                 <KafkaServerOnline resolveLanguageKey={resolveLanguageKey} />
                 <div>
                     <p className={cn("text-sm font-medium", {"text-destructive": !connected})}>{resolveLanguageKey("kafkaServerTitle")}</p>

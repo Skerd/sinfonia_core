@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/actions/delete.tsx",
+  "title": "Löschen",
+  "deleteConfirmTitle": "Kanton löschen",
+  "deleteConfirmDescription": "Sind sie sicher sie want bis löschen diese kanton?",
+  "confirmNameLabel": "Typ die kanton name bis confirm",
+  "cancel": "Abbrechen",
+  "confirmDelete": "Löschen",
+  "axios": {
+    "start": {
+      "title": "Deleting kanton",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kanton erfolgreich gelöscht.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kanton fehlgeschlagen bis werden gelöscht",
+      "time": 3000
+    }
+  }
+}

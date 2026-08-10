@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/components/custom/themeSwitch.tsx",
+  "toggleTheme": "Changer de thème",
+  "light": "Clair",
+  "dark": "Sombre",
+  "system": "Système",
+  "appearance": "Apparence",
+  "density": "Densité",
+  "comfortable": "Confortable",
+  "compact": "Compact"
+}

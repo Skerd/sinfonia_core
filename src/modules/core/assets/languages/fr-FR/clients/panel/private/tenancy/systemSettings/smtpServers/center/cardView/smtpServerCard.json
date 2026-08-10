@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/cardView/smtpServerCard.tsx",
+  "name": "Nom",
+  "host": "Hôte",
+  "sequence": "Priorité",
+  "port": "Port",
+  "active": "Actif",
+  "encryption": "Cryptage",
+  "fromEmail": "À partir d'un e-mail",
+  "deleted": "Supprimé",
+  "failedTitle": "Échec du chargement du serveur SMTP",
+  "failedDescription": "Appuyez pour réessayer."
+}

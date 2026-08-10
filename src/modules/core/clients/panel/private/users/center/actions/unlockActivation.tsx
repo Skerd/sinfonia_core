@@ -63,7 +63,7 @@ function UnlockActivationAction({user, resolveLanguageKey, onFilterChange, loadi
             >
                 {
                     write?.requests?.keys?.activation?.keys?.date &&
-                    <div className="flex items-center space-x-2 mt-4">
+                    <div className="flex items-center gap-x-2 mt-4">
                         <Checkbox
                             id="unlock-activation-resend"
                             checked={resendEmail}

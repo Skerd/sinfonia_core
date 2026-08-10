@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx",
+  "title": "Città",
+  "description": "Gestisci le città",
+  "createCity": "Crea città",
+  "searchPlaceholder": "Cerca per nome o aggiungi filtri...",
+  "noData": "Nessuna città trovata",
+  "failTitle": "Impossibile caricare le città",
+  "failDescription": "Si è verificato un errore durante il caricamento delle città. Per favore riprova.",
+  "status": "Stato",
+  "name": "Nome",
+  "state": "Cantone / Stato",
+  "country": "Paese",
+  "deleted": "Eliminato",
+  "active": "Attivo",
+  "fields": {
+    "name": "Nome",
+    "state": "Cantone / Stato",
+    "country": "Paese",
+    "createdAt": "Creato il",
+    "updatedAt": "Aggiornato il",
+    "createdBy": "Creato da",
+    "company": "Azienda",
+    "deletedAt": "Stato",
+    "deletedBy": "Eliminato da"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/editState.tsx",
+  "title": "Kanton bearbeiten",
+  "description": "Aktualisieren kanton details",
+  "errorTitle": "Kanton daten konnten nicht geladen werden",
+  "errorDescription": "Bitte click here bis retry fetching kanton daten",
+  "form": {
+    "idLabel": "Kanton ID",
+    "nameLabel": "Name",
+    "namePlaceholder": "Kanton name",
+    "codeLabel": "Code",
+    "codePlaceholder": "E.g. CA",
+    "countryLabel": "Land",
+    "countryPlaceholder": "Land auswählen"
+  },
+  "noId": "Keine kanton selected.",
+  "backToList": "Zurück zu liste",
+  "axios": {
+    "start": {
+      "title": "Saving kanton",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kanton aktualisiert erfolgreich!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kanton konnte nicht aktualisiert werden, bitte erneut versuchen!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Kanton bearbeiten",
+    "description": "Aktualisieren kanton details"
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Speichern"
+  }
+}

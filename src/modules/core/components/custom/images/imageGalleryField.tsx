@@ -37,7 +37,7 @@ export function ImageGalleryField({ resolveLanguageKey, loading = false, editMod
 
     return (
         <div>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-y-2">
                 <Label>{resolveLanguageKey("form.imageGalleryLabel")}</Label>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-10 gap-2">
                     {

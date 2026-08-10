@@ -1,6 +1,7 @@
 {
   "path": "src/modules/core/components/custom/dateInput.tsx",
   "placeholder": "Pick a date",
+  "timePlaceholder": "Pick a time",
   "hourLabel": "Hr",
   "minuteLabel": "Min",
   "secondLabel": "Sec",

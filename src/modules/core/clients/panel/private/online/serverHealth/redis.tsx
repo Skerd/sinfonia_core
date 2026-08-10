@@ -44,7 +44,7 @@ function RedisOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageK
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Zap className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
+                    <Zap className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>
@@ -83,7 +83,7 @@ function RedisPinged({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageK
                     </p>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <div className="text-xs space-y-1 max-w-xs">
+                    <div className="flex flex-col text-xs gap-y-1 max-w-xs">
                         <div className="opacity-70">{resolveLanguageKey("nodes")}:</div>
                         {nodeList.map((node: string, idx: number) => (
                             <div key={`${node}-${idx}`} className="font-medium">{node}</div>
@@ -102,8 +102,8 @@ function RedisResource({resolveLanguageKey}: RedisResourceProps){
     const {connected} = useSelector((state: RootState) => state.serverResources.serverHealth.services!.redis);
 
     return (
-        <div className={cn("flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background space-y-1", {"border-destructive animate-pulse": !connected})}>
-            <div className="flex items-center space-x-2">
+        <div className={cn("flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background gap-y-1", {"border-destructive animate-pulse": !connected})}>
+            <div className="flex items-center gap-x-2">
                 <RedisOnline resolveLanguageKey={resolveLanguageKey} />
                 <div>
                     <p className={cn("text-sm font-medium", {"text-destructive": !connected})}>{resolveLanguageKey("redisServerTitle")}</p>

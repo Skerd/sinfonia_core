@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockActivation.tsx",
+  "unlockActivation": "Unlock activation",
+  "unlockActivationConfirm": "Unlock activation lock?",
+  "unlockActivationConfirmDesc": "Diese will leeren die activation lock. Die benutzer will werden able bis antrag a neu activation e-Mail.",
+  "unlockActivationResendEmail": "Resend activation e-Mail",
+  "unlockActivationSuccess": "Activation lock cleared erfolgreich",
+  "unlockActivationError": "Fehlgeschlagen bis leeren activation lock",
+  "axios": {
+    "start": {
+      "title": "Unlocking activation",
+      "time": 3000
+    },
+    "success": {
+      "title": "Activation lock cleared erfolgreich",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fehlgeschlagen bis leeren activation lock",
+      "time": 3000
+    }
+  }
+}

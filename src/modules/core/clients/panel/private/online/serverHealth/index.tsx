@@ -113,22 +113,22 @@ function ServerHealth({
                                 error ?
                                 <SimpleError title={resolveLanguageKey("failTitle")} description={resolveLanguageKey("failTitleTooltip")} onClick={() => {setForceReload(forceReload + 1)}}/>
                                 :
-                                <div className="space-y-5">
-                                    <section className="space-y-2">
+                                <div className="flex flex-col gap-y-5">
+                                    <section className="flex flex-col gap-y-2">
                                         <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                                             {resolveLanguageKey("infrastructureServers")}
                                         </h3>
-                                        <div className="space-y-3">
+                                        <div className="flex flex-col gap-y-3">
                                             <MongoResource />
                                             <RedisResource />
                                             <KafkaResource />
                                         </div>
                                     </section>
-                                    <section className="space-y-2">
+                                    <section className="flex flex-col gap-y-2">
                                         <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                                             {resolveLanguageKey("serviceServers")}
                                         </h3>
-                                        <div className="space-y-3">
+                                        <div className="flex flex-col gap-y-3">
                                             <ApiResource />
                                             <WebsocketResource />
                                             <KafkaServerResource />

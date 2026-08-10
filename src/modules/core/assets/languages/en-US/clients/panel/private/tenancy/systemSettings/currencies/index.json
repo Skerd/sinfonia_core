@@ -19,6 +19,8 @@
     "symbol": "Symbol",
     "abbreviation": "Abbreviation",
     "decimalPlaces": "Decimal places",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
     "createdBy": "Created by",
     "company": "Company",
     "deletedAt": "Status",

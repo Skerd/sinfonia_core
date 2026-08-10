@@ -65,7 +65,7 @@ function NewPhoto({
         <div>
             {
                 fileSelected ?
-                <div className="flex grow items-center justify-end space-x-2">
+                <div className="flex grow items-center justify-end gap-x-2">
                     <Button
                         disabled={loading}
                         variant="destructive"

@@ -34,7 +34,6 @@ function AllMessagingProviders({resolveLanguageKey}: WithLanguageType) {
             buildEditPath={messagingProviderEditPath}
             resolveLanguageKey={resolveLanguageKey}
             sheetLanguagePath="src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx"
-            cardViewClassName="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3"
             renderActionMenuChildren={(_entity, bindRowAction) => (
                 <>
                     <TestMessagingProviderConnection onAction={bindRowAction} />
@@ -67,7 +66,7 @@ function AllMessagingProviders({resolveLanguageKey}: WithLanguageType) {
                             onOpenChange={(o: boolean) => { if (!o) resetAction(); }}
                             messagingProvider={entity}
                             targetActive={true}
-                            onSuccess={(provider) => listRef.current?.updateRow?.(entity._id, provider)}
+                            onSuccess={(provider: MessagingProvider) => listRef.current?.updateRow?.(entity._id, provider)}
                         />
                     );
                 }
@@ -78,7 +77,7 @@ function AllMessagingProviders({resolveLanguageKey}: WithLanguageType) {
                             onOpenChange={(o: boolean) => { if (!o) resetAction(); }}
                             messagingProvider={entity}
                             targetActive={false}
-                            onSuccess={(provider) => listRef.current?.updateRow?.(entity._id, provider)}
+                            onSuccess={(provider: MessagingProvider) => listRef.current?.updateRow?.(entity._id, provider)}
                         />
                     );
                 }
@@ -109,5 +108,5 @@ function AllMessagingProviders({resolveLanguageKey}: WithLanguageType) {
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "messagingProviders"),
 )(AllMessagingProviders);

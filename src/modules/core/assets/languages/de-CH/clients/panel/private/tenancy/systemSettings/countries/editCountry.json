@@ -1,0 +1,42 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/editCountry.tsx",
+  "title": "Land bearbeiten",
+  "description": "Aktualisieren land details",
+  "errorTitle": "Land daten konnten nicht geladen werden",
+  "errorDescription": "Bitte click here bis retry fetching land daten",
+  "form": {
+    "idLabel": "Land ID",
+    "nameLabel": "Name",
+    "namePlaceholder": "Land name",
+    "codeLabel": "Code",
+    "codePlaceholder": "E.g. USA",
+    "phoneCodeLabel": "Telefon code",
+    "phoneCodePlaceholder": "+1",
+    "currencyLabel": "Währung",
+    "currencyPlaceholder": "Währung auswählen"
+  },
+  "noId": "Keine land selected.",
+  "backToList": "Zurück zu liste",
+  "axios": {
+    "start": {
+      "title": "Saving land",
+      "time": 3000
+    },
+    "success": {
+      "title": "Land aktualisiert erfolgreich!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Land konnte nicht aktualisiert werden, bitte erneut versuchen!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Land bearbeiten",
+    "description": "Aktualisieren land details"
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Speichern"
+  }
+}

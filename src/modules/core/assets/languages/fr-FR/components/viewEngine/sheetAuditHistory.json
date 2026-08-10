@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/components/viewEngine/sheetAuditHistory.tsx",
+  "menuItem": "Activité",
+  "drawerTitle": "Activité",
+  "drawerDescription": "Modifications de cet enregistrement au fil du temps.",
+  "loadMore": "Charger plus",
+  "loading": "Chargement…",
+  "empty": "Aucune activité pour l'instant.",
+  "errorTitle": "Impossible de charger l'activité",
+  "retry": "Réessayer",
+  "actionCreate": "créé cet enregistrement",
+  "actionUpdate": "mis à jour",
+  "actionDelete": "supprimé cet enregistrement",
+  "actionRestore": "restauré ce disque",
+  "systemActor": "Système",
+  "unknownField": "Champ",
+  "from": "Du",
+  "to": "Au",
+  "noFieldChanges": "Aucun changement de champ visible (diff restreint ou vide)."
+}

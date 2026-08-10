@@ -38,19 +38,73 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     min-width: 0;
 }
 
-/* global.css */
 ::-webkit-scrollbar {
     width: 4px;
     height: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--border);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--muted-foreground);
+    cursor: pointer;
+}
+
+/*
+ * Motion is opt-out rather than opt-in: any animation added anywhere in the
+ * app is covered without the author having to remember this rule. Kept to
+ * near-zero rather than `none` so transitionend/animationend still fire and
+ * components waiting on them do not hang.
+ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/*
+ * Marketing pages: force arrow over copy so headings/prose don't show the
+ * text I-beam. Interactive controls opt back in; grab/none/not-allowed on
+ * specific elements still win via their own utility classes.
+ */
+.public-page-shell {
+    cursor: default;
+}
+
+.public-page-shell :is(a, button:not(:disabled), summary, [role="button"]) {
+    cursor: pointer;
+}
+
+.public-page-shell :is(
+    input:not([type]),
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="search"],
+    input[type="url"],
+    input[type="password"],
+    input[type="number"],
+    textarea
+) {
+    cursor: text;
+}
+
+.public-page-shell :is(
+    input[type="range"],
+    input[type="checkbox"],
+    input[type="radio"],
+    input[type="submit"],
+    input[type="button"],
+    input[type="file"]
+) {
     cursor: pointer;
 }
 
@@ -70,7 +124,7 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     }
 
     .scrollbar-thin-custom::-webkit-scrollbar-thumb {
-        background-color: #888;
+        background-color: var(--border);
         border-radius: 4px;
     }
 
@@ -81,93 +135,304 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     /* Firefox */
     .scrollbar-thin-custom {
         scrollbar-width: auto;
-        scrollbar-color: #888 transparent;
+        scrollbar-color: var(--border) transparent;
+    }
+
+    /*
+     * Indeterminate sliver for background refetches. Deliberately not a
+     * spinner: the list already holds content, so the indicator belongs at
+     * the edge of the viewport rather than on top of the rows.
+     */
+    .animate-indeterminate {
+        animation: indeterminate 1.1s ease-in-out infinite;
+    }
+
+    /*
+     * Card lists: intrinsic packing capped by `--grid-cols-max` (default 5).
+     * Track min is the larger of `--grid-card-min*` and `1/N` of the row
+     * (minus gaps), so a wide pane stays at N equal tracks instead of
+     * spilling wider, while narrower panes still drop toward 1.
+     *
+     * `auto-fill` (not `auto-fit`) keeps empty tracks, so a 2-item list stays
+     * at card-sized columns instead of stretching those two across the row.
+     * Override with `.grid-cols-max-4` (etc.) where a denser card needs fewer
+     * columns. `min(..., 100%)` prevents overflow on the narrowest viewports.
+     * `align-items: start` keeps content height.
+     */
+    .grid-hierarchy,
+    .grid-transactional {
+        --grid-cols-max: 5;
+        display: grid;
+        gap: var(--density-gap);
+        align-items: start;
+    }
+
+    .grid-hierarchy {
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(
+                min(
+                    100%,
+                    max(
+                        var(--grid-card-min),
+                        calc((100% - (var(--grid-cols-max) - 1) * var(--density-gap)) / var(--grid-cols-max))
+                    )
+                ),
+                1fr
+            )
+        );
+    }
+
+    .grid-transactional {
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(
+                min(
+                    100%,
+                    max(
+                        var(--grid-card-min-sm),
+                        calc((100% - (var(--grid-cols-max) - 1) * var(--density-gap)) / var(--grid-cols-max))
+                    )
+                ),
+                1fr
+            )
+        );
+    }
+
+    .grid-cols-max-4 {
+        --grid-cols-max: 4;
+    }
+
+    .grid-cols-max-3 {
+        --grid-cols-max: 3;
     }
 
 }
 
+@keyframes indeterminate {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(400%);
+    }
+}
+
+/*
+ * Striped progress fill. Lived in the unused tailwind.config.ts; moved here so
+ * `animate-stripes` resolves again after that config was deleted.
+ */
+@keyframes stripes {
+    from {
+        background-position: 1rem 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+
+@utility animate-stripes {
+    animation: stripes 1s linear infinite;
+}
+
+/*
+ * Neutral zinc theme (shadcnuikit export, colors only). Radius / spacing /
+ * fonts stay Arpeggio defaults — generator --spacing would break Tailwind v4.
+ *
+ * --status-* are domain tokens (unit availability), kept on their own hues.
+ */
 :root {
     --radius: 0.625rem;
+
+    /*
+     * Height of the media block at the top of an entity card. Shared so the
+     * loading skeleton reserves exactly the space the carousel will occupy;
+     * a mismatch here is visible as a jump when the first page lands.
+     */
+    --card-media-height: 12.5rem;
+
+    /*
+     * Density. Every surface that would otherwise hardcode padding, gap or row
+     * height reads these instead, so `data-density="compact"` on <html> retunes
+     * the whole panel without touching a component. Comfortable is the default.
+     */
+    --density-pad: 0.75rem;
+    --density-pad-sm: 0.5rem;
+    --density-gap: 1rem;
+    --density-gap-sm: 0.5rem;
+    --density-row-h: 2.75rem;
+
+    /*
+     * Minimum readable card width. Used as the floor in the 5-column-capped
+     * grids above; on wide panes the 1/5 track size wins so the default stays
+     * five columns. Compact density lowers these so more columns fit before
+     * the cap engages.
+     */
+    --grid-card-min: 18rem;
+    --grid-card-min-sm: 14rem;
+    /* KPI tiles hold a label and a number, so they pack far tighter. */
+    --grid-kpi-min: 13rem;
+
+    /*
+     * Elevation. Card already establishes its outline with `ring-1
+     * ring-foreground/10`; these carry only the drop shadow, so the two compose
+     * instead of competing. Deliberately soft in light mode - the page sits
+     * below the card in luminance, which does most of the separation already.
+     */
+    --elevation-0: 0 0 transparent;
+    --elevation-1: 0 1px 2px -1px oklch(0.145 0 0 / 0.08);
+    --elevation-2: 0 4px 12px -2px oklch(0.145 0 0 / 0.1);
+    --elevation-3: 0 12px 28px -6px oklch(0.145 0 0 / 0.14);
+
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
+
+    --primary: oklch(0.145 0 0);
     --primary-foreground: oklch(0.985 0 0);
     --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
+    --secondary-foreground: oklch(0.145 0 0);
     --muted: oklch(0.97 0 0);
     --muted-foreground: oklch(0.556 0 0);
     --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.58 0.22 27);
+    --accent-foreground: oklch(0.145 0 0);
+    --destructive: oklch(0.637 0.208 25.331);
+    --destructive-foreground: oklch(0.985 0 0);
+
     --border: oklch(0.922 0 0);
     --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.809 0.105 251.813);
-    --chart-2: oklch(0.623 0.214 259.815);
-    --chart-3: oklch(0.546 0.245 262.881);
-    --chart-4: oklch(0.488 0.243 264.376);
-    --chart-5: oklch(0.424 0.199 265.638);
+    --ring: oklch(0.87 0 0);
+
+    --chart-1: oklch(0.652 0.124 284.594);
+    --chart-2: oklch(0.779 0.097 155.935);
+    --chart-3: oklch(0.858 0.141 81.233);
+    --chart-4: oklch(0.738 0.16 21.742);
+    --chart-5: oklch(0.821 0.072 214.103);
 
     --sidebar: oklch(0.985 0 0);
     --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary: oklch(0.145 0 0);
     --sidebar-primary-foreground: oklch(0.985 0 0);
     --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-accent-foreground: oklch(0.145 0 0);
     --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --sidebar-ring: oklch(0.87 0 0);
+
+    /*
+     * Feedback tokens, distinct from --status-* above. These describe outcome
+     * (saved / needs attention / failed), the --status-* set describes unit
+     * lifecycle. Keeping them apart stops "sold" being reused to mean "success".
+     */
+    --success: oklch(0.58 0.15 152);
+    --success-foreground: oklch(0.99 0 0);
+    --warning: oklch(0.70 0.16 75);
+    --warning-foreground: oklch(0.22 0.04 75);
+    --info: oklch(0.58 0.15 232);
+    --info-foreground: oklch(0.99 0 0);
+
     --status-available: oklch(0.55 0.18 230);
     --status-reserved: oklch(0.72 0.18 75);
     --status-sold: oklch(0.55 0.2 145);
     --status-blocked: oklch(0.55 0.22 25);
+    --status-leased: oklch(0.55 0.21 300);
+    /* One foreground for all five: they share a lightness band by design. */
+    --status-foreground: oklch(0.99 0 0);
+
+    /*
+     * Content that sits on a photograph rather than on a themed surface: card
+     * media scrims, gallery hover controls, badges over a hero image. These are
+     * deliberately NOT theme-dependent - the image underneath does not get
+     * lighter in light mode, so flipping these with the theme would destroy the
+     * contrast they exist to guarantee. Declared once here so the intent is
+     * explicit rather than scattered as `bg-black/60` and `text-white`.
+     */
+    --overlay: oklch(0 0 0 / 0.6);
+    --overlay-foreground: oklch(1 0 0);
 }
 
 .dark {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
+    --card: oklch(0.21 0.006 285.885);
     --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
+    --popover: oklch(0.21 0.006 285.885);
     --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.87 0.00 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
+
+    --primary: oklch(0.985 0 0);
+    --primary-foreground: oklch(0.145 0 0);
+    --secondary: oklch(0.274 0.005 286.033);
     --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.371 0 0);
+    --muted: oklch(0.274 0.005 286.033);
+    --muted-foreground: oklch(0.712 0.013 286.067);
+    --accent: oklch(0.274 0.005 286.033);
     --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.809 0.105 251.813);
-    --chart-2: oklch(0.623 0.214 259.815);
-    --chart-3: oklch(0.546 0.245 262.881);
-    --chart-4: oklch(0.488 0.243 264.376);
-    --chart-5: oklch(0.424 0.199 265.638);
+    --destructive: oklch(0.637 0.208 25.331);
+    --destructive-foreground: oklch(0.985 0 0);
+
+    /*
+     * A shadow tuned for a white page is invisible on a dark one. Same ramp,
+     * pushed to near-black and higher alpha so elevation still reads.
+     */
+    --elevation-1: 0 1px 2px -1px oklch(0 0 0 / 0.5);
+    --elevation-2: 0 4px 12px -2px oklch(0 0 0 / 0.55);
+    --elevation-3: 0 12px 28px -6px oklch(0 0 0 / 0.65);
+
+    --border: oklch(0.274 0.005 286.033);
+    --input: oklch(0.274 0.005 286.033);
+    --ring: oklch(0.37 0.012 285.805);
+
+    --chart-1: oklch(0.652 0.124 284.594);
+    --chart-2: oklch(0.779 0.097 155.935);
+    --chart-3: oklch(0.858 0.141 81.233);
+    --chart-4: oklch(0.738 0.16 21.742);
+    --chart-5: oklch(0.821 0.072 214.103);
+
+    --sidebar: oklch(0.21 0.006 285.885);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.274 0.005 286.033);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.274 0.005 286.033);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(0.274 0.005 286.033);
+    --sidebar-ring: oklch(0.37 0.012 285.805);
+
+    --success: oklch(0.72 0.16 152);
+    --success-foreground: oklch(0.17 0.03 152);
+    --warning: oklch(0.80 0.15 75);
+    --warning-foreground: oklch(0.20 0.04 75);
+    --info: oklch(0.70 0.14 232);
+    --info-foreground: oklch(0.17 0.03 232);
+
     --status-available: oklch(0.65 0.2 230);
     --status-reserved: oklch(0.78 0.18 75);
     --status-sold: oklch(0.65 0.22 145);
     --status-blocked: oklch(0.65 0.2 25);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    --status-leased: oklch(0.68 0.19 300);
+    /* The dark-mode status colors are lifted to ~0.65 L, where white text no
+       longer clears contrast and dark text does. */
+    --status-foreground: oklch(0.165 0.022 264);
+}
+
+/*
+ * Compact density. Set on <html> by the density provider. Only the four
+ * spacing primitives change - nothing here knows about a specific component,
+ * which is what keeps the two modes from drifting apart.
+ */
+[data-density="compact"] {
+    --density-pad: 0.5rem;
+    --density-pad-sm: 0.375rem;
+    --density-gap: 0.5rem;
+    --density-gap-sm: 0.375rem;
+    --density-row-h: 2.25rem;
+    --grid-card-min: 16rem;
+    --grid-card-min-sm: 12rem;
+    --grid-kpi-min: 11rem;
 }
 
 @theme inline {
-    --font-inter: 'Inter', 'sans-serif';
-    --font-manrope: 'Manrope', 'sans-serif';
-
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
@@ -187,6 +452,13 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     --color-accent: var(--accent);
     --color-accent-foreground: var(--accent-foreground);
     --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-warning: var(--warning);
+    --color-warning-foreground: var(--warning-foreground);
+    --color-info: var(--info);
+    --color-info-foreground: var(--info-foreground);
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
@@ -207,10 +479,37 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     --color-status-reserved: var(--status-reserved);
     --color-status-sold: var(--status-sold);
     --color-status-blocked: var(--status-blocked);
+    --color-status-leased: var(--status-leased);
+    --color-status-foreground: var(--status-foreground);
+    --color-overlay: var(--overlay);
+    --color-overlay-foreground: var(--overlay-foreground);
     --font-sans: 'Roboto Variable', sans-serif;
+    /* Alias, not a second family: swapping in a display face later is a change
+       here rather than at every `font-display` call site. */
+    --font-display: var(--font-sans);
     --radius-2xl: calc(var(--radius) * 1.8);
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
+
+    /*
+     * Micro type. Dense cards, table meta and badge counters had been reaching
+     * for arbitrary 9-11px values because the scale stopped at 12px. Two steps
+     * below `text-xs`; nothing smaller, since 8px and 9px were below legibility
+     * and were folded up into 3xs.
+     */
+    --text-2xs: 0.6875rem;
+    --text-2xs--line-height: 1rem;
+    --text-3xs: 0.625rem;
+    --text-3xs--line-height: 0.875rem;
+
+    /* `shadow-e1` .. `shadow-e3`. See the --elevation-* comment in :root. */
+    --shadow-e0: var(--elevation-0);
+    --shadow-e1: var(--elevation-1);
+    --shadow-e2: var(--elevation-2);
+    --shadow-e3: var(--elevation-3);
+
+    /* Utility form of the card media box: `h-card-media`, `min-h-card-media`. */
+    --spacing-card-media: var(--card-media-height);
 }
 
 @layer base {
@@ -223,20 +522,6 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
   html {
     @apply font-sans;
     }
-}
-
-.my-masonry-grid {
-    display: flex;
-    width: auto;
-    gap: 1rem; /* matches md:gap-4 */
-}
-.my-masonry-grid_column {
-    min-width: 0;
-    background-clip: padding-box;
-}
-
-.my-masonry-grid_column > div {
-    margin-bottom: 1rem;
 }
 
 .flex-full {
@@ -288,47 +573,6 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     -webkit-user-select: none;
     user-select: none;
     -webkit-touch-callout: none;
-}
-
-/* Dashboard demo components */
-.font-display {
-    font-family: var(--font-manrope, var(--font-inter)), sans-serif;
-}
-
-.kpi-card {
-    @apply rounded-xl border p-6 transition-colors;
-}
-
-.glass-card {
-    @apply rounded-xl border border-border bg-card/80 backdrop-blur-sm;
-}
-
-.nav-item {
-    @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground;
-}
-
-.nav-item-active {
-    @apply bg-accent text-accent-foreground;
-}
-
-.status-badge {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
-}
-
-.status-available {
-    color: var(--status-available);
-}
-
-.status-reserved {
-    color: var(--status-reserved);
-}
-
-.status-sold {
-    color: var(--status-sold);
-}
-
-.status-blocked {
-    color: var(--status-blocked);
 }
 
 .leaflet-control-zoom a {

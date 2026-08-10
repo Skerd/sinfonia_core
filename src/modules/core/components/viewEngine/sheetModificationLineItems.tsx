@@ -37,8 +37,8 @@ function formatCost(n: number): string {
 }
 
 const cardClass =
-    "text-sm p-2 rounded-md bg-muted/50 border border-border/30 space-y-1";
-const highlightClass = "text-emerald-600 dark:text-emerald-400 shrink-0 font-medium";
+    "text-sm p-2 rounded-md bg-muted/50 border border-border/30 flex flex-col gap-1";
+const highlightClass = "text-success shrink-0 font-medium";
 
 export default function SheetModificationLineItems({
     items,
@@ -58,8 +58,8 @@ export default function SheetModificationLineItems({
     const notesLabel = String(resolveLanguageKey("notesLabel"));
 
     return (
-        <div className={cn("space-y-2 w-full", className)}>
-            <div className="space-y-1.5 max-h-72 overflow-y-auto">
+        <div className={cn("flex flex-col gap-y-2 w-full", className)}>
+            <div className="flex flex-col gap-y-1.5 max-h-72 overflow-y-auto">
                 {items.map((row, index) => {
                 const isCost = variant === "costBreakdown" || variant === "expenditureItems";
                 const lineTotal =

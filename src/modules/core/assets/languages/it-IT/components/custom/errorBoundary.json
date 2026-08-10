@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/errorBoundary.tsx",
+  "title": "Qualcosa è andato storto",
+  "description": "Si è verificato un errore imprevisto durante il rendering di questa pagina.",
+  "retry": "Riprova",
+  "goHome": "Vai a casa"
+}

@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterRule.tsx",
+  "filterRule": "Règle de filtrage",
+  "rule": "Règle",
+  "operators": {
+    "equals": "Égal à",
+    "notEquals": "Différent de",
+    "contains": "Contient",
+    "startsWith": "Commence par",
+    "endsWith": "Se termine par",
+    "greaterThan": "Supérieur à",
+    "greaterThanOrEqual": "Supérieur ou égal",
+    "lessThan": "Inférieur à",
+    "lessThanOrEqual": "Inférieur ou égal",
+    "between": "Entre",
+    "in": "Dans",
+    "notIn": "Pas dans",
+    "exists": "Existe"
+  },
+  "filterField": "Sélectionnez un champ",
+  "filterOperator": "Opérateur",
+  "selectFieldFirst": "Sélectionnez un champ",
+  "removeFilter": "Supprimer"
+}

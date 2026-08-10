@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/searchChatUsers/createNewChannel.tsx",
+  "chat": "Commencez à discuter",
+  "axios": {
+    "start": {
+      "title": "Création d'une chaîne",
+      "time": 3000
+    },
+    "success": {
+      "title": "Chaîne créée avec succès !",
+      "time": 3000
+    },
+    "successExists": {
+      "title": "La chaîne existe déjà !",
+      "time": 3000
+    },
+    "error": {
+      "title": "La chaîne n'a pas pu être créée, veuillez réessayer !",
+      "time": 3000
+    }
+  }
+}

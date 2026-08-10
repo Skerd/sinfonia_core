@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/login/index.tsx",
+  "signInHeader": {
+    "title": "Anmelden",
+    "descriptionOne": "Ihr e-Mail und passwort below bis eingeben",
+    "descriptionTwo": "Log into ihr konto"
+  },
+  "mfaHeader": {
+    "title": "Two-faktor Authentication",
+    "descriptionOne": "Bitte eingeben die authentication code.",
+    "descriptionTwo": "Sie can find die code in ihr authenticator app."
+  },
+  "mfaFooter": {
+    "forgot": "Kann nicht zugriff 2FA?",
+    "reset": "Zurücksetzen it",
+    "or": "Oder",
+    "goLogin": "Go back bis anmelden"
+  }
+}

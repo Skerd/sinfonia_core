@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/acceptInvitation/acceptInvitation.form.tsx",
+  "verifyingInvitationCodeTitle": "Sicherheit check",
+  "verifyingInvitationCodeDescription": "Checking einladung code validity.",
+  "errorVerifyingInvitationCodeTitle": "Sicherheit check fehlgeschlagen",
+  "errorVerifyingInvitationCodeDescription": "Diese einladung code ist invalid oder has abgelaufen.",
+  "errorAcceptingInvitationTitle": "Fehlgeschlagen bis accept einladung",
+  "errorAcceptingInvitationDescription": "Something unexpected happened während accepting die einladung. Bitte versuchen erneut later!",
+  "successAcceptingInvitationTitle": "Erfolg",
+  "successAcceptingInvitationDescription": "Einladung accepted erfolgreich. Sie can now log into ihr konto using ihr passwort.",
+  "title": "Accept einladung",
+  "description": "Set ihr passwort bis accept die einladung",
+  "form": {
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "Ihr passwort eingeben",
+    "invitationCodeLabel": "Einladung code"
+  },
+  "confirm": "Accept einladung",
+  "axios": {
+    "start": {
+      "title": "Accepting einladung",
+      "time": 3000
+    },
+    "success": {
+      "title": "Einladung accepted erfolgreich",
+      "time": 3000
+    },
+    "error": {
+      "title": "Konnte nicht accept einladung",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/userSession/index.tsx",
+  "title": "Séances actives",
+  "description": "Vérifiez où vous êtes connecté et révoquez l'accès aux appareils auxquels vous ne faites pas confiance.",
+  "helperText": "Si vous ne reconnaissez pas un appareil, ouvrez le menu de la ligne (⋮) et choisissez Révoquer l'accès, puis modifiez votre mot de passe.",
+  "rowActions": "Ouvrir le menu de la séance",
+  "searchPlaceholder": "Rechercher par session, appareil ou emplacement",
+  "unknown": "Inconnu",
+  "unknownDevice": "Appareil inconnu",
+  "unknownLocation": "Lieu inconnu",
+  "sessionId": "ID de session",
+  "userAgent": "Agent utilisateur",
+  "expiresAt": "Expire",
+  "revoke": "Révoquer l'accès",
+  "revokeSuccess": "Accès à la session révoqué.",
+  "revokeError": "Impossible de révoquer cette session.",
+  "badge": {
+    "active": "Actif",
+    "revoked": "Révoqué",
+    "current": "Cet appareil"
+  },
+  "fields": {
+    "user": "Utilisateur",
+    "userId": "Utilisateur",
+    "sessionId": "ID de session",
+    "deviceId": "ID de l'appareil",
+    "userAgent": "Agent utilisateur",
+    "ipAddress": "Adresse IP",
+    "geolocation": "Géolocalisation",
+    "createdAt": "Créé le",
+    "lastActiveAt": "Dernier actif",
+    "expiresAt": "Expire",
+    "isActive": "Actif"
+  }
+}

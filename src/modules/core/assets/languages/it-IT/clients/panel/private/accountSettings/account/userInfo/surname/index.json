@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/surname/index.tsx",
+  "form": {
+    "surnameLabel": "Cognome",
+    "surnameDescription": "Questo è il cognome che verrà visualizzato nel sistema."
+  },
+  "failTitle": "Impossibile caricare il cognome",
+  "failTitleTooltip": "Fare clic per riprovare a caricare il cognome"
+}

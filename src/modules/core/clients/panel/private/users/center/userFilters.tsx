@@ -100,7 +100,7 @@ function UserFilters({filters, setFilters, resolveLanguageKey, extraParams}: Use
     return (
         <div className="flex grow me-4" style={{border: "0px solid red"}}>
             <div className="w-full grid grid-cols-2 lg:grid-cols-7 gap-2 md:gap-2">
-                <div className="space-y-2 col-span-2 lg:col-span-3">
+                <div className="flex flex-col gap-y-2 col-span-2 lg:col-span-3">
                     <Input
                         id="filter-username"
                         placeholder={resolveLanguageKey("filterSearch")}
@@ -108,7 +108,7 @@ function UserFilters({filters, setFilters, resolveLanguageKey, extraParams}: Use
                         onChange={(e) => onSearchChange(e.target.value)}
                     />
                 </div>
-                <div className="space-y-2">
+                <div className="flex flex-col gap-y-2">
                     <SimpleSelect
                         options={[
                             // { value: "all", label: String(resolveLanguageKey("filterStatusAll")) },
@@ -123,7 +123,7 @@ function UserFilters({filters, setFilters, resolveLanguageKey, extraParams}: Use
                         multiple
                     />
                 </div>
-                <div className="space-y-2">
+                <div className="flex flex-col gap-y-2">
                     <ApiSelect
                         apiUrl="/api/user/permissions/accessible/roles/select"
                         postBody={{ administration: !!(extraParams as { administration?: boolean })?.administration }}

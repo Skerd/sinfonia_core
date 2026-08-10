@@ -85,8 +85,8 @@ export function FilterChip({
                     </button>
                 </PopoverTrigger>
                 <PopoverContent align="start" sideOffset={4} className="w-[min(360px,calc(100vw-24px))] p-2.5 rounded-md" onClick={(e) => e.stopPropagation()}>
-                    <div className="space-y-1.5">
-                        <p className="text-[11px] font-medium text-muted-foreground">
+                    <div className="flex flex-col gap-y-1.5">
+                        <p className="text-2xs font-medium text-muted-foreground">
                             {resolveLanguageKey("editFilter")}
                         </p>
                         <div className="flex flex-wrap items-center gap-1.5">

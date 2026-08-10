@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/activateAccount/activateAccount.form.tsx",
+  "loading": "Attivazione conto",
+  "loadingDescription": "Attivazione dell'account utilizzando il collegamento di attivazione",
+  "fail": "Attivazione dell'account non riuscita",
+  "failDescription": "Il collegamento per l'attivazione dell'account non è corretto",
+  "success": "Conto attivato",
+  "successDescription": "Account attivato con successo, ora puoi accedere solo utilizzando la tua password",
+  "axios": {
+    "start": {
+      "title": "Attivazione conto",
+      "time": 3000
+    },
+    "success": {
+      "title": "Attivazione dell'account riuscita",
+      "time": 3000
+    },
+    "error": {
+      "title": "Attivazione dell'account non riuscita",
+      "time": 3000
+    }
+  }
+}

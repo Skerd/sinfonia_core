@@ -1,0 +1,107 @@
+{
+  "path": "src/modules/core/clients/panel/entryPoint/index.tsx",
+  "home": {
+    "title": "Applications"
+  },
+  "common": {
+    "create": "Créer",
+    "edit": "Modifier",
+    "delete": "Supprimer"
+  },
+  "menus": {
+    "account": {
+      "mainTitle": "Mon compte",
+      "title": "Mon compte",
+      "accountSettings": {
+        "title": "Paramètres"
+      },
+      "profile": {
+        "title": "Profil"
+      },
+      "security": {
+        "title": "Sécurité"
+      },
+      "account": {
+        "title": "Compte"
+      },
+      "notifications": {
+        "title": "Notifications"
+      },
+      "notificationCenter": {
+        "title": "Activité"
+      },
+      "apps": {
+        "title": "Applications connectées"
+      }
+    },
+    "tenancy": {
+      "title": "Gestion des locataires",
+      "companies": {
+        "title": "Toutes les sociétés"
+      },
+      "serverPerformance": {
+        "title": "Performance"
+      },
+      "cronJobs": {
+        "title": "Actions planifiées"
+      },
+      "systemSettings": {
+        "title": "Configurations",
+        "roles": {
+          "title": "Rôles"
+        },
+        "countries": {
+          "title": "Pays"
+        },
+        "states": {
+          "title": "États / cantons"
+        },
+        "cities": {
+          "title": "Villes"
+        },
+        "currencies": {
+          "title": "Devises"
+        },
+        "companies": {
+          "title": "Sociétés"
+        },
+        "smtpServers": {
+          "title": "Serveurs mail"
+        },
+        "messagingProviders": {
+          "title": "Fournisseurs de messagerie"
+        }
+      }
+    },
+    "company": {
+      "title": "Entreprise",
+      "dashboard": {
+        "title": "Aperçu"
+      },
+      "administration": {
+        "title": "Administration"
+      },
+      "users": {
+        "title": "Utilisateurs"
+      },
+      "chats": {
+        "title": "Discussions"
+      },
+      "info": {
+        "title": "Entreprise"
+      },
+      "editCompany": {
+        "title": "Modifier la société"
+      },
+      "createCompany": {
+        "title": "Créer une société"
+      }
+    }
+  },
+  "commandPalette": {
+    "title": "Palette de commandes",
+    "description": "Aller à n'importe quelle page",
+    "placeholder": "Rechercher des pages…",
+    "empty": "Aucune page correspondante"
+  }
+}

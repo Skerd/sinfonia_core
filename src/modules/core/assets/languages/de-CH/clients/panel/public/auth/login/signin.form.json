@@ -1,0 +1,28 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/login/signin.form.tsx",
+  "form": {
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "example@e-Mail.com",
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "********",
+    "mfaCodeLabel": "2FA Code",
+    "ipAddressLabel": "IP Adresse"
+  },
+  "forgotPassword": "Forgot passwort?",
+  "signInButtonLabel": "Anmelden",
+  "verify": "Verifizieren",
+  "axios": {
+    "start": {
+      "title": "Signing in, bitte wait",
+      "time": 3000
+    },
+    "error": {
+      "title": "Sign in fehlgeschlagen",
+      "time": 3000
+    },
+    "success": {
+      "title": "Signed in erfolgreich",
+      "time": 3000
+    }
+  }
+}

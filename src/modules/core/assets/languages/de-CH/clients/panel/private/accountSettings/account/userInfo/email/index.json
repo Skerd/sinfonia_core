@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/email/index.tsx",
+  "form": {
+    "newEmailLabel": "E-Mail",
+    "newEmailDescription": "Diese ist die e-Mail that will werden used bis log into die system."
+  },
+  "failTitle": "E-Mail konnten nicht geladen werden",
+  "failTitleTooltip": "Click bis retry laden e-Mail",
+  "emailVerified": "Current verifiziert e-Mail",
+  "invitedUser": "Bitte verifizieren die e-Mail von accepting die einladung antrag",
+  "emailNotVerified": "Bitte verifizieren ihr neu e-Mail von clicking on die link sent bis ihr posteingang",
+  "emailNotVerifiedSmall": "Bitte verifizieren ihr neu e-Mail"
+}

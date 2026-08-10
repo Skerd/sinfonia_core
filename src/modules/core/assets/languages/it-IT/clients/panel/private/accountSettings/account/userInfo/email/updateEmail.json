@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/email/updateEmail.tsx",
+  "confirm": "Conferma la modifica dell'e-mail",
+  "cancel": "Annulla",
+  "axios": {
+    "start": {
+      "title": "Aggiornamento dell'e-mail",
+      "time": 3000
+    },
+    "success": {
+      "title": "Email aggiornata con successo. Verifica questa email facendo clic sul collegamento inviato a questa email",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare l'e-mail",
+      "time": 3000
+    }
+  }
+}

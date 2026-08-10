@@ -46,7 +46,7 @@ function CreateCompanyDropMenuItem({resolveLanguageKey}: CreateCompanyDropMenuIt
                 <DialogContent
                     className="flex max-h-[min(90vh,920px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl"
                 >
-                    <DialogHeader className="shrink-0 space-y-1 border-b px-6 py-4 text-left">
+                    <DialogHeader className="flex flex-col shrink-0 gap-y-1 border-b px-6 py-4 text-left">
                         <DialogTitle>{resolveLanguageKey("dialogTitle")}</DialogTitle>
                         <DialogDescription>{resolveLanguageKey("dialogDescription")}</DialogDescription>
                     </DialogHeader>

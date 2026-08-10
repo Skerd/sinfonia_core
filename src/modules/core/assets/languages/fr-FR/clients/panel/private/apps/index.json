@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/index.tsx",
+  "title": "Intégrations d'applications",
+  "description": "Voici la liste de vos applications disponibles pour l'intégration.",
+  "filterApps": "Filtrer les applications",
+  "dropDown": {
+    "allApps": "Toutes les applications",
+    "connected": "Connectées",
+    "notConnected": "Non connectées"
+  },
+  "order": {
+    "ascending": "Croissant",
+    "descending": "Décroissant"
+  },
+  "appsList": {
+    "telegram": {
+      "key": "telegram",
+      "name": "Telegram",
+      "logo": "IconTelegram",
+      "desc": "Connectez Telegram pour une communication en temps réel.",
+      "connected": false
+    }
+  }
+}

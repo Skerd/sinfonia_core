@@ -1,0 +1,11 @@
+{
+  "message": "Scrivi i tuoi messaggi...",
+  "send": "Invia",
+  "reply": "Rispondi",
+  "attach": "Allega file. Dimensione massima per file: {}",
+  "noLongerMember": "Non puoi inviare messaggi a questo gruppo perché non sei più membro.",
+  "messageDeleted": "Messaggio eliminato",
+  "fileTooLarge": "Uno o più file superano il limite di 50 MB e non sono stati aggiunti.",
+  "mentionSuggestions": "Menziona un membro del canale",
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/input.tsx"
+}

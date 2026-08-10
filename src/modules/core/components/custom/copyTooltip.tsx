@@ -21,7 +21,7 @@ function CopyTooltip({
 
     return (
         <>
-            <TooltipDisplayer tooltipRender={() => { return <p>{resolveLanguageKey( copied ? "copied" : "copy")}</p> }} open={open} onOpenChange={(v) => setOpen(v)}>
+            <TooltipDisplayer tooltipRender={() => { return <p>{resolveLanguageKey( copied ? "copied" : "copy")}</p> }} open={open} onOpenChange={(v: boolean) => setOpen(v)}>
                 <div>
                     <div className="flex items-center gap-x-1 hover:underline hover:cursor-pointer">
                         {!!children && children}

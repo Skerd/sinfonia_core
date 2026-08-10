@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/createState.tsx",
+  "title": "Créer un état",
+  "description": "Ajouter un nouvel état",
+  "form": {
+    "nameLabel": "Nom",
+    "namePlaceholder": "Nom de l'État",
+    "codeLabel": "Code",
+    "codePlaceholder": "par ex. Californie",
+    "countryLabel": "Pays",
+    "countryPlaceholder": "Sélectionner le pays"
+  },
+  "axios": {
+    "start": {
+      "title": "Création d'un état",
+      "time": 3000
+    },
+    "success": {
+      "title": "État créé avec succès !",
+      "time": 3000
+    },
+    "error": {
+      "title": "L'état n'a pas pu être créé, veuillez réessayer !",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Créer un état",
+    "description": "Ajouter un nouvel état"
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Créer"
+  }
+}

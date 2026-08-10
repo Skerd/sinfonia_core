@@ -22,13 +22,13 @@ function ModelNodeComponent({data, selected}: NodeProps<ModelFlowNode>) {
                 boxShadow: selected ? `0 0 0 2px ${meta.color}` : undefined,
             }}
         >
-            <Handle type="target" position={Position.Left} className="!bg-slate-400 !w-2 !h-2" />
-            <div className="text-[10px] font-medium uppercase tracking-wide" style={{color: meta.color}}>
+            <Handle type="target" position={Position.Left} className="!bg-muted-foreground !w-2 !h-2" />
+            <div className="text-3xs font-medium uppercase tracking-wide" style={{color: meta.color}}>
                 {meta.label}
             </div>
-            <div className="text-sm font-semibold text-slate-900 leading-tight mt-0.5">{data.label}</div>
-            <div className="text-[10px] text-slate-500 mt-0.5 truncate">{data.module}</div>
-            <Handle type="source" position={Position.Right} className="!bg-slate-400 !w-2 !h-2" />
+            <div className="text-sm font-semibold text-foreground leading-tight mt-0.5">{data.label}</div>
+            <div className="text-3xs text-muted-foreground mt-0.5 truncate">{data.module}</div>
+            <Handle type="source" position={Position.Right} className="!bg-muted-foreground !w-2 !h-2" />
         </div>
     );
 }
@@ -46,18 +46,18 @@ export type FlowStepFlowNode = Node<FlowStepNodeData, "flowStep">;
 function FlowStepNodeComponent({data, selected}: NodeProps<FlowStepFlowNode>) {
     return (
         <div
-            className="rounded-md border bg-white px-3 py-2 shadow-sm min-w-[150px] max-w-[180px]"
+            className="rounded-md border bg-card px-3 py-2 shadow-sm min-w-[150px] max-w-[180px]"
             style={{
-                borderColor: selected ? data.accent : "#e2e8f0",
+                borderColor: selected ? data.accent : "var(--border)",
                 boxShadow: selected ? `0 0 0 2px ${data.accent}` : undefined,
             }}
         >
-            <Handle type="target" position={Position.Left} className="!bg-slate-400 !w-2 !h-2" />
-            <div className="text-sm font-semibold text-slate-900">{data.label}</div>
-            <div className="text-[11px] text-slate-500 mt-0.5 leading-snug">{data.description}</div>
-            <Handle type="source" position={Position.Right} className="!bg-slate-400 !w-2 !h-2" />
-            <Handle type="source" position={Position.Bottom} id="bottom" className="!bg-slate-400 !w-2 !h-2" />
-            <Handle type="target" position={Position.Top} id="top" className="!bg-slate-400 !w-2 !h-2" />
+            <Handle type="target" position={Position.Left} className="!bg-muted-foreground !w-2 !h-2" />
+            <div className="text-sm font-semibold text-foreground">{data.label}</div>
+            <div className="text-2xs text-muted-foreground mt-0.5 leading-snug">{data.description}</div>
+            <Handle type="source" position={Position.Right} className="!bg-muted-foreground !w-2 !h-2" />
+            <Handle type="source" position={Position.Bottom} id="bottom" className="!bg-muted-foreground !w-2 !h-2" />
+            <Handle type="target" position={Position.Top} id="top" className="!bg-muted-foreground !w-2 !h-2" />
         </div>
     );
 }

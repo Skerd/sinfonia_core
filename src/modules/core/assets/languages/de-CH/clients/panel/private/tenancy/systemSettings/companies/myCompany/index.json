@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/index.tsx",
+  "title": "Firma",
+  "description": "Firma info",
+  "failTitle": "Firma konnten nicht geladen werden",
+  "failTitleTooltip": "Click bis retry laden firma info"
+}

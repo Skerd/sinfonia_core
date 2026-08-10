@@ -68,7 +68,7 @@ function Login({
                     header === "signInHeader" ?
                     <TermsAndConditions/>
                     :
-                    <div className="w-full space-y-2 text-muted-foreground underline-offset-4">
+                    <div className="flex flex-col w-full gap-y-2 text-muted-foreground underline-offset-4">
                         <p className='text-center text-sm w-full'>
                             {resolveLanguageKey("mfaFooter.forgot")}{' '}
                             <Link to='#' className='hover:text-primary underline' onClick={() => {setDisableOTP(Date.now());}}>

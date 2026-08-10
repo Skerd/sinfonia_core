@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/cardView/companyCard.tsx",
+  "contactInfo": "Informazioni sui contatti",
+  "location": "Posizione",
+  "aboutUs": "Chi siamo",
+  "active": "Attivo",
+  "notActive": "Non attivo",
+  "deactivated": "Disattivato",
+  "openInGoogleMaps": "Google Maps",
+  "openInAppleMaps": "Mappe di Apple",
+  "downloadCard": "Scarica la carta aziendale",
+  "expand": "Espandi",
+  "collapse": "Comprimi",
+  "_id": "Id",
+  "name": "Nome",
+  "email": "E-mail",
+  "phone": "Telefono",
+  "phoneNumber": {
+    "prefix": "Prefisso",
+    "number": "Numero"
+  },
+  "address": "Indirizzo",
+  "city": "Città",
+  "country": "Paese",
+  "postalCode": "CAP",
+  "description": "Descrizione",
+  "website": "Sito web",
+  "vat": "IVA",
+  "allowedDomains": "Domini consentiti",
+  "edit": "Modifica"
+}

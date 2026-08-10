@@ -81,8 +81,8 @@ function AccountProfilePhoneNumber({
     }
     if( !!read.phoneNumber && !write.phoneNumber ){
         return (
-            <div className="space-y-2">
-                <div className="flex items-center space-x-1">
+            <div className="flex flex-col gap-y-2">
+                <div className="flex items-center gap-x-1">
                     <p className="text-sm leading-none font-medium">
                         {resolveLanguageKey("form.phoneNumberNumberLabel")}
                     </p>
@@ -96,18 +96,18 @@ function AccountProfilePhoneNumber({
 
     return(
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(() => { setFireUpdate(Date.now()); })} className="space-y-8">
+            <form onSubmit={form.handleSubmit(() => { setFireUpdate(Date.now()); })} className="flex flex-col gap-y-8">
                 <FormField
                     control={form.control}
                     name="phoneNumber"
                     render={({ field }) => (
                         <FormItem>
-                            <div className="flex items-center space-x-1">
+                            <div className="flex items-center gap-x-1">
                                 <FormLabel>{resolveLanguageKey("form.phoneNumberNumberLabel")}</FormLabel>
                             </div>
                             <FormControl>
-                                <div className="flex space-x-1.5">
-                                    <div className="flex grow space-x-1">
+                                <div className="flex gap-x-1.5">
+                                    <div className="flex grow gap-x-1">
                                         <PhoneInput
                                             placeholder={currentPhoneNumber}
                                             {...field}

@@ -110,5 +110,11 @@
         }
       }
     }
+  },
+  "commandPalette": {
+    "title": "Paleta e komandave",
+    "description": "Kalo te çdo faqe",
+    "placeholder": "Kërko faqe…",
+    "empty": "Nuk u gjetën faqe"
   }
 }

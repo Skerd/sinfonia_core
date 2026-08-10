@@ -84,6 +84,19 @@ export function ThemeProvider({
     const applyTheme = (currentResolvedTheme: ResolvedTheme) => {
       root.classList.remove('light', 'dark') // Remove existing theme classes
       root.classList.add(currentResolvedTheme) // Add the new theme class
+
+      // The class alone only themes our own CSS. Native chrome -- scrollbars,
+      // select popups, date pickers, autofill backgrounds -- follows
+      // color-scheme, and stays light-on-dark without this.
+      root.style.colorScheme = currentResolvedTheme
+
+      // Read back after the class lands so browser chrome tracks the resolved
+      // --background. Owned here rather than in the theme switcher, whose child
+      // effect would run before this one and read the previous theme's value.
+      const metaThemeColor = document.querySelector("meta[name='theme-color']")
+      if (!metaThemeColor) return
+      const background = getComputedStyle(document.body).backgroundColor
+      if (background) metaThemeColor.setAttribute('content', background)
     }
 
     const handleChange = () => {
@@ -137,3 +150,11 @@ export const useTheme = () => {
 
   return context
 }
+
+// eslint-disable-next-line react-refresh/only-export-components
+/**
+ * Non-throwing variant for shared primitives that may render in the public and
+ * shop apps, which do not mount `ThemeProvider`. Prefer `useTheme` in panel code
+ * so a missing provider stays a loud failure.
+ */
+export const useThemeOptional = () => useContext(ThemeContext)

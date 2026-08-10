@@ -20,7 +20,7 @@ function DeletedDrawerPanel({resolveLanguageKey, deletedAt, deletedBy}: DrawerPa
 
     return (
         <div
-            className="select-none cursor-pointer text-white"
+            className="select-none cursor-pointer text-destructive-foreground"
             onClick={(e) => {
                 e.stopPropagation();
                 setIsOpen(prev => !prev);
@@ -28,12 +28,12 @@ function DeletedDrawerPanel({resolveLanguageKey, deletedAt, deletedBy}: DrawerPa
         >
             {/* Details — collapses to zero when closed, expands to content height when open */}
             <div className={cn("overflow-hidden transition-all duration-300 ease-in-out", isOpen ? "max-h-20" : "max-h-0 group-hover:max-h-20")}>
-                <div className="px-3 py-2 space-y-1.5 text-xs border-b border-white/15">
+                <div className="flex flex-col px-3 py-2 gap-y-1.5 text-xs border-b border-destructive-foreground/15">
                     {
                         !!deletedBy &&
                         <InfoRow
                             icon={User}
-                            className="text-white"
+                            className="text-destructive-foreground"
                             label={resolveLanguageKey("deletedBy")}
                             tooltip={resolveLanguageKey("deletedBy")}
                             value={deletedBy ? getName(deletedBy) : undefined}
@@ -43,7 +43,7 @@ function DeletedDrawerPanel({resolveLanguageKey, deletedAt, deletedBy}: DrawerPa
                         !!deletedAt &&
                         <InfoRow
                             icon={Clock}
-                            className="text-white"
+                            className="text-destructive-foreground"
                             label={resolveLanguageKey("deletedAt")}
                             tooltip={resolveLanguageKey("deletedAt")}
                             value={deletedAt ? formatDate(new Date(deletedAt.toString()), {timeZone: timezone}) : undefined}
@@ -80,7 +80,7 @@ export function withDeletedDrawer<TProps extends object>(Component: ComponentTyp
         }
 
         return (
-            <div className="group flex flex-col rounded-xl bg-linear-to-b from-red-600 to-red-700 shadow-[0_6px_20px_-4px_rgba(180,0,0,0.45)]">
+            <div className="group flex flex-col rounded-xl bg-linear-to-b from-destructive to-destructive shadow-[0_6px_20px_-4px_rgba(180,0,0,0.45)]">
                 <div className="relative z-10 p-0.5">
                     <Component {...props} />
                 </div>

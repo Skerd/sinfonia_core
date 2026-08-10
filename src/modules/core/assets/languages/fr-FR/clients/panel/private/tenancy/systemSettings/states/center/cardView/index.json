@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/cardView/index.tsx",
+  "failTitle": "Échec du chargement",
+  "failDescription": "Une erreur s'est produite. Veuillez réessayer.",
+  "noData": "Aucun état trouvé"
+}

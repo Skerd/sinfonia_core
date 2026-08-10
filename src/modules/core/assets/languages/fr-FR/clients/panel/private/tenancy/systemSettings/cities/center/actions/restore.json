@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/actions/restore.tsx",
+  "title": "Restaurer",
+  "restoreConfirmTitle": "Restaurer la ville",
+  "restoreConfirmDescription": "Êtes-vous sûr de vouloir restaurer cette ville ?",
+  "cancel": "Annuler",
+  "confirmRestore": "Restaurer",
+  "axios": {
+    "start": {
+      "title": "Restaurer la ville",
+      "time": 3000
+    },
+    "success": {
+      "title": "Ville restaurée avec succès.",
+      "time": 3000
+    },
+    "error": {
+      "title": "La ville n'a pas pu être restaurée",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/newPhoto.tsx",
+  "confirm": "Salva",
+  "cancel": "Annulla",
+  "updatePhoto": "Aggiorna foto",
+  "axios": {
+    "start": {
+      "title": "Caricamento foto",
+      "time": 3000
+    },
+    "success": {
+      "title": "Foto caricata con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile caricare la foto",
+      "time": 3000
+    }
+  }
+}

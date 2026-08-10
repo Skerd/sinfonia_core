@@ -1,0 +1,49 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/editSmtpServer.tsx",
+  "title": "Modifica server SMTP",
+  "description": "Lasciare vuota la password per mantenere la password corrente.",
+  "errorTitle": "Impossibile caricare il server SMTP",
+  "errorDescription": "Fare clic qui per riprovare a recuperare i dati del server.",
+  "noId": "Nessun server SMTP selezionato.",
+  "backToList": "Torna all'elenco",
+  "form": {
+    "nameLabel": "Nome",
+    "namePlaceholder": "per esempio. SMTP primario",
+    "sequenceLabel": "Priorità (sequenza)",
+    "sequencePlaceholder": "10",
+    "activeLabel": "Attivo",
+    "hostLabel": "Ospite SMTP",
+    "hostPlaceholder": "smtp.esempio.com",
+    "portLabel": "Porta",
+    "portPlaceholder": "587",
+    "encryptionLabel": "Crittografia",
+    "authTypeLabel": "Autenticazione",
+    "usernameLabel": "Nome utente",
+    "usernamePlaceholder": "utente@esempio.com",
+    "passwordLabel": "Password (lasciare vuoto per mantenerla)",
+    "passwordPlaceholder": "••••••••",
+    "fromEmailLabel": "Dall'e-mail",
+    "fromEmailPlaceholder": "noreply@esempio.com",
+    "fromNameLabel": "Dal nome",
+    "fromNamePlaceholder": "La mia azienda",
+    "replyToLabel": "Rispondi a",
+    "replyToPlaceholder": "support@esempio.com",
+    "encryption": {
+      "none": "Nessuno",
+      "ssl": "SSL",
+      "starttls": "STARTTLS"
+    },
+    "authType": {
+      "login": "Nome utente/password",
+      "none": "Nessuno"
+    }
+  },
+  "formHeader": {
+    "title": "Modifica server SMTP",
+    "description": "Lasciare vuota la password per mantenere la password corrente."
+  },
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Salva"
+  }
+}

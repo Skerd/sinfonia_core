@@ -1,0 +1,32 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/editRole.tsx",
+  "title": "Modifier le rôle",
+  "description": "Mettre à jour les détails du rôle",
+  "errorTitle": "Échec du chargement des données de rôle",
+  "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données de rôle",
+  "form": {
+    "nameLabel": "Nom du rôle",
+    "namePlaceholder": "Nom du rôle",
+    "nameDescription": "Le nom d'affichage du rôle",
+    "templateLabel": "Modèle",
+    "templatePlaceholder": "Modèle",
+    "templateDescription": "Copier les autorisations d'un autre rôle"
+  },
+  "none": "Aucun",
+  "cancel": "Annuler",
+  "submit": "Enregistrer",
+  "axios": {
+    "start": {
+      "title": "Rôle de sauvegarde",
+      "time": 3000
+    },
+    "success": {
+      "title": "Rôle mis à jour avec succès !",
+      "time": 3000
+    },
+    "error": {
+      "title": "Le rôle n'a pas pu être mis à jour, veuillez réessayer !",
+      "time": 3000
+    }
+  }
+}

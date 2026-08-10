@@ -52,5 +52,5 @@ function AllCurrencies({resolveLanguageKey}: AllCurrenciesProps) {
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "currencies")
 )(AllCurrencies);

@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/components/custom/copyTooltip.tsx",
+  "copy": "Clicca per copiare",
+  "copied": "Copiato!"
+}

@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx",
+  "name": "Nome",
+  "code": "Codice",
+  "country": "Paese",
+  "deleted": "Eliminato",
+  "active": "Attivo",
+  "failedTitle": "Impossibile caricare lo stato",
+  "failedDescription": "Tocca per riprovare."
+}

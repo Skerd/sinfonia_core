@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/restore.tsx",
+  "title": "Wiederherstellen",
+  "restoreConfirmTitle": "Wiederherstellen land",
+  "restoreConfirmDescription": "Sind sie sicher sie want bis wiederherstellen diese land?",
+  "cancel": "Abbrechen",
+  "confirmRestore": "Wiederherstellen",
+  "axios": {
+    "start": {
+      "title": "Restoring land",
+      "time": 3000
+    },
+    "success": {
+      "title": "Land restored erfolgreich!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Land konnte nicht werden restored, bitte versuchen erneut!",
+      "time": 3000
+    }
+  }
+}

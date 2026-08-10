@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/pinMessage.tsx",
+  "pin": "Épingler",
+  "axios": {
+    "start": {
+      "title": "Épingler un message",
+      "time": 3000
+    },
+    "success": {
+      "title": "Message épinglé avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de l'épinglage du message.",
+      "time": 3000
+    }
+  }
+}

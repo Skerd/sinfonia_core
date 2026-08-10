@@ -18,7 +18,8 @@ import {
     ShieldQuestionMark,
     UserPlus,
 } from "lucide-react";
-import {Card} from "@coreModule/components/ui/card.tsx";
+import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
+import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
 import CoverPhoto
     from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/coverPhoto.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -240,7 +241,7 @@ function UserProfileCardInner({
 
     return (
         <div>
-            <Card className="p-0 gap-6 transition-all duration-300 hover:shadow-md">
+            <EntityCardShell disableClick className="gap-6">
 
                 <HiddenElement>
                     {
@@ -253,7 +254,7 @@ function UserProfileCardInner({
                                 hideCondition={!read.cover}
                             />
                             <div
-                                className="flex items-center justify-center bg-gray-400 border-4 border-white absolute bottom-[-25px] left-8 rounded-full"
+                                className="flex items-center justify-center bg-muted-foreground border-4 border-background absolute bottom-[-25px] left-8 rounded-full"
                                 style={{width: avatarSize, height: avatarSize}}>
                                 <div className="w-full h-full rounded-full">
                                     <ProfilePhoto
@@ -267,7 +268,7 @@ function UserProfileCardInner({
                     }
                 </HiddenElement>
 
-                <div className="px-4 space-y-2">
+                <div className="flex flex-col px-4 gap-y-2">
                     <HiddenElement>
                         {
                             (read.name || read.surname || read.online || read.mfaStatus) &&
@@ -285,10 +286,10 @@ function UserProfileCardInner({
                                                 variant="outline"
                                                 className={cn(
                                                     "text-xs font-normal",
-                                                    data.online ? "border-green-500/50 text-green-600" : "border-muted text-muted-foreground"
+                                                    data.online ? "border-success/50 text-success" : "border-muted text-muted-foreground"
                                                 )}
                                             >
-                                                <span className={cn("mr-1 size-1.5 rounded-full", data.online ? "bg-green-500" : "bg-muted-foreground")}/>
+                                                <span className={cn("mr-1 size-1.5 rounded-full", data.online ? "bg-success" : "bg-muted-foreground")}/>
                                                 {data.online ? resolveLanguageKey("online") : resolveLanguageKey("offline")}
                                             </Badge>
                                         }
@@ -298,8 +299,8 @@ function UserProfileCardInner({
                                                 <Badge
                                                     variant="outline"
                                                     className={cn("text-xs font-normal", {
-                                                        "border-red-500/50 text-red-500": data.mfaStatus === "notActive",
-                                                        "border-green-500/50 text-green-500": data.mfaStatus === "active",
+                                                        "border-destructive/50 text-destructive": data.mfaStatus === "notActive",
+                                                        "border-success/50 text-success": data.mfaStatus === "active",
                                                     })}
                                                 >
                                                     <Shield size={12} className={cn("mr-1")}/>
@@ -325,7 +326,7 @@ function UserProfileCardInner({
                         </TabsList>
 
                         <TabsContent value="about" className="rounded-md border bg-muted/30 p-3 text-sm">
-                            <div className="space-y-1.5">
+                            <InfoRowGroup className="flex-col !gap-y-1.5">
                                 <InfoRow
                                     iconReplacement={<div>
                                         <HiddenElement>
@@ -334,9 +335,9 @@ function UserProfileCardInner({
                                                 <>
                                                     {
                                                         (data.verified && !data.unverifiedEmail) ?
-                                                        <BadgeCheck size={20} className="text-blue-500"/>
+                                                        <BadgeCheck size={20} className="text-info"/>
                                                         :
-                                                        <BadgeAlert size={20} className="text-red-500"/>
+                                                        <BadgeAlert size={20} className="text-destructive"/>
                                                     }
                                                 </>
                                             }
@@ -461,7 +462,7 @@ function UserProfileCardInner({
                                                         <>
                                                             {
                                                                 data.status === "active" &&
-                                                                <ShieldCheck size={18} className="text-green-600"/>
+                                                                <ShieldCheck size={18} className="text-success"/>
                                                             }
                                                             {
                                                                 data.status === "inactive" &&
@@ -469,7 +470,7 @@ function UserProfileCardInner({
                                                             }
                                                             {
                                                                 data.status === "invited" &&
-                                                                <ShieldQuestionMark size={18} className="text-sky-300"/>
+                                                                <ShieldQuestionMark size={18} className="text-info"/>
                                                             }
                                                         </>
                                                     }
@@ -485,9 +486,9 @@ function UserProfileCardInner({
                                                 read.roles?.keys?.active && !!data.status &&
                                                 <>
                                                     <span className={cn("hover:underline", {
-                                                        "text-green-600": data.status === "active",
+                                                        "text-success": data.status === "active",
                                                         "text-destructive": data.status === "inactive",
-                                                        "text-sky-300": data.status === "invited"
+                                                        "text-info": data.status === "invited"
                                                     })}>
                                                         {resolveLanguageKey(`statuses.${data.status}`)}
                                                     </span>
@@ -496,12 +497,12 @@ function UserProfileCardInner({
                                         </HiddenElement>
                                     }
                                 />
-                                <div className="space-y-2">
+                                <div className="flex flex-col w-full gap-y-2">
                                     <p className="text-sm text-muted-foreground">{resolveLanguageKey("roles")}</p>
                                     <HiddenElement>
                                         {
                                             read?.roles?.keys?.roles?.keys?.name &&
-                                            <div className="flex items-center flex-wrap space-x-1 space-y-0.5">
+                                            <div className="flex items-center flex-wrap gap-x-1 gap-y-0.5">
                                                 {
                                                     data.roles?.map((r, i: number) => {
                                                         return (
@@ -515,10 +516,10 @@ function UserProfileCardInner({
                                         }
                                     </HiddenElement>
                                 </div>
-                            </div>
+                            </InfoRowGroup>
                         </TabsContent>
                         <TabsContent value="info" className="rounded-md border bg-muted/30 p-3 text-sm">
-                            <div className="space-y-1.5">
+                            <InfoRowGroup className="flex-col !gap-y-1.5">
                                 <InfoRow
                                     icon={Ampersand}
                                     label={resolveLanguageKey("registeredDate")}
@@ -639,7 +640,7 @@ function UserProfileCardInner({
                                         </HiddenElement>
                                     }
                                 />
-                            </div>
+                            </InfoRowGroup>
                         </TabsContent>
                         {
                             data?.requests?.invitation &&
@@ -679,7 +680,7 @@ function UserProfileCardInner({
                         }
                     </Tabs>
                 </div>
-            </Card>
+            </EntityCardShell>
         </div>
     );
 }

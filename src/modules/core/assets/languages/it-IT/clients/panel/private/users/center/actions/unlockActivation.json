@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockActivation.tsx",
+  "unlockActivation": "Sblocca l'attivazione",
+  "unlockActivationConfirm": "Sbloccare il blocco di attivazione?",
+  "unlockActivationConfirmDesc": "Ciò cancellerà il blocco di attivazione. L'utente potrà richiedere una nuova email di attivazione.",
+  "unlockActivationResendEmail": "Invia nuovamente l'e-mail di attivazione",
+  "unlockActivationSuccess": "Il blocco di attivazione è stato cancellato correttamente",
+  "unlockActivationError": "Impossibile cancellare il blocco di attivazione",
+  "axios": {
+    "start": {
+      "title": "Attivazione dello sblocco",
+      "time": 3000
+    },
+    "success": {
+      "title": "Il blocco di attivazione è stato cancellato correttamente",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile cancellare il blocco di attivazione",
+      "time": 3000
+    }
+  }
+}

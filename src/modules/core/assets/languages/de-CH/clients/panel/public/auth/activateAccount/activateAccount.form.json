@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/activateAccount/activateAccount.form.tsx",
+  "loading": "Activating konto",
+  "loadingDescription": "Activating konto using activation link",
+  "fail": "Konto activation fehlgeschlagen",
+  "failDescription": "Konto activation link ist nicht correct",
+  "success": "Konto activated",
+  "successDescription": "Konto activated erfolgreich, sie can now anmelden only using ihr passwort",
+  "axios": {
+    "start": {
+      "title": "Activating konto",
+      "time": 3000
+    },
+    "success": {
+      "title": "Konto activation successful",
+      "time": 3000
+    },
+    "error": {
+      "title": "Konto activation fehlgeschlagen",
+      "time": 3000
+    }
+  }
+}

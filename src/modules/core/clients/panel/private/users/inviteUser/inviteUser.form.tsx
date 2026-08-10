@@ -81,7 +81,7 @@ function InviteUserForm({
                 <form
                     id='user-invite-form'
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='space-y-4'
+                    className='flex flex-col gap-y-4'
                 >
                     <FormField
                         control={form.control}
@@ -189,7 +189,7 @@ function InviteUserForm({
                         )}
                     />
 
-                    <div className='flex items-center justify-end space-x-2'>
+                    <div className='flex items-center justify-end gap-x-2'>
                         <Button variant='outline' type={"button"} disabled={loading} onClick={() => onClose()}>
                             {resolveLanguageKey("cancel")}
                         </Button>

@@ -1,4 +1,4 @@
-import {Clock, Globe2, ShieldCheck} from "lucide-react";
+import {Clock, Globe2, Monitor, ShieldCheck} from "lucide-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
@@ -7,6 +7,11 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import type {UserSession} from "armonia/src/modules/core/api/user/private/userSession/userSession.dto.ts";
 import UserSessionActionMenu from "@coreModule/clients/panel/private/accountSettings/security/userSession/center/actions/userSessionActionMenu.tsx";
 import DeletedInfo from "@coreModule/components/custom/deletedInfo";
+import InfoRow from "@coreModule/components/custom/infoRow.tsx";
+import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
+import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
+import {CARD_BODY_CLASS} from "@coreModule/components/custom/cards/entityCard.constants.ts";
 
 function formatDate(value: string | undefined, timezone: string | undefined) {
     if (!value) return "";
@@ -58,13 +63,17 @@ export default function UserSessionCard({
 
     const can = (k: string) => typeof r === "object" && r !== null && k in r;
 
+    const title =
+        can("deviceId")
+            ? (session.deviceId || resolveLanguageKey("unknownDevice"))
+            : can("sessionId")
+                ? session.sessionId
+                : resolveLanguageKey("unknownDevice");
+
     return (
-        <div
-            className={cn(
-                "group overflow-hidden rounded-lg border bg-card text-sm shadow-sm",
-                !isActive && "opacity-70",
-                session.deletedAt != null && "border-l-4 border-l-muted-foreground/60"
-            )}
+        <EntityCardShell
+            disableClick
+            className={cn(!isActive && "opacity-70")}
         >
             <div className="flex w-full items-stretch">
                 {(can("deletedBy") || can("deletedAt")) && (
@@ -73,88 +82,93 @@ export default function UserSessionCard({
                         deletedBy={session.deletedBy}
                     />
                 )}
-                <div className="min-w-0 flex-1 p-2.5">
-            <div className="flex items-start justify-between gap-2">
-                <div className="flex min-w-0 flex-1 items-start gap-2">
-                    <div
-                        className={cn(
-                            "flex size-7 shrink-0 items-center justify-center rounded-full",
-                            isActive ? "bg-emerald-500/10 text-emerald-600" : "bg-muted text-muted-foreground"
-                        )}
-                    >
-                        <ShieldCheck className="size-3.5 shrink-0" />
-                    </div>
-                    <div className="min-w-0 space-y-0.5">
-                        {(can("deviceId") || can("sessionId")) && (
-                            <div className="flex flex-wrap items-center gap-1.5">
-                                <p className="max-w-full truncate text-xs font-medium" title={session.sessionId}>
-                                    {can("deviceId")
-                                        ? (session.deviceId || resolveLanguageKey("unknownDevice"))
-                                        : can("sessionId")
-                                            ? session.sessionId
-                                            : resolveLanguageKey("unknownDevice")}
-                                </p>
-                                <Badge variant={isActive ? "secondary" : "outline"} className="h-5 px-1.5 text-[10px]">
+                <div className="w-full min-w-0">
+                    <EntityTextCardHeader
+                        iconTile={
+                            <div
+                                className={cn(
+                                    "flex size-7 shrink-0 items-center justify-center rounded-full",
+                                    isActive ? "bg-success/10 text-success" : "bg-muted text-muted-foreground",
+                                )}
+                            >
+                                <ShieldCheck className="size-3.5 shrink-0" />
+                            </div>
+                        }
+                        title={title}
+                        showTitle={!!(can("deviceId") || can("sessionId"))}
+                        badges={
+                            <>
+                                <Badge variant={isActive ? "secondary" : "outline"} className="h-5 px-1.5 text-3xs">
                                     {resolveLanguageKey(isActive ? "badge.active" : "badge.revoked")}
                                 </Badge>
                                 {isCurrentDevice && (
-                                    <Badge variant="default" className="h-5 px-1.5 text-[10px]">
+                                    <Badge variant="default" className="h-5 px-1.5 text-3xs">
                                         {resolveLanguageKey("badge.current")}
                                     </Badge>
                                 )}
-                            </div>
-                        )}
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-muted-foreground">
-                            {can("lastActiveAt") && (
-                                <span className="inline-flex items-center gap-0.5">
-                                    <Clock className="size-3 shrink-0" />
-                                    {formatDate(session.lastActiveAt, timezone)}
-                                </span>
-                            )}
-                            {(can("ipAddress") || can("geolocation")) && (
-                                <span className="inline-flex min-w-0 items-center gap-0.5">
-                                    <Globe2 className="size-3 shrink-0" />
-                                    <span className="truncate">
-                                        {location || session.ipAddress || resolveLanguageKey("unknownLocation")}
+                            </>
+                        }
+                        showBadges={!!(can("deviceId") || can("sessionId"))}
+                        actionMenu={
+                            <UserSessionActionMenu
+                                session={session}
+                                currentDeviceId={currentDeviceId}
+                                revoking={revoking}
+                                onRevoke={onRevoke}
+                                onAction={onMenuAction}
+                                resolveLanguageKey={resolveLanguageKey}
+                            />
+                        }
+                    />
+                    <div className={CARD_BODY_CLASS}>
+                        <InfoRowGroup>
+                            <InfoRow
+                                icon={Clock}
+                                label={resolveLanguageKey("lastActiveAt")}
+                                tooltip={resolveLanguageKey("lastActiveAt")}
+                                show={can("lastActiveAt")}
+                                value={formatDate(session.lastActiveAt, timezone)}
+                            />
+                            <InfoRow
+                                icon={Globe2}
+                                label={resolveLanguageKey("location")}
+                                tooltip={resolveLanguageKey("location")}
+                                show={can("ipAddress") || can("geolocation")}
+                                value={location || session.ipAddress || resolveLanguageKey("unknownLocation")}
+                            />
+                            <InfoRow
+                                icon={Monitor}
+                                label={resolveLanguageKey("sessionId")}
+                                tooltip={resolveLanguageKey("sessionId")}
+                                show={can("sessionId")}
+                                value={
+                                    <span className="line-clamp-1 font-mono text-3xs" title={session.sessionId}>
+                                        {session.sessionId}
                                     </span>
-                                </span>
-                            )}
-                        </div>
+                                }
+                            />
+                            <InfoRow
+                                icon={Monitor}
+                                label={resolveLanguageKey("userAgent")}
+                                tooltip={resolveLanguageKey("userAgent")}
+                                show={can("userAgent")}
+                                value={
+                                    <span className="line-clamp-1 text-3xs" title={session.userAgent || undefined}>
+                                        {session.userAgent || resolveLanguageKey("unknown")}
+                                    </span>
+                                }
+                            />
+                            <InfoRow
+                                icon={Clock}
+                                label={resolveLanguageKey("expiresAt")}
+                                tooltip={resolveLanguageKey("expiresAt")}
+                                show={can("expiresAt")}
+                                value={formatDate(session.expiresAt, timezone)}
+                            />
+                        </InfoRowGroup>
                     </div>
                 </div>
-                <div className="flex shrink-0 items-start">
-                    <UserSessionActionMenu
-                        session={session}
-                        currentDeviceId={currentDeviceId}
-                        revoking={revoking}
-                        onRevoke={onRevoke}
-                        onAction={onMenuAction}
-                        resolveLanguageKey={resolveLanguageKey}
-                    />
-                </div>
             </div>
-
-            {(can("sessionId") || can("userAgent") || can("expiresAt")) && (
-                <div className="mt-1.5 space-y-0.5 border-t border-border/60 pt-1.5 text-[10px] leading-tight text-muted-foreground">
-                    {can("sessionId") && (
-                        <p className="line-clamp-1 font-mono" title={session.sessionId}>
-                            {resolveLanguageKey("sessionId")}: {session.sessionId}
-                        </p>
-                    )}
-                    {can("userAgent") && (
-                        <p className="line-clamp-1" title={session.userAgent || undefined}>
-                            {resolveLanguageKey("userAgent")}: {session.userAgent || resolveLanguageKey("unknown")}
-                        </p>
-                    )}
-                    {can("expiresAt") && (
-                        <p>
-                            {resolveLanguageKey("expiresAt")}: {formatDate(session.expiresAt, timezone)}
-                        </p>
-                    )}
-                </div>
-            )}
-                </div>
-            </div>
-        </div>
+        </EntityCardShell>
     );
 }

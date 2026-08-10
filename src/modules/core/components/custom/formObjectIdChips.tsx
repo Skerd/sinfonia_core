@@ -134,7 +134,7 @@ export default function FormObjectIdChips({
                                         <Tooltip>
                                             <TooltipTrigger asChild>
                                                 <X
-                                                    className="size-3 hover:cursor-pointer hover:text-red-500"
+                                                    className="size-3 hover:cursor-pointer hover:text-destructive"
                                                     onClick={() => {
                                                         const current =
                                                             (form.getValues(name as any) as string[] | undefined) ??

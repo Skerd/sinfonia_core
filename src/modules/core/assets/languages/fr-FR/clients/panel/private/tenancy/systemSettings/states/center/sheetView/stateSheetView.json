@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx",
+  "overview": "Aperçu",
+  "lifecycle": "Cycle de vie",
+  "createdBy": "Créé par",
+  "state": "Canton / État",
+  "code": "Code",
+  "country": "Pays",
+  "createdAt": "Créé le",
+  "updatedAt": "Mis à jour le",
+  "deletedAt": "Supprimé le",
+  "deletedBy": "Supprimé par"
+}

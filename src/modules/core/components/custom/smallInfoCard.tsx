@@ -1,6 +1,13 @@
 import type { ComponentType, ReactNode } from "react";
 import { Suspense, useState } from "react";
 import { cn } from "@coreModule/components/lib/utils.ts";
+import {
+    Item,
+    ItemActions,
+    ItemContent,
+    ItemMedia,
+    ItemTitle,
+} from "@coreModule/components/ui/item.tsx";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -30,6 +37,11 @@ type SmallInfoCardProps = {
     /** When true, only icon and title are shown (no value / ValueNotSet row). */
     dontRenderValue?: boolean;
     /**
+     * External URL: shows a link badge that opens the URL in a new tab.
+     * Prefer with `dontRenderValue` so long URLs do not overflow the sheet.
+     */
+    externalHref?: string;
+    /**
      * Linked ref: badge uses `useAccess(resourceId)`; `LinkedSheet` comes from config `linkedSheetWidget`
      * (resolved in the view renderer).
      */
@@ -39,12 +51,16 @@ type SmallInfoCardProps = {
     };
 };
 
+/**
+ * Applied over `Item variant="outline"`, so every variant keeps the same 1px box and
+ * the grid stays aligned; `default` just makes its border invisible.
+ */
 const containerStyles: Record<SmallInfoCardVariant, string> = {
-    default: "bg-muted/30",
-    success: "border border-status-sold/30 bg-status-sold/5",
-    destructive: "border border-destructive/30 bg-destructive/5",
-    warning: "border border-status-reserved/30 bg-status-reserved/5",
-    info: "border border-status-available/30 bg-status-available/5",
+    default: "border-transparent bg-muted/30",
+    success: "border-status-sold/30 bg-status-sold/5",
+    destructive: "border-destructive/30 bg-destructive/5",
+    warning: "border-status-reserved/30 bg-status-reserved/5",
+    info: "border-status-available/30 bg-status-available/5",
 };
 
 const iconWrapStyles: Record<SmallInfoCardVariant, string> = {
@@ -108,6 +124,24 @@ function SmallInfoCardNestedSheets({
     );
 }
 
+function normalizeExternalHref(href: string): string | null {
+    const trimmed = href.trim();
+    if (!trimmed) {
+        return null;
+    }
+    if (/^https?:\/\//i.test(trimmed)) {
+        return trimmed;
+    }
+    if (/^\/\//.test(trimmed)) {
+        return `https:${trimmed}`;
+    }
+    // Block javascript: and other non-http schemes
+    if (/^[a-z][a-z0-9+.-]*:/i.test(trimmed) && !/^https?:/i.test(trimmed)) {
+        return null;
+    }
+    return `https://${trimmed}`;
+}
+
 export default function SmallInfoCard({
     show = true,
     variant = "default",
@@ -116,6 +150,7 @@ export default function SmallInfoCard({
     value,
     tooltip,
     dontRenderValue = false,
+    externalHref,
     linkedReferenceSheet,
 }: SmallInfoCardProps) {
 
@@ -127,6 +162,10 @@ export default function SmallInfoCard({
         LinkedSheet != null &&
         accessResourceId.length > 0 &&
         resourceHasPositiveRead(linkedAccess.read);
+
+    const resolvedExternalHref =
+        typeof externalHref === "string" ? normalizeExternalHref(externalHref) : null;
+    const showExternalBadge = resolvedExternalHref != null;
 
     const [linkedSheetOpen, setLinkedSheetOpen] = useState(false);
     const tooltipText = tooltip != null ? String(tooltip).trim() : "";
@@ -144,16 +183,14 @@ export default function SmallInfoCard({
 
     return (
         <>
-            <div
-                className={cn(
-                    "flex items-center gap-2 p-2 rounded-lg h-fit",
-                    containerStyles[variant],
-                )}
+            <Item
+                variant="outline"
+                className={cn("h-fit gap-2 p-2", containerStyles[variant])}
             >
                 {Icon != null && (
-                    <div
+                    <ItemMedia
                         className={cn(
-                            "shrink-0 p-2.5 rounded-md",
+                            "p-2.5 rounded-md",
                             iconWrapStyles[variant],
                         )}
                     >
@@ -163,13 +200,13 @@ export default function SmallInfoCard({
                                 accentTextStyles[variant],
                             )}
                         />
-                    </div>
+                    </ItemMedia>
                 )}
-                <div className="flex-1 min-w-0">
+                <ItemContent className="min-w-0 gap-0.5">
                     <div className="flex items-center gap-1 min-w-0">
-                        <div className="text-sm font-medium text-muted-foreground truncate">
+                        <ItemTitle className="min-w-0 font-medium text-muted-foreground">
                             {title}
-                        </div>
+                        </ItemTitle>
                         {hasTooltip && (
                             <TooltipDisplayer tooltip={tooltipText}>
                                 <button
@@ -194,7 +231,7 @@ export default function SmallInfoCard({
                                 value ? valueTextStyles[variant] : undefined,
                             )}
                         >
-                            <HiddenElement>
+                            <HiddenElement randomLength={show ? 0 : 8}>
                                 {
                                     !!show &&
                                     <>
@@ -204,26 +241,51 @@ export default function SmallInfoCard({
                             </HiddenElement>
                         </div>
                     )}
-                </div>
-                {showLinkedBadge && LinkedSheet != null && (
-                    <TooltipDisplayer tooltip={title}>
-                        <div
-                            className={cn(
-                                "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
-                                "bg-background text-sm font-semibold text-muted-foreground",
-                                "hover:bg-muted hover:text-foreground hover:cursor-pointer",
-                            )}
-                            aria-label={title}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setLinkedSheetOpen(true);
-                            }}
-                        >
-                            <IconLink size={16} />
-                        </div>
-                    </TooltipDisplayer>
+                </ItemContent>
+                {(showExternalBadge || (showLinkedBadge && LinkedSheet != null)) && (
+                    <ItemActions>
+                        {showExternalBadge && resolvedExternalHref != null ? (
+                            <TooltipDisplayer tooltip={resolvedExternalHref}>
+                                <a
+                                    href={resolvedExternalHref}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={cn(
+                                        "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
+                                        "bg-background text-sm font-semibold text-muted-foreground",
+                                        "hover:bg-muted hover:text-foreground hover:cursor-pointer",
+                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                    )}
+                                    aria-label={title}
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <IconLink size={16} />
+                                </a>
+                            </TooltipDisplayer>
+                        ) : null}
+                        {showLinkedBadge && LinkedSheet != null ? (
+                            <TooltipDisplayer tooltip={title}>
+                                <button
+                                    type="button"
+                                    className={cn(
+                                        "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
+                                        "bg-background text-sm font-semibold text-muted-foreground",
+                                        "hover:bg-muted hover:text-foreground hover:cursor-pointer",
+                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                    )}
+                                    aria-label={title}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setLinkedSheetOpen(true);
+                                    }}
+                                >
+                                    <IconLink size={16} />
+                                </button>
+                            </TooltipDisplayer>
+                        ) : null}
+                    </ItemActions>
                 )}
-            </div>
+            </Item>
             {LinkedSheet != null && (
                 <SmallInfoCardNestedSheets
                     LinkedSheet={LinkedSheet}

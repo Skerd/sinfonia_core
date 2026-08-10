@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/newPhoto.tsx",
+  "confirm": "Speichern",
+  "cancel": "Abbrechen",
+  "updatePhoto": "Aktualisieren foto",
+  "axios": {
+    "start": {
+      "title": "Uploading cover foto",
+      "time": 3000
+    },
+    "success": {
+      "title": "Cover foto erfolgreich uploaded",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fehlgeschlagen bis upload cover foto",
+      "time": 3000
+    }
+  }
+}

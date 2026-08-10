@@ -1,20 +1,24 @@
 import {compose} from "redux";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {ToggleGroup, ToggleGroupItem} from "@coreModule/components/ui/toggle-group.tsx";
 import {LayoutGrid, List, SlidersVertical} from "lucide-react";
-import {JSX, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
-import Masonry from "react-masonry-css";
+import {JSX, type KeyboardEvent, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
+import {TableVirtuoso} from "react-virtuoso";
+import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
+import {useListUrlState, type EntityListViewMode as UrlViewMode} from "@coreModule/helpers/hooks/useListUrlState.ts";
+import type {RowSelectionState} from "@tanstack/react-table";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type { FilterGroup } from "armonia/src/modules/core/database/filter";
 import { isFilterGroupEmpty, mergeAndFilterDSL } from "@coreModule/helpers/filter/mergeFilterDsl.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import PageController from "@coreModule/components/custom/paginator";
 import NoData from "@coreModule/components/custom/noData.tsx";
-import {ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable} from "@tanstack/react-table";
+import {entityCardSkeletonItems, EntityTableSkeleton} from "@coreModule/components/custom/skeletons/entityListSkeleton.tsx";
+import {ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, type Row, useReactTable} from "@tanstack/react-table";
 import {Table, TableBody, TableCell, TableRow} from "@coreModule/components/ui/table/table.tsx";
 import DataTableTableHeaderProps from "@coreModule/components/ui/table/table-header.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -24,17 +28,27 @@ import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collaps
 import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useTableConfig} from "@coreModule/helpers/hooks/useTableConfig.ts";
 import {useTableConfigContext} from "@coreModule/helpers/context/tableConfigContext.tsx";
+import {GRID_MASONRY_ITEM} from "@coreModule/components/custom/cards/entityCard.constants.ts";
 import {columnConfigToColumnDef} from "@coreModule/helpers/mappers/columnConfigToColumnDef.tsx";
 import FilterBuilder from "@coreModule/components/custom/filterBuilder/filterBuilder.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {openActionMenuFromContextMenu} from "@coreModule/components/custom/actions/menu/openActionMenuFromContextMenu.ts";
 
-export type EntityCardLayout = "grid" | "masonry";
-
-export type MasonryBreakpointCols =
-    | number
-    | {default: number; [key: number]: number};
+/**
+ * Imperative list-mutation API exposed by {@link CardAndTableView} via `ref`/`listRef`
+ * and forwarded to cards, sheets and row actions.
+ *
+ * Single source of truth: consumers must reference this type rather than restating
+ * the shape inline, otherwise a ref declared without `mapRows` silently stops
+ * matching the component's prop type.
+ */
+export type EntityListApi<T> = {
+    refetch: () => void;
+    updateRow: (id: string | number, patch: Partial<T>) => void;
+    /** Patch currently loaded rows in place (no network). Return a patch or void to skip. */
+    mapRows: (mapper: (row: T) => Partial<T> | void) => void;
+};
 
 /** Card list cell: always reserve 1px border so highlighting never reflows the grid. */
 const ENTITY_CARD_WRAPPER_BASE = "rounded-xl border border-transparent box-border transition-colors";
@@ -50,7 +64,7 @@ const ENTITY_TABLE_ROW_MENU_OPEN =
 const ENTITY_TABLE_CELL_MENU_OPEN =
     "group-has-[[data-slot=dropdown-menu-trigger][data-state=open]]/row:bg-muted/40";
 
-type EntityListViewMode = "card" | "table";
+type EntityListViewMode = UrlViewMode;
 
 function listViewModeStorageKey(tableConfigKey: string): string {
     return `entityListViewMode:${tableConfigKey}`;
@@ -107,10 +121,6 @@ type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: numbe
         cardViewClassName?: string,
         scrollRootClassName?: string,
     }
-    /** Card list packing. `masonry` uses Pinterest-style columns (ignores CSS grid on cardViewClassName). */
-    cardLayout?: EntityCardLayout;
-    /** Column counts for `cardLayout="masonry"` (react-masonry-css max-width breakpoints). */
-    masonryBreakpointCols?: MasonryBreakpointCols;
     configurations: {
         limit?: number,
         columnVisibility?: VisibilityState,
@@ -118,25 +128,15 @@ type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: numbe
     renderFunctions: {
         cardRender: (data: T) => JSX.Element,
         action: (data: T) => ReactNode,
+        /** Table row activation (Enter/click) — typically opens the entity sheet. */
+        onRowClick?: (data: T) => void,
     },
     getItems?: (response: ResponseType) => T[];
     getTotal?: (response: ResponseType) => number;
     getId?: (item: T) => string | number;
-    onRegister?: (api: {
-        refetch: () => void;
-        updateRow: (id: string | number, patch: Partial<T>) => void;
-        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
-    }) => void;
-    ref?: Ref<{
-        refetch: () => void;
-        updateRow: (id: string | number, patch: Partial<T>) => void;
-        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
-    } | null>;
-    listRef?: Ref<{
-        refetch: () => void;
-        updateRow: (id: string | number, patch: Partial<T>) => void;
-        mapRows: (mapper: (row: T) => Partial<T> | void) => void;
-    } | null>;
+    onRegister?: (api: EntityListApi<T>) => void;
+    ref?: Ref<EntityListApi<T> | null>;
+    listRef?: Ref<EntityListApi<T> | null>;
     extraParams?: Record<string, unknown>;
     extraFilters?: Record<string, unknown>;
     /** AND-merged ahead of Filter Builder DSL (e.g. finance vendor/purchaser rules). */
@@ -160,8 +160,6 @@ function CountryCenterView<
     error,
     requestInfo,
     containersClassName,
-    cardLayout = "grid",
-    masonryBreakpointCols = {default: 4, 1280: 3, 1024: 2, 768: 1},
     configurations = {
         limit: 20
     },
@@ -188,15 +186,25 @@ function CountryCenterView<
     const isMobile = useIsMobile();
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
 
-    const [viewMode, setViewMode] = useState<EntityListViewMode>(() =>
-        loadStoredListViewMode(tableConfigKey),
-    );
     const [firstCall, setFirstCall] = useState<boolean>(true);
     const [forceReload, setForceReload] = useState<number>(0);
 
-    const [offset, setOffset] = useState<number>(0);
     const [limit, setLimit] = useState<number>(configurations.limit ?? 20);
-    const [sorting, setSorting] = useState<SortingState>([]);
+    // Capture once per mount — re-reading localStorage every render races the
+    // preference write and made the card/table toggle need two clicks.
+    const [listViewFallback] = useState(() => loadStoredListViewMode(tableConfigKey));
+    const {
+        viewMode,
+        setViewMode,
+        offset,
+        setOffset,
+        sorting,
+        setSorting,
+    } = useListUrlState({
+        fallbackView: listViewFallback,
+        limit,
+    });
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [rowOverlays, setRowOverlays] = useState<Record<string, Partial<T>>>({});
     const [columnFilters, onColumnFiltersChange] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState | undefined>(undefined);
@@ -262,7 +270,18 @@ function CountryCenterView<
     }, [tableFilters, tableConfigOptions, resolveLanguageKey]);
 
     useEffect(() => {
-        setExtraParameters({...extraParams})
+        const next = {...(extraParams ?? {})};
+        setExtraParameters((prev) => {
+            const prevKeys = Object.keys(prev);
+            const nextKeys = Object.keys(next);
+            if (
+                prevKeys.length === nextKeys.length &&
+                nextKeys.every((key) => Object.is(prev[key], next[key]))
+            ) {
+                return prev;
+            }
+            return next;
+        });
     }, [extraParams]);
 
     useEffect(() => {
@@ -336,22 +355,61 @@ function CountryCenterView<
 
     }, [data, rowOverlays, getId]);
 
+    /*
+     * columnConfigToColumnDef calls useSelectedLanguage (a hook). It must run
+     * on every render at this call site — never inside useMemo — or React's
+     * hook order breaks and the whole tree unmounts.
+     */
+    const dataColumns = columnConfigToColumnDef<T>(tableColumns ?? [], {
+        fields: tableConfigOptions?.filterConfig?.fields,
+        renderActions: renderFunctions.action,
+        timezone,
+    }) as ColumnDef<T>[];
+
+    const columns = useMemo<ColumnDef<T>[]>(() => {
+        const selectCol: ColumnDef<T> = {
+            id: "select",
+            enableSorting: false,
+            enableHiding: false,
+            header: ({table: t}) => (
+                <div className="flex items-center justify-center px-2">
+                    <Checkbox
+                        checked={t.getIsAllPageRowsSelected() || (t.getIsSomePageRowsSelected() && "indeterminate")}
+                        onCheckedChange={(v) => t.toggleAllPageRowsSelected(!!v)}
+                        aria-label={String(resolveLanguageKey("selectAll") || "Select all")}
+                    />
+                </div>
+            ),
+            cell: ({row}) => (
+                <div className="flex items-center justify-center px-2" onClick={(e) => e.stopPropagation()}>
+                    <Checkbox
+                        checked={row.getIsSelected()}
+                        onCheckedChange={(v) => row.toggleSelected(!!v)}
+                        aria-label={String(resolveLanguageKey("selectRow") || "Select row")}
+                    />
+                </div>
+            ),
+            meta: { className: "sticky left-0 z-10 w-10 bg-background" },
+        };
+        return [selectCol, ...dataColumns];
+    }, [dataColumns, resolveLanguageKey]);
+
     const table = useReactTable({
         data: tableData,
-        columns: columnConfigToColumnDef<T>(tableColumns, {fields: tableConfigOptions?.filterConfig?.fields, renderActions: renderFunctions.action, timezone}) as ColumnDef<T>[],
+        columns,
         getRowId: (originalRow) => String(getId(originalRow as T)),
         manualPagination: true,
         manualFiltering: true,
         manualSorting: true,
+        enableRowSelection: true,
         state: {
             columnFilters,
             ...(columnVisibility && { columnVisibility }),
             sorting,
+            rowSelection,
         },
-        onSortingChange: (updater) => {
-            const next = typeof updater === "function" ? updater(sorting) : updater;
-            setSorting(next);
-        },
+        onRowSelectionChange: setRowSelection,
+        onSortingChange: setSorting,
         onColumnFiltersChange: (updater) => {
             const next = typeof updater === "function" ? updater(columnFilters) : updater;
             onColumnFiltersChange(next);
@@ -374,6 +432,80 @@ function CountryCenterView<
     if( !read || !Object.keys(read).length ){
         return <HiddenElement />
     }
+
+    /*
+     * Content-height cards: GRID_* uses `align-items: start`, and wrappers stay
+     * `h-fit` so a short card does not stretch to the tallest in its row.
+     */
+    const cardItemClassName = cn(
+        GRID_MASONRY_ITEM,
+        ENTITY_CARD_WRAPPER_BASE,
+        ENTITY_CARD_MENU_OPEN,
+    );
+
+    /** Shared by real cards and their skeletons so both pack identically. */
+    const renderCardContainer = (items: ReactNode[]) => (
+        <div className={containersClassName?.cardViewClassName}>{items}</div>
+    );
+
+    /* Enough to cover the fold; a full page of placeholders costs more than it communicates. */
+    const skeletonCount = Math.min(limit || 20, 8);
+    const skeletonColumnCount = table.getVisibleFlatColumns().length || 5;
+    const isRefetching = !firstCall && loading;
+    const selectedCount = Object.keys(rowSelection).length;
+    const shouldVirtualize = tableData.length > 50;
+    const onRowActivate = renderFunctions.onRowClick;
+
+    const activateRow = (item: T, e?: { target: EventTarget | null }) => {
+        if (!onRowActivate) return;
+        const el = e?.target as HTMLElement | null;
+        if (el?.closest("button, a, input, [role=checkbox], [data-slot=dropdown-menu-trigger], [data-slot=checkbox]")) {
+            return;
+        }
+        onRowActivate(item);
+    };
+
+    const handleRowKeyDown = (item: T, e: KeyboardEvent<HTMLTableRowElement>) => {
+        if (!onRowActivate) return;
+        if (e.target !== e.currentTarget) return;
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onRowActivate(item);
+        }
+    };
+
+    const renderTableRow = (row: Row<T>) => (
+        <TableRow
+            key={row.id}
+            data-state={row.getIsSelected() && "selected"}
+            tabIndex={onRowActivate ? 0 : undefined}
+            className={cn(
+                "group/row transition-colors",
+                ENTITY_TABLE_ROW_MENU_OPEN,
+                onRowActivate && "cursor-pointer",
+                !!(row.original as {deletedAt?: unknown})?.deletedAt && "opacity-60 bg-muted/50",
+            )}
+            onClick={(e) => activateRow(row.original, e)}
+            onKeyDown={(e) => handleRowKeyDown(row.original, e)}
+            onContextMenu={openActionMenuFromContextMenu}
+        >
+            {row.getVisibleCells().map((cell) => (
+                <TableCell
+                    key={cell.id}
+                    className={cn(
+                        "bg-background transition-colors group-hover/row:bg-muted/50 group-data-[state=selected]/row:bg-muted",
+                        ENTITY_TABLE_CELL_MENU_OPEN,
+                        cell.column.id === "actions" && "w-[1%] text-right pr-3 sticky right-0 z-10",
+                        cell.column.id === "select" && "sticky left-0 z-10",
+                        (cell.column.columnDef.meta as { className?: string } | undefined)?.className
+                    )}
+                >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+            ))}
+        </TableRow>
+    );
+
 
     return (
         <>
@@ -404,7 +536,7 @@ function CountryCenterView<
                         </>
                     }
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-2">
                     <PageController
                         total={data?.total ?? 0}
                         limit={configurations.limit}
@@ -414,29 +546,30 @@ function CountryCenterView<
                     />
                     {
                         read &&
-                        <div className="flex items-center space-x-2">
-                            <div className="flex rounded-md border border-border">
+                        <div className="flex items-center gap-2">
+                            <ToggleGroup
+                                type="single"
+                                spacing={0}
+                                variant="outline"
+                                value={viewMode}
+                                // Radix clears the value when the active item is pressed again;
+                                // ignore that so the list always has a view mode.
+                                onValueChange={(next) => {
+                                    if (next === "table" || next === "card") setViewMode(next);
+                                }}
+                                aria-label={resolveLanguageKey("showTableView")}
+                            >
                                 <TooltipDisplayer tooltip={resolveLanguageKey("showTableView")}>
-                                    <Button
-                                        variant={viewMode === "table" ? "secondary" : "ghost"}
-                                        size="icon"
-                                        onClick={() => setViewMode("table")}
-                                        className="rounded-r-none"
-                                    >
+                                    <ToggleGroupItem value="table" aria-label={resolveLanguageKey("showTableView")}>
                                         <List />
-                                    </Button>
+                                    </ToggleGroupItem>
                                 </TooltipDisplayer>
                                 <TooltipDisplayer tooltip={resolveLanguageKey("showCardView")}>
-                                    <Button
-                                        variant={viewMode === "card" ? "secondary" : "ghost"}
-                                        size="icon"
-                                        onClick={() => setViewMode("card")}
-                                        className="rounded-l-none"
-                                    >
-                                        <LayoutGrid/>
-                                    </Button>
+                                    <ToggleGroupItem value="card" aria-label={resolveLanguageKey("showCardView")}>
+                                        <LayoutGrid />
+                                    </ToggleGroupItem>
                                 </TooltipDisplayer>
-                            </div>
+                            </ToggleGroup>
                             {
                                 viewMode === "table" &&
                                 <DataTableViewOptions table={table} />
@@ -457,7 +590,30 @@ function CountryCenterView<
 
             <div ref={viewPortRef} className={cn("min-w-0 flex-1 min-h-0 flex flex-col overflow-x-hidden", containersClassName?.scrollRootClassName)}>
 
-                <div className="min-w-0 min-h-0 flex flex-col flex-1 overflow-x-hidden ps-0.5">
+                {
+                    /*
+                     * Background refetch: a sliver pinned to the top of the scrollport.
+                     * `sticky` rather than `absolute` because this container scrolls —
+                     * the previous absolutely-positioned bar had no positioned ancestor
+                     * here and resolved against the page instead.
+                     */
+                    isRefetching &&
+                    <div
+                        role="status"
+                        aria-live="polite"
+                        aria-label={String(resolveLanguageKey("loading"))}
+                        className="sticky top-0 z-20 -mb-0.5 h-0.5 w-full shrink-0 overflow-hidden bg-primary/15"
+                    >
+                        <div className="h-full w-1/3 bg-primary animate-indeterminate" />
+                    </div>
+                }
+
+                <div
+                    className={cn(
+                        "min-w-0 min-h-0 flex flex-col flex-1 overflow-x-hidden ps-0.5 transition-opacity duration-200",
+                        isRefetching && "opacity-60",
+                    )}
+                >
                     <>
                         {
                             (error || tableConfigError) ?
@@ -484,97 +640,112 @@ function CountryCenterView<
                             :
                             <>
                                 {
-                                    (!data || data?.data?.length === 0) && !firstCall ?
-                                        <NoData title={requestInfo?.noData ?? resolveLanguageKey("noData")}/>
+                                    (loadingTableConfig) || (firstCall && loading) ?
+                                        (
+                                            viewMode === "card"
+                                                ? renderCardContainer(entityCardSkeletonItems(skeletonCount, cardItemClassName))
+                                                : <EntityTableSkeleton rows={skeletonCount} columns={skeletonColumnCount} />
+                                        )
                                         :
                                         <>
+                                            {selectedCount > 0 && (
+                                                <div className="mb-2 flex items-center justify-between gap-2 rounded-md border bg-muted/40 px-3 py-2 text-sm">
+                                                    <span className="tabular-nums text-muted-foreground">
+                                                        {selectedCount} {String(resolveLanguageKey("selected") || "selected")}
+                                                    </span>
+                                                    <Button type="button" variant="ghost" size="sm" onClick={() => setRowSelection({})}>
+                                                        {String(resolveLanguageKey("clearSelection") || "Clear")}
+                                                    </Button>
+                                                </div>
+                                            )}
                                             {
-                                                (loadingTableConfig) || (firstCall && loading) ?
-                                                    <Loader />
-                                                    :
-                                                    <>
-                                                        {
-                                                            viewMode === "card" ?
-                                                                (() => {
-                                                                    const cardItems = tableData.map((item) => (
-                                                                        <div
-                                                                            key={String(getId(item))}
-                                                                            className={cn(
-                                                                                cardLayout === "masonry" ? "min-w-0" : "h-full min-h-0",
-                                                                                ENTITY_CARD_WRAPPER_BASE,
-                                                                                ENTITY_CARD_MENU_OPEN,
-                                                                            )}
-                                                                            onContextMenu={openActionMenuFromContextMenu}
+                                                viewMode === "card" ? (
+                                                    (!data || data?.data?.length === 0) && !firstCall ? (
+                                                        <NoData title={requestInfo?.noData ?? resolveLanguageKey("noData")}/>
+                                                    ) : (
+                                                        renderCardContainer(tableData.map((item) => (
+                                                            <div
+                                                                key={String(getId(item))}
+                                                                className={cardItemClassName}
+                                                                onContextMenu={openActionMenuFromContextMenu}
+                                                            >
+                                                                {renderFunctions.cardRender(item)}
+                                                            </div>
+                                                        )))
+                                                    )
+                                                ) : (
+                                                    <div className="min-w-0 w-full overflow-x-auto rounded-md border">
+                                                        {shouldVirtualize && data?.data?.length ? (
+                                                            <div style={{height: 480}}>
+                                                                <TableVirtuoso
+                                                                    style={{height: "100%"}}
+                                                                    data={table.getRowModel().rows}
+                                                                    fixedHeaderContent={() => (
+                                                                        <DataTableTableHeaderProps table={table} />
+                                                                    )}
+                                                                    itemContent={(_index, row) => (
+                                                                        <>
+                                                                            {row.getVisibleCells().map((cell) => (
+                                                                                <TableCell
+                                                                                    key={cell.id}
+                                                                                    className={cn(
+                                                                                        "bg-background transition-colors",
+                                                                                        ENTITY_TABLE_CELL_MENU_OPEN,
+                                                                                        cell.column.id === "actions" && "w-[1%] text-right pr-3 sticky right-0 z-10",
+                                                                                        cell.column.id === "select" && "sticky left-0 z-10",
+                                                                                        (cell.column.columnDef.meta as { className?: string } | undefined)?.className
+                                                                                    )}
+                                                                                >
+                                                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                                                </TableCell>
+                                                                            ))}
+                                                                        </>
+                                                                    )}
+                                                                    components={{
+                                                                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                                                        Table: ({style, ...props}: any) => (
+                                                                            <table {...props} style={style} className="w-full min-w-max caption-bottom text-sm" />
+                                                                        ),
+                                                                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                                                        TableRow: ({item: row, ...props}: any) => (
+                                                                            <tr
+                                                                                {...props}
+                                                                                data-state={row.getIsSelected() && "selected"}
+                                                                                className={cn(
+                                                                                    "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted group/row",
+                                                                                    ENTITY_TABLE_ROW_MENU_OPEN,
+                                                                                    onRowActivate && "cursor-pointer",
+                                                                                )}
+                                                                                tabIndex={onRowActivate ? 0 : undefined}
+                                                                                onClick={(e) => activateRow(row.original, e)}
+                                                                                onKeyDown={(e) => handleRowKeyDown(row.original, e as unknown as KeyboardEvent<HTMLTableRowElement>)}
+                                                                                onContextMenu={openActionMenuFromContextMenu}
+                                                                            />
+                                                                        ),
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        ) : (
+                                                        <Table>
+                                                            <DataTableTableHeaderProps table={table} />
+                                                            <TableBody>
+                                                                {(!data || data?.data?.length === 0) && !firstCall ? (
+                                                                    <TableRow>
+                                                                        <TableCell
+                                                                            colSpan={Math.max(table.getVisibleFlatColumns().length, 1)}
+                                                                            className="h-48"
                                                                         >
-                                                                            {renderFunctions.cardRender(item)}
-                                                                        </div>
-                                                                    ));
-
-                                                                    if (cardLayout === "masonry") {
-                                                                        return (
-                                                                            <Masonry
-                                                                                breakpointCols={masonryBreakpointCols}
-                                                                                className="my-masonry-grid"
-                                                                                columnClassName="my-masonry-grid_column"
-                                                                            >
-                                                                                {cardItems}
-                                                                            </Masonry>
-                                                                        );
-                                                                    }
-
-                                                                    return (
-                                                                        <div className={containersClassName?.cardViewClassName}>
-                                                                            {cardItems}
-                                                                        </div>
-                                                                    );
-                                                                })()
-                                                                :
-                                                                <>
-                                                                    <div className="min-w-0 w-full overflow-x-auto rounded-md border">
-                                                                        <Table>
-                                                                            <DataTableTableHeaderProps table={table} />
-                                                                            <TableBody>
-                                                                                {
-                                                                                    table?.getRowModel()?.rows?.map((row) => {
-                                                                                        return (
-                                                                                            <TableRow
-                                                                                                key={row.id}
-                                                                                                data-state={row.getIsSelected() && "selected"}
-                                                                                                className={cn(
-                                                                                                    "group/row transition-colors",
-                                                                                                    ENTITY_TABLE_ROW_MENU_OPEN,
-                                                                                                    (row.original as any)?.deletedAt && "opacity-60 bg-muted/50"
-                                                                                                )}
-                                                                                                onContextMenu={openActionMenuFromContextMenu}
-                                                                                            >
-                                                                                                {
-                                                                                                    row.getVisibleCells().map((cell) => {
-                                                                                                        return (
-                                                                                                            <TableCell
-                                                                                                                key={cell.id}
-                                                                                                                className={cn(
-                                                                                                                    "bg-background transition-colors group-hover/row:bg-muted/50 group-data-[state=selected]/row:bg-muted",
-                                                                                                                    ENTITY_TABLE_CELL_MENU_OPEN,
-                                                                                                                    cell.column.id === "actions" && "w-[1%] text-right pr-3",
-                                                                                                                    (cell.column.columnDef.meta as { className?: string } | undefined)?.className
-                                                                                                                )}
-                                                                                                            >
-                                                                                                                {/*{Date.now()}*/}
-                                                                                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                                                                                            </TableCell>
-                                                                                                        )
-                                                                                                    })
-                                                                                                }
-                                                                                            </TableRow>
-                                                                                        )
-                                                                                    })
-                                                                                }
-                                                                            </TableBody>
-                                                                        </Table>
-                                                                    </div>
-                                                                </>
-                                                        }
-                                                    </>
+                                                                            <NoData title={requestInfo?.noData ?? resolveLanguageKey("noData")}/>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                ) : (
+                                                                    table.getRowModel().rows.map((row) => renderTableRow(row))
+                                                                )}
+                                                            </TableBody>
+                                                        </Table>
+                                                        )}
+                                                    </div>
+                                                )
                                             }
                                         </>
                                 }
@@ -583,14 +754,6 @@ function CountryCenterView<
                     </>
                 </div>
 
-                {
-                    !firstCall && (loading) &&
-                    <div className="absolute flex items-center justify-center w-full bottom-0 left-0">
-                        <div className="min-w-[10%] bg-secondary animate-bounce">
-                            <Loader title={resolveLanguageKey("loading")}/>
-                        </div>
-                    </div>
-                }
             </div>
 
         </>

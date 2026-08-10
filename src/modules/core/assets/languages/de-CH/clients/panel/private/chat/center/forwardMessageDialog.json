@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/forwardMessageDialog.tsx",
+  "failTitle": "Konnte nicht laden channels",
+  "failTitleTooltip": "Tap bis versuchen laden channels erneut.",
+  "noDataTitle": "Keine channels verfügbar.",
+  "forward": "Forward",
+  "message": "Nachricht",
+  "selectChannelsToForward": "Channels bis forward diese nachricht bis auswählen",
+  "addComment": "A kommentar (optional) hinzufügen",
+  "addCommentPlaceholder": "A kommentar... hinzufügen",
+  "selectChannels": "Channels auswählen",
+  "cancel": "Abbrechen",
+  "sending": "Sending...",
+  "axios": {
+    "start": {
+      "title": "Forwarding nachricht",
+      "time": 3000
+    },
+    "success": {
+      "title": "Nachricht erfolgreich forwarded",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fehlgeschlagen bis forward nachricht",
+      "time": 3000
+    }
+  },
+  "messageDeleted": "Nachricht Gelöscht"
+}

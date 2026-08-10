@@ -190,7 +190,7 @@ function ActionCell({hasPermission, checked, tags, ids, editable, parentLoading,
     if (!checked) return <span className="text-muted-foreground">—</span>;
     const content = (
         <div className="size-5 flex items-center justify-center">
-            <Check className="size-5 text-green-600" aria-label="yes" />
+            <Check className="size-5 text-success" aria-label="yes" />
         </div>
     );
     if (!tags.length) return content;
@@ -373,7 +373,7 @@ function PermissionsTable({
     const totalRows = filteredData.length;
 
     return (
-        <div className="space-y-2 mt-2">
+        <div className="flex flex-col gap-y-2 mt-2">
             <div className="flex flex-wrap items-center justify-between gap-2" style={{border: "0px solid red"}}>
                 <div className="flex grow flex-wrap gap-2" style={{border: "0px solid red"}}>
 

@@ -27,7 +27,7 @@ function SmallCompany({company, index}: SmallCompanyProps){
                         read.logo &&
                         <Avatar>
                             <AvatarImage src={`/api/auxiliary/media/${company.logo}`} alt={company.name + "photo"} />
-                            <AvatarFallback className="text-black dark:text-white font-semibold">{company?.name.substring(0, 2)?.toUpperCase() ?? ""}</AvatarFallback>
+                            <AvatarFallback className="text-foreground font-semibold">{company?.name.substring(0, 2)?.toUpperCase() ?? ""}</AvatarFallback>
                         </Avatar>
                     }
                 </HiddenElement>

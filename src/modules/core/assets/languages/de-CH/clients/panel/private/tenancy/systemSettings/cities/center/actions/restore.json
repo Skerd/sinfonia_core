@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/actions/restore.tsx",
+  "title": "Wiederherstellen",
+  "restoreConfirmTitle": "Wiederherstellen ort",
+  "restoreConfirmDescription": "Sind sie sicher sie want bis wiederherstellen diese ort?",
+  "cancel": "Abbrechen",
+  "confirmRestore": "Wiederherstellen",
+  "axios": {
+    "start": {
+      "title": "Restoring ort",
+      "time": 3000
+    },
+    "success": {
+      "title": "Ort erfolgreich restored.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Ort fehlgeschlagen bis werden restored",
+      "time": 3000
+    }
+  }
+}

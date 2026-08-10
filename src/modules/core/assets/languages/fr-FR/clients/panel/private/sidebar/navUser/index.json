@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/navUser/index.tsx",
+  "profile": "Profil",
+  "security": "Sécurité",
+  "account": "Compte",
+  "notifications": "Notifications",
+  "signOut": "Se déconnecter",
+  "dialog": {
+    "title": "Se déconnecter",
+    "description": "Voulez-vous vraiment vous déconnecter ? Vous devrez vous reconnecter pour accéder à votre compte.",
+    "confirmText": "Se déconnecter",
+    "cancelText": "Annuler"
+  }
+}

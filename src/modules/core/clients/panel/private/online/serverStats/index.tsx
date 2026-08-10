@@ -50,7 +50,7 @@ function ServerStats({
     }, [forceReload]);
 
     return (
-       <div className="space-y-4">
+       <div className="flex flex-col gap-y-4">
            {
                loading ?
                <Loader title={resolveLanguageKey("waitingForPerformanceData")} />

@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/delete.tsx",
+  "title": "Löschen",
+  "deleteConfirmTitle": "Land löschen",
+  "deleteConfirmDescription": "Sind sie sicher sie want bis löschen diese land?",
+  "confirmNameLabel": "Typ die land name bis confirm",
+  "cancel": "Abbrechen",
+  "confirmDelete": "Löschen",
+  "axios": {
+    "start": {
+      "title": "Deleting land",
+      "time": 3000
+    },
+    "success": {
+      "title": "Land gelöscht erfolgreich!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Land konnte nicht werden gelöscht, bitte versuchen erneut!",
+      "time": 3000
+    }
+  }
+}

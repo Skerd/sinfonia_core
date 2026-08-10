@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/messagesFetcher.tsx",
+  "noMessages": "On a l'air seul ici",
+  "failTitle": "Échec du chargement des messages de la chaîne",
+  "failTitleTooltip": "Cliquez pour recharger les messages de la chaîne"
+}

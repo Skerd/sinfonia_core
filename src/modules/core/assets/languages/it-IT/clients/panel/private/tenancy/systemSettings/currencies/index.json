@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
+  "title": "Valute",
+  "description": "Gestisci le valute",
+  "createCurrency": "Crea valuta",
+  "searchPlaceholder": "Cerca per nome, abbreviazione o aggiungi filtri...",
+  "noData": "Nessuna valuta trovata",
+  "failTitle": "Impossibile caricare le valute",
+  "failDescription": "Si è verificato un errore durante il caricamento delle valute. Per favore riprova.",
+  "status": "Stato",
+  "name": "Nome",
+  "symbol": "Simbolo",
+  "abbreviation": "Abbreviazione",
+  "decimalPlaces": "Posti decimali",
+  "deleted": "Eliminato",
+  "active": "Attivo",
+  "fields": {
+    "name": "Nome",
+    "symbol": "Simbolo",
+    "abbreviation": "Abbreviazione",
+    "decimalPlaces": "Posti decimali",
+    "createdAt": "Creato il",
+    "updatedAt": "Aggiornato il",
+    "createdBy": "Creato da",
+    "company": "Azienda",
+    "deletedAt": "Stato",
+    "deletedBy": "Eliminato da"
+  }
+}

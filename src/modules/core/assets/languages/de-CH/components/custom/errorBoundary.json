@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/errorBoundary.tsx",
+  "title": "Etwas ist schiefgelaufen",
+  "description": "Ein unexpected fehler aufgetreten während rendering diese seite.",
+  "retry": "Erneut versuchen",
+  "goHome": "Go startseite"
+}

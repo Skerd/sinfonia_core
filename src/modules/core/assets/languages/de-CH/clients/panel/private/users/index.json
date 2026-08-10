@@ -1,0 +1,88 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/index.tsx",
+  "title": "Benutzer liste",
+  "searchPlaceholder": "Suchen von name, e-Mail, oder hinzufügen filters...",
+  "activeFilters": "aktiv",
+  "administrationTitle": "Administration users liste",
+  "description": "Ihr users und their rollen here. verwalten",
+  "administrationDescription": "Firma administration users und their rollen here. verwalten",
+  "photo": "Foto",
+  "emailVerified": "Current e-Mail",
+  "invitedUser": "Bitte verifizieren die e-Mail von accepting die einladung antrag",
+  "emailNotVerified": "Bitte verifizieren ihr neu e-Mail von clicking on die link sent bis ihr posteingang",
+  "statuses": {
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "invited": "Eingeladen"
+  },
+  "companies": "Firmen",
+  "fields": {
+    "!enums": {
+      "roles": {
+        "active": {
+          "active": "Aktiv",
+          "inactive": "Inaktiv",
+          "invited": "Eingeladen"
+        }
+      },
+      "mfaStatus": {
+        "active": "Aktiv",
+        "notActive": "Nicht aktiv"
+      }
+    },
+    "username": "E-Mail",
+    "name": "Name",
+    "surname": "Surname",
+    "timezone": "Zeitzone",
+    "birthday": "Birthday",
+    "phoneNumber": "Telefon nummer",
+    "photo": "Foto",
+    "cover": "Cover",
+    "isEmailVerified": "E-Mail verifiziert",
+    "emailVerifiedAt": "E-Mail verifiziert am",
+    "registeredFrom": "Registered von",
+    "registerDate": "Joined on",
+    "online": "Online",
+    "roles": {
+      "active": "Status",
+      "unsuccessfulLogins": "Unsuccessful logins",
+      "lockedOutUntil": "Locked out until",
+      "lastLogin": "Nach anmelden",
+      "roles": "Rollen"
+    },
+    "finance": "Finanzen",
+    "mfaStatus": "MFA status",
+    "requests": {
+      "mfaDeactivation": {
+        "opened": "MFA deactivation opened",
+        "attempts": "MFA deactivation attempts",
+        "date": "MFA deactivation datum",
+        "lockedUntil": "MFA deactivation locked until"
+      },
+      "passwordReset": {
+        "opened": "Passwort zurücksetzen opened",
+        "attempts": "Passwort zurücksetzen attempts",
+        "date": "Passwort zurücksetzen datum",
+        "lockedUntil": "Passwort zurücksetzen locked until"
+      },
+      "activation": {
+        "email": "Activation e-Mail",
+        "attempts": "Activation attempts",
+        "date": "Activation datum",
+        "lockedUntil": "Activation locked until"
+      },
+      "invitation": {
+        "opened": "Einladung opened",
+        "attempts": "Einladung attempts",
+        "date": "Einladung datum",
+        "lockedUntil": "Einladung locked until",
+        "invitedBy": "Invited von",
+        "invitedAt": "Invited am",
+        "invitationExpiresAt": "Einladung expires am",
+        "accepted": "Accepted",
+        "acceptedAt": "Accepted am",
+        "welcomeMessage": "Welcome nachricht"
+      }
+    }
+  }
+}

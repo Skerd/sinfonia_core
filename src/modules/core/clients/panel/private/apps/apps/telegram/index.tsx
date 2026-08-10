@@ -74,7 +74,7 @@ function UserLinkTelegram({
                         <IconTelegram />
                     </div>
 
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center gap-x-1">
                         {
                             (!loading) ?
                             <HiddenElement>
@@ -83,7 +83,7 @@ function UserLinkTelegram({
                                     <Button
                                         variant='outline'
                                         size='sm'
-                                        className={`${linked ? 'border border-blue-300 bg-blue-50 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-950 dark:hover:bg-blue-900' : ''}`}
+                                        className={`${linked ? 'border border-info/30 bg-info/10 hover:bg-info/20' : ''}`}
                                         onClick={() => { if( !linked ){  setOpenWhat("link"); }}}
                                     >
                                         {linked ? resolveLanguageKey("connected") : resolveLanguageKey("notConnected")}
@@ -116,7 +116,7 @@ function UserLinkTelegram({
                 </div>
                 <div>
                     <h2 className='mb-1 font-semibold'>{resolveLanguageKey("name")}</h2>
-                    <p className='line-clamp-2 text-gray-500'>{resolveLanguageKey("description")}</p>
+                    <p className='line-clamp-2 text-muted-foreground'>{resolveLanguageKey("description")}</p>
                 </div>
 
                 {

@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/2fa/confirm2FADeactivation.form.tsx",
+  "loading": "Disattivazione 2FA",
+  "loadingDescription": "Disattivazione 2FA per l'utente che utilizza il collegamento di disattivazione 2FA",
+  "fail": "Disattivazione 2FA non riuscita",
+  "failDescription": "Il collegamento per la disattivazione 2FA non è corretto",
+  "success": "2FA disattivato",
+  "successDescription": "2FA disattivato con successo, ora puoi accedere solo utilizzando la tua password",
+  "axios": {
+    "start": {
+      "title": "Disattivazione 2FA",
+      "time": 3000
+    },
+    "success": {
+      "title": "Disattivazione 2FA riuscita",
+      "time": 3000
+    },
+    "error": {
+      "title": "Disattivazione 2FA non riuscita",
+      "time": 3000
+    }
+  }
+}

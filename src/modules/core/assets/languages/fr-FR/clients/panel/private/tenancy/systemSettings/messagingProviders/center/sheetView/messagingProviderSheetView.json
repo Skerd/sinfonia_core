@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx",
+  "failedTitle": "Échec du chargement du fournisseur de messagerie",
+  "failedDescription": "Une erreur s'est produite lors du chargement de ce fournisseur. Cliquez pour réessayer.",
+  "failedTooltipDescription": "Cliquez pour réessayer de charger les données.",
+  "overview": "Aperçu",
+  "credentials": "Informations d'identification",
+  "senders": "Expéditeurs",
+  "lastTest": "Test de dernière connexion",
+  "lifecycle": "Cycle de vie",
+  "providerType": "Fournisseur",
+  "active": "Actif",
+  "accountSid": "Numéro de compte du compte",
+  "hasAuthToken": "Jeton d'authentification stocké",
+  "fromPhone": "Expéditeur de SMS",
+  "fromWhatsapp": "Expéditeur WhatsApp",
+  "yes": "Oui",
+  "no": "Non",
+  "lastTestStatus": "Dernier essai",
+  "lastTestedAt": "Dernier testé",
+  "lastTestMessage": "Message de test",
+  "createdAt": "Créé le",
+  "updatedAt": "Mis à jour le",
+  "createdBy": "Créé par",
+  "deletedAt": "Supprimé le",
+  "deletedBy": "Supprimé par",
+  "providerTypeValues": {
+    "twilio": "Twilio"
+  },
+  "lastTestStatusValues": {
+    "ok": "D'ACCORD",
+    "failed": "Échoué"
+  }
+}

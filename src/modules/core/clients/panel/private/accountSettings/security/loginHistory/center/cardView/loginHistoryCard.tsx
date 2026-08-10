@@ -7,6 +7,11 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import type {LoginHistory} from "armonia/src/modules/core/api/user/private/loginHistory/loginHistory.dto.ts";
 import LoginHistoryActionMenu from "@coreModule/clients/panel/private/accountSettings/security/loginHistory/center/actions/loginHistoryActionMenu.tsx";
 import DeletedInfo from "@coreModule/components/custom/deletedInfo";
+import InfoRow from "@coreModule/components/custom/infoRow.tsx";
+import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
+import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
+import {CARD_BODY_CLASS} from "@coreModule/components/custom/cards/entityCard.constants.ts";
 
 function formatDate(value: string | undefined, timezone: string | undefined) {
     if (!value) return "";
@@ -44,11 +49,9 @@ export default function LoginHistoryCard({entry, resolveLanguageKey, timezone, v
     const can = (k: string) => typeof r === "object" && r !== null && k in r;
 
     return (
-        <div
-            className={cn(
-                "group overflow-hidden rounded-lg border bg-card text-sm shadow-sm",
-                entry.deletedAt != null && "border-l-4 border-l-muted-foreground/60 opacity-80"
-            )}
+        <EntityCardShell
+            disableClick
+            className={cn(entry.deletedAt != null && "opacity-80")}
         >
             <div className="flex w-full items-stretch">
                 {(can("deletedBy") || can("deletedAt")) && (
@@ -57,71 +60,74 @@ export default function LoginHistoryCard({entry, resolveLanguageKey, timezone, v
                         deletedBy={entry.deletedBy}
                     />
                 )}
-                <div className="min-w-0 flex-1 p-2.5">
-            <div className="flex items-start justify-between gap-2">
-                <div className="flex min-w-0 items-start gap-2">
-                    <div
-                        className={cn(
-                            "flex size-7 shrink-0 items-center justify-center rounded-full",
-                            isSuccess ? "bg-emerald-500/10 text-emerald-600" : "bg-destructive/10 text-destructive"
-                        )}
-                    >
-                        {isSuccess ? <CheckCircle2 className="size-3.5" /> : <XCircle className="size-3.5" />}
-                    </div>
-                    <div className="min-w-0 space-y-0.5">
-                        {can("status") && (
-                            <div className="flex flex-wrap items-center gap-1.5">
-                                <span className="text-xs font-medium">
-                                    {resolveLanguageKey(isSuccess ? "status.success" : "status.failure")}
-                                </span>
-                                <Badge variant={isSuccess ? "secondary" : "destructive"} className="h-5 px-1.5 text-[10px]">
+                <div className="w-full min-w-0">
+                    <EntityTextCardHeader
+                        iconTile={
+                            <div
+                                className={cn(
+                                    "flex size-7 shrink-0 items-center justify-center rounded-full",
+                                    isSuccess ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
+                                )}
+                            >
+                                {isSuccess ? <CheckCircle2 className="size-3.5" /> : <XCircle className="size-3.5" />}
+                            </div>
+                        }
+                        title={resolveLanguageKey(isSuccess ? "status.success" : "status.failure")}
+                        showTitle={can("status")}
+                        badges={
+                            <>
+                                <Badge variant={isSuccess ? "secondary" : "destructive"} className="h-5 px-1.5 text-3xs">
                                     {resolveLanguageKey(isSuccess ? "badge.success" : "badge.failure")}
                                 </Badge>
                                 {can("mfa") && entry.mfa && (
-                                    <Badge variant="outline" className="h-5 px-1.5 text-[10px]">
+                                    <Badge variant="outline" className="h-5 px-1.5 text-3xs">
                                         {resolveLanguageKey("badge.mfa")}
                                     </Badge>
                                 )}
-                            </div>
-                        )}
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-muted-foreground">
-                            {can("time") && (
-                                <span className="inline-flex items-center gap-0.5">
-                                    <Clock className="size-3 shrink-0" />
-                                    {formatDate(entry.time, timezone)}
-                                </span>
-                            )}
-                            {(can("ip") || can("geolocation")) && (
-                                <span className="inline-flex min-w-0 items-center gap-0.5">
-                                    <Globe2 className="size-3 shrink-0" />
-                                    <span className="truncate">{location || entry.ip || resolveLanguageKey("unknownLocation")}</span>
-                                </span>
-                            )}
-                        </div>
+                            </>
+                        }
+                        showBadges={can("status")}
+                        actionMenu={<LoginHistoryActionMenu entry={entry} onAction={onMenuAction} />}
+                    />
+                    <div className={CARD_BODY_CLASS}>
+                        <InfoRowGroup>
+                            <InfoRow
+                                icon={Clock}
+                                label={resolveLanguageKey("time")}
+                                tooltip={resolveLanguageKey("time")}
+                                show={can("time")}
+                                value={formatDate(entry.time, timezone)}
+                            />
+                            <InfoRow
+                                icon={Globe2}
+                                label={resolveLanguageKey("location")}
+                                tooltip={resolveLanguageKey("location")}
+                                show={can("ip") || can("geolocation")}
+                                value={location || entry.ip || resolveLanguageKey("unknownLocation")}
+                            />
+                            <InfoRow
+                                icon={MonitorSmartphone}
+                                label={resolveLanguageKey("device")}
+                                tooltip={resolveLanguageKey("device")}
+                                show={can("device") || can("os") || can("browser")}
+                                value={deviceLine || "—"}
+                            />
+                            <InfoRow
+                                label={resolveLanguageKey("reason")}
+                                tooltip={resolveLanguageKey("reason")}
+                                show={can("reason") && !!entry.reason}
+                                value={
+                                    entry.reason ? (
+                                        <span className="rounded border border-border/60 bg-muted/50 px-2 py-0.5 text-3xs leading-snug">
+                                            {entry.reason}
+                                        </span>
+                                    ) : null
+                                }
+                            />
+                        </InfoRowGroup>
                     </div>
                 </div>
-                <div className="flex shrink-0 items-start gap-1">
-                    <LoginHistoryActionMenu entry={entry} onAction={onMenuAction} />
-                </div>
             </div>
-
-            {(can("device") || can("os") || can("browser") || (can("reason") && entry.reason)) && (
-                <div className="mt-1.5 space-y-1 border-t border-border/60 pt-1.5 text-[11px] text-muted-foreground">
-                    {(can("device") || can("os") || can("browser")) && (
-                        <div className="flex items-center gap-1">
-                            <MonitorSmartphone className="size-3 shrink-0" />
-                            <span className="min-w-0 truncate">{deviceLine || "—"}</span>
-                        </div>
-                    )}
-                    {can("reason") && entry.reason && (
-                        <div className="rounded border border-border/60 bg-muted/50 px-2 py-0.5 text-[10px] leading-snug">
-                            {resolveLanguageKey("reason")}: {entry.reason}
-                        </div>
-                    )}
-                </div>
-            )}
-                </div>
-            </div>
-        </div>
+        </EntityCardShell>
     );
 }

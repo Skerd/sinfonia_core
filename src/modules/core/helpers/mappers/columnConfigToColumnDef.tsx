@@ -19,6 +19,7 @@ import { MdiIcon } from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {IconFileLike, IconFileXFilled} from "@tabler/icons-react";
 import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import {cn} from "@coreModule/components/lib/utils.ts";
 
 export type ColumnConfigToColumnDefOptions<T> = {
     fields: TranslationValue;
@@ -120,9 +121,9 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
         //                             )}
         //                         >
         //                             {data.verified && !data.unverifiedEmail ? (
-        //                                 <BadgeCheck size={18} className="text-blue-500 shrink-0" />
+        //                                 <BadgeCheck size={18} className="text-info shrink-0" />
         //                             ) : (
-        //                                 <BadgeAlert size={18} className="text-red-500 shrink-0" />
+        //                                 <BadgeAlert size={18} className="text-destructive shrink-0" />
         //                             )}
         //                         </TooltipDisplayer>
         //                         {email ? (
@@ -358,7 +359,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                     const value = (col.dtoPath ? findFromObject(row.original, col.dtoPath) : row.getValue(col.accessorPath)) as boolean | undefined;
                     return (
                         <div className="flex items-center" style={{border: "0px solid red"}}>
-                            {/*<Badge variant="outline" className={cn("capitalize", value ? "bg-green-500" : "bg-red-500")}>*/}
+                            {/*<Badge variant="outline" className={cn("capitalize", value ? "bg-success" : "bg-destructive")}>*/}
                             {/*    <Check />*/}
                             {/*    <CircleSlash />*/}
                             {/*</Badge>*/}
@@ -498,6 +499,10 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
         if (col.cellType === "number") {
             return {
                 ...base,
+                meta: {
+                    ...(base.meta as object),
+                    className: cn((base.meta as {className?: string} | undefined)?.className, "tabular-nums text-right"),
+                },
                 cell: ({ row }) => {
                     const value = (col.dtoPath ? findFromObject(row.original, col.dtoPath) : row.getValue(col.accessorPath)) as number | number[] | undefined;
                     if (value == null) return <div />;
@@ -513,7 +518,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                                 <PopoverContent align="start" className="w-auto max-w-lg px-2">
                                     <div className="max-h-60 w-fit overflow-y-auto flex flex-col gap-1.5">
                                         {items.map((v, i) => (
-                                            <Badge key={i} variant="outline" className="text-sm">
+                                            <Badge key={i} variant="outline" className="text-sm tabular-nums">
                                                 {String(v ?? "")}
                                             </Badge>
                                         ))}
@@ -524,14 +529,14 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                     }
                     if (items.length > 1) {
                         return (
-                            <div className="flex items-center gap-1 flex-wrap">
+                            <div className="flex items-center gap-1 flex-wrap justify-end">
                                 {items.map((v, i) => (
-                                    <Badge key={i} variant="outline">{String(v ?? "")}</Badge>
+                                    <Badge key={i} variant="outline" className="tabular-nums">{String(v ?? "")}</Badge>
                                 ))}
                             </div>
                         );
                     }
-                    return <div>{String(items[0] ?? "")}</div>;
+                    return <div className="tabular-nums text-right">{String(items[0] ?? "")}</div>;
                 },
             } as ColumnDef<T>;
         }
@@ -638,15 +643,15 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                         <TooltipDisplayer tooltip={(currentLanguage ? currentLanguage[ !!value ? "deleted" : "active" ] : "") as TranslationValue}>
                             {
                                 !!value ?
-                                    <div className="flex items-center space-x-1">
-                                        <IconFileXFilled className="text-red-500" />
+                                    <div className="flex items-center gap-x-1">
+                                        <IconFileXFilled className="text-destructive" />
                                         <p>{formatDate(new Date(value), {
                                             timeZone: timezone ?? "UTC",
                                             format: { dateStyle: "long", timeStyle: "medium" }
                                         })}</p>
                                     </div>
                                     :
-                                    <IconFileLike className="text-green-400" />
+                                    <IconFileLike className="text-success" />
                             }
                         </TooltipDisplayer>
                     )
@@ -671,7 +676,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
     if( !!renderActions ){
         allColumns.push({
             id: "actions",
-            meta: { className: "w-fit text-right pr-3" },
+            meta: { className: "w-fit text-right pr-3 sticky right-0 z-10 bg-background" },
             cell: ({ row }) => renderActions(row.original),
         })
     }

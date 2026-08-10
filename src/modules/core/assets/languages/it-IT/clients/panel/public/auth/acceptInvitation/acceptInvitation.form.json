@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/acceptInvitation/acceptInvitation.form.tsx",
+  "verifyingInvitationCodeTitle": "Controllo di sicurezza",
+  "verifyingInvitationCodeDescription": "Verifica della validità del codice di invito.",
+  "errorVerifyingInvitationCodeTitle": "Il controllo di sicurezza non è riuscito",
+  "errorVerifyingInvitationCodeDescription": "Questo codice di invito non è valido o è scaduto.",
+  "errorAcceptingInvitationTitle": "Impossibile accettare l'invito",
+  "errorAcceptingInvitationDescription": "È successo qualcosa di inaspettato mentre accettavi l'invito. Per favore riprova più tardi!",
+  "successAcceptingInvitationTitle": "Successo",
+  "successAcceptingInvitationDescription": "Invito accettato con successo. Ora puoi accedere al tuo account utilizzando la tua password.",
+  "title": "Accetta l'invito",
+  "description": "Imposta la tua password per accettare l'invito",
+  "form": {
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Inserisci la tua password",
+    "invitationCodeLabel": "Codice invito"
+  },
+  "confirm": "Accetta l'invito",
+  "axios": {
+    "start": {
+      "title": "Accettare l'invito",
+      "time": 3000
+    },
+    "success": {
+      "title": "Invito accettato con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile accettare l'invito",
+      "time": 3000
+    }
+  }
+}

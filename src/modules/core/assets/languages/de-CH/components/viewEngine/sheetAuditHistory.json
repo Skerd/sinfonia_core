@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/components/viewEngine/sheetAuditHistory.tsx",
+  "menuItem": "Aktivität",
+  "drawerTitle": "Aktivität",
+  "drawerDescription": "Änderungen bis diese protokoll over time.",
+  "loadMore": "Laden more",
+  "loading": "Laden…",
+  "empty": "Keine activity yet.",
+  "errorTitle": "Konnte nicht laden activity",
+  "retry": "Erneut versuchen",
+  "actionCreate": "Erstellt diese protokoll",
+  "actionUpdate": "aktualisiert",
+  "actionDelete": "Gelöscht diese protokoll",
+  "actionRestore": "Restored diese protokoll",
+  "systemActor": "System",
+  "unknownField": "Field",
+  "from": "Von",
+  "to": "Bis",
+  "noFieldChanges": "Keine visible field änderungen (restricted oder empty diff)."
+}

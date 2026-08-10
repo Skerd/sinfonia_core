@@ -63,7 +63,7 @@ function RoleSheetView({
                             </div>
                         )}
                         <div className="flex items-start justify-between gap-2 p-2 w-full">
-                            <div className="min-w-0 flex-1 space-y-1">
+                            <div className="min-w-0 flex-1 gap-y-1">
                                 <SheetTitle>
                                     <HiddenElement>
                                         {read?.name && !!role.name && <span className="truncate">{role.name}</span>}
@@ -92,10 +92,10 @@ function RoleSheetView({
                     </div>
                 </SheetHeader>
 
-                <div className="px-4 pb-6 mt-4 space-y-6">
+                <div className="flex flex-col px-4 pb-6 mt-4 gap-y-6">
                     <HiddenElement>
                         {read?.permissions && permissionsTable && (
-                            <div className="space-y-2">
+                            <div className="flex flex-col gap-y-2">
                                 <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                                     {resolveLanguageKey("permissions")}
                                 </p>

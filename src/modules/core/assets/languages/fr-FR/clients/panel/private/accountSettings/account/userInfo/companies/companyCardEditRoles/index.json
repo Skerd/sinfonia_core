@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/index.tsx",
+  "roles": "Rôles",
+  "update": "Mettre à jour",
+  "cancel": "Annuler",
+  "failTitle": "Échec du chargement des rôles de l'entreprise",
+  "failTitleTooltip": "Cliquez ici pour réessayer de charger les rôles des entreprises",
+  "clarification": "Clarification",
+  "clarificationDescription": "Le vert est actif ou en activation, le rouge est inactif ou en désactivation"
+}

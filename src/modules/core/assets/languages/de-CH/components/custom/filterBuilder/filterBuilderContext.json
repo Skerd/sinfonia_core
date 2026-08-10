@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterBuilderContext.tsx",
+  "loadingFilters": "Laden filters...",
+  "filterLoadError": "Filter fields konnten nicht geladen werden",
+  "filterLoadErrorDescription": "Click bis retry fetching filter fields!"
+}

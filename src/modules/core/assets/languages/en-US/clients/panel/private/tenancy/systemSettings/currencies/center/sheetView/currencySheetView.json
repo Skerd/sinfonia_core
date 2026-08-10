@@ -2,9 +2,13 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx",
   "currency": "Currency",
   "overview": "Overview",
-  "metadata": "Metadata",
+  "lifecycle": "Lifecycle",
   "symbol": "Symbol",
   "abbreviation": "Abbreviation",
   "decimalPlaces": "Decimal places",
-  "createdBy": "Created by"
+  "createdAt": "Created at",
+  "updatedAt": "Updated at",
+  "createdBy": "Created by",
+  "deletedAt": "Deleted at",
+  "deletedBy": "Deleted by"
 }

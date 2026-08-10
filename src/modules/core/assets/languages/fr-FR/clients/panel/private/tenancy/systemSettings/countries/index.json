@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/index.tsx",
+  "title": "Pays",
+  "description": "Gérer les pays et les paramètres de configuration",
+  "create": "Créer un pays",
+  "searchPlaceholder": "Recherchez par nom, code ou ajoutez des filtres...",
+  "noData": "Aucun pays trouvé",
+  "failTitle": "Échec du chargement des pays",
+  "failDescription": "Une erreur s'est produite lors du chargement des pays. Veuillez réessayer.",
+  "status": "Statut",
+  "name": "Nom",
+  "code": "Code",
+  "phoneCode": "Code de téléphone",
+  "currency": "Devise",
+  "deleted": "Supprimé",
+  "active": "Actif",
+  "fields": {
+    "name": "Nom",
+    "code": "Code",
+    "phoneCode": "Code de téléphone",
+    "currency": "Devise",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "createdBy": "Créé par",
+    "company": "Entreprise",
+    "deletedAt": "Statut",
+    "deletedBy": "Supprimé par"
+  }
+}

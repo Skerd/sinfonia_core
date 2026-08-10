@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/custom/infoRowGroup.tsx",
+  "one": "1 champ restreint",
+  "many": "{count} champs restreints",
+  "tooltip": "Vous n'êtes pas autorisé à afficher ces champs"
+}

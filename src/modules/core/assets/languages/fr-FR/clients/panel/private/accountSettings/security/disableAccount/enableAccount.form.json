@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/enableAccount.form.tsx",
+  "title": "Le compte utilisateur n'est pas actif",
+  "description": "Si vous souhaitez l'activer, cliquez sur le bouton ci-dessous",
+  "deactivateButton": "Activer",
+  "axios": {
+    "start": {
+      "title": "Activation du compte",
+      "time": 3000
+    },
+    "success": {
+      "title": "Activation du compte terminée avec succès",
+      "time": 1000
+    },
+    "error": {
+      "title": "L'activation du compte a échoué",
+      "time": 3000
+    }
+  }
+}

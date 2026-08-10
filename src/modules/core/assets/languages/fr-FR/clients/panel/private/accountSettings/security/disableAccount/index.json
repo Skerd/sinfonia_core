@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/index.tsx",
+  "title": "Statut du compte",
+  "description": "Changer le statut du compte",
+  "failTitle": "Échec du chargement de l'état du compte",
+  "failTitleTooltip": "Cliquez pour réessayer de charger l'état du compte"
+}

@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/createCity.tsx",
+  "title": "Créer une ville",
+  "description": "Ajouter une nouvelle ville",
+  "form": {
+    "nameLabel": "Nom",
+    "namePlaceholder": "Nom de la ville",
+    "countryLabel": "Pays",
+    "countryPlaceholder": "Sélectionner le pays",
+    "stateLabel": "Canton / État",
+    "statePlaceholder": "Sélectionner le canton"
+  },
+  "formHeader": {
+    "title": "Créer une ville",
+    "description": "Ajouter une nouvelle ville"
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Créer"
+  }
+}

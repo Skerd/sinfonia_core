@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/components/custom/arrayOfStringsField.tsx",
+  "label": "Articles",
+  "placeholder": "Ajouter un article…",
+  "removeTooltip": "Supprimer",
+  "addButtonLabel": "Ajouter un article",
+  "maxItemsReached": "Nombre maximum d'éléments atteint."
+}

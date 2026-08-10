@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/actions/restore.tsx",
+  "title": "Ripristina",
+  "restoreConfirmTitle": "Ripristina la valuta",
+  "restoreConfirmDescription": "Sei sicuro di voler ripristinare questa valuta?",
+  "cancel": "Annulla",
+  "confirmRestore": "Ripristina",
+  "axios": {
+    "start": {
+      "title": "Ripristino della valuta",
+      "time": 3000
+    },
+    "success": {
+      "title": "Valuta ripristinata con successo.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile ripristinare la valuta",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx",
+  "name": "Name",
+  "state": "Kanton",
+  "active": "Aktiv",
+  "country": "Land",
+  "deleted": "Gelöscht",
+  "failedTitle": "Ort konnten nicht geladen werden",
+  "failedDescription": "Tap bis retry."
+}

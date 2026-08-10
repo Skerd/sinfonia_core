@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/messagesList.tsx",
+  "failTitle": "Nachrichten konnten nicht geladen werden",
+  "failTitleTooltip": "Click bis reload nachrichten",
+  "welcome": "Welcome bis chat",
+  "today": "Heute",
+  "yesterday": "Gestern",
+  "weekDays": [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ]
+}

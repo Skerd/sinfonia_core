@@ -1,10 +1,11 @@
+import {useMemo} from "react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconBuildingPlus} from "@tabler/icons-react";
-import {buildTitleBreadcrumb} from "@coreModule/helpers/general";
+import {buildPageTitle} from "@coreModule/helpers/general";
 import CityCard from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx";
 import CitySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx";
 import EntityListPage from "@coreModule/components/entityPage/EntityListPage.tsx";
@@ -45,12 +46,15 @@ function AllCities({
     countryName,
 }: AllCitiesProps) {
 
-    const headerTitle = buildTitleBreadcrumb(resolveLanguageKey("title") as string, [countryName, stateName]);
+    const headerTitle = buildPageTitle(resolveLanguageKey("title") as string, [countryName, stateName]);
 
-    const extraParams = {
-        country: countryId ?? undefined,
-        state: stateId ?? undefined,
-    };
+    const extraParams = useMemo(() => {
+        if (!countryId && !stateId) return undefined;
+        return {
+            ...(countryId ? {country: countryId} : {}),
+            ...(stateId ? {state: stateId} : {}),
+        };
+    }, [countryId, stateId]);
 
     return (
         <EntityListPage<City>
@@ -65,7 +69,7 @@ function AllCities({
             resolveLanguageKey={resolveLanguageKey}
             headerTitle={headerTitle}
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-            configurations={{limit: 200}}
+            configurations={{limit: 20}}
             renderCard={(city, onDelete, onRestore) => (
                 <CityCard
                     countryId={countryId}
@@ -97,5 +101,5 @@ function AllCities({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "cities")
 )(AllCities);

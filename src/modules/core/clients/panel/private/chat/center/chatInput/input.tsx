@@ -317,7 +317,7 @@ function ChatInputAll({
             }
             {
                 !!selectedFiles &&
-                <div className="flex flex-wrap space-x-1 space-y-1 max-h-42 overflow-y-auto">
+                <div className="flex flex-wrap gap-x-1 gap-y-1 max-h-42 overflow-y-auto">
                     {
                         selectedFiles.map((file, index: number) => {
                             return (
@@ -337,7 +337,7 @@ function ChatInputAll({
                 </div>
             }
 
-            <div className="flex items-end border rounded-lg px-1 space-x-1" style={{border: "0px solid red"}}>
+            <div className="flex items-end border rounded-lg px-1 gap-x-1" style={{border: "0px solid red"}}>
 
                 <TooltipDisplayer tooltip={(resolveLanguageKey("attach") as string)?.replace("{}", formatMaxSize(MAX_FILE_SIZE_BYTES))}>
                     <div className="bg-card rounded-full flex items-center justify-center md:p-1">
@@ -410,7 +410,7 @@ function ChatInputAll({
                             }}
                             data={mentionData}
                             appendSpaceOnAdd={true}
-                            className="font-medium text-green-600 dark:text-green-500"
+                            className="font-medium text-success"
                             renderSuggestion={(entry, _search, highlightedDisplay, _index, focused) => {
                                 const user = usersById.get(String(entry.id));
                                 return (

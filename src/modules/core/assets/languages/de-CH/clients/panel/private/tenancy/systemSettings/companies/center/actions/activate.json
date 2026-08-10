@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx",
+  "title": "Aktivieren firma",
+  "description": "Sind sie sicher sie want bis aktivieren diese firma? Users will werden able bis zugriff die system after activating.",
+  "confirm": "Aktivieren",
+  "cancel": "Abbrechen",
+  "axios": {
+    "start": {
+      "title": "Activating firma",
+      "time": 3000
+    },
+    "success": {
+      "title": "Firma erfolgreich activated.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Firma fehlgeschlagen bis werden activated",
+      "time": 3000
+    }
+  }
+}

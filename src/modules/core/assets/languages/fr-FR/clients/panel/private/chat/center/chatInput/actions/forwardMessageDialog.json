@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/actions/forwardMessageDialog.tsx",
+  "failTitle": "Impossible de charger les chaînes",
+  "failTitleTooltip": "Appuyez pour réessayer de charger les chaînes.",
+  "noDataTitle": "Aucune chaîne disponible.",
+  "forward": "Transférer",
+  "message": "Message",
+  "selectChannelsToForward": "Sélectionnez les chaînes auxquelles transférer ce message",
+  "addComment": "Ajouter un commentaire (facultatif)",
+  "addCommentPlaceholder": "Ajouter un commentaire...",
+  "selectChannels": "Sélectionnez les chaînes",
+  "cancel": "Annuler",
+  "sending": "Envoi...",
+  "axios": {
+    "start": {
+      "title": "Transfert de message",
+      "time": 3000
+    },
+    "success": {
+      "title": "Message transféré avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec du transfert du message",
+      "time": 3000
+    }
+  },
+  "messageDeleted": "Message supprimé"
+}

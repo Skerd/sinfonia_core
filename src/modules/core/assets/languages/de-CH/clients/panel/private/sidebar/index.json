@@ -1,0 +1,120 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/index.tsx",
+  "home": {
+    "title": "Apps",
+    "subtitle": "App auswählen zum Öffnen",
+    "searchPlaceholder": "Apps suchen…",
+    "noResults": "Keine Apps entsprechen Ihrer Suche.",
+    "recent": "Zuletzt",
+    "greetingMorning": "Guten Morgen",
+    "greetingAfternoon": "Guten Tag",
+    "greetingEvening": "Guten Abend"
+  },
+  "menus": {
+    "account": {
+      "title": "Mein Konto",
+      "accountSettings": {
+        "title": "Einstellungen",
+        "profile": {
+          "title": "Profil"
+        },
+        "security": {
+          "title": "Sicherheit"
+        },
+        "account": {
+          "title": "Konto"
+        },
+        "notifications": {
+          "title": "Benachrichtigungen"
+        },
+        "notificationCenter": {
+          "title": "Aktivität"
+        }
+      },
+      "apps": {
+        "title": "Apps",
+        "connectedApps": {
+          "title": "Verbundene Apps"
+        }
+      }
+    },
+    "tenancy": {
+      "title": "Mandantenverwaltung",
+      "companies": {
+        "title": "Firmen",
+        "allCompanies": {
+          "title": "Firmen",
+          "editCompany": {
+            "title": "Firma bearbeiten"
+          },
+          "createCompany": {
+            "title": "Firma erstellen"
+          }
+        }
+      },
+      "resources": {
+        "title": "Ressourcen",
+        "serverPerformance": {
+          "title": "Performance"
+        },
+        "cronJobs": {
+          "title": "Geplante Aktionen"
+        }
+      },
+      "systemSettings": {
+        "smtpServers": {
+          "title": "Mailserver"
+        },
+        "cities": {
+          "title": "Städte"
+        },
+        "states": {
+          "title": "Kantone / Staaten"
+        },
+        "title": "Konfigurationen",
+        "messagingProviders": {
+          "title": "Messaging-Anbieter"
+        },
+        "core": {
+          "title": "Core"
+        },
+        "countries": {
+          "title": "Länder"
+        },
+        "currencies": {
+          "title": "Währungen"
+        }
+      }
+    },
+    "company": {
+      "title": "Firma",
+      "dashboard": {
+        "title": "Übersicht"
+      },
+      "administration": {
+        "title": "Administration"
+      },
+      "users": {
+        "title": "Benutzer"
+      },
+      "chats": {
+        "title": "Chats"
+      },
+      "settings": {
+        "title": "Einstellungen",
+        "company": {
+          "title": "Firma"
+        },
+        "roles": {
+          "title": "Rollen"
+        }
+      }
+    }
+  },
+  "commandPalette": {
+    "title": "Befehlspalette",
+    "description": "Zu einer Seite springen",
+    "placeholder": "Seiten suchen…",
+    "empty": "Keine passenden Seiten"
+  }
+}

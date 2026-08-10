@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/custom/infoRowGroup.tsx",
+  "one": "1 field restricted",
+  "many": "{count} fields restricted",
+  "tooltip": "You do not have permission to view these fields"
+}

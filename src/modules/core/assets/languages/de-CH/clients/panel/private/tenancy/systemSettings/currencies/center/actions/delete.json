@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/actions/delete.tsx",
+  "title": "Löschen",
+  "deleteConfirmTitle": "Währung löschen",
+  "deleteConfirmDescription": "Sind sie sicher sie want bis löschen diese währung?",
+  "confirmNameLabel": "Typ die währung name bis confirm",
+  "cancel": "Abbrechen",
+  "confirmDelete": "Löschen",
+  "axios": {
+    "start": {
+      "title": "Deleting währung",
+      "time": 3000
+    },
+    "success": {
+      "title": "Währung erfolgreich gelöscht.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Währung fehlgeschlagen bis werden gelöscht",
+      "time": 3000
+    }
+  }
+}

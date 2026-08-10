@@ -1,0 +1,32 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/editRole.tsx",
+  "title": "Modifica ruolo",
+  "description": "Aggiorna i dettagli del ruolo",
+  "errorTitle": "Impossibile caricare i dati del ruolo",
+  "errorDescription": "Fare clic qui per riprovare a recuperare i dati del ruolo",
+  "form": {
+    "nameLabel": "Nome del ruolo",
+    "namePlaceholder": "Nome del ruolo",
+    "nameDescription": "Il nome visualizzato del ruolo",
+    "templateLabel": "Modello",
+    "templatePlaceholder": "Modello",
+    "templateDescription": "Copia le autorizzazioni da un altro ruolo"
+  },
+  "none": "Nessuno",
+  "cancel": "Annulla",
+  "submit": "Salva",
+  "axios": {
+    "start": {
+      "title": "Salvataggio del ruolo",
+      "time": 3000
+    },
+    "success": {
+      "title": "Ruolo aggiornato con successo!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare il ruolo, riprova!",
+      "time": 3000
+    }
+  }
+}

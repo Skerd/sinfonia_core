@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/timezone/updateTimeZone.tsx",
+  "confirm": "Conferma la modifica del fuso orario",
+  "cancel": "Annulla",
+  "axios": {
+    "start": {
+      "title": "Aggiornamento del fuso orario",
+      "time": 3000
+    },
+    "success": {
+      "title": "Fuso orario aggiornato correttamente",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare il fuso orario",
+      "time": 3000
+    }
+  }
+}

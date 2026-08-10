@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/actions/restore.tsx",
+  "title": "Restaurer",
+  "restoreConfirmTitle": "Restaurer l'état",
+  "restoreConfirmDescription": "Êtes-vous sûr de vouloir restaurer cet état ?",
+  "cancel": "Annuler",
+  "confirmRestore": "Restaurer",
+  "axios": {
+    "start": {
+      "title": "État de restauration",
+      "time": 3000
+    },
+    "success": {
+      "title": "État restauré avec succès.",
+      "time": 3000
+    },
+    "error": {
+      "title": "L’État n’a pas pu être restauré",
+      "time": 3000
+    }
+  }
+}

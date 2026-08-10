@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/editMessagingProvider.tsx",
+  "title": "Modifier le fournisseur de messagerie",
+  "description": "Laissez le jeton d'authentification vide pour conserver le jeton actuel.",
+  "errorTitle": "Échec du chargement du fournisseur de messagerie",
+  "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données du fournisseur.",
+  "noId": "Aucun fournisseur de messagerie sélectionné.",
+  "backToList": "Retour à la liste",
+  "form": {
+    "nameLabel": "Nom",
+    "namePlaceholder": "par ex. Twilio primaire",
+    "providerTypeLabel": "Fournisseur",
+    "providerType": {
+      "twilio": "Twilio"
+    },
+    "accountSidLabel": "Numéro de compte du compte",
+    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "authTokenLabel": "Jeton d'authentification",
+    "authTokenPlaceholder": "••••••••",
+    "authTokenEditLabel": "Jeton d'authentification (laisser vide pour conserver)",
+    "authTokenEditPlaceholder": "••••••••",
+    "fromPhoneLabel": "Expéditeur de SMS (E.164)",
+    "fromPhonePlaceholder": "+15551234567",
+    "fromWhatsappLabel": "Expéditeur WhatsApp (E.164)",
+    "fromWhatsappPlaceholder": "+15551234567"
+  },
+  "formHeader": {
+    "title": "Modifier le fournisseur de messagerie",
+    "description": "Laissez le jeton d'authentification vide pour conserver le jeton actuel."
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Enregistrer"
+  }
+}

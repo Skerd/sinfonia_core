@@ -15,7 +15,7 @@ type HiddenElementProps = WithLanguageType & {
 };
 
 const LOCK_SIZE = 14;
-const DEFAULT_RANDOM_LENGTH = 8;
+const DEFAULT_RANDOM_LENGTH = 0;
 
 function HiddenElement({
     children,
@@ -50,7 +50,7 @@ function HiddenElement({
     if (!hasContent) {
         if (hideAll) return null;
         return (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-x-2">
                 {showLock && (
                     <TooltipDisplayer tooltip={resolveLanguageKey("tooltip")}>
                         <LockKeyhole
@@ -60,9 +60,11 @@ function HiddenElement({
                     </TooltipDisplayer>
                 )}
                 {randomLength > 0 && (
-                    <p className="blur-xs select-none" aria-hidden>
-                        {generateRandomString(randomLength)}
-                    </p>
+                    <TooltipDisplayer tooltip={resolveLanguageKey("tooltip")}>
+                        <p className="blur-xs select-none" aria-hidden>
+                            {generateRandomString(randomLength)}
+                        </p>
+                    </TooltipDisplayer>
                 )}
             </div>
         );

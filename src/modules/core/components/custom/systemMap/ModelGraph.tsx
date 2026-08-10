@@ -103,17 +103,17 @@ export function ModelGraph({dataset, onSelectModel}: ModelGraphProps) {
                         stroke: e.bridge
                             ? CLUSTER_META.escrow.color
                             : selectedId && (e.source === selectedId || e.target === selectedId)
-                              ? "#0f172a"
-                              : "#94a3b8",
+                              ? "var(--foreground)"
+                              : "var(--muted-foreground)",
                         strokeWidth:
                             e.bridge || e.source === selectedId || e.target === selectedId ? 2 : 1,
                     },
-                    labelStyle: {fontSize: 10, fill: "#64748b"},
+                    labelStyle: {fontSize: 10, fill: "var(--muted-foreground)"},
                     markerEnd: {
                         type: MarkerType.ArrowClosed,
                         width: 14,
                         height: 14,
-                        color: e.bridge ? CLUSTER_META.escrow.color : "#94a3b8",
+                        color: e.bridge ? CLUSTER_META.escrow.color : "var(--muted-foreground)",
                     },
                 })),
         [modelEdges, visibleIds, selectedId],
@@ -135,7 +135,7 @@ export function ModelGraph({dataset, onSelectModel}: ModelGraphProps) {
     }, [onSelectModel]);
 
     return (
-        <div className="flex h-full min-h-[560px] rounded-md border overflow-hidden bg-slate-50">
+        <div className="flex h-full min-h-[560px] rounded-md border overflow-hidden bg-muted">
             <div className="flex flex-1 flex-col min-w-0">
                 <div className="flex flex-wrap items-center gap-2 border-b bg-background px-3 py-2">
                     <input
@@ -154,7 +154,7 @@ export function ModelGraph({dataset, onSelectModel}: ModelGraphProps) {
                                     key={cluster}
                                     type="button"
                                     onClick={() => toggleCluster(cluster)}
-                                    className="rounded-md border px-2 py-1 text-[11px] font-medium transition-opacity"
+                                    className="rounded-md border px-2 py-1 text-2xs font-medium transition-opacity"
                                     style={{
                                         background: on ? meta.bg : "transparent",
                                         borderColor: meta.border,
@@ -167,7 +167,7 @@ export function ModelGraph({dataset, onSelectModel}: ModelGraphProps) {
                             );
                         })}
                     </div>
-                    <span className="ml-auto text-[11px] text-muted-foreground">
+                    <span className="ml-auto text-2xs text-muted-foreground">
                         {nodes.length} models · {edges.length} links · pan / zoom / click
                     </span>
                 </div>
@@ -187,15 +187,15 @@ export function ModelGraph({dataset, onSelectModel}: ModelGraphProps) {
                         nodesDraggable={false}
                         proOptions={{hideAttribution: true}}
                     >
-                        <Background gap={18} size={1} color="#e2e8f0" />
+                        <Background gap={18} size={1} color="var(--border)" />
                         <Controls showInteractive={false} />
                         <MiniMap
                             nodeColor={(n) => {
                                 const cluster = (n.data as {cluster?: SystemMapCluster})?.cluster;
-                                return cluster ? CLUSTER_META[cluster].color : "#94a3b8";
+                                return cluster ? CLUSTER_META[cluster].color : "var(--muted-foreground)";
                             }}
                             maskColor="rgba(15,23,42,0.08)"
-                            className="!bg-white !border"
+                            className="!bg-card !border"
                         />
                     </ReactFlow>
                 </div>

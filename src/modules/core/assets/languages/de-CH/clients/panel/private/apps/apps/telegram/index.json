@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/index.tsx",
+  "name": "Telegram",
+  "description": "Verbinden Sie Telegram für Echtzeitkommunikation.",
+  "connected": "Verbunden",
+  "notConnected": "Verbinden",
+  "connect": "Verbinden",
+  "disconnect": "Trennen",
+  "failTitle": "Status konnte nicht geladen werden",
+  "failTitleTooltip": "Hier klicken, um den Status erneut zu laden",
+  "linked": {
+    "title": "Telegram erfolgreich verbunden",
+    "description": "Klicken Sie auf die Schaltfläche unten, um Telegram zu trennen",
+    "button": "Trennen"
+  },
+  "notLinked": {
+    "title": "Telegram nicht verbunden",
+    "description": "Klicken Sie auf die Schaltfläche unten, um Telegram zu verbinden",
+    "button": "Verbinden"
+  }
+}

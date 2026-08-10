@@ -96,7 +96,7 @@ function MessagingProviderSheetView({
                     onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
                     messagingProvider={asMessagingProvider}
                     targetActive={action === "activateMessagingProvider"}
-                    onSuccess={(provider) => {
+                    onSuccess={(provider: MessagingProvider) => {
                         setSheetData(provider);
                         onSheetRowPatched?.(provider);
                     }}
@@ -116,5 +116,5 @@ function MessagingProviderSheetView({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx"),
-    withDebug(true, true),
+    withDebug(true, false, "messagingProviders"),
 )(MessagingProviderSheetView);

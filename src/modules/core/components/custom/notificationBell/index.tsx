@@ -68,7 +68,7 @@ function NotificationBell({
                         unreadNotifications > 0 &&
                         <span
                             className={cn(
-                                "absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-medium text-primary-foreground",
+                                "absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-3xs font-medium text-primary-foreground",
                                 unreadNotifications > 99 && "px-1"
                             )}
                         >
@@ -105,15 +105,15 @@ function NotificationBell({
                                 <path
                                     d="M70 30 C50 30 42 45 42 62 V85 C42 92 40 96 36 100 C44 96 48 102 52 100 C56 98 60 104 64 100 C68 98 72 104 76 100 C80 98 84 104 88 100 C92 98 96 102 104 100 C100 96 98 92 98 85 V62 C98 45 90 30 70 30Z"
                                     // fill="#FFFFFF"
-                                    stroke="#9CA3AF"
+                                    stroke="var(--muted-foreground)"
                                     strokeWidth="2"
                                     strokeLinejoin="round"
                                 />
-                                <circle cx="70" cy="90" r="4" fill="#9CA3AF"/>
-                                <circle cx="60" cy="65" r="3" fill="#9CA3AF"/>
-                                <circle cx="80" cy="65" r="3" fill="#9CA3AF"/>
-                                <path d="M60 80C65 75 75 75 80 80" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round"/>
-                                <circle cx="95" cy="40" r="5" fill="#9CA3AF"/>
+                                <circle cx="70" cy="90" r="4" fill="var(--muted-foreground)"/>
+                                <circle cx="60" cy="65" r="3" fill="var(--muted-foreground)"/>
+                                <circle cx="80" cy="65" r="3" fill="var(--muted-foreground)"/>
+                                <path d="M60 80C65 75 75 75 80 80" stroke="var(--muted-foreground)" strokeWidth="2" strokeLinecap="round"/>
+                                <circle cx="95" cy="40" r="5" fill="var(--muted-foreground)"/>
                             </svg>
                         </div>
                         :

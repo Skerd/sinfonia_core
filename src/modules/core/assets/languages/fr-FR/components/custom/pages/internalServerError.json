@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/pages/internalServerError.tsx",
+  "title": "Oups ! Quelque chose s'est mal passé :')",
+  "description": "Nous nous excusons pour la gêne occasionnée.\n Veuillez réessayer plus tard.",
+  "backLabel": "Retourner",
+  "backHome": "Retour à la maison"
+}

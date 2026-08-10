@@ -17,7 +17,7 @@ import {ChevronsUpDown, User, X} from 'lucide-react';
 import {cn} from '@coreModule/components/lib/utils.ts';
 import apiClient from '@coreModule/helpers/axiosClients/apiClient.ts';
 import PageIncrementer from '@coreModule/components/custom/apiSelect/pageIncrementer.tsx';
-import {HashLoader} from 'react-spinners';
+import {Spinner} from "@coreModule/components/ui/spinner.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {CheckIcon, PlusCircledIcon} from "@radix-ui/react-icons";
@@ -445,7 +445,6 @@ function ApiSelectCore({
 
     const triggerRef = useRef<HTMLButtonElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
-    const [popoverWidth, setPopoverWidth] = useState<number>();
     const notifiedValueRef = useRef<string | undefined>(undefined);
     const notifiedMultiValuesKeyRef = useRef<string>("");
 
@@ -729,7 +728,6 @@ function ApiSelectCore({
     const handleOpenChange = useCallback((nextOpen: boolean) => {
         if( disabled ) return;
         if (!nextOpen) setSearchText('');
-        else if (triggerRef.current) setPopoverWidth(triggerRef.current.offsetWidth);
         setOpen(nextOpen);
     }, [disabled]);
 
@@ -887,7 +885,7 @@ function ApiSelectCore({
                 <CommandItem
                     key={option.value}
                     value={option.value}
-                    className="space-x-0"
+                    className="flex gap-x-0"
                     aria-selected={multiple ? isSelected : undefined}
                     onSelect={() => handleOptionSelect(option)}
                 >
@@ -906,7 +904,7 @@ function ApiSelectCore({
                     {option.photo ? (
                         <SelectOptionAvatar photo={option.photo} label={option.label} />
                     ) : null}
-                    <p>{option.label}</p>
+                    <p className="whitespace-nowrap">{option.label}</p>
                 </CommandItem>
             );
         },
@@ -1003,7 +1001,7 @@ function ApiSelectCore({
                                 <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
                                     {selectedValues.length}
                                 </Badge>
-                                <div className="hidden space-x-1 lg:flex">
+                                <div className="hidden gap-x-1 lg:flex">
                                     {selectedValues.length > 2 ? (
                                         <Badge variant="secondary" className="rounded-sm px-1 font-normal">
                                             {selectedValues.length} selected
@@ -1051,11 +1049,14 @@ function ApiSelectCore({
                 )}
             </PopoverTrigger>
             <PopoverContent
-                className={cn(forTable ? 'w-[200px] p-0' : 'w-full p-0')}
-                style={forTable ? undefined : { width: popoverWidth }}
+                className={cn(
+                    forTable
+                        ? 'w-[200px] p-0'
+                        : 'w-max min-w-[var(--radix-popover-trigger-width)] max-w-[min(90vw,32rem)] p-0',
+                )}
                 align="start"
             >
-                <Command className="w-full" shouldFilter={false}>
+                <Command className="h-auto w-max min-w-full overflow-hidden" shouldFilter={false}>
                     <div className="relative">
                         <CommandInput
                             placeholder={`${resolveLanguageKey("search")}...`}
@@ -1081,7 +1082,7 @@ function ApiSelectCore({
                         {
                             loading && options.length === 0 ?
                             <div className="flex p-3 items-center justify-center w-full border rounded-lg">
-                                <HashLoader color="gray" size="20px" loading />
+                                <Spinner className="size-5 text-muted-foreground" />
                             </div>
                             :
                             <>
@@ -1119,7 +1120,7 @@ function ApiSelectCore({
                                         {
                                             (loadingMore) &&
                                             <div className="flex p-2 items-center justify-center">
-                                                <HashLoader color="gray" size="16px" loading={loadingMore} />
+                                                <Spinner className="size-4 text-muted-foreground" />
                                             </div>
                                         }
                                         {filteredDefaultOptions.length > 0 && (

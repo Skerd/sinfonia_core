@@ -42,7 +42,7 @@ function DeleteMessage({
     return (
         <div>
             <ContextMenuItem onClick={() => {toggleMessageDelete()}} className="hover:cursor-pointer">
-                <Trash2 className="mr-2 h-4 w-4 text-red-500" />
+                <Trash2 className="mr-2 h-4 w-4 text-destructive" />
                 {resolveLanguageKey("delete")}
                 <ContextMenuShortcut>⌘{shortcut}</ContextMenuShortcut>
             </ContextMenuItem>

@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/createCompanyDropMenuItem.tsx",
+  "addCompany": "Aggiungi azienda",
+  "dialogTitle": "Crea azienda",
+  "dialogDescription": "Crea una nuova azienda utilizzando il modulo sottostante."
+}

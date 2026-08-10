@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx",
+  "markAllAsRead": "Marquer tout comme lu",
+  "confirmTitle": "Marquer tout comme lu",
+  "confirmDescription": "Êtes-vous sûr de vouloir marquer toutes les notifications comme lues ?",
+  "cancel": "Annuler",
+  "confirm": "Marquer comme lu",
+  "axios": {
+    "start": {
+      "title": "Marquer tout comme lu",
+      "time": 3000
+    },
+    "success": {
+      "title": "Toutes les notifications marquées comme lues.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec du marquage des notifications comme lues",
+      "time": 3000
+    }
+  }
+}

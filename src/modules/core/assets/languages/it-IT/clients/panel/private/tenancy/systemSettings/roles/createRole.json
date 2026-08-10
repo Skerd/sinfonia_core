@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/createRole.tsx",
+  "title": "Crea ruolo",
+  "description": "Aggiungi un nuovo ruolo con autorizzazioni",
+  "failTitle": "Impossibile caricare le autorizzazioni",
+  "failDescription": "Impossibile caricare le autorizzazioni, riprova",
+  "failTooltip": "Fare clic qui per riprovare a caricare le autorizzazioni",
+  "noData": "Nessuna autorizzazione trovata, quindi non è possibile creare alcun ruolo",
+  "form": {
+    "nameLabel": "Nome del ruolo",
+    "namePlaceholder": "Nome del ruolo",
+    "nameDescription": "Il nome visualizzato del ruolo",
+    "templateLabel": "Modello",
+    "templatePlaceholder": "Modello",
+    "templateDescription": "Copia le autorizzazioni da un altro ruolo"
+  },
+  "none": "Nessuno",
+  "cancel": "Annulla",
+  "submit": "Crea",
+  "axios": {
+    "start": {
+      "title": "Creazione di ruolo",
+      "time": 3000
+    },
+    "success": {
+      "title": "Ruolo creato con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Creazione del ruolo non riuscita",
+      "time": 3000
+    }
+  }
+}

@@ -1,9 +1,13 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx",
   "overview": "Vështrim i përgjithshëm",
-  "metadata": "Metadatat",
+  "lifecycle": "Cikli i jetës",
   "createdBy": "Krijuar nga",
   "state": "Shtetit",
   "code": "Kodi",
-  "country": "Vendi"
+  "country": "Vendi",
+  "createdAt": "Krijuar më",
+  "updatedAt": "Përditësuar më",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga"
 }

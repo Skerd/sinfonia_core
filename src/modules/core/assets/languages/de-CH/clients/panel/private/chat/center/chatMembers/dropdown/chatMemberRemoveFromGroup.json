@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/chatMemberRemoveFromGroup.tsx",
+  "removeMember": "Entfernen von group",
+  "axios": {
+    "start": {
+      "title": "Removing mitglied",
+      "time": 3000
+    },
+    "success": {
+      "title": "Mitglied erfolgreich removed",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fehlgeschlagen bis entfernen mitglied",
+      "time": 3000
+    }
+  }
+}

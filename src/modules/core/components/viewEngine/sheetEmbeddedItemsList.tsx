@@ -64,7 +64,7 @@ function cardColumnsClass(columns: number | undefined): string {
     if (columns === 2) return "grid grid-cols-2 gap-2";
     if (columns === 3) return "grid grid-cols-3 gap-2";
     if (columns === 4) return "grid grid-cols-4 gap-2";
-    return "space-y-2";
+    return "flex flex-col gap-2";
 }
 
 function formatAmountWithCurrency(amountText: string, currency: unknown): string {
@@ -98,8 +98,12 @@ function resolveEmbeddedFieldText(
 
     if (field.languageKeyCategory && typeof raw === "boolean") {
         raw = resolveLanguageKey(`${field.languageKeyCategory}.${raw ? "true" : "false"}`);
-    } else if (field.languageKeyCategory && typeof raw === "string" && raw.trim()) {
-        const key = `${field.languageKeyCategory}.${raw.trim()}`;
+    } else if (
+        field.languageKeyCategory &&
+        (typeof raw === "string" || typeof raw === "number") &&
+        String(raw).trim()
+    ) {
+        const key = `${field.languageKeyCategory}.${String(raw).trim()}`;
         const resolved = resolveLanguageKey(key);
         if (resolved !== key) raw = resolved;
     }
@@ -129,7 +133,8 @@ function resolveLinkedRefStub(item: Record<string, any>, field: EmbeddedItemFiel
 function fieldHasValue(item: Record<string, any>, field: EmbeddedItemFieldConfig): boolean {
     if (field.type === "mediaStrip") {
         const v = resolvePath(item, field.name);
-        return Array.isArray(v) && v.length > 0;
+        if (Array.isArray(v)) return v.length > 0;
+        return v != null && typeof v === "object";
     }
     if (field.type === "linkedRef") {
         return resolveLinkedRefStub(item, field) != null;
@@ -326,7 +331,7 @@ function SheetEmbeddedItemsList({
 
     const listBody =
         displayMode === "compact" ? (
-            <div className="space-y-1">
+            <div className="flex flex-col gap-y-1">
                 {pagination.slice.map((item, i) => {
                     const summary = buildCompactSummary(
                         item,
@@ -345,7 +350,7 @@ function SheetEmbeddedItemsList({
                 })}
             </div>
         ) : (
-            <div className="space-y-2">
+            <div className="flex flex-col gap-y-2">
                 {pagination.slice.map((item, i) => {
                     const globalIndex =
                         pagination.pageSize < pagination.total
@@ -354,18 +359,38 @@ function SheetEmbeddedItemsList({
                     return (
                     <div
                         key={itemKey(item, i)}
-                        className="rounded-lg border border-border/60 bg-card p-3 space-y-2"
+                        className="flex flex-col rounded-lg border border-border/60 bg-card p-3 gap-y-2"
                     >
                         <span className="text-xs font-medium text-muted-foreground">#{globalIndex}</span>
                         <div className={fieldsLayoutClass}>
                         {fields.map((f, fi) => {
                             if (f.type === "mediaStrip") {
                                 const value = resolvePath(item, f.name);
-                                if (!Array.isArray(value) || value.length === 0) return null;
+                                const mediaList = Array.isArray(value)
+                                    ? value
+                                    : value != null && typeof value === "object"
+                                      ? [value]
+                                      : [];
+                                if (mediaList.length === 0) return null;
+                                const label =
+                                    typeof f.labelKey === "string" && f.labelKey.length > 0
+                                        ? resolveSheet(f.labelKey)
+                                        : null;
                                 return (
-                                    <div key={fi} className={cardColumns ? "col-span-full" : undefined}>
+                                    <div
+                                        key={fi}
+                                        className={cn(
+                                            "flex flex-col gap-1",
+                                            cardColumns ? "col-span-full" : undefined,
+                                        )}
+                                    >
+                                        {label ? (
+                                            <span className="text-xs font-medium text-muted-foreground">
+                                                {label}
+                                            </span>
+                                        ) : null}
                                         <SheetMediaFilesStrip
-                                            media={value as Media[]}
+                                            media={mediaList as Media[]}
                                             resolveLanguageKey={resolveSheet}
                                             canDownload
                                             canRemove={false}
@@ -412,8 +437,8 @@ function SheetEmbeddedItemsList({
         );
 
     return (
-        <div className="space-y-2">
-            <div className={cn("gap-2 space-y-2 max-h-[350px] overflow-y-auto", listClassName)}>{listBody}</div>
+        <div className="flex flex-col gap-y-2">
+            <div className={cn("flex flex-col gap-2 gap-y-2 max-h-[350px] overflow-y-auto", listClassName)}>{listBody}</div>
             <SheetListPaginationFooter
                 rangeLabel={pagination.rangeLabel}
                 pageIndex={pagination.pageIndex}

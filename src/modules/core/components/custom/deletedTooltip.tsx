@@ -28,10 +28,10 @@ function DeletedTooltip({
     return (
         <TooltipDisplayer
             tooltipRender={() => (
-                <div className="space-y-1">
+                <div className="flex flex-col gap-y-1">
                     {
                         !!deletedAt &&
-                        <div className="flex items-center space-x-1">
+                        <div className="flex items-center gap-x-1">
                             <p>{resolveLanguageKey("deletedAt")}:</p>
                             <p className="font-semibold">
                                 {formatDate(new Date(deletedAt.toString()), { timeZone: timezone })}
@@ -40,7 +40,7 @@ function DeletedTooltip({
                     }
                     {
                         !!deletedBy &&
-                        <div className="flex items-center space-x-1">
+                        <div className="flex items-center gap-x-1">
                             <p>{resolveLanguageKey("deletedBy")}:</p>
                             <p className="font-semibold">{getName(deletedBy)}</p>
                         </div>

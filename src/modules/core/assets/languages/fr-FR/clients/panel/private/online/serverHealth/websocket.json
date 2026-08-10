@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/websocket.tsx",
+  "websocketServerTitle": "Serveur Websocket",
+  "online": "En ligne",
+  "offline": "Hors ligne",
+  "uptime": "Temps de disponibilité",
+  "jobs": "Emplois",
+  "failed": "Échoué",
+  "avgTime": "Moy. Temps",
+  "day": "jour",
+  "days": "jours",
+  "hour": "heure",
+  "hours": "heures",
+  "minute": "minute",
+  "minutes": "minutes",
+  "second": "deuxième",
+  "seconds": "secondes"
+}

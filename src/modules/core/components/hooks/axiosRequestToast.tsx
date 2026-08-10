@@ -22,7 +22,7 @@ export function AxiosRequestToast({
 }: AxiosRequestToastProps){
     return (
         <div className="min-w-xs max-w-xs overflow-auto min-h-[20vh] max-h-[20vh]">
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center gap-x-1">
                 <p className="uppercase font-semibold">[{httpRequest}]</p>
                 {
                     isError ?

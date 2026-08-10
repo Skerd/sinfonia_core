@@ -1,0 +1,45 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/createSmtpServer.tsx",
+  "title": "SMTP server hinzufügen",
+  "description": "Outgoing mail ist sent using aktiv servers in priority auftrag (lowest sequence vor).",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "E.g. Primär SMTP",
+    "sequenceLabel": "Priority (sequence)",
+    "sequencePlaceholder": "10",
+    "activeLabel": "Aktiv",
+    "hostLabel": "SMTP host",
+    "hostPlaceholder": "smtp.example.com",
+    "portLabel": "Port",
+    "portPlaceholder": "587",
+    "encryptionLabel": "Encryption",
+    "authTypeLabel": "Authentication",
+    "usernameLabel": "Benutzername",
+    "usernamePlaceholder": "benutzer@example.com",
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "••••••••",
+    "fromEmailLabel": "Von e-Mail",
+    "fromEmailPlaceholder": "noreply@example.com",
+    "fromNameLabel": "Von name",
+    "fromNamePlaceholder": "My Firma",
+    "replyToLabel": "Reply-Bis",
+    "replyToPlaceholder": "support@example.com",
+    "encryption": {
+      "none": "Keine",
+      "ssl": "SSL",
+      "starttls": "STARTTLS"
+    },
+    "authType": {
+      "login": "Benutzername / passwort",
+      "none": "Keine"
+    }
+  },
+  "formHeader": {
+    "title": "SMTP server hinzufügen",
+    "description": "Outgoing mail ist sent using aktiv servers in priority auftrag (lowest sequence vor)."
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Erstellen"
+  }
+}

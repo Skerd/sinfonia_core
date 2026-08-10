@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/components/custom/messagingProviders/setMessagingProviderActiveDialog.tsx",
+  "activate": {
+    "title": "Activer le fournisseur de messagerie",
+    "description": "Ce fournisseur sera utilisé pour les messages SMS et WhatsApp sortants."
+  },
+  "deactivate": {
+    "title": "Désactiver le fournisseur de messagerie",
+    "description": "Ce fournisseur ne sera plus utilisé pour les messages sortants jusqu'à ce qu'il soit à nouveau activé."
+  }
+}

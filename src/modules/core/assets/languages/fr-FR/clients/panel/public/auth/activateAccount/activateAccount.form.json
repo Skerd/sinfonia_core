@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/activateAccount/activateAccount.form.tsx",
+  "loading": "Activation du compte",
+  "loadingDescription": "Activation du compte à l'aide du lien d'activation",
+  "fail": "L'activation du compte a échoué",
+  "failDescription": "Le lien d'activation du compte n'est pas correct",
+  "success": "Compte activé",
+  "successDescription": "Compte activé avec succès, vous pouvez désormais vous connecter uniquement en utilisant votre mot de passe",
+  "axios": {
+    "start": {
+      "title": "Activation du compte",
+      "time": 3000
+    },
+    "success": {
+      "title": "Activation du compte réussie",
+      "time": 3000
+    },
+    "error": {
+      "title": "L'activation du compte a échoué",
+      "time": 3000
+    }
+  }
+}

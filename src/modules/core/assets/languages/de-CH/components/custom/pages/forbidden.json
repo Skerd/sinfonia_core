@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/components/custom/pages/forbidden.tsx",
+  "title": "Zugriff Forbidden",
+  "description": "Sie don't have necessary berechtigung\n bis anzeigen diese resource.",
+  "backLabel": "Go Back",
+  "backHome": "Zurück zu Startseite"
+}

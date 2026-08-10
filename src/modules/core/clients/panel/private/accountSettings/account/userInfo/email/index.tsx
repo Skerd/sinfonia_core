@@ -92,16 +92,16 @@ function AccountProfileEmail({
     }
     if( !!read.username && !write.username ){
         return (
-            <div className="space-y-2">
-                <div className="flex items-center space-x-1">
+            <div className="flex flex-col gap-y-2">
+                <div className="flex items-center gap-x-1">
                     <TooltipProvider delayDuration={0}>
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 {
                                     (isEmailVerified && !unverifiedEmail) ?
-                                    <BadgeCheck size={20} className="text-blue-500 hover:cursor-pointer"/>
+                                    <BadgeCheck size={20} className="text-info hover:cursor-pointer"/>
                                     :
-                                    <BadgeAlert size={20} className="text-red-500 hover:cursor-pointer"/>
+                                    <BadgeAlert size={20} className="text-destructive hover:cursor-pointer"/>
                                 }
                             </TooltipTrigger>
                             <TooltipContent>
@@ -139,21 +139,21 @@ function AccountProfileEmail({
 
     return(
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(() => { setFireUpdate(Date.now()); })} className="space-y-8">
+            <form onSubmit={form.handleSubmit(() => { setFireUpdate(Date.now()); })} className="flex flex-col gap-y-8">
                 <FormField
                     control={form.control}
                     name="newEmail"
                     render={({ field }) => (
                         <FormItem>
-                            <div className="flex items-center space-x-1">
+                            <div className="flex items-center gap-x-1">
                                 <TooltipProvider delayDuration={0}>
                                     <Tooltip>
                                         <TooltipTrigger asChild>
                                             {
                                                 (isEmailVerified && !unverifiedEmail) ?
-                                                <BadgeCheck size={20} className="text-blue-500 hover:cursor-pointer"/>
+                                                <BadgeCheck size={20} className="text-info hover:cursor-pointer"/>
                                                 :
-                                                <BadgeAlert size={20} className="text-red-500 hover:cursor-pointer"/>
+                                                <BadgeAlert size={20} className="text-destructive hover:cursor-pointer"/>
                                             }
                                         </TooltipTrigger>
                                         <TooltipContent>
@@ -179,8 +179,8 @@ function AccountProfileEmail({
                                 <FormLabel>{resolveLanguageKey("form.newEmailLabel")}</FormLabel>
                             </div>
                             <FormControl>
-                                <div className="flex space-x-1.5">
-                                    <div className="flex grow space-x-1">
+                                <div className="flex gap-x-1.5">
+                                    <div className="flex grow gap-x-1">
                                         <Input
                                             id="newEmail"
                                             type="text"

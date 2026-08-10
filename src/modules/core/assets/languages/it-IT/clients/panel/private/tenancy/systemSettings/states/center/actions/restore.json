@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/actions/restore.tsx",
+  "title": "Ripristina",
+  "restoreConfirmTitle": "Ripristina stato",
+  "restoreConfirmDescription": "Sei sicuro di voler ripristinare questo stato?",
+  "cancel": "Annulla",
+  "confirmRestore": "Ripristina",
+  "axios": {
+    "start": {
+      "title": "Ripristino dello stato",
+      "time": 3000
+    },
+    "success": {
+      "title": "Stato ripristinato con successo.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Lo stato non è stato ripristinato",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/resendActivation.tsx",
+  "resendActivationEmail": "Resend activation e-Mail",
+  "resendActivationEmailConfirm": "Resend activation e-Mail?",
+  "resendActivationEmailConfirmDesc": "A neu activation e-Mail will werden sent bis die benutzer.",
+  "resendActivationEmailSuccess": "Activation e-Mail sent erfolgreich",
+  "resendActivationEmailError": "Fehlgeschlagen bis send activation e-Mail",
+  "axios": {
+    "start": {
+      "title": "Sending activation e-Mail",
+      "time": 3000
+    },
+    "success": {
+      "title": "Activation e-Mail sent erfolgreich",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fehlgeschlagen bis send activation e-Mail",
+      "time": 3000
+    }
+  }
+}

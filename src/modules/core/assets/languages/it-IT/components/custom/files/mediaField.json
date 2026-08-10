@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/components/custom/files/mediaField.tsx",
+  "uploadImageHint": "Carica immagine",
+  "uploadVideoHint": "Carica video",
+  "uploadFileHint": "Carica file",
+  "imageAlt": "Immagine",
+  "videoAlt": "Video",
+  "fileAlt": "File",
+  "videoUnsupported": "Il tuo browser non supporta il tag video."
+}

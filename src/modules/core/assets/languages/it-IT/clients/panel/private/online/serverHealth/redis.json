@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/redis.tsx",
+  "redisServerTitle": "Server Redis",
+  "online": "Online",
+  "offline": "Non in linea",
+  "uptime": "Tempo di attività",
+  "jobs": "Lavori",
+  "failed": "Non riuscito",
+  "avgTime": "Media Tempo",
+  "nodes": "Nodi",
+  "day": "giorno",
+  "days": "giorni",
+  "hour": "ora",
+  "hours": "ore",
+  "minute": "minuto",
+  "minutes": "minuti",
+  "second": "secondo",
+  "seconds": "secondi"
+}

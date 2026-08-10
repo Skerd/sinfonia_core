@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/saveNewCompanyRoles.tsx",
+  "confirm": "Confirmer le changement de rôle",
+  "editRoles": "Modifier les rôles",
+  "cancel": "Annuler",
+  "axios": {
+    "start": {
+      "title": "Mise à jour des rôles",
+      "time": 3000
+    },
+    "success": {
+      "title": "Rôles mis à jour avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la mise à jour du rôle",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/custom/infoRowGroup.tsx",
+  "one": "1 Feld eingeschränkt",
+  "many": "{count} Felder eingeschränkt",
+  "tooltip": "Sie haben keine Berechtigung, diese Felder anzuzeigen"
+}

@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/surname/index.tsx",
+  "form": {
+    "surnameLabel": "Nom",
+    "surnameDescription": "C'est le nom de famille qui sera affiché dans le système."
+  },
+  "failTitle": "Échec du chargement du nom de famille",
+  "failTitleTooltip": "Cliquez pour réessayer de charger le nom de famille"
+}

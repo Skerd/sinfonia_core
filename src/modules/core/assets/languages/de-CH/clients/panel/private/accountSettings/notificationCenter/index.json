@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx",
+  "title": "Benachrichtigung Center",
+  "description": "Und verwalten ihr benachrichtigungen anzeigen",
+  "unreadOnly": "Unread only",
+  "failTitle": "Benachrichtigung konnten nicht geladen werden",
+  "failDescription": "Click here bis retry fetching benachrichtigungen",
+  "loading": "Laden...",
+  "noNotifications": "Keine benachrichtigungen",
+  "error": "Benachrichtigungen konnten nicht geladen werden",
+  "loadMore": "Laden more",
+  "system": "System"
+}

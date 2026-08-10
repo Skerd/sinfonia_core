@@ -19,6 +19,8 @@
     "symbol": "Simboli",
     "abbreviation": "Shkurtesa",
     "decimalPlaces": "Vendet dhjetore",
+    "createdAt": "Krijuar më",
+    "updatedAt": "Përditësuar më",
     "createdBy": "Krijuar nga",
     "company": "Kompania",
     "deletedAt": "Statusi",

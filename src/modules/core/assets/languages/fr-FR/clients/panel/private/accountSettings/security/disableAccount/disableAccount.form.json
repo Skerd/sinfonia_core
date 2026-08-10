@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/disableAccount.form.tsx",
+  "form": {
+    "usernameLabel": "Nom d'utilisateur",
+    "usernamePlaceholder": "Nom d'utilisateur",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Mot de passe",
+    "statusLabel": "Statut",
+    "statusPlaceholder": "Statut"
+  },
+  "title": "Le compte utilisateur est actif",
+  "description": "Si vous souhaitez désactiver le compte, veuillez suivre les étapes ci-dessous.",
+  "steps": {
+    "one": "Remplissez votre mot de passe",
+    "two": "Cliquez sur le '!!!!' bouton pour désactiver votre compte",
+    "three": "Attention, si vous désactivez votre compte, vous devez contacter l'administrateur système pour le réactiver !"
+  },
+  "deactivateButton": "Bloc",
+  "axios": {
+    "start": {
+      "title": "Désactivation du compte",
+      "time": 3000
+    },
+    "success": {
+      "title": "Compte désactivé avec succès",
+      "time": 1000
+    },
+    "error": {
+      "title": "Échec de la désactivation du compte",
+      "time": 3000
+    }
+  }
+}

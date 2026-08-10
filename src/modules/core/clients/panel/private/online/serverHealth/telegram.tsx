@@ -59,7 +59,7 @@ function TelegramOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLangua
             <Tooltip>
                 <TooltipTrigger asChild>
                     <span className="inline-flex hover:cursor-pointer">
-                        <IconTelegram className={clsx("h-5 w-5", connected ? "text-green-500" : "text-red-500")} />
+                        <IconTelegram className={clsx("h-5 w-5", connected ? "text-success" : "text-destructive")} />
                     </span>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -91,8 +91,8 @@ function TelegramResource({resolveLanguageKey}: TelegramResourceProps){
     const connected = !!useTelegram()?.connected;
 
     return (
-        <div className={cn("flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background space-y-1", {"border-destructive animate-pulse": !connected})}>
-            <div className="flex items-center space-x-2">
+        <div className={cn("flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background gap-y-1", {"border-destructive animate-pulse": !connected})}>
+            <div className="flex items-center gap-x-2">
                 <TelegramOnline resolveLanguageKey={resolveLanguageKey} />
                 <div>
                     <p className={cn("text-sm font-medium", {"text-destructive": !connected})}>{resolveLanguageKey("telegramServerTitle")}</p>

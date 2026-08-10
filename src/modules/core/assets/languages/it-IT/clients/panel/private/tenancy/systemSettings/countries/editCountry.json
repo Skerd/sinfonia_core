@@ -1,0 +1,42 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/editCountry.tsx",
+  "title": "Modifica paese",
+  "description": "Aggiorna i dettagli del paese",
+  "errorTitle": "Impossibile caricare i dati del Paese",
+  "errorDescription": "Fai clic qui per riprovare a recuperare i dati del Paese",
+  "form": {
+    "idLabel": "Identificativo del paese",
+    "nameLabel": "Nome",
+    "namePlaceholder": "Nome del paese",
+    "codeLabel": "Codice",
+    "codePlaceholder": "per esempio. U.S.A.",
+    "phoneCodeLabel": "Codice telefonico",
+    "phoneCodePlaceholder": "+1",
+    "currencyLabel": "Valuta",
+    "currencyPlaceholder": "Seleziona valuta"
+  },
+  "noId": "Nessun paese selezionato.",
+  "backToList": "Torna all'elenco",
+  "axios": {
+    "start": {
+      "title": "Salvare il Paese",
+      "time": 3000
+    },
+    "success": {
+      "title": "Paese aggiornato con successo!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare il Paese, riprova!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Modifica paese",
+    "description": "Aggiorna i dettagli del paese"
+  },
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Salva"
+  }
+}

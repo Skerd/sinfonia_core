@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockInvitation.tsx",
+  "unlockInvitation": "Sblocca l'invito",
+  "unlockInvitationConfirm": "Sbloccare il blocco degli inviti?",
+  "unlockInvitationConfirmDesc": "Ciò cancellerà il blocco dell'invito. L'utente potrà ricevere una nuova email di invito.",
+  "unlockInvitationResendEmail": "Invia nuovamente l'e-mail di invito",
+  "unlockInvitationSuccess": "Il blocco dell'invito è stato cancellato correttamente",
+  "unlockInvitationError": "Impossibile eliminare il blocco dell'invito",
+  "axios": {
+    "start": {
+      "title": "Invito di sblocco",
+      "time": 3000
+    },
+    "success": {
+      "title": "Il blocco dell'invito è stato cancellato correttamente",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile eliminare il blocco dell'invito",
+      "time": 3000
+    }
+  }
+}

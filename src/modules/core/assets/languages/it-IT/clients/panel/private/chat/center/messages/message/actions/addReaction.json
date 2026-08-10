@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/actions/addReaction.tsx",
+  "searchPlaceholder": "Cerca",
+  "suggested": "Usato frequentemente",
+  "smileys_people": "Faccine e persone",
+  "animals_nature": "Animali e natura",
+  "food_drink": "Cibo e bevande",
+  "travel_places": "Viaggi e luoghi",
+  "activities": "Attività",
+  "objects": "Oggetti",
+  "symbols": "Simboli",
+  "flags": "Bandiere"
+}

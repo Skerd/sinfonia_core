@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/connect/index.tsx",
+  "link": "Link di invito",
+  "failTitle": "Impossibile generare il codice QR di Telegram",
+  "failTitleTooltip": "Clicca qui per riprovare a generare il codice QR di Telegram",
+  "steps": {
+    "one": "Scansiona il codice QR con il telefono oppure apri il 'Link di invito'"
+  },
+  "cancel": "Annulla",
+  "axios": {
+    "start": {
+      "title": "Collegamento di Telegram",
+      "time": 3000
+    },
+    "success": {
+      "title": "Telegram collegato correttamente",
+      "time": 3000
+    },
+    "error": {
+      "title": "Collegamento di Telegram non riuscito",
+      "time": 3000
+    }
+  }
+}

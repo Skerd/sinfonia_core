@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/disconnect/index.tsx",
+  "title": "Sei sicuro di voler scollegare Telegram?",
+  "description": "Non riceverai più le notifiche",
+  "usersTitle": "Sei sicuro di voler scollegare Telegram?",
+  "usersDescription": "L'utente non riceverà più le notifiche",
+  "button": "Conferma",
+  "backButton": "Annulla",
+  "axios": {
+    "start": {
+      "title": "Disconnessione di Telegram",
+      "time": 3000
+    },
+    "success": {
+      "title": "Telegram scollegato correttamente",
+      "time": 3000
+    },
+    "error": {
+      "title": "Disconnessione di Telegram non riuscita",
+      "time": 3000
+    }
+  }
+}

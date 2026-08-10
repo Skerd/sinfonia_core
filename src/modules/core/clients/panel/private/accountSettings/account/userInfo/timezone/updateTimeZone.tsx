@@ -60,16 +60,16 @@ function UpdateTimezone({
     }
 
     return (
-        <div className="flex items-center grow space-x-1 transition-all ease-in" style={{border: "0px solid red"}}>
+        <div className="flex items-center grow gap-x-1 transition-all ease-in" style={{border: "0px solid red"}}>
             <TooltipDisplayer tooltip={resolveLanguageKey("confirm")} contentClassName="text-sm">
                 <Button
                     type="submit"
                     variant="outline"
                     size="icon"
-                    className={cn("h-full px-2 text-green-500", {"hover:border-green-400 hover:dark:border-green-400": !!fieldValue})}
+                    className={cn("h-full px-2 text-success", {"hover:border-success/50 hover:dark:border-success/50": !!fieldValue})}
                     disabled={loading}
                 >
-                    <Check className={cn("h-4 w-4 hover:text-white", )} />
+                    <Check className={cn("h-4 w-4")} />
                 </Button>
             </TooltipDisplayer>
             <TooltipDisplayer tooltip={resolveLanguageKey("cancel")} contentClassName="text-sm">
@@ -81,7 +81,7 @@ function UpdateTimezone({
                     disabled={loading}
                     onClick={() => {updateCanEdit(false);}}
                 >
-                    <X className=" h-4 w-4 hover:opacity-50 hover:text-white" />
+                    <X className="h-4 w-4 hover:opacity-50" />
                 </Button>
             </TooltipDisplayer>
         </div>

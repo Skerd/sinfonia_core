@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/companies/allCompanies/index.tsx",
+  "title": "Tutte le aziende",
+  "description": "Tutte le aziende",
+  "failTitle": "Impossibile caricare tutte le società",
+  "failDescription": "Fare clic qui per riprovare a caricare tutte le società",
+  "noData": "Nessuna azienda trovata",
+  "createCompany": "Crea azienda"
+}

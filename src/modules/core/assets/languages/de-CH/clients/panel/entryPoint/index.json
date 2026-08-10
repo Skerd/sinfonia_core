@@ -1,0 +1,107 @@
+{
+  "path": "src/modules/core/clients/panel/entryPoint/index.tsx",
+  "home": {
+    "title": "Apps"
+  },
+  "common": {
+    "create": "Erstellen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen"
+  },
+  "menus": {
+    "account": {
+      "mainTitle": "Mein Konto",
+      "title": "Mein Konto",
+      "accountSettings": {
+        "title": "Einstellungen"
+      },
+      "profile": {
+        "title": "Profil"
+      },
+      "security": {
+        "title": "Sicherheit"
+      },
+      "account": {
+        "title": "Konto"
+      },
+      "notifications": {
+        "title": "Benachrichtigungen"
+      },
+      "notificationCenter": {
+        "title": "Aktivität"
+      },
+      "apps": {
+        "title": "Verbundene Apps"
+      }
+    },
+    "tenancy": {
+      "title": "Mandantenverwaltung",
+      "companies": {
+        "title": "Alle Firmen"
+      },
+      "serverPerformance": {
+        "title": "Performance"
+      },
+      "cronJobs": {
+        "title": "Scheduled massnahmen"
+      },
+      "systemSettings": {
+        "title": "Konfigurationen",
+        "roles": {
+          "title": "Rollen"
+        },
+        "countries": {
+          "title": "Länder"
+        },
+        "states": {
+          "title": "Kantone / Staaten"
+        },
+        "cities": {
+          "title": "Städte"
+        },
+        "currencies": {
+          "title": "Währungen"
+        },
+        "companies": {
+          "title": "Firmen"
+        },
+        "smtpServers": {
+          "title": "Mailserver"
+        },
+        "messagingProviders": {
+          "title": "Messaging-Anbieter"
+        }
+      }
+    },
+    "company": {
+      "title": "Firma",
+      "dashboard": {
+        "title": "Übersicht"
+      },
+      "administration": {
+        "title": "Administration"
+      },
+      "users": {
+        "title": "Benutzer"
+      },
+      "chats": {
+        "title": "Chats"
+      },
+      "info": {
+        "title": "Firma"
+      },
+      "editCompany": {
+        "title": "Firma bearbeiten"
+      },
+      "createCompany": {
+        "title": "Firma erstellen"
+      }
+    }
+  },
+  "commandPalette": {
+    "title": "Befehlspalette",
+    "description": "Zu einer Seite springen",
+    "placeholder": "Seiten suchen…",
+    "empty": "Keine passenden Seiten"
+  }
+}

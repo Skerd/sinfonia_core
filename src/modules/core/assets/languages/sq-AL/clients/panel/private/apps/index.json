@@ -15,7 +15,7 @@
   "appsList": {
     "telegram": {
       "key": "telegram",
-      "name": "Telegrami",
+      "name": "Telegram",
       "logo": "IconTelegram",
       "desc": "Lidhu me Telegram për komunikim në kohë reale.",
       "connected": false

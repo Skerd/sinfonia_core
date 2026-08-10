@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/otp/deactivateOTP/deactivateOtp.form.tsx",
+  "deactivateNow": "Êtes-vous sûr de vouloir désactiver 2FA ?",
+  "deactivateNowDescription": "Après la désactivation, l'utilisateur peut se connecter au système en utilisant uniquement un mot de passe.",
+  "withOTPCodeDescription": "Remplissez le code 2FA pour désactiver",
+  "confirm": "Désactiver 2FA",
+  "cancel": "Annuler",
+  "twoParts": {
+    "noOtpCode": {
+      "0": "Vous n'avez pas de code 2FA ?",
+      "1": "Demander des instructions par courrier électronique"
+    }
+  },
+  "checkEmail": "Vérifiez vos e-mails pour continuer la désactivation de 2FA",
+  "disabled": "2FA désactivé avec succès !",
+  "form": {
+    "mfaCodeLabel": "Code 2FA",
+    "mfaCodePlaceholder": "Code 2FA"
+  },
+  "axios": {
+    "start": {
+      "title": "Désactiver 2FA",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la désactivation de 2FA",
+      "time": 3000
+    },
+    "success": {
+      "title": "Terminé avec succès",
+      "time": 3000
+    }
+  }
+}

@@ -129,14 +129,14 @@ function SelectedMembers({
     return (
         <Collapsible open={selectedUserIds.length > 0}>
             <CollapsibleContent className="collapsible-content ">
-                <div className="rounded-lg border px-2 py-3 space-y-1">
+                <div className="flex flex-col rounded-lg border px-2 py-3 gap-y-1">
                     <SetGroupName form={form} selectedUserIds={selectedUserIds} resolveLanguageKey={resolveLanguageKey} />
                     <div className="max-w-full overflow-x-scroll hide-scrollbar ">
                         <div className='flex px-2 flex-nowrap items-center gap-4 max-w-full'>
                             {
                                 selectedUsers.map((user) => (
-                                    <div className="relative space-y-1" key={user._id}>
-                                        <div className="absolute p-0.5 right-0 top-0 hover:cursor-pointer rounded-full bg-muted-foreground text-white hover:bg-foreground" style={{zIndex: 1}} onClick={() => onToggleMember(user)}>
+                                    <div className="flex flex-col relative gap-y-1" key={user._id}>
+                                        <div className="absolute p-0.5 right-0 top-0 hover:cursor-pointer rounded-full bg-muted-foreground text-background hover:bg-foreground" style={{zIndex: 1}} onClick={() => onToggleMember(user)}>
                                             <X size={12}/>
                                         </div>
                                         <CustomAvatar user={user} avatarClassName={"size-14"}/>
@@ -144,7 +144,7 @@ function SelectedMembers({
                                     </div>
                                 ))
                             }
-                            <div style={{width: "150px", minWidth: "150px", border: "1px solid #00000000"}}></div>
+                            <div className="w-[150px] shrink-0" />
                         </div>
                     </div>
                 </div>

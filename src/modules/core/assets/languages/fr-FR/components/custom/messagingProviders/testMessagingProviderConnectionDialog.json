@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/components/custom/messagingProviders/testMessagingProviderConnectionDialog.tsx",
+  "title": "Tester la connexion à la messagerie",
+  "description": "Envoyez un SMS de test ou un message WhatsApp pour vérifier ce fournisseur. Entrez le numéro de téléphone du destinataire ci-dessous.",
+  "testPhoneLabel": "Tester le téléphone du destinataire",
+  "confirm": "Tester la connexion",
+  "cancel": "Annuler",
+  "axios": {
+    "start": {
+      "title": "Test de la connexion à la messagerie…"
+    },
+    "success": {
+      "title": "Le test de connexion à la messagerie a réussi."
+    },
+    "error": {
+      "title": "Le test de connexion à la messagerie a échoué"
+    }
+  }
+}

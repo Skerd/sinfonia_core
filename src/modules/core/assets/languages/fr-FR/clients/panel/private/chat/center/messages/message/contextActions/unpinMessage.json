@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/unpinMessage.tsx",
+  "unpin": "Désépingler",
+  "axios": {
+    "start": {
+      "title": "Désépingler le message",
+      "time": 3000
+    },
+    "success": {
+      "title": "Message désépinglé avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la désépinglage du message.",
+      "time": 3000
+    }
+  }
+}

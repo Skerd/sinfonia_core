@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverStats/index.tsx",
+  "waitingForPerformanceData": "In attesa dei dati sulle prestazioni...",
+  "failTitle": "Impossibile caricare i dati delle statistiche del server",
+  "failTitleTooltip": "Impossibile caricare i dati delle statistiche del server, fai clic qui per riprovare"
+}

@@ -101,7 +101,7 @@ function AcceptInvitation({
         return (
             <Card className="w-full gap-4 h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <ShieldBan size={30} color="#c82121"/>
+                    <ShieldBan size={30} color="var(--destructive)"/>
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("errorVerifyingInvitationCodeTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("errorVerifyingInvitationCodeDescription")}</CardDescription>
                 </CardHeader>
@@ -115,7 +115,7 @@ function AcceptInvitation({
         return (
             <Card className="w-full gap-4 h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <CircleX size={30} color="#c82121" />
+                    <CircleX size={30} color="var(--destructive)" />
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("errorAcceptingInvitationTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("errorAcceptingInvitationDescription")}</CardDescription>
                 </CardHeader>

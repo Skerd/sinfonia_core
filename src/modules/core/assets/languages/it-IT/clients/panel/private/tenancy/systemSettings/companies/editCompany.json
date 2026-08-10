@@ -1,0 +1,74 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/editCompany.tsx",
+  "title": "Modifica azienda",
+  "description": "Aggiorna i dettagli dell'azienda",
+  "editTitle": "Aggiorna azienda",
+  "editDescription": "Aggiorna le informazioni sull'azienda",
+  "generalInfo": "Informazioni generali",
+  "howToReach": "Come raggiungerci",
+  "whoAreWe": "Chi siamo noi",
+  "addAddress": "Aggiungi indirizzo",
+  "address": "Indirizzo",
+  "remove": "Rimuovi",
+  "errorTitle": "Caricamento azienda non riuscito",
+  "errorDescription": "Fare clic qui per riprovare a recuperare i dati dell'azienda",
+  "form": {
+    "nameLabel": "Nome",
+    "namePlaceholder": "Nome",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "E-mail",
+    "phoneNumberNumberLabel": "Numero di telefono",
+    "phoneNumberNumberPlaceholder": "Numero di telefono",
+    "descriptionLabel": "Descrizione",
+    "descriptionPlaceholder": "Descrizione",
+    "logoLabel": "Logo",
+    "websiteLabel": "Sito web",
+    "websitePlaceholder": "Sito web",
+    "linkedinLabel": "LinkedIn",
+    "linkedinPlaceholder": "https://linkedin.com/company/...",
+    "instagramLabel": "Instagram",
+    "instagramPlaceholder": "https://instagram.com/...",
+    "facebookLabel": "Facebook",
+    "facebookPlaceholder": "https://facebook.com/...",
+    "vatLabel": "IVA",
+    "vatPlaceholder": "IVA",
+    "allowedDomainsLabel": "Domini consentiti",
+    "allowedDomainsPlaceholder": "Aggiungi un dominio",
+    "streetLabel": "Via",
+    "streetPlaceholder": "Via",
+    "postalCodeLabel": "CAP",
+    "postalCodePlaceholder": "CAP",
+    "cityLabel": "Città",
+    "cityPlaceholder": "Città",
+    "stateLabel": "Cantone / Stato",
+    "statePlaceholder": "Cantone / Stato",
+    "countryLabel": "Paese",
+    "countryPlaceholder": "Paese",
+    "latitudeLabel": "Latitudine",
+    "latitudePlaceholder": "Latitudine",
+    "longitudeLabel": "Longitudine",
+    "longitudePlaceholder": "Longitudine"
+  },
+  "axios": {
+    "start": {
+      "title": "Azienda in aggiornamento",
+      "time": 3000
+    },
+    "success": {
+      "title": "Azienda aggiornata con successo!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare la società, riprova!",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Aggiorna azienda",
+    "description": "Aggiorna le informazioni sull'azienda"
+  },
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Salva"
+  }
+}

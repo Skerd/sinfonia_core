@@ -3,8 +3,12 @@
   "name": "Emri",
   "city": "Qyteti",
   "overview": "Vështrim i përgjithshëm",
-  "metadata": "Metadatat",
+  "lifecycle": "Cikli i jetës",
   "state": "Shteti / Rajoni",
   "country": "Vendi",
-  "createdBy": "Krijuar nga"
+  "createdAt": "Krijuar më",
+  "updatedAt": "Përditësuar më",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga"
 }

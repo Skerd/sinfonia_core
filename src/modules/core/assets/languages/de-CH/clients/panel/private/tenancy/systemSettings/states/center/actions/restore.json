@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/actions/restore.tsx",
+  "title": "Wiederherstellen",
+  "restoreConfirmTitle": "Wiederherstellen kanton",
+  "restoreConfirmDescription": "Sind sie sicher sie want bis wiederherstellen diese kanton?",
+  "cancel": "Abbrechen",
+  "confirmRestore": "Wiederherstellen",
+  "axios": {
+    "start": {
+      "title": "Restoring kanton",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kanton erfolgreich restored.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kanton fehlgeschlagen bis werden restored",
+      "time": 3000
+    }
+  }
+}

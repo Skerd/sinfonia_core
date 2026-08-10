@@ -1,9 +1,13 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx",
   "overview": "Overview",
-  "metadata": "Metadata",
+  "lifecycle": "Lifecycle",
   "createdBy": "Created by",
   "state": "State",
   "code": "Code",
-  "country": "Country"
+  "country": "Country",
+  "createdAt": "Created at",
+  "updatedAt": "Updated at",
+  "deletedAt": "Deleted at",
+  "deletedBy": "Deleted by"
 }

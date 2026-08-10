@@ -192,7 +192,7 @@ function MessagesList({scrollRoot, scrollRootRevision = 0}: MessagesListProps){
     }
     // if( messagesOrderIds.length === 0){
     //     return (
-    //         <div className="flex flex-col space-y-0 items-center justify-center py-4">
+    //         <div className="flex flex-col gap-y-0 items-center justify-center py-4">
     //             <p className="font-semibold text-sm text-foreground">{resolveLanguageKey("welcome")}</p>
     //             <svg data-v-ad307406="" xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
     //                  fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"

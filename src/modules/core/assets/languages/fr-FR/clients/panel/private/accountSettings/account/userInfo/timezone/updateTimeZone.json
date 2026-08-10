@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/timezone/updateTimeZone.tsx",
+  "confirm": "Confirmer le changement de fuseau horaire",
+  "cancel": "Annuler",
+  "axios": {
+    "start": {
+      "title": "Mise à jour du fuseau horaire",
+      "time": 3000
+    },
+    "success": {
+      "title": "Fuseau horaire mis à jour avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Le fuseau horaire n'a pas pu être mis à jour",
+      "time": 3000
+    }
+  }
+}

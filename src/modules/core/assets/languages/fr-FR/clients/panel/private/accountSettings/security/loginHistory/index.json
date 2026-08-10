@@ -1,0 +1,32 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
+  "title": "Historique de connexion",
+  "description": "Passez en revue les connexions récentes et les tentatives infructueuses. Les enregistrements générés par le serveur ne peuvent pas être modifiés ici.",
+  "searchPlaceholder": "Recherche par heure, appareil ou IP",
+  "unknownLocation": "Lieu inconnu",
+  "reason": "Motif",
+  "status": {
+    "success": "Connexion réussie",
+    "failure": "Échec de la connexion"
+  },
+  "badge": {
+    "success": "Succès",
+    "failure": "Échoué",
+    "mfa": "MFA"
+  },
+  "fields": {
+    "user": "Utilisateur",
+    "userId": "Utilisateur",
+    "time": "Heure",
+    "status": "Statut",
+    "mfa": "MFA",
+    "reason": "Motif",
+    "device": "Appareil",
+    "os": "Système opérateur",
+    "browser": "Navigateur",
+    "userAgent": "Agent utilisateur",
+    "ip": "Adresse IP",
+    "geolocation": "Géolocalisation",
+    "createdAt": "Créé le"
+  }
+}

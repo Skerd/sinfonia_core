@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/chatMemberRemoveFromGroup.tsx",
+  "removeMember": "Rimuovi dal gruppo",
+  "axios": {
+    "start": {
+      "title": "Rimozione membro",
+      "time": 3000
+    },
+    "success": {
+      "title": "Membro rimosso con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile rimuovere il membro",
+      "time": 3000
+    }
+  }
+}

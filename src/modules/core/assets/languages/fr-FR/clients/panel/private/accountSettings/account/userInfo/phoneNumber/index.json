@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/phoneNumber/index.tsx",
+  "form": {
+    "phoneNumberNumberLabel": "Numéro de téléphone",
+    "phoneNumberNumberPlaceholder": "Numéro de téléphone"
+  },
+  "failTitle": "Échec du chargement du numéro de téléphone",
+  "failTitleTooltip": "Cliquez pour réessayer de charger le numéro de téléphone"
+}

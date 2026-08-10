@@ -53,7 +53,7 @@ function WebsocketOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLangu
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <MessageSquare className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-green-500" : "text-red-500")} />
+                    <MessageSquare className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>
@@ -95,8 +95,8 @@ function WebsocketResource({resolveLanguageKey}: WebsocketResourceProps){
     const {connected} = useWebsocket();
 
     return (
-        <div className={cn("flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background space-y-1", {"border-destructive animate-pulse": !connected})}>
-            <div className="flex items-center space-x-2">
+        <div className={cn("flex flex-col md:flex-row md:items-center justify-between p-2 rounded-lg border bg-background gap-y-1", {"border-destructive animate-pulse": !connected})}>
+            <div className="flex items-center gap-x-2">
                 <WebsocketOnline resolveLanguageKey={resolveLanguageKey} />
                 <div>
                     <p className={cn("text-sm font-medium", {"text-destructive": !connected})}>{resolveLanguageKey("websocketServerTitle")}</p>

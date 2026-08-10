@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/signUp/signup.form.tsx",
+  "form": {
+    "nameLabel": "Nome",
+    "namePlaceholder": "Nome",
+    "surnameLabel": "Cognome",
+    "surnamePlaceholder": "Cognome",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "esempio@email.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "confirmPasswordLabel": "Conferma password",
+    "confirmPasswordPlaceholder": "Conferma password",
+    "phoneNumberLabel": "Numero di telefono",
+    "phoneNumberPlaceholder": "Numero di telefono",
+    "phoneNumberPrefixLabel": "Prefisso del numero di telefono",
+    "phoneNumberPrefixPlaceholder": "Prefisso del numero di telefono"
+  },
+  "signUpButtonLabel": "Creare un account",
+  "axios": {
+    "start": {
+      "title": "Creazione dell'account, attendere",
+      "time": 3000
+    },
+    "success": {
+      "title": "Il tuo account è stato creato con successo. Segui i passaggi inviati alla tua email per continuare.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Creazione dell'account non riuscita",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx",
+  "name": "Nome",
+  "flag": "Bandiera",
+  "code": "Codice",
+  "phoneCode": "Codice telefonico",
+  "currency": "Valuta",
+  "deleted": "Eliminato",
+  "active": "Attivo",
+  "failedTitle": "Impossibile caricare il paese",
+  "failedDescription": "Tocca per riprovare."
+}

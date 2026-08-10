@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/left/channelsList.tsx",
+  "you": "Toi",
+  "unreadMessages": "messages non lus",
+  "user_left": "A quitté le groupe",
+  "user_removed": "supprimé",
+  "user_added": "ajouté",
+  "user_made_admin": "promu administrateur",
+  "user_demoted_from_admin": "rétrogradé",
+  "noChats": "On a l'air seul ici",
+  "messageDeleted": "Message supprimé",
+  "isTyping": "est en train de taper...",
+  "areTyping": "vous tapez...",
+  "and": "et",
+  "others": "autres",
+  "unknown": "Inconnu"
+}

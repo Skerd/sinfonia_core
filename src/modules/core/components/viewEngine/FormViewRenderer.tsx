@@ -6,13 +6,14 @@ import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.t
 import type { WithAxiosLifecycleRef } from "@coreModule/helpers/hocs/withAxios.tsx";
 import type { RefObject } from "react";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";
+import { FieldGroup } from "@coreModule/components/ui/field.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { LoaderCircle, Save } from "lucide-react";
 import Header from "@coreModule/components/custom/header.tsx";
 import ViewRenderer, { type ViewRendererContext } from "./ViewRenderer.tsx";
 import { resolveWidget } from "./widgetRegistry.ts";
 import { renderFormWidget, isCompoundFormWidget, renderCompoundWidget } from "./renderFormWidget.tsx";
-import {buildTitleBreadcrumb} from "@coreModule/helpers/general";
+import {buildPageTitle} from "@coreModule/helpers/general";
 
 export type FormViewRendererProps<T extends FieldValues = FieldValues> = {
     config: ViewConfig;
@@ -103,9 +104,18 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
                         <FormItem>
                             {
                                 binding.label &&
-                                <FormLabel>{resolveLanguageKey(binding.label)}</FormLabel>
+                                <FormLabel>
+                                    {/* Single flex child so `Label`'s gap-2 doesn't detach the marker. */}
+                                    <span>
+                                        {resolveLanguageKey(binding.label)}
+                                        {
+                                            binding.required &&
+                                            <span aria-hidden="true" className="ml-0.5 text-destructive">*</span>
+                                        }
+                                    </span>
+                                </FormLabel>
                             }
-                            <FormControl>
+                            <FormControl aria-required={binding.required || undefined}>
                                 {
                                     renderFormWidget(
                                         WidgetComponent,
@@ -140,31 +150,37 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
         <div className="flex flex-col gap-4">
             {!hideChrome && (
                 <Header
-                    title={buildTitleBreadcrumb(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
+                    title={buildPageTitle(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
                     description={resolveLanguageKey("formHeader.description")}
                 />
             )}
-            <div className={`space-y-4 ${hideChrome ? "px-0 pb-2" : "px-2 pb-[100px]"}`}>
+            <div className={`flex flex-col gap-4 ${hideChrome ? "px-0 pb-2" : "px-2 pb-[100px]"}`}>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit as any)} className="grid gap-4">
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit as any, (errors) => {
+                            const first = Object.keys(errors)[0];
+                            if (first) form.setFocus(first as any);
+                        })}
+                    >
+                        <FieldGroup>
+                            {formExtras?.renderChildrenFirst ? renderChildren?.(form) : null}
 
-                        {formExtras?.renderChildrenFirst ? renderChildren?.(form) : null}
+                            <ViewRenderer nodes={config.nodes} ctx={ctx} />
 
-                        <ViewRenderer nodes={config.nodes} ctx={ctx} />
+                            {!formExtras?.renderChildrenFirst ? renderChildren?.(form) : null}
 
-                        {!formExtras?.renderChildrenFirst ? renderChildren?.(form) : null}
+                            {children}
 
-                        {children}
-
-                        <div className="flex grow items-center justify-end gap-2">
-                            <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
-                                {resolveLanguageKey("formButtons.cancel")}
-                            </Button>
-                            <Button type="submit" disabled={loading || submitDisabled}>
-                                {loading ? <LoaderCircle className="animate-spin h-4 w-4" /> : (submitIcon ?? <Save />)}
-                                {resolveLanguageKey("formButtons.submit")}
-                            </Button>
-                        </div>
+                            <div className="flex items-center justify-end gap-2">
+                                <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
+                                    {resolveLanguageKey("formButtons.cancel")}
+                                </Button>
+                                <Button type="submit" disabled={loading || submitDisabled}>
+                                    {loading ? <LoaderCircle className="animate-spin h-4 w-4" /> : (submitIcon ?? <Save />)}
+                                    {resolveLanguageKey("formButtons.submit")}
+                                </Button>
+                            </div>
+                        </FieldGroup>
                     </form>
                 </Form>
             </div>

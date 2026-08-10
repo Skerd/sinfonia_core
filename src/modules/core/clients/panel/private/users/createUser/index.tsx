@@ -27,7 +27,7 @@ function CreateUsers({
 
     return (
         <>
-            <Button className='space-x-1' onClick={() => setOpen(true)}>
+            <Button className='flex gap-x-1' onClick={() => setOpen(true)}>
                 <UserPlus size={18} />
                 <ButtonTitle hideMobile={true} tooltip={resolveLanguageKey("addUser")}>
                     {resolveLanguageKey("addUser")}

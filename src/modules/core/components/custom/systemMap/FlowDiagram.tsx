@@ -15,12 +15,12 @@ import {FlowStepNode} from "./nodes.tsx";
 const nodeTypes = {flowStep: FlowStepNode};
 
 const FLOW_ACCENTS: Record<string, string> = {
-    "catalog-checkout": "#b45309",
-    "marketplace-listing": "#047857",
-    "marketplace-bid": "#0f766e",
-    "pm-sales": "#b45309",
-    "pm-lease": "#0f766e",
-    "pm-delivery": "#7c3aed",
+    "catalog-checkout": "var(--chart-4)",
+    "marketplace-listing": "var(--chart-3)",
+    "marketplace-bid": "var(--chart-2)",
+    "pm-sales": "var(--chart-4)",
+    "pm-lease": "var(--chart-2)",
+    "pm-delivery": "var(--chart-1)",
 };
 
 type FlowDiagramProps = {
@@ -37,7 +37,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
     }, [flows]);
 
     const flow = flows.find((f) => f.id === activeFlowId) ?? flows[0] ?? null;
-    const accent = flow ? (FLOW_ACCENTS[flow.id] ?? "#475569") : "#475569";
+    const accent = flow ? (FLOW_ACCENTS[flow.id] ?? "var(--muted-foreground)") : "var(--muted-foreground)";
 
     const nodes: Node[] = useMemo(
         () =>
@@ -64,7 +64,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                 label: e.label,
                 animated: true,
                 style: {stroke: accent, strokeWidth: 2},
-                labelStyle: {fontSize: 10, fill: "#64748b"},
+                labelStyle: {fontSize: 10, fill: "var(--muted-foreground)"},
                 markerEnd: {
                     type: MarkerType.ArrowClosed,
                     width: 16,
@@ -91,7 +91,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                 <div className="flex flex-wrap gap-2">
                     {flows.map((f) => {
                         const on = f.id === flow.id;
-                        const color = FLOW_ACCENTS[f.id] ?? "#475569";
+                        const color = FLOW_ACCENTS[f.id] ?? "var(--muted-foreground)";
                         return (
                             <button
                                 key={f.id}
@@ -103,8 +103,8 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                                 className="rounded-md border px-3 py-1.5 text-sm font-medium transition-colors"
                                 style={{
                                     background: on ? `${color}14` : "transparent",
-                                    borderColor: on ? color : "#e2e8f0",
-                                    color: on ? color : "#64748b",
+                                    borderColor: on ? color : "var(--border)",
+                                    color: on ? color : "var(--muted-foreground)",
                                 }}
                             >
                                 {f.title}
@@ -116,7 +116,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
 
             <p className="text-sm text-muted-foreground max-w-3xl leading-relaxed">{flow.summary}</p>
 
-            <div className="flex flex-1 min-h-[420px] rounded-md border overflow-hidden bg-slate-50">
+            <div className="flex flex-1 min-h-[420px] rounded-md border overflow-hidden bg-muted">
                 <div className="flex-1 min-w-0">
                     <ReactFlow
                         key={flow.id}
@@ -132,7 +132,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                         nodesDraggable={false}
                         proOptions={{hideAttribution: true}}
                     >
-                        <Background gap={18} size={1} color="#e2e8f0" />
+                        <Background gap={18} size={1} color="var(--border)" />
                         <Controls showInteractive={false} />
                     </ReactFlow>
                 </div>
@@ -140,7 +140,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                 <aside className="w-72 shrink-0 border-l bg-background p-4 text-sm overflow-y-auto">
                     {selectedStep ? (
                         <>
-                            <div className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                            <div className="text-3xs font-medium uppercase tracking-wide text-muted-foreground">
                                 Step
                             </div>
                             <h3 className="text-base font-semibold mt-0.5">{selectedStep.label}</h3>
@@ -148,7 +148,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                                 {selectedStep.description}
                             </p>
                             {selectedStep.detail && (
-                                <p className="mt-3 text-[12px] leading-relaxed border-t pt-3 text-foreground">
+                                <p className="mt-3 text-xs leading-relaxed border-t pt-3 text-foreground">
                                     {selectedStep.detail}
                                 </p>
                             )}
@@ -159,7 +159,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                             <p className="text-muted-foreground mt-1">
                                 Click a step to see what happens at that stage.
                             </p>
-                            <ol className="mt-3 flex flex-col gap-1.5 list-decimal list-inside text-[12px]">
+                            <ol className="mt-3 flex flex-col gap-1.5 list-decimal list-inside text-xs">
                                 {flow.steps.map((s) => (
                                     <li key={s.id}>
                                         <button

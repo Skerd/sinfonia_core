@@ -95,20 +95,34 @@ export function buildTsModulePaths() {
     );
 }
 
-/** Pretty-print tsconfig with compact single-line path arrays. */
+const PATHS_PLACEHOLDER = "__paths_placeholder__";
+
+/**
+ * Pretty-print tsconfig with compact single-line path arrays.
+ *
+ * Paths are swapped for a placeholder key so they render in their original
+ * position regardless of what other top-level keys (exclude, include, ...)
+ * surround compilerOptions.
+ */
 function formatTsconfig(json: any) {
     const paths = json.compilerOptions?.paths ?? {};
     const clone = structuredClone(json);
     if (clone.compilerOptions) {
         delete clone.compilerOptions.paths;
+        clone.compilerOptions[PATHS_PLACEHOLDER] = "";
     }
     const base = JSON.stringify(clone, null, 2);
     const pathLines = Object.entries(paths).map(
         ([key, value]) => `      ${JSON.stringify(key)}: ${JSON.stringify(value)}`,
     );
-    const pathsBlock = `    "paths": {\n${pathLines.join(",\n")}\n    }`;
-    // Insert paths as the last compilerOptions property.
-    return base.replace(/\n  \}\n\}\n?$/, `,\n${pathsBlock}\n  }\n}\n`);
+    const pathsBlock = `"paths": {\n${pathLines.join(",\n")}\n    }`;
+    const marker = `${JSON.stringify(PATHS_PLACEHOLDER)}: ""`;
+    if (!base.includes(marker)) {
+        throw new Error(
+            "[moduleAliases] failed to locate the paths placeholder; refusing to write a tsconfig without compilerOptions.paths",
+        );
+    }
+    return `${base.replace(marker, pathsBlock)}\n`;
 }
 
 /**

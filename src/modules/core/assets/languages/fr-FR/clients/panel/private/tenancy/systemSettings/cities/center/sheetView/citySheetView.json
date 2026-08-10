@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx",
+  "name": "Nom",
+  "city": "Ville",
+  "overview": "Aperçu",
+  "lifecycle": "Cycle de vie",
+  "state": "État/Région",
+  "country": "Pays",
+  "createdAt": "Créé le",
+  "updatedAt": "Mis à jour le",
+  "createdBy": "Créé par",
+  "deletedAt": "Supprimé le",
+  "deletedBy": "Supprimé par"
+}

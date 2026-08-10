@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/kafka.tsx",
+  "kafkaClusterTitle": "Kafka",
+  "disabled": "Deaktiviert",
+  "online": "Online",
+  "offline": "Offline",
+  "uptime": "Uptime",
+  "brokers": "Brokers",
+  "brokersOnline": "Online brokers",
+  "topics": "Topics",
+  "clusterId": "Cluster ID",
+  "none": "Keine",
+  "day": "day",
+  "days": "tage",
+  "hour": "stunde",
+  "hours": "hours",
+  "minute": "minute",
+  "minutes": "minutes",
+  "second": "sekunde",
+  "seconds": "seconds"
+}

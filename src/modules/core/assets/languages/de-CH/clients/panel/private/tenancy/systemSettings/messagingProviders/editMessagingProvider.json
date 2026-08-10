@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/editMessagingProvider.tsx",
+  "title": "Messaging provider bearbeiten",
+  "description": "Leave auth token blank bis keep die current token.",
+  "errorTitle": "Messaging provider konnten nicht geladen werden",
+  "errorDescription": "Bitte click here bis retry fetching provider daten.",
+  "noId": "Keine messaging provider selected.",
+  "backToList": "Zurück zu liste",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "E.g. Primär Twilio",
+    "providerTypeLabel": "Anbieter",
+    "providerType": {
+      "twilio": "Twilio"
+    },
+    "accountSidLabel": "Konto SID",
+    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "authTokenLabel": "Auth token",
+    "authTokenPlaceholder": "••••••••",
+    "authTokenEditLabel": "Auth token (leave blank bis keep)",
+    "authTokenEditPlaceholder": "••••••••",
+    "fromPhoneLabel": "SMS sender (E.164)",
+    "fromPhonePlaceholder": "+15551234567",
+    "fromWhatsappLabel": "WhatsApp sender (E.164)",
+    "fromWhatsappPlaceholder": "+15551234567"
+  },
+  "formHeader": {
+    "title": "Messaging provider bearbeiten",
+    "description": "Leave auth token blank bis keep die current token."
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Speichern"
+  }
+}

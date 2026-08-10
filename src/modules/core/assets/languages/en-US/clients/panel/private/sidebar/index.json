@@ -73,7 +73,7 @@
         },
         "title": "Configurations",
         "messagingProviders": {
-          "title": "Messaging Providers"
+          "title": "Messaging providers"
         },
         "core": {
           "title": "Core"
@@ -110,5 +110,11 @@
         }
       }
     }
+  },
+  "commandPalette": {
+    "title": "Command palette",
+    "description": "Jump to any page",
+    "placeholder": "Search pages…",
+    "empty": "No matching pages"
   }
 }

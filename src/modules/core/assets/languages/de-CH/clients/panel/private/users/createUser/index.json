@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/createUser/index.tsx",
+  "title": "Neu Benutzer hinzufügen",
+  "administrationTitle": "Neu Benutzer hinzufügen",
+  "description": "Neu web benutzer here. Click speichern when sie're fertig. erstellen",
+  "administrationDescription": "Neu team benutzer here. Click speichern when sie're fertig. erstellen",
+  "addUser": "Benutzer hinzufügen"
+}

@@ -53,7 +53,7 @@ function Chat({resolveLanguageKey}: ChatProps){
 
     const bird = () => {
         return (
-            <div className="flex flex-col items-center justify-center space-y-0 py-4">
+            <div className="flex flex-col items-center justify-center gap-y-0 py-4">
                 <p className="text-sm font-semibold text-foreground">{resolveLanguageKey("welcome")}</p>
                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
                      fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"

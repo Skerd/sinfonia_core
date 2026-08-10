@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/left/channelsFetcher.tsx",
+  "failTitle": "Échec du chargement des chaînes utilisateur",
+  "failTitleTooltip": "Cliquez pour recharger les chaînes utilisateur",
+  "noDataTitle": "Aucun résultat"
+}

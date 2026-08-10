@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/helpers/hocs/withAuthentication.tsx",
+  "verifying": "Sicherheit check",
+  "loadingUser": "Laden previously logged benutzer",
+  "sessionExpiredTitle": "Ihr sitzung has abgelaufen",
+  "sessionExpiredDescription": "Ihr sitzung has abgelaufen, bitte sign in erneut",
+  "sessionExpiredOkButton": "Ok"
+}

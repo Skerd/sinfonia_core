@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/editCity.tsx",
+  "title": "Modifica città",
+  "description": "Aggiorna i dettagli della città",
+  "errorTitle": "Impossibile caricare i dati della città",
+  "errorDescription": "Fai clic qui per riprovare a recuperare i dati della città",
+  "form": {
+    "nameLabel": "Nome",
+    "namePlaceholder": "Nome della città",
+    "countryLabel": "Paese",
+    "countryPlaceholder": "Seleziona il paese",
+    "stateLabel": "Cantone / Stato",
+    "statePlaceholder": "Seleziona il cantone"
+  },
+  "noId": "Nessuna città selezionata.",
+  "backToList": "Torna all'elenco",
+  "formHeader": {
+    "title": "Modifica città",
+    "description": "Aggiorna i dettagli della città"
+  },
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Salva"
+  }
+}

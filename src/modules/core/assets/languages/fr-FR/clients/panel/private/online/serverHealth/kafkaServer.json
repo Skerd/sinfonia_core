@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/kafkaServer.tsx",
+  "kafkaServerTitle": "Serveur Kafka",
+  "online": "En ligne",
+  "offline": "Hors ligne",
+  "uptime": "Temps de disponibilité",
+  "jobs": "Emplois",
+  "failed": "Échoué",
+  "avgTime": "Moy. Temps",
+  "consumers": "Consommateurs",
+  "noConsumersRegistered": "Aucun consommateur enregistré",
+  "day": "jour",
+  "days": "jours",
+  "hour": "heure",
+  "hours": "heures",
+  "minute": "minute",
+  "minutes": "minutes",
+  "second": "deuxième",
+  "seconds": "secondes"
+}

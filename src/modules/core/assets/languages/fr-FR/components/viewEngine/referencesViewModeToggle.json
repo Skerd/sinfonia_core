@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/viewEngine/referencesViewModeToggle.tsx",
+  "compactView": "Compact",
+  "cardsView": "Cartes",
+  "toggleReferenceListView": "Basculer la présentation de la liste des inspections"
+}

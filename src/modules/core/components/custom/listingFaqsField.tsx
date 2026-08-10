@@ -42,7 +42,7 @@ export function ListingFaqsField({
             control={form.control}
             name={name as never}
             render={() => (
-                <FormItem className="space-y-4">
+                <FormItem className="flex flex-col gap-y-4">
                     {labelKey ? <FormLabel>{resolve(labelKey, resolveLanguageKey)}</FormLabel> : null}
                     <div className="flex flex-col gap-4">
                         {fields.map((field, index) => (

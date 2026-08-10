@@ -35,7 +35,7 @@ function LeftChatPanel({
     }
 
     return (
-        <div className="flex-full w-full space-y-0.5">
+        <div className="flex-full w-full gap-y-0.5">
 
             <div className='px-2 pb-3 shadow-md sm:static sm:z-auto sm:mx-0 sm:p-0 sm:shadow-none'>
                 <div className='flex items-center justify-between py-2'>
@@ -50,7 +50,7 @@ function LeftChatPanel({
                         </div>
                     }
                 </div>
-                <label className={cn('focus-within:ring-ring focus-within:ring-1 focus-within:outline-hidden', 'border-border flex h-9 w-full items-center space-x-0 rounded-md border ps-2')}>
+                <label className={cn('focus-within:ring-ring focus-within:ring-1 focus-within:outline-hidden', 'border-border flex h-9 w-full items-center gap-0 rounded-md border ps-2')}>
                     <SearchIcon size={15} className='me-2 text-muted-foreground' />
                     <span className='sr-only'>{resolveLanguageKey("searchChat")}</span>
                     <input

@@ -158,6 +158,82 @@ export function formatDate(
 }
 
 /**
+ * Cached per option set: constructing an `Intl.NumberFormat` costs roughly as
+ * much as formatting a few hundred values, and these run inside chart tick
+ * formatters and table cell renderers, which are called on every frame of a
+ * resize and on every row of a page.
+ */
+const numberFormatterCache = new Map<string, Intl.NumberFormat>();
+
+function getNumberFormatter(options: Intl.NumberFormatOptions): Intl.NumberFormat {
+  const key = JSON.stringify(options);
+  let formatter = numberFormatterCache.get(key);
+  if (!formatter) {
+    formatter = new Intl.NumberFormat(undefined, options);
+    numberFormatterCache.set(key, formatter);
+  }
+  return formatter;
+}
+
+export interface FormatNumberOptions {
+  /** Shortens to 1.6K / 1.6M. Use on chart axes and dense cells, not on totals. */
+  compact?: boolean;
+  /** ISO 4217 code. When present the result carries the currency symbol. */
+  currency?: string;
+  minimumFractionDigits?: number;
+  maximumFractionDigits?: number;
+}
+
+/**
+ * Locale-aware number formatting, the numeric counterpart to {@link formatDate}.
+ *
+ * Before this existed each call site did its own thing, which is why a chart
+ * axis read `$1600000` and a card read `1.6M €` on the same screen.
+ *
+ * @returns `""` for null/undefined/NaN so callers can render an empty cell
+ * rather than the string "NaN".
+ */
+export function formatNumber(
+  value: number | null | undefined,
+  options: FormatNumberOptions = {}
+): string {
+  if (value == null || Number.isNaN(value)) return "";
+
+  const {compact, currency, minimumFractionDigits, maximumFractionDigits} = options;
+
+  const intlOptions: Intl.NumberFormatOptions = {
+    notation: compact ? "compact" : "standard",
+    ...(compact ? {compactDisplay: "short" as const} : {}),
+    ...(currency ? {style: "currency" as const, currency} : {}),
+    ...(minimumFractionDigits != null ? {minimumFractionDigits} : {}),
+    // Compact notation defaults to 0 fraction digits, which turns 1.6M into 2M.
+    ...(maximumFractionDigits != null
+      ? {maximumFractionDigits}
+      : compact
+        ? {maximumFractionDigits: 1}
+        : {}),
+  };
+
+  return getNumberFormatter(intlOptions).format(value);
+}
+
+/**
+ * Money. Defaults to whole units because the panel shows portfolio-scale
+ * figures where cents are noise; pass `maximumFractionDigits: 2` for ledgers.
+ */
+export function formatCurrency(
+  value: number | null | undefined,
+  currency = "EUR",
+  options: Omit<FormatNumberOptions, "currency"> = {}
+): string {
+  return formatNumber(value, {
+    currency,
+    maximumFractionDigits: options.compact ? undefined : 0,
+    ...options,
+  });
+}
+
+/**
  * Returns whether two dates fall on the same calendar day (local time).
  *
  * @param d1 - First date.
@@ -229,16 +305,29 @@ export function formatDurationInDaysHoursOrMinutes(
 }
 
 /**
- * Builds a document/page title by appending a breadcrumb of segments.
+ * A page heading plus the entity context that scoped it — e.g. the units list
+ * filtered to one floor is `{title: "Units", context: ["Aria", "Block B", "3"]}`.
  *
- * @param title - Base title (e.g. app or section name).
- * @param items - Breadcrumb segments; falsy entries are omitted.
- * @returns `title` when no items, otherwise `"title: item1 / item2 / ..."`.
+ * Kept structured rather than pre-joined into `"Units: Aria / Block B / 3"`,
+ * because the shell renders the context as breadcrumb links: a joined string
+ * can only be printed, and the user cannot click back up the hierarchy they
+ * navigated down.
  */
-export function buildTitleBreadcrumb(title: string, items: (string | undefined)[]): string {
-  const filteredItems = items.filter((item) => Boolean(item));
-  if (filteredItems.length === 0) return title;
-  return `${title}: ${filteredItems.join(" / ")}`;
+export type PageTitle = {
+  title: string;
+  context: string[];
+};
+
+/**
+ * @param items - Context segments, outermost first; falsy entries are omitted.
+ */
+export function buildPageTitle(title: string, items: (string | undefined | null)[] = []): PageTitle {
+  return {title, context: items.filter((item): item is string => Boolean(item))};
+}
+
+/** Accepts either form so pages with no entity context can pass a bare string. */
+export function toPageTitle(value: string | PageTitle): PageTitle {
+  return typeof value === "string" ? {title: value, context: []} : value;
 }
 
 export function findFromLanguage(values: TranslationValue, path: string): TranslationValue{

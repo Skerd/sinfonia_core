@@ -36,7 +36,6 @@ function AllCountries({resolveLanguageKey}: WithLanguageType) {
             buildEditPath={countryEditPath}
             resolveLanguageKey={resolveLanguageKey}
             sheetLanguagePath="src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx"
-            // cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
             renderCard={(country, onDelete, onRestore) => (
                 <CountryCard
                     country={country}
@@ -51,5 +50,5 @@ function AllCountries({resolveLanguageKey}: WithLanguageType) {
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/countries/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "countries")
 )(AllCountries);

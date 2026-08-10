@@ -8,7 +8,7 @@ import { Button } from "@coreModule/components/ui/button.tsx";
 import { X } from "lucide-react";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import DeletedInfo from "@coreModule/components/custom/deletedInfo";
-import { TooltipDisplayer } from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
@@ -164,7 +164,7 @@ export function SheetViewRenderer({
     auditHistoryFieldLabels,
 }: SheetViewRendererProps) {
 
-    const [data, setData] = useState(dataProps || {});
+    const [data, setData] = useState<Record<string, any>>(dataProps || {});
     const [action, setAction] = useState("");
     const [forceReload, setForceReload] = useState(0);
     const [auditHistoryOpen, setAuditHistoryOpen] = useState(false);
@@ -388,7 +388,7 @@ export function SheetViewRenderer({
                                     />
                                 </div>
                                 :
-                                <div className="flex-full px-4 pb-6 mt-4 space-y-4">
+                                <div className="flex-full px-4 pb-6 mt-4 gap-y-4">
                                     <ViewRenderer nodes={config.nodes} ctx={ctx} />
                                     {children}
                                 </div>
@@ -480,6 +480,7 @@ function renderTitle(
     }
 
     if (header) {
+        const canReadTitle = hasAccessPath(readAccess, header.titleField);
         const rawTitle = resolvePath(data, header.titleField);
         const cat =
             typeof header.titleFieldLanguageCategory === "string" &&
@@ -496,9 +497,13 @@ function renderTitle(
         const titleCls = header.titleClassName ?? "md:text-xl";
         return (
             <SheetTitle className="flex flex-col flex-wrap justify-center gap-1">
-                <TooltipDisplayer tooltip={resolveLanguageKey(header.titleField)} show={!!readAccess[header.titleField]}>
-                    <p className={`truncate w-fit ${titleCls}`}>{titleValue}</p>
-                </TooltipDisplayer>
+                <HiddenElement randomLength={10}>
+                    {canReadTitle ? (
+                        <TooltipDisplayer tooltip={resolveLanguageKey(header.titleField)}>
+                            <p className={`truncate w-fit ${titleCls}`}>{titleValue}</p>
+                        </TooltipDisplayer>
+                    ) : null}
+                </HiddenElement>
                 {
                     header.subtitleKey &&
                     <Badge variant="secondary">
@@ -511,10 +516,10 @@ function renderTitle(
 
     return (
         <SheetTitle className="flex flex-wrap items-center gap-2 mb-0">
-            <HiddenElement>
-                {readAccess.name && data.name && (
+            <HiddenElement randomLength={10}>
+                {hasAccessPath(readAccess, "name") && data.name ? (
                     <span className="truncate">{data.name}</span>
-                )}
+                ) : null}
             </HiddenElement>
         </SheetTitle>
     );

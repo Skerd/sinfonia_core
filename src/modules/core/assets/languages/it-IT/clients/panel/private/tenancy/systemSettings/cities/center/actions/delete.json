@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/actions/delete.tsx",
+  "title": "Elimina",
+  "deleteConfirmTitle": "Elimina città",
+  "deleteConfirmDescription": "Sei sicuro di voler eliminare questa città?",
+  "confirmNameLabel": "Digita il nome della città per confermare",
+  "cancel": "Annulla",
+  "confirmDelete": "Elimina",
+  "axios": {
+    "start": {
+      "title": "Eliminazione città",
+      "time": 3000
+    },
+    "success": {
+      "title": "Città eliminata con successo.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile eliminare la città",
+      "time": 3000
+    }
+  }
+}

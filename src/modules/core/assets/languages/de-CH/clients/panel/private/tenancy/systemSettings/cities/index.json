@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx",
+  "title": "Cities",
+  "description": "Cities verwalten",
+  "createCity": "Ort erstellen",
+  "searchPlaceholder": "Suchen von name oder hinzufügen filters...",
+  "noData": "Keine cities gefunden",
+  "failTitle": "Cities konnten nicht geladen werden",
+  "failDescription": "Beim Laden von cities ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+  "status": "Status",
+  "name": "Name",
+  "state": "Kanton",
+  "country": "Land",
+  "deleted": "Gelöscht",
+  "active": "Aktiv",
+  "fields": {
+    "name": "Name",
+    "state": "Kanton",
+    "country": "Land",
+    "createdAt": "Erstellt am",
+    "updatedAt": "Aktualisiert am",
+    "createdBy": "Erstellt von",
+    "company": "Firma",
+    "deletedAt": "Status",
+    "deletedBy": "Gelöscht von"
+  }
+}

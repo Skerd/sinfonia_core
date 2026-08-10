@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/cardView/userProfile.tsx",
+  "failTitle": "Benutzer daten konnten nicht geladen werden",
+  "failTitleTooltip": "Click here bis retry laden benutzer daten",
+  "about": "Über",
+  "info": "Info",
+  "email": "E-Mail",
+  "emailVerified": "Current verifiziert e-Mail",
+  "invitedUser": "Bitte verifizieren die e-Mail von accepting die einladung antrag",
+  "emailNotVerified": "Bitte verifizieren ihr neu e-Mail von clicking on die link sent bis ihr posteingang",
+  "timezone": "Zeitzone",
+  "birthday": "Birthday",
+  "phoneNumber": "Telefon nummer",
+  "registeredDate": "Register datum",
+  "registeredFrom": "Registered von",
+  "emailVerifiedAt": "E-Mail verifiziert am",
+  "lockedOutUntil": "Locked out until",
+  "online": "Online",
+  "offline": "Offline",
+  "createdBy": "Erstellt von",
+  "status": "Status",
+  "statuses": {
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "invited": "Eingeladen"
+  },
+  "mfaStatuses": {
+    "active": "MFA aktiv",
+    "notActive": "MFA nicht aktiv"
+  },
+  "roles": "Rollen",
+  "unsuccessfulLogins": "Unsuccessful logins",
+  "lastLoginDate": "Nach anmelden",
+  "requests": "Requests",
+  "requestsInvitation": "Einladung",
+  "requestsActivation": "Activation",
+  "requestsPasswordReset": "Passwort zurücksetzen",
+  "requestsMfaDeactivation": "MFA deactivation"
+}

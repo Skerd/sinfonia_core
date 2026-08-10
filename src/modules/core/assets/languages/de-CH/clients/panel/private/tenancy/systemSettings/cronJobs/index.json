@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
+  "title": "Scheduled massnahmen",
+  "description": "Cron jobs und scheduled tasks verwalten",
+  "createCronJob": "Scheduled aktion erstellen",
+  "searchPlaceholder": "Suchen von name, code, oder handler...",
+  "noData": "Keine scheduled massnahmen gefunden",
+  "failTitle": "Scheduled massnahmen konnten nicht geladen werden",
+  "failDescription": "Beim Laden von scheduled massnahmen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+  "tooltipDescription": "Click bis retry fetching scheduled massnahmen.",
+  "fields": {
+    "code": "Code",
+    "name": "Name",
+    "handler": "Handler",
+    "type": "Terminplan typ",
+    "active": "Aktiv",
+    "scope": "Umfang",
+    "priority": "Priority",
+    "nextRunAt": "Nächste run",
+    "lastRunAt": "Nach run"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/index.tsx",
+  "home": {
+    "title": "Applications",
+    "subtitle": "Choisissez une application à ouvrir",
+    "searchPlaceholder": "Rechercher des apps…",
+    "noResults": "Aucune application ne correspond à votre recherche.",
+    "recent": "Récents",
+    "greetingMorning": "Bonjour",
+    "greetingAfternoon": "Bon après-midi",
+    "greetingEvening": "Bonsoir"
+  },
+  "menus": {
+    "account": {
+      "title": "Mon compte",
+      "accountSettings": {
+        "title": "Paramètres",
+        "profile": {
+          "title": "Profil"
+        },
+        "security": {
+          "title": "Sécurité"
+        },
+        "account": {
+          "title": "Compte"
+        },
+        "notifications": {
+          "title": "Notifications"
+        },
+        "notificationCenter": {
+          "title": "Activité"
+        }
+      },
+      "apps": {
+        "title": "Applications",
+        "connectedApps": {
+          "title": "Applications connectées"
+        }
+      }
+    },
+    "tenancy": {
+      "title": "Gestion des locataires",
+      "companies": {
+        "title": "Sociétés",
+        "allCompanies": {
+          "title": "Sociétés",
+          "editCompany": {
+            "title": "Modifier la société"
+          },
+          "createCompany": {
+            "title": "Créer une société"
+          }
+        }
+      },
+      "resources": {
+        "title": "Ressources",
+        "serverPerformance": {
+          "title": "Performance"
+        },
+        "cronJobs": {
+          "title": "Actions planifiées"
+        }
+      },
+      "systemSettings": {
+        "smtpServers": {
+          "title": "Serveurs mail"
+        },
+        "cities": {
+          "title": "Villes"
+        },
+        "states": {
+          "title": "États / cantons"
+        },
+        "title": "Configurations",
+        "messagingProviders": {
+          "title": "Fournisseurs de messagerie"
+        },
+        "core": {
+          "title": "Cœur"
+        },
+        "countries": {
+          "title": "Pays"
+        },
+        "currencies": {
+          "title": "Devises"
+        }
+      }
+    },
+    "company": {
+      "title": "Entreprise",
+      "dashboard": {
+        "title": "Aperçu"
+      },
+      "administration": {
+        "title": "Administration"
+      },
+      "users": {
+        "title": "Utilisateurs"
+      },
+      "chats": {
+        "title": "Discussions"
+      },
+      "settings": {
+        "title": "Paramètres",
+        "company": {
+          "title": "Entreprise"
+        },
+        "roles": {
+          "title": "Rôles"
+        }
+      }
+    }
+  },
+  "commandPalette": {
+    "title": "Palette de commandes",
+    "description": "Aller à n'importe quelle page",
+    "placeholder": "Rechercher des pages…",
+    "empty": "Aucune page correspondante"
+  }
+}

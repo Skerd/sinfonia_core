@@ -37,7 +37,7 @@ function DeletedInfo({
     if( bottom ){
         return (
             <DeletedTooltip deletedAt={deletedAt} deletedBy={deletedBy}>
-                <div className="w-full py-0.5 flex justify-center items-center bg-destructive text-center text-white text-xs">
+                <div className="w-full py-0.5 flex justify-center items-center bg-destructive text-center text-destructive-foreground text-xs">
                     {resolveLanguageKey("deleted")}
                 </div>
             </DeletedTooltip>
@@ -54,7 +54,7 @@ function DeletedInfo({
                     </DeletedTooltip>
                     :
                     <TooltipDisplayer tooltip={resolveLanguageKey("active")}>
-                        <div className="h-full min-h-full w-1.5 bg-green-600" />
+                        <div className="h-full min-h-full w-1.5 bg-success" />
                     </TooltipDisplayer>
                 }
             </div>

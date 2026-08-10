@@ -31,7 +31,7 @@ function UserAccountSecurityEnableAccountForm({
     }
 
     return (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-y-4">
             <Alert variant={"destructive"}>
                 <TriangleAlert className="h-4 w-4"/>
                 <AlertTitle>{resolveLanguageKey("title")}</AlertTitle>

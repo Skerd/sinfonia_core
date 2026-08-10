@@ -1,0 +1,15 @@
+{
+  "path": "src/modules/core/components/custom/files/uploadFile.tsx",
+  "dropOnly": "Déposez les fichiers ici",
+  "dragAndDrop": "Glissez et déposez les fichiers ici",
+  "or": "ou",
+  "browse": "parcourir",
+  "upload": "télécharger",
+  "oneFile": "Un seul fichier",
+  "upTo": "Jusqu'à",
+  "files": "fichiers",
+  "each": "chaque",
+  "remove": "Supprimer le fichier",
+  "converting": "Conversion...",
+  "maxSizeExceeded": "Le fichier est trop volumineux. La taille maximale est de {{size}}MB."
+}

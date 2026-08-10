@@ -259,7 +259,7 @@ function UploadField({
                             {required && " *"}
                         </FormLabel>
                         <FormControl>
-                            <div className="space-y-2">
+                            <div className="flex flex-col gap-y-2">
                                 <div className="flex flex-wrap items-start gap-4">
                                     {
                                         hasExisting && !hasNewFile &&
@@ -285,7 +285,7 @@ function UploadField({
                                         >
                                             <input {...getInputProps()} />
                                             <UploadCloud className="h-10 w-10 text-muted-foreground" />
-                                            <div className="flex flex-col space-y-1 text-center mt-2">
+                                            <div className="flex flex-col gap-y-1 text-center mt-2">
                                                 <p className="text-sm font-medium">
                                                     {isDragActive
                                                         ? (resolveLanguageKey?.("dropOnly") ?? "Drop the files here")
@@ -315,7 +315,7 @@ function UploadField({
                                             key={`${file.name}-${index}`}
                                             className="flex items-center justify-between rounded-md border border-border p-3 gap-2"
                                         >
-                                            <div className="flex items-center space-x-3">
+                                            <div className="flex items-center gap-x-3">
                                                 {showPreviews && isImageFile(file) && file.preview ? (
                                                     <div className="h-10 w-10 overflow-hidden rounded-md border border-border shrink-0">
                                                         <img
@@ -334,7 +334,7 @@ function UploadField({
                                                 ) : (
                                                     <FileIcon className="h-5 w-5 text-muted-foreground shrink-0" />
                                                 )}
-                                                <div className="space-y-1 min-w-0">
+                                                <div className="flex flex-col gap-y-1 min-w-0">
                                                     <p className="text-sm font-medium truncate">{file.name}</p>
                                                     <p className="text-xs text-muted-foreground">
                                                         {file.isConverting

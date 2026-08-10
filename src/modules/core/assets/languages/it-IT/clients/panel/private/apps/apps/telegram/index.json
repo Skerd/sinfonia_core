@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/index.tsx",
+  "name": "Telegram",
+  "description": "Collega Telegram per comunicazioni in tempo reale.",
+  "connected": "Collegato",
+  "notConnected": "Collega",
+  "connect": "Collega",
+  "disconnect": "Scollega",
+  "failTitle": "Impossibile caricare lo stato",
+  "failTitleTooltip": "Clicca qui per riprovare a caricare lo stato",
+  "linked": {
+    "title": "Telegram collegato correttamente",
+    "description": "Clicca il pulsante qui sotto per scollegare Telegram",
+    "button": "Scollega"
+  },
+  "notLinked": {
+    "title": "Telegram non collegato",
+    "description": "Clicca il pulsante qui sotto per collegare Telegram",
+    "button": "Collega"
+  }
+}

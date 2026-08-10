@@ -161,7 +161,7 @@ export default function SheetCompanyAddressesSection({
     const multipleAddresses = rows.length > 1;
 
     return (
-        <div className={multipleAddresses ? "space-y-3" : "space-y-4"}>
+        <div className={multipleAddresses ? "flex flex-col gap-3" : "flex flex-col gap-4"}>
             {rows.map((row: any, idx: number) => {
                 const scoped: Record<string, any> = { address: row };
                 const countryName = resolvePath(scoped, "address.country.name");
@@ -190,7 +190,7 @@ export default function SheetCompanyAddressesSection({
                                 : `addr-${idx}`
                         }
                         className={cn(
-                            multipleAddresses ? "space-y-1.5" : "space-y-2",
+                            multipleAddresses ? "flex flex-col gap-1.5" : "flex flex-col gap-2",
                             multipleAddresses && idx < rows.length - 1 && "border-b border-border/50",
                         )}
                     >

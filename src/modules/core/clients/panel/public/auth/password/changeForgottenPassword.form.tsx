@@ -101,7 +101,7 @@ function ChangeForgottenPassword({
         return (
             <Card className="gap-4 w-full h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <ShieldBan size={30} color="#c82121"/>
+                    <ShieldBan size={30} color="var(--destructive)"/>
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("errorVerifyingPasswordResetLinkTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("errorVerifyingPasswordResetLinkDescription")}</CardDescription>
                 </CardHeader>
@@ -115,7 +115,7 @@ function ChangeForgottenPassword({
         return (
             <Card className="gap-4 w-full h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <CircleX size={30} color="#c82121" />
+                    <CircleX size={30} color="var(--destructive)" />
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("errorChangingPasswordTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("errorChangingPasswordDescription")}</CardDescription>
                 </CardHeader>

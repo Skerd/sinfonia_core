@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/sidebar/companies/index.tsx",
+  "failTitle": "Caricamento azienda non riuscito",
+  "failTitleTooltip": "Clicca per ricaricare l'azienda"
+}

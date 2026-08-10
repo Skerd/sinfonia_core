@@ -64,7 +64,7 @@ function AddMembersToChannel({
     }
 
     return (
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center gap-x-1">
             <Button
                 type="button"
                 variant="destructive"

@@ -1,7 +1,14 @@
 import { LucideIcon, ChevronRight } from 'lucide-react';
-import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import {cn} from "@coreModule/components/lib/utils.ts";
+import { cn } from "@coreModule/components/lib/utils.ts";
+import { Badge } from "@coreModule/components/ui/badge.tsx";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@coreModule/components/ui/card.tsx";
 
 export interface KPICardProps {
   title: string;
@@ -20,15 +27,16 @@ export interface KPICardProps {
   linkLabel?: string;
 }
 
-const variantStyles = {
-  default: 'border-border',
-  primary: 'border-primary/30 bg-primary/5',
-  success: 'border-status-sold/30 bg-status-sold/5',
-  warning: 'border-status-reserved/30 bg-status-reserved/5',
-  danger: 'border-status-blocked/30 bg-status-blocked/5',
+/** Overrides `Card`'s neutral `ring-foreground/10` with the variant accent. */
+const variantStyles: Record<NonNullable<KPICardProps['variant']>, string> = {
+  default: '',
+  primary: 'ring-primary/30 bg-primary/5',
+  success: 'ring-status-sold/30 bg-status-sold/5',
+  warning: 'ring-status-reserved/30 bg-status-reserved/5',
+  danger: 'ring-status-blocked/30 bg-status-blocked/5',
 };
 
-const iconVariantStyles = {
+const iconVariantStyles: Record<NonNullable<KPICardProps['variant']>, string> = {
   default: 'bg-accent text-foreground',
   primary: 'bg-primary/20 text-primary',
   success: 'bg-status-sold/20 text-status-sold',
@@ -36,59 +44,66 @@ const iconVariantStyles = {
   danger: 'bg-status-blocked/20 text-status-blocked',
 };
 
-function DrillDownIndicator({ linkLabel }: { linkLabel?: string }) {
+function TrendBadge({ trend }: { trend: NonNullable<KPICardProps['trend']> }) {
+  return (
+    <Badge
+      variant={trend.isPositive ? 'secondary' : 'destructive'}
+      className={cn('shrink-0', trend.isPositive && 'bg-success/10 text-success')}
+    >
+      {trend.isPositive ? '+' : ''}
+      {trend.value}%
+    </Badge>
+  );
+}
+
+/**
+ * Chevron only in the compact card: the label that used to sit beside it was
+ * competing with the KPI title for the same line, and the title lost — every
+ * compact card on the overview read `Activ…` or `Cos…`. The label survives as
+ * the overlay link's accessible name, so nothing is lost to assistive tech.
+ */
+function DrillDownIndicator({
+  linkLabel,
+  showLabel = true,
+}: {
+  linkLabel?: string;
+  showLabel?: boolean;
+}) {
   return (
     <span
-      className={cn(
-        'inline-flex shrink-0 items-center gap-0.5 rounded-md px-1.5 py-0.5',
-        'text-muted-foreground text-[10px] font-medium',
-      )}
+      className="inline-flex shrink-0 items-center gap-0.5 text-3xs font-medium text-muted-foreground"
       aria-hidden
     >
-      {linkLabel != null && linkLabel !== '' ? (
-        <span className="hidden sm:inline max-w-[5rem] truncate">{linkLabel}</span>
+      {showLabel && linkLabel != null && linkLabel !== '' ? (
+        <span className="hidden max-w-[5rem] truncate sm:inline">{linkLabel}</span>
       ) : null}
       <ChevronRight size={14} className="shrink-0" />
     </span>
   );
 }
 
-function KpiCardShell({
+/**
+ * Stretched overlay instead of wrapping the card in an anchor: keeps `Card` as the
+ * layout root (so the `data-size` group selectors still drive header/content padding)
+ * while still giving one focusable, keyboard-reachable link per card.
+ */
+function DrillDownOverlayLink({
   href,
-  linkLabel,
   title,
-  variant,
-  compact,
-  children,
+  linkLabel,
 }: {
-  href?: string;
-  linkLabel?: string;
+  href: string;
   title: string;
-  variant: KPICardProps['variant'];
-  compact?: boolean;
-  children: ReactNode;
+  linkLabel?: string;
 }) {
-  const interactive = href != null && href !== '';
-  const shellClass = cn(
-    'kpi-card',
-    variantStyles[variant ?? 'default'],
-    interactive && 'cursor-pointer transition-shadow hover:shadow-sm hover:ring-1 hover:ring-border/80',
-    compact && 'gap-0 rounded-lg p-3',
+  return (
+    <Link
+      to={href}
+      className="absolute inset-0 z-10 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    >
+      <span className="sr-only">{linkLabel ? `${linkLabel}: ${title}` : title}</span>
+    </Link>
   );
-
-  if (interactive) {
-    return (
-      <Link
-        to={href}
-        className={cn(shellClass, 'block no-underline text-inherit')}
-        aria-label={linkLabel ? `${linkLabel}: ${title}` : title}
-      >
-        {children}
-      </Link>
-    );
-  }
-
-  return <div className={shellClass}>{children}</div>;
 }
 
 export function KpiCard({
@@ -102,79 +117,75 @@ export function KpiCard({
   href,
   linkLabel,
 }: KPICardProps) {
+  const interactive = href != null && href !== '';
+  const shellClass = cn(
+    'relative',
+    variantStyles[variant],
+    interactive && 'transition-shadow hover:ring-2 hover:ring-primary/30',
+  );
 
   if (compact) {
     return (
-      <KpiCardShell href={href} linkLabel={linkLabel} title={title} variant={variant} compact>
-        <div className="flex items-center gap-1.5 mb-1">
-          <div className={cn('shrink-0 p-1.5 rounded-md', iconVariantStyles[variant])}>
+      <Card size="sm" className={cn(shellClass, 'gap-1.5')}>
+        {interactive && <DrillDownOverlayLink href={href} title={title} linkLabel={linkLabel} />}
+        {/*
+          * Label above value rather than beside it. The previous single row put
+          * icon, title, value, trend and chevron in one flex line with the title
+          * as the only shrinkable element, so at five columns the title was the
+          * first thing to truncate - the card kept the number and threw away
+          * what the number meant.
+          */}
+        <CardHeader className="flex items-start gap-1.5">
+          <div className={cn('shrink-0 rounded-md p-1.5', iconVariantStyles[variant])}>
             <Icon size={16} />
           </div>
-          <p className="text-muted-foreground font-medium leading-tight truncate min-w-0 flex-1">
+          <CardTitle className="min-w-0 flex-1 text-xs leading-tight font-medium text-balance text-muted-foreground">
             {title}
-          </p>
-          <p className="font-display font-bold text-foreground text-lg leading-tight tracking-tight">
-            {value}
-          </p>
-          {trend != null && (
-            <span
-              className={cn(
-                'shrink-0 text-xs font-medium px-1.5 py-0.5 rounded-md',
-                trend.isPositive
-                  ? 'bg-status-sold/10 text-status-sold'
-                  : 'bg-status-blocked/10 text-status-blocked',
-              )}
-            >
-              {trend.isPositive ? '+' : ''}
-              {trend.value}%
-            </span>
+          </CardTitle>
+          {interactive && (
+            <CardAction className="self-start">
+              <DrillDownIndicator linkLabel={linkLabel} showLabel={false} />
+            </CardAction>
           )}
-          {href != null && href !== '' && <DrillDownIndicator linkLabel={linkLabel} />}
-        </div>
+        </CardHeader>
+        <CardContent className="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
+          <span className="font-display text-lg leading-tight font-bold tracking-tight tabular-nums text-foreground">
+            {value}
+          </span>
+          {trend != null && <TrendBadge trend={trend} />}
+        </CardContent>
         {subtitle != null && (
-          <p className="text-muted-foreground text-xs leading-tight mt-2">
+          <CardContent className="text-2xs leading-tight text-muted-foreground">
             {subtitle}
-          </p>
+          </CardContent>
         )}
-      </KpiCardShell>
+      </Card>
     );
   }
 
   return (
-    <KpiCardShell href={href} linkLabel={linkLabel} title={title} variant={variant}>
-      <div className="flex items-start justify-between gap-2 mb-4">
-        <div className={cn('p-3 rounded-xl', iconVariantStyles[variant])}>
+    <Card className={cn(shellClass, 'py-6')}>
+      {interactive && <DrillDownOverlayLink href={href} title={title} linkLabel={linkLabel} />}
+      <CardHeader className="px-6">
+        <div className={cn('w-fit rounded-xl p-3', iconVariantStyles[variant])}>
           <Icon size={24} />
         </div>
-        <div className="flex items-center gap-2">
-          {trend != null && (
-            <span
-              className={cn(
-                'shrink-0 text-sm font-medium px-2 py-1 rounded-full',
-                trend.isPositive
-                  ? 'bg-status-sold/10 text-status-sold'
-                  : 'bg-status-blocked/10 text-status-blocked',
-              )}
-            >
-              {trend.isPositive ? '+' : ''}
-              {trend.value}%
-            </span>
-          )}
-          {href != null && href !== '' && <DrillDownIndicator linkLabel={linkLabel} />}
-        </div>
-      </div>
-
-      <p className="text-muted-foreground font-medium text-sm leading-tight mb-1">
-        {title}
-      </p>
-      <p className="font-display font-bold text-3xl text-foreground leading-tight">
-        {value}
-      </p>
-      {subtitle != null && (
-        <p className="text-muted-foreground text-sm leading-tight mt-1">
-          {subtitle}
+        {(trend != null || interactive) && (
+          <CardAction className="flex items-center gap-2">
+            {trend != null && <TrendBadge trend={trend} />}
+            {interactive && <DrillDownIndicator linkLabel={linkLabel} />}
+          </CardAction>
+        )}
+      </CardHeader>
+      <CardContent className="px-6">
+        <p className="text-sm leading-tight font-medium text-muted-foreground">{title}</p>
+        <p className="font-display text-3xl leading-tight font-bold tabular-nums text-foreground">
+          {value}
         </p>
-      )}
-    </KpiCardShell>
+        {subtitle != null && (
+          <p className="mt-1 text-sm leading-tight text-muted-foreground">{subtitle}</p>
+        )}
+      </CardContent>
+    </Card>
   );
 }

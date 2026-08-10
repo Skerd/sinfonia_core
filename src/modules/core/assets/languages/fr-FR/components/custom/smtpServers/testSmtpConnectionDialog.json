@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/components/custom/smtpServers/testSmtpConnectionDialog.tsx",
+  "title": "Tester la connexion SMTP",
+  "description": "Vérifiez le serveur et envoyez un e-mail de test à l'adresse de votre compte.",
+  "confirm": "Tester la connexion",
+  "cancel": "Annuler",
+  "axios": {
+    "start": {
+      "title": "Test de la connexion SMTP…"
+    },
+    "success": {
+      "title": "Le test de connexion SMTP a réussi."
+    },
+    "error": {
+      "title": "Le test de connexion SMTP a échoué"
+    }
+  }
+}

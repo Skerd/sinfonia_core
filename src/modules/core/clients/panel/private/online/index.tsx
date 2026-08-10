@@ -23,7 +23,7 @@ function OnlineResources({
                 <Separator className="mt-2 mb-4" />
             </div>
 
-            <div className="flex-full space-y-4 pb-24">
+            <div className="flex-full gap-y-4 pb-24">
                 <div>
                     <ServerHealth />
                 </div>

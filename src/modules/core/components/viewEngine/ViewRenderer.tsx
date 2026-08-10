@@ -36,14 +36,16 @@ import SheetCompanyAddressesSection from "./sheetCompanyAddressesSection.tsx";
 import SheetAddressSection from "./sheetAddressSection.tsx";
 import SheetEmbeddedItemsList, { type EmbeddedItemFieldConfig } from "./sheetEmbeddedItemsList.tsx";
 import {
+    filterAccessibleValuePath,
     hasAccessPath,
+    hasSmallInfoCardValueAccess,
     normalizeObjectIdRef,
     resolvePath,
     type ViewRendererContext,
 } from "./viewRendererHelpers.ts";
 
 export type { ViewRendererContext };
-export { hasAccessPath, normalizeObjectIdRef, resolvePath };
+export { hasAccessPath, hasSmallInfoCardValueAccess, normalizeObjectIdRef, resolvePath };
 
 /** Lazy-loaded to avoid a static import cycle (cards → sheet → ViewRenderer). */
 const TenancyCountryCardLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx"));
@@ -910,7 +912,7 @@ function wrapSheetMediaWithLabel(
             : null,
         createElement("p", {className: "text-sm font-medium text-muted-foreground"}, label),
     );
-    return createElement("div", {key, className: "space-y-1.5"}, heading, content);
+    return createElement("div", {key, className: "flex flex-col gap-1.5"}, heading, content);
 }
 
 function formatSheetSmallInfoTemporal(value: unknown, mode: "date" | "dateTime"): string | null {
@@ -1116,7 +1118,7 @@ function renderLinkedObjectRefCardList(
         fromPreset ??
         (typeof wp.listClassName === "string" && wp.listClassName.length > 0
             ? wp.listClassName
-            : "space-y-2");
+            : "flex flex-col gap-2");
 
     const cards: ReactNode[] = [];
     rawList.forEach((rawItem: unknown, rowIndex: number) => {
@@ -1245,31 +1247,42 @@ function renderSmallInfoCard(
     } else if (wp.valuePath && Array.isArray(wp.valuePath) && data) {
         const parent = wp.parent ? resolvePath(data, wp.parent) : data;
         if (!parent) return null;
-        let pathParts = wp.valuePath.map((p: string) => resolvePath(parent, p));
-        const categoriesByPath = wp.languageKeyCategoriesByPath as Record<string, string> | undefined;
-        if (categoriesByPath && typeof categoriesByPath === "object") {
-            pathParts = pathParts.map((part, i) => {
-                const segment = String(wp.valuePath[i] ?? "");
-                const category =
-                    categoriesByPath[segment] ?? categoriesByPath[segment.split(".")[0] ?? ""];
-                if (category && part != null && typeof part === "string" && part.length > 0) {
-                    return resolveLanguageKey(`${category}.${part}`);
-                }
-                return part;
-            });
-        }
-        if (wp.format === "locale") {
-            pathParts = pathParts.map((part: unknown) =>
-                part != null && typeof part === "number" ? part.toLocaleString() : part
-            );
-        }
-        if (wp.pickFirstTruthyValuePath) {
-            displayValue = pathParts.find((part) => part != null && part !== "") ?? null;
+        const rawValuePath = (wp.valuePath as unknown[]).filter(
+            (p): p is string => typeof p === "string" && p.length > 0,
+        );
+        const valuePath =
+            typeof wp.parent === "string" && wp.parent.length > 0
+                ? filterAccessibleValuePath(ctx.access, wp.parent, rawValuePath)
+                : rawValuePath;
+        if (valuePath.length > 0) {
+            let pathParts = valuePath.map((p: string) => resolvePath(parent, p));
+            const categoriesByPath = wp.languageKeyCategoriesByPath as Record<string, string> | undefined;
+            if (categoriesByPath && typeof categoriesByPath === "object") {
+                pathParts = pathParts.map((part, i) => {
+                    const segment = String(valuePath[i] ?? "");
+                    const category =
+                        categoriesByPath[segment] ?? categoriesByPath[segment.split(".")[0] ?? ""];
+                    if (category && part != null && typeof part === "string" && part.length > 0) {
+                        return resolveLanguageKey(`${category}.${part}`);
+                    }
+                    return part;
+                });
+            }
+            if (wp.format === "locale") {
+                pathParts = pathParts.map((part: unknown) =>
+                    part != null && typeof part === "number" ? part.toLocaleString() : part
+                );
+            }
+            if (wp.pickFirstTruthyValuePath) {
+                displayValue = pathParts.find((part) => part != null && part !== "") ?? null;
+            } else {
+                const parts = pathParts.filter(
+                    (part) => part !== null && part !== undefined && part !== ""
+                );
+                displayValue = parts.join(wp.joinSeparator ?? " ");
+            }
         } else {
-            const parts = pathParts.filter(
-                (part) => part !== null && part !== undefined && part !== ""
-            );
-            displayValue = parts.join(wp.joinSeparator ?? " ");
+            displayValue = null;
         }
     } else if (data) {
         displayValue = resolvePath(data, binding.name);
@@ -1399,16 +1412,24 @@ function renderSmallInfoCard(
         }
     }
 
+    const externalLinkValue =
+        wp.externalLink === true &&
+        typeof displayValue === "string" &&
+        displayValue.trim().length > 0
+            ? displayValue.trim()
+            : undefined;
+
     return (
         <Component
             key={index}
             title={label}
             tooltip={tooltipText}
-            show={!(node.permissions?.read && !hasAccessPath(ctx.access, node.permissions.read))}
+            show={hasSmallInfoCardValueAccess(ctx.access, binding)}
             Icon={Icon ?? undefined}
             value={displayValue}
             variant={variant}
-            dontRenderValue={!!wp.dontRenderValue}
+            dontRenderValue={!!wp.dontRenderValue || !!externalLinkValue}
+            externalHref={externalLinkValue}
             linkedReferenceSheet={linkedReferenceSheet}
         />
     );
@@ -1426,7 +1447,7 @@ function renderStringBadgeList(
     const visible = list.slice(0, limit);
     const remaining = list.length - visible.length;
     return (
-        <div className="flex flex-wrap space-y-1 space-x-1 mt-0.5">
+        <div className="flex flex-wrap gap-y-1 gap-x-1 mt-0.5">
             {visible.map((item: unknown, i: number) => (
                 <Badge key={i} variant="outline">
                     {String(item)}
@@ -1450,7 +1471,7 @@ function renderObjectNameBadgeList(
     const list = resolvePath(data, fieldName);
     if (!Array.isArray(list) || list.length === 0) return null;
     return (
-        <div className="flex flex-wrap space-y-1 space-x-1 mt-0.5">
+        <div className="flex flex-wrap gap-y-1 gap-x-1 mt-0.5">
             {list.map((item: any, i: number) => {
                 const label = labelField.includes(".") ? resolvePath(item, labelField) : item?.[labelField];
                 if (label == null || label === "") return null;
@@ -1504,7 +1525,7 @@ function renderUnitTypeBadgeList(
     });
 
     if (badges.length === 0) return <div className="mt-0.5"><ValueNotSet /></div>;
-    return <div className="flex flex-wrap space-y-1 space-x-1 mt-0.5">{badges}</div>;
+    return <div className="flex flex-wrap gap-y-1 gap-x-1 mt-0.5">{badges}</div>;
 }
 
 function renderCurrencyList(
@@ -1522,7 +1543,7 @@ function renderCurrencyList(
           : [];
     if (list.length === 0) {
         return (
-            <div className="flex items-center space-x-0.5">
+            <div className="flex items-center gap-x-0.5">
                 <p>{resolveLanguageKey("none")}</p>
             </div>
         );
@@ -1531,7 +1552,7 @@ function renderCurrencyList(
     const andKey = wp.andKey ?? "and";
 
     return (
-        <div className="text-green-600 flex flex-wrap space-x-1">
+        <div className="text-success flex flex-wrap gap-x-1">
             {list.map((item: any, i: number) => {
                 const currency = item.currency;
                 const currencyName = currency?.abbreviation ?? currency?.symbol ?? currency?.name ?? "";
@@ -1539,7 +1560,7 @@ function renderCurrencyList(
                 const isLast = i === list.length - 1;
                 const hasMultiple = list.length > 1;
                 return (
-                    <div className="flex items-center space-x-0.5" key={i}>
+                    <div className="flex items-center gap-x-0.5" key={i}>
                         {isLast && hasMultiple && <span> {resolveLanguageKey(andKey)} </span>}
                         <p>{String(currencyName)}</p>
                         <p>{value.toLocaleString()}</p>

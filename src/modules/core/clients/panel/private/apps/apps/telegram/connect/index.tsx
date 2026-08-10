@@ -65,12 +65,12 @@ function ConnectTelegram({
     }
 
     return(
-        <div className="space-y-2">
+        <div className="flex flex-col gap-y-2">
             <div>
                 {
                     Object.values(resolveLanguageKey("steps") || {})?.map((step: string, index: number) => {
                         return (
-                            <div className="flex space-x-1 text-sm text-muted-foreground">
+                            <div className="flex gap-x-1 text-sm text-muted-foreground">
                                 <p>{index + 1}.</p>
                                 <p key={"step_" + index} className="">{`${step}`}</p>
                             </div>
@@ -79,7 +79,7 @@ function ConnectTelegram({
                 }
             </div>
 
-            <div className="w-full flex flex-col items-center space-y-2">
+            <div className="w-full flex flex-col items-center gap-y-2">
                 <div className="flex border">
                     <img style={{height: "300px"}} src={data?.data_url} alt="QR Code"/>
                 </div>

@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/cardView/index.tsx",
+  "failTitle": "Laden fehlgeschlagen",
+  "failDescription": "Ein fehler aufgetreten. Bitte versuchen erneut.",
+  "noData": "Keine states gefunden"
+}

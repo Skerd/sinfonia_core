@@ -1,0 +1,32 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/editRole.tsx",
+  "title": "Rolle bearbeiten",
+  "description": "Aktualisieren rolle details",
+  "errorTitle": "Rolle daten konnten nicht geladen werden",
+  "errorDescription": "Bitte click here bis retry fetching rolle daten",
+  "form": {
+    "nameLabel": "Rolle name",
+    "namePlaceholder": "Rolle name",
+    "nameDescription": "Die display name von die rolle",
+    "templateLabel": "Vorlage",
+    "templatePlaceholder": "Vorlage",
+    "templateDescription": "Copy berechtigungen von another rolle"
+  },
+  "none": "Keine",
+  "cancel": "Abbrechen",
+  "submit": "Speichern",
+  "axios": {
+    "start": {
+      "title": "Saving rolle",
+      "time": 3000
+    },
+    "success": {
+      "title": "Rolle aktualisiert erfolgreich!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Rolle konnte nicht aktualisiert werden, bitte erneut versuchen!",
+      "time": 3000
+    }
+  }
+}

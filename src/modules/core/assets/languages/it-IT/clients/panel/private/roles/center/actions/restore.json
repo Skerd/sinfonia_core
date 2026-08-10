@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/center/actions/restore.tsx",
+  "title": "Ripristina",
+  "restoreConfirmTitle": "Ripristina ruolo",
+  "restoreConfirmDescription": "Sei sicuro di voler ripristinare questo ruolo?",
+  "cancel": "Annulla",
+  "confirmRestore": "Ripristina",
+  "axios": {
+    "start": {
+      "title": "Ripristino del ruolo",
+      "time": 3000
+    },
+    "success": {
+      "title": "Ruolo ripristinato con successo!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile ripristinare il ruolo, riprova!",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/index.tsx",
+  "title": "Azienda",
+  "description": "Informazioni sull'azienda",
+  "failTitle": "Caricamento azienda non riuscito",
+  "failTitleTooltip": "Fare clic per riprovare a caricare le informazioni sull'azienda"
+}

@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx",
+  "overview": "Aperçu",
+  "description": "Description",
+  "company": "Entreprise",
+  "name": "Nom",
+  "email": "E-mail",
+  "phone": "Téléphone",
+  "website": "Site web",
+  "linkedin": "LinkedIn",
+  "instagram": "Instagram",
+  "facebook": "Facebook",
+  "logo": "Logo",
+  "vat": "TVA",
+  "parentCompany": "Société mère",
+  "allowedDomains": "Domaines autorisés",
+  "howToReach": "Coordonnées",
+  "whoAreWe": "Qui sommes-nous",
+  "audit": "Audit",
+  "createdBy": "Créé par",
+  "deletedBy": "Supprimé par",
+  "deletedAt": "Supprimé le",
+  "active": "Actif",
+  "notActive": "Pas actif",
+  "status": {
+    "true": "Actif",
+    "false": "Pas actif"
+  },
+  "form": {
+    "streetLabel": "Rue",
+    "postalCodeLabel": "Code postal",
+    "cityLabel": "Ville",
+    "stateLabel": "Canton / État",
+    "countryLabel": "Pays",
+    "latitudeLabel": "Latitude",
+    "longitudeLabel": "Longitude",
+    "logoLabel": "Logo"
+  }
+}

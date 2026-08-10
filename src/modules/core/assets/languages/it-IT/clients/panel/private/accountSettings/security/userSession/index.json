@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/userSession/index.tsx",
+  "title": "Sessioni attive",
+  "description": "Scopri dove hai effettuato l'accesso e revoca l'accesso sui dispositivi di cui non ti fidi.",
+  "helperText": "Se non riconosci un dispositivo, apri il menu della riga (⋮) e scegli Revoca accesso, quindi modifica la password.",
+  "rowActions": "Apri il menu della sessione",
+  "searchPlaceholder": "Cerca per sessione, dispositivo o posizione",
+  "unknown": "Sconosciuto",
+  "unknownDevice": "Dispositivo sconosciuto",
+  "unknownLocation": "Posizione sconosciuta",
+  "sessionId": "Identificativo della sessione",
+  "userAgent": "Agente utente",
+  "expiresAt": "Scade",
+  "revoke": "Revoca l'accesso",
+  "revokeSuccess": "Accesso alla sessione revocato.",
+  "revokeError": "Impossibile revocare questa sessione.",
+  "badge": {
+    "active": "Attivo",
+    "revoked": "Revocato",
+    "current": "Questo dispositivo"
+  },
+  "fields": {
+    "user": "Utente",
+    "userId": "Utente",
+    "sessionId": "Identificativo della sessione",
+    "deviceId": "ID del dispositivo",
+    "userAgent": "Agente utente",
+    "ipAddress": "Indirizzo IP",
+    "geolocation": "Geolocalizzazione",
+    "createdAt": "Creato il",
+    "lastActiveAt": "Ultimo attivo",
+    "expiresAt": "Scade",
+    "isActive": "Attivo"
+  }
+}

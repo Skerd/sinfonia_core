@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/tableView/stateTableBody.tsx",
+  "noData": "Nessuno stato trovato",
+  "failTitle": "Caricamento non riuscito",
+  "failDescription": "Si è verificato un errore. Per favore riprova."
+}

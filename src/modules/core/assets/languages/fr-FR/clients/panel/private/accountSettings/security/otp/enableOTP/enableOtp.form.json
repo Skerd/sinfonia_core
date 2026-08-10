@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/otp/enableOTP/enableOtp.form.tsx",
+  "manualSetup": "Clé de configuration",
+  "confirm": "Activer 2FA",
+  "cancel": "Annuler",
+  "form": {
+    "tokenLabel": "Code généré",
+    "tokenPlaceholder": "Code généré"
+  },
+  "steps": {
+    "one": "Scannez le code QR ci-dessous avec votre application d'authentification préférée",
+    "two": "Entrez le code généré dans le champ ci-dessous",
+    "three": "Cliquez sur '!!!' bouton pour activer 2FA"
+  },
+  "axios": {
+    "start": {
+      "title": "Activer 2FA",
+      "time": 3000
+    },
+    "success": {
+      "title": "2FA activé avec succès",
+      "time": 1000
+    },
+    "error": {
+      "title": "L'activation 2FA a échoué",
+      "time": 3000
+    }
+  }
+}

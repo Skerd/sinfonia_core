@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/index.tsx",
+  "title": "Alle rollen",
+  "description": "Und bearbeiten firma rollen anzeigen",
+  "searchPlaceholder": "Suchen von name oder slug...",
+  "failTitle": "Rollen konnten nicht geladen werden",
+  "failTitleTooltip": "Click here bis retry laden rollen",
+  "create": "Rolle erstellen",
+  "fields": {
+    "name": "Name",
+    "isAdmin": "Admin rolle",
+    "isSignupDefault": "Default für signup",
+    "canEdit": "Can bearbeiten",
+    "canDelete": "Can löschen",
+    "slug": "Slug",
+    "createdBy": "Erstellt von",
+    "company": "Firma",
+    "deletedAt": "Status",
+    "deletedBy": "Gelöscht von"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/api.tsx",
+  "apiServerTitle": "Serveur API",
+  "online": "En ligne",
+  "offline": "Hors ligne",
+  "uptime": "Temps de disponibilité",
+  "requests": "Demandes",
+  "failed": "Échoué",
+  "avgTime": "Moy. Temps",
+  "day": "jour",
+  "days": "jours",
+  "hour": "heure",
+  "hours": "heures",
+  "minute": "minute",
+  "minutes": "minutes",
+  "second": "deuxième",
+  "seconds": "secondes"
+}

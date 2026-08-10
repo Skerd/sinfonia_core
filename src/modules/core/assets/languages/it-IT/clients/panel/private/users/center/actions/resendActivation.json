@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/resendActivation.tsx",
+  "resendActivationEmail": "Invia nuovamente l'e-mail di attivazione",
+  "resendActivationEmailConfirm": "Inviare nuovamente l'e-mail di attivazione?",
+  "resendActivationEmailConfirmDesc": "All'utente verrà inviata una nuova email di attivazione.",
+  "resendActivationEmailSuccess": "Email di attivazione inviata con successo",
+  "resendActivationEmailError": "Impossibile inviare l'e-mail di attivazione",
+  "axios": {
+    "start": {
+      "title": "Invio e-mail di attivazione",
+      "time": 3000
+    },
+    "success": {
+      "title": "Email di attivazione inviata con successo",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile inviare l'e-mail di attivazione",
+      "time": 3000
+    }
+  }
+}

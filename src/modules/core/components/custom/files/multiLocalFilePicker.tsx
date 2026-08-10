@@ -80,7 +80,7 @@ export default function MultiLocalFilePicker({
     }, []);
 
     return (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-y-4">
             {showLabel ? <FormLabel>{String(resolveLanguageKey(labelKey))}</FormLabel> : null}
             <div className="flex items-center gap-2">
                 <input

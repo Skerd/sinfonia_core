@@ -1,5 +1,4 @@
 import {
-    Building2,
     MessagesSquare,
     Users,
     UserCog,
@@ -141,14 +140,6 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
                     usersPermissions: [],
                     atLeastOnePermission: true,
                     items: [
-                        {
-                            title: resolveLanguageKey("menus.tenancy.companies.allCompanies.title"),
-                            url: "/tenancy/systemSettings/companies",
-                            icon: Building2,
-                            permissions: [],
-                            usersPermissions: [],
-                            atLeastOnePermission: true,
-                        },
                         {
                             title: resolveLanguageKey("menus.company.settings.roles.title"),
                             url: "/tenancy/systemSettings/roles",

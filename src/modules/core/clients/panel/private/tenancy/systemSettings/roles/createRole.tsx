@@ -161,7 +161,7 @@ function CreateRole({
     return (
         <div className="flex-full gap-4">
             <Header title={resolveLanguageKey("title")} description={resolveLanguageKey("description")} />
-            <div className="flex-full px-2 pb-[100px] space-y-4">
+            <div className="flex-full px-2 pb-[100px] gap-y-4">
                 {
                     permissionsLoading ?
                     <Loader />
@@ -176,9 +176,9 @@ function CreateRole({
                     <NoData title={resolveLanguageKey("noData")} />
                     :
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
 
-                            <div className="flex space-x-2 pe-2">
+                            <div className="flex gap-x-2 pe-2">
                                 <div className="flex grow">
                                     <FormField
                                         control={form.control}

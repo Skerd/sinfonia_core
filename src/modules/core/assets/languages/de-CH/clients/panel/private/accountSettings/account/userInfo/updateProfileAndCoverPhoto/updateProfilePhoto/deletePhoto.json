@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/deletePhoto.tsx",
+  "confirm": "Löschen",
+  "cancel": "Abbrechen",
+  "deletePhoto": "Foto löschen",
+  "axios": {
+    "start": {
+      "title": "Deleting foto",
+      "time": 3000
+    },
+    "success": {
+      "title": "Foto erfolgreich gelöscht",
+      "time": 3000
+    },
+    "error": {
+      "title": "Fehlgeschlagen bis löschen foto",
+      "time": 3000
+    }
+  }
+}

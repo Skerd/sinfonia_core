@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/components/custom/filterBuilder/filterBuilder.tsx",
+  "addCustomFilter": "Aggiungi filtri personalizzati",
+  "apply": "Applica",
+  "clearFilters": "Cancella",
+  "loadingFilters": "Caricamento filtri...",
+  "filterLoadError": "Impossibile caricare i campi filtro"
+}

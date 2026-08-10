@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/index.tsx",
+  "title": "Membres",
+  "failTitle": "Échec du chargement des membres de la chaîne",
+  "failTitleTooltip": "Cliquez ici pour réessayer de récupérer les membres de la chaîne",
+  "noData": "Aucun membre trouvé"
+}

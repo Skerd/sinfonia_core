@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/cardView/cronJobCard.tsx",
+  "handler": "Handler",
+  "nextRunAt": "Nächste run",
+  "active": "Aktiv",
+  "yes": "Ja",
+  "no": "Nein"
+}

@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/name/updateName.tsx",
+  "confirm": "Confirmer le changement de nom",
+  "cancel": "Annuler",
+  "axios": {
+    "start": {
+      "title": "Mise à jour du nom",
+      "time": 3000
+    },
+    "success": {
+      "title": "Nom mis à jour avec succès.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Le nom n'a pas pu être mis à jour",
+      "time": 3000
+    }
+  }
+}

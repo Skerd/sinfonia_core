@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/inviteUser/inviteUser.form.tsx",
+  "form": {
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "ad esempio: email@esempio.com",
+    "nameLabel": "Nome",
+    "namePlaceholder": "ad esempio: Giovanni",
+    "surnameLabel": "Cognome",
+    "surnamePlaceholder": "ad esempio: Doe",
+    "userRoleLabel": "Ruolo",
+    "userRolePlaceholder": "Seleziona un ruolo",
+    "welcomeMessageLabel": "Messaggio di benvenuto (facoltativo)",
+    "welcomeMessagePlaceholder": "Aggiungi una nota personale al tuo invito (facoltativo)"
+  },
+  "cancel": "Annulla",
+  "invite": "Invita",
+  "axios": {
+    "start": {
+      "title": "Utente invitante",
+      "time": 3000
+    },
+    "success": {
+      "title": "Utente invitato con successo!",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile invitare l'utente.",
+      "time": 3000
+    }
+  }
+}

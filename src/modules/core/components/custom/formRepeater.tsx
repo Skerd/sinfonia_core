@@ -49,16 +49,69 @@ export type FormRepeaterProps = {
      * Relative dot-paths within each row used to build a summary label shown
      * in the row header next to the remove button.
      * Supports nested paths for populated refs (e.g. `"city.name"`).
-     * Empty / null / object values are skipped; remaining strings are joined with `rowTitleSeparator`.
+     * Empty / null / object values are skipped; remaining parts are joined with
+     * `rowTitleSeparators` (per-gap) when provided, otherwise `rowTitleSeparator`.
      */
     rowTitleFields?: string[];
-    /** Separator between summary parts. Defaults to `", "`. */
+    /** Separator between summary parts. Defaults to `", "`. Ignored when `rowTitleSeparators` is set. */
     rowTitleSeparator?: string;
+    /**
+     * Per-gap separators between consecutive non-empty title parts.
+     * Example: `[" ", " - "]` with fields `[day, start, end]` → `"Monday 09:00 - 17:00"`.
+     */
+    rowTitleSeparators?: string[];
     /** Language key shown as `"<resolved> N"` when the row has no filled title fields yet. */
     rowTitlePlaceholder?: string;
     addLabel?: string;
     removeLabel?: string;
 };
+
+// ---------------------------------------------------------------------------
+// Option-label sync (SimpleSelect / Select → RowTitle __label)
+// ---------------------------------------------------------------------------
+
+/**
+ * Seeds `${field}__label` from static options when a row loads with an existing value
+ * (edit mode / defaultItem), so titles show the human label before the user re-selects.
+ *
+ * Options are snapshotted by value→label key so a fresh `options` array each render
+ * does not re-trigger the effect (avoids setValue → re-render loops).
+ */
+function RowOptionLabelSync({
+    arrayField,
+    index,
+    fieldName,
+    options,
+    resolveLanguageKey,
+}: {
+    arrayField: string;
+    index: number;
+    fieldName: string;
+    options: {value: string; label: string}[];
+    resolveLanguageKey: ResolveLanguageKey;
+}) {
+    const form = useFormContext<FieldValues>();
+    const valuePath = `${arrayField}.${index}.${fieldName}`;
+    const labelPath = `${valuePath}__label`;
+    const value = form.watch(valuePath as any);
+    const optionsKey = options.map((o) => `${o.value}:${o.label}`).join("|");
+
+    useEffect(() => {
+        if (value == null || value === "") return;
+        const opt = options.find((o) => String(o.value) === String(value));
+        if (!opt) return;
+        const rawLabel = typeof opt.label === "string" ? opt.label : String(opt.label ?? "");
+        const label = rawLabel.includes(".")
+            ? String(resolveLanguageKey(rawLabel))
+            : rawLabel;
+        const current = form.getValues(labelPath as any);
+        if (current === label) return;
+        form.setValue(labelPath as any, label || undefined, {shouldDirty: false});
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- options keyed via optionsKey
+    }, [arrayField, fieldName, index, labelPath, optionsKey, resolveLanguageKey, value]);
+
+    return null;
+}
 
 // ---------------------------------------------------------------------------
 // Cascade side-effect component
@@ -124,17 +177,29 @@ function RowCascadeEffects({
  * 2. Object with `.name` (populated ref loaded from the server in edit mode)
  * 3. Plain non-ObjectId string (e.g. street, postalCode)
  */
+function joinTitleParts(parts: string[], separator: string, separators?: string[]): string {
+    if (!parts.length) return "";
+    if (!separators?.length) return parts.join(separator);
+    let out = parts[0]!;
+    for (let i = 1; i < parts.length; i++) {
+        out += (separators[i - 1] ?? separator) + parts[i]!;
+    }
+    return out;
+}
+
 function RowTitle({
     titleFields,
     arrayField,
     index,
     separator,
+    separators,
     fallback,
 }: {
     titleFields: string[];
     arrayField: string;
     index: number;
     separator: string;
+    separators?: string[];
     fallback: string;
 }) {
     const form = useFormContext<FieldValues>();
@@ -145,7 +210,7 @@ function RowTitle({
     const vals = Array.isArray(fieldValues) ? fieldValues : [fieldValues];
     const labs = Array.isArray(labelValues) ? labelValues : [labelValues];
 
-    const label = titleFields
+    const parts = titleFields
         .map((_, i) => {
             const lab = labs[i] as string | undefined;
             if (lab && typeof lab === "string" && lab.trim()) return lab.trim();
@@ -159,10 +224,14 @@ function RowTitle({
                 if (/^[0-9a-f]{24}$/i.test(val)) return null;
                 return val.trim() || null;
             }
+            if (typeof val === "number" || typeof val === "boolean") {
+                return String(val);
+            }
             return null;
         })
-        .filter(Boolean)
-        .join(separator);
+        .filter((part): part is string => !!part);
+
+    const label = joinTitleParts(parts, separator, separators);
 
     return <>{label || fallback}</>;
 }
@@ -200,15 +269,20 @@ function renderRowNode(
         if (!WidgetComponent) return null;
 
         if (isCompoundFormWidget(binding.widget)) {
+            // Name-based compounds (#MediaField, #StringArrayField, …) write via `name`.
+            // Prefix-based compounds (#FormAddressRow, …) use `fieldPrefix`. Set both so
+            // either style resolves to `socialLinks.0.logo` / `addresses.0.*`, not a root key.
+            const rowPrefix = `${arrayField}.${index}`;
             const prefixedBinding: FieldBinding = {
                 ...binding,
+                name: `${rowPrefix}.${binding.name}`,
                 widgetProps: {
                     ...binding.widgetProps,
-                    fieldPrefix: `${arrayField}.${index}`,
+                    fieldPrefix: rowPrefix,
                 },
             };
             return (
-                <div key={`compound-${nodeIndex}`}>
+                <div key={`compound-${nodeIndex}-${binding.name}`}>
                     {renderCompoundWidget(WidgetComponent, prefixedBinding, resolveLanguageKey, extra)}
                 </div>
             );
@@ -237,8 +311,12 @@ function renderRowNode(
             if (!siblingVal) fieldDisabled = true;
         }
 
-        // Inject label-capture callback for ApiSelect so RowTitle can display human-readable values.
-        if (binding.widget === "#ApiSelect") {
+        // Inject label-capture callback so RowTitle can display human-readable values.
+        if (
+            binding.widget === "#ApiSelect" ||
+            binding.widget === "#SimpleSelect" ||
+            binding.widget === "#Select"
+        ) {
             const labelPath = `${arrayField}.${index}.${binding.name}__label` as any;
             resolvedWidgetProps = {
                 ...resolvedWidgetProps,
@@ -272,8 +350,22 @@ function renderRowNode(
             widgetProps: resolvedWidgetProps,
         };
 
+        const staticOptions =
+            binding.widget === "#SimpleSelect" || binding.widget === "#Select"
+                ? ((resolvedWidgetProps.options ?? []) as {value: string; label: string}[])
+                : null;
+
         return (
             <div key={`field-${nodeIndex}-${binding.name}`}>
+                {staticOptions && staticOptions.length > 0 && (
+                    <RowOptionLabelSync
+                        arrayField={arrayField}
+                        index={index}
+                        fieldName={binding.name}
+                        options={staticOptions}
+                        resolveLanguageKey={resolveLanguageKey}
+                    />
+                )}
                 <FormField
                     control={form.control}
                     name={prefixedName as any}
@@ -355,6 +447,7 @@ function FormRepeater({
     title,
     rowTitleFields,
     rowTitleSeparator = ", ",
+    rowTitleSeparators,
     rowTitlePlaceholder,
     addLabel = "add",
     removeLabel = "remove",
@@ -407,7 +500,7 @@ function FormRepeater({
             {fields.map((field, index) => (
                 <div
                     key={field.id}
-                    className="rounded-lg border border-border/60 p-3"
+                    className="rounded-lg border border-border/60 p-4"
                 >
                     {rowCascades && rowCascades.length > 0 && (
                         <RowCascadeEffects
@@ -425,6 +518,7 @@ function FormRepeater({
                                     arrayField={arrayField}
                                     index={index}
                                     separator={rowTitleSeparator}
+                                    separators={rowTitleSeparators}
                                     fallback={
                                         rowTitlePlaceholder
                                             ? `${resolveLanguageKey(rowTitlePlaceholder)} ${index + 1}`
@@ -454,7 +548,7 @@ function FormRepeater({
                             </Button>
                         }
                     >
-                        <div className="space-y-4">
+                        <div className="flex flex-col gap-y-4">
                             {rowTemplate.map((node, nodeIndex) =>
                                 renderRowNode(
                                     node,

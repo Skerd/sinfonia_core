@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/roles/index.tsx",
+  "title": "Tous les rôles",
+  "description": "Afficher et modifier les rôles dans l'entreprise",
+  "searchPlaceholder": "Rechercher par nom ou par slug...",
+  "failTitle": "Échec du chargement des rôles",
+  "failTitleTooltip": "Cliquez ici pour réessayer de charger les rôles",
+  "create": "Créer un rôle",
+  "fields": {
+    "name": "Nom",
+    "isAdmin": "Rôle d'administrateur",
+    "isSignupDefault": "Par défaut pour l'inscription",
+    "canEdit": "Peut modifier",
+    "canDelete": "Peut supprimer",
+    "slug": "Identifiant",
+    "createdBy": "Créé par",
+    "company": "Entreprise",
+    "deletedAt": "Statut",
+    "deletedBy": "Supprimé par"
+  }
+}

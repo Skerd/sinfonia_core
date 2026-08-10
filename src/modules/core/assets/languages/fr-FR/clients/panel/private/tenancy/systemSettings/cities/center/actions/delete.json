@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/actions/delete.tsx",
+  "title": "Supprimer",
+  "deleteConfirmTitle": "Supprimer la ville",
+  "deleteConfirmDescription": "Êtes-vous sûr de vouloir supprimer cette ville ?",
+  "confirmNameLabel": "Tapez le nom de la ville pour confirmer",
+  "cancel": "Annuler",
+  "confirmDelete": "Supprimer",
+  "axios": {
+    "start": {
+      "title": "Supprimer la ville",
+      "time": 3000
+    },
+    "success": {
+      "title": "Ville supprimée avec succès.",
+      "time": 3000
+    },
+    "error": {
+      "title": "La ville n'a pas pu être supprimée",
+      "time": 3000
+    }
+  }
+}

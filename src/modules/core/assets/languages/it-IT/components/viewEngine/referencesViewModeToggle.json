@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/viewEngine/referencesViewModeToggle.tsx",
+  "compactView": "Compatta",
+  "cardsView": "Schede",
+  "toggleReferenceListView": "Attiva/disattiva il layout dell'elenco delle ispezioni"
+}

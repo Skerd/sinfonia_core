@@ -40,7 +40,7 @@ type SimpleSelectProps = WithLanguageType & {
 };
 
 const DEFAULT_FILTER: (option: SimpleSelectOption, searchText: string) => boolean = (option, searchText) =>
-    option.label.toLowerCase().includes(searchText.trim().toLowerCase());
+    String(option.label ?? "").toLowerCase().includes(searchText.trim().toLowerCase());
 
 function SimpleSelectRender({
     options,
@@ -68,7 +68,6 @@ function SimpleSelectRender({
 
     const [open, setOpen] = useState(false);
     const [searchText, setSearchText] = useState('');
-    const [popoverWidth, setPopoverWidth] = useState<number | undefined>();
     const triggerRef = useRef<HTMLButtonElement>(null);
 
     const searchLower = useMemo(() => searchText.trim().toLowerCase(), [searchText]);
@@ -113,7 +112,6 @@ function SimpleSelectRender({
         (nextOpen: boolean) => {
             if (disabled) return;
             if (!nextOpen) setSearchText('');
-            else if (triggerRef.current) setPopoverWidth(triggerRef.current.offsetWidth);
             setOpen(nextOpen);
         },
         [disabled],
@@ -125,8 +123,9 @@ function SimpleSelectRender({
             return (
                 <CommandItem
                     key={option.value}
-                    value={option.value}
-                    className="space-x-0"
+                    // cmdk uses `value` for filtering; bare numeric strings like "0" can break open/select.
+                    value={`${option.label} ${option.value}`}
+                    className="flex gap-x-0"
                     aria-selected={multiple ? isSelected : undefined}
                     onSelect={() => handleOptionSelect(option)}
                 >
@@ -142,7 +141,7 @@ function SimpleSelectRender({
                     ) : (
                         <CheckIcon className={cn('text-primary h-4 w-4', isSelected ? 'opacity-100' : 'opacity-0')} />
                     )}
-                    <p>{option.label}</p>
+                    <p className="whitespace-nowrap">{option.label}</p>
                 </CommandItem>
             );
         },
@@ -185,7 +184,7 @@ function SimpleSelectRender({
                                 <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
                                     {selectedValues.length}
                                 </Badge>
-                                <div className="hidden space-x-1 lg:flex">
+                                <div className="hidden gap-x-1 lg:flex">
                                     {selectedValues.length > 2 ? (
                                         <Badge variant="secondary" className="rounded-sm px-1 font-normal">
                                             {selectedValues.length} {String(resolveLanguageKey('selected'))}
@@ -231,12 +230,15 @@ function SimpleSelectRender({
                 )}
             </PopoverTrigger>
             <PopoverContent
-                className={cn(forTable ? 'w-[200px] p-0' : 'w-full p-0')}
-                style={forTable ? undefined : { width: popoverWidth }}
+                className={cn(
+                    forTable
+                        ? 'w-[200px] p-0'
+                        : 'w-max min-w-[var(--radix-popover-trigger-width)] max-w-[min(90vw,32rem)] p-0',
+                )}
                 align="start"
                 container={drawerPortalContainer?.current ?? undefined}
             >
-                <Command className="w-full" shouldFilter={false}>
+                <Command className="h-auto w-max min-w-full overflow-hidden" shouldFilter={false}>
                     <div className="relative">
                         <CommandInput
                             placeholder={String(searchPlaceholder ?? resolveLanguageKey('searchPlaceholder'))}

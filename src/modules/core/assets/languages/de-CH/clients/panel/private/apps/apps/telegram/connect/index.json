@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/apps/apps/telegram/connect/index.tsx",
+  "link": "Einladungslink",
+  "failTitle": "Telegram-QR-Code konnte nicht erstellt werden",
+  "failTitleTooltip": "Hier klicken, um den Telegram-QR-Code erneut zu erstellen",
+  "steps": {
+    "one": "Scannen Sie den folgenden QR-Code mit Ihrem Telefon oder klicken Sie auf den «Einladungslink»"
+  },
+  "cancel": "Abbrechen",
+  "axios": {
+    "start": {
+      "title": "Telegram wird verbunden",
+      "time": 3000
+    },
+    "success": {
+      "title": "Telegram erfolgreich verbunden",
+      "time": 3000
+    },
+    "error": {
+      "title": "Verbindung mit Telegram fehlgeschlagen",
+      "time": 3000
+    }
+  }
+}

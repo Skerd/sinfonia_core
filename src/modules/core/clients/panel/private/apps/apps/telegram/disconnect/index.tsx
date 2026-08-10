@@ -36,7 +36,7 @@ const UserLinkTelegramDeactivation = ({
     }
 
     return (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-y-4">
             {
                 !!specificUserId ?
                 <div className="flex flex-col w-full justify-center gap-2">

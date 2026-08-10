@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/components/custom/company/activateCompanyDialog.tsx",
+  "title": "Activer l'entreprise",
+  "description": "Êtes-vous sûr de vouloir activer cette entreprise ? Les utilisateurs pourront accéder au système après l'activation.",
+  "confirm": "Activer",
+  "cancel": "Annuler",
+  "axios": {
+    "start": {
+      "title": "Activation de l'entreprise",
+      "time": 3000
+    },
+    "success": {
+      "title": "Entreprise activée avec succès.",
+      "time": 3000
+    },
+    "error": {
+      "title": "L'entreprise n'a pas pu être activée",
+      "time": 3000
+    }
+  }
+}

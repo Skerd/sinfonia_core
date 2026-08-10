@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/components/custom/messagingProviders/setMessagingProviderActiveDialog.tsx",
+  "activate": {
+    "title": "Aktivieren messaging provider",
+    "description": "Diese provider will werden used für outbound SMS und WhatsApp nachrichten."
+  },
+  "deactivate": {
+    "title": "Deaktivieren messaging provider",
+    "description": "Diese provider will keine longer werden used für outbound nachrichten until activated erneut."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx",
+  "failedTitle": "Impossibile caricare l'azione pianificata",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento di questo lavoro. Fare clic per riprovare.",
+  "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
+  "overview": "Panoramica",
+  "name": "Nome",
+  "handler": "Gestore",
+  "type": "Tipo di pianificazione",
+  "active": "Attivo",
+  "nextRunAt": "Prossima corsa",
+  "lastRunAt": "Ultima corsa",
+  "code": "Codice",
+  "yes": "Sì",
+  "no": "No",
+  "typeValues": {
+    "interval": "Intervallo",
+    "cron": "Espressione cron",
+    "once": "Una volta",
+    "queue": "Coda"
+  },
+  "scopeValues": {
+    "global": "Globale",
+    "company": "Azienda"
+  }
+}

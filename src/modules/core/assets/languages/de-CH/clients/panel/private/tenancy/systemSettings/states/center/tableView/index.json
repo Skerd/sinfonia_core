@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/tableView/index.tsx",
+  "status": "Status",
+  "name": "Name",
+  "code": "Code",
+  "country": "Land",
+  "deleted": "Gelöscht",
+  "noData": "Keine states gefunden",
+  "failTitle": "Laden fehlgeschlagen",
+  "failDescription": "Ein fehler aufgetreten. Bitte versuchen erneut."
+}

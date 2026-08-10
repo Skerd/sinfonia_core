@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverStats/endpointPerformance.tsx",
+  "lastUpdated": "Dernière mise à jour :",
+  "endpointPerformanceTitle": "Performances des points de terminaison",
+  "waitingForPerformanceData": "En attente des données de performances...",
+  "endpointsTracked": "Points de terminaison suivis",
+  "totalMetrics": "Mesures totales",
+  "uniqueEndpoints": "Points de terminaison uniques",
+  "tracked": "Suivi",
+  "slowest": "Le plus lent",
+  "mostCalled": "Les plus appelés",
+  "errors": "Erreurs",
+  "method": "Méthode",
+  "endpoint": "Point de terminaison",
+  "count": "Compter",
+  "avgMs": "Moyenne (ms)",
+  "p95Ms": "P95 (ms)",
+  "p99Ms": "P99 (ms)",
+  "errorRate": "Taux d'erreur",
+  "noDataAvailable": "Aucune donnée disponible"
+}

@@ -1,0 +1,32 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
+  "title": "Cronologia degli accessi",
+  "description": "Esamina gli accessi recenti e i tentativi non riusciti. I record generati dal server non possono essere modificati qui.",
+  "searchPlaceholder": "Cerca per ora, dispositivo o IP",
+  "unknownLocation": "Posizione sconosciuta",
+  "reason": "Motivo",
+  "status": {
+    "success": "Accesso riuscito",
+    "failure": "Accesso non riuscito"
+  },
+  "badge": {
+    "success": "Successo",
+    "failure": "Non riuscito",
+    "mfa": "MAE"
+  },
+  "fields": {
+    "user": "Utente",
+    "userId": "Utente",
+    "time": "Ora",
+    "status": "Stato",
+    "mfa": "MAE",
+    "reason": "Motivo",
+    "device": "Dispositivo",
+    "os": "Sistema operativo",
+    "browser": "Navigatore",
+    "userAgent": "Agente utente",
+    "ip": "Indirizzo IP",
+    "geolocation": "Geolocalizzazione",
+    "createdAt": "Creato il"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx",
+  "name": "Nome",
+  "state": "Cantone / Stato",
+  "active": "Attivo",
+  "country": "Paese",
+  "deleted": "Eliminato",
+  "failedTitle": "Impossibile caricare la città",
+  "failedDescription": "Tocca per riprovare."
+}

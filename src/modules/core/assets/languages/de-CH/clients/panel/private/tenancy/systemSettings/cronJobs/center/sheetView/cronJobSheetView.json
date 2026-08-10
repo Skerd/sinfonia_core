@@ -1,0 +1,26 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx",
+  "failedTitle": "Scheduled aktion konnten nicht geladen werden",
+  "failedDescription": "Something went wrong während laden diese job. Click bis retry.",
+  "failedTooltipDescription": "Click bis retry fetching daten.",
+  "overview": "Übersicht",
+  "name": "Name",
+  "handler": "Handler",
+  "type": "Terminplan typ",
+  "active": "Aktiv",
+  "nextRunAt": "Nächste run",
+  "lastRunAt": "Nach run",
+  "code": "Code",
+  "yes": "Ja",
+  "no": "Nein",
+  "typeValues": {
+    "interval": "Intervall",
+    "cron": "Cron expression",
+    "once": "Once",
+    "queue": "Queue"
+  },
+  "scopeValues": {
+    "global": "Global",
+    "company": "Firma"
+  }
+}

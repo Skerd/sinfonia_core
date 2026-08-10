@@ -6,13 +6,14 @@ import {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type { WithAxiosLifecycleRef } from "@coreModule/helpers/hocs/withAxios.tsx";
 import type { RefObject } from "react";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";
+import { FieldGroup } from "@coreModule/components/ui/field.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { LoaderCircle, Save } from "lucide-react";
 import Header from "@coreModule/components/custom/header.tsx";
 import ViewRenderer, { type ViewRendererContext } from "./ViewRenderer.tsx";
 import { resolveWidget } from "./widgetRegistry.ts";
 import { renderFormWidget, isCompoundFormWidget, renderCompoundWidget } from "./renderFormWidget.tsx";
-import { buildTitleBreadcrumb } from "@coreModule/helpers/general";
+import { buildPageTitle } from "@coreModule/helpers/general";
 import { useNavigate } from "react-router-dom";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
@@ -172,9 +173,16 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
                     render={({ field }) => (
                         <FormItem>
                             {binding.label && (
-                                <FormLabel>{resolveLanguageKey(binding.label)}</FormLabel>
+                                <FormLabel>
+                                    <span>
+                                        {resolveLanguageKey(binding.label)}
+                                        {binding.required && (
+                                            <span aria-hidden="true" className="ml-0.5 text-destructive">*</span>
+                                        )}
+                                    </span>
+                                </FormLabel>
                             )}
-                            <FormControl>
+                            <FormControl aria-required={binding.required || undefined}>
                                 {renderFormWidget(WidgetComponent, binding, field, resolveLanguageKey, {
                                     loading: loading || loadingData,
                                     editMode: true,
@@ -203,10 +211,10 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
         // Avoid nested `.flex-full` (each sets overflow-y: auto) — panel content is the sole scroll root.
         <div className="flex flex-col gap-4">
             <Header
-                title={buildTitleBreadcrumb(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
+                title={buildPageTitle(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
                 description={resolveLanguageKey("formHeader.description")}
             />
-            <div className="px-2 pb-[100px] space-y-4">
+            <div className="flex flex-col px-2 pb-[100px] gap-y-4">
                 {
                     loadingData ?
                     <Loader />
@@ -224,19 +232,27 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
                             </>
                             :
                             <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit as any)} className="grid gap-4">
-                                    <ViewRenderer nodes={config.nodes} ctx={ctx} />
-                                    {renderChildren?.(form)}
-                                    {children}
-                                    <div className="flex grow items-center justify-end gap-2">
-                                        <Button type="button" variant="outline" onClick={onCancel} disabled={loading || loadingData}>
-                                            {resolveLanguageKey("formButtons.cancel")}
-                                        </Button>
-                                        <Button type="submit" disabled={loading || loadingData || submitDisabled}>
-                                            {loading ? <LoaderCircle className="animate-spin h-4 w-4" /> : (submitIcon ?? <Save />)}
-                                            {resolveLanguageKey("formButtons.submit")}
-                                        </Button>
-                                    </div>
+                                <form
+                                    onSubmit={form.handleSubmit(onSubmit as any, (errors) => {
+                                        const first = Object.keys(errors)[0];
+                                        if (first) form.setFocus(first as any);
+                                    })}
+                                    className="grid gap-4"
+                                >
+                                    <FieldGroup>
+                                        <ViewRenderer nodes={config.nodes} ctx={ctx} />
+                                        {renderChildren?.(form)}
+                                        {children}
+                                        <div className="flex grow items-center justify-end gap-2">
+                                            <Button type="button" variant="outline" onClick={onCancel} disabled={loading || loadingData}>
+                                                {resolveLanguageKey("formButtons.cancel")}
+                                            </Button>
+                                            <Button type="submit" disabled={loading || loadingData || submitDisabled}>
+                                                {loading ? <LoaderCircle className="animate-spin h-4 w-4" /> : (submitIcon ?? <Save />)}
+                                                {resolveLanguageKey("formButtons.submit")}
+                                            </Button>
+                                        </div>
+                                    </FieldGroup>
                                 </form>
                             </Form>
                         }

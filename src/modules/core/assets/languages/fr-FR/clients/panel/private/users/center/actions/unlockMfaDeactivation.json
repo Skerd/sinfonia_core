@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/users/center/actions/unlockMfaDeactivation.tsx",
+  "unlockMfaDeactivation": "Déverrouiller la désactivation de MFA",
+  "unlockMfaDeactivationConfirm": "Déverrouiller le verrouillage de désactivation MFA ?",
+  "unlockMfaDeactivationConfirmDesc": "Cela effacera le verrou de désactivation MFA. L'utilisateur pourra demander un nouveau code de désactivation MFA.",
+  "unlockMfaDeactivationResendEmail": "Renvoyer l'e-mail de désactivation de MFA",
+  "unlockMfaDeactivationSuccess": "Le verrouillage de désactivation MFA a été effacé avec succès",
+  "unlockMfaDeactivationError": "Échec de la suppression du verrouillage de désactivation MFA",
+  "axios": {
+    "start": {
+      "title": "Déverrouillage de la désactivation de MFA",
+      "time": 3000
+    },
+    "success": {
+      "title": "Le verrouillage de désactivation MFA a été effacé avec succès",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la suppression du verrouillage de désactivation MFA",
+      "time": 3000
+    }
+  }
+}
