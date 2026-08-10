@@ -21,7 +21,10 @@ import Loader from "@coreModule/components/custom/loader.tsx";
 import {ErrorView} from "@coreModule/components/custom/errorView.tsx";
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {SheetMenuNavigateDismissProvider} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
+import {
+    clearStaleBodyPointerEventsLock,
+    SheetMenuNavigateDismissProvider,
+} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import SheetAuditHistoryDrawer, {SheetAuditHistoryMenuLabel} from "@coreModule/components/viewEngine/sheetAuditHistory.tsx";
 import {
@@ -203,6 +206,17 @@ export function SheetViewRenderer({
         }, SHEET_CLOSE_ANIMATION_MS);
     }, [clearCloseTimer, onOpenChange]);
 
+    /**
+     * Immediate teardown for Edit / menu navigation. Animated `requestClose` leaves the
+     * overlay + RemoveScroll mounted while the route changes, which can stick
+     * `pointer-events: none` on `document.body` and block the destination form.
+     */
+    const dismissForMenuNavigate = useCallback(() => {
+        clearCloseTimer();
+        setPresent(false);
+        onOpenChange(false);
+    }, [clearCloseTimer, onOpenChange]);
+
     const handleOpenChange = useCallback((next: boolean) => {
         if (next) {
             clearCloseTimer();
@@ -212,6 +226,10 @@ export function SheetViewRenderer({
         }
         requestClose();
     }, [clearCloseTimer, onOpenChange, requestClose]);
+
+    useEffect(() => () => {
+        clearStaleBodyPointerEventsLock();
+    }, []);
 
     const ctx: ViewRendererContext = {
         data,
@@ -299,7 +317,7 @@ export function SheetViewRenderer({
     }, [dataProps]);
 
     return (
-        <SheetMenuNavigateDismissProvider onDismiss={requestClose}>
+        <SheetMenuNavigateDismissProvider onDismiss={dismissForMenuNavigate}>
             <Sheet open={present} onOpenChange={handleOpenChange}>
             <SheetContent
                 side="right"

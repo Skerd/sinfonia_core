@@ -41,16 +41,29 @@ export function SheetMenuNavigateDismissProvider({
 }
 
 /**
- * Calls the nearest wrapper's `onDismiss`, optionally closing every nesting sheet upward.
- *
- * @param allNestedSheets – pass `true` before router navigation when nested sheets may be open so
- * overlays and scroll-lock do not stick (recommended for Edit / navigate actions).
+ * Clears a leftover `react-remove-scroll` body lock. Nested sheet + dropdown can leave
+ * `pointer-events: none` on `document.body` after abrupt unmount during route changes.
  */
-export function useDismissSheetBeforeMenuNavigate(): (allNestedSheets?: boolean) => void {
+export function clearStaleBodyPointerEventsLock(): void {
+    if (document.body.style.pointerEvents === "none") {
+        document.body.style.removeProperty("pointer-events");
+    }
+}
+
+/**
+ * Calls the nearest wrapper's `onDismiss`, closing every nesting sheet upward.
+ *
+ * Always tears down nested sheets (`{ all: true }`) so overlays and scroll-lock do not stick
+ * (recommended for Edit / navigate actions). Also schedules a body lock scrub for the next
+ * macrotask — callers can keep `dismiss(); navigate(path)` without a special navigate helper.
+ */
+export function useDismissSheetBeforeMenuNavigate(): () => void {
     const dispatch = useContext(SheetMenuNavigateDismissContext);
 
-    return useCallback(
-        () => {dispatch?.({ all: true });},
-        [dispatch],
-    );
+    return useCallback(() => {
+        if (!dispatch) return;
+        dispatch({ all: true });
+        // After React flushes sheet/menu unmount (and any same-tick navigate), clear a stuck lock.
+        window.setTimeout(clearStaleBodyPointerEventsLock, 0);
+    }, [dispatch]);
 }
