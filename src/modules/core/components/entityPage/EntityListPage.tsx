@@ -3,7 +3,9 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import {
     clearQuickFilterParams,
     LIST_PAGE_PARAM,
-    QUICK_FILTER_PARAM_PREFIX,
+    quickFilterLabelParamKey,
+    quickFilterParamKey,
+    readQuickFilterLabelsFromUrl,
     readQuickFiltersFromUrl,
 } from "@coreModule/helpers/hooks/useListUrlState.ts";
 import {useAccess, type AccessObject} from "@coreModule/helpers/hocs/withAccess.tsx";
@@ -275,15 +277,20 @@ export default function EntityListPage<T extends BaseEntity>({
     const [searchParams, setSearchParams] = useSearchParams();
     const quickFilterFields = useMemo(() => (quickFilters ?? []).map((d) => d.field), [quickFilters]);
 
-    // Seed from `qf_*` on first render so toolbarFilterDSL is correct for the first fetch.
+    // Seed from `qf_*` / `qf_*_label` on first render so toolbarFilterDSL is correct for the first fetch.
     const [quickFilterValues, setQuickFilterValues] = useState<Record<string, FilterValue | null>>(() => {
         if (!quickFilterFields.length) return {};
         return readQuickFiltersFromUrl(searchParams, quickFilterFields) as Record<string, FilterValue | null>;
+    });
+    const [quickFilterLabels, setQuickFilterLabels] = useState<Record<string, string | null>>(() => {
+        if (!quickFilterFields.length) return {};
+        return readQuickFilterLabelsFromUrl(searchParams, quickFilterFields);
     });
 
     useEffect(() => {
         if (!quickFilterFields.length) return;
         const fromUrl = readQuickFiltersFromUrl(searchParams, quickFilterFields);
+        const labelsFromUrl = readQuickFilterLabelsFromUrl(searchParams, quickFilterFields);
         setQuickFilterValues((prev) => {
             let changed = false;
             const next = {...prev};
@@ -303,39 +310,87 @@ export default function EntityListPage<T extends BaseEntity>({
             }
             return changed ? next : prev;
         });
+        setQuickFilterLabels((prev) => {
+            let changed = false;
+            const next = {...prev};
+            for (const field of quickFilterFields) {
+                const urlLabel = labelsFromUrl[field];
+                if ((prev[field] ?? null) !== urlLabel) {
+                    next[field] = urlLabel;
+                    changed = true;
+                }
+            }
+            for (const key of Object.keys(next)) {
+                if (!quickFilterFields.includes(key) && next[key] != null) {
+                    next[key] = null;
+                    changed = true;
+                }
+            }
+            return changed ? next : prev;
+        });
         // Only hydrate from the URL when the param set changes.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams.toString(), quickFilterFields.join("|")]);
 
-    const setQuickFilterValue = (field: string, value: FilterValue | null) => {
-        let wrote = false;
-        let dependents: string[] = [];
+    const setQuickFilterValue = (field: string, value: FilterValue | null, label?: string | null) => {
+        const prevVal = quickFilterValues[field] ?? null;
+        const sameValue =
+            prevVal === value ||
+            (prevVal != null && value != null && String(prevVal) === String(value));
 
+        // Same id — only persist a newly resolved display label (`qf_<field>_label`).
+        if (sameValue) {
+            if (
+                value != null &&
+                label != null &&
+                label !== "" &&
+                (quickFilterLabels[field] ?? null) !== label
+            ) {
+                setQuickFilterLabels((prev) => ({...prev, [field]: label}));
+                setSearchParams(
+                    (prev) => {
+                        const next = new URLSearchParams(prev);
+                        next.set(quickFilterLabelParamKey(field), label);
+                        return next;
+                    },
+                    {replace: true},
+                );
+            }
+            return;
+        }
+
+        const dependents = collectDependentQuickFilterFields(quickFilters ?? [], field);
         setQuickFilterValues((prev) => {
-            const prevVal = prev[field] ?? null;
-            // ApiSelect re-notifies the same id once its label hydrates — that must NOT
-            // clear dependsOn children or rewrite the URL (drops qf_edifice / qf_floor on back).
-            const unchanged =
-                prevVal === value ||
-                (prevVal != null && value != null && String(prevVal) === String(value));
-            if (unchanged) return prev;
-
-            wrote = true;
-            dependents = collectDependentQuickFilterFields(quickFilters ?? [], field);
             const next = {...prev, [field]: value};
             for (const dep of dependents) next[dep] = null;
             return next;
         });
-
-        if (!wrote) return;
+        setQuickFilterLabels((prev) => {
+            const next = {
+                ...prev,
+                [field]: value == null || value === "" ? null : (label ?? null),
+            };
+            for (const dep of dependents) next[dep] = null;
+            return next;
+        });
 
         setSearchParams(
             (prev) => {
                 const next = new URLSearchParams(prev);
-                const key = `${QUICK_FILTER_PARAM_PREFIX}${field}`;
-                if (value == null || value === "") next.delete(key);
-                else next.set(key, String(value));
-                for (const dep of dependents) next.delete(`${QUICK_FILTER_PARAM_PREFIX}${dep}`);
+                const key = quickFilterParamKey(field);
+                const labelKey = quickFilterLabelParamKey(field);
+                if (value == null || value === "") {
+                    next.delete(key);
+                    next.delete(labelKey);
+                } else {
+                    next.set(key, String(value));
+                    if (label != null && label !== "") next.set(labelKey, label);
+                    else next.delete(labelKey);
+                }
+                for (const dep of dependents) {
+                    next.delete(quickFilterParamKey(dep));
+                    next.delete(quickFilterLabelParamKey(dep));
+                }
                 next.delete(LIST_PAGE_PARAM);
                 return next;
             },
@@ -345,6 +400,7 @@ export default function EntityListPage<T extends BaseEntity>({
 
     const clearQuickFilters = () => {
         setQuickFilterValues({});
+        setQuickFilterLabels({});
         clearQuickFilterParams(setSearchParams, quickFilterFields);
     };
 
@@ -455,6 +511,7 @@ export default function EntityListPage<T extends BaseEntity>({
                                     <QuickFilterBar
                                         defs={quickFilters}
                                         values={quickFilterValues}
+                                        labels={quickFilterLabels}
                                         onChange={setQuickFilterValue}
                                         onClearAll={clearQuickFilters}
                                         extraParams={mergedExtraParams}

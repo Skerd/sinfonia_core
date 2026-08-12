@@ -7,8 +7,10 @@ import type {SortingState} from "@tanstack/react-table";
  *
  * Full list URL contract (see also `filterUrl.ts`):
  * - `filter` — FilterBuilder DSL
- * - `qf_<field>` — QuickFilterBar
+ * - `qf_<field>` — QuickFilterBar values
+ * - `qf_<field>_label` — display labels for ObjectId quick filters (skip select hydrate)
  * - `ep_<name>` — non-DSL extraParams
+ * - `ep_<name>_label` — display labels for ObjectId extraParams
  * - `*Id` / `*Name` — scope/default filters
  * - `listView` / `listPage` / `listSort` — chrome
  */
@@ -16,8 +18,26 @@ export const LIST_VIEW_PARAM = "listView";
 export const LIST_PAGE_PARAM = "listPage";
 export const LIST_SORT_PARAM = "listSort";
 export const QUICK_FILTER_PARAM_PREFIX = "qf_";
+/** Suffix for companion display-label params (`qf_project_label`, `ep_reservedBy_label`). */
+export const FILTER_LABEL_SUFFIX = "_label";
 /** Prefix for non-DSL list body params mirrored in the URL (see `filterUrl.EXTRA_PARAM_PREFIX`). */
 export const EXTRA_PARAM_PREFIX = "ep_";
+
+export function quickFilterParamKey(field: string): string {
+    return `${QUICK_FILTER_PARAM_PREFIX}${field}`;
+}
+
+export function quickFilterLabelParamKey(field: string): string {
+    return `${QUICK_FILTER_PARAM_PREFIX}${field}${FILTER_LABEL_SUFFIX}`;
+}
+
+export function extraParamKey(name: string): string {
+    return `${EXTRA_PARAM_PREFIX}${name}`;
+}
+
+export function extraParamLabelKey(name: string): string {
+    return `${EXTRA_PARAM_PREFIX}${name}${FILTER_LABEL_SUFFIX}`;
+}
 
 export type EntityListViewMode = "card" | "table";
 
@@ -156,7 +176,20 @@ export function readQuickFiltersFromUrl(
 ): Record<string, string | null> {
     const out: Record<string, string | null> = {};
     for (const field of fields) {
-        const raw = searchParams.get(`${QUICK_FILTER_PARAM_PREFIX}${field}`);
+        const raw = searchParams.get(quickFilterParamKey(field));
+        out[field] = raw != null && raw !== "" ? raw : null;
+    }
+    return out;
+}
+
+/** Read ObjectId display labels from `qf_<field>_label` params. */
+export function readQuickFilterLabelsFromUrl(
+    searchParams: URLSearchParams,
+    fields: string[],
+): Record<string, string | null> {
+    const out: Record<string, string | null> = {};
+    for (const field of fields) {
+        const raw = searchParams.get(quickFilterLabelParamKey(field));
         out[field] = raw != null && raw !== "" ? raw : null;
     }
     return out;
@@ -166,13 +199,21 @@ export function writeQuickFilterParam(
     setSearchParams: ReturnType<typeof useSearchParams>[1],
     field: string,
     value: string | null,
+    label?: string | null,
 ) {
     setSearchParams(
         (prev) => {
             const next = new URLSearchParams(prev);
-            const key = `${QUICK_FILTER_PARAM_PREFIX}${field}`;
-            if (value == null || value === "") next.delete(key);
-            else next.set(key, value);
+            const key = quickFilterParamKey(field);
+            const labelKey = quickFilterLabelParamKey(field);
+            if (value == null || value === "") {
+                next.delete(key);
+                next.delete(labelKey);
+            } else {
+                next.set(key, value);
+                if (label != null && label !== "") next.set(labelKey, label);
+                else if (label === null || label === "") next.delete(labelKey);
+            }
             // Filter change resets pagination so results stay coherent.
             next.delete(LIST_PAGE_PARAM);
             return next;
@@ -188,7 +229,10 @@ export function clearQuickFilterParams(
     setSearchParams(
         (prev) => {
             const next = new URLSearchParams(prev);
-            for (const field of fields) next.delete(`${QUICK_FILTER_PARAM_PREFIX}${field}`);
+            for (const field of fields) {
+                next.delete(quickFilterParamKey(field));
+                next.delete(quickFilterLabelParamKey(field));
+            }
             // Filter change resets pagination so results stay coherent.
             next.delete(LIST_PAGE_PARAM);
             return next;
@@ -204,7 +248,20 @@ export function readExtraParamsFromUrl(
 ): Record<string, string | null> {
     const out: Record<string, string | null> = {};
     for (const key of keys) {
-        const raw = searchParams.get(`${EXTRA_PARAM_PREFIX}${key}`);
+        const raw = searchParams.get(extraParamKey(key));
+        out[key] = raw != null && raw !== "" ? raw : null;
+    }
+    return out;
+}
+
+/** Read ObjectId display labels from `ep_<name>_label` params. */
+export function readExtraParamLabelsFromUrl(
+    searchParams: URLSearchParams,
+    keys: string[],
+): Record<string, string | null> {
+    const out: Record<string, string | null> = {};
+    for (const key of keys) {
+        const raw = searchParams.get(extraParamLabelKey(key));
         out[key] = raw != null && raw !== "" ? raw : null;
     }
     return out;
@@ -214,13 +271,21 @@ export function writeExtraParam(
     setSearchParams: ReturnType<typeof useSearchParams>[1],
     key: string,
     value: string | null,
+    label?: string | null,
 ) {
     setSearchParams(
         (prev) => {
             const next = new URLSearchParams(prev);
-            const paramKey = `${EXTRA_PARAM_PREFIX}${key}`;
-            if (value == null || value === "") next.delete(paramKey);
-            else next.set(paramKey, value);
+            const paramKey = extraParamKey(key);
+            const labelKey = extraParamLabelKey(key);
+            if (value == null || value === "") {
+                next.delete(paramKey);
+                next.delete(labelKey);
+            } else {
+                next.set(paramKey, value);
+                if (label != null && label !== "") next.set(labelKey, label);
+                else if (label === null || label === "") next.delete(labelKey);
+            }
             next.delete(LIST_PAGE_PARAM);
             return next;
         },
@@ -235,7 +300,10 @@ export function clearExtraParams(
     setSearchParams(
         (prev) => {
             const next = new URLSearchParams(prev);
-            for (const key of keys) next.delete(`${EXTRA_PARAM_PREFIX}${key}`);
+            for (const key of keys) {
+                next.delete(extraParamKey(key));
+                next.delete(extraParamLabelKey(key));
+            }
             next.delete(LIST_PAGE_PARAM);
             return next;
         },

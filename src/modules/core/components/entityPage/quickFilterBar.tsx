@@ -61,7 +61,9 @@ export function collectDependentQuickFilterFields(defs: QuickFilterDef[], field:
 type QuickFilterBarProps = WithLanguageType & {
     defs: QuickFilterDef[];
     values: Record<string, FilterValue | null>;
-    onChange: (field: string, value: FilterValue | null) => void;
+    /** Cached ObjectId labels from `qf_<field>_label` (skip select hydrate). */
+    labels?: Record<string, string | null>;
+    onChange: (field: string, value: FilterValue | null, label?: string | null) => void;
     onClearAll: () => void;
     extraParams?: Record<string, unknown>;
 };
@@ -120,7 +122,8 @@ export function buildQuickFilterExtraParams(
 type QuickFilterInputProps = {
     def: QuickFilterDef;
     value: FilterValue | null;
-    onChange: (value: FilterValue | null) => void;
+    label?: string | null;
+    onChange: (value: FilterValue | null, label?: string | null) => void;
     values: Record<string, FilterValue | null>;
     extraParams?: Record<string, unknown>;
     resolveLanguageKey: WithLanguageType["resolveLanguageKey"];
@@ -225,7 +228,7 @@ function BooleanInput({def, value, onChange, resolveLanguageKey}: QuickFilterInp
     );
 }
 
-function ObjectIdInput({def, value, onChange, values, extraParams}: QuickFilterInputProps) {
+function ObjectIdInput({def, value, label, onChange, values, extraParams}: QuickFilterInputProps) {
     const parentFields = dependsOnFields(def);
     const activeParents = parentFields
         .map((field) => {
@@ -261,19 +264,34 @@ function ObjectIdInput({def, value, onChange, values, extraParams}: QuickFilterI
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [def.field, def.postBodyKeys, extraParams, remountKey]);
 
-    if (!def.apiUrl) return null;
     const strVal = typeof value === "string" ? value : undefined;
+    const cachedLabel = label != null && label !== "" ? label : undefined;
+    const defaultOptions = useMemo(
+        () => (strVal && cachedLabel ? [{value: strVal, label: cachedLabel}] : []),
+        [strVal, cachedLabel],
+    );
+
+    if (!def.apiUrl) return null;
+
     return (
         <ApiSelect
             key={`${def.field}-${remountKey}`}
             apiUrl={def.apiUrl}
             postBody={postBody}
             value={strVal}
-            onValueChange={(v: string | string[] | undefined) => {
+            defaultOptions={defaultOptions}
+            onValueChange={(v: string | string[] | undefined, nextLabel?: string | string[]) => {
                 const next = typeof v === "string" && v !== "" ? v : null;
-                // Ignore same-id label hydration notifications from ApiSelect.
-                if (next === (strVal ?? null)) return;
-                onChange(next as FilterValue | null);
+                const resolvedLabel =
+                    typeof nextLabel === "string" && nextLabel !== "" ? nextLabel : null;
+                // Same id: only persist a newly resolved label (no dependent clears).
+                if (next === (strVal ?? null)) {
+                    if (next && resolvedLabel && resolvedLabel !== cachedLabel) {
+                        onChange(next, resolvedLabel);
+                    }
+                    return;
+                }
+                onChange(next as FilterValue | null, resolvedLabel);
             }}
             placeholder={def.placeholder ?? def.label}
             className="h-8 text-sm min-w-[140px] max-w-[220px]"
@@ -309,6 +327,7 @@ function QuickFilterInput(props: QuickFilterInputProps) {
 function QuickFilterBar({
     defs,
     values,
+    labels,
     onChange,
     onClearAll,
     extraParams,
@@ -327,7 +346,8 @@ function QuickFilterBar({
                             <QuickFilterInput
                                 def={def}
                                 value={values[def.field] ?? null}
-                                onChange={(v) => onChange(def.field, v)}
+                                label={labels?.[def.field] ?? null}
+                                onChange={(v, lbl) => onChange(def.field, v, lbl)}
                                 values={values}
                                 extraParams={extraParams}
                                 resolveLanguageKey={resolveLanguageKey}
@@ -335,7 +355,7 @@ function QuickFilterBar({
                             {active && (
                                 <button
                                     type="button"
-                                    onClick={() => onChange(def.field, null)}
+                                    onClick={() => onChange(def.field, null, null)}
                                     className="absolute right-1.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                                     aria-label={String(resolveLanguageKey("clear"))}
                                 >

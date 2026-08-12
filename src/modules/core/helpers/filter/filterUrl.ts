@@ -5,7 +5,9 @@ import { generateUUID } from "@coreModule/helpers/general";
  * List URL param contract (EntityListPage / CardAndTableView):
  * - `filter` — base64(JSON) FilterBuilder DSL (user-applied advanced filters)
  * - `qf_<field>` — QuickFilterBar values (merged into toolbar DSL or extraParams)
+ * - `qf_<field>_label` — ObjectId quick-filter display labels (skip select hydrate)
  * - `ep_<name>` — non-DSL list body extraParams (page-local / asExtraParam)
+ * - `ep_<name>_label` — ObjectId extraParam display labels
  * - `projectId` / `edificeId` / `floorId` / `*Name` — scope/default filters (extraFilters)
  * - `listView` / `listPage` / `listSort` — list chrome (useListUrlState)
  *
