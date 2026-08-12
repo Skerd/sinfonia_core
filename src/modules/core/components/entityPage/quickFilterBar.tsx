@@ -352,7 +352,8 @@ function QuickFilterBar({
                                 extraParams={extraParams}
                                 resolveLanguageKey={resolveLanguageKey}
                             />
-                            {active && (
+                            {/* ApiSelect already renders its own clear control. */}
+                            {active && def.type !== COLUMN_TYPE.OBJECT_ID && (
                                 <button
                                     type="button"
                                     onClick={() => onChange(def.field, null, null)}

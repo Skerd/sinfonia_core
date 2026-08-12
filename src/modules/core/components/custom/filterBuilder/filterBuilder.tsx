@@ -6,7 +6,7 @@ import {Search, Trash2} from "lucide-react";
 import { FilterBuilderProvider, useFilterBuilder } from "./filterBuilderContext.tsx";
 import FilterGroup from "./filterGroup.tsx";
 import FilterChip from "./filterChip.tsx";
-import { useFilterState } from "./useFilterState.ts";
+import { isCompleteRule, useFilterState } from "./useFilterState.ts";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterDSL, FilterRule, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import {
@@ -28,7 +28,7 @@ type RuleWithGroup = { groupId: string; rule: FilterRule };
 function collectRulesWithGroups(group: FilterDSL, fields: FilterFieldConfig[]): RuleWithGroup[] {
     const result: RuleWithGroup[] = [];
     for (const r of group.rules ?? []) {
-        if (r.field && r.value != null) result.push({ groupId: group.id, rule: r });
+        if (isCompleteRule(r)) result.push({ groupId: group.id, rule: r });
     }
     for (const g of group.groups ?? []) {
         result.push(...collectRulesWithGroups(g, fields));
@@ -37,9 +37,14 @@ function collectRulesWithGroups(group: FilterDSL, fields: FilterFieldConfig[]): 
 }
 
 function countActiveRules(group: FilterDSL): number {
-    const rules = group.rules?.filter((r) => r.field && r.value != null)?.length ?? 0;
+    const rules = group.rules?.filter(isCompleteRule)?.length ?? 0;
     const nested = group.groups?.reduce((sum, g) => sum + countActiveRules(g), 0) ?? 0;
     return rules + nested;
+}
+
+/** Incomplete rule waiting for field/value (not shown as a chip yet). */
+function isDraftRule(rule: FilterRule): boolean {
+    return !isCompleteRule(rule);
 }
 
 type FilterBuilderProps = WithLanguageType & {
@@ -85,17 +90,64 @@ function FilterBuilderInner({
         serialize,
     } = useFilterState(initialFilter);
 
+    const [popoverOpen, setPopoverOpen] = useState(false);
+    /** Suppress auto-apply once after URL hydrate / programmatic commit. */
+    const suppressAutoApplyRef = useRef(1);
+    const lastCommittedKeyRef = useRef<string | null>(null);
+    const lastSyncedFilterParam = useRef<string | null>(filterParam);
+    const lastSyncedLabelsParam = useRef<string | null>(labelsParam);
+
+    const commitFilters = useCallback(
+        (dsl: FilterDSL | undefined, options?: { closePopover?: boolean }) => {
+            const prunedLabels = pruneFilterLabelsToDsl(refLabelsByFieldPath, dsl);
+            setFilters((prev) => {
+                const next = { ...prev, ...extraParams };
+                if (dsl) next.filter = dsl;
+                else delete next.filter;
+                return next;
+            });
+            setSearchParams((prev) => {
+                const next = new URLSearchParams(prev);
+                if (dsl) {
+                    next.set(FILTER_URL_PARAM, encodeFilterToUrl(dsl));
+                    if (Object.keys(prunedLabels).length > 0) {
+                        next.set(FILTER_LABELS_URL_PARAM, encodeFilterLabelsToUrl(prunedLabels));
+                    } else {
+                        next.delete(FILTER_LABELS_URL_PARAM);
+                    }
+                } else {
+                    next.delete(FILTER_URL_PARAM);
+                    next.delete(FILTER_LABELS_URL_PARAM);
+                }
+                next.delete(LIST_PAGE_PARAM);
+                return next;
+            }, { replace: true });
+            lastSyncedFilterParam.current = dsl ? encodeFilterToUrl(dsl) : null;
+            lastSyncedLabelsParam.current =
+                dsl && Object.keys(prunedLabels).length > 0
+                    ? encodeFilterLabelsToUrl(prunedLabels)
+                    : null;
+            if (Object.keys(prunedLabels).length > 0) replaceRefLabels(prunedLabels);
+            else replaceRefLabels({});
+            lastCommittedKeyRef.current = JSON.stringify(dsl ?? null);
+            suppressAutoApplyRef.current += 1;
+            if (options?.closePopover) setPopoverOpen(false);
+        },
+        [setFilters, extraParams, setSearchParams, refLabelsByFieldPath, replaceRefLabels],
+    );
+
     // Re-sync UI + applied filters whenever the URL `filter` param changes
     // (refresh, shared links, browser back/forward). Apply/Clear write the URL;
     // this effect is the reader.
-    const lastSyncedFilterParam = useRef<string | null>(filterParam);
     useEffect(() => {
         if (lastSyncedFilterParam.current === filterParam) return;
         lastSyncedFilterParam.current = filterParam;
+        suppressAutoApplyRef.current += 1;
 
         if (urlFilter) {
             setRoot(urlFilter);
             setFilters((prev) => ({ ...prev, ...extraParams, filter: urlFilter }));
+            lastCommittedKeyRef.current = JSON.stringify(urlFilter);
             return;
         }
 
@@ -108,11 +160,11 @@ function FilterBuilderInner({
                 delete next.filter;
                 return next;
             });
+            lastCommittedKeyRef.current = JSON.stringify(null);
         }
     }, [filterParam, urlFilter, setRoot, reset, setFilters, extraParams]);
 
     // Keep ObjectId chip labels in sync with `filterLabels` (provider also seeds on mount).
-    const lastSyncedLabelsParam = useRef<string | null>(labelsParam);
     useEffect(() => {
         if (lastSyncedLabelsParam.current === labelsParam) return;
         lastSyncedLabelsParam.current = labelsParam;
@@ -125,67 +177,46 @@ function FilterBuilderInner({
 
     const activeCount = useMemo(() => countActiveRules(root), [root]);
     const rulesWithGroups = useMemo(() => collectRulesWithGroups(root, fields), [root, fields]);
-    const [popoverOpen, setPopoverOpen] = useState(false);
+    const appliedDsl = useMemo(() => serialize(), [serialize]);
+    const appliedKey = useMemo(() => JSON.stringify(appliedDsl ?? null), [appliedDsl]);
+
+    // Auto-apply when complete rules change (chip edit/remove, or draft → badge).
+    useEffect(() => {
+        if (suppressAutoApplyRef.current > 0) {
+            suppressAutoApplyRef.current -= 1;
+            lastCommittedKeyRef.current = appliedKey;
+            return;
+        }
+        if (appliedKey === lastCommittedKeyRef.current) return;
+        commitFilters(appliedDsl, { closePopover: false });
+    }, [appliedKey, appliedDsl, commitFilters]);
+
+    // When the builder opens, ensure there is a blank rule ready to edit.
+    // After a draft becomes a chip (and auto-applies), add another blank rule.
+    useEffect(() => {
+        if (!popoverOpen) return;
+        if (root.rules.some(isDraftRule)) return;
+        addRule(root.id);
+    }, [popoverOpen, root.rules, root.id, addRule]);
 
     const onApply = useCallback(() => {
-        const dsl = serialize();
-        const prunedLabels = pruneFilterLabelsToDsl(refLabelsByFieldPath, dsl);
-        setFilters((prev) => {
-            const next = { ...prev, ...extraParams };
-            if (dsl) next.filter = dsl;
-            else delete next.filter;
-            return next;
-        });
-        setSearchParams((prev) => {
-            const next = new URLSearchParams(prev);
-            if (dsl) {
-                next.set(FILTER_URL_PARAM, encodeFilterToUrl(dsl));
-                if (Object.keys(prunedLabels).length > 0) {
-                    next.set(FILTER_LABELS_URL_PARAM, encodeFilterLabelsToUrl(prunedLabels));
-                } else {
-                    next.delete(FILTER_LABELS_URL_PARAM);
-                }
-            } else {
-                next.delete(FILTER_URL_PARAM);
-                next.delete(FILTER_LABELS_URL_PARAM);
-            }
-            // Filter change resets pagination so results stay coherent.
-            next.delete(LIST_PAGE_PARAM);
-            return next;
-        }, { replace: true });
-        // Avoid a redundant setRoot/setFilters from the URL effect for this write.
-        lastSyncedFilterParam.current = dsl ? encodeFilterToUrl(dsl) : null;
-        lastSyncedLabelsParam.current =
-            dsl && Object.keys(prunedLabels).length > 0
-                ? encodeFilterLabelsToUrl(prunedLabels)
-                : null;
-        if (Object.keys(prunedLabels).length > 0) replaceRefLabels(prunedLabels);
-        else replaceRefLabels({});
-        setPopoverOpen(false);
-    }, [serialize, setFilters, extraParams, setSearchParams, refLabelsByFieldPath, replaceRefLabels]);
+        commitFilters(serialize(), { closePopover: true });
+    }, [commitFilters, serialize]);
 
     const onClear = useCallback(() => {
         reset();
         replaceRefLabels({});
-        setFilters((prev) => {
-            const next = { ...prev, ...extraParams };
-            delete next.filter;
-            return next;
-        });
-        setSearchParams((prev) => {
-            const next = new URLSearchParams(prev);
-            next.delete(FILTER_URL_PARAM);
-            next.delete(FILTER_LABELS_URL_PARAM);
-            next.delete(LIST_PAGE_PARAM);
-            return next;
-        }, { replace: true });
+        commitFilters(undefined, { closePopover: true });
         lastSyncedFilterParam.current = null;
         lastSyncedLabelsParam.current = null;
-        setPopoverOpen(false);
-    }, [reset, setFilters, extraParams, setSearchParams, replaceRefLabels]);
+    }, [reset, replaceRefLabels, commitFilters]);
+
+    const handlePopoverOpenChange = useCallback((open: boolean) => {
+        setPopoverOpen(open);
+    }, []);
 
     return (
-        <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+        <Popover open={popoverOpen} onOpenChange={handlePopoverOpenChange}>
             <PopoverTrigger asChild>
                 <div
                     role="button"

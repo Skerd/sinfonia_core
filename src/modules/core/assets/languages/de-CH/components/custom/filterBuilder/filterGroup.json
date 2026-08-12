@@ -1,9 +1,14 @@
 {
   "path": "src/modules/core/components/custom/filterBuilder/filterGroup.tsx",
-  "matchAll": "Match alle",
-  "matchAny": "Match any",
-  "newRule": "Neu rule",
-  "filterGroup": "Filter group",
-  "addGroup": "Group hinzufügen",
-  "removeGroup": "Entfernen group"
+  "matchAll": "Alle Bedingungen erfüllen",
+  "matchAny": "Beliebige Bedingung erfüllen",
+  "matchMode": "Übereinstimmungsmodus",
+  "matchPrefix": "Erfülle",
+  "matchAllShort": "alle",
+  "matchAnyShort": "beliebige",
+  "matchSuffix": "der folgenden",
+  "newRule": "Neue Regel",
+  "filterGroup": "Filtergruppe",
+  "addGroup": "Gruppe hinzufügen",
+  "removeGroup": "Gruppe entfernen"
 }

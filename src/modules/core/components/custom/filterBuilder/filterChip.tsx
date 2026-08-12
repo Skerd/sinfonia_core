@@ -107,9 +107,13 @@ export function FilterChip({
                                         label: (resolveLanguageKey(`operators.${op}`)) ?? op,
                                     }))}
                                     value={rule.operator}
-                                    onValueChange={(v: any) =>
-                                        onUpdate(groupId, rule.id, { operator: (v ?? "equals") as FilterRule["operator"] })
-                                    }
+                                    onValueChange={(v: any) => {
+                                        const operator = (v ?? "equals") as FilterRule["operator"];
+                                        onUpdate(groupId, rule.id, {
+                                            operator,
+                                            value: operator === "exists" ? true : null,
+                                        });
+                                    }}
                                     placeholder={resolveLanguageKey("filterOperator")}
                                     className="h-7 text-xs min-w-[72px]"
                                 />

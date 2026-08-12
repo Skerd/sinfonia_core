@@ -28,6 +28,16 @@ export function createEmptyRule(): FilterRule {
     };
 }
 
+/** True when a rule has field + operator + a usable value (ready to apply / show as chip). */
+export function isCompleteRule(rule: FilterRule): boolean {
+    if (!rule.field || !rule.operator) return false;
+    if (rule.operator === "exists") return typeof rule.value === "boolean";
+    if (rule.value == null) return false;
+    if (typeof rule.value === "string" && rule.value.trim() === "") return false;
+    if (Array.isArray(rule.value) && rule.value.length === 0) return false;
+    return true;
+}
+
 type FilterAction =
     | { type: "addRule"; groupId: string }
     | { type: "removeRule"; groupId: string; ruleId: string }
@@ -51,7 +61,8 @@ function updateGroup(group: FilterGroup, groupId: string, updater: (g: FilterGro
 function pruneEmpty(group: FilterGroup): FilterGroup {
     return {
         ...group,
-        rules: group.rules.filter((r: FilterRule) => r.field || r.value !== null),
+        // Only complete rules are sent to the API / URL — field-only drafts must not filter.
+        rules: group.rules.filter(isCompleteRule),
         groups: group.groups.map(pruneEmpty).filter((g: FilterGroup) => g.rules.length > 0 || g.groups.length > 0),
     };
 }
