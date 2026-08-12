@@ -14,6 +14,7 @@ import {
     encodeFilterToUrl,
     FILTER_URL_PARAM,
 } from "@coreModule/helpers/filter/filterUrl.ts";
+import { LIST_PAGE_PARAM } from "@coreModule/helpers/hooks/useListUrlState.ts";
 import {compose} from "redux";
 import withLanguage, {TranslationValue, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
@@ -61,18 +62,48 @@ function FilterBuilderInner({
     const { fields } = useFilterBuilder();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const urlFilter = decodeFilterFromUrl(searchParams.get(FILTER_URL_PARAM));
+    const filterParam = searchParams.get(FILTER_URL_PARAM);
+    const urlFilter = decodeFilterFromUrl(filterParam);
     const initialFilter = (filters?.filter as FilterDSL | undefined) ?? urlFilter;
 
-    const { root, addRule, removeRule, updateRule, addGroup, removeGroup, updateGroupOperator, reset, serialize } = useFilterState(initialFilter);
+    const {
+        root,
+        addRule,
+        removeRule,
+        updateRule,
+        addGroup,
+        removeGroup,
+        updateGroupOperator,
+        setRoot,
+        reset,
+        serialize,
+    } = useFilterState(initialFilter);
 
-    const hasAppliedUrlFilter = useRef(false);
+    // Re-sync UI + applied filters whenever the URL `filter` param changes
+    // (refresh, shared links, browser back/forward). Apply/Clear write the URL;
+    // this effect is the reader.
+    const lastSyncedFilterParam = useRef<string | null>(filterParam);
     useEffect(() => {
-        if (urlFilter && !hasAppliedUrlFilter.current) {
-            hasAppliedUrlFilter.current = true;
-            setFilters({ ...extraParams, filter: urlFilter });
+        if (lastSyncedFilterParam.current === filterParam) return;
+        lastSyncedFilterParam.current = filterParam;
+
+        if (urlFilter) {
+            setRoot(urlFilter);
+            setFilters((prev) => ({ ...prev, ...extraParams, filter: urlFilter }));
+            return;
         }
-    }, [urlFilter, setFilters, extraParams]);
+
+        // Only clear when the param is gone. If decode fails (corrupt / too long),
+        // keep existing applied state — do not wipe filters or fight the URL.
+        if (filterParam == null || filterParam === "") {
+            reset();
+            setFilters((prev) => {
+                const next = { ...prev, ...extraParams };
+                delete next.filter;
+                return next;
+            });
+        }
+    }, [filterParam, urlFilter, setRoot, reset, setFilters, extraParams]);
 
     const activeCount = useMemo(() => countActiveRules(root), [root]);
     const rulesWithGroups = useMemo(() => collectRulesWithGroups(root, fields), [root, fields]);
@@ -80,31 +111,39 @@ function FilterBuilderInner({
 
     const onApply = useCallback(() => {
         const dsl = serialize();
-        setFilters({ ...extraParams, ...(dsl ? { filter: dsl } : {}) });
-        if (dsl) {
-            setSearchParams((prev) => {
-                const next = new URLSearchParams(prev);
-                next.set(FILTER_URL_PARAM, encodeFilterToUrl(dsl));
-                return next;
-            }, { replace: true });
-        } else {
-            setSearchParams((prev) => {
-                const next = new URLSearchParams(prev);
-                next.delete(FILTER_URL_PARAM);
-                return next;
-            }, { replace: true });
-        }
+        setFilters((prev) => {
+            const next = { ...prev, ...extraParams };
+            if (dsl) next.filter = dsl;
+            else delete next.filter;
+            return next;
+        });
+        setSearchParams((prev) => {
+            const next = new URLSearchParams(prev);
+            if (dsl) next.set(FILTER_URL_PARAM, encodeFilterToUrl(dsl));
+            else next.delete(FILTER_URL_PARAM);
+            // Filter change resets pagination so results stay coherent.
+            next.delete(LIST_PAGE_PARAM);
+            return next;
+        }, { replace: true });
+        // Avoid a redundant setRoot/setFilters from the URL effect for this write.
+        lastSyncedFilterParam.current = dsl ? encodeFilterToUrl(dsl) : null;
         setPopoverOpen(false);
     }, [serialize, setFilters, extraParams, setSearchParams]);
 
     const onClear = useCallback(() => {
         reset();
-        setFilters({ ...extraParams });
+        setFilters((prev) => {
+            const next = { ...prev, ...extraParams };
+            delete next.filter;
+            return next;
+        });
         setSearchParams((prev) => {
             const next = new URLSearchParams(prev);
             next.delete(FILTER_URL_PARAM);
+            next.delete(LIST_PAGE_PARAM);
             return next;
         }, { replace: true });
+        lastSyncedFilterParam.current = null;
         setPopoverOpen(false);
     }, [reset, setFilters, extraParams, setSearchParams]);
 

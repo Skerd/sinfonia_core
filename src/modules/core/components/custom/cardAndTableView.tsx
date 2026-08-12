@@ -12,6 +12,7 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type { FilterGroup } from "armonia/src/modules/core/database/filter";
 import { isFilterGroupEmpty, mergeAndFilterDSL } from "@coreModule/helpers/filter/mergeFilterDsl.ts";
+import { decodeFilterFromUrl, FILTER_URL_PARAM } from "@coreModule/helpers/filter/filterUrl.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
@@ -34,6 +35,7 @@ import FilterBuilder from "@coreModule/components/custom/filterBuilder/filterBui
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {openActionMenuFromContextMenu} from "@coreModule/components/custom/actions/menu/openActionMenuFromContextMenu.ts";
+import {useSearchParams} from "react-router-dom";
 
 /**
  * Imperative list-mutation API exposed by {@link CardAndTableView} via `ref`/`listRef`
@@ -239,7 +241,15 @@ function CountryCenterView<
 
     const [open, setOpen] = useState(false);
     const [extraParameters, setExtraParameters] = useState<Record<string, any>>({...extraParams});
-    const [filters, setFilters] = useState<Record<string, any>>({...extraFilters});
+    // Seed FilterBuilder DSL from `?filter=` on first render so the initial list
+    // POST includes it (FilterBuilder effect alone races the fetch effect).
+    const [searchParams] = useSearchParams();
+    const [filters, setFilters] = useState<Record<string, any>>(() => {
+        const initial: Record<string, any> = {...(extraFilters ?? {})};
+        const urlFilter = decodeFilterFromUrl(searchParams.get(FILTER_URL_PARAM));
+        if (urlFilter) initial.filter = urlFilter;
+        return initial;
+    });
 
     const {
         loading: loadingTableConfig,

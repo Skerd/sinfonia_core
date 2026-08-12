@@ -269,9 +269,12 @@ function ObjectIdInput({def, value, onChange, values, extraParams}: QuickFilterI
             apiUrl={def.apiUrl}
             postBody={postBody}
             value={strVal}
-            onValueChange={(v: string | string[] | undefined) =>
-                onChange((typeof v === "string" ? v : null) as FilterValue | null)
-            }
+            onValueChange={(v: string | string[] | undefined) => {
+                const next = typeof v === "string" && v !== "" ? v : null;
+                // Ignore same-id label hydration notifications from ApiSelect.
+                if (next === (strVal ?? null)) return;
+                onChange(next as FilterValue | null);
+            }}
             placeholder={def.placeholder ?? def.label}
             className="h-8 text-sm min-w-[140px] max-w-[220px]"
             pageSize={50}

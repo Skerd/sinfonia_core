@@ -2,8 +2,9 @@ import {JSX, useEffect, useMemo, useRef, useState, type ReactNode, type RefObjec
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {
     clearQuickFilterParams,
+    LIST_PAGE_PARAM,
+    QUICK_FILTER_PARAM_PREFIX,
     readQuickFiltersFromUrl,
-    writeQuickFilterParam,
 } from "@coreModule/helpers/hooks/useListUrlState.ts";
 import {useAccess, type AccessObject} from "@coreModule/helpers/hocs/withAccess.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
@@ -271,9 +272,14 @@ export default function EntityListPage<T extends BaseEntity>({
         return {id: generateUUID(), operator: "and" as const, rules, groups: []};
     }, [extraFilters]);
 
-    const [quickFilterValues, setQuickFilterValues] = useState<Record<string, FilterValue | null>>({});
     const [searchParams, setSearchParams] = useSearchParams();
     const quickFilterFields = useMemo(() => (quickFilters ?? []).map((d) => d.field), [quickFilters]);
+
+    // Seed from `qf_*` on first render so toolbarFilterDSL is correct for the first fetch.
+    const [quickFilterValues, setQuickFilterValues] = useState<Record<string, FilterValue | null>>(() => {
+        if (!quickFilterFields.length) return {};
+        return readQuickFiltersFromUrl(searchParams, quickFilterFields) as Record<string, FilterValue | null>;
+    });
 
     useEffect(() => {
         if (!quickFilterFields.length) return;
@@ -288,6 +294,13 @@ export default function EntityListPage<T extends BaseEntity>({
                     changed = true;
                 }
             }
+            // Drop fields no longer in defs (or cleared in URL).
+            for (const key of Object.keys(next)) {
+                if (!quickFilterFields.includes(key) && next[key] != null) {
+                    next[key] = null;
+                    changed = true;
+                }
+            }
             return changed ? next : prev;
         });
         // Only hydrate from the URL when the param set changes.
@@ -295,20 +308,39 @@ export default function EntityListPage<T extends BaseEntity>({
     }, [searchParams.toString(), quickFilterFields.join("|")]);
 
     const setQuickFilterValue = (field: string, value: FilterValue | null) => {
-        const dependents = collectDependentQuickFilterFields(quickFilters ?? [], field);
+        let wrote = false;
+        let dependents: string[] = [];
+
         setQuickFilterValues((prev) => {
+            const prevVal = prev[field] ?? null;
+            // ApiSelect re-notifies the same id once its label hydrates — that must NOT
+            // clear dependsOn children or rewrite the URL (drops qf_edifice / qf_floor on back).
+            const unchanged =
+                prevVal === value ||
+                (prevVal != null && value != null && String(prevVal) === String(value));
+            if (unchanged) return prev;
+
+            wrote = true;
+            dependents = collectDependentQuickFilterFields(quickFilters ?? [], field);
             const next = {...prev, [field]: value};
             for (const dep of dependents) next[dep] = null;
             return next;
         });
-        writeQuickFilterParam(
-            setSearchParams,
-            field,
-            value == null ? null : String(value),
+
+        if (!wrote) return;
+
+        setSearchParams(
+            (prev) => {
+                const next = new URLSearchParams(prev);
+                const key = `${QUICK_FILTER_PARAM_PREFIX}${field}`;
+                if (value == null || value === "") next.delete(key);
+                else next.set(key, String(value));
+                for (const dep of dependents) next.delete(`${QUICK_FILTER_PARAM_PREFIX}${dep}`);
+                next.delete(LIST_PAGE_PARAM);
+                return next;
+            },
+            {replace: true},
         );
-        for (const dep of dependents) {
-            writeQuickFilterParam(setSearchParams, dep, null);
-        }
     };
 
     const clearQuickFilters = () => {
