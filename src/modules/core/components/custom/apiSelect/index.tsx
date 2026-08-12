@@ -731,23 +731,28 @@ function ApiSelectCore({
         setOpen(nextOpen);
     }, [disabled]);
 
-    const allOptions = useMemo(
-        () => [...options, ...defaultOptions],
-        [options, defaultOptions]
-    );
+    const allOptions = useMemo(() => {
+        // Prefer fetched options; keep defaultOptions only for ids not yet loaded.
+        const fetchedIds = new Set(options.map((o) => o.value));
+        const orphans = defaultOptions.filter((o) => !fetchedIds.has(o.value));
+        return [...options, ...orphans];
+    }, [options, defaultOptions]);
 
     const searchLower = useMemo(
         () => searchText.trim().toLowerCase(),
         [searchText]
     );
 
-    const filteredDefaultOptions = useMemo(
-        () =>
-            defaultOptions.filter((opt) =>
-                !searchLower || opt.label.toLowerCase().includes(searchLower)
-            ),
-        [defaultOptions, searchLower]
-    );
+    // Default/cached selections shown only while missing from the fetched page(s).
+    // Once page 1 (or later pages) include the id, drop the duplicate default row.
+    const filteredDefaultOptions = useMemo(() => {
+        const fetchedIds = new Set(options.map((o) => o.value));
+        return defaultOptions.filter(
+            (opt) =>
+                !fetchedIds.has(opt.value) &&
+                (!searchLower || opt.label.toLowerCase().includes(searchLower)),
+        );
+    }, [defaultOptions, options, searchLower]);
 
     const selectedValuesSet = useMemo(
         () => new Set(selectedValues),
