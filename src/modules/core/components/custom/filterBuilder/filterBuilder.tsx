@@ -11,8 +11,12 @@ import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterDSL, FilterRule, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import {
     decodeFilterFromUrl,
+    decodeFilterLabelsFromUrl,
+    encodeFilterLabelsToUrl,
     encodeFilterToUrl,
+    FILTER_LABELS_URL_PARAM,
     FILTER_URL_PARAM,
+    pruneFilterLabelsToDsl,
 } from "@coreModule/helpers/filter/filterUrl.ts";
 import { LIST_PAGE_PARAM } from "@coreModule/helpers/hooks/useListUrlState.ts";
 import {compose} from "redux";
@@ -59,11 +63,13 @@ function FilterBuilderInner({
     configuration
 }: Omit<FilterBuilderProps, "resourceUrl">) {
 
-    const { fields } = useFilterBuilder();
+    const { fields, refLabelsByFieldPath, replaceRefLabels } = useFilterBuilder();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const filterParam = searchParams.get(FILTER_URL_PARAM);
+    const labelsParam = searchParams.get(FILTER_LABELS_URL_PARAM);
     const urlFilter = decodeFilterFromUrl(filterParam);
+    const urlLabels = decodeFilterLabelsFromUrl(labelsParam);
     const initialFilter = (filters?.filter as FilterDSL | undefined) ?? urlFilter;
 
     const {
@@ -105,12 +111,25 @@ function FilterBuilderInner({
         }
     }, [filterParam, urlFilter, setRoot, reset, setFilters, extraParams]);
 
+    // Keep ObjectId chip labels in sync with `filterLabels` (provider also seeds on mount).
+    const lastSyncedLabelsParam = useRef<string | null>(labelsParam);
+    useEffect(() => {
+        if (lastSyncedLabelsParam.current === labelsParam) return;
+        lastSyncedLabelsParam.current = labelsParam;
+        if (urlLabels) {
+            replaceRefLabels(urlLabels);
+        } else if (labelsParam == null || labelsParam === "") {
+            replaceRefLabels({});
+        }
+    }, [labelsParam, urlLabels, replaceRefLabels]);
+
     const activeCount = useMemo(() => countActiveRules(root), [root]);
     const rulesWithGroups = useMemo(() => collectRulesWithGroups(root, fields), [root, fields]);
     const [popoverOpen, setPopoverOpen] = useState(false);
 
     const onApply = useCallback(() => {
         const dsl = serialize();
+        const prunedLabels = pruneFilterLabelsToDsl(refLabelsByFieldPath, dsl);
         setFilters((prev) => {
             const next = { ...prev, ...extraParams };
             if (dsl) next.filter = dsl;
@@ -119,19 +138,35 @@ function FilterBuilderInner({
         });
         setSearchParams((prev) => {
             const next = new URLSearchParams(prev);
-            if (dsl) next.set(FILTER_URL_PARAM, encodeFilterToUrl(dsl));
-            else next.delete(FILTER_URL_PARAM);
+            if (dsl) {
+                next.set(FILTER_URL_PARAM, encodeFilterToUrl(dsl));
+                if (Object.keys(prunedLabels).length > 0) {
+                    next.set(FILTER_LABELS_URL_PARAM, encodeFilterLabelsToUrl(prunedLabels));
+                } else {
+                    next.delete(FILTER_LABELS_URL_PARAM);
+                }
+            } else {
+                next.delete(FILTER_URL_PARAM);
+                next.delete(FILTER_LABELS_URL_PARAM);
+            }
             // Filter change resets pagination so results stay coherent.
             next.delete(LIST_PAGE_PARAM);
             return next;
         }, { replace: true });
         // Avoid a redundant setRoot/setFilters from the URL effect for this write.
         lastSyncedFilterParam.current = dsl ? encodeFilterToUrl(dsl) : null;
+        lastSyncedLabelsParam.current =
+            dsl && Object.keys(prunedLabels).length > 0
+                ? encodeFilterLabelsToUrl(prunedLabels)
+                : null;
+        if (Object.keys(prunedLabels).length > 0) replaceRefLabels(prunedLabels);
+        else replaceRefLabels({});
         setPopoverOpen(false);
-    }, [serialize, setFilters, extraParams, setSearchParams]);
+    }, [serialize, setFilters, extraParams, setSearchParams, refLabelsByFieldPath, replaceRefLabels]);
 
     const onClear = useCallback(() => {
         reset();
+        replaceRefLabels({});
         setFilters((prev) => {
             const next = { ...prev, ...extraParams };
             delete next.filter;
@@ -140,12 +175,14 @@ function FilterBuilderInner({
         setSearchParams((prev) => {
             const next = new URLSearchParams(prev);
             next.delete(FILTER_URL_PARAM);
+            next.delete(FILTER_LABELS_URL_PARAM);
             next.delete(LIST_PAGE_PARAM);
             return next;
         }, { replace: true });
         lastSyncedFilterParam.current = null;
+        lastSyncedLabelsParam.current = null;
         setPopoverOpen(false);
-    }, [reset, setFilters, extraParams, setSearchParams]);
+    }, [reset, setFilters, extraParams, setSearchParams, replaceRefLabels]);
 
     return (
         <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
@@ -269,9 +306,21 @@ function FilterBuilderView({
     languageCode,
     currentLanguage
 }: FilterBuilderProps) {
+    const [searchParams] = useSearchParams();
+    const initialRefLabels = useMemo(
+        () => decodeFilterLabelsFromUrl(searchParams.get(FILTER_LABELS_URL_PARAM)) ?? {},
+        // Depend on the raw param string so back/forward re-seeds labels.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [searchParams.get(FILTER_LABELS_URL_PARAM)],
+    );
+
     return (
         <>
-            <FilterBuilderProvider extraParams={extraParams} fields={filterFields}>
+            <FilterBuilderProvider
+                extraParams={extraParams}
+                fields={filterFields}
+                initialRefLabels={initialRefLabels}
+            >
                 <FilterBuilderInner
                     filters={filters}
                     setFilters={setFilters}

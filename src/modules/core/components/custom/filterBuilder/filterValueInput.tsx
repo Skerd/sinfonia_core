@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { format, isValid, parse } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Input } from "@coreModule/components/ui/input.tsx";
@@ -23,6 +23,81 @@ type FilterValueInputProps = WithLanguageType & {
 const inputBase = "w-full";
 // const inputBase = "h-6 text-2xs";
 
+type ObjectIdFilterValueInputProps = {
+    fieldConfig: FilterFieldConfig;
+    operator: FilterOperator;
+    value: FilterValue;
+    onVal: (value: FilterValue) => void;
+    mergeRefLabels: (fieldPath: string, updates: Record<string, string>) => void;
+    refLabelsByFieldPath: Record<string, Record<string, string>>;
+    extraParams?: Record<string, unknown>;
+    resolveLanguageKey: WithLanguageType["resolveLanguageKey"];
+};
+
+function ObjectIdFilterValueInput({
+    fieldConfig,
+    operator,
+    value,
+    onVal,
+    mergeRefLabels,
+    refLabelsByFieldPath,
+    extraParams = {},
+    resolveLanguageKey,
+}: ObjectIdFilterValueInputProps) {
+    const postBody = useMemo(
+        () => Object.fromEntries((fieldConfig.postBodyKeys ?? []).map((k: string) => [k, extraParams[k]])),
+        [fieldConfig.postBodyKeys, extraParams],
+    );
+    const isMulti = operator === "in" || operator === "notIn";
+    const apiValue = isMulti
+        ? (Array.isArray(value) ? value : value != null ? [value] : [])
+        : (typeof value === "string" ? value : Array.isArray(value) && value[0] ? value[0] : undefined);
+
+    const cachedForField = fieldConfig.path ? refLabelsByFieldPath[fieldConfig.path] : undefined;
+    const defaultOptions = useMemo(() => {
+        if (!cachedForField) return [];
+        const ids = isMulti
+            ? (Array.isArray(apiValue) ? apiValue.filter((v): v is string => typeof v === "string" && !!v) : [])
+            : (typeof apiValue === "string" && apiValue ? [apiValue] : []);
+        return ids
+            .filter((id) => cachedForField[id])
+            .map((id) => ({value: id, label: cachedForField[id]}));
+    }, [cachedForField, apiValue, isMulti]);
+
+    return (
+        <ApiSelect
+            apiUrl={fieldConfig.apiUrl!}
+            postBody={postBody}
+            value={apiValue as string | string[] | undefined}
+            defaultOptions={defaultOptions}
+            onValueChange={(v: string | string[] | undefined, labels?: string | string[]) => {
+                if (fieldConfig.path && labels != null) {
+                    if (Array.isArray(v) && Array.isArray(labels)) {
+                        const updates: Record<string, string> = {};
+                        v.forEach((id, i) => {
+                            const lab = labels[i];
+                            if (typeof id === "string" && id && typeof lab === "string" && lab) updates[id] = lab;
+                        });
+                        if (Object.keys(updates).length > 0) mergeRefLabels(fieldConfig.path, updates);
+                    } else if (typeof v === "string" && v && typeof labels === "string" && labels) {
+                        mergeRefLabels(fieldConfig.path, { [v]: labels });
+                    }
+                }
+                if (isMulti) {
+                    onVal(Array.isArray(v) ? v : v != null ? [v] : []);
+                } else {
+                    onVal((typeof v === "string" ? v : Array.isArray(v) && v[0] ? v[0] : null) as FilterValue);
+                }
+            }}
+            multiple={isMulti}
+            placeholder={isMulti ? resolveLanguageKey("selectValues") : resolveLanguageKey("selectValue")}
+            className={cn(inputBase)}
+            resolveLanguageKey={resolveLanguageKey}
+            pageSize={50}
+        />
+    );
+}
+
 export function FilterValueInput({
     fieldConfig,
     operator,
@@ -31,7 +106,7 @@ export function FilterValueInput({
     resolveLanguageKey
 }: FilterValueInputProps) {
     const filterBuilderCtx = useFilterBuilder();
-    const { mergeRefLabels } = filterBuilderCtx;
+    const { mergeRefLabels, refLabelsByFieldPath } = filterBuilderCtx;
     const onVal = useCallback((v: FilterValue) => onChange(v), [onChange]);
 
     if (!fieldConfig) return null;
@@ -143,42 +218,16 @@ export function FilterValueInput({
 
     //TODO fix this
     if (fieldConfig.type === "objectId" && fieldConfig.apiUrl) {
-        const extraParams = filterBuilderCtx.extraParams ?? {};
-        const postBody = Object.fromEntries((fieldConfig.postBodyKeys ?? []).map((k: string) => [k, extraParams[k]]))
-        const isMulti = operator === "in" || operator === "notIn";
-        const apiValue = isMulti
-            ? (Array.isArray(value) ? value : value != null ? [value] : [])
-            : (typeof value === "string" ? value : Array.isArray(value) && value[0] ? value[0] : undefined);
-
         return (
-            <ApiSelect
-                apiUrl={fieldConfig.apiUrl}
-                postBody={postBody}
-                value={apiValue}
-                onValueChange={(v: string | string[] | undefined, labels?: string | string[]) => {
-                    if (fieldConfig.path && labels != null) {
-                        if (Array.isArray(v) && Array.isArray(labels)) {
-                            const updates: Record<string, string> = {};
-                            v.forEach((id, i) => {
-                                const lab = labels[i];
-                                if (typeof id === "string" && id && typeof lab === "string" && lab) updates[id] = lab;
-                            });
-                            if (Object.keys(updates).length > 0) mergeRefLabels(fieldConfig.path, updates);
-                        } else if (typeof v === "string" && v && typeof labels === "string" && labels) {
-                            mergeRefLabels(fieldConfig.path, { [v]: labels });
-                        }
-                    }
-                    if (isMulti) {
-                        onVal(Array.isArray(v) ? v : v != null ? [v] : []);
-                    } else {
-                        onVal((typeof v === "string" ? v : Array.isArray(v) && v[0] ? v[0] : null) as FilterValue);
-                    }
-                }}
-                multiple={isMulti}
-                placeholder={isMulti ? resolveLanguageKey("selectValues") : resolveLanguageKey("selectValue")}
-                className={cn(inputBase)}
+            <ObjectIdFilterValueInput
+                fieldConfig={fieldConfig}
+                operator={operator}
+                value={value}
+                onVal={onVal}
+                mergeRefLabels={mergeRefLabels}
+                refLabelsByFieldPath={refLabelsByFieldPath}
+                extraParams={filterBuilderCtx.extraParams}
                 resolveLanguageKey={resolveLanguageKey}
-                pageSize={50}
             />
         );
     }
