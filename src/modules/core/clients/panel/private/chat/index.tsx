@@ -2,9 +2,10 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect, useRef, useState} from "react";
+import {useSearchParams} from "react-router-dom";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {clientWebSocket} from "@coreModule/helpers/hocs/withWebSocket.tsx";
-import {openChannel, isPeekingWebsiteChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {openChannel, isPeekingWebsiteChannel, upsertChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import LeftChatPanel from "@coreModule/clients/panel/private/chat/left";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ChatHeader from "@coreModule/clients/panel/private/chat/center/chatHeader";
@@ -19,6 +20,8 @@ import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/priv
 import LeftWebsiteChatPanel from "@coreModule/clients/panel/private/websiteChats/left/index.tsx";
 import WebsiteChatHeader from "@coreModule/clients/panel/private/websiteChats/center/chatHeader.tsx";
 import PeekComposerBar from "@coreModule/clients/panel/private/websiteChats/center/peekComposerBar.tsx";
+import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import {GetChannelSingleFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/getChannelSingle.form.response.type.ts";
 
 type ChatProps = WithLanguageType & {
     websiteChannels?: PublicChatInboxFilter;
@@ -28,6 +31,7 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
 
     const {theme} = useTheme();
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
     const scrollRef = useRef<HTMLDivElement | null>(null);
     /** Bumps when the scroll container mounts so MessagesList can attach IntersectionObserver to the real root. */
     const [scrollRootRevision, setScrollRootRevision] = useState(0);
@@ -43,6 +47,7 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
     const isWebsiteInbox = !!websiteChannels;
     const peeking = isPeekingWebsiteChannel(openedChannel, userId);
     const room = isWebsiteInbox ? "websiteChats" : "allChats";
+    const openChannelId = isWebsiteInbox ? searchParams.get("channelId")?.trim() || null : null;
 
     useEffect(() => {
         if( !!webSocketConnected && clientWebSocket?.readyState === 1 ){
@@ -55,12 +60,37 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
         }
     }, [webSocketConnected, room]);
 
+    // Clear selection when entering / switching inbox (mine ↔ waiting).
     useEffect(() => {
-        dispatch(openChannel(null));
+        // dispatch(openChannel(null));
+        // return () => {
+            // dispatch(openChannel(null));
+        // };
+    }, [dispatch, isWebsiteInbox, websiteChannels]);
+
+    // ?channelId=… → load channel, select it, drop the query param.
+    useEffect(() => {
+        if (!openChannelId) return;
+
+        let cancelled = false;
+        apiClient
+            .post<GetChannelSingleFormResponseType>("/api/user/chats/channels/single", {id: openChannelId})
+            .then((res) => {
+                if (cancelled || !res.data?._id) return;
+                dispatch(upsertChannel(res.data));
+                dispatch(openChannel(res.data._id));
+                setSearchParams((prev) => {
+                    const next = new URLSearchParams(prev);
+                    next.delete("channelId");
+                    return next;
+                }, {replace: true});
+            })
+            .catch(() => {});
+
         return () => {
-            dispatch(openChannel(null));
-        }
-    }, [dispatch, isWebsiteInbox, websiteChannels])
+            cancelled = true;
+        };
+    }, [openChannelId, dispatch, setSearchParams]);
 
     const bird = () => {
         return (

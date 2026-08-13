@@ -1419,6 +1419,17 @@ function renderSmallInfoCard(
             ? displayValue.trim()
             : undefined;
 
+    let internalHrefValue: string | undefined;
+    if (typeof wp.internalHrefTemplate === "string" && wp.internalHrefTemplate.trim().length > 0) {
+        const linkedPathForHref = typeof wp.linkedRefPath === "string" ? wp.linkedRefPath : binding.name;
+        const rawRef = data ? resolvePath(data, linkedPathForHref) : undefined;
+        const normalized = normalizeObjectIdRef(rawRef);
+        const id = normalized?.fetchId;
+        if (id) {
+            internalHrefValue = wp.internalHrefTemplate.replaceAll("{_id}", id);
+        }
+    }
+
     return (
         <Component
             key={index}
@@ -1430,6 +1441,7 @@ function renderSmallInfoCard(
             variant={variant}
             dontRenderValue={!!wp.dontRenderValue || !!externalLinkValue}
             externalHref={externalLinkValue}
+            internalHref={internalHrefValue}
             linkedReferenceSheet={linkedReferenceSheet}
         />
     );

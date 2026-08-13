@@ -20,6 +20,7 @@ import {IconFileLike, IconFileXFilled} from "@tabler/icons-react";
 import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import {Link} from "react-router-dom";
 
 export type ColumnConfigToColumnDefOptions<T> = {
     fields: TranslationValue;
@@ -179,9 +180,10 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
         //
 
         if( col.cellType === "objectId" ){
-            const colMeta = col.meta as { refDisplayKey?: string[]; maxInlineItems?: number } | undefined;
+            const colMeta = col.meta as { refDisplayKey?: string[]; maxInlineItems?: number; hrefTemplate?: string } | undefined;
             const displayFields = colMeta?.refDisplayKey ?? ["name"];
             const maxInlineItems = colMeta?.maxInlineItems ?? 2;
+            const hrefTemplate = typeof colMeta?.hrefTemplate === "string" ? colMeta.hrefTemplate : "";
             const getByPath = (obj: Record<string, unknown>, path: string): unknown =>
                 path.split(".").reduce((a, k) => (a as Record<string, unknown>)?.[k], obj);
             const toDisplayLabel = (item: Record<string, unknown>): string => {
@@ -193,6 +195,12 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                 });
                 return parts.filter((p) => p !== "").join(hasLiteral ? "" : " ") || "";
             };
+            const resolveHref = (item: Record<string, unknown>): string | null => {
+                if (!hrefTemplate) return null;
+                const id = item._id != null ? String(item._id) : "";
+                if (!id) return null;
+                return hrefTemplate.replaceAll("{_id}", id);
+            };
             return {
                 ...base,
                 cell: ({ row }) => {
@@ -202,17 +210,37 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                         (item): item is Record<string, unknown> =>
                             item != null && typeof item === "object" && !Array.isArray(item),
                     );
+                    const fallbackLabel = findFromLanguage(fields, col.labelKey) ?? "Open";
                     const labeled = rawItems
-                        .map((item) => ({item, label: toDisplayLabel(item)}))
-                        .filter(({label}) => label !== "");
+                        .map((item) => ({
+                            item,
+                            label: toDisplayLabel(item) || String(fallbackLabel),
+                            href: resolveHref(item),
+                        }))
+                        .filter(({label, href}) => label !== "" || !!href);
                     if (labeled.length === 0) return <></>;
                     const visible = labeled.slice(0, maxInlineItems);
                     const remaining = labeled.length - visible.length;
+                    const renderBadge = (label: string, href: string | null, key: number) => {
+                        const badge = (
+                            <Badge
+                                key={href ? undefined : key}
+                                variant="outline"
+                                className={href ? "cursor-pointer hover:bg-accent" : undefined}
+                            >
+                                {label}
+                            </Badge>
+                        );
+                        if (!href) return badge;
+                        return (
+                            <Link key={key} to={href} onClick={(e) => e.stopPropagation()}>
+                                {badge}
+                            </Link>
+                        );
+                    };
                     return (
                         <div className="flex items-center gap-1 flex-wrap">
-                            {visible.map(({label}, i) => (
-                                <Badge key={i} variant="outline">{label}</Badge>
-                            ))}
+                            {visible.map(({label, href}, i) => renderBadge(label, href, i))}
                             {remaining > 0 && (
                                 <Popover>
                                     <PopoverTrigger asChild>
@@ -222,9 +250,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                                     </PopoverTrigger>
                                     <PopoverContent align="start" className="w-auto max-w-lg px-2">
                                         <div className="max-h-60 w-fit overflow-y-auto flex flex-col gap-1.5">
-                                            {labeled.slice(maxInlineItems).map(({label}, i) => (
-                                                <Badge variant="outline" key={i} className="text-sm">{label}</Badge>
-                                            ))}
+                                            {labeled.slice(maxInlineItems).map(({label, href}, i) => renderBadge(label, href, i))}
                                         </div>
                                     </PopoverContent>
                                 </Popover>

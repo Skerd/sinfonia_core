@@ -1,5 +1,6 @@
-import type { ComponentType, ReactNode } from "react";
+import type { ComponentType, MouseEvent, ReactNode } from "react";
 import { Suspense, useState } from "react";
+import { Link } from "react-router-dom";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import {
     Item,
@@ -13,6 +14,7 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import { useAccess } from "@coreModule/helpers/hocs/withAccess.tsx";
 import { IconInfoCircle, IconLink } from "@tabler/icons-react";
+import { useDismissSheetBeforeMenuNavigate } from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
 
 /** Open/close wiring from `#SmallInfoCard`; renderer may bind extra props (e.g. `fetchId`). */
 export type SmallInfoCardLinkedSheetOuterProps = {
@@ -41,6 +43,10 @@ type SmallInfoCardProps = {
      * Prefer with `dontRenderValue` so long URLs do not overflow the sheet.
      */
     externalHref?: string;
+    /**
+     * In-app path (react-router): shows a link badge that navigates inside the panel.
+     */
+    internalHref?: string;
     /**
      * Linked ref: badge uses `useAccess(resourceId)`; `LinkedSheet` comes from config `linkedSheetWidget`
      * (resolved in the view renderer).
@@ -151,12 +157,14 @@ export default function SmallInfoCard({
     tooltip,
     dontRenderValue = false,
     externalHref,
+    internalHref,
     linkedReferenceSheet,
 }: SmallInfoCardProps) {
 
     const accessResourceId = linkedReferenceSheet?.resourceId ?? "";
     const LinkedSheet = linkedReferenceSheet?.LinkedSheet;
     const linkedAccess = useAccess(accessResourceId);
+    const dismissSheetBeforeNavigate = useDismissSheetBeforeMenuNavigate();
     const showLinkedBadge =
         linkedReferenceSheet != null &&
         LinkedSheet != null &&
@@ -166,6 +174,16 @@ export default function SmallInfoCard({
     const resolvedExternalHref =
         typeof externalHref === "string" ? normalizeExternalHref(externalHref) : null;
     const showExternalBadge = resolvedExternalHref != null;
+    const resolvedInternalHref =
+        typeof internalHref === "string" && internalHref.trim().startsWith("/")
+            ? internalHref.trim()
+            : null;
+    const showInternalBadge = resolvedInternalHref != null;
+
+    const onInternalNavigate = (e: MouseEvent) => {
+        e.stopPropagation();
+        dismissSheetBeforeNavigate();
+    };
 
     const [linkedSheetOpen, setLinkedSheetOpen] = useState(false);
     const tooltipText = tooltip != null ? String(tooltip).trim() : "";
@@ -180,6 +198,20 @@ export default function SmallInfoCard({
         }
         return true;
     };
+
+    const renderedValue = checkValue(value) ? value : <div className="mt-0.5"><ValueNotSet /></div>;
+    const linkedValue =
+        resolvedInternalHref != null && checkValue(value) ? (
+            <Link
+                to={resolvedInternalHref}
+                className="underline-offset-2 hover:underline"
+                onClick={onInternalNavigate}
+            >
+                {value}
+            </Link>
+        ) : (
+            renderedValue
+        );
 
     return (
         <>
@@ -235,14 +267,14 @@ export default function SmallInfoCard({
                                 {
                                     !!show &&
                                     <>
-                                        {checkValue(value) ? value : <div className="mt-0.5"><ValueNotSet /></div>}
+                                        {linkedValue}
                                     </>
                                 }
                             </HiddenElement>
                         </div>
                     )}
                 </ItemContent>
-                {(showExternalBadge || (showLinkedBadge && LinkedSheet != null)) && (
+                {(showExternalBadge || showInternalBadge || (showLinkedBadge && LinkedSheet != null)) && (
                     <ItemActions>
                         {showExternalBadge && resolvedExternalHref != null ? (
                             <TooltipDisplayer tooltip={resolvedExternalHref}>
@@ -261,6 +293,23 @@ export default function SmallInfoCard({
                                 >
                                     <IconLink size={16} />
                                 </a>
+                            </TooltipDisplayer>
+                        ) : null}
+                        {showInternalBadge && resolvedInternalHref != null ? (
+                            <TooltipDisplayer tooltip={title}>
+                                <Link
+                                    to={resolvedInternalHref}
+                                    className={cn(
+                                        "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
+                                        "bg-background text-sm font-semibold text-muted-foreground",
+                                        "hover:bg-muted hover:text-foreground hover:cursor-pointer",
+                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                    )}
+                                    aria-label={title}
+                                    onClick={onInternalNavigate}
+                                >
+                                    <IconLink size={16} />
+                                </Link>
                             </TooltipDisplayer>
                         ) : null}
                         {showLinkedBadge && LinkedSheet != null ? (
