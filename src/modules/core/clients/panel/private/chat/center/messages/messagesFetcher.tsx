@@ -6,7 +6,7 @@ import {RefObject, useEffect, useImperativeHandle, useRef, useState} from "react
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import useIsInViewport from "@coreModule/helpers/hooks/useIsInViewPort.ts";
-import {addMessages, setMessages} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {addMessages, isPeekingWebsiteChannel, setMessages} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {sendMessageReceiptBatch} from "@coreModule/helpers/chat/messageReceipts.ts";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import Loader from "@coreModule/components/custom/loader.tsx";
@@ -51,10 +51,13 @@ function MessagesFetcher({
     const ref= useRef<HTMLDivElement>(null);
 
     const activeChannelId = useSelector((state: RootState) => state.chat.activeChannelId);
-    const {_id: channelId} = useSelector((state: RootState) => state.chat.channels[activeChannelId ?? ""]);
+    const channel = useSelector((state: RootState) => state.chat.channels[activeChannelId ?? ""]);
+    const {_id: channelId} = channel || {};
     const channelIdRef = useRef<string | undefined>(undefined);
     channelIdRef.current = channelId;
-    const {lastUserReadTime} = useSelector((state: RootState) => state.chat.channels[activeChannelId ?? ""]?.metaData) || {};
+    const lastUserReadTime = channel?.metaData?.lastUserReadTime;
+    const userId = useSelector((state: RootState) => state.authentication.user?.id);
+    const peeking = isPeekingWebsiteChannel(channel, userId);
 
     const [newOldestMessageTime, setNewOldestMessageTime] = useState<string | null>(null);
     const [fetchedMessages, setFetchedMessages] = useState<number>(0);
@@ -79,7 +82,7 @@ function MessagesFetcher({
                 const payload: MessagesFormType = {
                     channel: channelId,
                     limit: messagesLimit,
-                    earliestMessage: earliestMessageTime || lastUserReadTime.toString()
+                    earliestMessage: earliestMessageTime || lastUserReadTime?.toString()
                 };
                 onFilterChange(payload);
             }
@@ -137,7 +140,7 @@ function MessagesFetcher({
 
             const uid = store.getState().authentication.user?.id;
             const chId = channelIdRef.current;
-            if (uid && chId && data.messages.length) {
+            if (!peeking && uid && chId && data.messages.length) {
                 const fromOthers = data.messages
                     .filter((m) => m.sender?._id && m.sender._id !== uid)
                     .map((m) => m._id);

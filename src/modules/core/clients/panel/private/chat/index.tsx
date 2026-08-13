@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {clientWebSocket} from "@coreModule/helpers/hocs/withWebSocket.tsx";
-import {openChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {openChannel, isPeekingWebsiteChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import LeftChatPanel from "@coreModule/clients/panel/private/chat/left";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ChatHeader from "@coreModule/clients/panel/private/chat/center/chatHeader";
@@ -18,6 +18,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";
 import LeftWebsiteChatPanel from "@coreModule/clients/panel/private/websiteChats/left/index.tsx";
 import WebsiteChatHeader from "@coreModule/clients/panel/private/websiteChats/center/chatHeader.tsx";
+import PeekComposerBar from "@coreModule/clients/panel/private/websiteChats/center/peekComposerBar.tsx";
 
 type ChatProps = WithLanguageType & {
     websiteChannels?: PublicChatInboxFilter;
@@ -37,7 +38,10 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
     const isMobile = useIsMobile();
     const webSocketConnected = useSelector((state: RootState) => state.ui.webSocketConnected);
     const activeChannelId = useSelector((state: RootState) => state.chat.activeChannelId);
+    const userId = useSelector((state: RootState) => state.authentication.user?.id);
+    const openedChannel = useSelector((state: RootState) => state.chat.channels[activeChannelId ?? ""]);
     const isWebsiteInbox = !!websiteChannels;
+    const peeking = isPeekingWebsiteChannel(openedChannel, userId);
     const room = isWebsiteInbox ? "websiteChats" : "allChats";
 
     useEffect(() => {
@@ -105,8 +109,14 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
                 }
             </div>
             <div className="relative z-1 px-2 pb-2">
-                <TypingIndicators />
-                <ChatInputAll />
+                {peeking ? (
+                    <PeekComposerBar />
+                ) : (
+                    <>
+                        <TypingIndicators />
+                        <ChatInputAll />
+                    </>
+                )}
             </div>
         </div>
     );

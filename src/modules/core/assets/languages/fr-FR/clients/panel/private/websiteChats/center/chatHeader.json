@@ -1,3 +1,6 @@
 {
-  "path": "src/modules/core/clients/panel/private/websiteChats/center/chatHeader.tsx"
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/chatHeader.tsx",
+  "peeking": "Aperçu",
+  "takeOver": "Prendre en charge",
+  "joining": "Connexion…"
 }

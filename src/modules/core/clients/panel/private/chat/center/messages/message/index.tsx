@@ -6,7 +6,7 @@ import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {ContextMenu, ContextMenuContent, ContextMenuTrigger} from "@coreModule/components/ui/context-menu.tsx";
 import {Forward, CircleSlash, Pin, User, Calendar, Check, CheckCheck} from "lucide-react";
-import {toggleDeleteMessageId, updateOpenDelete} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {isPeekingWebsiteChannel, toggleDeleteMessageId, updateOpenDelete} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
 import LongText from "@coreModule/components/custom/longText.tsx";
 import DeleteMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/deleteMessage.tsx";
@@ -84,6 +84,7 @@ function Message({
     const previousMessage = useSelector((state: RootState) => (previousMessageId ? state.chat?.messages?.[previousMessageId] : undefined));
 
     const openDelete = useSelector((state: RootState) => state.chat.openDelete);
+    const interactionLocked = !!openedChannel.metaData?.readOnly || isPeekingWebsiteChannel(openedChannel, user.id);
 
     useOutsideClick(pickerRef, () => setReactionPickerOpened(false));
 
@@ -731,7 +732,7 @@ function Message({
                                 </div>
                             </ContextMenuTrigger>
                             {
-                                (!openedChannel.metaData?.readOnly && !openDelete) &&
+                                (!interactionLocked && !openDelete) &&
                                 <ContextMenuContent className="w-fit">
                                     <DeleteMessage messageId={message._id} shortcutOverride={"1"} />
                                 </ContextMenuContent>
@@ -787,7 +788,7 @@ function Message({
                                     </div>
                                 </ContextMenuTrigger>
                                 {
-                                    (!openedChannel.metaData?.readOnly && !openDelete) &&
+                                    (!interactionLocked && !openDelete) &&
                                     <ContextMenuContent className="w-48">
                                         {
                                             message.sender._id === user.id &&
@@ -812,12 +813,14 @@ function Message({
                         </div>
                     </PopoverTrigger>
                     <PopoverContent side={"top"} align={message?.sender?._id === user.id ? "end" : "start"} className="w-fit border-0 bg-transparent p-0 shadow-none ring-0">
-                        <div ref={pickerRef} className="select-none">
-                            <ReactToMessage
-                                messageId={message._id}
-                                onSuccess={() => {setReactionPickerOpened(false)}}
-                            />
-                        </div>
+                        {!interactionLocked && (
+                            <div ref={pickerRef} className="select-none">
+                                <ReactToMessage
+                                    messageId={message._id}
+                                    onSuccess={() => {setReactionPickerOpened(false)}}
+                                />
+                            </div>
+                        )}
                     </PopoverContent>
                 </Popover>
             </div>

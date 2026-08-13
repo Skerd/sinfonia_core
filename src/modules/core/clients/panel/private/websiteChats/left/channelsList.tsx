@@ -1,10 +1,10 @@
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
-import {decrementWaitingCount, openChannel, selectChannelOrderIdsByKind, upsertChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {openChannel, selectChannelOrderIdsByKind} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Fragment, type MouseEvent, RefObject, useState} from "react";
+import {Fragment, type MouseEvent, RefObject} from "react";
 import {Globe, UserCheck} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
@@ -17,10 +17,9 @@ import {getName} from "@coreModule/helpers/general";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
-import type {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";
 import WebsiteChannelsFetcher from "@coreModule/clients/panel/private/websiteChats/left/channelsFetcher.tsx";
+import {useJoinPublicChat} from "@coreModule/clients/panel/private/websiteChats/center/useJoinPublicChat.ts";
 
 type ChannelProps = WithLanguageType & {
     channelId: string;
@@ -41,7 +40,7 @@ function WebsiteChannelInfo({
     const channel = useSelector((state: RootState) => state.chat.channels[channelId]);
     const avatarUser = channel?.users?.find((u) => u._id !== user.id) || null;
     const activeChannelId = useSelector((state: RootState) => state.chat.activeChannelId);
-    const [joining, setJoining] = useState(false);
+    const {joining, join} = useJoinPublicChat();
 
     function getUnreadMessages(messages: number) {
         let messageCount = messages + "";
@@ -68,25 +67,10 @@ function WebsiteChannelInfo({
 
     async function handleTakeOver(event: MouseEvent) {
         event.stopPropagation();
-        if (!canTakeOver || joining) {
+        if (!canTakeOver) {
             return;
         }
-        setJoining(true);
-        try {
-            const {data} = await apiClient.post<Channel>(
-                "/api/user/chats/channels/join",
-                {_id: channel._id},
-            );
-            dispatch(upsertChannel(data));
-            dispatch(decrementWaitingCount());
-            dispatch(openChannel(data._id));
-        }
-        catch {
-            // Someone else took it, or the join was rejected.
-        }
-        finally {
-            setJoining(false);
-        }
+        await join(channel._id);
     }
 
     if (!read || !channel || !channel.metaData?.isPublicChat) {
@@ -101,17 +85,13 @@ function WebsiteChannelInfo({
         <Fragment key={channelId + "_" + index}>
             <div
                 className={cn(
-                    "group relative flex min-w-0 w-full items-center gap-3 px-2 py-3 text-start",
-                    !isWaiting && "cursor-pointer hover:bg-muted/50",
-                    isWaiting && "hover:bg-muted/30",
+                    "group relative flex min-w-0 w-full cursor-pointer items-center gap-3 px-2 py-3 text-start hover:bg-muted/50",
                     activeChannelId === channel._id && "bg-muted",
                 )}
                 onClick={() => {
-                    if (!isWaiting) {
-                        dispatch(openChannel(channel._id));
-                    }
+                    dispatch(openChannel(channel._id));
                 }}
-                role={!isWaiting ? "button" : undefined}
+                role="button"
             >
                 {avatarUser ? (
                     <CustomAvatar user={avatarUser} />

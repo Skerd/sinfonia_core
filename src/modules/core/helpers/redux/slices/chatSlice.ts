@@ -16,6 +16,17 @@ export function isWebsiteChannel(channel: Channel | undefined | null): boolean {
     return !!channel?.metaData?.isPublicChat;
 }
 
+/** Waiting website chat the agent is not a member of — transcript is visible, replies are not. */
+export function isPeekingWebsiteChannel(channel: Channel | undefined | null, userId: string | undefined): boolean {
+    if (!channel?.metaData?.isPublicChat || !userId) {
+        return false;
+    }
+    if (channel.metaData.publicChatStatus !== "requested_human") {
+        return false;
+    }
+    return !channel.users?.some((u) => u._id === userId);
+}
+
 function channelMatchesKind(channel: Channel | undefined, kind: ChatChannelKind): boolean {
     if (!channel) {
         return false;

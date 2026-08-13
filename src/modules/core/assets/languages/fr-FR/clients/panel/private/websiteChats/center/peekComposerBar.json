@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/peekComposerBar.tsx",
+  "peekingBanner": "Vous consultez cette conversation. Prenez-la en charge pour répondre.",
+  "takeOver": "Prendre en charge",
+  "joining": "Connexion…"
+}
