@@ -93,8 +93,23 @@ function messageEvaluator(message: MessageEvent, dispatch: any, userId: string) 
                 dispatch(prependNotificationItems(notifications));
                 dispatch(incrementUnreadNotifications(notifications.filter((notification) => !notification.readOn).length));
                 dispatch(setLatestNotification(notifications[0]));
-                if (notifications.some((notification) => notification.code === PUBLIC_CHAT_HANDOFF_CODE)) {
+                const handoffNotifications = notifications.filter((notification) => notification.code === PUBLIC_CHAT_HANDOFF_CODE);
+                if (handoffNotifications.length > 0) {
                     dispatch(incrementWaitingCount());
+                    const seen = new Set<string>();
+                    for (const notification of handoffNotifications) {
+                        const channelId = notification.content?.channelId;
+                        if (typeof channelId !== "string" || seen.has(channelId)) {
+                            continue;
+                        }
+                        seen.add(channelId);
+                        messageEvaluator({
+                            data: JSON.stringify({
+                                code: WebSocketFEMessageCodes.CHANNEL_CREATED,
+                                payload: {channelId},
+                            }),
+                        } as MessageEvent, dispatch, userId);
+                    }
                 }
             }
             break;
