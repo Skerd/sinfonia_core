@@ -179,7 +179,7 @@ function ActionMenu({
                         children &&
                         <>
                             {children}
-                            <DropdownMenuSeparator />
+                            {(hasStandardTrailing || beforeViewMenuChildren) && <DropdownMenuSeparator />}
                         </>
                     }
 

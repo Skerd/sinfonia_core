@@ -8,6 +8,8 @@ import {RemoveUserFromChannelAdminFormResponseType} from "armonia/src/modules/co
 import {MakeUserChannelAdminFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/makeUserChannelAdmin.form.response.type.ts";
 import {RemoveChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/removeChannelMembers.form.response.type.ts";
 import {ChannelUser} from "armonia/src/modules/core/types";
+import type {InboxBadgesFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/inboxBadges.form.response.type.ts";
+import type {PublicChatStatusType} from "armonia/src/modules/core/api/user/public/publicChat/publicChat.types.ts";
 
 
 export type ChatChannelKind = "internal" | "website";
@@ -91,6 +93,28 @@ const initialState: ChatState = {
 
     typingUsers: {},
     waitingCount: 0,
+}
+
+function inboxBadgeStubChannel(
+    id: string,
+    unread: number,
+    isPublicChat: boolean,
+    publicChatStatus?: PublicChatStatusType,
+): Channel {
+    return {
+        _id: id,
+        name: "",
+        users: [],
+        metaData: {
+            isGroup: false,
+            readOnly: false,
+            unreadMessages: unread,
+            lastUserReadTime: new Date(0),
+            isAiAssistant: false,
+            isPublicChat,
+            publicChatStatus,
+        },
+    };
 }
 
 const toArray = <T>(value: T[] | null | undefined): T[] => {
@@ -300,6 +324,35 @@ export const chatSlice = createSlice({
             }
 
             state.channelsOrderIds = appendUniqueIds(state.channelsOrderIds, incomingIds);
+        },
+        hydrateInboxBadges: (state, action: PayloadAction<InboxBadgesFormResponseType>) => {
+            state.waitingCount = Math.max(0, action.payload.waitingCount);
+            for (const row of action.payload.unread ?? []) {
+                const id = row.channelId;
+                if (!id || row.unread <= 0) {
+                    continue;
+                }
+                if (typeof state.channelsUnread[id] !== "number") {
+                    state.channelsUnread[id] = row.unread;
+                }
+                const existing = state.channels[id];
+                if (existing?.metaData) {
+                    if (typeof existing.metaData.unreadMessages !== "number") {
+                        existing.metaData.unreadMessages = state.channelsUnread[id];
+                    }
+                    if (row.isPublicChat) {
+                        existing.metaData.isPublicChat = true;
+                        if (row.publicChatStatus) {
+                            existing.metaData.publicChatStatus = row.publicChatStatus;
+                        }
+                    }
+                    continue;
+                }
+                if (existing) {
+                    continue;
+                }
+                state.channels[id] = inboxBadgeStubChannel(id, row.unread, row.isPublicChat, row.publicChatStatus);
+            }
         },
         setWaitingCount: (state, action: PayloadAction<number>) => {
             state.waitingCount = Math.max(0, action.payload);
@@ -538,6 +591,7 @@ export const {
     upsertChannel,
     deleteChannel,
     setChannels,
+    hydrateInboxBadges,
     appendChannels,
     updateChannelReadOnlyState,
     setWaitingCount,
