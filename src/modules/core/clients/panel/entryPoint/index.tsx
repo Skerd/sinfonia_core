@@ -137,7 +137,10 @@ function CenterPanel({resolveLanguageKey}: CenterPanelProps){
         [pathname, resolveLanguageKey],
     );
 
-    const hideHeader = menu === "company" && subview === "chats" && isMobile && activeChannelId;
+    const hideHeader = menu === "company" && isMobile && (
+        (subview === "chats" && !!activeChannelId)
+        || (subview === "websiteChats" && !!activeChannelId)
+    );
 
     // Do not use `.flex-full` here: that class always sets `overflow-y: auto`, which
     // overrides `overflow-hidden` and creates nested scrollports (double scrollbar +
@@ -178,7 +181,7 @@ function CenterPanel({resolveLanguageKey}: CenterPanelProps){
                         className={clsx(
                             "mx-auto flex min-h-0 min-w-0 w-full max-w-full flex-1 flex-col",
                             resolveCenterPanelClassName({menu, subview, isMobile})
-                                ?? (menu === "company" && subview === "chats" && isMobile
+                                ?? (menu === "company" && (subview === "chats" || subview === "websiteChats") && isMobile
                                     ? "overflow-y-auto px-0"
                                     : "overflow-y-auto px-2 pb-2 mt-2"),
                         )}

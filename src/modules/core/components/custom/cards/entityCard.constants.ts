@@ -31,11 +31,10 @@ export const MEDIA_CAROUSEL_CLASS =
     "w-full overflow-hidden min-h-(--card-media-height)";
 
 /*
- * Card lists use intrinsic CSS grid (`.grid-hierarchy` / `.grid-transactional`
+ * Card lists use CSS multi-column mosaic (`.grid-hierarchy` / `.grid-transactional`
  * in index.css): default is 5 columns on a full panel pane, dropping to fewer
- * on narrower widths via `--grid-card-min*`. `auto-fill` keeps empty tracks so
- * a short list does not stretch its cards across the row. Items stay
- * content-height via `align-items: start`.
+ * on narrower widths via `--grid-card-min*`. Short cards pack under taller ones
+ * instead of leaving row gutters. Reading order is top-to-bottom per column.
  *
  * Pair every list item with {@link GRID_MASONRY_ITEM}. Cap at 4 columns with
  * {@link GRID_COLS_MAX_4} for denser cards (modification requests, leads,
@@ -53,8 +52,8 @@ export const GRID_COLS_MAX_4 = "grid-cols-max-4";
 
 export const GRID_COLS_MAX_3 = "grid-cols-max-3";
 
-/** Wrapper on each card (and skeleton) inside an entity card grid. */
-export const GRID_MASONRY_ITEM = "h-fit min-h-0";
+/** Wrapper on each card (and skeleton) inside an entity card mosaic. */
+export const GRID_MASONRY_ITEM = "h-fit min-h-0 w-full break-inside-avoid";
 
 /**
  * KPI tile rows. Same intrinsic policy as the entity grids: `auto-fit` +

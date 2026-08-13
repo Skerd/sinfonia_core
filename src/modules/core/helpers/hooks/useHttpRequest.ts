@@ -1,6 +1,6 @@
 import {toast} from "sonner";
 import {useEffect, useRef, useState} from 'react';
-import {Method} from "axios";
+import {Method, type ResponseType} from "axios";
 import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
 
 export type HttpRequestUrlBuilder = {
@@ -40,7 +40,7 @@ export type HttpRequest = {
         condition: unknown,
         message: string
     },
-    responseType?: string,
+    responseType?: ResponseType,
 }
 export type HttpError = {
     error: string,
@@ -322,9 +322,7 @@ export default function useHttpRequest<TData = unknown>(
             toastConfig["success"] = (data) => {
                 let messageToReturn = String(runtimeProps.resolveLanguageKey?.("axios.success.title") || "");
                 const responseData = isPlainObject(data) ? data : {};
-                if (typeof responseData.message === "string" && responseData.message.trim()) {
-                    messageToReturn = responseData.message.trim();
-                }
+                // Prefer language-file copy over server `message` (which is often English-only).
                 if (requestConfig.onSuccessMessage) {
                     if (responseData[requestConfig.onSuccessMessage.if] === requestConfig.onSuccessMessage.condition) {
                         messageToReturn = String(runtimeProps.resolveLanguageKey?.(`axios.${requestConfig.onSuccessMessage.message}.title`) || "");
@@ -431,7 +429,7 @@ export default function useHttpRequest<TData = unknown>(
             data: axiosData,
             headers: axiosHeaders,
             signal: controller.signal,
-            ...(currentHttpRequest.responseType ? {responseType: currentHttpRequest.responseType} : {}),
+            responseType: currentHttpRequest.responseType,
         })
             .then((res) => {
                 if (requestId !== requestIdRef.current) {

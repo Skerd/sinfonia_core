@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {getPanelNavGroups} from "@coreModule/helpers/panel/panelNavGroups.ts";
 import {flattenPanelNavLinks, type FlatPanelNavLink} from "@coreModule/helpers/panel/flattenPanelNavLinks.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -255,13 +256,18 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
     const [launchingUrl, setLaunchingUrl] = useState<string | null>(null);
 
     const user = useSelector((state: RootState) => state.authentication.user);
-    const channelsUnread = useSelector((state: RootState) => state.chat.channelsUnread);
-    const chatUnreadTotal = Object.values(channelsUnread ?? {}).reduce((a, b) => a + b, 0);
+    const chatUnreadTotal = useSelector(selectInternalChatUnread);
+    const publicChatWaitingCount = useSelector((state: RootState) => state.chat.waitingCount);
+    const publicChatMineUnread = useSelector(selectWebsiteChatMineUnread);
 
     const allLinks = useMemo(() => {
-        const groups = getPanelNavGroups(resolveLanguageKey, {chatUnreadTotal});
+        const groups = getPanelNavGroups(resolveLanguageKey, {
+            chatUnreadTotal,
+            publicChatWaitingCount,
+            publicChatMineUnread,
+        });
         return flattenPanelNavLinks(groups);
-    }, [resolveLanguageKey, chatUnreadTotal]);
+    }, [resolveLanguageKey, chatUnreadTotal, publicChatWaitingCount, publicChatMineUnread]);
 
     const {recentLinks, trackVisit} = useRecentLinks(allLinks);
 

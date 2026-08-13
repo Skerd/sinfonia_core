@@ -87,6 +87,15 @@
       "chats": {
         "title": "Bisedat"
       },
+      "websiteChats": {
+        "title": "Bisedat e faqes",
+        "waiting": {
+          "title": "Në pritje"
+        },
+        "mine": {
+          "title": "Të miat"
+        }
+      },
       "info": {
         "title": "Kompania"
       },

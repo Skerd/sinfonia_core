@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/left/channelsList.tsx",
+  "unreadMessages": "mesazhe të palexuara",
+  "noWaiting": "Asnjë vizitor nuk po pret",
+  "noMine": "Nuk po menaxhoni asnjë bisedë",
+  "messageDeleted": "Mesazhi u fshi",
+  "unknown": "I panjohur",
+  "anonymousVisitor": "Vizitor i faqes",
+  "takeOver": "Merr përsipër",
+  "joining": "Duke u bashkuar…"
+}

@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/releaseToBot.tsx",
+  "releaseToBot": "Ktheje te boti",
+  "dialog": {
+    "title": "Ktheje te boti",
+    "description": "Vizitori do t'i kthehet asistentit. Ju do ta lini këtë bisedë.",
+    "confirmText": "Ktheje",
+    "cancelText": "Anulo"
+  },
+  "axios": {
+    "start": {
+      "title": "Duke e kthyer bisedën",
+      "time": 3000
+    },
+    "success": {
+      "title": "Biseda iu kthye asistentit",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kthimi dështoi, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  }
+}

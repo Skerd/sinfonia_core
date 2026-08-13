@@ -97,7 +97,14 @@ function ChatInputAll({
         success: (data: MessageTypeWithParticipants) => {
 
             dispatch(addMessages({messages: [data], startOrEnd: "end"}))
-            dispatch(upsertChannel(openedChannel));
+            dispatch(upsertChannel({
+                ...openedChannel,
+                metaData: {
+                    ...openedChannel.metaData,
+                    ... !!data ? {lastMessage: data} : {}
+
+                }
+            }));
             dispatch(setActionMessage(null));
 
             setMessage("");

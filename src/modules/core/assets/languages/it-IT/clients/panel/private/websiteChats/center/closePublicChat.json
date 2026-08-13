@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/closePublicChat.tsx",
+  "closeChat": "Chiudi chat",
+  "dialog": {
+    "title": "Chiudi chat",
+    "description": "Questa conversazione verrà chiusa. Il visitatore dovrà avviare una nuova sessione.",
+    "confirmText": "Chiudi",
+    "cancelText": "Annulla"
+  },
+  "axios": {
+    "start": {
+      "title": "Chiusura della chat",
+      "time": 3000
+    },
+    "success": {
+      "title": "Chat chiusa",
+      "time": 3000
+    },
+    "error": {
+      "title": "Chiusura non riuscita, riprova!",
+      "time": 3000
+    }
+  }
+}

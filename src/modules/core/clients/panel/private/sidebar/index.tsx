@@ -16,6 +16,7 @@ import {
 } from "@coreModule/components/ui/sidebar.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {IconHome} from "@tabler/icons-react";
 import type {ComponentProps, ReactNode} from "react";
 import {ModuleSidebarNavGroups} from "@coreModule/clients/panel/moduleContributions/ModuleSidebarNavGroups.tsx";
@@ -42,8 +43,9 @@ function AdministrativePanelSideBar({
     preChildren,
     postChildren,
 }: ComponentProps<typeof Sidebar> & AdministrativePanelSideBarProps) {
-    const channelsUnread = useSelector((state: RootState) => state.chat.channelsUnread);
-    const chatUnreadTotal = Object.values(channelsUnread ?? {}).reduce((a, b) => a + b, 0);
+    const chatUnreadTotal = useSelector(selectInternalChatUnread);
+    const publicChatWaitingCount = useSelector((state: RootState) => state.chat.waitingCount);
+    const publicChatMineUnread = useSelector(selectWebsiteChatMineUnread);
     const {pathname} = useLocation();
     // The module nav groups resolve their own active state; this entry is hardcoded here.
     const isHomeActive = pathname === "/" || pathname === "/home";
@@ -74,6 +76,8 @@ function AdministrativePanelSideBar({
                 <ModuleSidebarNavGroups
                     resolveLanguageKey={resolveLanguageKey}
                     chatUnreadTotal={chatUnreadTotal}
+                    publicChatWaitingCount={publicChatWaitingCount}
+                    publicChatMineUnread={publicChatMineUnread}
                 />
                 {postChildren}
             </SidebarContent>

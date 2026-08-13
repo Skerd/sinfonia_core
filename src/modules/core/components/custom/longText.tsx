@@ -46,9 +46,10 @@ export function LongText({
 
     return (
         <>
-            <div className='hidden sm:block' onClick={(e) => e.stopPropagation()}>
+            {/* Hover peek only — do not stopPropagation or the parent row/button click never fires. */}
+            <div className='hidden sm:block'>
                 <TooltipDisplayer tooltipRender={renderPopover}>
-                    <div ref={refCallback} className={cn('truncate hover:cursor-pointer', className)}>
+                    <div ref={refCallback} className={cn('truncate', className)}>
                         {children}
                     </div>
                 </TooltipDisplayer>

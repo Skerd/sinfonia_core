@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/left/channelsFetcher.tsx",
+  "failTitle": "Failed to load website chats",
+  "failTitleTooltip": "Click to reload website chats",
+  "noDataTitle": "No results"
+}

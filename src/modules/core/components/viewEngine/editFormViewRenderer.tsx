@@ -258,6 +258,9 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
                         }
                     </>
                 }
+                {/* <pre> */}
+                    {/* {JSON.stringify(form.getValues(), null, 2)} */}
+                {/* </pre> */}
             </div>
         </div>
     );

@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/releaseToBot.tsx",
+  "releaseToBot": "Release to bot",
+  "dialog": {
+    "title": "Release to bot",
+    "description": "The visitor will be handed back to the assistant. You will leave this conversation.",
+    "confirmText": "Release",
+    "cancelText": "Cancel"
+  },
+  "axios": {
+    "start": {
+      "title": "Releasing chat",
+      "time": 3000
+    },
+    "success": {
+      "title": "Chat released to the assistant",
+      "time": 3000
+    },
+    "error": {
+      "title": "Failed to release chat, please try again!",
+      "time": 3000
+    }
+  }
+}

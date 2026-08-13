@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/closePublicChat.tsx",
+  "closeChat": "Close chat",
+  "dialog": {
+    "title": "Close chat",
+    "description": "This conversation will be closed. The visitor will need to start a new session.",
+    "confirmText": "Close",
+    "cancelText": "Cancel"
+  },
+  "axios": {
+    "start": {
+      "title": "Closing chat",
+      "time": 3000
+    },
+    "success": {
+      "title": "Chat closed",
+      "time": 3000
+    },
+    "error": {
+      "title": "Failed to close chat, please try again!",
+      "time": 3000
+    }
+  }
+}

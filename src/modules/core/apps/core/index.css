@@ -148,55 +148,38 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     }
 
     /*
-     * Card lists: intrinsic packing capped by `--grid-cols-max` (default 5).
-     * Track min is the larger of `--grid-card-min*` and `1/N` of the row
-     * (minus gaps), so a wide pane stays at N equal tracks instead of
-     * spilling wider, while narrower panes still drop toward 1.
+     * Card lists: CSS multi-column mosaic capped by `--grid-cols-max` (default 5).
+     * `column-width` is the minimum card width; `column-count` is the ceiling.
+     * Together they keep a wide pane at N equal columns and drop toward 1 on
+     * narrower panes. Override with `.grid-cols-max-4` (etc.) for denser cards.
      *
-     * `auto-fill` (not `auto-fit`) keeps empty tracks, so a 2-item list stays
-     * at card-sized columns instead of stretching those two across the row.
-     * Override with `.grid-cols-max-4` (etc.) where a denser card needs fewer
-     * columns. `min(..., 100%)` prevents overflow on the narrowest viewports.
-     * `align-items: start` keeps content height.
+     * Vertical packing: cards flow top-to-bottom and balance across columns, so
+     * a short card does not leave an empty gutter before the next row. Children
+     * must not split across columns (`break-inside: avoid` below).
      */
     .grid-hierarchy,
     .grid-transactional {
         --grid-cols-max: 5;
-        display: grid;
-        gap: var(--density-gap);
-        align-items: start;
+        column-gap: var(--density-gap);
+        column-fill: balance;
     }
 
     .grid-hierarchy {
-        grid-template-columns: repeat(
-            auto-fill,
-            minmax(
-                min(
-                    100%,
-                    max(
-                        var(--grid-card-min),
-                        calc((100% - (var(--grid-cols-max) - 1) * var(--density-gap)) / var(--grid-cols-max))
-                    )
-                ),
-                1fr
-            )
-        );
+        column-width: var(--grid-card-min);
+        column-count: var(--grid-cols-max);
     }
 
     .grid-transactional {
-        grid-template-columns: repeat(
-            auto-fill,
-            minmax(
-                min(
-                    100%,
-                    max(
-                        var(--grid-card-min-sm),
-                        calc((100% - (var(--grid-cols-max) - 1) * var(--density-gap)) / var(--grid-cols-max))
-                    )
-                ),
-                1fr
-            )
-        );
+        column-width: var(--grid-card-min-sm);
+        column-count: var(--grid-cols-max);
+    }
+
+    .grid-hierarchy > *,
+    .grid-transactional > * {
+        break-inside: avoid;
+        -webkit-column-break-inside: avoid;
+        width: 100%;
+        margin-bottom: var(--density-gap);
     }
 
     .grid-cols-max-4 {
@@ -263,8 +246,8 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     --density-row-h: 2.75rem;
 
     /*
-     * Minimum readable card width. Used as the floor in the 5-column-capped
-     * grids above; on wide panes the 1/5 track size wins so the default stays
+     * Minimum readable card width. Used as `column-width` in the 5-column-capped
+     * mosaics above; on wide panes `column-count` wins so the default stays
      * five columns. Compact density lowers these so more columns fit before
      * the cap engages.
      */

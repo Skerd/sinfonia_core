@@ -1,6 +1,6 @@
 import { compose } from "redux";
 import {useDispatch, useSelector} from "react-redux";
-import {openChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {openChannel, selectChannelOrderIdsByKind} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -18,6 +18,7 @@ import {getName} from "@coreModule/helpers/general";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {MessageSenderType, MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
+import {IconAi} from "@tabler/icons-react";
 
 type ChannelProps = WithLanguageType & {
     channelId: string,
@@ -35,7 +36,7 @@ function ChannelInfo({
     const user = useSelector((state: RootState) => state.authentication.user);
     const channel = useSelector((state: RootState) => state.chat.channels[channelId]);
 
-    const avatarUser = channel.users?.find(u => u._id !== user.id) || null;
+    const avatarUser = channel?.users?.find(u => u._id !== user.id) || null;
     const activeChannelId = useSelector( (state: RootState) => state.chat.activeChannelId );
     const typingUsers = useSelector((state: RootState) => state.chat.typingUsers?.[channelId]);
 
@@ -146,7 +147,7 @@ function ChannelInfo({
         }
     }, [ref, activeChannelId]);
 
-    if( !read ){
+    if( !read || !channel || channel.metaData?.isPublicChat ){
         return <HiddenElement />
     }
 
@@ -163,24 +164,32 @@ function ChannelInfo({
                     dispatch(openChannel(channel._id));
                 }}
             >
-                {
-                    channel.metaData.isGroup ?
-                    <Avatar className="flex size-10 shrink-0 items-center justify-center border">
-                        <Users size={18} />
-                    </Avatar>
-                    :
-                    <HiddenElement Render={<Avatar className="flex size-10 shrink-0 items-center justify-center border"><Users size={18} /></Avatar>}>
-                        {
-                            read.users &&
-                            <>
-                                {
-                                    !!avatarUser &&
-                                    <CustomAvatar user={avatarUser}/>
-                                }
-                            </>
-                        }
-                    </HiddenElement>
-                }
+                <div className="relative">
+                    {
+                        channel.metaData.isGroup ?
+                        <Avatar className="flex size-10 shrink-0 items-center justify-center border">
+                            <Users size={18} />
+                        </Avatar>
+                        :
+                        <HiddenElement Render={<Avatar className="flex size-10 shrink-0 items-center justify-center border"><Users size={18} /></Avatar>}>
+                            {
+                                read.users &&
+                                <>
+                                    {
+                                        !!avatarUser &&
+                                        <CustomAvatar user={avatarUser}/>
+                                    }
+                                </>
+                            }
+                        </HiddenElement>
+                    }
+                    {
+                        channel.metaData.isAiAssistant &&
+                        <div className="absolute -top-2 -right-2 border rounded-full p-0 bg-blue-500">
+                            <IconAi size={20} color={"#ffffff"} />
+                        </div>
+                    }
+                </div>
 
                 <div className="min-w-0 grow">
                     <div className="flex items-center justify-between gap-2">
@@ -263,7 +272,7 @@ type ChannelsListProps = WithLanguageType & {
 function ChannelsList({searchName, scrollRoot, resolveLanguageKey}: ChannelsListProps){
 
     const {read} = useAccess("channels");
-    const channelsOrderIds = useSelector((state: RootState) => state.chat.channelsOrderIds);
+    const channelsOrderIds = useSelector(selectChannelOrderIdsByKind("internal"));
 
     if( !read ){
         return <HiddenElement />

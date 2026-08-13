@@ -4,6 +4,8 @@ import type { NavGroup } from "@coreModule/helpers/panel/sidebarNav.types.ts";
 /** Optional context passed when building sidebar / apps launcher nav. */
 export type SidebarContributionContext = {
     chatUnreadTotal?: number;
+    publicChatWaitingCount?: number;
+    publicChatMineUnread?: number;
 };
 
 /**

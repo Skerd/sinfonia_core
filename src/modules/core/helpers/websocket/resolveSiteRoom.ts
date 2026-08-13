@@ -20,6 +20,7 @@ const PATH_ROOM_OVERRIDES: Record<string, string> = {
     "company/administration": "administration",
     "company/users": "users",
     "company/chats": "chats",
+    "company/websiteChats": "websiteChats",
     "company/info": "company",
     "account/account": "account",
     "account/security": "security",

@@ -42,7 +42,6 @@ function CreateNewChannel({
             name: groupName,
             userIds
         });
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: run only on fireUpdate change
     }, [fireUpdate]);
 
     useImperativeHandle(innerRef, () => ({

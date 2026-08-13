@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/closePublicChat.tsx",
+  "closeChat": "Mbyll bisedën",
+  "dialog": {
+    "title": "Mbyll bisedën",
+    "description": "Kjo bisedë do të mbyllet. Vizitori duhet të fillojë një sesion të ri.",
+    "confirmText": "Mbyll",
+    "cancelText": "Anulo"
+  },
+  "axios": {
+    "start": {
+      "title": "Duke mbyllur bisedën",
+      "time": 3000
+    },
+    "success": {
+      "title": "Biseda u mbyll",
+      "time": 3000
+    },
+    "error": {
+      "title": "Mbyllja dështoi, ju lutemi provoni përsëri!",
+      "time": 3000
+    }
+  }
+}

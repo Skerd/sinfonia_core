@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/releaseToBot.tsx",
+  "releaseToBot": "Rendre au bot",
+  "dialog": {
+    "title": "Rendre au bot",
+    "description": "Le visiteur sera renvoyé à l'assistant. Vous quitterez cette conversation.",
+    "confirmText": "Rendre",
+    "cancelText": "Annuler"
+  },
+  "axios": {
+    "start": {
+      "title": "Remise du chat",
+      "time": 3000
+    },
+    "success": {
+      "title": "Chat rendu à l'assistant",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la remise, veuillez réessayer !",
+      "time": 3000
+    }
+  }
+}

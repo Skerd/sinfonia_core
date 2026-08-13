@@ -21,7 +21,6 @@ export default compose(
     withTableConfig(),
     withViewConfig(),
     withAccess(),
-
     // withImpersonation()
 )
 (PrivatePage)

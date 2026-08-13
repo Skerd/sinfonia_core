@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/releaseToBot.tsx",
+  "releaseToBot": "Rilascia al bot",
+  "dialog": {
+    "title": "Rilascia al bot",
+    "description": "Il visitatore verrà restituito all'assistente. Lascerai questa conversazione.",
+    "confirmText": "Rilascia",
+    "cancelText": "Annulla"
+  },
+  "axios": {
+    "start": {
+      "title": "Rilascio della chat",
+      "time": 3000
+    },
+    "success": {
+      "title": "Chat rilasciata all'assistente",
+      "time": 3000
+    },
+    "error": {
+      "title": "Rilascio non riuscito, riprova!",
+      "time": 3000
+    }
+  }
+}

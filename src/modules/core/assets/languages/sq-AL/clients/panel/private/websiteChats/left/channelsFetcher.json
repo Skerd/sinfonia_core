@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/left/channelsFetcher.tsx",
+  "failTitle": "Bisedat e faqes nuk u ngarkuan",
+  "failTitleTooltip": "Kliko për t'i ringarkuar bisedat e faqes",
+  "noDataTitle": "Nuk ka rezultate"
+}

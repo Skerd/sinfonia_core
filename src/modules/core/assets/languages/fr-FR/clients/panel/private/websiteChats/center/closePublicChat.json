@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/closePublicChat.tsx",
+  "closeChat": "Fermer le chat",
+  "dialog": {
+    "title": "Fermer le chat",
+    "description": "Cette conversation sera fermée. Le visiteur devra démarrer une nouvelle session.",
+    "confirmText": "Fermer",
+    "cancelText": "Annuler"
+  },
+  "axios": {
+    "start": {
+      "title": "Fermeture du chat",
+      "time": 3000
+    },
+    "success": {
+      "title": "Chat fermé",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la fermeture, veuillez réessayer !",
+      "time": 3000
+    }
+  }
+}

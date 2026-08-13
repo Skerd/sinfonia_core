@@ -11,6 +11,8 @@ import {
     Boxes,
     Mail,
     MessageSquare,
+    Globe,
+    UserCheck,
 } from "lucide-react";
 import {
     IconBuilding,
@@ -27,6 +29,8 @@ import {getTenancySettingsSubCollapsibles} from "@coreModule/clients/panel/modul
 function buildCompanyNavGroup(
     resolveLanguageKey: ResolveLanguageKey,
     chatUnreadTotal = 0,
+    publicChatWaitingCount = 0,
+    publicChatMineUnread = 0,
 ): NavGroup {
     const items: NavItem[] = [
         {
@@ -53,6 +57,34 @@ function buildCompanyNavGroup(
             permissions: [],
             usersPermissions: [],
             atLeastOnePermission: true,
+        },
+        {
+            title: resolveLanguageKey("menus.company.websiteChats.title"),
+            icon: Globe,
+            permissions: [],
+            usersPermissions: [],
+            atLeastOnePermission: true,
+            badge: (publicChatWaitingCount + publicChatMineUnread) || undefined,
+            items: [
+                {
+                    title: resolveLanguageKey("menus.company.websiteChats.waiting.title"),
+                    url: "/company/websiteChats/waiting",
+                    icon: MessagesSquare,
+                    permissions: [],
+                    usersPermissions: [],
+                    atLeastOnePermission: true,
+                    badge: publicChatWaitingCount || undefined,
+                },
+                {
+                    title: resolveLanguageKey("menus.company.websiteChats.mine.title"),
+                    url: "/company/websiteChats/mine",
+                    icon: UserCheck,
+                    permissions: [],
+                    usersPermissions: [],
+                    atLeastOnePermission: true,
+                    badge: publicChatMineUnread || undefined,
+                },
+            ],
         },
         {
             title: resolveLanguageKey("menus.company.settings.company.title"),
@@ -215,7 +247,12 @@ const coreCompanySidebarContribution: SidebarContribution = {
     id: "core-company",
     order: 10,
     getNavGroups(resolveLanguageKey, context) {
-        return [buildCompanyNavGroup(resolveLanguageKey, context?.chatUnreadTotal ?? 0)];
+        return [buildCompanyNavGroup(
+            resolveLanguageKey,
+            context?.chatUnreadTotal ?? 0,
+            context?.publicChatWaitingCount ?? 0,
+            context?.publicChatMineUnread ?? 0,
+        )];
     },
 };
 

@@ -100,6 +100,15 @@
       "chats": {
         "title": "Discussions"
       },
+      "websiteChats": {
+        "title": "Chats du site",
+        "waiting": {
+          "title": "En attente"
+        },
+        "mine": {
+          "title": "Les miens"
+        }
+      },
       "settings": {
         "title": "Paramètres",
         "company": {

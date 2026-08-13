@@ -22,13 +22,21 @@ function renderOneNavGroup(nav: NavGroupDef, index: number) {
 export function ModuleSidebarNavGroups({
     resolveLanguageKey,
     chatUnreadTotal = 0,
+    publicChatWaitingCount = 0,
+    publicChatMineUnread = 0,
 }: {
     resolveLanguageKey: ResolveLanguageKey;
     chatUnreadTotal?: number;
+    publicChatWaitingCount?: number;
+    publicChatMineUnread?: number;
 }) {
     const groups = useMemo(
-        () => getModuleSidebarNavGroups(resolveLanguageKey, {chatUnreadTotal}),
-        [resolveLanguageKey, chatUnreadTotal],
+        () => getModuleSidebarNavGroups(resolveLanguageKey, {
+            chatUnreadTotal,
+            publicChatWaitingCount,
+            publicChatMineUnread,
+        }),
+        [resolveLanguageKey, chatUnreadTotal, publicChatWaitingCount, publicChatMineUnread],
     );
     return <>{groups.map((nav, i) => renderOneNavGroup(nav, i))}</>;
 }

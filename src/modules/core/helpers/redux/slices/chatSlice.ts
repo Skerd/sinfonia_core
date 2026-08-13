@@ -10,6 +10,23 @@ import {RemoveChannelMembersFormResponseType} from "armonia/src/modules/core/api
 import {ChannelUser} from "armonia/src/modules/core/types";
 
 
+export type ChatChannelKind = "internal" | "website";
+
+export function isWebsiteChannel(channel: Channel | undefined | null): boolean {
+    return !!channel?.metaData?.isPublicChat;
+}
+
+function channelMatchesKind(channel: Channel | undefined, kind: ChatChannelKind): boolean {
+    if (!channel) {
+        return false;
+    }
+    return kind === "website" ? isWebsiteChannel(channel) : !isWebsiteChannel(channel);
+}
+
+export type SetChannelsPayload = AllChannelsFormResponseType & {
+    kind: ChatChannelKind;
+};
+
 /**
  * Chat redux state.
  *
@@ -17,6 +34,7 @@ import {ChannelUser} from "armonia/src/modules/core/types";
  * - `channelsOrderIds` and `messagesOrderIds` are unique.
  * - Every ID in an order array points to an existing entity in its map.
  * - `channelsUnread` is the canonical unread counter store; channel metadata mirrors it.
+ * - Internal and website channels share this slice; lists filter by `metaData.isPublicChat`.
  */
 export interface ChatState {
 
@@ -39,6 +57,9 @@ export interface ChatState {
     
     // Typing indicators: {channelId: {userId: username}}
     typingUsers: {[channelId: string]: {[userId: string]: string}},
+
+    /** Waiting-queue size for website visitor chats (sidebar badge). */
+    waitingCount: number,
 }
 
 const initialState: ChatState = {
@@ -58,6 +79,7 @@ const initialState: ChatState = {
     actionMessage: null,
 
     typingUsers: {},
+    waitingCount: 0,
 }
 
 const toArray = <T>(value: T[] | null | undefined): T[] => {
@@ -222,23 +244,31 @@ export const chatSlice = createSlice({
                 state.messagesOrderIds = [];
             }
         },
-        setChannels: (state, action: PayloadAction<AllChannelsFormResponseType | null>) => {
+        setChannels: (state, action: PayloadAction<SetChannelsPayload | null>) => {
             if( !action.payload ){
-                state.channels = {};
-                state.channelsOrderIds = [];
-                state.channelsUnread = {};
+                return;
             }
-            else{
-                const {data} = action.payload;
-                const normalizedChannels = buildChannelsState(toArray(data));
-                state.channels = normalizedChannels.channels;
-                state.channelsOrderIds = normalizedChannels.channelsOrderIds;
-                state.channelsUnread = Object.keys(normalizedChannels.channels).reduce<Record<string, number>>((acc, channelId) => {
-                    const unread = normalizedChannels.channels[channelId]?.metaData?.unreadMessages;
-                    acc[channelId] = typeof unread === "number" ? unread : 0;
-                    return acc;
-                }, {});
+            const {data, kind} = action.payload;
+            const incoming = toArray(data);
+            const normalizedChannels = buildChannelsState(incoming);
+
+            state.channels = {...state.channels, ...normalizedChannels.channels};
+            for (const channelId of normalizedChannels.channelsOrderIds) {
+                const unread = normalizedChannels.channels[channelId]?.metaData?.unreadMessages;
+                if (typeof unread === "number") {
+                    state.channelsUnread[channelId] = unread;
+                }
+                else if (typeof state.channelsUnread[channelId] !== "number") {
+                    state.channelsUnread[channelId] = 0;
+                }
             }
+
+            const otherKindOrderIds = state.channelsOrderIds.filter((channelId) => {
+                const channel = state.channels[channelId];
+                return channel && !channelMatchesKind(channel, kind);
+            });
+            state.channelsOrderIds = [...normalizedChannels.channelsOrderIds, ...otherKindOrderIds];
+
             state.messages = {};
             state.messagesOrderIds = [];
         },
@@ -259,6 +289,15 @@ export const chatSlice = createSlice({
             }
 
             state.channelsOrderIds = appendUniqueIds(state.channelsOrderIds, incomingIds);
+        },
+        setWaitingCount: (state, action: PayloadAction<number>) => {
+            state.waitingCount = Math.max(0, action.payload);
+        },
+        incrementWaitingCount: (state) => {
+            state.waitingCount += 1;
+        },
+        decrementWaitingCount: (state) => {
+            state.waitingCount = Math.max(0, state.waitingCount - 1);
         },
         updateChannelReadOnlyState: (state, action: PayloadAction<{_id: string, state: boolean}>) => {
             const { _id, state: readOnlyState } = action.payload;
@@ -331,7 +370,6 @@ export const chatSlice = createSlice({
             else{
                 const unreadMessagesTemp = (state.channelsUnread[channelId] ?? 0) + 1;
                 state.channelsUnread[channelId] = unreadMessagesTemp;
-                console.log((state.channelsUnread[channelId] ?? 0) + 1)
                 if( state.channels[channelId]?.metaData ){
                     state.channels[channelId].metaData.unreadMessages = unreadMessagesTemp;
                     state.channels[channelId].metaData.lastMessage = message;
@@ -491,6 +529,9 @@ export const {
     setChannels,
     appendChannels,
     updateChannelReadOnlyState,
+    setWaitingCount,
+    incrementWaitingCount,
+    decrementWaitingCount,
 
     // message actions
     setMessages,
@@ -515,3 +556,32 @@ export const {
 
 } = chatSlice.actions;
 export default chatSlice.reducer;
+
+export function selectChannelOrderIdsByKind(kind: ChatChannelKind) {
+    return (state: {chat: ChatState}): string[] =>
+        state.chat.channelsOrderIds.filter((channelId) => channelMatchesKind(state.chat.channels[channelId], kind));
+}
+
+/** Unread on internal (staff) conversations — excludes website visitor chats. */
+export function selectInternalChatUnread(state: {chat: ChatState}): number {
+    const {channels, channelsUnread} = state.chat;
+    let total = 0;
+    for (const [channelId, unread] of Object.entries(channelsUnread ?? {})) {
+        if (!isWebsiteChannel(channels[channelId])) {
+            total += unread;
+        }
+    }
+    return total;
+}
+
+/** Unread on website conversations the agent already owns — excludes the waiting queue. */
+export function selectWebsiteChatMineUnread(state: {chat: ChatState}): number {
+    const {channels, channelsUnread} = state.chat;
+    let total = 0;
+    for (const [channelId, unread] of Object.entries(channelsUnread ?? {})) {
+        if (channels[channelId]?.metaData?.isPublicChat && channels[channelId]?.metaData?.publicChatStatus === "human") {
+            total += unread;
+        }
+    }
+    return total;
+}

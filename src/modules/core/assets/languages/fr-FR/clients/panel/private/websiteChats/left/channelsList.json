@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/left/channelsList.tsx",
+  "unreadMessages": "messages non lus",
+  "noWaiting": "Aucun visiteur en attente",
+  "noMine": "Vous ne gérez aucun chat",
+  "messageDeleted": "Message supprimé",
+  "unknown": "Inconnu",
+  "anonymousVisitor": "Visiteur du site",
+  "takeOver": "Prendre en charge",
+  "joining": "Connexion…"
+}

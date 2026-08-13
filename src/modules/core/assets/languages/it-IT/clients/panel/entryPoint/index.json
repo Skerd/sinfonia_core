@@ -87,6 +87,15 @@
       "chats": {
         "title": "Chat"
       },
+      "websiteChats": {
+        "title": "Chat del sito",
+        "waiting": {
+          "title": "In attesa"
+        },
+        "mine": {
+          "title": "Mie"
+        }
+      },
       "info": {
         "title": "Azienda"
       },

@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {clientWebSocket} from "@coreModule/helpers/hocs/withWebSocket.tsx";
-import {openChannel, setChannels} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {openChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import LeftChatPanel from "@coreModule/clients/panel/private/chat/left";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ChatHeader from "@coreModule/clients/panel/private/chat/center/chatHeader";
@@ -15,10 +15,15 @@ import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
 import TypingIndicators from "@coreModule/clients/panel/private/chat/center/typingIndicators.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";
+import LeftWebsiteChatPanel from "@coreModule/clients/panel/private/websiteChats/left/index.tsx";
+import WebsiteChatHeader from "@coreModule/clients/panel/private/websiteChats/center/chatHeader.tsx";
 
-type ChatProps = WithLanguageType & {}
+type ChatProps = WithLanguageType & {
+    websiteChannels?: PublicChatInboxFilter;
+}
 
-function Chat({resolveLanguageKey}: ChatProps){
+function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
 
     const {theme} = useTheme();
     const dispatch = useDispatch();
@@ -32,24 +37,26 @@ function Chat({resolveLanguageKey}: ChatProps){
     const isMobile = useIsMobile();
     const webSocketConnected = useSelector((state: RootState) => state.ui.webSocketConnected);
     const activeChannelId = useSelector((state: RootState) => state.chat.activeChannelId);
+    const isWebsiteInbox = !!websiteChannels;
+    const room = isWebsiteInbox ? "websiteChats" : "allChats";
 
     useEffect(() => {
         if( !!webSocketConnected && clientWebSocket?.readyState === 1 ){
-            clientWebSocket.send(JSON.stringify({code: "JOIN_ROOM", payload: ["allChats"] }));
+            clientWebSocket.send(JSON.stringify({code: "JOIN_ROOM", payload: [room] }));
         }
         return () => {
             if( !!webSocketConnected && clientWebSocket?.readyState === 1 ){
-                clientWebSocket.send(JSON.stringify({code: "LEAVE_ROOM", payload: ["allChats"] }));
+                clientWebSocket.send(JSON.stringify({code: "LEAVE_ROOM", payload: [room] }));
             }
         }
-    }, [webSocketConnected]);
+    }, [webSocketConnected, room]);
 
     useEffect(() => {
+        dispatch(openChannel(null));
         return () => {
-            dispatch(setChannels(null));
             dispatch(openChannel(null));
         }
-    },[])
+    }, [dispatch, isWebsiteInbox, websiteChannels])
 
     const bird = () => {
         return (
@@ -81,11 +88,11 @@ function Chat({resolveLanguageKey}: ChatProps){
                 }}
             />
             <div className="relative z-1">
-                <ChatHeader defaultTitle={""} />
+                {isWebsiteInbox ? <WebsiteChatHeader /> : <ChatHeader defaultTitle={""} />}
             </div>
             <div ref={scrollContainerRef} className={cn("relative z-1 flex-full px-0 pt-1", mobile && "px-0")}>
                 {
-                    !!activeChannelId ?
+                    activeChannelId ?
                     <>
                         <MessageFetcherRender
                             scrollRoot={scrollRef}
@@ -104,6 +111,10 @@ function Chat({resolveLanguageKey}: ChatProps){
         </div>
     );
 
+    const leftPanel = isWebsiteInbox && websiteChannels
+        ? <LeftWebsiteChatPanel websiteChannels={websiteChannels} />
+        : <LeftChatPanel />;
+
     return (
         <div className="flex-full flex-row">
             {
@@ -112,7 +123,7 @@ function Chat({resolveLanguageKey}: ChatProps){
                     {
                         !activeChannelId ?
                         <div className="flex-full">
-                            <LeftChatPanel />
+                            {leftPanel}
                         </div>
                         :
                         conversationPane(true)
@@ -121,7 +132,7 @@ function Chat({resolveLanguageKey}: ChatProps){
                 :
                 <div className="grid h-full w-full grid-cols-8 gap-2">
                     <div className="col-span-2 flex-full">
-                        <LeftChatPanel />
+                        {leftPanel}
                     </div>
                     <div className="col-span-6 flex-full">
                         {conversationPane(false)}

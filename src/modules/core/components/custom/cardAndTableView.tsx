@@ -444,8 +444,8 @@ function CountryCenterView<
     }
 
     /*
-     * Content-height cards: GRID_* uses `align-items: start`, and wrappers stay
-     * `h-fit` so a short card does not stretch to the tallest in its row.
+     * Mosaic cards: GRID_* is CSS multi-column; wrappers stay `h-fit` +
+     * `break-inside-avoid` so each card keeps its height and does not split.
      */
     const cardItemClassName = cn(
         GRID_MASONRY_ITEM,

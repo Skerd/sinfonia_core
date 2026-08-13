@@ -100,6 +100,15 @@
       "chats": {
         "title": "Chats"
       },
+      "websiteChats": {
+        "title": "Website-Chats",
+        "waiting": {
+          "title": "Wartend"
+        },
+        "mine": {
+          "title": "Meine"
+        }
+      },
       "settings": {
         "title": "Einstellungen",
         "company": {

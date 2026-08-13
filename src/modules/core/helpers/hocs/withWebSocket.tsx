@@ -12,7 +12,7 @@ import {
     deleteChannel,
     promoteToAdmin,
     removeUsersFromChannel,
-    demoteToUser
+    demoteToUser, incrementWaitingCount
 } from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {updateWebSocketConnectionStatus} from "@coreModule/helpers/redux/slices/uiSlice.ts";
@@ -73,6 +73,8 @@ export let sendWebsocketMessage: any = null;
 //         break;
 //     }
 
+const PUBLIC_CHAT_HANDOFF_CODE = "PUBLIC_CHAT_HANDOFF_REQUESTED";
+
 function messageEvaluator(message: MessageEvent, dispatch: any, userId: string) {
     let parsedMessage: {code?: string; payload?: any};
     try {
@@ -91,6 +93,9 @@ function messageEvaluator(message: MessageEvent, dispatch: any, userId: string) 
                 dispatch(prependNotificationItems(notifications));
                 dispatch(incrementUnreadNotifications(notifications.filter((notification) => !notification.readOn).length));
                 dispatch(setLatestNotification(notifications[0]));
+                if (notifications.some((notification) => notification.code === PUBLIC_CHAT_HANDOFF_CODE)) {
+                    dispatch(incrementWaitingCount());
+                }
             }
             break;
         }

@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/panel/private/websiteChats/center/releaseToBot.tsx",
+  "releaseToBot": "An den Bot übergeben",
+  "dialog": {
+    "title": "An den Bot übergeben",
+    "description": "Der Besucher wird wieder an den Assistenten übergeben. Sie verlassen diese Unterhaltung.",
+    "confirmText": "Übergeben",
+    "cancelText": "Abbrechen"
+  },
+  "axios": {
+    "start": {
+      "title": "Chat wird übergeben",
+      "time": 3000
+    },
+    "success": {
+      "title": "Chat an den Assistenten übergeben",
+      "time": 3000
+    },
+    "error": {
+      "title": "Übergabe fehlgeschlagen, bitte erneut versuchen!",
+      "time": 3000
+    }
+  }
+}

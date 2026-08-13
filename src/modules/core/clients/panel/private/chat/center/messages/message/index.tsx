@@ -643,13 +643,14 @@ function Message({
         <span
             className={cn(
                 "inline-flex shrink-0 items-center gap-0.5 ps-2 pt-0.5 leading-none",
-                owner ? "text-primary-foreground/70" : "text-muted-foreground",
+                owner ? "text-primary-foreground/70 justify-end" : "text-muted-foreground",
             )}
         >
             {messageIsPinned()}
-            {(message.status === "edited") && (
+            {
+                message.status === "edited" &&
                 <span className="text-3xs leading-none opacity-80">{resolveLanguageKey("edited")}</span>
-            )}
+            }
             {messageTime()}
             {messageReceiptTicks()}
         </span>
@@ -662,25 +663,27 @@ function Message({
                 {messageForwarded()}
                 {messageSender()}
                 {messageFiles()}
-                {
-                    hasText &&
-                    <HiddenElement showLock={false}>
-                        {
-                            read.text &&
-                            <p className="whitespace-pre-wrap wrap-break-word pe-[3.75rem]">
-                                {renderMessageWithMentions(message.message)}
-                            </p>
-                        }
-                    </HiddenElement>
-                }
+                <div>
+                    {
+                        hasText &&
+                        <HiddenElement showLock={false}>
+                            {
+                                read.text &&
+                                <p className="whitespace-pre-wrap wrap-break-word">
+                                    {renderMessageWithMentions(message.message)}
+                                </p>
+                            }
+                        </HiddenElement>
+                    }
+                </div>
                 {
                     !hasText && hasAttachments &&
                     <div className="h-5 w-full" aria-hidden />
                 }
             </div>
-            <div className="col-start-1 row-start-1 self-end justify-self-end">
+            {/*<div className="col-start-1 row-start-1 self-end justify-self-end">*/}
                 {messageMeta()}
-            </div>
+            {/*</div>*/}
         </div>
     )
 
@@ -720,12 +723,9 @@ function Message({
                                     onClick={(e) => {e.stopPropagation(); e.preventDefault();}}
                                 >
                                     <div className="grid min-w-0">
-                                        <div className="col-start-1 row-start-1 flex min-w-0 items-center gap-1 pe-[3.75rem]">
+                                        <div className="col-start-1 row-start-1 flex min-w-0 items-center gap-1">
                                             <CircleSlash size={12} />
                                             <p className="italic">{resolveLanguageKey(  message.sender._id === user.id ? "youDeletedTheMessage" : "messageDeleted")}</p>
-                                        </div>
-                                        <div className="col-start-1 row-start-1 self-end justify-self-end">
-                                            {messageMeta()}
                                         </div>
                                     </div>
                                 </div>
@@ -764,15 +764,15 @@ function Message({
                     <PopoverTrigger asChild>
                         <div className={cn("group flex min-w-0 flex-col", owner && "items-end")}>
                             <ContextMenu
-                            open={contextOpened && !attachmentsOpen}
-                            onOpenChange={(open) => {
-                                if (attachmentsOpen) {
-                                    setContextOpened(false);
-                                    return;
-                                }
-                                setContextOpened(open);
-                            }}
-                        >
+                                open={contextOpened && !attachmentsOpen}
+                                onOpenChange={(open) => {
+                                    if (attachmentsOpen) {
+                                        setContextOpened(false);
+                                        return;
+                                    }
+                                    setContextOpened(open);
+                                }}
+                            >
                                 <ContextMenuTrigger asChild>
                                     <div
                                         className={messageBubbleClassNameResolver()}

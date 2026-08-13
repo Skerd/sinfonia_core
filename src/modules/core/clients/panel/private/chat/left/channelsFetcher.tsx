@@ -70,7 +70,7 @@ function ChannelsFetcher({
     useEffect(() => {
         if (!data) return;
         setTotal(data.total);
-        dispatch(offset === 0 ? setChannels(data) : appendChannels(data));
+        dispatch(offset === 0 ? setChannels({...data, kind: "internal"}) : appendChannels(data));
         setLastTriggeredOffset(offset);
     }, [data]);
 

@@ -22,6 +22,7 @@ import {runRouteConfigContributions} from "@coreModule/clients/panel/moduleContr
 import Roles from "@coreModule/clients/panel/private/tenancy/systemSettings/roles";
 import AllCompanies from "@coreModule/clients/panel/private/tenancy/systemSettings/companies";
 import Chat from "@coreModule/clients/panel/private/chat";
+import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";
 import OnlineResources from "@coreModule/clients/panel/private/online";
 import MyCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/myCompany";
 import AllSmtpServers from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers";
@@ -68,6 +69,10 @@ function renderCoreCenterPanelContent({
         if (subview === "administration") return <Users administration={true} specificUserId={"yes"}/>;
         if (subview === "users") return <Users administration={false} specificUserId={"yes"}/>;
         if (subview === "chats") return <Chat />;
+        if (subview === "websiteChats") {
+            const websiteChannels: PublicChatInboxFilter = segments[2] === "mine" ? "mine" : "waiting";
+            return <Chat websiteChannels={websiteChannels} />;
+        }
         if (subview === "info") return <MyCompany />;
     }
 

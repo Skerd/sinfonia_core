@@ -186,7 +186,7 @@ export type EntityListPageProps<T extends BaseEntity> = {
     headerActions?: ReactNode;
     /**
      * Defaults to {@link GRID_TRANSACTIONAL}. Pass {@link GRID_HIERARCHY} for
-     * media-led cards; both are CSS multi-column masonry driven by density
+     * media-led cards; both are CSS multi-column mosaics driven by density
      * min-widths, so do not add breakpoint column counts on top - they would
      * pin back the column count that these exist to derive.
      */
