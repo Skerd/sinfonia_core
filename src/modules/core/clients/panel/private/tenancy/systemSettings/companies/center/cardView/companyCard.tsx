@@ -30,6 +30,7 @@ import {useEntityCard} from "@coreModule/helpers/hooks/useEntityCard.ts";
 import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
 import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
 import {CARD_BODY_CLASS} from "@coreModule/components/custom/cards/entityCard.constants.ts";
+import {openActionMenuFromContextMenu} from "@coreModule/components/custom/actions/menu/openActionMenuFromContextMenu.ts";
 
 const CompanyMap = lazy(() => import("@coreModule/components/custom/addresses/mapWithMultiplePins.tsx"));
 
@@ -110,7 +111,7 @@ const CompanyCard = memo(function CompanyCard({
 
     return (
         <>
-            <div ref={contentRef} id={"company_" + company._id}>
+            <div ref={contentRef} id={"company_" + company._id} onContextMenu={openActionMenuFromContextMenu}>
                 <EntityCardShell
                     onClick={() => setAction("view")}
                     className={cn(

@@ -7,6 +7,7 @@
   "generalInfo": "Allgemeine Infos",
   "howToReach": "How bis reach us",
   "whoAreWe": "Who sind we",
+  "publicAiChat": "Öffentlicher KI-Chat",
   "addAddress": "Neu adresse hinzufügen",
   "address": "Adresse",
   "remove": "Entfernen",
@@ -47,7 +48,14 @@
     "latitudeLabel": "Breitengrad",
     "latitudePlaceholder": "Breitengrad",
     "longitudeLabel": "Längengrad",
-    "longitudePlaceholder": "Längengrad"
+    "longitudePlaceholder": "Längengrad",
+    "enabledLabel": "Öffentlichen KI-Chat aktivieren",
+    "requireIdentificationLabel": "Identifikation verlangen",
+    "humanHandoffEnabledLabel": "Übergabe an eine Person erlauben",
+    "greetingLabel": "Begrüssung",
+    "greetingPlaceholder": "Erste Nachricht, die der Bot sendet, wenn ein Besucher den Chat öffnet",
+    "personaLabel": "Persona",
+    "personaPlaceholder": "Firmenspezifische Anweisungen, die dem öffentlichen Bot-Prompt angehängt werden"
   },
   "axios": {
     "start": {

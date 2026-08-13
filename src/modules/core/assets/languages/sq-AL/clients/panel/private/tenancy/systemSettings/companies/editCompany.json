@@ -7,6 +7,7 @@
   "generalInfo": "Informacione të përgjithshme",
   "howToReach": "Si të arrini tek ne",
   "whoAreWe": "Kush jemi ne",
+  "publicAiChat": "Chat publik me AI",
   "addAddress": "Shto adresë të re",
   "address": "Adresa",
   "remove": "Hiq",
@@ -47,7 +48,14 @@
     "latitudeLabel": "Gjerësia gjeografike",
     "latitudePlaceholder": "Gjerësia gjeografike",
     "longitudeLabel": "Gjatësia gjeografike",
-    "longitudePlaceholder": "Gjatësia gjeografike"
+    "longitudePlaceholder": "Gjatësia gjeografike",
+    "enabledLabel": "Aktivizo chat-in publik me AI",
+    "requireIdentificationLabel": "Kërko identifikim",
+    "humanHandoffEnabledLabel": "Lejo kalimin te një person",
+    "greetingLabel": "Përshëndetja",
+    "greetingPlaceholder": "Mesazhi i parë që boti dërgon kur një vizitor hap chat-in",
+    "personaLabel": "Persona",
+    "personaPlaceholder": "Udhëzime specifike të kompanisë që i shtohen prompt-it publik të botit"
   },
   "axios": {
     "start": {

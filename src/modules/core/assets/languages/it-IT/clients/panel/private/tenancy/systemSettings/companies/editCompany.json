@@ -7,6 +7,7 @@
   "generalInfo": "Informazioni generali",
   "howToReach": "Come raggiungerci",
   "whoAreWe": "Chi siamo noi",
+  "publicAiChat": "Chat AI pubblica",
   "addAddress": "Aggiungi indirizzo",
   "address": "Indirizzo",
   "remove": "Rimuovi",
@@ -47,7 +48,14 @@
     "latitudeLabel": "Latitudine",
     "latitudePlaceholder": "Latitudine",
     "longitudeLabel": "Longitudine",
-    "longitudePlaceholder": "Longitudine"
+    "longitudePlaceholder": "Longitudine",
+    "enabledLabel": "Abilita la chat AI pubblica",
+    "requireIdentificationLabel": "Richiedi identificazione",
+    "humanHandoffEnabledLabel": "Consenti il passaggio a una persona",
+    "greetingLabel": "Messaggio di benvenuto",
+    "greetingPlaceholder": "Primo messaggio che il bot invia quando un visitatore apre la chat",
+    "personaLabel": "Persona",
+    "personaPlaceholder": "Istruzioni specifiche dell'azienda aggiunte al prompt pubblico del bot"
   },
   "axios": {
     "start": {

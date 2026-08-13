@@ -55,6 +55,15 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormData>({
             }))
             : undefined,
         logo: writeFields.logo ? companyData.logo : undefined,
+        publicAiChat: writeFields.publicAiChat
+            ? {
+                enabled: companyData.publicAiChat?.enabled ?? false,
+                greeting: companyData.publicAiChat?.greeting,
+                persona: companyData.publicAiChat?.persona,
+                requireIdentification: companyData.publicAiChat?.requireIdentification ?? false,
+                humanHandoffEnabled: companyData.publicAiChat?.humanHandoffEnabled ?? true,
+            }
+            : undefined,
     }),
     submitIcon: <Save />,
     afterSuccess: () => store.dispatch(newCompanyCreated()),
@@ -72,6 +81,7 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormData>({
             vat:            data.vat,
             parentCompany:  data.parentCompany,
             allowedDomains: data.allowedDomains || [],
+            publicAiChat:   data.publicAiChat,
             addresses:      (data.addresses || []).map((addr) => ({
                 street:     addr.street,
                 postalCode: addr.postalCode,

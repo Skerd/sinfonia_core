@@ -7,6 +7,7 @@
   "generalInfo": "General info",
   "howToReach": "How to reach us",
   "whoAreWe": "Who are we",
+  "publicAiChat": "Public AI chat",
   "addAddress": "Add new address",
   "address": "Address",
   "remove": "Remove",
@@ -47,7 +48,14 @@
     "latitudeLabel": "Latitude",
     "latitudePlaceholder": "Latitude",
     "longitudeLabel": "Longitude",
-    "longitudePlaceholder": "Longitude"
+    "longitudePlaceholder": "Longitude",
+    "enabledLabel": "Enable public AI chat",
+    "requireIdentificationLabel": "Require identification",
+    "humanHandoffEnabledLabel": "Allow human handoff",
+    "greetingLabel": "Greeting",
+    "greetingPlaceholder": "First message the bot sends when a visitor opens chat",
+    "personaLabel": "Persona",
+    "personaPlaceholder": "Tenant-specific instructions appended to the public bot prompt"
   },
   "axios": {
     "start": {
