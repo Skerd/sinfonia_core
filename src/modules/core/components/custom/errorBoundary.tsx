@@ -73,6 +73,12 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
         console.error("ErrorBoundary caught an error", error, errorInfo);
     }
 
+    componentDidUpdate(prevProps: ErrorBoundaryProps) {
+        if (this.state.hasError && prevProps.children !== this.props.children) {
+            this.setState({hasError: false});
+        }
+    }
+
     private handleRetry = () => {
         this.setState({hasError: false});
     };

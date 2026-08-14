@@ -62,6 +62,8 @@ interface PolygonSelectorProps {
      * polygon math stays aligned. Marketing full-bleed viewers typically want `cover`.
      */
     objectFit?: "contain" | "cover";
+    /** Vertical/horizontal placement of the fitted image. Default centers. */
+    objectPosition?: "center" | "top";
     /** Keep phantom polygons faintly visible even when not hovered (marketing explorers). */
     phantomsAlwaysVisible?: boolean;
 }
@@ -101,6 +103,7 @@ function getRenderedImageSize(
     containerWidth: number,
     containerHeight: number,
     objectFit: "contain" | "cover" = "contain",
+    objectPosition: "center" | "top" = "center",
 ): { width: number; height: number; left: number; top: number } {
     if (naturalWidth <= 0 || naturalHeight <= 0 || containerWidth <= 0 || containerHeight <= 0) {
         return { width: 0, height: 0, left: 0, top: 0 };
@@ -119,19 +122,17 @@ function getRenderedImageSize(
             renderedWidth = containerWidth;
             renderedHeight = containerWidth / imageAspect;
         }
-    } else if (imageAspect > containerAspect) {
-        renderedWidth = containerWidth;
-        renderedHeight = containerWidth / imageAspect;
     } else {
-        renderedHeight = containerHeight;
-        renderedWidth = containerHeight * imageAspect;
+        const scale = Math.min(containerWidth / naturalWidth, containerHeight / naturalHeight);
+        renderedWidth = naturalWidth * scale;
+        renderedHeight = naturalHeight * scale;
     }
 
     return {
         width: renderedWidth,
         height: renderedHeight,
         left: (containerWidth - renderedWidth) / 2,
-        top: (containerHeight - renderedHeight) / 2,
+        top: objectPosition === "top" ? 0 : (containerHeight - renderedHeight) / 2,
     };
 }
 
@@ -174,6 +175,7 @@ function PolygonSelector({
     borderless = false,
     hideControls = false,
     objectFit = "contain",
+    objectPosition = "center",
     phantomsAlwaysVisible = false,
 }: PolygonSelectorProps & WithLanguageType) {
 
@@ -602,6 +604,7 @@ function PolygonSelector({
             contentWidth,
             contentHeight,
             objectFit,
+            objectPosition,
         );
 
         setSvgCoordinates((prev) => {
@@ -620,7 +623,7 @@ function PolygonSelector({
             }
             return newSvgCoordinates;
         });
-    }, [imageLoaded, naturalSize, containerDimensions, zoom, imagePadding, objectFit]);
+    }, [imageLoaded, naturalSize, containerDimensions, zoom, imagePadding, objectFit, objectPosition]);
     useEffect(() => {
         return () => {
             window.removeEventListener("pointerup", onPointerUp);
@@ -891,7 +894,7 @@ function PolygonSelector({
                                 <img
                                     ref={imageRef}
                                     src={renderedImageUrl}
-                                    alt="Image for polygon selection"
+                                    alt=""
                                     className={cn(
                                         "block",
                                         borderless
