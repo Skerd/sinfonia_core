@@ -10,8 +10,8 @@ import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 type ViewCitiesProps = WithLanguageType & {
     countryId?: string;
     countryName?: string;
-    stateId: string;
-    stateName: string;
+    stateId?: string;
+    stateName?: string;
 }
 
 function ViewCities({
@@ -24,12 +24,10 @@ function ViewCities({
 
     const {read} = useAccess("cities");
     const navigate = useNavigate();
-
-    if( !read ){
-        return <></>
-    }
+    const canOpen = Boolean(read && stateId && stateName);
     const shortcut = "1";
     const viewCities = () => {
+        if (!canOpen) return;
         const params = new URLSearchParams();
         if (countryId) params.set("countryId", countryId);
         if (countryName) params.set("countryName", countryName);
@@ -38,6 +36,10 @@ function ViewCities({
         navigate(`/tenancy/systemSettings/cities?${params.toString()}`);
     }
     useKeyboardShortcuts(shortcut, viewCities);
+
+    if (!canOpen) {
+        return <></>
+    }
 
     return (
         <DropdownMenuItem onClick={(e) => { e.preventDefault(); e.stopPropagation(); viewCities(); }}>

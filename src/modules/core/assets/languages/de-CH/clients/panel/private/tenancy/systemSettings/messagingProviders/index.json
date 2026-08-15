@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
-  "title": "Messaging providers",
-  "description": "Configure SMS und WhatsApp providers für diese firma. Only aktiv providers sind used für outbound nachrichten.",
+  "title": "Messaging-Anbieter",
+  "description": "SMS- und WhatsApp-Anbieter für diese Firma konfigurieren. Für ausgehende Nachrichten werden nur aktive Anbieter verwendet.",
   "createMessagingProvider": "Messaging provider hinzufügen",
   "searchPlaceholder": "Suchen von name oder konto SID...",
   "noData": "Keine messaging providers configured",

@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
   "title": "Currencies",
-  "description": "Manage currencies",
+  "description": "Manage currencies, symbols, and decimal places",
   "createCurrency": "Create currency",
   "searchPlaceholder": "Search by name, abbreviation, or add filters...",
   "noData": "No currencies found",

@@ -53,9 +53,11 @@ export default function Header({
 
     const isRedundant = useMemo(() => {
         if (!pageHeader || context.length > 0) return false;
+        // A subtitle needs a visible heading; hiding the h1 leaves only muted text.
+        if (description?.trim()) return false;
         const trail = [...pageHeader.routeCrumbs, ...pageHeader.contextCrumbs];
         return normalize(trail.at(-1)?.label) === normalize(heading);
-    }, [pageHeader, context.length, heading]);
+    }, [pageHeader, context.length, heading, description]);
 
     return (
         <div className={cn("flex min-h-8 items-center justify-between gap-3", className)}>

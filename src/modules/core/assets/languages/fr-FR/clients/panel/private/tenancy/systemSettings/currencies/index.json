@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
   "title": "Devises",
-  "description": "Gérer les devises",
+  "description": "Gérer les devises, symboles et décimales",
   "createCurrency": "Créer une devise",
   "searchPlaceholder": "Recherchez par nom, abréviation ou ajoutez des filtres...",
   "noData": "Aucune devise trouvée",

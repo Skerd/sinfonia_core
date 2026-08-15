@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/index.tsx",
-  "title": "Countries",
-  "description": "Countries und konfiguration einstellungen verwalten",
+  "title": "Länder",
+  "description": "Länder und Konfigurationseinstellungen verwalten",
   "create": "Land erstellen",
   "searchPlaceholder": "Suchen von name, code, oder hinzufügen filters...",
   "noData": "Keine countries gefunden",

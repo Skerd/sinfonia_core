@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx",
   "title": "Città",
-  "description": "Gestisci le città",
+  "description": "Gestisci le città e lo stato e il paese associati",
   "createCity": "Crea città",
   "searchPlaceholder": "Cerca per nome o aggiungi filtri...",
   "noData": "Nessuna città trovata",

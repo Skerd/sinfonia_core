@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
   "title": "Valute",
-  "description": "Gestisci le valute",
+  "description": "Gestisci valute, simboli e decimali",
   "createCurrency": "Crea valuta",
   "searchPlaceholder": "Cerca per nome, abbreviazione o aggiungi filtri...",
   "noData": "Nessuna valuta trovata",

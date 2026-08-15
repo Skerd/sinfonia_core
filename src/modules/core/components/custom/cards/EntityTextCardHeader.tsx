@@ -20,7 +20,7 @@ type EntityTextCardHeaderProps = {
     className?: string;
     /** When false, title is masked with HiddenElement (city-style field permission). */
     showTitle?: boolean;
-    /** When false, subtitle is masked with HiddenElement (permission denied). Omit / leave true when the card has no subtitle. */
+    /** When false, the subtitle row is masked. The row is omitted unless `subtitle` is passed. */
     showSubtitle?: boolean;
     /** When false, badges are masked with HiddenElement. */
     showBadges?: boolean;
@@ -49,43 +49,47 @@ export function EntityTextCardHeader({
     showSubtitle = true,
     showBadges = true,
 }: EntityTextCardHeaderProps) {
-    const hasSubtitle = subtitle != null && subtitle !== "";
+    const showSubtitleRow = subtitle != null;
     const hasBadges = badges != null;
     const showActions = !hideActions && actionMenu != null;
 
     return (
-        <CardHeader className={cn("gap-1.5 px-2 pt-2 pb-1", className)}>
-            <div className="flex min-w-0 items-start gap-2">
-                {iconTile != null && <div className="shrink-0 self-center">{iconTile}</div>}
+        <CardHeader className={cn("gap-1.5 px-2 pt-2 pb-1", !showSubtitleRow && "items-center", className)}>
+            <div className={cn("flex min-w-0 gap-2", showSubtitleRow ? "items-start" : "items-center")}>
+                {iconTile != null && (
+                    <div className="flex shrink-0 items-center justify-center self-center leading-none">
+                        {iconTile}
+                    </div>
+                )}
                 <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
                     <div className="flex min-w-0 items-center gap-1">
-                        <CardTitle className="min-w-0 truncate text-sm leading-snug font-semibold">
+                        <CardTitle className="min-w-0 truncate  text-lg leading-snug font-semibold">
                             <HiddenElement randomLength={10}>
                                 {showTitle ? title : null}
                             </HiddenElement>
                         </CardTitle>
                         {titleExtra}
                     </div>
-                    {(hasSubtitle || !showSubtitle) && (
+                    {showSubtitleRow && (
                         <p className="truncate text-xs leading-snug text-muted-foreground">
                             <HiddenElement randomLength={8}>
-                                {showSubtitle && hasSubtitle ? subtitle : null}
+                                {showSubtitle ? subtitle : null}
                             </HiddenElement>
                         </p>
+                    )}
+                    {(hasBadges || !showBadges) && (
+                        <div className="flex flex-wrap items-center gap-1.5">
+                            <HiddenElement randomLength={6}>
+                                {showBadges && hasBadges ? badges : null}
+                            </HiddenElement>
+                        </div>
                     )}
                 </div>
             </div>
             {showActions && (
-                <CardAction className="-mr-1">
+                <CardAction className={cn("-mr-1", showSubtitleRow ? "row-span-2" : "row-span-1 self-center")}>
                     <EntityCardActionMenu variant="inline">{actionMenu}</EntityCardActionMenu>
                 </CardAction>
-            )}
-            {(hasBadges || !showBadges) && (
-                <div className="col-start-1 flex flex-wrap items-center gap-1.5">
-                    <HiddenElement randomLength={6}>
-                        {showBadges && hasBadges ? badges : null}
-                    </HiddenElement>
-                </div>
             )}
         </CardHeader>
     );

@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
   "title": "States",
-  "description": "Manage states",
+  "description": "Manage states and their country assignment",
   "createState": "Create state",
   "searchPlaceholder": "Search by name, code, or add filters...",
   "noData": "No states found",

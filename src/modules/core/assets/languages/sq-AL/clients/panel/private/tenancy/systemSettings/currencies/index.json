@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
   "title": "Monedhat",
-  "description": "Menaxhoni monedhat",
+  "description": "Menaxhoni monedhat, simbolet dhe shifrat dhjetore",
   "createCurrency": "Krijo monedhë",
   "searchPlaceholder": "Kërkoni sipas emrit, shkurtesës ose shtoni filtra...",
   "noData": "Nuk u gjet asnjë monedhë",

@@ -261,9 +261,8 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
     const { setOpenMobile } = useSidebar();
     const { pathname } = useLocation();
     const href = pathname || '';
-    const isChildActive = item.items?.some((sub) => subEntryActive(href, sub));
     return (
-        <Collapsible asChild defaultOpen={isChildActive || checkIsActive(href, item, true)} className='group/collapsible'>
+        <Collapsible asChild defaultOpen className='group/collapsible'>
             <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                     <SidebarMenuButton tooltip={item.title}>
@@ -305,7 +304,7 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                 return (
                                     <Collapsible
                                         key={nested.title}
-                                        defaultOpen={nestedOpen}
+                                        defaultOpen
                                         className='group/subcollapsible'
                                     >
                                         <SidebarMenuSubItem>
@@ -345,7 +344,7 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                         return (
                                                             <Collapsible
                                                                 key={`${nested.title}-${deeper.title}`}
-                                                                defaultOpen={deeperOpen}
+                                                                defaultOpen
                                                                 className='group/subcollapsible2'
                                                             >
                                                                 <SidebarMenuSubItem>

@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
   "title": "États / cantons",
-  "description": "Gérer les états",
+  "description": "Gérer les états et le pays associé",
   "createState": "Créer un état",
   "searchPlaceholder": "Recherchez par nom, code ou ajoutez des filtres...",
   "noData": "Aucun état trouvé",

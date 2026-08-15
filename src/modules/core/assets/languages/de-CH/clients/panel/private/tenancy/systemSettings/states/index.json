@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
-  "title": "States",
-  "description": "States verwalten",
+  "title": "Kantone / Bundesländer",
+  "description": "Kantone und Bundesländer sowie das zugehörige Land verwalten",
   "createState": "Kanton erstellen",
   "searchPlaceholder": "Suchen von name, code, oder hinzufügen filters...",
   "noData": "Keine states gefunden",

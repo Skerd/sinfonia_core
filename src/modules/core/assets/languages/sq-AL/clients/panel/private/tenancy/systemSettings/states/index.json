@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
-  "title": "shtetet",
-  "description": "Menaxhoni shtetet",
+  "title": "Shtetet",
+  "description": "Menaxhoni shtetet dhe vendin përkatës",
   "createState": "Krijo shtet",
   "searchPlaceholder": "Kërko sipas emrit, kodit ose shto filtra...",
   "noData": "Nuk u gjet asnjë shtet",

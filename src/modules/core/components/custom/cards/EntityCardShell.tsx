@@ -1,4 +1,4 @@
-import type {ReactNode, KeyboardEvent} from "react";
+import type {ReactNode, KeyboardEvent, Ref} from "react";
 import {Card} from "@coreModule/components/ui/card.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {
@@ -6,6 +6,7 @@ import {
     CARD_SHELL_CLICKABLE_CLASS,
     DASHBOARD_SELECTABLE_RING,
 } from "./entityCard.constants.ts";
+import {openActionMenuFromContextMenu} from "@coreModule/components/custom/actions/menu/openActionMenuFromContextMenu.ts";
 
 type EntityCardShellProps = {
     children: ReactNode;
@@ -16,6 +17,7 @@ type EntityCardShellProps = {
     isSelected?: boolean;
     /** Disable pointer cursor (e.g. fetch-only preview). */
     disableClick?: boolean;
+    ref?: Ref<HTMLDivElement>;
 };
 
 function handleActivationKeyDown(
@@ -41,6 +43,7 @@ export function EntityCardShell({
     selectable = false,
     isSelected = false,
     disableClick = false,
+    ref,
 }: EntityCardShellProps) {
     const interactive = !!onClick && !disableClick;
 
@@ -53,12 +56,14 @@ export function EntityCardShell({
         role: "button",
         tabIndex: 0,
         onClick,
+        onContextMenu: openActionMenuFromContextMenu,
         onKeyDown: (e: KeyboardEvent<HTMLDivElement>) => handleActivationKeyDown(e, onClick),
     } as const;
 
     if (selectable) {
         return (
             <Card
+                ref={ref}
                 {...activationProps}
                 aria-pressed={isSelected}
                 className={cn(
@@ -76,6 +81,7 @@ export function EntityCardShell({
 
     return (
         <Card
+            ref={ref}
             {...(interactive ? activationProps : {})}
             className={cn(
                 interactive ? CARD_SHELL_CLICKABLE_CLASS : CARD_SHELL_CLASS,
