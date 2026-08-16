@@ -105,5 +105,39 @@ function plainTooltipText(value: unknown): string {
         const {prefix, number} = value as {prefix?: string; number?: string};
         return `${prefix || ""} ${number || ""}`.trim();
     }
+    if (typeof value === "object" && !Array.isArray(value) && ("name" in value || "surname" in value)) {
+        const {name, surname} = value as {name?: string; surname?: string};
+        return [name, surname]
+            .map((part) => (typeof part === "string" ? part.trim() : ""))
+            .filter(Boolean)
+            .join(" ");
+    }
+    if (
+        typeof value === "object" &&
+        !Array.isArray(value) &&
+        ("amount" in value || "currency" in value || "symbol" in value || "abbreviation" in value)
+    ) {
+        const obj = value as {
+            amount?: unknown;
+            number?: unknown;
+            currency?: {symbol?: string; abbreviation?: string};
+            symbol?: string;
+            abbreviation?: string;
+        };
+        const amount = obj.amount ?? obj.number;
+        const amountText =
+            typeof amount === "number" && Number.isFinite(amount)
+                ? amount.toFixed(2)
+                : typeof amount === "string"
+                  ? amount
+                  : "";
+        const symbol =
+            (typeof obj.currency?.symbol === "string" && obj.currency.symbol.trim()) ||
+            (typeof obj.symbol === "string" && obj.symbol.trim()) ||
+            (typeof obj.currency?.abbreviation === "string" && obj.currency.abbreviation.trim()) ||
+            (typeof obj.abbreviation === "string" && obj.abbreviation.trim()) ||
+            "";
+        return [symbol, amountText].filter(Boolean).join(" ");
+    }
     return "";
 }

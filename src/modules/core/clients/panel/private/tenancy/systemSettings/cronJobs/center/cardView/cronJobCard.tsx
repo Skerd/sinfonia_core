@@ -1,56 +1,13 @@
 import {compose} from "redux";
-import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import type {CronJob} from "armonia/src/modules/core/api/auxiliary/private/cronJob/cronJob.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {cronJobEditPath} from "../../index.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import {Clock, Code, Cog, Power} from "lucide-react";
-import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
-import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
+import CronJobSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx";
 import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
-
-type CronJobSheetProps = {
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-    data?: CronJob;
-    onDelete?: (data: DeletedData) => void;
-    onRestore?: () => void;
-    hideActions?: boolean;
-    resolveLanguageKey: ResolveLanguageKey;
-};
-
-function CronJobSheet({
-    open,
-    onOpenChange,
-    data,
-    onDelete,
-    onRestore,
-    hideActions,
-    resolveLanguageKey,
-}: CronJobSheetProps) {
-    const access = useAccess("cronJobs");
-    const viewConfig = useViewConfig("cronjobs", "sheet");
-    if (!viewConfig || !data) return null;
-
-    return (
-        <SheetViewRenderer
-            config={viewConfig}
-            data={data}
-            url="/api/auxiliary/cron-jobs/single"
-            fetchId={data._id}
-            open={open}
-            onOpenChange={onOpenChange}
-            resolveLanguageKey={resolveLanguageKey}
-            access={access}
-            hideActions={hideActions}
-            onDelete={onDelete}
-            onRestore={onRestore}
-            editPath={cronJobEditPath(data)}
-        />
-    );
-}
 
 type Props = WithLanguageType & {
     job: CronJob;
@@ -64,16 +21,16 @@ function CronJobCard({job, resolveLanguageKey, onDelete, onRestore}: Props) {
             resource="cronJobs"
             entity={job}
             onDelete={onDelete}
+            
             onRestore={onRestore}
             editPath={cronJobEditPath}
-            Sheet={CronJobSheet}
-            sheetEntityProp="data"
+            Sheet={CronJobSheetView}
+            sheetEntityProp="cronJob"
             deleteUrl="/api/auxiliary/cron-jobs"
             restoreUrl="/api/auxiliary/cron-jobs/restore"
             failedTitle=""
             failedDescription=""
             titlePath="name"
-            sheetProps={() => ({resolveLanguageKey})}
         >
             {({entity}) => (
                 <>

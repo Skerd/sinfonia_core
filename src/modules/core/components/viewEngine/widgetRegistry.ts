@@ -6,7 +6,7 @@ import {Textarea} from "@coreModule/components/ui/textarea.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import SmallInfoCard from "@coreModule/components/custom/smallInfoCard.tsx";
+import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
 import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
 import {ApiSelect} from "@coreModule/components/custom/apiSelect";
@@ -61,7 +61,8 @@ const WIDGET_REGISTRY: Record<string, ComponentType<any>> = {
     "#Checkbox": Checkbox,
     "#Switch": Switch,
     "#Badge": Badge,
-    "#SmallInfoCard": SmallInfoCard,
+    "#SmallInfoCard": DisplayCard,
+    "#DisplayCard": DisplayCard,
     "#CountryFlag": CountryFlag,
     "#ExpandableText": ExpandableText,
     "#ApiSelect": ApiSelect,

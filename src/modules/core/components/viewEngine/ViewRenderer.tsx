@@ -560,7 +560,7 @@ function renderSheetField(
     const Component = resolveWidget(binding.widget);
     if (!Component) return null;
 
-    if (binding.widget === "#SmallInfoCard") {
+    if (binding.widget === "#SmallInfoCard" || binding.widget === "#DisplayCard") {
         return renderSmallInfoCard(Component, node, binding, ctx, index);
     }
 
@@ -1217,6 +1217,8 @@ function renderSmallInfoCard(
 ): ReactNode {
     const { data, resolveLanguageKey } = ctx;
     const wp = binding.widgetProps ?? {};
+    const displayType = typeof wp.type === "string" && wp.type.length > 0 ? wp.type : undefined;
+    const skipPreFormat = !!displayType;
 
     if (wp.valueType === "linkedObjectRefCardList") {
         return renderLinkedObjectRefCardList(Component, node, binding, ctx, index);
@@ -1237,7 +1239,7 @@ function renderSmallInfoCard(
             ctx.access,
             node.permissions?.read
         );
-    } else if (wp.valueType === "mdiIcon" && data) {
+    } else if (wp.valueType === "mdiIcon" && data && !skipPreFormat) {
         const raw = resolvePath(data, binding.name);
         if (raw == null || raw === "") {
             displayValue = null;
@@ -1288,11 +1290,11 @@ function renderSmallInfoCard(
         displayValue = resolvePath(data, binding.name);
     }
 
-    if (wp.format === "locale" && displayValue != null && typeof displayValue === "number") {
+    if (!skipPreFormat && wp.format === "locale" && displayValue != null && typeof displayValue === "number") {
         displayValue = displayValue.toLocaleString();
     }
 
-    if (displayValue != null && (wp.format === "date" || wp.format === "dateTime")) {
+    if (!skipPreFormat && displayValue != null && (wp.format === "date" || wp.format === "dateTime")) {
         displayValue = formatSheetSmallInfoTemporal(displayValue, wp.format === "dateTime" ? "dateTime" : "date");
     }
 
@@ -1308,7 +1310,7 @@ function renderSmallInfoCard(
         }
     }
 
-    if (wp.valueType === "boolean" && displayValue != null && !isValidElement(displayValue)) {
+    if (!skipPreFormat && wp.valueType === "boolean" && displayValue != null && !isValidElement(displayValue)) {
         if (typeof displayValue === "boolean") {
             displayValue = resolveLanguageKey(displayValue ? "yes" : "no");
         } else if (displayValue === "true" || displayValue === "false") {
@@ -1317,6 +1319,7 @@ function renderSmallInfoCard(
     }
 
     if (
+        !skipPreFormat &&
         wp.prefix &&
         displayValue != null &&
         !isValidElement(displayValue) &&
@@ -1326,6 +1329,7 @@ function renderSmallInfoCard(
         if (!str.includes(wp.prefix)) displayValue = wp.prefix + str;
     }
     if (
+        !skipPreFormat &&
         wp.suffix &&
         displayValue != null &&
         !isValidElement(displayValue) &&
@@ -1436,6 +1440,9 @@ function renderSmallInfoCard(
             title={label}
             tooltip={tooltipText}
             show={hasSmallInfoCardValueAccess(ctx.access, binding)}
+            path={binding.name}
+            type={displayType}
+            size={typeof wp.size === "number" ? wp.size : undefined}
             Icon={Icon ?? undefined}
             value={displayValue}
             variant={variant}

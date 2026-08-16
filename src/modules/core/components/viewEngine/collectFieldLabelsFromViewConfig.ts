@@ -64,7 +64,7 @@ function hintForBinding(binding: FieldBinding): AuditFieldHint | null {
         return {kind: "singlePost", url: direct.url, labelFields: direct.labelFields};
     }
 
-    if (w === "#SmallInfoCard") {
+    if (w === "#SmallInfoCard" || w === "#DisplayCard") {
         const linkedPath = typeof wp.linkedRefPath === "string" ? wp.linkedRefPath.trim() : "";
         let linkedToken = typeof wp.linkedSheetWidget === "string" ? wp.linkedSheetWidget : "";
         if (!linkedToken && wp.linkedSheetByType != null && typeof wp.linkedSheetByType === "object") {
@@ -99,7 +99,7 @@ function mergeHintForPersistedPaths(
     const wp = binding.widgetProps ?? {};
     mergeFieldHint(out, fieldName, hint);
 
-    if (binding.widget === "#SmallInfoCard" && hint.kind === "singlePost") {
+    if ((binding.widget === "#SmallInfoCard" || binding.widget === "#DisplayCard") && hint.kind === "singlePost") {
         const linkedPath = typeof wp.linkedRefPath === "string" ? wp.linkedRefPath.trim() : "";
         if (linkedPath && linkedPath !== fieldName) {
             mergeFieldHint(out, linkedPath, hint);
@@ -190,7 +190,7 @@ export function collectFieldLabelsFromViewNodes(
         }
         out[name] = label;
         /** Audit diffs keys are schema paths (`project`), while labels often sit on dotted display paths (`project.name`). */
-        if (widget === "#SmallInfoCard") {
+        if (widget === "#SmallInfoCard" || widget === "#DisplayCard") {
             const linkedPath = typeof wp.linkedRefPath === "string" ? wp.linkedRefPath.trim() : "";
             if (linkedPath.length > 0 && linkedPath !== name) {
                 out[linkedPath] = label;

@@ -27,7 +27,9 @@ export type DisplayValueType =
     | "email"
     | "icon"
     | "avatar"
-    | "flag";
+    | "flag"
+    | "user"
+    | "currency";
 
 type DisplayValueProps = WithLanguageType & {
     value: unknown;
@@ -183,6 +185,58 @@ function formatEmail(value: unknown): ReactNode {
     return email ? hrefLink(`mailto:${email}`, email) : "";
 }
 
+type UserParts = {name?: string; surname?: string};
+
+/** Populated user stub (`{name, surname}`) or a preformatted display string. */
+function formatUser(value: unknown): string | null {
+    if (typeof value === "string") {
+        const trimmed = value.trim();
+        return trimmed || null;
+    }
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+        const {name, surname} = value as UserParts;
+        const display = [name, surname]
+            .map((part) => (typeof part === "string" ? part.trim() : ""))
+            .filter(Boolean)
+            .join(" ");
+        return display || null;
+    }
+    return null;
+}
+
+type CurrencyStub = {symbol?: string; abbreviation?: string};
+
+function currencyLabel(value: unknown): string {
+    if (typeof value === "string") return value.trim();
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+        const {symbol, abbreviation} = value as CurrencyStub;
+        const sym = typeof symbol === "string" ? symbol.trim() : "";
+        if (sym) return sym;
+        return typeof abbreviation === "string" ? abbreviation.trim() : "";
+    }
+    return "";
+}
+
+/**
+ * Money amount + currency stub (`{amount, currency: {symbol, abbreviation}}`),
+ * a bare amount, or a currency identity (`{symbol, abbreviation}`).
+ */
+function formatCurrencyValue(value: unknown): string | null {
+    const amountOnly = toNumber(value);
+    if (amountOnly != null && (typeof value === "number" || typeof value === "string")) {
+        return formatFiniteDecimal(amountOnly);
+    }
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+        const obj = value as CurrencyStub & {amount?: unknown; number?: unknown; currency?: unknown};
+        const amount = toNumber(obj.amount ?? obj.number);
+        const label = currencyLabel(obj.currency ?? {symbol: obj.symbol, abbreviation: obj.abbreviation});
+        if (amount != null && label) return `${label} ${formatFiniteDecimal(amount)}`;
+        if (amount != null) return formatFiniteDecimal(amount);
+        if (label) return label;
+    }
+    return null;
+}
+
 function mediaSrc(value: unknown): string | undefined {
     if (typeof value === "string") {
         const raw = value.trim();
@@ -274,6 +328,12 @@ function formatByType(
     if (type === "email") {
         return formatEmail(value);
     }
+    if (type === "user") {
+        return formatUser(value) ?? String(value);
+    }
+    if (type === "currency") {
+        return formatCurrencyValue(value) ?? String(value);
+    }
     if (type === "area") {
         const n = toNumber(value);
         return n != null ? `${formatFiniteDecimal(n)}m²` : String(value);
@@ -356,7 +416,9 @@ function DisplayValue({
         type !== "avatar" &&
         (isEmptyValue(value) ||
             ((type === "phoneCode" || type === "flag" || type === "email" || type === "icon") && String(value).trim() === "") ||
-            (type === "phoneNumber" && !parsePhoneNumber(value)))
+            (type === "phoneNumber" && !parsePhoneNumber(value)) ||
+            (type === "user" && !formatUser(value)) ||
+            (type === "currency" && !formatCurrencyValue(value)))
     ) {
         return wrap(<ValueNotSet />, className);
     }

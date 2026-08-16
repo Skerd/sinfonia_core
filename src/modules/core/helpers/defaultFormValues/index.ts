@@ -10,7 +10,7 @@ export function defaultSignInValues(): any{
     if( process.env.NODE_ENV === "development" ){
         return {
             username: 'echo@echo.com',
-            password: 'echo',
+            password: 'EchoPronix@10',
             mfaCode: undefined
         }
     }
