@@ -103,11 +103,9 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                             label={resolveLanguageKey("providerType")}
                             tooltip={resolveLanguageKey("providerType")}
                             path="providerType"
-                            value={
-                                entity.providerType
-                                    ? resolveLanguageKey(`providerTypeValues.${entity.providerType}`)
-                                    : null
-                            }
+                            type="enum"
+                            languageKeyCategory="providerTypeValues"
+                            value={entity.providerType}
                         />
                         <DisplayRow
                             icon={Power}

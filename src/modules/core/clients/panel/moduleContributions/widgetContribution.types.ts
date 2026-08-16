@@ -20,7 +20,7 @@ export type SheetFieldRendererArgs = {
 
 /**
  * Custom sheet-mode renderer for a widget token.
- * Return `undefined` to fall through to ViewRenderer’s generic/`#SmallInfoCard` paths.
+ * Return `undefined` to fall through to ViewRenderer’s generic/`#DisplayCard` paths.
  * Return `null` to render nothing (handled / hidden).
  */
 export type SheetFieldRenderer = (args: SheetFieldRendererArgs) => ReactNode | undefined;

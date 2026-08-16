@@ -13,8 +13,15 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {IconInfoCircle, IconLink} from "@tabler/icons-react";
 import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
-import type {SmallInfoCardLinkedSheetOuterProps} from "@coreModule/components/custom/smallInfoCard.tsx";
 import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
+
+/** Open/close wiring from `#DisplayCard`; renderer may bind extra props (e.g. `fetchId`). */
+export type DisplayCardLinkedSheetOuterProps = {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    /** Called after linked entity delete succeeds; DisplayCard closes the nested sheet. */
+    onLinkedDeleted?: () => void;
+};
 
 type DisplayCardVariant = "default" | "success" | "destructive" | "warning" | "info";
 
@@ -24,6 +31,7 @@ type DisplayCardProps = {
     show?: boolean;
     path?: string;
     type?: DisplayValueType;
+    languageKeyCategory?: string;
     format?: Intl.DateTimeFormatOptions;
     size?: number;
     children?: (formatted: ReactNode) => ReactNode;
@@ -37,7 +45,7 @@ type DisplayCardProps = {
     internalHref?: string;
     linkedReferenceSheet?: {
         resourceId: string;
-        LinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps>;
+        LinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps>;
     };
 };
 
@@ -86,7 +94,7 @@ function DisplayCardNestedSheets({
     onClose,
     onLinkedDeleted,
 }: {
-    LinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps>;
+    LinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps>;
     linkedOpen: boolean;
     onClose: () => void;
     onLinkedDeleted?: () => void;
@@ -127,13 +135,13 @@ function normalizeExternalHref(href: string): string | null {
 }
 
 /**
- * Sheet tile. Chrome matches `SmallInfoCard`; the value slot is `DisplayValue`
- * (blur when denied, `ValueNotSet` when empty).
+ * Sheet tile. Value slot is `DisplayValue` (blur when denied, `ValueNotSet` when empty).
  */
 export default function DisplayCard({
     show,
     path,
     type,
+    languageKeyCategory,
     format,
     size,
     children,
@@ -229,6 +237,7 @@ export default function DisplayCard({
                                 value={value}
                                 path={path}
                                 type={type}
+                                languageKeyCategory={languageKeyCategory}
                                 format={format}
                                 size={size}
                                 show={show}

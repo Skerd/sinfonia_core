@@ -27,15 +27,13 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ProfilePhoto
     from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/profilePhoto.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {formatDate, getName} from "@coreModule/helpers/general";
+import {getName} from "@coreModule/helpers/general";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import type {
     CompanyUserRequestsType,
     CompanyUserType
 } from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
-import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import LongText from "@coreModule/components/custom/longText.tsx";
 import {Tabs, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
 import {ActivationRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/activationRequestTabContent.tsx";
 import {InvitationRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/invitationRequestTabContent.tsx";
@@ -44,7 +42,7 @@ import {PasswordResetRequestTabContent} from "@coreModule/clients/panel/private/
 import {useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import InfoRow from "@coreModule/components/custom/infoRow.tsx";
+import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import {TabsContent} from "@radix-ui/react-tabs";
 
 export type UserProfileData = CompanyUserType;
@@ -327,7 +325,7 @@ function UserProfileCardInner({
 
                         <TabsContent value="about" className="rounded-md border bg-muted/30 p-3 text-sm">
                             <InfoRowGroup className="flex-col !gap-y-1.5">
-                                <InfoRow
+                                <DisplayRow
                                     iconReplacement={<div>
                                         <HiddenElement>
                                             {
@@ -368,90 +366,37 @@ function UserProfileCardInner({
                                                     </>
                                                 }
                                             </HiddenElement>
-
                                         </>
                                     }
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read?.username &&
-                                                <>
-                                                    {
-                                                        !!(data.username || data.unverifiedEmail) ?
-                                                            <LongText className="max-w-full">
-                                                                <a className="hover:underline" href={`mailto:${data.username || data.unverifiedEmail}`}>{data.username || data.unverifiedEmail}</a>
-                                                            </LongText>
-                                                            :
-                                                            <ValueNotSet/>
-                                                    }
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
+                                    show={!!read?.username}
+                                    type="email"
+                                    value={data.username || data.unverifiedEmail}
                                 />
-
-                                <InfoRow
+                                <DisplayRow
                                     icon={Phone}
                                     label={resolveLanguageKey("phoneNumber")}
                                     tooltip={resolveLanguageKey("phoneNumber")}
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read.phoneNumber &&
-                                                <>
-                                                    {
-                                                        !!data.phoneNumber ?
-                                                        <a className="hover:underline" href={`tel:${data.phoneNumber}`}>{data.phoneNumber}</a>
-                                                        :
-                                                        <ValueNotSet/>
-                                                    }
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
+                                    show={!!read.phoneNumber}
+                                    type="phoneNumber"
+                                    value={data.phoneNumber}
                                 />
-
-                                <InfoRow
+                                <DisplayRow
                                     icon={Clock9}
                                     label={resolveLanguageKey("timezone")}
                                     tooltip={resolveLanguageKey("timezone")}
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read.timezone &&
-                                                <>
-                                                    {
-                                                        !!data.timezone ?
-                                                        data.timezone
-                                                        :
-                                                        <ValueNotSet/>
-                                                    }
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
+                                    show={!!read.timezone}
+                                    value={data.timezone}
                                 />
-                                <InfoRow
+                                <DisplayRow
                                     icon={MailCheck}
                                     label={resolveLanguageKey("emailVerifiedAt")}
                                     tooltip={resolveLanguageKey("emailVerifiedAt")}
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read.emailVerifiedAt &&
-                                                <>
-                                                    {
-                                                        data.emailVerifiedAt ?
-                                                        formatDate(new Date(data.emailVerifiedAt), {timeZone: timezone ?? "UTC", format: {dateStyle: "long", timeStyle: "short"}})
-                                                        :
-                                                        <ValueNotSet/>
-                                                    }
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
+                                    show={!!read.emailVerifiedAt}
+                                    type="dateTime"
+                                    format={{dateStyle: "long", timeStyle: "short"}}
+                                    value={data.emailVerifiedAt}
                                 />
-                                <InfoRow
+                                <DisplayRow
                                     iconReplacement={
                                         <HiddenElement>
                                             {
@@ -480,23 +425,21 @@ function UserProfileCardInner({
                                     }
                                     label={resolveLanguageKey("status")}
                                     tooltip={resolveLanguageKey("status")}
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read.roles?.keys?.active && !!data.status &&
-                                                <>
-                                                    <span className={cn("hover:underline", {
-                                                        "text-success": data.status === "active",
-                                                        "text-destructive": data.status === "inactive",
-                                                        "text-info": data.status === "invited"
-                                                    })}>
-                                                        {resolveLanguageKey(`statuses.${data.status}`)}
-                                                    </span>
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
-                                />
+                                    show={!!read.roles?.keys?.active}
+                                    type="enum"
+                                    languageKeyCategory="statuses"
+                                    value={data.status}
+                                >
+                                    {(formatted) => (
+                                        <span className={cn("hover:underline", {
+                                            "text-success": data.status === "active",
+                                            "text-destructive": data.status === "inactive",
+                                            "text-info": data.status === "invited"
+                                        })}>
+                                            {formatted}
+                                        </span>
+                                    )}
+                                </DisplayRow>
                                 <div className="flex flex-col w-full gap-y-2">
                                     <p className="text-sm text-muted-foreground">{resolveLanguageKey("roles")}</p>
                                     <HiddenElement>
@@ -520,125 +463,57 @@ function UserProfileCardInner({
                         </TabsContent>
                         <TabsContent value="info" className="rounded-md border bg-muted/30 p-3 text-sm">
                             <InfoRowGroup className="flex-col !gap-y-1.5">
-                                <InfoRow
+                                <DisplayRow
                                     icon={Ampersand}
                                     label={resolveLanguageKey("registeredDate")}
                                     tooltip={resolveLanguageKey("registeredDate")}
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read.registerDate &&
-                                                <>
-                                                    {
-                                                        !!data.registerDate ?
-                                                        formatDate(new Date(data.registerDate), {timeZone: timezone ?? "UTC", format: {dateStyle: "long", timeStyle: "short"}})
-                                                        :
-                                                        <ValueNotSet/>
-                                                    }
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
+                                    show={!!read.registerDate}
+                                    type="dateTime"
+                                    format={{dateStyle: "long", timeStyle: "short"}}
+                                    value={data.registerDate}
                                 />
-                                <InfoRow
+                                <DisplayRow
                                     icon={UserPlus}
                                     label={resolveLanguageKey("registeredFrom")}
                                     tooltip={resolveLanguageKey("registeredFrom")}
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read.registeredFrom &&
-                                                <>
-                                                    {
-                                                        data.registeredFrom ?
-                                                        getName(data.registeredFrom as Parameters<typeof getName>[0])
-                                                        :
-                                                        <ValueNotSet/>
-                                                    }
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
+                                    show={!!read.registeredFrom}
+                                    type="user"
+                                    value={data.registeredFrom}
                                 />
-                                <InfoRow
+                                <DisplayRow
                                     icon={Calendar}
                                     label={resolveLanguageKey("birthday")}
                                     tooltip={resolveLanguageKey("birthday")}
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read.birthday &&
-                                                <>
-                                                    {
-                                                        !!data.birthday ?
-                                                        formatDate(new Date(data.birthday), {timeZone: timezone ?? "UTC", format: {dateStyle: "long"}})
-                                                        :
-                                                        <ValueNotSet/>
-                                                    }
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
+                                    show={!!read.birthday}
+                                    type="date"
+                                    format={{dateStyle: "long"}}
+                                    value={data.birthday}
                                 />
-                                <InfoRow
+                                <DisplayRow
                                     icon={Key}
                                     label={resolveLanguageKey("lastLoginDate")}
                                     tooltip={resolveLanguageKey("lastLoginDate")}
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read.roles?.keys?.lastLogin &&
-                                                <>
-                                                    {
-                                                        data.lastLogin ?
-                                                        formatDate(new Date(data.lastLogin), {timeZone: timezone ?? "UTC", format: {dateStyle: "long", timeStyle: "medium"}})
-                                                        :
-                                                        <ValueNotSet/>
-                                                    }
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
+                                    show={!!read.roles?.keys?.lastLogin}
+                                    type="dateTime"
+                                    format={{dateStyle: "long", timeStyle: "medium"}}
+                                    value={data.lastLogin}
                                 />
-                                <InfoRow
+                                <DisplayRow
                                     icon={CircleSlash}
                                     label={resolveLanguageKey("unsuccessfulLogins")}
                                     tooltip={resolveLanguageKey("unsuccessfulLogins")}
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read.roles?.keys?.unsuccessfulLogins &&
-                                                <>
-                                                    {
-                                                        data.unsuccessfulLogins !== undefined ?
-                                                        data.unsuccessfulLogins
-                                                        :
-                                                        <ValueNotSet/>
-                                                    }
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
+                                    show={!!read.roles?.keys?.unsuccessfulLogins}
+                                    type="number"
+                                    value={data.unsuccessfulLogins}
                                 />
-                                <InfoRow
+                                <DisplayRow
                                     icon={Lock}
                                     label={resolveLanguageKey("lockedOutUntil")}
                                     tooltip={resolveLanguageKey("lockedOutUntil")}
-                                    value={
-                                        <HiddenElement>
-                                            {
-                                                read.roles?.keys?.lockedOutUntil &&
-                                                <>
-                                                    {
-                                                        data.lockedOutUntil ?
-                                                        formatDate(new Date(data.lockedOutUntil), {timeZone: timezone ?? "UTC", format: {dateStyle: "long", timeStyle: "short"}})
-                                                        :
-                                                        <ValueNotSet/>
-                                                    }
-                                                </>
-                                            }
-                                        </HiddenElement>
-                                    }
+                                    show={!!read.roles?.keys?.lockedOutUntil}
+                                    type="dateTime"
+                                    format={{dateStyle: "long", timeStyle: "short"}}
+                                    value={data.lockedOutUntil}
                                 />
                             </InfoRowGroup>
                         </TabsContent>

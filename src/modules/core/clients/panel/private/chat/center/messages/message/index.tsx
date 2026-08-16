@@ -31,7 +31,7 @@ import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/p
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import InfoRow from "@coreModule/components/custom/infoRow.tsx";
+import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 
 const MAX_FILES = 2;
@@ -592,38 +592,21 @@ function Message({
                                     {
                                         !!message.pinned &&
                                         <>
-                                            <InfoRow
+                                            <DisplayRow
                                                 className="text-background"
                                                 icon={User}
                                                 label={resolveLanguageKey("pinnedBy")}
-                                                value={
-                                                    <HiddenElement>
-                                                        {
-                                                            read.pinned?.keys?.user &&
-                                                            <>
-                                                                {getName(message?.pinned.user)}
-                                                            </>
-                                                        }
-                                                    </HiddenElement>
-                                                }
+                                                show={!!read.pinned?.keys?.user}
+                                                type="user"
+                                                value={message?.pinned.user}
                                             />
-                                            <InfoRow
+                                            <DisplayRow
                                                 className="text-background"
                                                 icon={Calendar}
                                                 label={resolveLanguageKey("pinnedAt")}
-                                                value={
-                                                    <HiddenElement>
-                                                        {
-                                                            read.pinned?.keys?.date &&
-                                                            <>
-                                                                {
-                                                                    !!message.pinned.date &&
-                                                                    formatDate(message.pinned?.date, {timeZone: user?.timezone})
-                                                                }
-                                                            </>
-                                                        }
-                                                    </HiddenElement>
-                                                }
+                                                show={!!read.pinned?.keys?.date}
+                                                type="dateTime"
+                                                value={message.pinned.date}
                                             />
                                         </>
                                     }

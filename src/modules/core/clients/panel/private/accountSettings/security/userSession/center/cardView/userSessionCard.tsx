@@ -7,20 +7,11 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import type {UserSession} from "armonia/src/modules/core/api/user/private/userSession/userSession.dto.ts";
 import UserSessionActionMenu from "@coreModule/clients/panel/private/accountSettings/security/userSession/center/actions/userSessionActionMenu.tsx";
 import DeletedInfo from "@coreModule/components/custom/deletedInfo";
-import InfoRow from "@coreModule/components/custom/infoRow.tsx";
+import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
 import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
 import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
 import {CARD_BODY_CLASS} from "@coreModule/components/custom/cards/entityCard.constants.ts";
-
-function formatDate(value: string | undefined, timezone: string | undefined) {
-    if (!value) return "";
-    return new Intl.DateTimeFormat(undefined, {
-        dateStyle: "short",
-        timeStyle: "short",
-        timeZone: timezone || undefined,
-    }).format(new Date(value));
-}
 
 function sessionLocation(session: UserSession) {
     const latest = session.geolocation?.[session.geolocation.length - 1];
@@ -44,7 +35,6 @@ export type UserSessionCardProps = {
 export default function UserSessionCard({
     session,
     currentDeviceId,
-    timezone,
     revoking,
     onRevoke,
     onMenuAction,
@@ -122,48 +112,54 @@ export default function UserSessionCard({
                     />
                     <div className={CARD_BODY_CLASS}>
                         <InfoRowGroup>
-                            <InfoRow
+                            <DisplayRow
                                 icon={Clock}
                                 label={resolveLanguageKey("lastActiveAt")}
                                 tooltip={resolveLanguageKey("lastActiveAt")}
                                 show={can("lastActiveAt")}
-                                value={formatDate(session.lastActiveAt, timezone)}
+                                type="dateTime"
+                                value={session.lastActiveAt}
                             />
-                            <InfoRow
+                            <DisplayRow
                                 icon={Globe2}
                                 label={resolveLanguageKey("location")}
                                 tooltip={resolveLanguageKey("location")}
                                 show={can("ipAddress") || can("geolocation")}
                                 value={location || session.ipAddress || resolveLanguageKey("unknownLocation")}
                             />
-                            <InfoRow
+                            <DisplayRow
                                 icon={Monitor}
                                 label={resolveLanguageKey("sessionId")}
                                 tooltip={resolveLanguageKey("sessionId")}
                                 show={can("sessionId")}
-                                value={
+                                value={session.sessionId}
+                            >
+                                {(formatted) => (
                                     <span className="line-clamp-1 font-mono text-3xs" title={session.sessionId}>
-                                        {session.sessionId}
+                                        {formatted}
                                     </span>
-                                }
-                            />
-                            <InfoRow
+                                )}
+                            </DisplayRow>
+                            <DisplayRow
                                 icon={Monitor}
                                 label={resolveLanguageKey("userAgent")}
                                 tooltip={resolveLanguageKey("userAgent")}
                                 show={can("userAgent")}
-                                value={
+                                value={session.userAgent || resolveLanguageKey("unknown")}
+                            >
+                                {(formatted) => (
                                     <span className="line-clamp-1 text-3xs" title={session.userAgent || undefined}>
-                                        {session.userAgent || resolveLanguageKey("unknown")}
+                                        {formatted}
                                     </span>
-                                }
-                            />
-                            <InfoRow
+                                )}
+                            </DisplayRow>
+                            <DisplayRow
                                 icon={Clock}
                                 label={resolveLanguageKey("expiresAt")}
                                 tooltip={resolveLanguageKey("expiresAt")}
                                 show={can("expiresAt")}
-                                value={formatDate(session.expiresAt, timezone)}
+                                type="dateTime"
+                                value={session.expiresAt}
                             />
                         </InfoRowGroup>
                     </div>

@@ -28,7 +28,7 @@ export type ViewRendererContext = {
     referenceCardUnitContext?: {unitId: string; unitName: string};
     /**
      * Clears an embedded ref field on the sheet row (dot path, e.g. `project`) after linked entity delete,
-     * so the parent document and SmallInfoCard re-render from `data` consistently.
+     * so the parent document and DisplayCard re-render from `data` consistently.
      */
     unlinkEmbeddedRefPath?: (dotPath: string) => void;
     /**
@@ -54,7 +54,7 @@ export function hasAccessPath(access: Record<string, any> | undefined, path: str
     return false;
 }
 
-export type SmallInfoCardAccessSpec = {
+export type DisplayCardAccessSpec = {
     /** Access paths for the *value* being rendered (not card chrome). */
     paths: string[];
     /** `any` = at least one path; `all` = every path. */
@@ -62,7 +62,7 @@ export type SmallInfoCardAccessSpec = {
 };
 
 /**
- * Paths that gate the SmallInfoCard *value* (HiddenElement `show`), derived from what
+ * Paths that gate the DisplayCard *value* (HiddenElement `show`), derived from what
  * is rendered — not from `permissions.read` (that only hides/shows the whole card):
  * - `field.name` like `country.name`
  * - `parent` + `valuePath` joins (e.g. createdBy name+surname)
@@ -71,9 +71,9 @@ export type SmallInfoCardAccessSpec = {
  * Set `field.skipReadAccessGate` (or use a `statistics.*` path) to skip value gating
  * for computed aggregates that are not real ACL keys.
  */
-export function resolveSmallInfoCardValueAccessSpec(
+export function resolveDisplayCardValueAccessSpec(
     binding: FieldBinding | undefined,
-): SmallInfoCardAccessSpec | null {
+): DisplayCardAccessSpec | null {
     if (binding?.skipReadAccessGate) {
         return null;
     }
@@ -105,11 +105,11 @@ export function resolveSmallInfoCardValueAccessSpec(
 }
 
 /** True when the user may see the rendered value (vs locked HiddenElement). */
-export function hasSmallInfoCardValueAccess(
+export function hasDisplayCardValueAccess(
     access: Record<string, any> | undefined,
     binding: FieldBinding | undefined,
 ): boolean {
-    const spec = resolveSmallInfoCardValueAccessSpec(binding);
+    const spec = resolveDisplayCardValueAccessSpec(binding);
     if (!spec || spec.paths.length === 0) return true;
     if (!access) return true;
     if (spec.mode === "any") {

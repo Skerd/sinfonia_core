@@ -91,7 +91,7 @@ export type SheetViewRendererProps = WithAxiosType<any, SingleForm> & {
     /** Merged with labels extracted from `config.nodes` for audit field names. */
     auditHistoryFieldLabels?: Record<string, string>;
     /**
-     * After the sheet clears an embedded ref (linked entity delete via SmallInfoCard), receives the patched row so
+     * After the sheet clears an embedded ref (linked entity delete via DisplayCard), receives the patched row so
      * the hosting list/card can mirror `data` across reopen (SheetViewRenderer state is ephemeral).
      */
     onSheetRowPatched?: (row: Record<string, any>) => void;

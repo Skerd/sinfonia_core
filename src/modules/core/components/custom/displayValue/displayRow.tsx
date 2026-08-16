@@ -15,6 +15,7 @@ type DisplayRowProps = {
     show?: boolean;
     path?: string;
     type?: DisplayValueType;
+    languageKeyCategory?: string;
     format?: Intl.DateTimeFormatOptions;
     size?: number;
     icon?: DisplayRowIcon;
@@ -30,8 +31,8 @@ type DisplayRowProps = {
 };
 
 /**
- * Card-body label/value row. ACL matches `InfoRow`: a denied field is omitted
- * and reported to `InfoRowGroup`. Allowed values go through `DisplayValue`.
+ * Card-body label/value row. A denied field is omitted and reported to
+ * `InfoRowGroup`. Allowed values go through `DisplayValue`.
  */
 export default function DisplayRow({
     icon: Icon,
@@ -45,6 +46,7 @@ export default function DisplayRow({
     show: showProp,
     path,
     type,
+    languageKeyCategory,
     format,
     size,
     dontRenderValue = false,
@@ -52,15 +54,20 @@ export default function DisplayRow({
 }: DisplayRowProps) {
     const id = useId();
     const contextRead = useAccessFieldsRead();
+    const labelText = typeof label === "string" ? label : "";
+    const tooltipText = typeof tooltip === "string" ? tooltip : undefined;
 
     let allowed = true;
     if (showProp !== undefined) {
         allowed = showProp;
+    } else if (path && (path === "statistics" || path.startsWith("statistics."))) {
+        // Computed aggregates — not model ACL keys. Backend decides the payload.
+        allowed = true;
     } else if (path) {
         allowed = contextRead !== undefined && accessFieldPathExists(contextRead, path);
     }
 
-    useRestrictedField(id, label, !allowed);
+    useRestrictedField(id, labelText, !allowed);
 
     if (!allowed) return null;
 
@@ -72,21 +79,28 @@ export default function DisplayRow({
         >
             {(iconReplacement || Icon) && (
                 <ItemMedia variant="icon">
-                    <TooltipDisplayer tooltipRender={tooltipRender ? tooltipRender : undefined} tooltip={tooltip}>
+                    <TooltipDisplayer tooltipRender={tooltipRender ? tooltipRender : undefined} tooltip={tooltipText}>
                         <div>{iconReplacement ? iconReplacement : !!Icon && <Icon size={18} />}</div>
                     </TooltipDisplayer>
                 </ItemMedia>
             )}
             {!hideTitle && (
                 <span className="shrink-0 text-sm font-medium">
-                    {label}
+                    {labelText}
                     {!dontRenderValue && ":"}
                 </span>
             )}
             {!dontRenderValue && (
                 <div className="min-w-0 hover:cursor-default">
                     <TruncatedValue text={plainTooltipText(value)}>
-                        <DisplayValue value={value} type={type} format={format} size={size} show>
+                        <DisplayValue
+                            value={value}
+                            type={type}
+                            languageKeyCategory={languageKeyCategory}
+                            format={format}
+                            size={size}
+                            show
+                        >
                             {children}
                         </DisplayValue>
                     </TruncatedValue>

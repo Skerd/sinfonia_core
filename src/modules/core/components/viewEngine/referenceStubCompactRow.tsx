@@ -1,7 +1,7 @@
 import { createElement, type ComponentType } from "react";
-import SmallInfoCard, {
-    type SmallInfoCardLinkedSheetOuterProps,
-} from "@coreModule/components/custom/smallInfoCard.tsx";
+import DisplayCard, {
+    type DisplayCardLinkedSheetOuterProps,
+} from "@coreModule/components/custom/displayValue/displayCard.tsx";
 import { resolveIcon, resolveWidget } from "./widgetRegistry.ts";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 
@@ -77,11 +77,11 @@ export function ReferenceStubCompactRow({
     const bootstrap = bootstrapStub(stub, id);
 
     let linkedReferenceSheet:
-        | { resourceId: string; LinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps> }
+        | { resourceId: string; LinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps> }
         | undefined;
 
     if (LinkedWidget && typeof id === "string" && id.length > 0) {
-        const Bound: ComponentType<SmallInfoCardLinkedSheetOuterProps> = (sheetProps) => {
+        const Bound: ComponentType<DisplayCardLinkedSheetOuterProps> = (sheetProps) => {
             const { onLinkedDeleted: _omit, ...rest } = sheetProps;
             const sheetPropsOut: Record<string, unknown> = {
                 ...rest,
@@ -101,7 +101,7 @@ export function ReferenceStubCompactRow({
     const label = String(resolveLanguageKey(config.label));
 
     return (
-        <SmallInfoCard
+        <DisplayCard
             show={show}
             title={label}
             tooltip={label}

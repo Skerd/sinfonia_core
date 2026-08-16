@@ -1,13 +1,10 @@
 import {ComponentType, useState} from "react";
 import {compose} from "redux";
-import {useSelector} from "react-redux";
 import {ChevronDown, Trash2, User, Clock} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {formatDate, getName} from "@coreModule/helpers/general";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import InfoRow from "@coreModule/components/custom/infoRow.tsx";
+import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 
 type DrawerPanelProps = WithLanguageType & {
     deletedAt?: DeletedData["deletedAt"];
@@ -15,7 +12,6 @@ type DrawerPanelProps = WithLanguageType & {
 };
 
 function DeletedDrawerPanel({resolveLanguageKey, deletedAt, deletedBy}: DrawerPanelProps) {
-    const {timezone} = useSelector((state: RootState) => state.authentication.user);
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -31,22 +27,24 @@ function DeletedDrawerPanel({resolveLanguageKey, deletedAt, deletedBy}: DrawerPa
                 <div className="flex flex-col px-3 py-2 gap-y-1.5 text-xs border-b border-destructive-foreground/15">
                     {
                         !!deletedBy &&
-                        <InfoRow
+                        <DisplayRow
                             icon={User}
                             className="text-destructive-foreground"
                             label={resolveLanguageKey("deletedBy")}
                             tooltip={resolveLanguageKey("deletedBy")}
-                            value={deletedBy ? getName(deletedBy) : undefined}
+                            type="user"
+                            value={deletedBy}
                         />
                     }
                     {
                         !!deletedAt &&
-                        <InfoRow
+                        <DisplayRow
                             icon={Clock}
                             className="text-destructive-foreground"
                             label={resolveLanguageKey("deletedAt")}
                             tooltip={resolveLanguageKey("deletedAt")}
-                            value={deletedAt ? formatDate(new Date(deletedAt.toString()), {timeZone: timezone}) : undefined}
+                            type="dateTime"
+                            value={deletedAt}
                         />
                     }
                 </div>

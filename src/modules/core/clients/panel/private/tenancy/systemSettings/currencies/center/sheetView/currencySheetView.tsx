@@ -11,7 +11,7 @@ import {Currency} from "armonia/src/modules/core/api/finance/private/currency/cu
 export type CurrencySheetViewOwnProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    /** Full row or bootstrap from `#SmallInfoCard` while `/single` loads. */
+    /** Full row or bootstrap from `#DisplayCard` while `/single` loads. */
     currency?: Currency;
     hideActions?: boolean;
     onDelete?: (response?: DeletedData) => void;

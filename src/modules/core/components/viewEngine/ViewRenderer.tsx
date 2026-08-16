@@ -21,7 +21,7 @@ import {
     resolveIcon,
 } from "./widgetRegistry.ts";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
-import type { SmallInfoCardLinkedSheetOuterProps } from "@coreModule/components/custom/smallInfoCard.tsx";
+import type { DisplayCardLinkedSheetOuterProps } from "@coreModule/components/custom/displayValue/displayCard.tsx";
 import type { Country } from "armonia/src/modules/core/api/auxiliary/private/country/country.dto.ts";
 import type { State } from "armonia/src/modules/core/api/auxiliary/private/state/state.dto.ts";
 import type { City } from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
@@ -38,14 +38,14 @@ import SheetEmbeddedItemsList, { type EmbeddedItemFieldConfig } from "./sheetEmb
 import {
     filterAccessibleValuePath,
     hasAccessPath,
-    hasSmallInfoCardValueAccess,
+    hasDisplayCardValueAccess,
     normalizeObjectIdRef,
     resolvePath,
     type ViewRendererContext,
 } from "./viewRendererHelpers.ts";
 
 export type { ViewRendererContext };
-export { hasAccessPath, hasSmallInfoCardValueAccess, normalizeObjectIdRef, resolvePath };
+export { hasAccessPath, hasDisplayCardValueAccess, normalizeObjectIdRef, resolvePath };
 
 /** Lazy-loaded to avoid a static import cycle (cards → sheet → ViewRenderer). */
 const TenancyCountryCardLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx"));
@@ -560,8 +560,8 @@ function renderSheetField(
     const Component = resolveWidget(binding.widget);
     if (!Component) return null;
 
-    if (binding.widget === "#SmallInfoCard" || binding.widget === "#DisplayCard") {
-        return renderSmallInfoCard(Component, node, binding, ctx, index);
+    if (binding.widget === "#DisplayCard") {
+        return renderDisplayCard(Component, node, binding, ctx, index);
     }
 
     if (binding.widget === "#ExpandableText") {
@@ -929,7 +929,7 @@ function formatSheetSmallInfoTemporal(value: unknown, mode: "date" | "dateTime")
 
 /**
  * Partial row `{ _id, [field]: string }` for linked sheet `data` while `/single` loads.
- * Uses the same `displayValue` as the SmallInfoCard label; skips React nodes / structured values.
+ * Uses the same `displayValue` as the DisplayCard label; skips React nodes / structured values.
  */
 function bootstrapLinkedSheetDataFromDisplayValue(
     linkedId: string,
@@ -1042,7 +1042,7 @@ function resolveLinkedSheetTarget(
 }
 
 /**
- * Renders each array element as a `#SmallInfoCard` row with the same linked-sheet wiring as a single
+ * Renders each array element as a `#DisplayCard` row with the same linked-sheet wiring as a single
  * `linkedRefPath` card (`linkedSheetModel`, `linkedSheetWidget`, optional `linkedSheetEntityProp` / `linkedSheetValueField`).
  * Deletes from the nested sheet invoke `unlinkEmbeddedListRefItem(listPath, index)` (defaults `listPath` to `field.name`).
  */
@@ -1153,7 +1153,7 @@ function renderLinkedObjectRefCardList(
                 ? wp.linkedSheetEntityProp
                 : "project";
 
-        const BoundLinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps> = (sheetProps) => {
+        const BoundLinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps> = (sheetProps) => {
             const { onLinkedDeleted, ...rest } = sheetProps;
             const refCtx = ctx.referenceCardUnitContext;
             const sheetPropsOut: Record<string, unknown> = {
@@ -1208,7 +1208,7 @@ function renderLinkedObjectRefCardList(
     return <div className={cn(listClass)}>{cards}</div>;
 }
 
-function renderSmallInfoCard(
+function renderDisplayCard(
     Component: React.ComponentType<any>,
     node: ViewNode,
     binding: FieldBinding,
@@ -1299,6 +1299,7 @@ function renderSmallInfoCard(
     }
 
     if (
+        displayType !== "enum" &&
         typeof wp.languageKeyCategory === "string" &&
         wp.languageKeyCategory.length > 0 &&
         displayValue != null
@@ -1372,7 +1373,7 @@ function renderSmallInfoCard(
     let linkedReferenceSheet:
         | {
               resourceId: string;
-              LinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps>;
+              LinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps>;
           }
         | undefined;
     if (linkedPath && linkedTarget && data && LinkedSheetWidget) {
@@ -1387,7 +1388,7 @@ function renderSmallInfoCard(
                 linkedTarget.valueField,
             );
             const entityProp = linkedTarget.entityProp;
-            const BoundLinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps> = (sheetProps) => {
+            const BoundLinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps> = (sheetProps) => {
                 const { onLinkedDeleted, ...rest } = sheetProps;
                 const refCtx = ctx.referenceCardUnitContext;
                 const sheetPropsOut: Record<string, unknown> = {
@@ -1439,9 +1440,14 @@ function renderSmallInfoCard(
             key={index}
             title={label}
             tooltip={tooltipText}
-            show={hasSmallInfoCardValueAccess(ctx.access, binding)}
+            show={wp.show === true || hasDisplayCardValueAccess(ctx.access, binding)}
             path={binding.name}
             type={displayType}
+            languageKeyCategory={
+                typeof wp.languageKeyCategory === "string" && wp.languageKeyCategory.length > 0
+                    ? wp.languageKeyCategory
+                    : undefined
+            }
             size={typeof wp.size === "number" ? wp.size : undefined}
             Icon={Icon ?? undefined}
             value={displayValue}

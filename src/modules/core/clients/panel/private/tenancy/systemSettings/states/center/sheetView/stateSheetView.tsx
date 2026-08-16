@@ -13,7 +13,7 @@ import {stateEditPath} from "@coreModule/clients/panel/private/tenancy/systemSet
 export type StateSheetViewOwnProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    /** Full row or bootstrap from `#SmallInfoCard` while `/single` loads. */
+    /** Full row or bootstrap from `#DisplayCard` while `/single` loads. */
     state?: State;
     countryId?: string;
     countryName?: string;

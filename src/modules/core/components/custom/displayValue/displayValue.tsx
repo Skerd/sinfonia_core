@@ -29,13 +29,19 @@ export type DisplayValueType =
     | "avatar"
     | "flag"
     | "user"
-    | "currency";
+    | "currency"
+    | "enum";
 
 type DisplayValueProps = WithLanguageType & {
     value: unknown;
     /** ACL dotted path (`area`, `unitType.name`). Walks nested `keys` via `accessFieldPathExists`. */
     path?: string;
     type?: DisplayValueType;
+    /**
+     * Prefix for `type="enum"` (`fields.!enums.status` + `pending` →
+     * `fields.!enums.status.pending`). Same name as sheet `widgetProps.languageKeyCategory`.
+     */
+    languageKeyCategory?: string;
     /** Wraps the formatted value (`Badge`, `div`, anything). */
     children?: (formatted: ReactNode) => ReactNode;
     /** Intl overrides for `date` / `dateTime`. Defaults: `15 Aug 2026` or `15 Aug 2026, 21:06`. */
@@ -122,6 +128,28 @@ function formatTemporal(
         format: format ?? (mode === "dateTime" ? DATE_TIME_FORMAT : DATE_FORMAT),
     });
     return formatted || String(value);
+}
+
+/** Stored enum token → card/sheet copy. Tries the raw token, then lowercase. */
+function formatEnum(
+    value: unknown,
+    category: string | undefined,
+    resolveLanguageKey: ResolveLanguageKey,
+): string | null {
+    if (typeof value !== "string" && typeof value !== "number" && typeof value !== "boolean") {
+        return null;
+    }
+    const token = String(value).trim();
+    if (!token) return null;
+    if (!category) return token;
+    const exact = resolveLanguageKey(`${category}.${token}`, true);
+    if (typeof exact === "string" && exact.length > 0) return exact;
+    const lower = token.toLowerCase();
+    if (lower !== token) {
+        const lowered = resolveLanguageKey(`${category}.${lower}`, true);
+        if (typeof lowered === "string" && lowered.length > 0) return lowered;
+    }
+    return token;
 }
 
 function formatBoolean(value: unknown, resolveLanguageKey: ResolveLanguageKey): string | null {
@@ -301,7 +329,11 @@ function formatByType(
     timeZone: string,
     format?: Intl.DateTimeFormatOptions,
     size?: number,
+    languageKeyCategory?: string,
 ): ReactNode {
+    if (type === "enum") {
+        return formatEnum(value, languageKeyCategory, resolveLanguageKey) ?? String(value);
+    }
     if (type === "boolean") {
         return formatBoolean(value, resolveLanguageKey) ?? String(value);
     }
@@ -387,6 +419,7 @@ function DisplayValue({
     value,
     path,
     type,
+    languageKeyCategory,
     children,
     format,
     size,
@@ -404,6 +437,9 @@ function DisplayValue({
     let allowed = true;
     if (showProp !== undefined) {
         allowed = showProp;
+    } else if (path && (path === "statistics" || path.startsWith("statistics."))) {
+        // Computed aggregates — not model ACL keys. Backend decides the payload.
+        allowed = true;
     } else if (path) {
         allowed = read !== undefined && accessFieldPathExists(read, path);
     }
@@ -418,7 +454,8 @@ function DisplayValue({
             ((type === "phoneCode" || type === "flag" || type === "email" || type === "icon") && String(value).trim() === "") ||
             (type === "phoneNumber" && !parsePhoneNumber(value)) ||
             (type === "user" && !formatUser(value)) ||
-            (type === "currency" && !formatCurrencyValue(value)))
+            (type === "currency" && !formatCurrencyValue(value)) ||
+            (type === "enum" && !formatEnum(value, languageKeyCategory, resolveLanguageKey)))
     ) {
         return wrap(<ValueNotSet />, className);
     }
@@ -428,7 +465,10 @@ function DisplayValue({
     }
 
     return wrap(
-        wrapFormatted(formatByType(value, type, resolveLanguageKey, timeZone, format, size), children),
+        wrapFormatted(
+            formatByType(value, type, resolveLanguageKey, timeZone, format, size, languageKeyCategory),
+            children,
+        ),
         className,
     );
 }

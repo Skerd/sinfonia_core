@@ -5,9 +5,9 @@ import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.t
 import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
-import SmallInfoCard, {
-    type SmallInfoCardLinkedSheetOuterProps,
-} from "@coreModule/components/custom/smallInfoCard.tsx";
+import DisplayCard, {
+    type DisplayCardLinkedSheetOuterProps,
+} from "@coreModule/components/custom/displayValue/displayCard.tsx";
 import SheetMediaFilesStrip from "./sheetMediaFilesStrip.tsx";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import { useReferencesViewModeOptional } from "./referencesViewModeContext.tsx";
@@ -227,7 +227,7 @@ function renderLinkedRefField(
     const Icon = field.icon ? resolveIcon(field.icon) : undefined;
 
     let linkedReferenceSheet:
-        | {resourceId: string; LinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps>}
+        | {resourceId: string; LinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps>}
         | undefined;
 
     if (LinkedWidget && model && id) {
@@ -235,7 +235,7 @@ function renderLinkedRefField(
             stub && typeof stub === "object" && Object.keys(stub).length > 1
                 ? {...stub}
                 : {_id: id, ...(display ? {title: display, name: display} : {})};
-        const Bound: ComponentType<SmallInfoCardLinkedSheetOuterProps> = (sheetProps) => {
+        const Bound: ComponentType<DisplayCardLinkedSheetOuterProps> = (sheetProps) => {
             const {onLinkedDeleted: _omit, ...rest} = sheetProps;
             const sheetPropsOut: Record<string, unknown> = {
                 ...rest,
@@ -248,7 +248,7 @@ function renderLinkedRefField(
     }
 
     return (
-        <SmallInfoCard
+        <DisplayCard
             key={key}
             show
             title={label ? String(label) : display}

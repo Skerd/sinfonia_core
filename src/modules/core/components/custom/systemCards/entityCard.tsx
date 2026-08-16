@@ -23,7 +23,6 @@ import {EntityCardFetchGuard} from "@coreModule/components/custom/cards/EntityCa
 import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
 import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
 import {useEntityCardFetch} from "@coreModule/helpers/hooks/useEntityCardFetch.ts";
-import {cn} from "@coreModule/components/lib/utils.ts";
 
 const CARD_CONTENT_CLASS = "flex w-full min-w-0 flex-col gap-(--density-pad) p-(--density-pad)";
 
@@ -57,6 +56,7 @@ type EntityCardActionCtx<T extends SoftDeletable> = {
 type EntityCardSheetCtx<T extends SoftDeletable> = {
     entity: T;
     setEntity: (entity: T) => void;
+    setAction: (action: string) => void;
 };
 
 type EntityCardContextValue = {
@@ -107,14 +107,19 @@ export type EntityCardProps<T extends SoftDeletable> = {
     failedDescription: string;
     titlePath?: string;
     innerRef?: RefObject<WithAxiosLifecycleRef<NoInfer<T>> | null>;
-    hideDelete?: boolean;
-    hideRestore?: boolean;
-    hideEdit?: boolean;
+    hideDelete?: boolean | ((entity: NoInfer<T>) => boolean);
+    hideRestore?: boolean | ((entity: NoInfer<T>) => boolean);
+    hideEdit?: boolean | ((entity: NoInfer<T>) => boolean);
     shellClassName?: string | ((entity: NoInfer<T>) => string | undefined);
     shellRef?: RefObject<HTMLDivElement | null>;
     sheetProps?: (ctx: EntityCardSheetCtx<NoInfer<T>>) => Record<string, unknown>;
     extraDialogs?: (ctx: EntityCardActionCtx<NoInfer<T>>) => ReactNode;
-    children: (ctx: {entity: NoInfer<T>; read: unknown; setAction: (action: string) => void}) => ReactNode;
+    children: (ctx: {
+        entity: NoInfer<T>;
+        read: unknown;
+        setAction: (action: string) => void;
+        setEntity: (entity: NoInfer<T>) => void;
+    }) => ReactNode;
 };
 
 type EntityCardHeaderProps = {
@@ -182,7 +187,7 @@ function EntityCardHeader({
 
 function EntityCardBody({children, className}: {children: ReactNode; className?: string}) {
     useEntityCardContext();
-    return <InfoRowGroup className={cn(className="flex flex-col", className)}>{children}</InfoRowGroup>;
+    return <InfoRowGroup className={className}>{children}</InfoRowGroup>;
 }
 
 function EntityCardRoot<T extends SoftDeletable>({
@@ -256,14 +261,18 @@ function EntityCardRoot<T extends SoftDeletable>({
         (!!entity.deletedAt || !!entity.deletedBy) &&
         (accessFieldPathExists(read, "deletedAt") || accessFieldPathExists(read, "deletedBy"));
 
+    const resolvedHideEdit = typeof hideEdit === "function" ? hideEdit(entity) : hideEdit;
+    const resolvedHideDelete = typeof hideDelete === "function" ? hideDelete(entity) : hideDelete;
+    const resolvedHideRestore = typeof hideRestore === "function" ? hideRestore(entity) : hideRestore;
+
     const contextValue: EntityCardContextValue = {
         resource,
         entity,
         read,
         hideActions,
-        hideDelete,
-        hideRestore,
-        hideEdit,
+        hideDelete: resolvedHideDelete,
+        hideRestore: resolvedHideRestore,
+        hideEdit: resolvedHideEdit,
         setAction,
         editPath: editPath as (row: SoftDeletable) => string,
         titlePath,
@@ -297,7 +306,7 @@ function EntityCardRoot<T extends SoftDeletable>({
                                         />
                                     )}
                                     <div className={CARD_CONTENT_CLASS}>
-                                        {children({entity, read, setAction})}
+                                        {children({entity, read, setAction, setEntity})}
                                     </div>
                                 </div>
                             </EntityCardShell>
@@ -314,9 +323,9 @@ function EntityCardRoot<T extends SoftDeletable>({
                                     onDelete,
                                     onRestore,
                                     hideActions,
-                                    ...sheetProps?.({entity, setEntity}),
+                                    ...sheetProps?.({entity, setEntity, setAction}),
                                 })}
-                            {action === "delete" && !hideDelete && (
+                            {action === "delete" && !resolvedHideDelete && (
                                 <DeleteAction
                                     accessModel={resource}
                                     deleteId={entity._id}
@@ -328,7 +337,7 @@ function EntityCardRoot<T extends SoftDeletable>({
                                     url={deleteUrl}
                                 />
                             )}
-                            {action === "restore" && !hideRestore && (
+                            {action === "restore" && !resolvedHideRestore && (
                                 <RestoreAction
                                     accessModel={resource}
                                     deleteId={entity._id}

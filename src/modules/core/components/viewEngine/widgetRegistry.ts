@@ -61,7 +61,6 @@ const WIDGET_REGISTRY: Record<string, ComponentType<any>> = {
     "#Checkbox": Checkbox,
     "#Switch": Switch,
     "#Badge": Badge,
-    "#SmallInfoCard": DisplayCard,
     "#DisplayCard": DisplayCard,
     "#CountryFlag": CountryFlag,
     "#ExpandableText": ExpandableText,

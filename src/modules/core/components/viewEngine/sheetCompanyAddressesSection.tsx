@@ -4,8 +4,7 @@ import {
     type ComponentType,
 } from "react";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
-import SmallInfoCard from "@coreModule/components/custom/smallInfoCard.tsx";
-import type { SmallInfoCardLinkedSheetOuterProps } from "@coreModule/components/custom/smallInfoCard.tsx";
+import DisplayCard, {type DisplayCardLinkedSheetOuterProps} from "@coreModule/components/custom/displayValue/displayCard.tsx";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import SheetLocationMap from "@coreModule/components/custom/addresses/sheetLocationMap.tsx";
 import { resolveWidget, resolveIcon } from "./widgetRegistry.ts";
@@ -87,7 +86,7 @@ function buildLinkedReferenceSheet(
     | {
           resourceId: string;
           badgeAccessResourceId?: string;
-          LinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps>;
+          LinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps>;
       }
     | undefined {
     const LinkedSheetWidget = resolveWidget(linkedWidgetToken);
@@ -100,7 +99,7 @@ function buildLinkedReferenceSheet(
             : undefined;
     if (!id) return undefined;
     const bootstrap = bootstrapLinkedSmallInfoSheetData(id, raw, displayValue, undefined);
-    const BoundLinkedSheet: ComponentType<SmallInfoCardLinkedSheetOuterProps> = (sheetProps) => {
+    const BoundLinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps> = (sheetProps) => {
         const { onLinkedDeleted, ...rest } = sheetProps;
         const sheetPropsOut: Record<string, unknown> = {
             ...rest,
@@ -199,7 +198,7 @@ export default function SheetCompanyAddressesSection({
                                 <SheetGrid columns={6}>
 
                                     <div className="lg:col-span-4 grid grid-cols-3 gap-2 h-fit">
-                                        <SmallInfoCard
+                                        <DisplayCard
                                             show={show}
                                             title={String(resolveLanguageKey("form.countryLabel"))}
                                             tooltip={String(resolveLanguageKey("form.countryLabel"))}
@@ -215,7 +214,7 @@ export default function SheetCompanyAddressesSection({
                                                 badgeAccessModel,
                                             )}
                                         />
-                                        <SmallInfoCard
+                                        <DisplayCard
                                             show={show}
                                             title={String(resolveLanguageKey("form.stateLabel"))}
                                             tooltip={String(resolveLanguageKey("form.stateLabel"))}
@@ -231,7 +230,7 @@ export default function SheetCompanyAddressesSection({
                                                 badgeAccessModel,
                                             )}
                                         />
-                                        <SmallInfoCard
+                                        <DisplayCard
                                             show={show}
                                             title={String(resolveLanguageKey("form.cityLabel"))}
                                             tooltip={String(resolveLanguageKey("form.cityLabel"))}
@@ -247,7 +246,7 @@ export default function SheetCompanyAddressesSection({
                                                 badgeAccessModel,
                                             )}
                                         />
-                                        <SmallInfoCard
+                                        <DisplayCard
                                             show={show}
                                             title={String(resolveLanguageKey("form.postalCodeLabel"))}
                                             tooltip={String(resolveLanguageKey("form.postalCodeLabel"))}
@@ -255,7 +254,7 @@ export default function SheetCompanyAddressesSection({
                                             value={postalCode ?? null}
                                         />
 
-                                        <SmallInfoCard
+                                        <DisplayCard
                                             show={show}
                                             title={String(resolveLanguageKey("form.latitudeLabel"))}
                                             tooltip={String(resolveLanguageKey("form.latitudeLabel"))}
@@ -263,7 +262,7 @@ export default function SheetCompanyAddressesSection({
                                             value={latNum != null ? String(latNum.toFixed(4)) : null}
                                         />
 
-                                        <SmallInfoCard
+                                        <DisplayCard
                                             show={show}
                                             title={String(resolveLanguageKey("form.longitudeLabel"))}
                                             tooltip={String(resolveLanguageKey("form.longitudeLabel"))}
@@ -272,7 +271,7 @@ export default function SheetCompanyAddressesSection({
                                         />
 
                                         <div className="lg:col-span-3">
-                                            <SmallInfoCard
+                                            <DisplayCard
                                                 show={show}
                                                 title={String(resolveLanguageKey("form.streetLabel"))}
                                                 tooltip={String(resolveLanguageKey("form.streetLabel"))}

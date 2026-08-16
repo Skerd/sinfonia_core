@@ -1,7 +1,6 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Calendar, CircleSlash, Lock} from "lucide-react";
-import {formatDate} from "@coreModule/helpers/general";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
 import type {CompanyUserRequestsType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
@@ -14,9 +13,8 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import UnlockMfaDeactivationAction from "@coreModule/clients/panel/private/users/center/actions/unlockMfaDeactivation.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import InfoRow from "@coreModule/components/custom/infoRow.tsx";
-import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
+import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
+import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
 
 function isMfaDeactivationLocked(mfaDeactivation: NonNullable<CompanyUserRequestsType["mfaDeactivation"]>): boolean {
     const lockedUntil = mfaDeactivation.lockedUntil;
@@ -72,80 +70,42 @@ function MfaDeactivationRequestTabContentInner({
     user,
     specificUserId,
     resolveLanguageKey,
-    timezone = "UTC",
 }: MfaDeactivationRequestTabContentProps) {
 
-    const fmt = (d: Date | string | undefined) => d ? formatDate(new Date(d), {timeZone: timezone, format: {dateStyle: "medium", timeStyle: "short"}}) : null;
     const {read} = useAccess("users", !specificUserId ? "self" : "others");
+    const mfaRead = read?.requests?.keys?.mfaDeactivation?.keys;
 
     return (
         <TabsContent value="mfaDeactivation" className="rounded-md border bg-muted/30 p-3 text-sm">
             <div className="relative group/mfa-deactivation-row">
                 <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0 gap-y-1.5">
-                        <InfoRow
-                            icon={CircleSlash}
-                            label={resolveLanguageKey("attempts")}
-                            tooltip={resolveLanguageKey("attempts")}
-                            value={
-                                <HiddenElement>
-                                    {
-                                        read?.requests?.keys?.mfaDeactivation?.keys?.attempts &&
-                                        <>
-                                            {
-                                                mfaDeactivation.attempts != null ?
-                                                mfaDeactivation.attempts
-                                                :
-                                                <ValueNotSet/>
-                                            }
-                                        </>
-                                    }
-                                </HiddenElement>
-                            }
-                        />
-
-                        <InfoRow
-                            icon={Calendar}
-                            label={resolveLanguageKey("date")}
-                            tooltip={resolveLanguageKey("date")}
-                            value={
-                                <HiddenElement>
-                                    {
-                                        read?.requests?.keys?.mfaDeactivation?.keys?.date &&
-                                        <>
-                                            {
-                                                mfaDeactivation.date ?
-                                                fmt(mfaDeactivation.date)
-                                                :
-                                                <ValueNotSet/>
-                                            }
-                                        </>
-                                    }
-                                </HiddenElement>
-                            }
-                        />
-
-                        <InfoRow
-                            icon={Lock}
-                            label={resolveLanguageKey("lockedUntil")}
-                            tooltip={resolveLanguageKey("lockedUntil")}
-                            value={
-                                <HiddenElement>
-                                    {
-                                        read?.requests?.keys?.mfaDeactivation?.keys?.lockedUntil &&
-                                        <>
-                                            {
-                                                mfaDeactivation.lockedUntil ?
-                                                fmt(mfaDeactivation.lockedUntil)
-                                                :
-                                                <ValueNotSet/>
-                                            }
-                                        </>
-                                    }
-                                </HiddenElement>
-                            }
-                        />
-
+                    <div className="flex-1 min-w-0">
+                        <InfoRowGroup className="flex-col !gap-y-1.5">
+                            <DisplayRow
+                                icon={CircleSlash}
+                                label={resolveLanguageKey("attempts")}
+                                tooltip={resolveLanguageKey("attempts")}
+                                show={!!mfaRead?.attempts}
+                                type="number"
+                                value={mfaDeactivation.attempts}
+                            />
+                            <DisplayRow
+                                icon={Calendar}
+                                label={resolveLanguageKey("date")}
+                                tooltip={resolveLanguageKey("date")}
+                                show={!!mfaRead?.date}
+                                type="dateTime"
+                                value={mfaDeactivation.date}
+                            />
+                            <DisplayRow
+                                icon={Lock}
+                                label={resolveLanguageKey("lockedUntil")}
+                                tooltip={resolveLanguageKey("lockedUntil")}
+                                show={!!mfaRead?.lockedUntil}
+                                type="dateTime"
+                                value={mfaDeactivation.lockedUntil}
+                            />
+                        </InfoRowGroup>
                     </div>
 
                     <MfaDeactivationRequestActions

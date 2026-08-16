@@ -11,7 +11,7 @@ import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 export type CitySheetViewOwnProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    /** Full row or bootstrap from `#SmallInfoCard` while `/single` loads. */
+    /** Full row or bootstrap from `#DisplayCard` while `/single` loads. */
     city?: City;
     countryId?: string;
     countryName?: string;

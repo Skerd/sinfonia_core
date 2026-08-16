@@ -23,7 +23,7 @@ export type SheetPaginatedReferenceCardListProps = WithLanguageType & {
     listClassName?: string;
     /** Shallow-merged into each card instance (e.g. `sheetOnly`). */
     cardProps?: Record<string, unknown>;
-    /** When `compact` and `compactRow` are set, renders `#SmallInfoCard`-style rows instead of cards. */
+    /** When `compact` and `compactRow` are set, renders `#DisplayCard`-style rows instead of cards. */
     displayMode?: "compact" | "cards";
     compactRow?: ReferenceCompactRowConfig;
     /** Mirrors `#ReferencesRender` read gate for compact rows. */

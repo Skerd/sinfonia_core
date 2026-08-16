@@ -1,5 +1,5 @@
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
-import SmallInfoCard from "@coreModule/components/custom/smallInfoCard.tsx";
+import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
 import { resolveIcon } from "./widgetRegistry.ts";
 import { useReferencesViewModeOptional } from "./referencesViewModeContext.tsx";
 import SheetCompanyAddressesSection from "./sheetCompanyAddressesSection.tsx";
@@ -33,7 +33,7 @@ export default function SheetAddressSection({
         const Icon = resolveIcon("#MapPin");
         const label = String(resolveLanguageKey("address"));
         return (
-            <SmallInfoCard
+            <DisplayCard
                 show={show}
                 title={label}
                 tooltip={label}

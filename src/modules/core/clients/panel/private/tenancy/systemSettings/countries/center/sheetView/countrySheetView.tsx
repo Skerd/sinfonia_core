@@ -13,7 +13,7 @@ import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 export type CountrySheetViewOwnProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    /** Full row or bootstrap from `#SmallInfoCard` while `/single` loads. */
+    /** Full row or bootstrap from `#DisplayCard` while `/single` loads. */
     country?: Country;
     hideActions?: boolean;
     onDelete?: (response?: DeletedData) => void;
