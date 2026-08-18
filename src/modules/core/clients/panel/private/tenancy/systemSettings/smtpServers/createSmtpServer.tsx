@@ -12,7 +12,6 @@ export default createGenericCreatePage<CreateSmtpServerFormType>({
     defaultValues: {
         name: "",
         sequence: 10,
-        active: true,
         host: "",
         port: 587,
         encryption: "starttls",

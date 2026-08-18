@@ -14,7 +14,6 @@ export default createGenericEditPage<SmtpServer, EditSmtpServerFormType>({
         _id: data._id,
         name: writeFields.name ? data.name : undefined,
         sequence: writeFields.sequence ? data.sequence : undefined,
-        active: writeFields.active ? data.active : undefined,
         host: writeFields.host ? data.host : undefined,
         port: writeFields.port ? data.port : undefined,
         encryption: writeFields.encryption ? data.encryption : undefined,

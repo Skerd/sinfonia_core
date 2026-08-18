@@ -8,7 +8,10 @@ import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import type {SmtpServer} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
 import {smtpServerEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers";
+import ActivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/activateSmtpServer.tsx";
+import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/deactivateSmtpServer.tsx";
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
+import SetSmtpServerActiveDialog from "@coreModule/components/custom/smtpServers/setSmtpServerActiveDialog.tsx";
 import TestSmtpConnectionDialog from "@coreModule/components/custom/smtpServers/testSmtpConnectionDialog.tsx";
 import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
 
@@ -80,9 +83,25 @@ function SmtpServerSheetView({
                 onSheetRowPatched={onSheetRowPatched}
                 actionMenuAllowCustomChildren
                 actionMenuChildren={
-                    <TestSmtpConnection onAction={(a: string) => setAction(a)} />
+                    <>
+                        <TestSmtpConnection onAction={(a: string) => setAction(a)} />
+                        <ActivateSmtpServer smtpServer={asSmtpServer} onAction={(a: string) => setAction(a)} />
+                        <DeactivateSmtpServer smtpServer={asSmtpServer} onAction={(a: string) => setAction(a)} />
+                    </>
                 }
             />
+            {(action === "activateSmtpServer" || action === "deactivateSmtpServer") && (
+                <SetSmtpServerActiveDialog
+                    open={action === "activateSmtpServer" || action === "deactivateSmtpServer"}
+                    onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
+                    smtpServer={asSmtpServer}
+                    targetActive={action === "activateSmtpServer"}
+                    onSuccess={(server: SmtpServer) => {
+                        setSheetData(server);
+                        onSheetRowPatched?.(server);
+                    }}
+                />
+            )}
             {action === "testSmtpConnection" && (
                 <TestSmtpConnectionDialog
                     open={action === "testSmtpConnection"}

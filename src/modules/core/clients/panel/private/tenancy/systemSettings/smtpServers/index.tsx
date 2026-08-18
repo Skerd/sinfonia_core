@@ -6,7 +6,10 @@ import type {SmtpServer} from "armonia/src/modules/core/api/auxiliary/private/sm
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import SmtpServerCard from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/cardView/smtpServerCard.tsx";
 import SmtpServerSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx";
+import ActivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/activateSmtpServer.tsx";
+import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/deactivateSmtpServer.tsx";
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
+import SetSmtpServerActiveDialog from "@coreModule/components/custom/smtpServers/setSmtpServerActiveDialog.tsx";
 import TestSmtpConnectionDialog from "@coreModule/components/custom/smtpServers/testSmtpConnectionDialog.tsx";
 import EntityListPage from "@coreModule/components/entityPage/EntityListPage.tsx";
 
@@ -31,10 +34,18 @@ function AllSmtpServers({resolveLanguageKey}: WithLanguageType) {
             buildEditPath={smtpServerEditPath}
             resolveLanguageKey={resolveLanguageKey}
             renderActionMenuChildren={(_entity, bindRowAction) => (
-                <TestSmtpConnection onAction={(a: string) => bindRowAction(a)} />
+                <>
+                    <TestSmtpConnection onAction={(a: string) => bindRowAction(a)} />
+                    <ActivateSmtpServer smtpServer={_entity} onAction={bindRowAction} />
+                    <DeactivateSmtpServer smtpServer={_entity} onAction={bindRowAction} />
+                </>
             )}
             renderSheetActionMenuChildren={(_entity, bindRowAction) => (
-                <TestSmtpConnection onAction={(a: string) => bindRowAction(a)} />
+                <>
+                    <TestSmtpConnection onAction={(a: string) => bindRowAction(a)} />
+                    <ActivateSmtpServer smtpServer={_entity} onAction={bindRowAction} />
+                    <DeactivateSmtpServer smtpServer={_entity} onAction={bindRowAction} />
+                </>
             )}
             renderFloatingModals={({action, entity, resetAction, listRef}) => {
                 if (action === "testSmtpConnection") {
@@ -44,6 +55,28 @@ function AllSmtpServers({resolveLanguageKey}: WithLanguageType) {
                             onOpenChange={(o: boolean) => { if (!o) resetAction(); }}
                             smtpServer={entity}
                             onTestComplete={() => listRef.current?.refetch?.()}
+                        />
+                    );
+                }
+                if (action === "activateSmtpServer") {
+                    return (
+                        <SetSmtpServerActiveDialog
+                            open={true}
+                            onOpenChange={(o: boolean) => { if (!o) resetAction(); }}
+                            smtpServer={entity}
+                            targetActive={true}
+                            onSuccess={(server: SmtpServer) => listRef.current?.updateRow?.(entity._id, server)}
+                        />
+                    );
+                }
+                if (action === "deactivateSmtpServer") {
+                    return (
+                        <SetSmtpServerActiveDialog
+                            open={true}
+                            onOpenChange={(o: boolean) => { if (!o) resetAction(); }}
+                            smtpServer={entity}
+                            targetActive={false}
+                            onSuccess={(server: SmtpServer) => listRef.current?.updateRow?.(entity._id, server)}
                         />
                     );
                 }

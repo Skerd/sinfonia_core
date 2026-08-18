@@ -7,7 +7,6 @@
     "namePlaceholder": "per esempio. SMTP primario",
     "sequenceLabel": "Priorità (sequenza)",
     "sequencePlaceholder": "10",
-    "activeLabel": "Attivo",
     "hostLabel": "Ospite SMTP",
     "hostPlaceholder": "smtp.esempio.com",
     "portLabel": "Porta",

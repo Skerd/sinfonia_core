@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/components/custom/smtpServers/setSmtpServerActiveDialog.tsx",
+  "activate": {
+    "title": "Activer le serveur de messagerie",
+    "description": "Ce serveur sera utilisé pour le courrier sortant, par ordre de priorité."
+  },
+  "deactivate": {
+    "title": "Désactiver le serveur de messagerie",
+    "description": "Ce serveur ne sera plus utilisé pour le courrier sortant jusqu'à ce qu'il soit à nouveau activé."
+  },
+  "axios": {
+    "start": {
+      "title": "Mise à jour du serveur de messagerie…"
+    },
+    "success": {
+      "title": "Serveur de messagerie activé."
+    },
+    "deactivated": {
+      "title": "Serveur de messagerie désactivé."
+    },
+    "error": {
+      "title": "Échec de la mise à jour du serveur de messagerie"
+    }
+  }
+}

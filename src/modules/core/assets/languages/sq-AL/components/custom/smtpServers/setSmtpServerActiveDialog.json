@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/components/custom/smtpServers/setSmtpServerActiveDialog.tsx",
+  "activate": {
+    "title": "Aktivizo serverin e postës",
+    "description": "Ky server do të përdoret për postën dalëse, sipas prioritetit."
+  },
+  "deactivate": {
+    "title": "Çaktivizo serverin e postës",
+    "description": "Ky server nuk do të përdoret më për postën dalëse derisa të aktivizohet përsëri."
+  },
+  "axios": {
+    "start": {
+      "title": "Serveri i postës po përditësohet…"
+    },
+    "success": {
+      "title": "Serveri i postës u aktivizua."
+    },
+    "deactivated": {
+      "title": "Serveri i postës u çaktivizua."
+    },
+    "error": {
+      "title": "Përditësimi i serverit të postës dështoi"
+    }
+  }
+}

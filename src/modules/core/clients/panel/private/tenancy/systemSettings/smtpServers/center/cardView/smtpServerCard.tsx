@@ -3,12 +3,15 @@ import {memo, type RefObject} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {accessFieldPathExists} from "@coreModule/helpers/hocs/withAccess.tsx";
-import {Mail, Server} from "lucide-react";
+import {Mail, Power, Server} from "lucide-react";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import DisplayValue from "@coreModule/components/custom/displayValue/displayValue.tsx";
 import SmtpServerSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
+import ActivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/activateSmtpServer.tsx";
+import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/deactivateSmtpServer.tsx";
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
+import SetSmtpServerActiveDialog from "@coreModule/components/custom/smtpServers/setSmtpServerActiveDialog.tsx";
 import TestSmtpConnectionDialog from "@coreModule/components/custom/smtpServers/testSmtpConnectionDialog.tsx";
 import type {SmtpServer} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
 import {smtpServerEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers";
@@ -58,23 +61,41 @@ const SmtpServerCard = memo(function SmtpServerCard({
                 fetchId,
                 onSheetRowPatched: setEntity,
             })}
-            extraDialogs={({action, setAction, entity, retry}) =>
-                action === "testSmtpConnection" ? (
-                    <TestSmtpConnectionDialog
-                        open
-                        onOpenChange={(open) => {
-                            if (!open) setAction("");
-                        }}
-                        smtpServer={entity}
-                        onTestComplete={retry}
-                    />
-                ) : null
-            }
+            extraDialogs={({action, setAction, entity, setEntity, retry}) => (
+                <>
+                    {(action === "activateSmtpServer" || action === "deactivateSmtpServer") && (
+                        <SetSmtpServerActiveDialog
+                            open
+                            onOpenChange={(open) => {
+                                if (!open) setAction("");
+                            }}
+                            smtpServer={entity}
+                            targetActive={action === "activateSmtpServer"}
+                            onSuccess={(server) => {
+                                setEntity(server);
+                                retry();
+                            }}
+                        />
+                    )}
+                    {action === "testSmtpConnection" && (
+                        <TestSmtpConnectionDialog
+                            open
+                            onOpenChange={(open) => {
+                                if (!open) setAction("");
+                            }}
+                            smtpServer={entity}
+                            onTestComplete={retry}
+                        />
+                    )}
+                </>
+            )}
         >
             {({entity, read, setAction}) => (
                 <>
                     <EntityCard.Header titlePath="name" title={entity.name}>
                         <TestSmtpConnection onAction={setAction} />
+                        <ActivateSmtpServer smtpServer={entity} onAction={setAction} />
+                        <DeactivateSmtpServer smtpServer={entity} onAction={setAction} />
                     </EntityCard.Header>
                     <EntityCard.Body>
                         <DisplayRow
@@ -91,6 +112,14 @@ const SmtpServerCard = memo(function SmtpServerCard({
                                     <DisplayValue path="port" type="number" value={entity.port} />
                                 </span>
                             }
+                        />
+                        <DisplayRow
+                            icon={Power}
+                            label={resolveLanguageKey("active")}
+                            tooltip={resolveLanguageKey("active")}
+                            path="active"
+                            type="boolean"
+                            value={entity.active}
                         />
                         <DisplayRow
                             icon={Mail}

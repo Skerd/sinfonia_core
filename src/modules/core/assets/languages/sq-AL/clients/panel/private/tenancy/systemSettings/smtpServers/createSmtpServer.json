@@ -7,7 +7,6 @@
     "namePlaceholder": "p.sh. SMTP kryesor",
     "sequenceLabel": "Prioriteti (sekuenca)",
     "sequencePlaceholder": "10",
-    "activeLabel": "Aktiv",
     "hostLabel": "Host SMTP",
     "hostPlaceholder": "smtp.example.com",
     "portLabel": "Porta",

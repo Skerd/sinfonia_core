@@ -11,7 +11,6 @@
     "namePlaceholder": "E.g. Primär SMTP",
     "sequenceLabel": "Priority (sequence)",
     "sequencePlaceholder": "10",
-    "activeLabel": "Aktiv",
     "hostLabel": "SMTP host",
     "hostPlaceholder": "smtp.example.com",
     "portLabel": "Port",

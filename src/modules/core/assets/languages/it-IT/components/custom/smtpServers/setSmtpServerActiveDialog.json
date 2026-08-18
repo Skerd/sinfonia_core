@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/components/custom/smtpServers/setSmtpServerActiveDialog.tsx",
+  "activate": {
+    "title": "Attiva il server di posta",
+    "description": "Questo server verrà utilizzato per la posta in uscita, in ordine di priorità."
+  },
+  "deactivate": {
+    "title": "Disattiva il server di posta",
+    "description": "Questo server non verrà più utilizzato per la posta in uscita finché non verrà nuovamente attivato."
+  },
+  "axios": {
+    "start": {
+      "title": "Aggiornamento del server di posta…"
+    },
+    "success": {
+      "title": "Server di posta attivato."
+    },
+    "deactivated": {
+      "title": "Server di posta disattivato."
+    },
+    "error": {
+      "title": "Impossibile aggiornare il server di posta"
+    }
+  }
+}

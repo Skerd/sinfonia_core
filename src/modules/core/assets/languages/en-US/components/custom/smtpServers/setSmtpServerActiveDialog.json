@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/components/custom/smtpServers/setSmtpServerActiveDialog.tsx",
+  "activate": {
+    "title": "Activate mail server",
+    "description": "This server will be used for outgoing mail, in priority order."
+  },
+  "deactivate": {
+    "title": "Deactivate mail server",
+    "description": "This server will no longer be used for outgoing mail until activated again."
+  },
+  "axios": {
+    "start": {
+      "title": "Updating mail server…"
+    },
+    "success": {
+      "title": "Mail server activated."
+    },
+    "deactivated": {
+      "title": "Mail server deactivated."
+    },
+    "error": {
+      "title": "Failed to update mail server"
+    }
+  }
+}
