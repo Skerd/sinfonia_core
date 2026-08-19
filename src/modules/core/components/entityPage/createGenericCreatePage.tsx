@@ -120,11 +120,12 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
         );
     }
 
-    GenericCreateInner.displayName = `GenericCreatePage_${resolveEntityPageKeys(config).viewCollectionKey || "unknown"}`;
+    const {accessKey, viewCollectionKey} = resolveEntityPageKeys(config);
+    GenericCreateInner.displayName = `GenericCreatePage_${viewCollectionKey || "unknown"}`;
 
     return compose(
         withLanguage(config.languagePath),
         withAxios<unknown, TForm>({url: config.apiUrl, method: "PUT", data: {}}, true),
-        withDebug(true, true)
+        withDebug(true, true, accessKey),
     )(GenericCreateInner) as any;
 }

@@ -212,5 +212,5 @@ function UserAccountSecurityUserSession({specificUserId, resolveLanguageKey}: Us
 export default compose(
     withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/userSession/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "userSessions")
 )(UserAccountSecurityUserSession);

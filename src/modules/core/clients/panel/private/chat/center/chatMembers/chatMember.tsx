@@ -131,5 +131,5 @@ function ChatMember({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/chatMembers/chatMember.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "channels")
 )(ChatMember);

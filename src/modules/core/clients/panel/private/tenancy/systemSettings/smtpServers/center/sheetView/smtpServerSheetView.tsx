@@ -116,5 +116,5 @@ function SmtpServerSheetView({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "smtpServers"),
 )(SmtpServerSheetView);

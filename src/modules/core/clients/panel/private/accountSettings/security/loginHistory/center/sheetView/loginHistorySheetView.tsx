@@ -55,5 +55,5 @@ function LoginHistorySheetView({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/loginHistory/center/sheetView/loginHistorySheetView.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "loginHistories")
 )(LoginHistorySheetView);

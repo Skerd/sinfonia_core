@@ -44,5 +44,5 @@ function ViewCities({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewCities.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "cities")
 )(ViewCities);

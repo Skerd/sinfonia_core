@@ -74,5 +74,5 @@ function LeftChatPanel({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/left/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "channels")
 )(LeftChatPanel)

@@ -40,5 +40,5 @@ function ToggleDelete({
 }
 
 export default compose(
-    withDebug(true, true)
+    withDebug(true, true, "messages")
 )(ToggleDelete);

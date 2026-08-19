@@ -117,5 +117,5 @@ const RoleCard = React.memo(function RoleCard({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/cardView/roleCard.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "roles")
 )(RoleCard);

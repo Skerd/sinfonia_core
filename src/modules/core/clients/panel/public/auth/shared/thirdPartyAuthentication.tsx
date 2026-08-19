@@ -52,5 +52,5 @@ function ThirdPartyAuthentication({resolveLanguageKey, loading}: ThirdPartyAuthe
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/public/auth/shared/thirdPartyAuthentication.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(ThirdPartyAuthentication);

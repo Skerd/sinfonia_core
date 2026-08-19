@@ -90,7 +90,7 @@ const ChannelsInfiniteListWithAxios = compose(
         },
         true
     ),
-    withDebug(true, true)
+    withDebug(true, true, "messages")
 )(ChannelsInfiniteList);
 
 type ForwardMessageDialogProps = WithLanguageType & WithAxiosType<ForwardMessageFormResponseType, ForwardMessageFormType> & {
@@ -245,6 +245,6 @@ export default compose(
         },
         true
     ),
-    withDebug(true, true)
+    withDebug(true, true, "messages")
 )(ForwardMessageDialog);
 

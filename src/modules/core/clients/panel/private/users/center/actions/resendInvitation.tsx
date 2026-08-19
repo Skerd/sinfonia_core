@@ -71,5 +71,5 @@ export default compose(
             whereToPut: "specificUser"
         }]
     }, true),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(ResendInvitationAction);

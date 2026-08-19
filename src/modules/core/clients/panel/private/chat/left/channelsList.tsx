@@ -260,7 +260,7 @@ function ChannelInfo({
 }
 const ChannelRender = compose(
     withLanguage("src/modules/core/clients/panel/private/chat/left/channelsList.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "channels")
 )(ChannelInfo);
 
 
@@ -318,5 +318,5 @@ function ChannelsList({searchName, scrollRoot, resolveLanguageKey}: ChannelsList
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/left/channelsList.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "channels")
 )(ChannelsList);

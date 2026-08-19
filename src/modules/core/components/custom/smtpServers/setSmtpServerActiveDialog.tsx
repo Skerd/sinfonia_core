@@ -71,7 +71,7 @@ const SetSmtpServerActiveDialogConnected = compose(
         },
         true,
     ),
-    withDebug(true, true),
+    withDebug(true, true, "smtpServers"),
 )(SetSmtpServerActiveDialogInner);
 
 export default function SetSmtpServerActiveDialog(props: SetSmtpServerActiveDialogOwnProps) {

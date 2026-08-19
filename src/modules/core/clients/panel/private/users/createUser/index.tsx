@@ -55,5 +55,5 @@ function CreateUsers({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/users/createUser/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(CreateUsers)

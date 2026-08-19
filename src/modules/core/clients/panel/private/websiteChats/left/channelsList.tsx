@@ -153,7 +153,7 @@ function WebsiteChannelInfo({
 
 const WebsiteChannelRender = compose(
     withLanguage("src/modules/core/clients/panel/private/websiteChats/left/channelsList.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "channels"),
 )(WebsiteChannelInfo);
 
 type WebsiteChannelsListProps = WithLanguageType & {
@@ -213,5 +213,5 @@ function WebsiteChannelsList({searchName, scrollRoot, websiteChannels, resolveLa
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/websiteChats/left/channelsList.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "channels"),
 )(WebsiteChannelsList);

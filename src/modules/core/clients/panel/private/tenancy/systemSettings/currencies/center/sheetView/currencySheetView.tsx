@@ -74,5 +74,5 @@ function CurrencySheetView({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "currencies")
 )(CurrencySheetView);

@@ -52,5 +52,5 @@ function DeleteMessage({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/deleteMessage.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "messages")
 )(DeleteMessage);

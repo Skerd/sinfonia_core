@@ -95,5 +95,5 @@ function CompanySheetView({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "companies")
 )(CompanySheetView);

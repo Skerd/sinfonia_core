@@ -27,5 +27,5 @@ function ActivateMessagingProvider({messagingProvider, resolveLanguageKey, onAct
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/activateMessagingProvider.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "messagingProviders"),
 )(ActivateMessagingProvider);

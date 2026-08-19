@@ -110,5 +110,5 @@ function WebsiteChatHeader({resolveLanguageKey}: WithLanguageType) {
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/websiteChats/center/chatHeader.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "channels"),
 )(WebsiteChatHeader);

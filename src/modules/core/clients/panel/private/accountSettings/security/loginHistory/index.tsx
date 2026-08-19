@@ -171,5 +171,5 @@ function UserAccountSecurityLoginHistory({specificUserId, resolveLanguageKey}: U
 export default compose(
     withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "loginHistories")
 )(UserAccountSecurityLoginHistory);

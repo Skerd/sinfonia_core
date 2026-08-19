@@ -35,7 +35,7 @@ function UserAccountSecurityChangePassword({
 export default compose(
     withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/changePassword/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(UserAccountSecurityChangePassword)
 
 // $2b$12$xaYYabNPAGcV3tI7Kv3nH.atGNPFPFsDH0NJGyPnX9KyQVhXyLTjK

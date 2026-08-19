@@ -122,5 +122,5 @@ const CityCard = memo(function CityCard({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "cities")
 )(CityCard);

@@ -103,5 +103,5 @@ export default compose(
         },
         true,
     ),
-    withDebug(true, true),
+    withDebug(true, true, "messagingProviders"),
 )(TestMessagingProviderConnectionDialog);

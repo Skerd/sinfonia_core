@@ -53,5 +53,5 @@ function AddMember({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "channels")
 )(AddMember);

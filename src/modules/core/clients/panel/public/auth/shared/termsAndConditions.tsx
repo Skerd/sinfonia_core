@@ -80,5 +80,5 @@ function TermsAndConditions({resolveLanguageKey}: TermsAndConditionsProps) {
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/public/auth/shared/termsAndConditions.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(TermsAndConditions);

@@ -28,5 +28,5 @@ function DeactivateCompany({company, resolveLanguageKey, onAction}: DeactivateCo
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "companies")
 )(DeactivateCompany);

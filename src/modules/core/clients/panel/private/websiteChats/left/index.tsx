@@ -72,5 +72,5 @@ function LeftWebsiteChatPanel({resolveLanguageKey, websiteChannels}: LeftWebsite
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/websiteChats/left/index.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "channels"),
 )(LeftWebsiteChatPanel);

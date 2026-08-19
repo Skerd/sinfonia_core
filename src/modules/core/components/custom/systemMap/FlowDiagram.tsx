@@ -14,6 +14,14 @@ import {FlowStepNode} from "./nodes.tsx";
 
 const nodeTypes = {flowStep: FlowStepNode};
 
+const FLOW_ACCENT_CYCLE = [
+    "var(--chart-1)",
+    "var(--chart-2)",
+    "var(--chart-3)",
+    "var(--chart-4)",
+    "var(--chart-5)",
+] as const;
+
 const FLOW_ACCENTS: Record<string, string> = {
     "catalog-checkout": "var(--chart-4)",
     "marketplace-listing": "var(--chart-3)",
@@ -21,6 +29,14 @@ const FLOW_ACCENTS: Record<string, string> = {
     "pm-sales": "var(--chart-4)",
     "pm-lease": "var(--chart-2)",
     "pm-delivery": "var(--chart-1)",
+    "pm-development": "var(--chart-1)",
+    "pm-delivery-ops": "var(--chart-2)",
+    "pm-cost": "var(--chart-3)",
+    "pm-tendering": "var(--chart-4)",
+    "pm-finance": "var(--chart-5)",
+    "pm-quality": "var(--chart-1)",
+    "pm-facility": "var(--chart-2)",
+    "pm-bim": "var(--chart-3)",
 };
 
 type FlowDiagramProps = {
@@ -37,7 +53,10 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
     }, [flows]);
 
     const flow = flows.find((f) => f.id === activeFlowId) ?? flows[0] ?? null;
-    const accent = flow ? (FLOW_ACCENTS[flow.id] ?? "var(--muted-foreground)") : "var(--muted-foreground)";
+    const flowIndex = flow ? Math.max(0, flows.findIndex((f) => f.id === flow.id)) : 0;
+    const accent = flow
+        ? (FLOW_ACCENTS[flow.id] ?? FLOW_ACCENT_CYCLE[flowIndex % FLOW_ACCENT_CYCLE.length])
+        : "var(--muted-foreground)";
 
     const nodes: Node[] = useMemo(
         () =>
@@ -57,23 +76,39 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
 
     const edges: Edge[] = useMemo(
         () =>
-            (flow?.edges ?? []).map((e) => ({
-                id: e.id,
-                source: e.source,
-                target: e.target,
-                label: e.label,
-                animated: true,
-                style: {stroke: accent, strokeWidth: 2},
-                labelStyle: {fontSize: 10, fill: "var(--muted-foreground)"},
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: 16,
-                    height: 16,
-                    color: accent,
-                },
-            })),
+            (flow?.edges ?? []).map((e) => {
+                const back = e.backtrack === true;
+                const color = back ? "var(--destructive)" : accent;
+                return {
+                    id: e.id,
+                    source: e.source,
+                    target: e.target,
+                    label: e.label,
+                    animated: !back,
+                    type: back ? "smoothstep" : undefined,
+                    sourceHandle: back ? "bottom" : undefined,
+                    targetHandle: back ? "top" : undefined,
+                    style: {
+                        stroke: color,
+                        strokeWidth: back ? 1.5 : 2,
+                        strokeDasharray: back ? "6 4" : undefined,
+                    },
+                    labelStyle: {
+                        fontSize: 10,
+                        fill: back ? "var(--destructive)" : "var(--muted-foreground)",
+                    },
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                        width: 16,
+                        height: 16,
+                        color,
+                    },
+                };
+            }),
         [flow, accent],
     );
+
+    const hasBacktrack = (flow?.edges ?? []).some((e) => e.backtrack);
 
     const selectedStep = flow?.steps.find((s) => s.id === selectedStepId) ?? null;
 
@@ -115,6 +150,12 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
             )}
 
             <p className="text-sm text-muted-foreground max-w-3xl leading-relaxed">{flow.summary}</p>
+            {hasBacktrack && (
+                <p className="text-2xs text-muted-foreground">
+                    Solid arrows are the happy path. Dashed red arrows are backtracking
+                    (reject, reopen, reissue, supersede, withdraw).
+                </p>
+            )}
 
             <div className="flex flex-1 min-h-[420px] rounded-md border overflow-hidden bg-muted">
                 <div className="flex-1 min-w-0">

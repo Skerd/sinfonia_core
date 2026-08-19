@@ -224,7 +224,8 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
         );
     }
 
-    GenericEditInner.displayName = `GenericEditPage_${resolveEntityPageKeys(config).viewCollectionKey || "unknown"}`;
+    const {accessKey, viewCollectionKey} = resolveEntityPageKeys(config);
+    GenericEditInner.displayName = `GenericEditPage_${viewCollectionKey || "unknown"}`;
 
     const patchHttp = {
         url:    config.apiUrl,
@@ -236,6 +237,6 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
     return compose(
         withLanguage(config.languagePath),
         withAxios<TDto, TForm>(patchHttp, true),
-        withDebug(true, true)
+        withDebug(true, true, accessKey),
     )(GenericEditInner) as any;
 }

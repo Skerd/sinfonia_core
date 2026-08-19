@@ -35,4 +35,4 @@ function UserActions({user, specificUserId}: UserActionsProps) {
     );
 }
 
-export default compose(withDebug(true, true))(UserActions);
+export default compose(withDebug(true, true, "users"))(UserActions);

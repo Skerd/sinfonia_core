@@ -21,5 +21,5 @@ function TestSmtpConnection({onAction, resolveLanguageKey}: TestSmtpConnectionPr
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "smtpServers"),
 )(TestSmtpConnection);

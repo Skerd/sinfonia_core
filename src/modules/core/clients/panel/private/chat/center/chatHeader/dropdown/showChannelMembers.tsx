@@ -48,5 +48,5 @@ function ShowChannelMembers({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/chatHeader/dropdown/showChannelMembers.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "channels")
 )(ShowChannelMembers);

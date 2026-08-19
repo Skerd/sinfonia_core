@@ -43,5 +43,5 @@ function EditUserAction({user, resolveLanguageKey, specificUserId}: EditUserActi
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/users/center/actions/edit.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(EditUserAction);

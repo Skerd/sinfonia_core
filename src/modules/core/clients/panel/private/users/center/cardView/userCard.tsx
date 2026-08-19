@@ -27,5 +27,5 @@ function UserCard({ user, specificUserId }: UserCardProps) {
 }
 
 export default compose(
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(UserCard);

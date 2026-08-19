@@ -28,5 +28,5 @@ function AccountProfileAndCoverPhoto({
 
 export default compose(
     withHidden(),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(AccountProfileAndCoverPhoto);

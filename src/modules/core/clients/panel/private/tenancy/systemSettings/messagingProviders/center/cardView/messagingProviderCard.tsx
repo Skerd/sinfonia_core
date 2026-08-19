@@ -131,5 +131,5 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/cardView/messagingProviderCard.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "messagingProviders"),
 )(MessagingProviderCard);

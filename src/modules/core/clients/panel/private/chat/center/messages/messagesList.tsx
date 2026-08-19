@@ -251,5 +251,5 @@ function MessagesList({scrollRoot, scrollRootRevision = 0}: MessagesListProps){
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/messages/messagesList.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "messages")
 )(MessagesList);

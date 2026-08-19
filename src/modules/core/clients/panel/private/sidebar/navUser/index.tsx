@@ -133,5 +133,5 @@ function NavUser({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/sidebar/navUser/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(NavUser)

@@ -44,5 +44,5 @@ function ReplyMessage({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/replyMessage.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "messages")
 )(ReplyMessage);

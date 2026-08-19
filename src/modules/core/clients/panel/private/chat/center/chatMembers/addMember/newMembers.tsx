@@ -135,7 +135,7 @@ const MembersInfiniteListWithAxios = compose(
         },
         true
     ),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(MembersInfiniteList);
 
 
@@ -289,5 +289,5 @@ function NewMembers({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(NewMembers);

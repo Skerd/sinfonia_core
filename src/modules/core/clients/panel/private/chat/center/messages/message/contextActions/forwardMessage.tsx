@@ -44,5 +44,5 @@ function ForwardMessage({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/forwardMessage.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "messages")
 )(ForwardMessage);

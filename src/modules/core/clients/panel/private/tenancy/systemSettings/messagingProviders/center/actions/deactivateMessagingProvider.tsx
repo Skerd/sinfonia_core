@@ -27,5 +27,5 @@ function DeactivateMessagingProvider({messagingProvider, resolveLanguageKey, onA
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/deactivateMessagingProvider.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "messagingProviders"),
 )(DeactivateMessagingProvider);

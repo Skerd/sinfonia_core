@@ -140,5 +140,5 @@ function RoleSheetView({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "roles")
 )(RoleSheetView);

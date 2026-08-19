@@ -38,5 +38,5 @@ function PeekComposerBar({resolveLanguageKey}: WithLanguageType) {
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/websiteChats/center/peekComposerBar.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "channels"),
 )(PeekComposerBar);

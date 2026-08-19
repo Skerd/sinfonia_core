@@ -264,5 +264,5 @@ function CreateRole({
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/roles/createRole.tsx"),
     withAxios({url: "/api/company/roles", method: "PUT", data: {}}, true),
-    withDebug(true, true)
+    withDebug(true, true, "roles")
 )(CreateRole);

@@ -35,5 +35,5 @@ function SignUp({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/public/auth/signUp/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(SignUp);

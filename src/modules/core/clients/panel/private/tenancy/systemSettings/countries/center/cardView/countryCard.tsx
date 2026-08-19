@@ -107,5 +107,5 @@ function CountryCard({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "countries")
 )(CountryCard);

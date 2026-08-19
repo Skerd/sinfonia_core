@@ -37,5 +37,5 @@ function Security({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(Security);

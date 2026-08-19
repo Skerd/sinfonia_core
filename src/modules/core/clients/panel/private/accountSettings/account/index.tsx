@@ -27,5 +27,5 @@ function Account({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/accountSettings/account/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(Account);

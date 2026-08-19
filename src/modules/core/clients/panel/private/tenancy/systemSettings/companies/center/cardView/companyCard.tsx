@@ -379,5 +379,5 @@ const CompanyCard = memo(function CompanyCard({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/cardView/companyCard.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "companies")
 )(CompanyCard);

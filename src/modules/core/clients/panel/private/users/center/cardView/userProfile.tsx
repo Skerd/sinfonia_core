@@ -61,7 +61,7 @@ const UserProfileFetcher = compose(
         },
         true
     ),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(UserProfileFetcherInner);
 
 type UserProfileWrapperProps = {
@@ -84,5 +84,5 @@ function UserProfile({ specificUserId, data }: UserProfileWrapperProps) {
 }
 
 export default compose(
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(UserProfile);

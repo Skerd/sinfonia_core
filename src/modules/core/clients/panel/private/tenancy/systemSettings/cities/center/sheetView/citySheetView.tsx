@@ -99,5 +99,5 @@ function CitySheetView({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "cities")
 )(CitySheetView);

@@ -246,5 +246,5 @@ export const MessageFetcherRender = compose(
         },
         true
     ),
-    withDebug(true, true)
+    withDebug(true, true, "messages")
 )(MessagesFetcher);

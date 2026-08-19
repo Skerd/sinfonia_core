@@ -98,5 +98,5 @@ const CurrencyCard = memo(function CurrencyCard({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/cardView/currencyCard.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "currencies")
 )(CurrencyCard);

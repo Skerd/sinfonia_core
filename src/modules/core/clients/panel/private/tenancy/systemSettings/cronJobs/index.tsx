@@ -41,5 +41,5 @@ function AllCronJobs({resolveLanguageKey}: WithLanguageType) {
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "cronJobs"),
 )(AllCronJobs);

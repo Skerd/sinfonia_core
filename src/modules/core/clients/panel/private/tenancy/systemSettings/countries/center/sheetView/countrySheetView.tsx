@@ -87,5 +87,5 @@ function CountrySheetView({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, ["countries", "states", "cities"])
 )(CountrySheetView);

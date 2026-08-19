@@ -52,5 +52,5 @@ function SearchChatUsers({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/searchChatUsers/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "channels")
 )(SearchChatUsers);

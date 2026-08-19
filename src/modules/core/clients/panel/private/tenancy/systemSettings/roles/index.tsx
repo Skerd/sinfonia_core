@@ -174,7 +174,7 @@ function Roles({resolveLanguageKey}: RolesProps) {
 
 const RolesPage = compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/roles/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "roles")
 )(Roles);
 
 export default RolesPage;

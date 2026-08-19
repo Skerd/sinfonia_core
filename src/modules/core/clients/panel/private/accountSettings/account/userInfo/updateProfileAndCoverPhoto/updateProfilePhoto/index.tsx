@@ -147,5 +147,5 @@ function UpdateProfilePhoto({
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/index.tsx"),
     withHidden(<HiddenProfilePhoto />),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(UpdateProfilePhoto);

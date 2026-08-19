@@ -28,5 +28,5 @@ function DontHaveAccountSignUp({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/public/auth/shared/dontHaveAccountSignUp.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(DontHaveAccountSignUp);

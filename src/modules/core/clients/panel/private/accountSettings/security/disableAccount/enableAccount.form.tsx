@@ -77,5 +77,5 @@ function UserAccountSecurityEnableAccountForm({
 export default compose(
     withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/disableAccount/enableAccount.form.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(UserAccountSecurityEnableAccountForm);

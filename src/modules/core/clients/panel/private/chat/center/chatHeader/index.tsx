@@ -176,5 +176,5 @@ function ChatHeader({}: MessageHeaderProps ){
 }
 
 export default compose(
-    withDebug(true, true)
+    withDebug(true, true, "channels")
 )(ChatHeader);

@@ -49,5 +49,5 @@ function AllCompaniesDropDownMenuContent({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "companies")
 )(AllCompaniesDropDownMenuContent);

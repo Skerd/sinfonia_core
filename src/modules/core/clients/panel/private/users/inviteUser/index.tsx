@@ -60,5 +60,5 @@ function UsersInviteDialog({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/users/inviteUser/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(UsersInviteDialog)

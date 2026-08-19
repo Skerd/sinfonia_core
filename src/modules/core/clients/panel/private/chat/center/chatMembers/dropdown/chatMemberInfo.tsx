@@ -51,5 +51,5 @@ function ChatMemberInfo({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/chatMemberInfo.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(ChatMemberInfo)

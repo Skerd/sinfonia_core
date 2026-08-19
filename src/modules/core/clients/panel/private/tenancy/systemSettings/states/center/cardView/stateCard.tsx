@@ -113,5 +113,5 @@ const StateCard = memo(function StateCard({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "states")
 )(StateCard);

@@ -119,5 +119,5 @@ export default compose(
         },
         true
     ),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(UpdateEmail);

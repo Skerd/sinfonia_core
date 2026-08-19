@@ -298,5 +298,5 @@ function EditRole({
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/roles/editRole.tsx"),
     withAxios({url: "/api/company/roles", method: "PATCH", data: {}}, true),
-    withDebug(true, true)
+    withDebug(true, true, "roles")
 )(EditRole);

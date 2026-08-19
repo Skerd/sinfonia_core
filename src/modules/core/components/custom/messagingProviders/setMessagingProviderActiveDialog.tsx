@@ -58,5 +58,5 @@ function SetMessagingProviderActiveDialog({
 
 export default compose(
     withLanguage("src/modules/core/components/custom/messagingProviders/setMessagingProviderActiveDialog.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "messagingProviders"),
 )(SetMessagingProviderActiveDialog);

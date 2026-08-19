@@ -135,5 +135,5 @@ function Apps({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/apps/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(Apps);

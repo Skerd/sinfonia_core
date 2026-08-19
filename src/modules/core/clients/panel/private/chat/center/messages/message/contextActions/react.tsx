@@ -39,5 +39,5 @@ function ReactMessage({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/react.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "messages")
 )(ReactMessage);

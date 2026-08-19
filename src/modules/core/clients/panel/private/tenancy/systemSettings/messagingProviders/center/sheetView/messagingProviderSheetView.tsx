@@ -116,5 +116,5 @@ function MessagingProviderSheetView({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx"),
-    withDebug(true, false, "messagingProviders"),
+    withDebug(true, true, "messagingProviders"),
 )(MessagingProviderSheetView);

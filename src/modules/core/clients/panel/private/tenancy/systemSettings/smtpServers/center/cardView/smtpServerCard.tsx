@@ -138,5 +138,5 @@ const SmtpServerCard = memo(function SmtpServerCard({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/cardView/smtpServerCard.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "smtpServers"),
 )(SmtpServerCard);

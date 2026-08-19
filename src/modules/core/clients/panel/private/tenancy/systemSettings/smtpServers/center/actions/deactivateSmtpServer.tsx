@@ -27,5 +27,5 @@ function DeactivateSmtpServer({smtpServer, resolveLanguageKey, onAction}: Deacti
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/deactivateSmtpServer.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "smtpServers"),
 )(DeactivateSmtpServer);

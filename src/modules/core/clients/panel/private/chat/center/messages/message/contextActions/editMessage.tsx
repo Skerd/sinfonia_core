@@ -44,5 +44,5 @@ function EditMessage({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/editMessage.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "messages")
 )(EditMessage);

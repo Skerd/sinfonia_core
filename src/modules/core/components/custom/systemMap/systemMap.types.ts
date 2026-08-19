@@ -53,6 +53,8 @@ export type FlowEdge = {
     source: string;
     target: string;
     label?: string;
+    /** Reverse path (reject / reopen / reissue / supersede). Rendered dashed, below the happy path. */
+    backtrack?: boolean;
 };
 
 export type SystemMapFlow = {

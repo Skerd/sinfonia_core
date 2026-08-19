@@ -55,5 +55,5 @@ function SmallCompany({company, index}: SmallCompanyProps){
 }
 
 export default compose(
-    withDebug(true, true)
+    withDebug(true, true, "companies")
 )(SmallCompany);

@@ -44,5 +44,5 @@ function ViewStates({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewStates.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "states")
 )(ViewStates);

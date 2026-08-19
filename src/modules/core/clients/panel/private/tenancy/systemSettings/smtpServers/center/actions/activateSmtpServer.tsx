@@ -27,5 +27,5 @@ function ActivateSmtpServer({smtpServer, resolveLanguageKey, onAction}: Activate
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/activateSmtpServer.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "smtpServers"),
 )(ActivateSmtpServer);

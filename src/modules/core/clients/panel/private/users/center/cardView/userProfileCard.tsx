@@ -562,7 +562,7 @@ function UserProfileCardInner({
 
 const UserProfileCard = compose(
     withLanguage("src/modules/core/clients/panel/private/users/center/cardView/userProfileCard.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(UserProfileCardInner);
 
 export {UserProfileCard};

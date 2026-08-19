@@ -88,5 +88,5 @@ function Users({resolveLanguageKey, administration}: UsersProps) {
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/users/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(Users);

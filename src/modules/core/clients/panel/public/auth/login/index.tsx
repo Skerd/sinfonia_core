@@ -98,5 +98,5 @@ function Login({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/public/auth/login/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "users")
 )(Login)

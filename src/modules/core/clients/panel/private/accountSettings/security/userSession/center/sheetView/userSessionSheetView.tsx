@@ -76,5 +76,5 @@ function UserSessionSheetView({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/userSession/center/sheetView/userSessionSheetView.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "userSessions")
 )(UserSessionSheetView);

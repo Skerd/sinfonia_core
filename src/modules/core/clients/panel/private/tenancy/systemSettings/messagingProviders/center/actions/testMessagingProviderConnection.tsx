@@ -19,5 +19,5 @@ function TestMessagingProviderConnection({onAction, resolveLanguageKey}: TestMes
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/testMessagingProviderConnection.tsx"),
-    withDebug(true, true),
+    withDebug(true, true, "messagingProviders"),
 )(TestMessagingProviderConnection);

@@ -81,5 +81,5 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/companies/index.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "companies")
 )(AllCompanies);

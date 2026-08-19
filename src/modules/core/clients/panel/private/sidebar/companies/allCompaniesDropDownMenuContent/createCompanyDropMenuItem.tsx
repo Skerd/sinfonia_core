@@ -66,5 +66,5 @@ function CreateCompanyDropMenuItem({resolveLanguageKey}: CreateCompanyDropMenuIt
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/createCompanyDropMenuItem.tsx"),
-    withDebug(true, true)
+    withDebug(true, true, "companies")
 )(CreateCompanyDropMenuItem);
