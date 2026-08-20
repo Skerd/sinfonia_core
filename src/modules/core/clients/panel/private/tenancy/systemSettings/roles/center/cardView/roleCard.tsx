@@ -71,6 +71,7 @@ const RoleCard = React.memo(function RoleCard({
         >
             {({entity: row, read}) => {
                 const canReadPermissions = accessFieldPathExists(read, "permissions");
+                const canReadDescription = accessFieldPathExists(read, "description");
                 const permissionsTable =
                     row.permissions && canReadPermissions
                         ? <PermissionsTable permissions={row.permissions} />
@@ -82,9 +83,14 @@ const RoleCard = React.memo(function RoleCard({
                                 <EntityCard.Header
                                     titlePath="name"
                                     title={row.name ? row.name : <ValueNotSet />}
-                                    subtitle={row.slug}
-                                    subtitlePath="slug"
                                 />
+                                {canReadDescription && !!row.description && (
+                                    <HiddenElement>
+                                        <p className="mt-1 text-sm leading-snug text-muted-foreground">
+                                            {row.description}
+                                        </p>
+                                    </HiddenElement>
+                                )}
                             </div>
                             <Button
                                 variant="outline"
@@ -100,7 +106,11 @@ const RoleCard = React.memo(function RoleCard({
                             </Button>
                         </div>
                         <Collapsible open={open} onOpenChange={setOpen} className="w-full">
-                            <CollapsibleContent className="p-0">
+                            <CollapsibleContent
+                                className="p-0"
+                                onClick={(e) => e.stopPropagation()}
+                                onPointerDown={(e) => e.stopPropagation()}
+                            >
                                 <CardContent className="flex flex-col gap-y-2 px-2 pb-2 pt-0 text-sm">
                                     <HiddenElement>
                                         {canReadPermissions && permissionsTable}

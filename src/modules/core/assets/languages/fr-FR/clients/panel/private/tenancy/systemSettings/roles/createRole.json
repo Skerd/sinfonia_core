@@ -10,6 +10,9 @@
     "nameLabel": "Nom du rôle",
     "namePlaceholder": "Nom du rôle",
     "nameDescription": "Le nom d'affichage du rôle",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "À quoi sert ce rôle",
+    "descriptionHelp": "Affichée sur la carte du rôle",
     "templateLabel": "Modèle",
     "templatePlaceholder": "Modèle",
     "templateDescription": "Copier les autorisations d'un autre rôle"

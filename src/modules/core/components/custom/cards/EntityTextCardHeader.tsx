@@ -6,6 +6,7 @@ import {
 } from "@coreModule/components/ui/card.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import {ACTION_MENU_PIN_WHEN_GALLERY} from "./entityCard.constants.ts";
 import {EntityCardActionMenu} from "./EntityCardActionMenu.tsx";
 
 type EntityTextCardHeaderProps = {
@@ -54,7 +55,12 @@ export function EntityTextCardHeader({
     const showActions = !hideActions && actionMenu != null;
 
     return (
-        <CardHeader className={cn("gap-1.5 px-2 pt-2 pb-1", !showSubtitleRow && "items-center", className)}>
+        <CardHeader className={cn(
+            "gap-1.5 px-2 pt-2 pb-1",
+            !showSubtitleRow && "items-center",
+            "group-has-[[data-slot=gallery-carousel]]/card:grid-cols-1",
+            className,
+        )}>
             <div className={cn("flex min-w-0 gap-2", showSubtitleRow ? "items-start" : "items-center")}>
                 {iconTile != null && (
                     <div className="flex shrink-0 items-center justify-center self-center leading-none">
@@ -87,7 +93,13 @@ export function EntityTextCardHeader({
                 </div>
             </div>
             {showActions && (
-                <CardAction className={cn("-mr-1", showSubtitleRow ? "row-span-2" : "row-span-1 self-center")}>
+                <CardAction
+                    className={cn(
+                        "-mr-1",
+                        showSubtitleRow ? "row-span-2" : "row-span-1 self-center",
+                        ACTION_MENU_PIN_WHEN_GALLERY,
+                    )}
+                >
                     <EntityCardActionMenu variant="inline">{actionMenu}</EntityCardActionMenu>
                 </CardAction>
             )}

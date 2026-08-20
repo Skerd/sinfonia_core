@@ -10,7 +10,7 @@
  * height instead of stretching to the tallest sibling in the row.
  */
 export const CARD_SHELL_CLASS =
-    "group h-fit gap-0 p-0 transition-[box-shadow,--tw-ring-color] duration-200";
+    "group relative h-fit gap-0 p-0 transition-[box-shadow,--tw-ring-color] duration-200";
 
 export const CARD_SHELL_CLICKABLE_CLASS =
     `${CARD_SHELL_CLASS} hover:cursor-pointer hover:shadow-e2 hover:ring-primary/40`;
@@ -33,6 +33,13 @@ export const MEDIA_HEADER_MIN_HEIGHT = "min-h-(--card-media-height)";
  */
 export const MEDIA_CAROUSEL_CLASS =
     "w-full overflow-hidden min-h-(--card-media-height)";
+
+/**
+ * When a gallery sits in the card, pin the action menu to the card chrome
+ * (top-right over the media) instead of the text header below it.
+ */
+export const ACTION_MENU_PIN_WHEN_GALLERY =
+    "group-has-[[data-slot=gallery-carousel]]/card:absolute group-has-[[data-slot=gallery-carousel]]/card:top-0 group-has-[[data-slot=gallery-carousel]]/card:right-0 group-has-[[data-slot=gallery-carousel]]/card:z-30 group-has-[[data-slot=gallery-carousel]]/card:m-0 group-has-[[data-slot=gallery-carousel]]/card:p-1.5";
 
 /*
  * Card lists use CSS multi-column mosaic (`.grid-hierarchy` / `.grid-transactional`

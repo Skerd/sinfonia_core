@@ -1,6 +1,7 @@
 import {compose} from "redux";
 import {LoaderCircle, Save} from "lucide-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
+import {Textarea} from "@coreModule/components/ui/textarea.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {useCallback, useEffect, useImperativeHandle, useMemo, useState} from "react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
@@ -62,6 +63,7 @@ function EditRole({
         resolver: zodResolver(baseFormSchema) as Resolver<FormValues>,
         defaultValues: {
             name: "",
+            description: "",
             template: "none",
             permissions: {}
         }
@@ -125,6 +127,7 @@ function EditRole({
         onFormDataChange({
             id: roleId,
             name: data.name,
+            description: data.description,
             permissions: permissions || {}
         });
     }
@@ -168,6 +171,7 @@ function EditRole({
             }
             form.reset({
                 name: role.name,
+                description: role.description ?? "",
                 template: "none",
                 permissions: permsRecord
             });
@@ -250,6 +254,9 @@ function EditRole({
                                                                                 selectedRole.permissions || {}
                                                                             ).flatMap((p) => [...(p.self || []), ...(p.others || [])]);
                                                                             updateCurrentPermissionsBasedOnArrayOfPermissions(selectedPerms);
+                                                                            if (selectedRole.description && !form.getValues("description")) {
+                                                                                form.setValue("description", selectedRole.description, {shouldDirty: true});
+                                                                            }
                                                                         }
                                                                     } else {
                                                                         setCurrentPermissions(JSON.parse(JSON.stringify(roleData?.permissions ?? {})));
@@ -268,6 +275,25 @@ function EditRole({
                                             />
                                         </div>
                                     </div>
+
+                                    <FormField
+                                        control={form.control}
+                                        name="description"
+                                        render={({field}) => (
+                                            <FormItem className="w-full">
+                                                <FormLabel>{resolveLanguageKey("form.descriptionLabel")}</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder={resolveLanguageKey("form.descriptionPlaceholder")}
+                                                        {...field}
+                                                        value={field.value ?? ""}
+                                                    />
+                                                </FormControl>
+                                                <FormDescription>{resolveLanguageKey("form.descriptionHelp")}</FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
 
                                     {memoizedPermissionsTable && <div className="flex-full">{memoizedPermissionsTable}</div>}
 

@@ -8,6 +8,9 @@
     "nameLabel": "Role name",
     "namePlaceholder": "Role name",
     "nameDescription": "The display name of the role",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "What this role is for",
+    "descriptionHelp": "Shown on the role card so operators know what this role can do",
     "templateLabel": "Template",
     "templatePlaceholder": "Template",
     "templateDescription": "Copy permissions from another role"

@@ -1,10 +1,11 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess, accessFieldPathExists} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {CompanyRole as CompanyRoleType} from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
 import {DeleteResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle} from "@coreModule/components/ui/sheet.tsx";
+import {OverlayPortalContainer} from "@coreModule/components/ui/drawer.tsx";
 import DeletedInfo from "@coreModule/components/custom/deletedInfo";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {useMemo, useState} from "react";
@@ -12,6 +13,10 @@ import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.ts
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
 import PermissionsTable from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/permissionsTable.tsx";
+import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
+import {SheetGroup} from "@coreModule/components/custom/renderEngine/layout/sheet/group.tsx";
+import {SheetGrid} from "@coreModule/components/custom/renderEngine/layout/sheet/grid.tsx";
+import {IconCalendar, IconUser} from "@tabler/icons-react";
 
 export type RoleSheetViewOwnProps = {
     open: boolean;
@@ -48,10 +53,18 @@ function RoleSheetView({
         return <PermissionsTable permissions={role.permissions} />;
     }, [role.permissions, read?.permissions]);
 
+    const showCreatedAt = accessFieldPathExists(read, "createdAt");
+    const showUpdatedAt = accessFieldPathExists(read, "updatedAt");
+    const showCreatedBy = accessFieldPathExists(read, "createdBy");
+    const showDeletedAt = accessFieldPathExists(read, "deletedAt") && !!role.deletedAt;
+    const showDeletedBy = accessFieldPathExists(read, "deletedBy") && !!role.deletedBy;
+    const showLifecycle = showCreatedAt || showUpdatedAt || showCreatedBy || showDeletedAt || showDeletedBy;
+
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
-            <SheetContent side="right" className="max-w-[95vw] lg:max-w-[60vw] min-w-[40vw] overflow-y-auto pb-[200px]">
-                <SheetHeader className="flex p-0 group hover:cursor-pointer shadow-sm">
+            <SheetContent side="right" className="max-w-[95vw] lg:max-w-[60vw] min-w-[40vw] overflow-hidden p-0">
+                <OverlayPortalContainer className="flex h-full min-h-0 flex-col overflow-hidden">
+                <SheetHeader className="flex shrink-0 p-0 group hover:cursor-pointer shadow-sm">
                     <div className="relative flex w-full items-stretch">
                         {(read?.deletedBy || read?.deletedAt) && (
                             <div className="h-full flex rounded-br-full items-stretch overflow-hidden">
@@ -74,6 +87,15 @@ function RoleSheetView({
                                         {read?.slug && role.slug && <span className="text-sm">{role.slug}</span>}
                                     </HiddenElement>
                                 </SheetDescription>
+                                {!!role.description && (
+                                    <HiddenElement>
+                                        {read?.description && (
+                                            <p className="mt-1 text-sm leading-snug text-muted-foreground">
+                                                {role.description}
+                                            </p>
+                                        )}
+                                    </HiddenElement>
+                                )}
                             </div>
                             <div className="shrink-0">
                                 {!hideActions && (
@@ -92,7 +114,7 @@ function RoleSheetView({
                     </div>
                 </SheetHeader>
 
-                <div className="flex flex-col px-4 pb-6 mt-4 gap-y-6">
+                <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-4 pb-[200px] mt-4 gap-y-6">
                     <HiddenElement>
                         {read?.permissions && permissionsTable && (
                             <div className="flex flex-col gap-y-2">
@@ -103,7 +125,69 @@ function RoleSheetView({
                             </div>
                         )}
                     </HiddenElement>
+                    {showLifecycle && (
+                        <SheetGroup
+                            title="lifecycle"
+                            resolveLanguageKey={resolveLanguageKey}
+                            collapseStorageKey="roles-lifecycle"
+                            defaultOpen={true}
+                        >
+                            <SheetGrid columns={3}>
+                                {showCreatedAt && (
+                                    <DisplayCard
+                                        path="createdAt"
+                                        type="dateTime"
+                                        title={String(resolveLanguageKey("createdAt"))}
+                                        tooltip={String(resolveLanguageKey("createdAt"))}
+                                        Icon={IconCalendar}
+                                        value={role.createdAt}
+                                    />
+                                )}
+                                {showUpdatedAt && (
+                                    <DisplayCard
+                                        path="updatedAt"
+                                        type="dateTime"
+                                        title={String(resolveLanguageKey("updatedAt"))}
+                                        tooltip={String(resolveLanguageKey("updatedAt"))}
+                                        Icon={IconCalendar}
+                                        value={role.updatedAt}
+                                    />
+                                )}
+                                {showCreatedBy && (
+                                    <DisplayCard
+                                        path="createdBy"
+                                        type="user"
+                                        title={String(resolveLanguageKey("createdBy"))}
+                                        tooltip={String(resolveLanguageKey("createdBy"))}
+                                        Icon={IconUser}
+                                        value={role.createdBy}
+                                    />
+                                )}
+                                {showDeletedAt && (
+                                    <DisplayCard
+                                        path="deletedAt"
+                                        type="dateTime"
+                                        title={String(resolveLanguageKey("deletedAt"))}
+                                        tooltip={String(resolveLanguageKey("deletedAt"))}
+                                        Icon={IconCalendar}
+                                        value={role.deletedAt}
+                                    />
+                                )}
+                                {showDeletedBy && (
+                                    <DisplayCard
+                                        path="deletedBy"
+                                        type="user"
+                                        title={String(resolveLanguageKey("deletedBy"))}
+                                        tooltip={String(resolveLanguageKey("deletedBy"))}
+                                        Icon={IconUser}
+                                        value={role.deletedBy}
+                                    />
+                                )}
+                            </SheetGrid>
+                        </SheetGroup>
+                    )}
                 </div>
+                </OverlayPortalContainer>
             </SheetContent>
 
             {!!action && (

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState, type MouseEvent, type PointerEvent } from 'react';
 import { Button } from '@coreModule/components/ui/button.tsx';
 import { Popover, PopoverContent, PopoverTrigger } from '@coreModule/components/ui/popover.tsx';
 import { useDrawerPortalContainer } from '@coreModule/components/ui/drawer.tsx';
@@ -39,8 +39,18 @@ type SimpleSelectProps = WithLanguageType & {
     searchPlaceholder?: string;
 };
 
-const DEFAULT_FILTER: (option: SimpleSelectOption, searchText: string) => boolean = (option, searchText) =>
-    String(option.label ?? "").toLowerCase().includes(searchText.trim().toLowerCase());
+const DEFAULT_FILTER: (option: SimpleSelectOption, searchText: string) => boolean = (option, searchText) => {
+    const q = searchText.trim().toLowerCase();
+    if (!q) return true;
+    return (
+        String(option.label ?? "").toLowerCase().includes(q) ||
+        String(option.value ?? "").toLowerCase().includes(q)
+    );
+};
+
+function stopCardActivation(event: MouseEvent | PointerEvent) {
+    event.stopPropagation();
+}
 
 function SimpleSelectRender({
     options,
@@ -123,9 +133,10 @@ function SimpleSelectRender({
             return (
                 <CommandItem
                     key={option.value}
-                    // cmdk uses `value` for filtering; bare numeric strings like "0" can break open/select.
-                    value={`${option.label} ${option.value}`}
-                    className="flex gap-x-0"
+                    // cmdk collapses items that share a normalized value; prefix avoids bare "0".
+                    value={`item:${option.value}`}
+                    keywords={[option.label, option.value]}
+                    className="flex gap-x-2"
                     aria-selected={multiple ? isSelected : undefined}
                     onSelect={() => handleOptionSelect(option)}
                 >
@@ -162,7 +173,7 @@ function SimpleSelectRender({
     };
 
     return (
-        <Popover open={open} onOpenChange={handleOpenChange}>
+        <Popover modal open={open} onOpenChange={handleOpenChange}>
             <PopoverTrigger asChild disabled={disabled}>
                 {forTable ? (
                     <Button
@@ -175,6 +186,8 @@ function SimpleSelectRender({
                         aria-expanded={open}
                         aria-invalid={ariaInvalid}
                         disabled={disabled}
+                        onClick={stopCardActivation}
+                        onPointerDown={stopCardActivation}
                     >
                         <PlusCircledIcon className="size-4" />
                         {effectivePlaceholder}
@@ -205,8 +218,7 @@ function SimpleSelectRender({
                         )}
                     </Button>
                 ) : (
-                    <div className="w-full">
-                        <Button
+                    <Button
                             ref={triggerRef}
                             variant="outline"
                             role="combobox"
@@ -214,6 +226,8 @@ function SimpleSelectRender({
                             aria-expanded={open}
                             aria-invalid={ariaInvalid}
                             disabled={disabled}
+                            onClick={stopCardActivation}
+                            onPointerDown={stopCardActivation}
                             className={cn(
                                 'w-full justify-between',
                                 'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive',
@@ -226,7 +240,6 @@ function SimpleSelectRender({
                             {multiple ? renderMultipleTriggerContent() : renderSingleTriggerContent()}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
-                    </div>
                 )}
             </PopoverTrigger>
             <PopoverContent
@@ -234,11 +247,18 @@ function SimpleSelectRender({
                     forTable
                         ? 'w-[200px] p-0'
                         : 'w-max min-w-[var(--radix-popover-trigger-width)] max-w-[min(90vw,32rem)] p-0',
+                    'flex max-h-[min(24rem,var(--radix-popover-content-available-height))] flex-col overflow-hidden',
                 )}
                 align="start"
+                collisionPadding={8}
                 container={drawerPortalContainer?.current ?? undefined}
+                onWheel={(event) => event.stopPropagation()}
+                onTouchMove={(event) => event.stopPropagation()}
+                onCloseAutoFocus={(event) => event.preventDefault()}
+                onClick={(event) => event.stopPropagation()}
+                onPointerDown={(event) => event.stopPropagation()}
             >
-                <Command className="h-auto w-max min-w-full overflow-hidden" shouldFilter={false}>
+                <Command className="flex h-auto min-h-0 w-full min-w-full flex-col overflow-hidden" shouldFilter={false}>
                     <div className="relative">
                         <CommandInput
                             placeholder={String(searchPlaceholder ?? resolveLanguageKey('searchPlaceholder'))}
@@ -262,7 +282,10 @@ function SimpleSelectRender({
                         )}
                     </div>
 
-                    <CommandList aria-multiselectable={multiple}>
+                    <CommandList
+                        aria-multiselectable={multiple}
+                        className="min-h-0 max-h-[min(20rem,calc(var(--radix-popover-content-available-height,20rem)-2.75rem))] overflow-y-auto overscroll-contain"
+                    >
                         {
                             filteredOptions.length === 0 ?
                             <div className="flex p-3 items-center justify-center w-full rounded-lg">

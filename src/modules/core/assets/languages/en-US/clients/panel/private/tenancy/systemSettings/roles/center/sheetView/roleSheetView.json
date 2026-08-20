@@ -1,4 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx",
-  "permissions": "Permissions"
+  "permissions": "Permissions",
+  "lifecycle": "Lifecycle",
+  "createdAt": "Created at",
+  "updatedAt": "Updated at",
+  "createdBy": "Created by",
+  "deletedAt": "Deleted at",
+  "deletedBy": "Deleted by"
 }

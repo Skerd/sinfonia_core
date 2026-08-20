@@ -8,6 +8,9 @@
     "nameLabel": "Rolle name",
     "namePlaceholder": "Rolle name",
     "nameDescription": "Die display name von die rolle",
+    "descriptionLabel": "Beschreibung",
+    "descriptionPlaceholder": "Wofür diese Rolle da ist",
+    "descriptionHelp": "Wird auf der Rollenkarte angezeigt",
     "templateLabel": "Vorlage",
     "templatePlaceholder": "Vorlage",
     "templateDescription": "Copy berechtigungen von another rolle"

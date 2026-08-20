@@ -232,10 +232,13 @@ function PermissionsTable({
 
     const modelOptions = useMemo(() => {
         const models = Array.from(new Set(data.map((row) => row.model))).sort();
-        return models.map((model) => ({
-            value: model,
-            label: String(resolveLanguageKey(`groups.${model}`)),
-        }));
+        return models.map((model) => {
+            const translated = resolveLanguageKey(`groups.${model}`, true);
+            return {
+                value: model,
+                label: typeof translated === "string" && translated ? translated : model,
+            };
+        });
     }, [data, resolveLanguageKey]);
 
     const filteredData = useMemo(() => {
@@ -246,6 +249,10 @@ function PermissionsTable({
             return modelMatch && groupMatch && scopeMatch;
         });
     }, [data, modelFilter, groupFilter, targetFilter]);
+
+    useEffect(() => {
+        setPagination((p) => (p.pageIndex === 0 ? p : { ...p, pageIndex: 0 }));
+    }, [modelFilter, groupFilter, targetFilter]);
 
     useEffect(() => {
         const maxPage = Math.max(0, Math.ceil(filteredData.length / pagination.pageSize) - 1);
@@ -373,7 +380,11 @@ function PermissionsTable({
     const totalRows = filteredData.length;
 
     return (
-        <div className="flex flex-col gap-y-2 mt-2">
+        <div
+            className="flex flex-col gap-y-2 mt-2"
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()}
+        >
             <div className="flex flex-wrap items-center justify-between gap-2" style={{border: "0px solid red"}}>
                 <div className="flex grow flex-wrap gap-2" style={{border: "0px solid red"}}>
 

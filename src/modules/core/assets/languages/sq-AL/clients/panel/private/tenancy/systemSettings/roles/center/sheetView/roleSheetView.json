@@ -1,4 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx",
-  "permissions": "Lejet"
+  "permissions": "Lejet",
+  "lifecycle": "Cikli i jetës",
+  "createdAt": "Krijuar më",
+  "updatedAt": "Përditësuar më",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga"
 }

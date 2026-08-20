@@ -8,6 +8,9 @@
     "nameLabel": "Emri i rolit",
     "namePlaceholder": "Emri i rolit",
     "nameDescription": "Emri i shfaqur i rolit",
+    "descriptionLabel": "Përshkrimi",
+    "descriptionPlaceholder": "Për çfarë shërben ky rol",
+    "descriptionHelp": "Shfaqet në kartën e rolit që operatorët të dinë se çfarë bën",
     "templateLabel": "shabllon",
     "templatePlaceholder": "shabllon",
     "templateDescription": "Kopjoni lejet nga një rol tjetër"

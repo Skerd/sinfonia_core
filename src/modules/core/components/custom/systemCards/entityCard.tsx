@@ -24,7 +24,8 @@ import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShe
 import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
 import {useEntityCardFetch} from "@coreModule/helpers/hooks/useEntityCardFetch.ts";
 
-const CARD_CONTENT_CLASS = "flex w-full min-w-0 flex-col gap-(--density-pad) p-(--density-pad)";
+const CARD_CONTENT_CLASS =
+    "flex w-full min-w-0 flex-col gap-(--density-pad) p-(--density-pad) [&>[data-slot=gallery-carousel]]:-mx-(--density-pad) [&>[data-slot=gallery-carousel]]:-mt-(--density-pad) [&>[data-slot=gallery-carousel]]:w-[calc(100%+2*var(--density-pad))]";
 
 type SoftDeletable = DeletedData & {
     _id: string;

@@ -7,7 +7,25 @@ import { cn } from "@coreModule/components/lib/utils.ts"
 const DrawerPortalContainerContext = React.createContext<React.RefObject<HTMLDivElement | null> | null>(null)
 
 export function useDrawerPortalContainer() {
-    return React.useContext(DrawerPortalContainerContext)
+  return React.useContext(DrawerPortalContainerContext)
+}
+
+/** Portal target for selects/popovers nested in Drawer or Sheet. */
+export function OverlayPortalContainer({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  const containerRef = React.useRef<HTMLDivElement>(null)
+  return (
+    <DrawerPortalContainerContext.Provider value={containerRef}>
+      <div ref={containerRef} className={className}>
+        {children}
+      </div>
+    </DrawerPortalContainerContext.Provider>
+  )
 }
 
 function Drawer({

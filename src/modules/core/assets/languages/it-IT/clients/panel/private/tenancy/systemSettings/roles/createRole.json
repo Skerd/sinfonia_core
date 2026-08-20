@@ -10,6 +10,9 @@
     "nameLabel": "Nome del ruolo",
     "namePlaceholder": "Nome del ruolo",
     "nameDescription": "Il nome visualizzato del ruolo",
+    "descriptionLabel": "Descrizione",
+    "descriptionPlaceholder": "A cosa serve questo ruolo",
+    "descriptionHelp": "Mostrata sulla scheda del ruolo",
     "templateLabel": "Modello",
     "templatePlaceholder": "Modello",
     "templateDescription": "Copia le autorizzazioni da un altro ruolo"

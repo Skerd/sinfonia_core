@@ -10,6 +10,7 @@ import {
 import { Dialog, DialogContent } from "@coreModule/components/ui/dialog.tsx"
 import { Media } from "armonia/src/modules/core/types"
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
+import { cn } from "@coreModule/components/lib/utils.ts";
 
 function resolveMediaUrl(url: string, media: Media): string {
     return `${url}${media._id}`
@@ -39,6 +40,7 @@ interface GalleryCarouselProps {
     showPreviews?: boolean
     /** Where the preview strip appears when `showPreviews` is true. Default `"bottom"`. */
     previewLocation?: GalleryCarouselPreviewLocation
+    className?: string
 }
 
 type PreviewRailOrientation = "horizontal" | "vertical"
@@ -164,6 +166,7 @@ export function GalleryCarousel({
     modifyImagesOnDarkMode,
     showPreviews = false,
     previewLocation = "right",
+    className,
 }: GalleryCarouselProps) {
     const media = React.useMemo<Media[]>(
         () => [...(mainImage ? [mainImage] : []), ...videoGallery, ...imageGallery],
@@ -305,69 +308,69 @@ export function GalleryCarousel({
         []
     )
 
+    const mediaObjectClass =
+        mediaClassBase +
+        (coverAfterFirst ? "object-cover" : "object-contain") +
+        (allowFullScreen ? "" : " pointer-events-none")
+
     const mainCarouselContent = React.useMemo(() => {
         if (!media?.length || aspectRatio == null) return null
         return (
             <CarouselContent>
-                {media.map((item, i) => (
-                    <CarouselItem key={item._id}>
-                        <button
-                            type="button"
-                            className="w-full h-full"
-                            onClick={() => {
-                                setIndex(i)
-                                api?.scrollTo(i)
-                                if (allowFullScreen) setOpen(true)
-                            }}
-                            aria-label={`View media ${i + 1} of ${media.length}`}
+                {media.map((item, i) => {
+                    const slide = (
+                        <div
+                            className="relative w-full h-full"
+                            style={{ aspectRatio }}
                         >
-                            <div
-                                className="relative w-full h-full"
-                                style={{ aspectRatio }}
-                            >
-                                {item.mime.includes("video") ? (
-                                    <video
-                                        ref={setVideoRef(i, false)}
-                                        autoPlay={i === 0}
-                                        src={resolveMediaUrl(mediaUrl, item)}
-                                        aria-label={item.name ?? "Gallery video"}
-                                        controls
-                                        muted
-                                        playsInline
-                                        preload="metadata"
-                                        className={
-                                            mediaClassBase +
-                                            (coverAfterFirst
-                                                ? "object-cover"
-                                                : "object-contain")
-                                        }
-                                    />
-                                ) : modifyImagesOnDarkMode ? (
-                                    React.createElement(modifyImagesOnDarkMode, {
-                                        src: resolveMediaUrl(mediaUrl, item),
-                                        alt: item.name ?? "",
-                                        className:
-                                            mediaClassBase +
-                                            (coverAfterFirst
-                                                ? "object-cover"
-                                                : "object-contain"),
-                                    })
-                                ) : (
-                                    <img
-                                        src={resolveMediaUrl(mediaUrl, item)}
-                                        alt={item.name ?? ""}
-                                        className={
-                                            mediaClassBase +
-                                            (coverAfterFirst
-                                                ? "object-cover"
-                                                : "object-contain")
-                                        }
-                                    />
-                                )}
-                            </div>
-                        </button>
-                    </CarouselItem>
-                ))}
+                            {item.mime.includes("video") ? (
+                                <video
+                                    ref={setVideoRef(i, false)}
+                                    autoPlay={i === 0}
+                                    src={resolveMediaUrl(mediaUrl, item)}
+                                    aria-label={item.name ?? "Gallery video"}
+                                    controls={allowFullScreen}
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                    className={mediaObjectClass}
+                                />
+                            ) : modifyImagesOnDarkMode ? (
+                                React.createElement(modifyImagesOnDarkMode, {
+                                    src: resolveMediaUrl(mediaUrl, item),
+                                    alt: item.name ?? "",
+                                    className: mediaObjectClass,
+                                })
+                            ) : (
+                                <img
+                                    src={resolveMediaUrl(mediaUrl, item)}
+                                    alt={item.name ?? ""}
+                                    className={mediaObjectClass}
+                                />
+                            )}
+                        </div>
+                    )
+                    return (
+                        <CarouselItem key={item._id}>
+                            {allowFullScreen ? (
+                                <button
+                                    type="button"
+                                    className="w-full h-full"
+                                    onClick={() => {
+                                        setIndex(i)
+                                        api?.scrollTo(i)
+                                        setOpen(true)
+                                    }}
+                                    aria-label={`View media ${i + 1} of ${media.length}`}
+                                >
+                                    {slide}
+                                </button>
+                            ) : (
+                                <div className="h-full w-full">{slide}</div>
+                            )}
+                        </CarouselItem>
+                    )
+                })}
             </CarouselContent>
         )
     }, [
@@ -379,6 +382,7 @@ export function GalleryCarousel({
         allowFullScreen,
         setVideoRef,
         api,
+        mediaObjectClass,
     ])
 
     const previewRailVertical = previewLocation === "left" || previewLocation === "right"
@@ -532,12 +536,21 @@ export function GalleryCarousel({
         }
     })()
 
-    if( media.length === 0 ) return <ValueNotSet />
+    const root = cn(rootClassName, className)
 
-    if (!aspectRatio) return null
+    if (media.length === 0) return <ValueNotSet />
+
+    if (!aspectRatio) {
+        return (
+            <div
+                data-slot="gallery-carousel"
+                className={cn(root, "min-h-(--card-media-height)")}
+            />
+        )
+    }
 
     return (
-        <div className={rootClassName}>
+        <div data-slot="gallery-carousel" className={root}>
             {layoutBody}
             {allowFullScreen && (
                 <Dialog open={open} onOpenChange={setOpen}>
