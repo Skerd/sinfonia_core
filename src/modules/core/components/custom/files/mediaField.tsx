@@ -349,7 +349,8 @@ function MediaField({
 
     const removeAt = (index: number) => {
         if (isSingle) {
-            form.setValue(name, "", {
+            // Edit: `null` is the $unset sentinel. Create: omit the field.
+            form.setValue(name, editMode ? null : undefined, {
                 shouldValidate: true,
                 shouldDirty: true,
             });
