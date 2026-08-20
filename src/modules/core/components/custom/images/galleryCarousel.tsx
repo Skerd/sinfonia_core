@@ -443,24 +443,28 @@ export function GalleryCarousel({
             setApi={setApi}
         >
             {mainCarouselContent}
-            <div
-                onClick={(e) => {
-                    e.stopPropagation()
-                    e.preventDefault()
-                }}
-                role="presentation"
-            >
-                <CarouselPrevious className="left-6" />
-            </div>
-            <div
-                onClick={(e) => {
-                    e.stopPropagation()
-                    e.preventDefault()
-                }}
-                role="presentation"
-            >
-                <CarouselNext className="right-6" />
-            </div>
+            {media.length > 1 && (
+                <>
+                    <div
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            e.preventDefault()
+                        }}
+                        role="presentation"
+                    >
+                        <CarouselPrevious className="left-6" />
+                    </div>
+                    <div
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            e.preventDefault()
+                        }}
+                        role="presentation"
+                    >
+                        <CarouselNext className="right-6" />
+                    </div>
+                </>
+            )}
         </Carousel>
     )
 
@@ -614,8 +618,12 @@ export function GalleryCarousel({
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
-                            <CarouselPrevious />
-                            <CarouselNext />
+                            {media.length > 1 && (
+                                <>
+                                    <CarouselPrevious />
+                                    <CarouselNext />
+                                </>
+                            )}
                         </Carousel>
                     </DialogContent>
                 </Dialog>

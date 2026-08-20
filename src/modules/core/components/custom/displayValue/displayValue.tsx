@@ -83,14 +83,14 @@ function isEmptyValue(value: unknown): boolean {
     return value === null || value === undefined || value === "";
 }
 
-function formatFiniteDecimal(value: number, digits = 2): string {
+function formatGroupedNumber(value: number, fractionDigits?: number): string {
     if (!Number.isFinite(value)) return "";
-    return value.toFixed(digits);
-}
-
-function formatLocaleNumber(value: number): string {
-    if (!Number.isFinite(value)) return "";
-    return value.toLocaleString();
+    return value.toLocaleString(undefined, {
+        useGrouping: true,
+        ...(fractionDigits != null
+            ? {minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits}
+            : {}),
+    });
 }
 
 function toDate(value: unknown): Date | null {
@@ -252,14 +252,14 @@ function currencyLabel(value: unknown): string {
 function formatCurrencyValue(value: unknown): string | null {
     const amountOnly = toNumber(value);
     if (amountOnly != null && (typeof value === "number" || typeof value === "string")) {
-        return formatFiniteDecimal(amountOnly);
+        return formatGroupedNumber(amountOnly, 2);
     }
     if (value && typeof value === "object" && !Array.isArray(value)) {
         const obj = value as CurrencyStub & {amount?: unknown; number?: unknown; currency?: unknown};
         const amount = toNumber(obj.amount ?? obj.number);
         const label = currencyLabel(obj.currency ?? {symbol: obj.symbol, abbreviation: obj.abbreviation});
-        if (amount != null && label) return `${label} ${formatFiniteDecimal(amount)}`;
-        if (amount != null) return formatFiniteDecimal(amount);
+        if (amount != null && label) return `${label} ${formatGroupedNumber(amount, 2)}`;
+        if (amount != null) return formatGroupedNumber(amount, 2);
         if (label) return label;
     }
     return null;
@@ -368,16 +368,16 @@ function formatByType(
     }
     if (type === "area") {
         const n = toNumber(value);
-        return n != null ? `${formatFiniteDecimal(n)}m²` : String(value);
+        return n != null ? `${formatGroupedNumber(n, 2)}m²` : String(value);
     }
     if (type === "locale") {
         const n = toNumber(value);
-        return n != null ? formatLocaleNumber(n) : String(value);
+        return n != null ? formatGroupedNumber(n) : String(value);
     }
     if (type === "number") {
         const n = toNumber(value);
         if (n == null) return String(value);
-        return Number.isInteger(n) ? String(n) : formatFiniteDecimal(n);
+        return Number.isInteger(n) ? formatGroupedNumber(n, 0) : formatGroupedNumber(n, 2);
     }
     if (type === "longText") {
         return <LongText>{String(value)}</LongText>;
@@ -393,7 +393,7 @@ function formatByType(
         return formatTemporal(value, "date", timeZone, format);
     }
     if (typeof value === "number") {
-        return formatLocaleNumber(value);
+        return formatGroupedNumber(value);
     }
     if (typeof value === "string") {
         if (isDateOnlyIso(value)) return formatTemporal(value, "date", timeZone, format);

@@ -282,10 +282,10 @@ export default function SheetCompanyAddressesSection({
                                     </div>
 
                                     {latNum != null && lngNum != null ? (
-                                        <div className={cn("lg:col-span-2")}>
+                                        <div className="relative min-h-[220px] self-stretch lg:col-span-2">
                                             <SheetLocationMap
                                                 address={row}
-                                                className={"w-full h-36 min-h-[132px] rounded-lg overflow-hidden"}
+                                                className="absolute inset-0 h-full w-full overflow-hidden rounded-lg"
                                             />
                                         </div>
                                     ) : null}

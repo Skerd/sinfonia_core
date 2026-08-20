@@ -336,12 +336,14 @@ function QuickFilterBar({
     const anyActive = defs.some((d) => hasActiveValue(values[d.field]));
 
     return (
-        <div className="flex items-center gap-2 flex-wrap pb-1">
+        <div className="flex items-end gap-2 flex-wrap pb-1">
             {defs.map((def) => {
                 const active = hasActiveValue(values[def.field]);
                 return (
-                    <div key={def.field} className="flex items-center gap-1">
-                        <span className="text-xs text-muted-foreground shrink-0">{def.label}</span>
+                    <div key={def.field} className="flex flex-col gap-2 min-w-0">
+                        <label className="text-xs text-muted-foreground leading-none">
+                            {def.label}
+                        </label>
                         <div className={cn("relative flex items-center", active && "ring-1 ring-primary/30 rounded-md")}>
                             <QuickFilterInput
                                 def={def}

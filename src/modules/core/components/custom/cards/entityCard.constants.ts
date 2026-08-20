@@ -19,6 +19,10 @@ export const CARD_BODY_CLASS = "flex w-full flex-col gap-1 p-(--density-pad)";
 
 export const CARD_INFO_ROWS_CLASS = "flex flex-wrap gap-x-2 gap-y-1";
 
+/** Opt-in two fields per row. Pass as `EntityCard.Body` `className`. */
+export const CARD_INFO_ROWS_TWO_COL_CLASS =
+    "grid min-w-0 grid-cols-2 [&_[data-slot=item]]:w-full [&_[data-slot=restricted-fields]]:col-span-2";
+
 /** Driven by `--card-media-height` so the list skeleton reserves the same box. */
 export const MEDIA_HEADER_MIN_HEIGHT = "min-h-(--card-media-height)";
 

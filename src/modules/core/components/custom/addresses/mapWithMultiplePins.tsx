@@ -57,6 +57,21 @@ function FitBounds({ bounds }: { bounds: [number, number][] }) {
     return null;
 }
 
+function InvalidateSizeOnResize() {
+    const map = useMap();
+    useEffect(() => {
+        const container = map.getContainer();
+        const sync = () => {
+            map.invalidateSize();
+        };
+        sync();
+        const observer = new ResizeObserver(sync);
+        observer.observe(container);
+        return () => observer.disconnect();
+    }, [map]);
+    return null;
+}
+
 function resolveTheme(theme: "dark" | "light" | "system"): "dark" | "light" {
     if (theme === "system") {
         return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -93,7 +108,8 @@ export default function MapWithMultiplePins({
             <MapContainer
                 center={mapCenter}
                 zoom={10000}
-                style={{width: "100%", height: "150px", zIndex: 1, background: "darkgrey"}}
+                className="h-full w-full"
+                style={{width: "100%", height: "100%", zIndex: 1, background: "darkgrey"}}
                 scrollWheelZoom={true}
             >
                 <TileLayer url={resolveTheme(theme) === "dark" ? DARK_TILE_URL : LIGHT_TILE_URL}/>
@@ -139,6 +155,7 @@ export default function MapWithMultiplePins({
                     })
                 }
                 <FitBounds bounds={bounds} />
+                <InvalidateSizeOnResize />
             </MapContainer>
         </div>
     );
