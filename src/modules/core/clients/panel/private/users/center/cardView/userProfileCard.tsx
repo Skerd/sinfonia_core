@@ -167,12 +167,17 @@ function UserProfileCardInner({
 
     const bannerSize = "150px";
     const avatarSize = "120px";
+    const maxVisibleRoles = 4;
     const {read} = useAccess("users", !specificUserId ? "self" : "others");
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
 
     if (!read || !Object.keys(read).length) {
         return <HiddenElement/>;
     }
+
+    const roles = data.roles ?? [];
+    const visibleRoles = roles.slice(0, maxVisibleRoles);
+    const remainingRoles = roles.slice(maxVisibleRoles);
 
     const tabLabels = {
         ...(
@@ -447,13 +452,32 @@ function UserProfileCardInner({
                                             read?.roles?.keys?.roles?.keys?.name &&
                                             <div className="flex items-center flex-wrap gap-x-1 gap-y-0.5">
                                                 {
-                                                    data.roles?.map((r, i: number) => {
-                                                        return (
-                                                            <Badge key={i} variant="outline" className="capitalize">
-                                                                {r.name}
-                                                            </Badge>
-                                                        )
-                                                    })
+                                                    visibleRoles.map((r) => (
+                                                        <Badge key={r._id} variant="outline" className="capitalize">
+                                                            {r.name}
+                                                        </Badge>
+                                                    ))
+                                                }
+                                                {
+                                                    remainingRoles.length > 0 &&
+                                                    <TooltipDisplayer
+                                                        contentClassName="max-w-72 flex-wrap items-start gap-1 border border-border bg-popover px-2 py-2 text-popover-foreground shadow-md [&>svg]:bg-popover [&>svg]:fill-popover"
+                                                        tooltipRender={() => (
+                                                            <>
+                                                                {
+                                                                    remainingRoles.map((r) => (
+                                                                        <Badge key={r._id} variant="outline" className="capitalize">
+                                                                            {r.name}
+                                                                        </Badge>
+                                                                    ))
+                                                                }
+                                                            </>
+                                                        )}
+                                                    >
+                                                        <Badge variant="outline" className="cursor-default text-muted-foreground">
+                                                            +{remainingRoles.length}
+                                                        </Badge>
+                                                    </TooltipDisplayer>
                                                 }
                                             </div>
                                         }
