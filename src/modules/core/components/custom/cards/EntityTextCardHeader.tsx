@@ -56,12 +56,11 @@ export function EntityTextCardHeader({
 
     return (
         <CardHeader className={cn(
-            "gap-1.5 px-2 pt-2 pb-1",
-            !showSubtitleRow && "items-center",
+            "gap-1.5 px-2 pt-2 pb-1 items-start",
             "group-has-[[data-slot=gallery-carousel]]/card:grid-cols-1",
             className,
         )}>
-            <div className={cn("flex min-w-0 gap-2", showSubtitleRow ? "items-start" : "items-center")}>
+            <div className={cn("flex min-w-0 gap-2", showSubtitleRow || hasBadges ? "items-start" : "items-center")}>
                 {iconTile != null && (
                     <div className="flex shrink-0 items-center justify-center self-center leading-none">
                         {iconTile}
@@ -93,13 +92,7 @@ export function EntityTextCardHeader({
                 </div>
             </div>
             {showActions && (
-                <CardAction
-                    className={cn(
-                        "-mr-1",
-                        showSubtitleRow ? "row-span-2" : "row-span-1 self-center",
-                        ACTION_MENU_PIN_WHEN_GALLERY,
-                    )}
-                >
+                <CardAction className={cn("-mr-1 self-start", ACTION_MENU_PIN_WHEN_GALLERY)}>
                     <EntityCardActionMenu variant="inline">{actionMenu}</EntityCardActionMenu>
                 </CardAction>
             )}
