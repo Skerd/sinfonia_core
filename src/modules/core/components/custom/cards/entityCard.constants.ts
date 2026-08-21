@@ -50,9 +50,8 @@ export const ACTION_MENU_PIN_WHEN_GALLERY =
  * on narrower widths via `--grid-card-min*`. Short cards pack under taller ones
  * instead of leaving row gutters. Reading order is top-to-bottom per column.
  *
- * Pair every list item with {@link GRID_MASONRY_ITEM}. Cap at 4 columns with
- * {@link GRID_COLS_MAX_4} for denser cards (modification requests, leads,
- * reservations, sales).
+ * Pair every list item with {@link GRID_MASONRY_ITEM}. Cap at 3–4 columns with
+ * {@link GRID_COLS_MAX_3} / {@link GRID_COLS_MAX_4} for denser cards
  */
 
 /** Hierarchy entity lists (projects, edifices, floors, units): media-led cards. */
