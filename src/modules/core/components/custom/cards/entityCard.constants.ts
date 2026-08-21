@@ -2,18 +2,21 @@
 
 /**
  * The card outline comes from Card's own `ring-1 ring-foreground/10`, which is
- * token-driven and therefore correct in both themes; the raised state adds the
- * `--elevation-*` shadow on top. The `shadow-md` this replaced was a fixed
- * black shadow that all but disappeared on a dark surface.
+ * token-driven and therefore correct in both themes. Resting `shadow-e1` and
+ * the raised hover `shadow-e2` use `--elevation-*` so both themes stay legible
+ * (the old fixed `shadow-md` all but disappeared on dark surfaces).
  *
  * `h-fit`: cards sit in an `align-items: start` grid, so each keeps its natural
  * height instead of stretching to the tallest sibling in the row.
+ *
+ * Hover scale is transform-only (layout size unchanged) so the masonry columns
+ * do not reflow; `z-10` keeps the enlarged card above neighbors.
  */
 export const CARD_SHELL_CLASS =
-    "group relative h-fit gap-0 p-0 transition-[box-shadow,--tw-ring-color] duration-200";
+    "group relative h-fit gap-0 p-0 shadow-sm transition-[box-shadow,--tw-ring-color,transform] duration-200";
 
 export const CARD_SHELL_CLICKABLE_CLASS =
-    `${CARD_SHELL_CLASS} hover:cursor-pointer hover:shadow-e2 hover:ring-primary/40`;
+    `${CARD_SHELL_CLASS} hover:cursor-pointer hover:z-10 hover:shadow-e2 hover:ring-primary/40`;
 
 export const CARD_BODY_CLASS = "flex w-full flex-col gap-1 p-(--density-pad)";
 
