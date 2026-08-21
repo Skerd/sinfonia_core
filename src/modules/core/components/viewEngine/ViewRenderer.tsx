@@ -47,6 +47,53 @@ import {
 export type { ViewRendererContext };
 export { hasAccessPath, hasDisplayCardValueAccess, normalizeObjectIdRef, resolvePath };
 
+/**
+ * Build the structured stub `DisplayValue` `type="currency"` expects from a
+ * `valuePath` like `["priceCurrency.symbol", "price"]`. Joining into a string
+ * ("€ 123") fails currency formatting and shows ValueNotSet ("!").
+ */
+function currencyStubFromValuePath(
+    parent: Record<string, unknown>,
+    valuePath: string[],
+): {amount: number; currency?: {symbol?: string; abbreviation?: string}} | null {
+    let amount: number | null = null;
+    let symbol: string | undefined;
+    let abbreviation: string | undefined;
+
+    for (const path of valuePath) {
+        const part = resolvePath(parent, path);
+        const leaf = path.includes(".") ? path.slice(path.lastIndexOf(".") + 1) : path;
+        if (leaf === "symbol" && part != null && String(part).trim() !== "") {
+            symbol = String(part).trim();
+            continue;
+        }
+        if (leaf === "abbreviation" && part != null && String(part).trim() !== "") {
+            abbreviation = String(part).trim();
+            continue;
+        }
+        if (typeof part === "number" && Number.isFinite(part)) {
+            amount = part;
+            continue;
+        }
+        if (typeof part === "string" && part.trim() !== "" && Number.isFinite(Number(part))) {
+            amount = Number(part);
+            continue;
+        }
+        if (part != null && typeof part === "object" && typeof (part as {toString?: () => string}).toString === "function") {
+            const asString = (part as {toString: () => string}).toString();
+            if (asString && asString !== "[object Object]" && Number.isFinite(Number(asString))) {
+                amount = Number(asString);
+            }
+        }
+    }
+
+    if (amount == null) return null;
+    if (symbol || abbreviation) {
+        return {amount, currency: {symbol, abbreviation}};
+    }
+    return {amount};
+}
+
 /** Lazy-loaded to avoid a static import cycle (cards → sheet → ViewRenderer). */
 const TenancyCountryCardLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx"));
 const TenancyStateCardLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx"));
@@ -1219,6 +1266,7 @@ function renderDisplayCard(
     const wp = binding.widgetProps ?? {};
     const displayType = typeof wp.type === "string" && wp.type.length > 0 ? wp.type : undefined;
     const skipPreFormat = !!displayType;
+    let typeForCard = displayType;
 
     if (wp.valueType === "linkedObjectRefCardList") {
         return renderLinkedObjectRefCardList(Component, node, binding, ctx, index);
@@ -1257,31 +1305,36 @@ function renderDisplayCard(
                 ? filterAccessibleValuePath(ctx.access, wp.parent, rawValuePath)
                 : rawValuePath;
         if (valuePath.length > 0) {
-            let pathParts = valuePath.map((p: string) => resolvePath(parent, p));
-            const categoriesByPath = wp.languageKeyCategoriesByPath as Record<string, string> | undefined;
-            if (categoriesByPath && typeof categoriesByPath === "object") {
-                pathParts = pathParts.map((part, i) => {
-                    const segment = String(valuePath[i] ?? "");
-                    const category =
-                        categoriesByPath[segment] ?? categoriesByPath[segment.split(".")[0] ?? ""];
-                    if (category && part != null && typeof part === "string" && part.length > 0) {
-                        return resolveLanguageKey(`${category}.${part}`);
-                    }
-                    return part;
-                });
-            }
-            if (wp.format === "locale") {
-                pathParts = pathParts.map((part: unknown) =>
-                    part != null && typeof part === "number" ? part.toLocaleString() : part
-                );
-            }
-            if (wp.pickFirstTruthyValuePath) {
-                displayValue = pathParts.find((part) => part != null && part !== "") ?? null;
+            // Currency cards: pass {amount, currency} — do not join into "€ 123" (DisplayValue rejects that).
+            if (displayType === "currency" && !wp.pickFirstTruthyValuePath) {
+                displayValue = currencyStubFromValuePath(parent as Record<string, unknown>, valuePath);
             } else {
-                const parts = pathParts.filter(
-                    (part) => part !== null && part !== undefined && part !== ""
-                );
-                displayValue = parts.join(wp.joinSeparator ?? " ");
+                let pathParts = valuePath.map((p: string) => resolvePath(parent, p));
+                const categoriesByPath = wp.languageKeyCategoriesByPath as Record<string, string> | undefined;
+                if (categoriesByPath && typeof categoriesByPath === "object") {
+                    pathParts = pathParts.map((part, i) => {
+                        const segment = String(valuePath[i] ?? "");
+                        const category =
+                            categoriesByPath[segment] ?? categoriesByPath[segment.split(".")[0] ?? ""];
+                        if (category && part != null && typeof part === "string" && part.length > 0) {
+                            return resolveLanguageKey(`${category}.${part}`);
+                        }
+                        return part;
+                    });
+                }
+                if (wp.format === "locale") {
+                    pathParts = pathParts.map((part: unknown) =>
+                        part != null && typeof part === "number" ? part.toLocaleString() : part
+                    );
+                }
+                if (wp.pickFirstTruthyValuePath) {
+                    displayValue = pathParts.find((part) => part != null && part !== "") ?? null;
+                } else {
+                    const parts = pathParts.filter(
+                        (part) => part !== null && part !== undefined && part !== ""
+                    );
+                    displayValue = parts.join(wp.joinSeparator ?? " ");
+                }
             }
         } else {
             displayValue = null;
@@ -1338,6 +1391,42 @@ function renderDisplayCard(
     ) {
         const str = String(displayValue);
         if (!str.includes(wp.suffix)) displayValue = str + wp.suffix;
+    }
+
+    // Currency stubs skip the string prefix/suffix path above; bake them in as plain text.
+    if (
+        displayType === "currency" &&
+        displayValue != null &&
+        typeof displayValue === "object" &&
+        !isValidElement(displayValue) &&
+        !Array.isArray(displayValue) &&
+        (wp.prefix || wp.suffix)
+    ) {
+        const stub = displayValue as {
+            amount?: unknown;
+            currency?: {symbol?: string; abbreviation?: string};
+            symbol?: string;
+            abbreviation?: string;
+        };
+        const amount =
+            typeof stub.amount === "number" && Number.isFinite(stub.amount) ? stub.amount : null;
+        if (amount != null) {
+            const label =
+                stub.currency?.symbol?.trim() ||
+                stub.currency?.abbreviation?.trim() ||
+                stub.symbol?.trim() ||
+                stub.abbreviation?.trim() ||
+                "";
+            const formatted = amount.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            });
+            let str = label ? `${label} ${formatted}` : formatted;
+            if (wp.prefix && !str.includes(wp.prefix)) str = wp.prefix + str;
+            if (wp.suffix && !str.includes(wp.suffix)) str = str + wp.suffix;
+            displayValue = str;
+            typeForCard = undefined;
+        }
     }
 
     const Icon = wp.icon ? resolveIcon(wp.icon) : undefined;
@@ -1442,7 +1531,7 @@ function renderDisplayCard(
             tooltip={tooltipText}
             show={wp.show === true || hasDisplayCardValueAccess(ctx.access, binding)}
             path={binding.name}
-            type={displayType}
+            type={typeForCard}
             languageKeyCategory={
                 typeof wp.languageKeyCategory === "string" && wp.languageKeyCategory.length > 0
                     ? wp.languageKeyCategory

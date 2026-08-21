@@ -254,6 +254,10 @@ function formatCurrencyValue(value: unknown): string | null {
     if (amountOnly != null && (typeof value === "number" || typeof value === "string")) {
         return formatGroupedNumber(amountOnly, 2);
     }
+    // Decimal128 / numeric object treated as bare amount
+    if (amountOnly != null && value != null && typeof value === "object" && !Array.isArray(value) && !("symbol" in value) && !("abbreviation" in value) && !("amount" in value) && !("number" in value) && !("currency" in value)) {
+        return formatGroupedNumber(amountOnly, 2);
+    }
     if (value && typeof value === "object" && !Array.isArray(value)) {
         const obj = value as CurrencyStub & {amount?: unknown; number?: unknown; currency?: unknown};
         const amount = toNumber(obj.amount ?? obj.number);
@@ -318,6 +322,14 @@ function toNumber(value: unknown): number | null {
     if (typeof value === "string" && value.trim().length > 0) {
         const n = Number(value);
         return Number.isFinite(n) ? n : null;
+    }
+    // Decimal128 / BSON decimal stubs expose a numeric toString()
+    if (value != null && typeof value === "object" && typeof (value as {toString?: () => string}).toString === "function") {
+        const asString = (value as {toString: () => string}).toString();
+        if (asString && asString !== "[object Object]") {
+            const n = Number(asString);
+            return Number.isFinite(n) ? n : null;
+        }
     }
     return null;
 }
