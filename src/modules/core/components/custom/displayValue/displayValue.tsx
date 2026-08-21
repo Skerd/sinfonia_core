@@ -1,4 +1,4 @@
-import {isValidElement, type MouseEvent, type ReactNode} from "react";
+import {isValidElement, useCallback, useContext, useRef, type MouseEvent, type ReactNode} from "react";
 import {useSelector} from "react-redux";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
@@ -11,7 +11,12 @@ import {accessFieldPathExists, useAccess} from "@coreModule/helpers/hocs/withAcc
 import {useAccessFieldsRead} from "./accessFields.tsx";
 import {formatDate} from "@coreModule/helpers/general";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import withLanguage, {type ResolveLanguageKey, type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
+import {
+    LanguageResolveContext,
+    type ResolveLanguageKey,
+    type TranslationValue,
+} from "@coreModule/helpers/hocs/withLanguage.tsx";
 
 export type DisplayValueType =
     | "string"
@@ -32,14 +37,14 @@ export type DisplayValueType =
     | "currency"
     | "enum";
 
-type DisplayValueProps = WithLanguageType & {
+type DisplayValueProps = {
     value: unknown;
     /** ACL dotted path (`area`, `unitType.name`). Walks nested `keys` via `accessFieldPathExists`. */
     path?: string;
     type?: DisplayValueType;
     /**
-     * Prefix for `type="enum"` (`fields.!enums.status` + `pending` →
-     * `fields.!enums.status.pending`). Same name as sheet `widgetProps.languageKeyCategory`.
+     * Prefix for `type="enum"` (`constructionTypes` + `hvac` → `constructionTypes.hvac`).
+     * Resolved against the nearest card/sheet language file via {@link LanguageResolveContext}.
      */
     languageKeyCategory?: string;
     /** Wraps the formatted value (`Badge`, `div`, anything). */
@@ -57,6 +62,9 @@ type DisplayValueProps = WithLanguageType & {
     resource?: string;
     className?: string;
 };
+
+const DISPLAY_VALUE_LANG_PATH =
+    "src/modules/core/components/custom/displayValue/displayValue.tsx";
 
 const HIDDEN_RANDOM_LENGTH = 8;
 const LONG_TEXT_THRESHOLD = 800;
@@ -438,8 +446,56 @@ function DisplayValue({
     show: showProp,
     resource,
     className,
-    resolveLanguageKey,
 }: DisplayValueProps) {
+    const parentResolveLanguageKey = useContext(LanguageResolveContext);
+    const {currentLanguage} = useSelectedLanguage(
+        DISPLAY_VALUE_LANG_PATH.replaceAll("/", "_"),
+        DISPLAY_VALUE_LANG_PATH,
+    );
+    const keyPathCache = useRef<Map<string, string[]>>(new Map());
+
+    const resolveOwnLanguageKey: ResolveLanguageKey = useCallback((key, returnUndefinedIfNeeded = false) => {
+        try {
+            let cached = keyPathCache.current.get(key);
+            if (!cached) {
+                cached = key.split(".");
+                keyPathCache.current.set(key, cached);
+            }
+            let returnThis: unknown = currentLanguage;
+            for (let i = 0; i < cached.length; i++) {
+                if (returnThis == null || typeof returnThis !== "object") {
+                    throw new Error("Missing translation key");
+                }
+                returnThis = (returnThis as Record<string, unknown>)[cached[i]];
+            }
+            if (typeof returnThis !== "string") {
+                if (!returnThis) {
+                    throw new Error("Missing translation value");
+                }
+                return returnThis as TranslationValue;
+            }
+            return returnThis;
+        } catch {
+            if (returnUndefinedIfNeeded) {
+                return null;
+            }
+            return `---${key}---`;
+        }
+    }, [currentLanguage]);
+
+    /**
+     * Prefer the nearest card/sheet dictionary for enums; keep this file for yes/no only.
+     */
+    const resolveLanguageKey: ResolveLanguageKey = useCallback((key, returnUndefinedIfNeeded = false) => {
+        if (parentResolveLanguageKey) {
+            const fromParent = parentResolveLanguageKey(key, true);
+            if (fromParent != null && fromParent !== "") {
+                return fromParent;
+            }
+        }
+        return resolveOwnLanguageKey(key, returnUndefinedIfNeeded);
+    }, [parentResolveLanguageKey, resolveOwnLanguageKey]);
+
     const contextRead = useAccessFieldsRead();
     const ownAccess = useAccess(resource ?? "");
     const read = resource ? ownAccess.read : contextRead;
@@ -485,4 +541,4 @@ function DisplayValue({
     );
 }
 
-export default withLanguage("src/modules/core/components/custom/displayValue/displayValue.tsx")(DisplayValue);
+export default DisplayValue;

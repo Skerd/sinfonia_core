@@ -1,7 +1,8 @@
-import {useSelector} from 'react-redux';
+import {createContext, useCallback, useMemo, useRef} from "react";
+import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import useSelectedLanguage, {LanguageDictionary} from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
-import {useCallback, useMemo, useRef} from "react";
+
 /**
  * Supported translation payload values.
  * Language entries can be primitives, nested dictionaries, or arrays.
@@ -16,6 +17,12 @@ export type TranslationValue = string | number | boolean | null | LanguageDictio
  * @returns resolved translation value, `null`, or fallback placeholder (`---key---`)
  */
 export type ResolveLanguageKey = (key: string, returnUndefinedIfNeeded?: boolean) => TranslationValue;
+
+/**
+ * Nearest ancestor card/sheet/page dictionary. Nested widgets (e.g. `DisplayValue`)
+ * read this so enum maps stay in that entity's language file.
+ */
+export const LanguageResolveContext = createContext<ResolveLanguageKey | null>(null);
 
 /**
  * Props injected by `withLanguage` into wrapped components.
@@ -35,10 +42,13 @@ export type WithLanguageType<TLanguage extends LanguageDictionary = LanguageDict
  * - Reads the active language code from Redux.
  * - Loads language data through `useSelectedLanguage`.
  * - Injects `currentLanguage`, `languageCode`, `resolveLanguageKey`, and `withLanguage` metadata.
+ * - Publishes {@link LanguageResolveContext} for nested widgets that must resolve enums
+ *   from this component's language file (card/sheet), not their own.
  *
  * Fallback behavior:
  * - Missing keys return `---<key>---` by default to make untranslated copy obvious in UI.
  * - When `returnUndefinedIfNeeded` is true, missing keys return `null`.
+ * - This HOC does not merge parent dictionaries; each wrapper keeps its own file only.
  *
  * @template TLanguage shape of the loaded language dictionary
  * @param componentFilePath Source path from repo `src/` onward, same module as bundled JSON stem, e.g. `src/modules/core/components/custom/files/singleFile.tsx` or `src/modules/realEstate/...`.
@@ -95,13 +105,15 @@ const withLanguage = (componentFilePath: string) => (WrappedComponent: any) => {
         }), [languageCode]);
 
         return (
-            <WrappedComponent
-                {...props}
-                currentLanguage={currentLanguage}
-                languageCode={languageCode}
-                resolveLanguageKey={resolveLanguageKey}
-                withLanguage={withLanguageData}
-            />
+            <LanguageResolveContext.Provider value={resolveLanguageKey}>
+                <WrappedComponent
+                    {...props}
+                    currentLanguage={currentLanguage}
+                    languageCode={languageCode}
+                    resolveLanguageKey={resolveLanguageKey}
+                    withLanguage={withLanguageData}
+                />
+            </LanguageResolveContext.Provider>
         )
     }
 
