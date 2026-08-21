@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect, useLayoutEffect, useMemo} from 'react';
+import React, {useState, useRef, useEffect, useLayoutEffect, useMemo, useCallback} from 'react';
 import {createPortal} from 'react-dom';
 import {ZoomIn, ZoomOut, RotateCcw, Maximize2, Minimize2, Eraser, Undo2} from 'lucide-react';
 import {compose} from "redux";
@@ -203,6 +203,42 @@ function PolygonSelector({
     /** Suppress phantom onClick after a drag-pan so releasing over a unit does not navigate. */
     const didPanRef = useRef(false);
     const phantomPointerDownRef = useRef<{ x: number; y: number } | null>(null);
+    /**
+     * True when the primary input can hover (mouse / fine pointer).
+     * Touch / coarse devices get sticky first-tap preview instead of mouseenter.
+     */
+    const [hoverCapable, setHoverCapable] = useState(() => {
+        if (typeof window === "undefined") return true;
+        return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    });
+
+    useEffect(() => {
+        const mql = window.matchMedia("(hover: hover) and (pointer: fine)");
+        const onChange = () => setHoverCapable(mql.matches);
+        onChange();
+        mql.addEventListener("change", onChange);
+        return () => mql.removeEventListener("change", onChange);
+    }, []);
+
+    const clearPhantomHover = useCallback(() => {
+        if (phantomHoverHideTimeoutRef.current) {
+            clearTimeout(phantomHoverHideTimeoutRef.current);
+            phantomHoverHideTimeoutRef.current = null;
+        }
+        setHoveredPhantomIndex(null);
+        setPhantomHoverPosition(null);
+        onPhantomHoverChange?.(null);
+    }, [onPhantomHoverChange]);
+
+    const activatePhantomHover = useCallback((index: number, clientX: number, clientY: number) => {
+        if (phantomHoverHideTimeoutRef.current) {
+            clearTimeout(phantomHoverHideTimeoutRef.current);
+            phantomHoverHideTimeoutRef.current = null;
+        }
+        setHoveredPhantomIndex(index);
+        setPhantomHoverPosition({x: clientX, y: clientY});
+        onPhantomHoverChange?.(phantomPoints[index]?._id ?? null);
+    }, [onPhantomHoverChange, phantomPoints]);
 
     const [isClosed, setIsClosed] = useState(initialPoints?.length >= 3);
 
@@ -678,6 +714,8 @@ function PolygonSelector({
 
     const canPhantomHover = !!phantomHoverContent || dashboard;
     const forcedHighlightId = externalHoveredId || stayHovered;
+    /** Touch / stylus: keep faint outlines visible so floors can be discovered without hover. */
+    const showPhantomsAlways = phantomsAlwaysVisible || (!hoverCapable && dashboard && canPhantomHover);
 
     const phantomPolygonsMemo = useMemo(() => {
         return (
@@ -712,30 +750,20 @@ function PolygonSelector({
                                         ))
                                     }
                                     <g
+                                        data-phantom-poly={phantomPoints[index]._id}
                                         onMouseEnter={(e) => {
-                                            if (canPhantomHover) {
-                                                if (phantomHoverHideTimeoutRef.current) {
-                                                    clearTimeout(phantomHoverHideTimeoutRef.current);
-                                                    phantomHoverHideTimeoutRef.current = null;
-                                                }
-                                                setHoveredPhantomIndex(index);
-                                                setPhantomHoverPosition({ x: e.clientX, y: e.clientY });
-                                                onPhantomHoverChange?.(phantomPoints[index]._id);
-                                            }
+                                            if (!canPhantomHover || !hoverCapable) return;
+                                            activatePhantomHover(index, e.clientX, e.clientY);
                                         }}
                                         onMouseMove={(e) => {
-                                            if (canPhantomHover) {
-                                                setPhantomHoverPosition({ x: e.clientX, y: e.clientY });
-                                            }
+                                            if (!canPhantomHover || !hoverCapable) return;
+                                            setPhantomHoverPosition({ x: e.clientX, y: e.clientY });
                                         }}
                                         onMouseLeave={() => {
-                                            if (canPhantomHover) {
-                                                phantomHoverHideTimeoutRef.current = setTimeout(() => {
-                                                    setHoveredPhantomIndex(null);
-                                                    setPhantomHoverPosition(null);
-                                                    onPhantomHoverChange?.(null);
-                                                }, 150);
-                                            }
+                                            if (!canPhantomHover || !hoverCapable) return;
+                                            phantomHoverHideTimeoutRef.current = setTimeout(() => {
+                                                clearPhantomHover();
+                                            }, 150);
                                         }}
                                         onPointerDown={(e) => {
                                             phantomPointerDownRef.current = { x: e.clientX, y: e.clientY };
@@ -748,6 +776,19 @@ function PolygonSelector({
                                             // If panned, don't treat release as a click.
                                             if (didPanRef.current) return;
                                             if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) > 4) return;
+
+                                            // Touch / coarse: first tap = sticky preview (desktop hover);
+                                            // second tap on the same polygon opens it.
+                                            if (!hoverCapable && canPhantomHover) {
+                                                e.stopPropagation();
+                                                if (hoveredPhantomIndex === index) {
+                                                    onFloorClick(phantomPoints[index]);
+                                                    return;
+                                                }
+                                                activatePhantomHover(index, e.clientX, e.clientY);
+                                                return;
+                                            }
+
                                             onFloorClick(phantomPoints[index]);
                                         }}
                                         style={{ pointerEvents: canPhantomHover ? 'visible' : 'none' }}
@@ -757,14 +798,14 @@ function PolygonSelector({
                                             fill={
                                                 isActive
                                                     ? fill
-                                                    : phantomsAlwaysVisible
+                                                    : showPhantomsAlways
                                                       ? mutedFill
                                                       : dashboard
                                                         ? "none"
                                                         : fill
                                             }
                                             stroke={
-                                                isActive || phantomsAlwaysVisible || !dashboard
+                                                isActive || showPhantomsAlways || !dashboard
                                                     ? stroke
                                                     : "none"
                                             }
@@ -780,7 +821,7 @@ function PolygonSelector({
             </>
         )
 
-    }, [phantomPoints, svgCoordinates, canPhantomHover, hoveredPhantomIndex, forcedHighlightId, dashboard, phantomsAlwaysVisible, onFloorClick, onPhantomHoverChange]);
+    }, [phantomPoints, svgCoordinates, canPhantomHover, hoveredPhantomIndex, forcedHighlightId, dashboard, showPhantomsAlways, hoverCapable, onFloorClick, activatePhantomHover, clearPhantomHover]);
 
     const imageSyncReady = renderedImageUrl === imageUrl && imageLoaded;
     const hasContentToShow =
@@ -821,19 +862,31 @@ function PolygonSelector({
         <>
             {
                 canPhantomHover && hoveredPhantomIndex !== null && phantomHoverPosition && phantomHoverContent && phantomPoints[hoveredPhantomIndex] && createPortal(
-                    <div className="fixed z-9999 pointer-events-none" style={{left: phantomHoverPosition.x + 12, top: phantomHoverPosition.y + 12,}}>
+                    <div
+                        className="fixed z-9999 pointer-events-none"
+                        style={{
+                            left: Math.min(phantomHoverPosition.x + 12, typeof window !== "undefined" ? window.innerWidth - 160 : phantomHoverPosition.x + 12),
+                            top: Math.min(phantomHoverPosition.y + 12, typeof window !== "undefined" ? window.innerHeight - 64 : phantomHoverPosition.y + 12),
+                        }}
+                    >
                         <div
                             className="pointer-events-auto overflow-hidden rounded-[5px] border border-black/10 bg-white shadow-lg"
                             onMouseEnter={() => {
+                                if (!hoverCapable) return;
                                 if (phantomHoverHideTimeoutRef.current) {
                                     clearTimeout(phantomHoverHideTimeoutRef.current);
                                     phantomHoverHideTimeoutRef.current = null;
                                 }
                             }}
                             onMouseLeave={() => {
-                                setHoveredPhantomIndex(null);
-                                setPhantomHoverPosition(null);
-                                onPhantomHoverChange?.(null);
+                                if (!hoverCapable) return;
+                                clearPhantomHover();
+                            }}
+                            onClick={(e) => {
+                                // Touch: tapping the label opens the previewed floor.
+                                if (hoverCapable || !dashboard) return;
+                                e.stopPropagation();
+                                onFloorClick(phantomPoints[hoveredPhantomIndex]);
                             }}
                         >
                             {phantomHoverContent(phantomPoints[hoveredPhantomIndex])}
@@ -875,6 +928,13 @@ function PolygonSelector({
                             WebkitUserSelect: 'none',
                         }}
                         onPointerDown={onPointerDown}
+                        onClick={(e) => {
+                            // Touch sticky preview: tapping empty stage dismisses the floor label.
+                            if (hoverCapable || hoveredPhantomIndex === null) return;
+                            const target = e.target as Element | null;
+                            if (target?.closest?.("[data-phantom-poly]")) return;
+                            clearPhantomHover();
+                        }}
                         onContextMenu={(e) => e.preventDefault()}
                         ref={containerRef}
                     >
