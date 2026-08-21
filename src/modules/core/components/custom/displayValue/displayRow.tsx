@@ -1,14 +1,31 @@
 import {useId, type ComponentType, type ReactNode} from "react";
+import {useSelector} from "react-redux";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Item, ItemMedia} from "@coreModule/components/ui/item.tsx";
 import {useRestrictedField} from "@coreModule/components/custom/infoRowGroup.tsx";
 import {accessFieldPathExists} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {formatDate} from "@coreModule/helpers/general";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {useAccessFieldsRead} from "./accessFields.tsx";
 import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
 import TruncatedValue from "./truncatedValue.tsx";
 
 export type DisplayRowIcon = ComponentType<{size?: number | string; className?: string}>;
+
+const DATE_FORMAT: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+};
+
+const DATE_TIME_FORMAT: Intl.DateTimeFormatOptions = {
+    ...DATE_FORMAT,
+    hour: "2-digit",
+    minute: "2-digit",
+};
+
+const DATE_ONLY_ISO = /^\d{4}-\d{2}-\d{2}$/;
 
 type DisplayRowProps = {
     /** Wins over `path`. */
@@ -54,6 +71,8 @@ export default function DisplayRow({
 }: DisplayRowProps) {
     const id = useId();
     const contextRead = useAccessFieldsRead();
+    const timezone = useSelector((state: RootState) => state.authentication.user?.timezone);
+    const timeZone = timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
     const labelText = typeof label === "string" ? label : "";
     const tooltipText = typeof tooltip === "string" ? tooltip : undefined;
 
@@ -92,7 +111,7 @@ export default function DisplayRow({
             )}
             {!dontRenderValue && (
                 <div className="min-w-0 hover:cursor-default">
-                    <TruncatedValue text={plainTooltipText(value)}>
+                    <TruncatedValue text={plainTooltipText(value, type, timeZone, format)}>
                         <DisplayValue
                             value={value}
                             type={type}
@@ -110,8 +129,16 @@ export default function DisplayRow({
     );
 }
 
-function plainTooltipText(value: unknown): string {
+function plainTooltipText(
+    value: unknown,
+    type?: DisplayValueType,
+    timeZone?: string,
+    format?: Intl.DateTimeFormatOptions,
+): string {
     if (value == null || value === "") return "";
+    if (type === "date" || type === "dateTime") {
+        return formatTemporalTooltip(value, type, timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone, format);
+    }
     if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
         return String(value);
     }
@@ -154,4 +181,27 @@ function plainTooltipText(value: unknown): string {
         return [symbol, amountText].filter(Boolean).join(" ");
     }
     return "";
+}
+
+/** Match `DisplayValue` date/dateTime formatting so truncated hover copy matches the cell. */
+function formatTemporalTooltip(
+    value: unknown,
+    mode: "date" | "dateTime",
+    timeZone: string,
+    format?: Intl.DateTimeFormatOptions,
+): string {
+    const dateOnly = typeof value === "string" && DATE_ONLY_ISO.test(value);
+    const d =
+        value instanceof Date
+            ? value
+            : typeof value === "string" || typeof value === "number"
+              ? new Date(value)
+              : null;
+    if (!d || Number.isNaN(d.getTime())) return typeof value === "string" ? value : "";
+    return (
+        formatDate(d, {
+            timeZone: dateOnly && mode === "date" ? "UTC" : timeZone,
+            format: format ?? (mode === "dateTime" ? DATE_TIME_FORMAT : DATE_FORMAT),
+        }) || (typeof value === "string" ? value : "")
+    );
 }
