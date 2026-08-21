@@ -253,6 +253,10 @@ function FileMediaPreview({
  * Language keys used when resolveLanguageKey is provided:
  * - form.mediaField.uploadImageHint  (placeholder for single image)
  * - form.mediaField.uploadVideoHint  (placeholder for single video)
+ * - form.mediaField.uploadFileHint   (placeholder for generic file)
+ * - form.mediaField.uploadPdfHint    (placeholder when accept is PDF-only)
+ * - form.mediaField.invalidFileType  (selected file does not match accept)
+ * - form.mediaField.invalidPdfType   (selected file is not a PDF)
  * - form.uploadNewImageHint          (fallback for image upload hint)
  * - form.mediaField.imageAlt         (alt for existing image in gallery)
  * - form.mediaField.videoAlt         (prefix for existing video, e.g. "Video" → "Video 1")
@@ -282,6 +286,33 @@ type Item =
 function getDefaultMaxCount(mode: "single" | "multiple", mediaType: MediaType): number {
     if (mode === "single") return 1;
     return mediaType === "video" ? 3 : 10;
+}
+
+function parseAcceptTokens(accept: string): string[] {
+    return accept
+        .split(",")
+        .map((token) => token.trim().toLowerCase())
+        .filter(Boolean);
+}
+
+function isPdfOnlyAccept(accept?: string): boolean {
+    if (!accept) return false;
+    const tokens = parseAcceptTokens(accept);
+    return tokens.length > 0 && tokens.every((token) => token === "application/pdf" || token === ".pdf");
+}
+
+function fileMatchesAccept(file: File, accept: string): boolean {
+    const tokens = parseAcceptTokens(accept);
+    if (tokens.length === 0) return true;
+
+    const mime = (file.type || "").toLowerCase();
+    const name = file.name.toLowerCase();
+
+    return tokens.some((token) => {
+        if (token.startsWith(".")) return name.endsWith(token);
+        if (token.endsWith("/*")) return mime.startsWith(token.slice(0, -1));
+        return mime === token;
+    });
 }
 
 function MediaField({
@@ -367,7 +398,19 @@ function MediaField({
 
     const handleFileSelect = (files: FileList | null) => {
         if (!files?.length) return;
-        const fileList = Array.from(files);
+        let fileList = Array.from(files);
+
+        if (accept) {
+            const valid = fileList.filter((file) => fileMatchesAccept(file, accept));
+            if (valid.length === 0) {
+                form.setError(name, {
+                    type: "manual",
+                    message: resolveLanguageKey(isPdfOnlyAccept(accept) ? "invalidPdfType" : "invalidFileType"),
+                });
+                return;
+            }
+            fileList = valid;
+        }
 
         if (isSingle) {
             const file = fileList[0];
@@ -388,7 +431,8 @@ function MediaField({
         }
     };
 
-    const uploadHint = placeholder || resolveLanguageKey(hints[mediaType]);
+    const uploadHint =
+        placeholder || resolveLanguageKey(isPdfOnlyAccept(accept) ? "uploadPdfHint" : hints[mediaType]);
     const fieldError = (form.formState.errors as Record<string, unknown>)[name];
     const hasError = !!fieldError;
 
