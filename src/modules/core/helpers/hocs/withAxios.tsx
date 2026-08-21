@@ -102,6 +102,9 @@ const withAxios =
                 const [requestData, setRequestData] = useState<RequestPayload>(initialFilter);
                 const [jsonData, setJsonData] = useState<Record<string, unknown> | null>(null);
                 const [isFormData, setIsFormData] = useState<boolean>(initialFilter instanceof FormData);
+                /** True from the moment a mutator is invoked until HTTP `loading` settles (covers file upload + effect lag). */
+                const [requestHold, setRequestHold] = useState(false);
+                const wasHttpLoadingRef = useRef(false);
                 const toastIdRef = useRef<string | number | undefined>(undefined);
                 const toastStateRef = useRef<{
                     url: string;
@@ -177,7 +180,7 @@ const withAxios =
                 }
 
                 const {
-                    loading,
+                    loading: httpLoading,
                     error,
                     data
                 } = useHttpRequest(
@@ -203,6 +206,15 @@ const withAxios =
                 useEffect(() => {
                     setFetchCount((currentFetchCount) => currentFetchCount + 1);
                 }, [requestData]);
+
+                useEffect(() => {
+                    if (wasHttpLoadingRef.current && !httpLoading) {
+                        setRequestHold(false);
+                    }
+                    wasHttpLoadingRef.current = httpLoading;
+                }, [httpLoading]);
+
+                const loading = httpLoading || requestHold;
 
                 return (
                     <>
@@ -234,20 +246,27 @@ const withAxios =
                                         setFetchCount((currentFetchCount) => currentFetchCount + 1);
                                     },
                                     onPost: async (data: PostType | FormData) => {
-                                        if (data instanceof FormData) {
-                                            setIsFormData(true);
-                                            setRequestData(data);
+                                        setRequestHold(true);
+                                        try {
+                                            if (data instanceof FormData) {
+                                                setIsFormData(true);
+                                                setRequestData(data);
+                                                setJsonData(null);
+                                                return;
+                                            }
+                                            const cleanData = hasNestedFile(data)
+                                                ? await replaceFilesWithIds(data as Record<string, unknown>)
+                                                : data;
+                                            setIsFormData(false);
+                                            setRequestData({...cleanData});
                                             setJsonData(null);
-                                            return;
+                                        } catch (err) {
+                                            setRequestHold(false);
+                                            throw err;
                                         }
-                                        const cleanData = hasNestedFile(data)
-                                            ? await replaceFilesWithIds(data as Record<string, unknown>)
-                                            : data;
-                                        setIsFormData(false);
-                                        setRequestData({...cleanData});
-                                        setJsonData(null);
                                     },
                                     onFormDataChange: (input: FormData | FormDataWithJson | PostType) => {
+                                        setRequestHold(true);
                                         setIsFormData(true);
                                         // Check if input is FormDataWithJson object
                                         if (isFormDataWithJson(input)) {
