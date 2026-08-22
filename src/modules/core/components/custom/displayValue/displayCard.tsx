@@ -51,34 +51,34 @@ type DisplayCardProps = {
 
 const containerStyles: Record<DisplayCardVariant, string> = {
     default: "border-transparent bg-muted/30",
-    success: "border-status-sold/30 bg-status-sold/5",
+    success: "border-success/30 bg-success/5",
     destructive: "border-destructive/30 bg-destructive/5",
-    warning: "border-status-reserved/30 bg-status-reserved/5",
-    info: "border-status-available/30 bg-status-available/5",
+    warning: "border-warning/30 bg-warning/5",
+    info: "border-info/30 bg-info/5",
 };
 
 const iconWrapStyles: Record<DisplayCardVariant, string> = {
     default: "bg-background",
-    success: "bg-status-sold/15",
+    success: "bg-success/15",
     destructive: "bg-destructive/10",
-    warning: "bg-status-reserved/15",
-    info: "bg-status-available/15",
+    warning: "bg-warning/15",
+    info: "bg-info/15",
 };
 
 const accentTextStyles: Record<DisplayCardVariant, string> = {
     default: "text-muted-foreground",
-    success: "text-status-sold",
+    success: "text-success",
     destructive: "text-destructive",
-    warning: "text-status-reserved",
-    info: "text-status-available",
+    warning: "text-warning",
+    info: "text-info",
 };
 
 const valueTextStyles: Record<DisplayCardVariant, string> = {
     default: "text-foreground",
-    success: "text-status-sold",
+    success: "text-success",
     destructive: "text-destructive",
-    warning: "text-status-reserved",
-    info: "text-status-available",
+    warning: "text-warning",
+    info: "text-info",
 };
 
 function resourceHasPositiveRead(read: unknown): boolean {

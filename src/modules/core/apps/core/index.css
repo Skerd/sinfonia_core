@@ -316,12 +316,14 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     --info: oklch(0.58 0.15 232);
     --info-foreground: oklch(0.99 0 0);
 
-    --status-available: oklch(0.55 0.18 230);
+    /* Unit lifecycle: available=green, reserved=yellow, sold=red,
+       unavailable(blocked)=purple, leased=black (matches primary badges). */
+    --status-available: oklch(0.55 0.2 145);
     --status-reserved: oklch(0.72 0.18 75);
-    --status-sold: oklch(0.55 0.2 145);
-    --status-blocked: oklch(0.55 0.22 25);
-    --status-leased: oklch(0.55 0.21 300);
-    /* One foreground for all five: they share a lightness band by design. */
+    --status-sold: oklch(0.55 0.22 25);
+    --status-blocked: oklch(0.55 0.21 300);
+    --status-leased: oklch(0.25 0 0);
+    /* One foreground for chromatic statuses; leased uses light text on dark. */
     --status-foreground: oklch(0.99 0 0);
 
     /*
@@ -389,13 +391,12 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     --info: oklch(0.70 0.14 232);
     --info-foreground: oklch(0.17 0.03 232);
 
-    --status-available: oklch(0.65 0.2 230);
+    --status-available: oklch(0.65 0.22 145);
     --status-reserved: oklch(0.78 0.18 75);
-    --status-sold: oklch(0.65 0.22 145);
-    --status-blocked: oklch(0.65 0.2 25);
-    --status-leased: oklch(0.68 0.19 300);
-    /* The dark-mode status colors are lifted to ~0.65 L, where white text no
-       longer clears contrast and dark text does. */
+    --status-sold: oklch(0.65 0.2 25);
+    --status-blocked: oklch(0.68 0.19 300);
+    --status-leased: oklch(0.92 0 0);
+    /* Chromatic statuses sit at ~0.65 L (dark text); leased is near-white. */
     --status-foreground: oklch(0.165 0.022 264);
 }
 

@@ -80,14 +80,14 @@ export const GRID_KPI =
 export const DASHBOARD_SELECTABLE_RING =
     "ring-2 ring-primary shadow-lg shadow-primary/20 hover:ring-primary";
 
-/** Semantic status badge tokens (maps to --status-* CSS variables). */
+/** Semantic outcome badges (maps to --success/--warning/--destructive/--info). */
 export const STATUS_BADGE_SUCCESS =
-    "border-status-sold/30 bg-status-sold/10 text-status-sold";
+    "border-success/30 bg-success/10 text-success";
 export const STATUS_BADGE_WARNING =
-    "border-status-reserved/30 bg-status-reserved/10 text-status-reserved";
+    "border-warning/30 bg-warning/10 text-warning";
 export const STATUS_BADGE_DANGER =
-    "border-status-blocked/30 bg-status-blocked/10 text-status-blocked";
+    "border-destructive/30 bg-destructive/10 text-destructive";
 export const STATUS_BADGE_INFO =
-    "border-status-available/30 bg-status-available/10 text-status-available";
+    "border-info/30 bg-info/10 text-info";
 export const STATUS_BADGE_NEUTRAL =
     "border-border bg-muted/50 text-muted-foreground";

@@ -176,7 +176,7 @@ export function EntityStatusBreakdown({
                     {collectedAmount != null && (
                         <div className="text-right">
                             <p className="text-3xs text-muted-foreground">{resolveLanguageKey(collectedLabelKey)}</p>
-                            <p className="font-semibold text-sm text-status-sold">
+                            <p className="font-semibold text-sm text-success">
                                 {formatCompactCurrency(collectedAmount)}
                             </p>
                         </div>

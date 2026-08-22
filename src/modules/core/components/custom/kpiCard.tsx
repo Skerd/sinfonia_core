@@ -31,17 +31,17 @@ export interface KPICardProps {
 const variantStyles: Record<NonNullable<KPICardProps['variant']>, string> = {
   default: '',
   primary: 'ring-primary/30 bg-primary/5',
-  success: 'ring-status-sold/30 bg-status-sold/5',
-  warning: 'ring-status-reserved/30 bg-status-reserved/5',
-  danger: 'ring-status-blocked/30 bg-status-blocked/5',
+  success: 'ring-success/30 bg-success/5',
+  warning: 'ring-warning/30 bg-warning/5',
+  danger: 'ring-destructive/30 bg-destructive/5',
 };
 
 const iconVariantStyles: Record<NonNullable<KPICardProps['variant']>, string> = {
   default: 'bg-accent text-foreground',
   primary: 'bg-primary/20 text-primary',
-  success: 'bg-status-sold/20 text-status-sold',
-  warning: 'bg-status-reserved/20 text-status-reserved',
-  danger: 'bg-status-blocked/20 text-status-blocked',
+  success: 'bg-success/20 text-success',
+  warning: 'bg-warning/20 text-warning',
+  danger: 'bg-destructive/20 text-destructive',
 };
 
 function TrendBadge({ trend }: { trend: NonNullable<KPICardProps['trend']> }) {
