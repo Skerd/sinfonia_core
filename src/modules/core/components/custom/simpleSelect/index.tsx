@@ -13,7 +13,7 @@ import {
 } from '@coreModule/components/ui/command.tsx';
 import { Badge } from '@coreModule/components/ui/badge.tsx';
 import { Separator } from '@coreModule/components/ui/separator.tsx';
-import { ChevronsUpDown } from 'lucide-react';
+import { ChevronsUpDown, X } from 'lucide-react';
 import { cn } from '@coreModule/components/lib/utils.ts';
 import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons';
 import withLanguage, { WithLanguageType } from '@coreModule/helpers/hocs/withLanguage.tsx';
@@ -127,6 +127,45 @@ function SimpleSelectRender({
         [disabled],
     );
 
+    const clearValue = useCallback(() => {
+        if (disabled) return;
+        if (multiple) {
+            onValueChange?.([], []);
+        } else {
+            onValueChange?.('');
+        }
+        setSearchText('');
+        setOpen(false);
+    }, [disabled, multiple, onValueChange]);
+
+    const handleClear = useCallback(
+        (e: MouseEvent | PointerEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+            clearValue();
+        },
+        [clearValue],
+    );
+
+    const canClear = !disabled && (multiple ? selectedOptions.length > 0 : Boolean(selectedOption));
+
+    const renderClearTriggerControl = () =>
+        canClear ? (
+            <span
+                role="button"
+                tabIndex={-1}
+                aria-label={String(resolveLanguageKey('clear'))}
+                className="rounded-sm p-0.5 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                onPointerDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
+                onClick={handleClear}
+            >
+                <X className="h-3.5 w-3.5" />
+            </span>
+        ) : null;
+
     const renderOptionItem = useCallback(
         (option: SimpleSelectOption) => {
             const isSelected = selectedValuesSet.has(option.value);
@@ -214,6 +253,7 @@ function SimpleSelectRender({
                                         ))
                                     )}
                                 </div>
+                                {renderClearTriggerControl()}
                             </>
                         )}
                     </Button>
@@ -237,8 +277,13 @@ function SimpleSelectRender({
                                 className,
                             )}
                         >
-                            {multiple ? renderMultipleTriggerContent() : renderSingleTriggerContent()}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            <span className="truncate">
+                                {multiple ? renderMultipleTriggerContent() : renderSingleTriggerContent()}
+                            </span>
+                            <span className="ml-2 flex shrink-0 items-center gap-1">
+                                {renderClearTriggerControl()}
+                                <ChevronsUpDown className="h-4 w-4 opacity-50" />
+                            </span>
                         </Button>
                 )}
             </PopoverTrigger>
@@ -265,16 +310,13 @@ function SimpleSelectRender({
                             value={searchText}
                             onValueChange={setSearchText}
                         />
-                        {multiple && selectedOptions.length > 0 && !forTable && (
+                        {selectedOptions.length > 0 && !forTable && (
                             <div className="absolute top-0 right-2">
                                 <Button
                                     variant="ghost"
                                     type="button"
                                     className="text-xs text-muted-foreground hover:text-foreground"
-                                    onClick={() => {
-                                        onValueChange?.([], []);
-                                        setSearchText('');
-                                    }}
+                                    onClick={clearValue}
                                 >
                                     {String(resolveLanguageKey('clear'))}
                                 </Button>
@@ -302,10 +344,7 @@ function SimpleSelectRender({
                                         <CommandSeparator />
                                         <CommandGroup>
                                             <CommandItem
-                                                onSelect={() => {
-                                                    onValueChange?.([], []);
-                                                    setOpen(false);
-                                                }}
+                                                onSelect={clearValue}
                                                 className="justify-center text-center"
                                             >
                                                 {String(resolveLanguageKey('clear'))}
