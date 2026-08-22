@@ -1,15 +1,234 @@
 import * as React from "react"
+import { createPortal } from "react-dom"
 import {
   DateLib,
   DayPicker,
   getDefaultClassNames,
   type DayButton,
+  type DropdownProps,
   type Locale,
 } from "react-day-picker"
 
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button, buttonVariants } from "@coreModule/components/ui/button.tsx"
 import { IconChevronLeft, IconChevronRight, IconChevronDown } from "@tabler/icons-react"
+
+/** Year dropdown span when callers do not set explicit navigation bounds. */
+export const CALENDAR_DROPDOWN_YEARS_BACK = 100
+export const CALENDAR_DROPDOWN_YEARS_FORWARD = 100
+
+function captionHasYearDropdown(
+  captionLayout: React.ComponentProps<typeof DayPicker>["captionLayout"],
+): boolean {
+  return captionLayout === "dropdown" || captionLayout === "dropdown-years"
+}
+
+function resolveDropdownNavBounds(
+  props: Pick<
+    React.ComponentProps<typeof DayPicker>,
+    "captionLayout" | "startMonth" | "endMonth" | "today"
+  >,
+): Pick<React.ComponentProps<typeof DayPicker>, "startMonth" | "endMonth"> {
+  if (!captionHasYearDropdown(props.captionLayout)) {
+    return {}
+  }
+
+  const anchor = props.today ?? new Date()
+  const year = anchor.getFullYear()
+  const bounds: Pick<React.ComponentProps<typeof DayPicker>, "startMonth" | "endMonth"> = {}
+
+  if (props.startMonth == null) {
+    bounds.startMonth = new Date(year - CALENDAR_DROPDOWN_YEARS_BACK, 0, 1)
+  }
+  if (props.endMonth == null) {
+    bounds.endMonth = new Date(year + CALENDAR_DROPDOWN_YEARS_FORWARD, 11, 31)
+  }
+
+  return bounds
+}
+
+type CompactCaptionDropdownProps = DropdownProps & {
+  scrollFallbackValue: number
+  triggerWidthClass?: string
+  listWidthClass?: string
+}
+
+function CompactCaptionDropdown({
+  options,
+  value,
+  onChange,
+  disabled,
+  className,
+  classNames,
+  "aria-label": ariaLabel,
+  scrollFallbackValue,
+  triggerWidthClass = "w-[4.25rem]",
+  listWidthClass = "w-[4.5rem]",
+}: CompactCaptionDropdownProps) {
+  const [open, setOpen] = React.useState(false)
+  const [listPosition, setListPosition] = React.useState({
+    top: 0,
+    left: 0,
+    minWidth: 0,
+  })
+  const rootRef = React.useRef<HTMLSpanElement>(null)
+  const listRef = React.useRef<HTMLDivElement>(null)
+  const selected = options?.find((option) => option.value === value)
+
+  React.useLayoutEffect(() => {
+    if (!open || !rootRef.current) return
+    const rect = rootRef.current.getBoundingClientRect()
+    setListPosition({
+      top: rect.bottom + 4,
+      left: rect.left,
+      minWidth: rect.width,
+    })
+  }, [open])
+
+  React.useLayoutEffect(() => {
+    if (!open || !listRef.current) return
+
+    const scrollValue = options?.some((option) => option.value === value)
+      ? (value as number)
+      : scrollFallbackValue
+    const optionEl = listRef.current.querySelector<HTMLButtonElement>(
+      `[data-option-value="${scrollValue}"]`,
+    )
+    if (!optionEl) return
+
+    const list = listRef.current
+    const centeredTop =
+      optionEl.offsetTop - list.clientHeight / 2 + optionEl.clientHeight / 2
+    list.scrollTop = Math.max(0, centeredTop)
+  }, [open, value, options, scrollFallbackValue, listPosition])
+
+  React.useEffect(() => {
+    if (!open) return
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target as Node
+      if (
+        rootRef.current?.contains(target) ||
+        listRef.current?.contains(target)
+      ) {
+        return
+      }
+      setOpen(false)
+    }
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false)
+    }
+
+    document.addEventListener("pointerdown", onPointerDown)
+    document.addEventListener("keydown", onKeyDown)
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown)
+      document.removeEventListener("keydown", onKeyDown)
+    }
+  }, [open])
+
+  const listPanel =
+    open &&
+    createPortal(
+      <div
+        ref={listRef}
+        role="listbox"
+        aria-label={ariaLabel}
+        className={cn(
+          "fixed z-[250] max-h-48 overflow-y-auto rounded-md border border-border bg-popover p-1 shadow-md ring-1 ring-foreground/10",
+          listWidthClass,
+        )}
+        style={{
+          top: listPosition.top,
+          left: listPosition.left,
+          minWidth: listPosition.minWidth,
+        }}
+        onMouseDown={(event) => event.preventDefault()}
+      >
+        {options?.map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            role="option"
+            data-option-value={option.value}
+            aria-selected={option.value === value}
+            disabled={option.disabled}
+            className={cn(
+              "w-full rounded px-2 py-1 text-left text-xs hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50",
+              option.value === value && "bg-accent text-accent-foreground",
+            )}
+            onClick={() => {
+              onChange?.({
+                target: { value: String(option.value) },
+              } as React.ChangeEvent<HTMLSelectElement>)
+              setOpen(false)
+            }}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>,
+      document.body,
+    )
+
+  return (
+    <>
+      <span
+        ref={rootRef}
+        className={cn(
+          "relative",
+          open && "z-30",
+          classNames.dropdown_root,
+        )}
+      >
+        <button
+          type="button"
+          disabled={disabled}
+          aria-label={ariaLabel}
+          aria-expanded={open}
+          aria-haspopup="listbox"
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => !disabled && setOpen((prev) => !prev)}
+          className={cn(
+            "flex h-7 items-center justify-between gap-0.5 rounded-md px-1.5 text-xs font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50",
+            triggerWidthClass,
+            classNames.caption_label,
+            className,
+          )}
+        >
+          <span className="min-w-0 truncate">{selected?.label}</span>
+          <IconChevronDown className="size-3 shrink-0 text-muted-foreground" />
+        </button>
+      </span>
+      {listPanel}
+    </>
+  )
+}
+
+function isMonthDropdownOptions(options: DropdownProps["options"]): boolean {
+  return (
+    options != null &&
+    options.length > 0 &&
+    options.length <= 12 &&
+    options.every((option) => option.value >= 0 && option.value <= 11)
+  )
+}
+
+function CompactDropdown(props: DropdownProps) {
+  const isMonth = isMonthDropdownOptions(props.options)
+  return (
+    <CompactCaptionDropdown
+      {...props}
+      scrollFallbackValue={isMonth ? new Date().getMonth() : new Date().getFullYear()}
+      triggerWidthClass={
+        isMonth ? "w-[5.5rem] max-w-[5.5rem]" : "w-[4.25rem] tabular-nums"
+      }
+      listWidthClass={
+        isMonth ? "w-[5.5rem] min-w-[5.5rem]" : "w-[4.5rem]"
+      }
+    />
+  )
+}
 
 function Calendar({
   className,
@@ -22,6 +241,9 @@ function Calendar({
   components,
   monthNames,
   weekdayNames,
+  startMonth,
+  endMonth,
+  today,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>["variant"]
@@ -34,6 +256,12 @@ function Calendar({
   weekdayNames?: readonly string[]
 }) {
   const defaultClassNames = getDefaultClassNames()
+  const dropdownNavBounds = resolveDropdownNavBounds({
+    captionLayout,
+    startMonth,
+    endMonth,
+    today,
+  })
 
   const resolvedFormatters = React.useMemo(() => {
     const fromLanguage: Record<string, unknown> =
@@ -74,6 +302,60 @@ function Calendar({
     return { ...fromLanguage, ...formatters }
   }, [monthNames, weekdayNames, locale?.code, formatters])
 
+  const mergedComponents = React.useMemo(
+    () => ({
+      ...components,
+      Root: components?.Root ??
+        (({ className, rootRef, ...rootProps }) => (
+          <div
+            data-slot="calendar"
+            ref={rootRef}
+            className={cn(className)}
+            {...rootProps}
+          />
+        )),
+      Chevron:
+        components?.Chevron ??
+        (({ className, orientation, ...chevronProps }) => {
+          if (orientation === "left") {
+            return (
+              <IconChevronLeft className={cn("size-4", className)} {...chevronProps} />
+            )
+          }
+
+          if (orientation === "right") {
+            return (
+              <IconChevronRight className={cn("size-4", className)} {...chevronProps} />
+            )
+          }
+
+          return (
+            <IconChevronDown className={cn("size-4", className)} {...chevronProps} />
+          )
+        }),
+      DayButton:
+        components?.DayButton ??
+        ((dayButtonProps) => (
+          <CalendarDayButton locale={locale} {...dayButtonProps} />
+        )),
+      WeekNumber:
+        components?.WeekNumber ??
+        (({ children, ...weekProps }) => (
+          <td {...weekProps}>
+            <div className="flex size-(--cell-size) items-center justify-center text-center">
+              {children}
+            </div>
+          </td>
+        )),
+      Dropdown: components?.Dropdown ?? CompactDropdown,
+    }),
+    [components, locale],
+  )
+
+  const { components: _ignoredComponents, ...dayPickerProps } = props as typeof props & {
+    components?: React.ComponentProps<typeof DayPicker>["components"]
+  }
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -86,6 +368,8 @@ function Calendar({
       captionLayout={captionLayout}
       locale={locale}
       formatters={resolvedFormatters}
+      startMonth={startMonth ?? dropdownNavBounds.startMonth}
+      endMonth={endMonth ?? dropdownNavBounds.endMonth}
       classNames={{
         root: cn("w-fit", defaultClassNames.root),
         months: cn(
@@ -108,11 +392,11 @@ function Calendar({
           defaultClassNames.button_next
         ),
         month_caption: cn(
-          "flex h-(--cell-size) w-full items-center justify-center px-(--cell-size)",
+          "relative z-20 flex h-(--cell-size) w-full items-center justify-center overflow-visible px-(--cell-size)",
           defaultClassNames.month_caption
         ),
         dropdowns: cn(
-          "flex h-(--cell-size) w-full items-center justify-center gap-1.5 text-sm font-medium",
+          "relative z-20 flex h-(--cell-size) w-full items-center justify-center gap-1 overflow-visible text-sm font-medium",
           defaultClassNames.dropdowns
         ),
         dropdown_root: cn(
@@ -123,11 +407,19 @@ function Calendar({
           "absolute inset-0 bg-popover opacity-0",
           defaultClassNames.dropdown
         ),
+        months_dropdown: cn(
+          "max-w-[5.5rem] text-xs",
+          defaultClassNames.months_dropdown
+        ),
+        years_dropdown: cn(
+          "max-w-[4.25rem] text-xs tabular-nums",
+          defaultClassNames.years_dropdown
+        ),
         caption_label: cn(
           "font-medium select-none",
           captionLayout === "label"
             ? "text-sm"
-            : "flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground",
+            : "flex items-center gap-1 rounded-(--cell-radius) px-1 text-xs [&>svg]:size-3 [&>svg]:text-muted-foreground",
           defaultClassNames.caption_label
         ),
         table: "w-full border-collapse",
@@ -176,49 +468,9 @@ function Calendar({
         hidden: cn("invisible", defaultClassNames.hidden),
         ...classNames,
       }}
-      components={{
-        Root: ({ className, rootRef, ...props }) => {
-          return (
-            <div
-              data-slot="calendar"
-              ref={rootRef}
-              className={cn(className)}
-              {...props}
-            />
-          )
-        },
-        Chevron: ({ className, orientation, ...props }) => {
-          if (orientation === "left") {
-            return (
-              <IconChevronLeft className={cn("size-4", className)} {...props} />
-            )
-          }
-
-          if (orientation === "right") {
-            return (
-              <IconChevronRight className={cn("size-4", className)} {...props} />
-            )
-          }
-
-          return (
-            <IconChevronDown className={cn("size-4", className)} {...props} />
-          )
-        },
-        DayButton: ({ ...props }) => (
-          <CalendarDayButton locale={locale} {...props} />
-        ),
-        WeekNumber: ({ children, ...props }) => {
-          return (
-            <td {...props}>
-              <div className="flex size-(--cell-size) items-center justify-center text-center">
-                {children}
-              </div>
-            </td>
-          )
-        },
-        ...components,
-      }}
-      {...props}
+      components={mergedComponents}
+      today={today}
+      {...dayPickerProps}
     />
   )
 }

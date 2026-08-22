@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@coreModule/components/
 import useSelectedLanguage, {
   type LanguageDictionary,
 } from "@coreModule/helpers/hooks/useSelectedLanguage.ts"
+import { Calendar as CalendarIcon, X } from "lucide-react"
 import {IconClock} from "@tabler/icons-react";
 
 const LANGUAGE_PATH = "src/modules/core/components/custom/dateInput.tsx"
@@ -366,21 +367,76 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
         ? format(dateValue, displayFormat)
         : ""
 
+    const hasValue = displayValue.length > 0
+    const canClear = hasValue && !disabled
+    const clearLabel =
+      typeof currentLanguage?.clear === "string"
+        ? currentLanguage.clear
+        : "Clear"
+
+    const clearValue = React.useCallback(() => {
+      if (disabled) return
+      if (resolvedValueFormat) {
+        emitStringValue(undefined)
+      } else {
+        ;(onChange as ((d: Date | undefined) => void) | undefined)?.(undefined)
+      }
+    }, [disabled, resolvedValueFormat, emitStringValue, onChange])
+
+    const handleClear = React.useCallback(
+      (event: React.MouseEvent | React.PointerEvent) => {
+        event.preventDefault()
+        event.stopPropagation()
+        clearValue()
+      },
+      [clearValue],
+    )
+
+    const EndIcon = timeOnly ? IconClock : CalendarIcon
+
     return (
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Input
-            ref={ref}
-            type="text"
-            readOnly
-            disabled={disabled}
-            value={displayValue}
-            placeholder={resolvedPlaceholder}
-            className={cn("h-8 cursor-pointer placeholder:text-sm", className)}
-            aria-haspopup="dialog"
-            {...inputProps}
-          />
-        </PopoverTrigger>
+        <div className={cn("relative w-full", className)}>
+          <PopoverTrigger asChild>
+            <Input
+              ref={ref}
+              type="text"
+              readOnly
+              disabled={disabled}
+              value={displayValue}
+              placeholder={resolvedPlaceholder}
+              className={cn(
+                "h-8 cursor-pointer placeholder:text-sm",
+                canClear ? "pr-14" : "pr-10",
+              )}
+              aria-haspopup="dialog"
+              {...inputProps}
+            />
+          </PopoverTrigger>
+          <div
+            className="pointer-events-none absolute inset-y-0 end-2 flex shrink-0 items-center gap-1"
+          >
+            {canClear ? (
+              <span
+                role="button"
+                tabIndex={-1}
+                aria-label={clearLabel}
+                className="pointer-events-auto rounded-sm p-0.5 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                onPointerDown={(event) => {
+                  event.preventDefault()
+                  event.stopPropagation()
+                }}
+                onClick={handleClear}
+              >
+                <X className="h-4 w-4 hover:cursor-pointer" />
+              </span>
+            ) : null}
+            <EndIcon
+              className="h-4 w-4 shrink-0 text-muted-foreground/50 opacity-100 me-1"
+              aria-hidden
+            />
+          </div>
+        </div>
         <PopoverContent className="w-auto p-0" align="start">
           <div
             className={cn(

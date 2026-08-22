@@ -5,6 +5,7 @@
   "hourLabel": "Hr",
   "minuteLabel": "Min",
   "secondLabel": "Sec",
+  "clear": "Clear",
   "months": [
     "January",
     "February",

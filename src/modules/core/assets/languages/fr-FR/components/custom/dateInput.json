@@ -4,13 +4,14 @@
   "timePlaceholder": "Choisissez une heure",
   "hourLabel": "Heure",
   "minuteLabel": "Min.",
-  "secondLabel": "Seconde",
+  "secondLabel": "Sec.",
+  "clear": "Effacer",
   "months": [
     "Janvier",
     "Février",
     "Mars",
     "Avril",
-    "Peut",
+    "Mai",
     "Juin",
     "Juillet",
     "Août",
@@ -20,12 +21,12 @@
     "Décembre"
   ],
   "weekdays": [
-    "Su",
-    "Mo",
-    "Tu",
-    "Nous",
-    "Ème",
-    "Fr",
+    "Di",
+    "Lu",
+    "Ma",
+    "Me",
+    "Je",
+    "Ve",
     "Sa"
   ]
 }

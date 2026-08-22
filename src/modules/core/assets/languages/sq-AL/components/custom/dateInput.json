@@ -1,31 +1,32 @@
 {
   "path": "src/modules/core/components/custom/dateInput.tsx",
   "placeholder": "Zgjidh një datë",
+  "timePlaceholder": "Zgjidh orën",
   "hourLabel": "Orë",
   "minuteLabel": "Min",
   "secondLabel": "Sek",
+  "clear": "Pastro",
   "months": [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+    "Janar",
+    "Shkurt",
+    "Mars",
+    "Prill",
+    "Maj",
+    "Qershor",
+    "Korrik",
+    "Gusht",
+    "Shtator",
+    "Tetor",
+    "Nëntor",
+    "Dhjetor"
   ],
   "weekdays": [
-    "Su",
-    "Mo",
-    "Tu",
-    "We",
-    "Th",
-    "Fr",
-    "Sa"
-  ],
-  "timePlaceholder": "Zgjidh orën"
+    "Di",
+    "Hë",
+    "Ma",
+    "Më",
+    "Enj",
+    "Pre",
+    "Sht"
+  ]
 }
