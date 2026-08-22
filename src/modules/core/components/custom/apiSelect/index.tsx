@@ -844,7 +844,9 @@ function ApiSelectCore({
         [clearValue]
     );
 
-    const canClear = !disabled && selectedValues.length > 0;
+    const canClear =
+        !disabled &&
+        (multiple ? selectedOptions.length > 0 : Boolean(selectedOption));
 
     const renderClearTriggerControl = () =>
         canClear ? (
