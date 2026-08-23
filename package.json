@@ -23,7 +23,7 @@
         "runXAndY": "export NODE_ENV=development VITE_ENABLED_MODULES=x,y && vite --host",
         "eCommerceMarketplace": "export NODE_ENV=development VITE_ENABLED_MODULES=eCommerceMarketplace && vite --host",
         "propertyManagement": "export NODE_ENV=development VITE_ENABLED_MODULES=propertyManagement && vite --host",
-        "coreOnly": "export NODE_ENV=development1 VITE_ENABLED_MODULES=core,propertyManagement1,eCommerce1,eCommerceMarketplace1 && vite --host",
+        "coreOnly": "export NODE_ENV=development VITE_ENABLED_MODULES=core,propertyManagement1,eCommerce1,eCommerceMarketplace1 && vite --host",
         "typecheck": "node --experimental-strip-types scripts/moduleAliases.ts && tsc --noEmit",
         "test": "vitest run",
         "test:watch": "vitest",
