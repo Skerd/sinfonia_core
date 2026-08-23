@@ -48,7 +48,7 @@ function MyCompany({
     }
 
     return (
-        <div className="flex justify-center items-center w-full">
+        <div className="flex justify-center items-center w-full pt-1">
             <CompanyCard single={true} company={data} overrideCompanyId={data._id} />
         </div>
     )

@@ -8,8 +8,25 @@
   "time": "Time",
   "status": "Status",
   "mfa": "MFA",
+  "reason": "Reason",
   "device": "Device",
   "os": "Operating system",
   "browser": "Browser",
-  "userAgent": "User agent"
+  "userAgent": "User agent",
+  "geolocation": "Geolocation",
+  "location": "Location",
+  "createdAt": "Created at",
+  "updatedAt": "Updated at",
+  "createdBy": "Created by",
+  "deletedAt": "Deleted at",
+  "deletedBy": "Deleted by",
+  "yes": "Yes",
+  "no": "No",
+  "statusValues": {
+    "success": "Successful login",
+    "failure": "Failed login"
+  },
+  "failedTitle": "Could not load login history",
+  "failedDescription": "Something went wrong while loading this sign-in record.",
+  "failedTooltipDescription": "Try again or refresh the page."
 }

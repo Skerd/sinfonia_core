@@ -5,6 +5,20 @@
   "searchPlaceholder": "Search by time, device, or IP",
   "unknownLocation": "Unknown location",
   "reason": "Reason",
+  "time": "Time",
+  "location": "Location",
+  "device": "Device",
+  "os": "Operating system",
+  "browser": "Browser",
+  "userAgent": "User agent",
+  "ip": "IP address",
+  "geolocation": "Geolocation",
+  "mfa": "MFA",
+  "createdAt": "Created at",
+  "updatedAt": "Updated at",
+  "createdBy": "Created by",
+  "deletedAt": "Deleted at",
+  "deletedBy": "Deleted by",
   "status": {
     "success": "Successful login",
     "failure": "Failed login"
@@ -15,6 +29,12 @@
     "mfa": "MFA"
   },
   "fields": {
+    "!enums": {
+      "status": {
+        "success": "Successful login",
+        "failure": "Failed login"
+      }
+    },
     "user": "User",
     "userId": "User",
     "time": "Time",
@@ -27,6 +47,11 @@
     "userAgent": "User agent",
     "ip": "IP address",
     "geolocation": "Geolocation",
-    "createdAt": "Created at"
+    "location": "Location",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "createdBy": "Created by",
+    "deletedAt": "Deleted at",
+    "deletedBy": "Deleted by"
   }
 }

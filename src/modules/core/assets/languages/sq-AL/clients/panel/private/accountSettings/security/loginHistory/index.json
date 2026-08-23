@@ -5,16 +5,36 @@
   "searchPlaceholder": "Kërkoni sipas kohës, pajisjes ose IP-së",
   "unknownLocation": "Vendndodhja e panjohur",
   "reason": "Arsyeja",
+  "time": "Koha",
+  "location": "Vendndodhja",
+  "device": "Pajisja",
+  "os": "Sistemi operativ",
+  "browser": "Shfletuesi",
+  "userAgent": "Agjenti i përdoruesit",
+  "ip": "Adresa IP",
+  "geolocation": "Gjeolokimi",
+  "mfa": "MPJ",
+  "createdAt": "Krijuar në",
+  "updatedAt": "Përditësuar në",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga",
   "status": {
     "success": "Identifikimi i suksesshëm",
     "failure": "Identifikimi i dështuar"
   },
   "badge": {
-    "success": "Suksese",
+    "success": "Sukses",
     "failure": "Dështoi",
     "mfa": "MPJ"
   },
   "fields": {
+    "!enums": {
+      "status": {
+        "success": "Identifikimi i suksesshëm",
+        "failure": "Identifikimi i dështuar"
+      }
+    },
     "user": "Përdoruesi",
     "userId": "Përdoruesi",
     "time": "Koha",
@@ -27,6 +47,11 @@
     "userAgent": "Agjenti i përdoruesit",
     "ip": "Adresa IP",
     "geolocation": "Gjeolokimi",
-    "createdAt": "Krijuar në"
+    "location": "Vendndodhja",
+    "createdAt": "Krijuar në",
+    "updatedAt": "Përditësuar në",
+    "createdBy": "Krijuar nga",
+    "deletedAt": "Fshirë më",
+    "deletedBy": "Fshirë nga"
   }
 }

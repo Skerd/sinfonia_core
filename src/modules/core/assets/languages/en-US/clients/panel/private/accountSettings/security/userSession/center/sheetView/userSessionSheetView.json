@@ -10,5 +10,17 @@
   "lastActiveAt": "Last active",
   "ipAddress": "IP address",
   "userAgent": "User agent",
-  "revoke": "Revoke access"
+  "createdAt": "Created at",
+  "expiresAt": "Expires",
+  "geolocation": "Geolocation",
+  "location": "Location",
+  "createdBy": "Created by",
+  "deletedAt": "Deleted at",
+  "deletedBy": "Deleted by",
+  "yes": "Yes",
+  "no": "No",
+  "revoke": "Revoke access",
+  "failedTitle": "Could not load session",
+  "failedDescription": "Something went wrong while loading this session.",
+  "failedTooltipDescription": "Try again or refresh the page."
 }

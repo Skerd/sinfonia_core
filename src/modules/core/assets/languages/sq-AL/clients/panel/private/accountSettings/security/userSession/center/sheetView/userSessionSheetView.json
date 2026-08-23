@@ -10,5 +10,17 @@
   "lastActiveAt": "Aktivi i fundit",
   "ipAddress": "Adresa IP",
   "userAgent": "Agjenti i përdoruesit",
-  "revoke": "Revoko aksesin"
+  "createdAt": "Krijuar në",
+  "expiresAt": "Skadon",
+  "geolocation": "Gjeolokimi",
+  "location": "Vendndodhja",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga",
+  "yes": "Po",
+  "no": "Jo",
+  "revoke": "Revoko aksesin",
+  "failedTitle": "Sesioni nuk u ngarkua",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit të këtij sesioni.",
+  "failedTooltipDescription": "Provoni përsëri ose rifreskoni faqen."
 }

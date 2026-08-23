@@ -1,13 +1,27 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
-  "title": "Anmelden history",
-  "description": "Prüfung recent sign-ins und fehlgeschlagen attempts. Server-generated einträge kann nicht werden edited here.",
-  "searchPlaceholder": "Suchen von time, gerät, oder IP",
-  "unknownLocation": "Unknown standort",
+  "title": "Anmeldeverlauf",
+  "description": "Überprüfen Sie kürzliche Anmeldungen und fehlgeschlagene Versuche. Servergenerierte Einträge können hier nicht bearbeitet werden.",
+  "searchPlaceholder": "Nach Zeit, Gerät oder IP suchen",
+  "unknownLocation": "Unbekannter Standort",
   "reason": "Grund",
+  "time": "Zeit",
+  "location": "Standort",
+  "device": "Gerät",
+  "os": "Betriebssystem",
+  "browser": "Browser",
+  "userAgent": "User-Agent",
+  "ip": "IP-Adresse",
+  "geolocation": "Geolokalisierung",
+  "mfa": "MFA",
+  "createdAt": "Erstellt am",
+  "updatedAt": "Aktualisiert am",
+  "createdBy": "Erstellt von",
+  "deletedAt": "Gelöscht am",
+  "deletedBy": "Gelöscht von",
   "status": {
-    "success": "Successful anmelden",
-    "failure": "Fehlgeschlagen anmelden"
+    "success": "Anmeldung erfolgreich",
+    "failure": "Anmeldung fehlgeschlagen"
   },
   "badge": {
     "success": "Erfolg",
@@ -15,18 +29,29 @@
     "mfa": "MFA"
   },
   "fields": {
+    "!enums": {
+      "status": {
+        "success": "Anmeldung erfolgreich",
+        "failure": "Anmeldung fehlgeschlagen"
+      }
+    },
     "user": "Benutzer",
     "userId": "Benutzer",
-    "time": "Time",
+    "time": "Zeit",
     "status": "Status",
     "mfa": "MFA",
     "reason": "Grund",
     "device": "Gerät",
-    "os": "Operating system",
+    "os": "Betriebssystem",
     "browser": "Browser",
-    "userAgent": "Benutzer makler",
-    "ip": "IP adresse",
-    "geolocation": "Geolocation",
-    "createdAt": "Erstellt am"
+    "userAgent": "User-Agent",
+    "ip": "IP-Adresse",
+    "geolocation": "Geolokalisierung",
+    "location": "Standort",
+    "createdAt": "Erstellt am",
+    "updatedAt": "Aktualisiert am",
+    "createdBy": "Erstellt von",
+    "deletedAt": "Gelöscht am",
+    "deletedBy": "Gelöscht von"
   }
 }

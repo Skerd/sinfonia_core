@@ -8,8 +8,25 @@
   "time": "Heure",
   "status": "Statut",
   "mfa": "MFA",
+  "reason": "Motif",
   "device": "Appareil",
-  "os": "Système opérateur",
+  "os": "Système d'exploitation",
   "browser": "Navigateur",
-  "userAgent": "Agent utilisateur"
+  "userAgent": "Agent utilisateur",
+  "geolocation": "Géolocalisation",
+  "location": "Emplacement",
+  "createdAt": "Créé le",
+  "updatedAt": "Mis à jour le",
+  "createdBy": "Créé par",
+  "deletedAt": "Supprimé le",
+  "deletedBy": "Supprimé par",
+  "yes": "Oui",
+  "no": "Non",
+  "statusValues": {
+    "success": "Connexion réussie",
+    "failure": "Échec de la connexion"
+  },
+  "failedTitle": "Impossible de charger l'historique de connexion",
+  "failedDescription": "Une erreur s'est produite lors du chargement de cet enregistrement de connexion.",
+  "failedTooltipDescription": "Réessayez ou actualisez la page."
 }

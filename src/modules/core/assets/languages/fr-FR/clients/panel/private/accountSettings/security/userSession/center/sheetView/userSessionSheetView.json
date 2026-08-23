@@ -10,5 +10,17 @@
   "lastActiveAt": "Dernier actif",
   "ipAddress": "Adresse IP",
   "userAgent": "Agent utilisateur",
-  "revoke": "Révoquer l'accès"
+  "createdAt": "Créé le",
+  "expiresAt": "Expire",
+  "geolocation": "Géolocalisation",
+  "location": "Emplacement",
+  "createdBy": "Créé par",
+  "deletedAt": "Supprimé le",
+  "deletedBy": "Supprimé par",
+  "yes": "Oui",
+  "no": "Non",
+  "revoke": "Révoquer l'accès",
+  "failedTitle": "Impossible de charger la session",
+  "failedDescription": "Une erreur s'est produite lors du chargement de cette session.",
+  "failedTooltipDescription": "Réessayez ou actualisez la page."
 }

@@ -18,7 +18,6 @@ import DeactivateCompany from "@coreModule/clients/panel/private/tenancy/systemS
 import ActivateCompanyDialog from "@coreModule/components/custom/company/activateCompanyDialog.tsx";
 import DeactivateCompanyDialog from "@coreModule/components/custom/company/deactivateCompanyDialog.tsx";
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
@@ -118,8 +117,7 @@ const CompanyCard = memo(function CompanyCard({
                 innerRef={innerRef}
                 shellClassName={(row) =>
                     cn(
-                        "relative overflow-hidden border-l max-w-6xl",
-                        !row.isActive ? "border-l-destructive" : "border-l-green-700",
+                        "relative overflow-hidden border-l max-w-6xl"
                     )
                 }
                 sheetProps={({entity: row}) => ({
@@ -172,16 +170,6 @@ const CompanyCard = memo(function CompanyCard({
 
                     return (
                         <>
-                            {accessFieldPathExists(read, "isActive") && (
-                                <TooltipDisplayer tooltip={resolveLanguageKey(row.isActive ? "active" : "notActive")}>
-                                    <div
-                                        className={cn(
-                                            "absolute top-0 left-0 h-full w-1 shrink-0",
-                                            !row.isActive ? "bg-destructive" : "bg-success",
-                                        )}
-                                    />
-                                </TooltipDisplayer>
-                            )}
                             <EntityCard.Header titlePath="name" title={row.name} icon={logoTile}>
                                 <DropdownMenuItem
                                     onClick={(e) => {

@@ -5,6 +5,20 @@
   "searchPlaceholder": "Cerca per ora, dispositivo o IP",
   "unknownLocation": "Posizione sconosciuta",
   "reason": "Motivo",
+  "time": "Ora",
+  "location": "Posizione",
+  "device": "Dispositivo",
+  "os": "Sistema operativo",
+  "browser": "Browser",
+  "userAgent": "Agente utente",
+  "ip": "Indirizzo IP",
+  "geolocation": "Geolocalizzazione",
+  "mfa": "MFA",
+  "createdAt": "Creato il",
+  "updatedAt": "Aggiornato il",
+  "createdBy": "Creato da",
+  "deletedAt": "Eliminato il",
+  "deletedBy": "Eliminato da",
   "status": {
     "success": "Accesso riuscito",
     "failure": "Accesso non riuscito"
@@ -12,21 +26,32 @@
   "badge": {
     "success": "Successo",
     "failure": "Non riuscito",
-    "mfa": "MAE"
+    "mfa": "MFA"
   },
   "fields": {
+    "!enums": {
+      "status": {
+        "success": "Accesso riuscito",
+        "failure": "Accesso non riuscito"
+      }
+    },
     "user": "Utente",
     "userId": "Utente",
     "time": "Ora",
     "status": "Stato",
-    "mfa": "MAE",
+    "mfa": "MFA",
     "reason": "Motivo",
     "device": "Dispositivo",
     "os": "Sistema operativo",
-    "browser": "Navigatore",
+    "browser": "Browser",
     "userAgent": "Agente utente",
     "ip": "Indirizzo IP",
     "geolocation": "Geolocalizzazione",
-    "createdAt": "Creato il"
+    "location": "Posizione",
+    "createdAt": "Creato il",
+    "updatedAt": "Aggiornato il",
+    "createdBy": "Creato da",
+    "deletedAt": "Eliminato il",
+    "deletedBy": "Eliminato da"
   }
 }

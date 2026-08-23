@@ -2,9 +2,23 @@
   "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
   "title": "Historique de connexion",
   "description": "Passez en revue les connexions récentes et les tentatives infructueuses. Les enregistrements générés par le serveur ne peuvent pas être modifiés ici.",
-  "searchPlaceholder": "Recherche par heure, appareil ou IP",
+  "searchPlaceholder": "Rechercher par heure, appareil ou IP",
   "unknownLocation": "Lieu inconnu",
   "reason": "Motif",
+  "time": "Heure",
+  "location": "Emplacement",
+  "device": "Appareil",
+  "os": "Système d'exploitation",
+  "browser": "Navigateur",
+  "userAgent": "Agent utilisateur",
+  "ip": "Adresse IP",
+  "geolocation": "Géolocalisation",
+  "mfa": "MFA",
+  "createdAt": "Créé le",
+  "updatedAt": "Mis à jour le",
+  "createdBy": "Créé par",
+  "deletedAt": "Supprimé le",
+  "deletedBy": "Supprimé par",
   "status": {
     "success": "Connexion réussie",
     "failure": "Échec de la connexion"
@@ -15,6 +29,12 @@
     "mfa": "MFA"
   },
   "fields": {
+    "!enums": {
+      "status": {
+        "success": "Connexion réussie",
+        "failure": "Échec de la connexion"
+      }
+    },
     "user": "Utilisateur",
     "userId": "Utilisateur",
     "time": "Heure",
@@ -22,11 +42,16 @@
     "mfa": "MFA",
     "reason": "Motif",
     "device": "Appareil",
-    "os": "Système opérateur",
+    "os": "Système d'exploitation",
     "browser": "Navigateur",
     "userAgent": "Agent utilisateur",
     "ip": "Adresse IP",
     "geolocation": "Géolocalisation",
-    "createdAt": "Créé le"
+    "location": "Emplacement",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "createdBy": "Créé par",
+    "deletedAt": "Supprimé le",
+    "deletedBy": "Supprimé par"
   }
 }

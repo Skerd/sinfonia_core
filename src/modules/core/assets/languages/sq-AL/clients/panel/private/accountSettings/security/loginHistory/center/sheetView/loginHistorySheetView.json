@@ -8,8 +8,25 @@
   "time": "Koha",
   "status": "Statusi",
   "mfa": "MPJ",
+  "reason": "Arsyeja",
   "device": "Pajisja",
   "os": "Sistemi operativ",
   "browser": "Shfletuesi",
-  "userAgent": "Agjenti i përdoruesit"
+  "userAgent": "Agjenti i përdoruesit",
+  "geolocation": "Gjeolokimi",
+  "location": "Vendndodhja",
+  "createdAt": "Krijuar në",
+  "updatedAt": "Përditësuar në",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga",
+  "yes": "Po",
+  "no": "Jo",
+  "statusValues": {
+    "success": "Identifikimi i suksesshëm",
+    "failure": "Identifikimi i dështuar"
+  },
+  "failedTitle": "Historia e hyrjes nuk u ngarkua",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit të këtij regjistri hyrjeje.",
+  "failedTooltipDescription": "Provoni përsëri ose rifreskoni faqen."
 }
