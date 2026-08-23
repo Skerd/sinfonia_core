@@ -31,7 +31,7 @@ type AccountProfileEmailProps = WithLanguageType & WithAxiosType<EmailPreference
 function AccountProfileEmail({
     resolveLanguageKey,
     data,
-    // onUpdate = () => {},
+    onUpdate = () => {},
     specificUserId,
     languageCode,
     loading,
@@ -205,18 +205,11 @@ function AccountProfileEmail({
                                                 try {
                                                     let tempEmail = newEmail;
                                                     form.reset();
-                                                    // this is commented out, because email must be verified every time it changes
-                                                    // if( specificUserId) {
-                                                    //     setIsEmailVerified(true);
-                                                    //     setUnverifiedEmail("");
-                                                    //     setCurrentEmail(tempEmail);
-                                                    //     onUpdate(tempEmail);
-                                                    // }
-                                                    // else {
-                                                        setIsEmailVerified(false);
-                                                        setUnverifiedEmail(tempEmail);
-                                                        setCurrentEmail(data?.email ?? currentEmail);
-                                                    // }
+                                                    // Pending verification: keep current username, track unverified email + surface activation tab
+                                                    setIsEmailVerified(false);
+                                                    setUnverifiedEmail(tempEmail);
+                                                    setCurrentEmail(data?.email ?? currentEmail);
+                                                    onUpdate(tempEmail);
                                                 }catch(e) {
                                                     console.log(e)
                                                 }

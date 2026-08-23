@@ -129,10 +129,21 @@ function UserAccountProfileUserInfo({
                 hideCondition={!read?.username}
                 specificUserId={specificUserId}
                 onUpdate={(email: string) => {
-                    updateRow?.(specificUserId ?? id, {username: email})
-                    if( !specificUserId ){
-                        // dispatch(updateUserValue("username", "email"))
-                    }
+                    // Reflect pending email verification + activation request immediately on the card/list
+                    updateRow?.(specificUserId ?? id, {
+                        unverifiedEmail: email,
+                        requests: {
+                            ...(data?.requests || {}),
+                            activation: {
+                                ...(data?.requests?.activation || {}),
+                                email,
+                                attempts: data?.requests?.activation?.attempts ?? 1,
+                                date: new Date(),
+                            },
+                        },
+                    });
+                    // Refetch full profile so RequestsSection gets server activation state and auto-opens the tab
+                    setForceReload(Date.now());
                 }}
             />
             <AccountProfileName

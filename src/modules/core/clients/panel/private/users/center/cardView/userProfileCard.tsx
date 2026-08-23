@@ -39,7 +39,7 @@ import {ActivationRequestTabContent} from "@coreModule/clients/panel/private/use
 import {InvitationRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/invitationRequestTabContent.tsx";
 import {MfaDeactivationRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/mfaDeactivationRequestTabContent.tsx";
 import {PasswordResetRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/passwordResetRequestTabContent.tsx";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
@@ -72,6 +72,7 @@ const REQUEST_TAB_IDS = ["invitation", "activation", "passwordReset", "mfaDeacti
 
 export function RequestsSection({data, resolveLanguageKey, timezone, specificUserId}: RequestsSectionProps) {
     const [selectedTab, setSelectedTab] = useState("");
+    const previousTabsRef = useRef<string[] | null>(null);
     const req = data.requests!;
     const tz = timezone ?? "UTC";
 
@@ -84,6 +85,23 @@ export function RequestsSection({data, resolveLanguageKey, timezone, specificUse
         if (id === "mfaDeactivation") return r.opened != null || r.attempts != null;
         return false;
     });
+
+    // When a request tab newly appears (e.g. after email change → activation), open it.
+    useEffect(() => {
+        if (previousTabsRef.current === null) {
+            previousTabsRef.current = [...tabsWithData];
+            return;
+        }
+        const previous = previousTabsRef.current;
+        const newlyAppeared = tabsWithData.filter((id) => !previous.includes(id));
+        previousTabsRef.current = [...tabsWithData];
+        if (!newlyAppeared.length) return;
+        const preferred =
+            newlyAppeared.includes("activation") ? "activation"
+            : newlyAppeared.includes("passwordReset") ? "passwordReset"
+            : newlyAppeared[newlyAppeared.length - 1];
+        setSelectedTab(preferred);
+    }, [tabsWithData.join("|")]);
 
     const tabLabels: Record<(typeof REQUEST_TAB_IDS)[number], string> = {
         invitation: resolveLanguageKey("requestsInvitation"),
@@ -170,6 +188,35 @@ function UserProfileCardInner({
     const maxVisibleRoles = 4;
     const {read} = useAccess("users", !specificUserId ? "self" : "others");
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
+    const [activeTab, setActiveTab] = useState("about");
+    const previousRequestTabsRef = useRef<string[] | null>(null);
+
+    // Derive which request tabs would be visible (must run before any early return)
+    const presentRequestTabs = (
+        [
+            (!!read?.requests?.keys?.invitation && !!data.requests?.invitation) ? "invitation" : null,
+            (!!read?.requests?.keys?.activation && !!data.requests?.activation && (!!data.requests.activation.email || data.requests.activation.attempts != null)) ? "activation" : null,
+            (!!read?.requests?.keys?.passwordReset && !!data.requests?.passwordReset && (data.requests.passwordReset.opened != null || data.requests.passwordReset.attempts != null)) ? "passwordReset" : null,
+            (!!read?.requests?.keys?.mfaDeactivation && !!data.requests?.mfaDeactivation && (data.requests.mfaDeactivation.attempts != null || data.requests.mfaDeactivation.date != null)) ? "mfaDeactivation" : null,
+        ] as const
+    ).filter((id): id is "invitation" | "activation" | "passwordReset" | "mfaDeactivation" => id != null);
+
+    useEffect(() => {
+        // First run: seed previous tabs without forcing a tab switch
+        if (previousRequestTabsRef.current === null) {
+            previousRequestTabsRef.current = [...presentRequestTabs];
+            return;
+        }
+        const previous = previousRequestTabsRef.current;
+        const newlyAppeared = presentRequestTabs.filter((id) => !previous.includes(id));
+        previousRequestTabsRef.current = [...presentRequestTabs];
+        if (!newlyAppeared.length) return;
+        const preferred =
+            newlyAppeared.includes("activation") ? "activation"
+            : newlyAppeared.includes("passwordReset") ? "passwordReset"
+            : newlyAppeared[newlyAppeared.length - 1];
+        setActiveTab(preferred);
+    }, [presentRequestTabs.join("|")]);
 
     if (!read || !Object.keys(read).length) {
         return <HiddenElement/>;
@@ -317,7 +364,7 @@ function UserProfileCardInner({
                         }
                     </HiddenElement>
 
-                    <Tabs defaultValue="about" className="w-full max-w-full pb-2">
+                    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-full pb-2">
                         <TabsList className="overflow-x-auto overflow-y-hidden">
                             {
                                 Object.entries(tabLabels).map((value) => {
