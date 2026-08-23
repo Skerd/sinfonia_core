@@ -131,17 +131,16 @@ function AccountProfileTimeZone({
                             <FormLabel>{resolveLanguageKey("form.newTimeZoneLabel")}</FormLabel>
                             <FormControl>
                                 <div className="flex gap-x-1.5">
-                                    <div className="flex grow gap-x-1">
-
+                                    <div className="flex min-w-0 grow gap-x-1">
+                                        {/* Mirror name field: input-like shrinkable control + grow action buttons */}
                                         <SimpleSelect
                                             options={timezoneSelectItems}
                                             value={field.value || currentTimeZone}
                                             onValueChange={field.onChange}
                                             placeholder={resolveLanguageKey("form.newTimeZoneLabel")}
                                             disabled={loading || !canEdit}
-                                            className="grow w-full"
+                                            className="min-w-0 w-full"
                                         />
-
                                         <UpdateTimeZone
                                             specificUserId={specificUserId}
                                             fieldValue={newTimezone !== currentTimeZone ? newTimezone : ""}

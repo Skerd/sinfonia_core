@@ -269,7 +269,8 @@ function SimpleSelectRender({
                             onClick={stopCardActivation}
                             onPointerDown={stopCardActivation}
                             className={cn(
-                                'w-full justify-between',
+                                // Override Button's shrink-0 so the trigger can shrink in flex rows (e.g. next to confirm/cancel).
+                                'min-w-0 w-full shrink justify-between',
                                 'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive',
                                 {
                                     'text-muted-foreground': multiple ? selectedOptions.length === 0 : !selectedOption,

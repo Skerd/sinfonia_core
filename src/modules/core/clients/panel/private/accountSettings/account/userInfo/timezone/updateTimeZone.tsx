@@ -60,7 +60,7 @@ function UpdateTimezone({
     }
 
     return (
-        <div className="flex items-center grow gap-x-1 transition-all ease-in" style={{border: "0px solid red"}}>
+        <div className="flex grow items-center gap-x-1 transition-all ease-in" style={{border: "0px solid red"}}>
             <TooltipDisplayer tooltip={resolveLanguageKey("confirm")} contentClassName="text-sm">
                 <Button
                     type="submit"
