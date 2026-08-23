@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {BadgeCheck, Calendar, Clock9, Lock, Mail, UserPlus} from "lucide-react";
+import {BadgeCheck, Calendar, Clock9, Lock, Mail, MessageSquareText, UserPlus} from "lucide-react";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
 import type {CompanyUserRequestsType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
@@ -87,6 +87,7 @@ function InvitationRequestTabContentInner({
 
     const {read} = useAccess("users", !specificUserId ? "self" : "others");
     const invitationRead = read?.requests?.keys?.invitation?.keys;
+    const accepted = invitation.accepted === true;
 
     return (
         <TabsContent value="invitation" className="rounded-md border bg-muted/30 p-3 text-sm">
@@ -111,53 +112,71 @@ function InvitationRequestTabContentInner({
                                 value={invitation.invitedAt}
                             />
                             <DisplayRow
-                                icon={Mail}
-                                label={resolveLanguageKey("opened")}
-                                tooltip={resolveLanguageKey("opened")}
-                                show={!!invitationRead?.opened}
-                                type="boolean"
-                                value={invitation.opened}
+                                icon={MessageSquareText}
+                                label={resolveLanguageKey("welcomeMessage")}
+                                tooltip={resolveLanguageKey("welcomeMessage")}
+                                show={!!invitationRead?.welcomeMessage}
+                                type="longText"
+                                value={invitation.welcomeMessage}
                             />
-                            <DisplayRow
-                                icon={Calendar}
-                                label={resolveLanguageKey("attempts")}
-                                tooltip={resolveLanguageKey("attempts")}
-                                show={!!invitationRead?.attempts}
-                                type="number"
-                                value={invitation.attempts}
-                            />
-                            <DisplayRow
-                                icon={Clock9}
-                                label={resolveLanguageKey("invitationExpiresAt")}
-                                tooltip={resolveLanguageKey("invitationExpiresAt")}
-                                show={!!invitationRead?.invitationExpiresAt}
-                                type="dateTime"
-                                value={invitation.invitationExpiresAt}
-                            />
-                            <DisplayRow
-                                icon={BadgeCheck}
-                                label={resolveLanguageKey("accepted")}
-                                tooltip={resolveLanguageKey("accepted")}
-                                show={!!invitationRead?.accepted}
-                                type="boolean"
-                                value={invitation.accepted}
-                            />
-                            <DisplayRow
-                                icon={Calendar}
-                                label={resolveLanguageKey("acceptedAt")}
-                                tooltip={resolveLanguageKey("acceptedAt")}
-                                show={!!invitationRead?.acceptedAt}
-                                type="dateTime"
-                                value={invitation.acceptedAt}
-                            />
-                            <DisplayRow
-                                icon={Lock}
-                                label={resolveLanguageKey("lockedUntil")}
-                                tooltip={resolveLanguageKey("lockedUntil")}
-                                show={!!invitationRead?.lockedUntil}
-                                type="dateTime"
-                                value={invitation.lockedUntil}
-                            />
+                            {
+                                !accepted &&
+                                <>
+                                    <DisplayRow
+                                        icon={Mail}
+                                        label={resolveLanguageKey("opened")}
+                                        tooltip={resolveLanguageKey("opened")}
+                                        show={!!invitationRead?.opened}
+                                        type="boolean"
+                                        value={invitation.opened}
+                                    />
+                                    <DisplayRow
+                                        icon={Calendar}
+                                        label={resolveLanguageKey("attempts")}
+                                        tooltip={resolveLanguageKey("attempts")}
+                                        show={!!invitationRead?.attempts}
+                                        type="number"
+                                        value={invitation.attempts}
+                                    />
+                                    <DisplayRow
+                                        icon={Clock9}
+                                        label={resolveLanguageKey("invitationExpiresAt")}
+                                        tooltip={resolveLanguageKey("invitationExpiresAt")}
+                                        show={!!invitationRead?.invitationExpiresAt}
+                                        type="dateTime"
+                                        value={invitation.invitationExpiresAt}
+                                    />
+                                    <DisplayRow
+                                        icon={Lock}
+                                        label={resolveLanguageKey("lockedUntil")}
+                                        tooltip={resolveLanguageKey("lockedUntil")}
+                                        show={!accepted && !!invitationRead?.lockedUntil}
+                                        type="dateTime"
+                                        value={invitation.lockedUntil}
+                                    />
+                                </>
+                            }
+                            {
+                                accepted &&
+                                <>
+                                    <DisplayRow
+                                        icon={BadgeCheck}
+                                        label={resolveLanguageKey("accepted")}
+                                        tooltip={resolveLanguageKey("accepted")}
+                                        show={!!invitationRead?.accepted}
+                                        type="boolean"
+                                        value={invitation.accepted}
+                                    />
+                                    <DisplayRow
+                                        icon={Calendar}
+                                        label={resolveLanguageKey("acceptedAt")}
+                                        tooltip={resolveLanguageKey("acceptedAt")}
+                                        show={!!invitationRead?.acceptedAt}
+                                        type="dateTime"
+                                        value={invitation.acceptedAt}
+                                    />
+                                </>
+                            }
                         </InfoRowGroup>
                     </div>
 

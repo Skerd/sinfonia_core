@@ -4,15 +4,14 @@ import {compose} from "redux";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import Header from "@coreModule/components/custom/header.tsx";
 import UsersInviteDialog from "@coreModule/clients/panel/private/users/inviteUser";
 import CreateUsers from "@coreModule/clients/panel/private/users/createUser";
-import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
+import {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
+import EntityListPage from "@coreModule/components/entityPage/EntityListPage.tsx";
 import {UserCard} from "@coreModule/clients/panel/private/users/center/cardView";
-import {AllUsersFormResponseType, CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
-import {AllUsersFormType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.type.ts";
+import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
 import EditUser from "@coreModule/clients/panel/private/users/editUser";
-import UserActions from "@coreModule/clients/panel/private/users/center/actions";
+import EditUserAction from "@coreModule/clients/panel/private/users/center/actions/edit.tsx";
 import {TableUpdateContext} from "@coreModule/components/custom/tableUpdateContext.tsx";
 
 export {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
@@ -22,9 +21,7 @@ type UsersProps = WithLanguageType & {
 };
 
 function Users({resolveLanguageKey, administration}: UsersProps) {
-
     const listApiRef = useRef<EntityListApi<CompanyUserType> | null>(null);
-
     const newUserCreated = useSelector((state: RootState) => state.ui.newUserCreated);
 
     useEffect(() => {
@@ -34,54 +31,46 @@ function Users({resolveLanguageKey, administration}: UsersProps) {
     }, [newUserCreated]);
 
     const contextValue = {
-        updateRow: (id: any, patch: any) => {
-            return listApiRef.current?.updateRow?.(id, patch)
-        },
+        updateRow: (id: any, patch: any) => listApiRef.current?.updateRow?.(id, patch),
         refetch: () => listApiRef.current?.refetch?.(),
     };
 
     return (
         <TableUpdateContext.Provider value={contextValue}>
-            <div className="min-w-0 flex-full gap-4">
-                <Header
-                    title={resolveLanguageKey(administration ? "administrationTitle" : "title")}
-                    description={resolveLanguageKey(administration ? "administrationDescription" : "description")}
-                >
-                    <div className="flex items-center gap-x-2">
+            <EntityListPage<CompanyUserType>
+                apiUrl="/api/company/users"
+                collectionName="users"
+                accessModel="users"
+                tableConfigKey="users"
+                hideCreate
+                selfAccess={false}
+                listApiRef={listApiRef}
+                buildEditPath={() => ""}
+                resolveLanguageKey={resolveLanguageKey}
+                headerTitle={resolveLanguageKey(administration ? "administrationTitle" : "title") as string}
+                headerDescription={resolveLanguageKey(administration ? "administrationDescription" : "description") as string}
+                headerActions={
+                    <>
                         <UsersInviteDialog administration={administration} />
                         <CreateUsers administration={administration} />
-                    </div>
-                </Header>
-
-                <CardAndTableView<AllUsersFormResponseType, AllUsersFormType>
-                    url="/api/company/users"
-                    tableConfigKey="users"
-                    access="users"
-                    selfAccess={false}
-                    tableConfigOptions={{
-                        filterConfig: {
-                            placeholder: resolveLanguageKey("searchPlaceholder"),
-                            fields: resolveLanguageKey("fields"),
-                        },
-                    }}
-                    extraParams={{ administration, fetchAdministrationUsers: true }}
-                    configurations={{ limit: 20 }}
-                    containersClassName={{
-                        cardViewClassName: "grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 pe-1",
-                        scrollRootClassName: "flex-full",
-                    }}
-                    listRef={listApiRef}
-                    renderFunctions={{
-                        cardRender: (user) => <UserCard user={user} specificUserId={user._id}/>,
-                        action: (user) => {
-                            return (
-                                <UserActions user={user} />
-                            )
-                        }
-                    }}
-                />
-                <EditUser />
-            </div>
+                    </>
+                }
+                extraParams={{administration, fetchAdministrationUsers: true}}
+                configurations={{limit: 20}}
+                cardViewClassName="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 pe-1"
+                rowActionMenu={{
+                    hideView: true,
+                    hideEdit: true,
+                    hideDelete: true,
+                    hideRestore: true,
+                    allowMenuForCustomChildren: true,
+                }}
+                renderCard={(user) => <UserCard user={user} specificUserId={user._id} />}
+                renderActionMenuChildren={(user) => (
+                    <EditUserAction user={user} specificUserId={user._id} />
+                )}
+            />
+            <EditUser />
         </TableUpdateContext.Provider>
     );
 }

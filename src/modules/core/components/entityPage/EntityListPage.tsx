@@ -214,6 +214,7 @@ export type EntityListPageProps<T extends BaseEntity> = {
     rowActionMenu?: {
         hideDelete?: boolean;
         hideRestore?: boolean;
+        hideView?: boolean;
         allowMenuForCustomChildren?: boolean;
         /** Per-row when a function (e.g. hide edit for paid reservations). */
         hideEdit?: boolean | ((entity: T) => boolean);
@@ -223,6 +224,13 @@ export type EntityListPageProps<T extends BaseEntity> = {
      * Each def becomes a labeled input; their values AND-combine with the main DSL filter and with `extraFilters`.
      */
     quickFilters?: QuickFilterDef[];
+    /**
+     * Access perspective for list read + CardAndTableView (default `true` → `self`).
+     * Pass `false` for company-admin lists that must use the `others` grant (e.g. users).
+     */
+    selfAccess?: boolean;
+    /** Optional external list mutation ref (updateRow / refetch) for parent-owned contexts. */
+    listApiRef?: EntityListRefs<T>;
 };
 
 export default function EntityListPage<T extends BaseEntity>({
@@ -254,10 +262,13 @@ export default function EntityListPage<T extends BaseEntity>({
     renderFloatingModals,
     rowActionMenu,
     quickFilters,
+    selfAccess = true,
+    listApiRef,
 }: EntityListPageProps<T>) {
     const navigate = useNavigate();
-    const access = useAccess(accessModel);
+    const access = useAccess(accessModel, selfAccess ? "self" : "others");
     const {create, read} = access;
+    const hasSheet = !!(renderSheet || sheetLanguagePath);
     const readFields = (read && typeof read === "object" ? read : undefined) as Record<string, unknown> | undefined;
 
     const extraFiltersDSL = useMemo<FilterGroup | undefined>(() => {
@@ -427,7 +438,8 @@ export default function EntityListPage<T extends BaseEntity>({
     const [sheetEntity, setSheetEntity] = useState<T | null>(null);
     const [action, setAction] = useState("");
 
-    const listRef = useRef<EntityListApi<T> | null>(null);
+    const internalListRef = useRef<EntityListApi<T> | null>(null);
+    const listRef = listApiRef ?? internalListRef;
 
     const handleDelete = (entity: T, response?: DeletedData) => {
         if (response?.deletedAt != null || response?.deletedBy != null) {
@@ -502,6 +514,7 @@ export default function EntityListPage<T extends BaseEntity>({
                         url={apiUrl}
                         tableConfigKey={tableConfigKey}
                         access={accessModel}
+                        selfAccess={selfAccess}
                         extraParams={mergedExtraParams}
                         toolbarFilterDSL={combinedToolbarDSL}
                         aboveToolbar={
@@ -541,10 +554,12 @@ export default function EntityListPage<T extends BaseEntity>({
                                         listRef as EntityListRefs<T>,
                                     ) as JSX.Element)
                                     : (<></> as unknown as JSX.Element),
-                            onRowClick: (entity) => {
-                                setAction("view");
-                                setSheetEntity(entity);
-                            },
+                            onRowClick: hasSheet
+                                ? (entity) => {
+                                    setAction("view");
+                                    setSheetEntity(entity);
+                                }
+                                : undefined,
                             action: (entity) => (
                                 <ActionMenu
                                     accessModel={accessModel}
@@ -555,6 +570,7 @@ export default function EntityListPage<T extends BaseEntity>({
                                     }}
                                     editPath={buildEditPath(entity)}
                                     hideEdit={resolveHideEdit(entity)}
+                                    hideView={rowActionMenu?.hideView}
                                     hideDelete={rowActionMenu?.hideDelete}
                                     hideRestore={rowActionMenu?.hideRestore}
                                     allowMenuForCustomChildren={rowActionMenu?.allowMenuForCustomChildren}

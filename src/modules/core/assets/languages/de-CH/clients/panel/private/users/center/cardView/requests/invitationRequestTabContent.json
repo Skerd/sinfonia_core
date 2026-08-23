@@ -2,6 +2,7 @@
   "path": "src/modules/core/clients/panel/private/users/center/cardView/requests/invitationRequestTabContent.tsx",
   "invitedBy": "Invited von",
   "invitedAt": "Invited am",
+  "welcomeMessage": "Einladungsnachricht",
   "opened": "Opened",
   "attempts": "Attempts",
   "invitationExpiresAt": "Expires am",
