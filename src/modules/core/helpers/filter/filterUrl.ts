@@ -175,7 +175,14 @@ function isUserFilterParamKey(key: string): boolean {
 }
 
 function isListChromeParamKey(key: string): boolean {
-    return key === LIST_VIEW_PARAM || key === LIST_PAGE_PARAM || key === LIST_SORT_PARAM;
+    return (
+        key === LIST_VIEW_PARAM ||
+        key === LIST_PAGE_PARAM ||
+        key === LIST_SORT_PARAM ||
+        key.startsWith(LIST_VIEW_PARAM + "_") ||
+        key.startsWith(LIST_PAGE_PARAM + "_") ||
+        key.startsWith(LIST_SORT_PARAM + "_")
+    );
 }
 
 function applyScope(
@@ -248,7 +255,7 @@ export function stripUserFilterParams(params: URLSearchParams): void {
 export function stripListChromeParams(params: URLSearchParams, keepView = false): void {
     for (const key of [...params.keys()]) {
         if (!isListChromeParamKey(key)) continue;
-        if (keepView && key === LIST_VIEW_PARAM) continue;
+        if (keepView && (key === LIST_VIEW_PARAM || key.startsWith(LIST_VIEW_PARAM + "_"))) continue;
         params.delete(key);
     }
 }

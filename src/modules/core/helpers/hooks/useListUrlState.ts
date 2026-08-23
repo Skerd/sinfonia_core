@@ -23,6 +23,17 @@ export const FILTER_LABEL_SUFFIX = "_label";
 /** Prefix for non-DSL list body params mirrored in the URL (see `filterUrl.EXTRA_PARAM_PREFIX`). */
 export const EXTRA_PARAM_PREFIX = "ep_";
 
+/**
+ * Namespace list chrome params when multiple lists share a route
+ * (e.g. active sessions + login history on account security).
+ * `listView` → `listView_usersessions`.
+ */
+export function listChromeParam(base: string, scope?: string | null): string {
+    if (!scope) return base;
+    const safe = String(scope).replace(/[^a-zA-Z0-9_-]/g, "");
+    return safe ? `${base}_${safe}` : base;
+}
+
 export function quickFilterParamKey(field: string): string {
     return `${QUICK_FILTER_PARAM_PREFIX}${field}`;
 }
@@ -74,16 +85,25 @@ type UseListUrlStateOptions = {
      */
     fallbackView?: EntityListViewMode;
     limit: number;
+    /**
+     * When set (typically `tableConfigKey`), chrome params are namespaced
+     * (`listView_usersessions`) so multiple lists on one route stay independent.
+     */
+    paramScope?: string | null;
 };
 
 /**
  * Shareable list chrome: view mode, 1-based page, and primary sort column.
  * Reads/writes react-router search params without touching FilterBuilder's `filter`.
  */
-export function useListUrlState({fallbackView = "card", limit}: UseListUrlStateOptions) {
+export function useListUrlState({fallbackView = "card", limit, paramScope}: UseListUrlStateOptions) {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const urlView = parseView(searchParams.get(LIST_VIEW_PARAM), fallbackView);
+    const viewParam = listChromeParam(LIST_VIEW_PARAM, paramScope);
+    const pageParam = listChromeParam(LIST_PAGE_PARAM, paramScope);
+    const sortParamKey = listChromeParam(LIST_SORT_PARAM, paramScope);
+
+    const urlView = parseView(searchParams.get(viewParam), fallbackView);
     // Optimistic local value so the toggle flips on the same click as the URL write.
     const [viewMode, setViewModeState] = useState<EntityListViewMode>(urlView);
 
@@ -91,11 +111,11 @@ export function useListUrlState({fallbackView = "card", limit}: UseListUrlStateO
         setViewModeState(urlView);
     }, [urlView]);
 
-    const page = parsePage(searchParams.get(LIST_PAGE_PARAM));
+    const page = parsePage(searchParams.get(pageParam));
     // Depend on the serialized sort string — not `searchParams` identity. Switching
     // card/table only patches `listView`; using the whole params object remade a new
     // `sorting` array every time and re-fired the list fetch effect.
-    const sortParam = searchParams.get(LIST_SORT_PARAM);
+    const sortParam = searchParams.get(sortParamKey);
     const sorting = useMemo(() => parseSort(sortParam), [sortParam]);
     const offset = (page - 1) * limit;
 
@@ -119,20 +139,20 @@ export function useListUrlState({fallbackView = "card", limit}: UseListUrlStateO
             patchParams((next) => {
                 // Always write an explicit value. Deleting when `mode === fallbackView`
                 // raced a live localStorage fallback and left the toggle needing two clicks.
-                next.set(LIST_VIEW_PARAM, mode);
+                next.set(viewParam, mode);
             });
         },
-        [patchParams],
+        [patchParams, viewParam],
     );
 
     const setPage = useCallback(
         (nextPage: number) => {
             patchParams((next) => {
-                if (nextPage <= 1) next.delete(LIST_PAGE_PARAM);
-                else next.set(LIST_PAGE_PARAM, String(nextPage));
+                if (nextPage <= 1) next.delete(pageParam);
+                else next.set(pageParam, String(nextPage));
             });
         },
-        [patchParams],
+        [patchParams, pageParam],
     );
 
     const setOffset = useCallback(
@@ -148,13 +168,13 @@ export function useListUrlState({fallbackView = "card", limit}: UseListUrlStateO
             const next = typeof updater === "function" ? updater(sorting) : updater;
             const serialized = serializeSort(next);
             patchParams((params) => {
-                if (!serialized) params.delete(LIST_SORT_PARAM);
-                else params.set(LIST_SORT_PARAM, serialized);
+                if (!serialized) params.delete(sortParamKey);
+                else params.set(sortParamKey, serialized);
                 // Sort change resets to first page so results stay coherent.
-                params.delete(LIST_PAGE_PARAM);
+                params.delete(pageParam);
             });
         },
-        [patchParams, sorting],
+        [patchParams, sorting, sortParamKey, pageParam],
     );
 
     return {
@@ -200,6 +220,7 @@ export function writeQuickFilterParam(
     field: string,
     value: string | null,
     label?: string | null,
+    listPageParam: string = LIST_PAGE_PARAM,
 ) {
     setSearchParams(
         (prev) => {
@@ -215,7 +236,7 @@ export function writeQuickFilterParam(
                 else if (label === null || label === "") next.delete(labelKey);
             }
             // Filter change resets pagination so results stay coherent.
-            next.delete(LIST_PAGE_PARAM);
+            next.delete(listPageParam);
             return next;
         },
         {replace: true},
@@ -225,6 +246,7 @@ export function writeQuickFilterParam(
 export function clearQuickFilterParams(
     setSearchParams: ReturnType<typeof useSearchParams>[1],
     fields: string[],
+    listPageParam: string = LIST_PAGE_PARAM,
 ) {
     setSearchParams(
         (prev) => {
@@ -234,7 +256,7 @@ export function clearQuickFilterParams(
                 next.delete(quickFilterLabelParamKey(field));
             }
             // Filter change resets pagination so results stay coherent.
-            next.delete(LIST_PAGE_PARAM);
+            next.delete(listPageParam);
             return next;
         },
         {replace: true},
@@ -272,6 +294,7 @@ export function writeExtraParam(
     key: string,
     value: string | null,
     label?: string | null,
+    listPageParam: string = LIST_PAGE_PARAM,
 ) {
     setSearchParams(
         (prev) => {
@@ -286,7 +309,7 @@ export function writeExtraParam(
                 if (label != null && label !== "") next.set(labelKey, label);
                 else if (label === null || label === "") next.delete(labelKey);
             }
-            next.delete(LIST_PAGE_PARAM);
+            next.delete(listPageParam);
             return next;
         },
         {replace: true},
@@ -296,6 +319,7 @@ export function writeExtraParam(
 export function clearExtraParams(
     setSearchParams: ReturnType<typeof useSearchParams>[1],
     keys: string[],
+    listPageParam: string = LIST_PAGE_PARAM,
 ) {
     setSearchParams(
         (prev) => {
@@ -304,7 +328,7 @@ export function clearExtraParams(
                 next.delete(extraParamKey(key));
                 next.delete(extraParamLabelKey(key));
             }
-            next.delete(LIST_PAGE_PARAM);
+            next.delete(listPageParam);
             return next;
         },
         {replace: true},

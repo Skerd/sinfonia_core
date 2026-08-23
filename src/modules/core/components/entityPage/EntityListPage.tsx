@@ -3,6 +3,7 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import {
     clearQuickFilterParams,
     LIST_PAGE_PARAM,
+    listChromeParam,
     quickFilterLabelParamKey,
     quickFilterParamKey,
     readQuickFilterLabelsFromUrl,
@@ -402,7 +403,7 @@ export default function EntityListPage<T extends BaseEntity>({
                     next.delete(quickFilterParamKey(dep));
                     next.delete(quickFilterLabelParamKey(dep));
                 }
-                next.delete(LIST_PAGE_PARAM);
+                next.delete(listChromeParam(LIST_PAGE_PARAM, tableConfigKey));
                 return next;
             },
             {replace: true},
@@ -412,7 +413,7 @@ export default function EntityListPage<T extends BaseEntity>({
     const clearQuickFilters = () => {
         setQuickFilterValues({});
         setQuickFilterLabels({});
-        clearQuickFilterParams(setSearchParams, quickFilterFields);
+        clearQuickFilterParams(setSearchParams, quickFilterFields, listChromeParam(LIST_PAGE_PARAM, tableConfigKey));
     };
 
     const quickFilterDSL = useMemo(

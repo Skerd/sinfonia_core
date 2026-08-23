@@ -6,7 +6,7 @@ import {LayoutGrid, List, SlidersVertical} from "lucide-react";
 import {JSX, type KeyboardEvent, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {TableVirtuoso} from "react-virtuoso";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
-import {useListUrlState, type EntityListViewMode as UrlViewMode} from "@coreModule/helpers/hooks/useListUrlState.ts";
+import {useListUrlState, listChromeParam, LIST_PAGE_PARAM, type EntityListViewMode as UrlViewMode} from "@coreModule/helpers/hooks/useListUrlState.ts";
 import type {RowSelectionState} from "@tanstack/react-table";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -205,7 +205,9 @@ function CountryCenterView<
     } = useListUrlState({
         fallbackView: listViewFallback,
         limit,
+        paramScope: tableConfigKey,
     });
+    const listPageParam = listChromeParam(LIST_PAGE_PARAM, tableConfigKey);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [rowOverlays, setRowOverlays] = useState<Record<string, Partial<T>>>({});
     const [columnFilters, onColumnFiltersChange] = useState<ColumnFiltersState>([]);
@@ -270,6 +272,7 @@ function CountryCenterView<
                 setFilters={props.setFilters}
                 extraParams={props.extraParams}
                 filterFields={tableFilters}
+                listPageParam={listPageParam}
                 configuration={{
                     placeholder: tableConfigOptions!.filterConfig.placeholder,
                     fields: tableConfigOptions!.filterConfig.fields,
@@ -277,7 +280,7 @@ function CountryCenterView<
                 resolveLanguageKey={resolveLanguageKey}
             />
         );
-    }, [tableFilters, tableConfigOptions, resolveLanguageKey]);
+    }, [tableFilters, tableConfigOptions, resolveLanguageKey, listPageParam]);
 
     useEffect(() => {
         const next = {...(extraParams ?? {})};

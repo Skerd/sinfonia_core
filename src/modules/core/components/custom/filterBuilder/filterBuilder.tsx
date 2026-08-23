@@ -57,7 +57,9 @@ type FilterBuilderProps = WithLanguageType & {
     configuration: {
         placeholder: string;
         fields: TranslationValue
-    }
+    };
+    /** Namespaced `listPage` key when multiple lists share the route. */
+    listPageParam?: string;
 };
 
 function FilterBuilderInner({
@@ -65,7 +67,8 @@ function FilterBuilderInner({
     setFilters,
     extraParams,
     resolveLanguageKey,
-    configuration
+    configuration,
+    listPageParam = LIST_PAGE_PARAM,
 }: Omit<FilterBuilderProps, "resourceUrl">) {
 
     const { fields, refLabelsByFieldPath, replaceRefLabels } = useFilterBuilder();
@@ -119,7 +122,7 @@ function FilterBuilderInner({
                     next.delete(FILTER_URL_PARAM);
                     next.delete(FILTER_LABELS_URL_PARAM);
                 }
-                next.delete(LIST_PAGE_PARAM);
+                next.delete(listPageParam);
                 return next;
             }, { replace: true });
             lastSyncedFilterParam.current = dsl ? encodeFilterToUrl(dsl) : null;
@@ -133,7 +136,7 @@ function FilterBuilderInner({
             suppressAutoApplyRef.current += 1;
             if (options?.closePopover) setPopoverOpen(false);
         },
-        [setFilters, extraParams, setSearchParams, refLabelsByFieldPath, replaceRefLabels],
+        [setFilters, extraParams, setSearchParams, refLabelsByFieldPath, replaceRefLabels, listPageParam],
     );
 
     // Re-sync UI + applied filters whenever the URL `filter` param changes
