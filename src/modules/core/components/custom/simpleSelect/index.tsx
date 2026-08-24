@@ -217,6 +217,7 @@ function SimpleSelectRender({
     };
 
     return (
+        <div className={cn(!forTable && 'min-w-0 w-full max-w-full')}>
         <Popover modal open={open} onOpenChange={handleOpenChange}>
             <PopoverTrigger asChild disabled={disabled}>
                 {forTable ? (
@@ -263,7 +264,6 @@ function SimpleSelectRender({
                         )}
                     </Button>
                 ) : (
-                    <div className="min-w-0 w-full max-w-full">
                         <Button
                             ref={triggerRef}
                             variant="outline"
@@ -292,7 +292,6 @@ function SimpleSelectRender({
                                 <ChevronsUpDown className="h-4 w-4 opacity-50" />
                             </span>
                         </Button>
-                    </div>
                 )}
             </PopoverTrigger>
             <PopoverContent
@@ -366,6 +365,7 @@ function SimpleSelectRender({
                 </Command>
             </PopoverContent>
         </Popover>
+        </div>
     );
 }
 

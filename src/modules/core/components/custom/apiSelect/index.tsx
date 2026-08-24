@@ -989,6 +989,7 @@ function ApiSelectCore({
 
     return (
         <>
+        <div className={cn(!forTable && 'min-w-0 w-full max-w-full')}>
         <Popover open={open} onOpenChange={handleOpenChange}>
             <PopoverTrigger asChild disabled={disabled}>
                 {forTable ? (
@@ -1029,7 +1030,6 @@ function ApiSelectCore({
                         )}
                     </Button>
                 ) : (
-                    <div className="min-w-0 w-full max-w-full">
                         <Button
                             ref={triggerRef}
                             variant="outline"
@@ -1056,7 +1056,6 @@ function ApiSelectCore({
                                 <ChevronsUpDown className="h-4 w-4 opacity-50" />
                             </span>
                         </Button>
-                    </div>
                 )}
             </PopoverTrigger>
             <PopoverContent
@@ -1160,6 +1159,7 @@ function ApiSelectCore({
                 </Command>
             </PopoverContent>
         </Popover>
+        </div>
         {CreateAdapter ? (
             <Dialog
                 open={createDialogOpen}
