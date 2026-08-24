@@ -2,7 +2,7 @@ import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {IconMailPlus} from "@tabler/icons-react";
-import type {SmtpServer} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
+import type {SmtpServer, TestSmtpConnectionResponse} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import SmtpServerCard from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/cardView/smtpServerCard.tsx";
 import SmtpServerSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx";
@@ -54,7 +54,7 @@ function AllSmtpServers({resolveLanguageKey}: WithLanguageType) {
                             open={true}
                             onOpenChange={(o: boolean) => { if (!o) resetAction(); }}
                             smtpServer={entity}
-                            onTestComplete={() => listRef.current?.refetch?.()}
+                            onTestComplete={(lastTest: TestSmtpConnectionResponse) => listRef.current?.updateRow?.(entity._id, lastTest)}
                         />
                     );
                 }

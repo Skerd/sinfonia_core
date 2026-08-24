@@ -6,14 +6,13 @@ import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
 import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import type {SmtpServer} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
+import type {SmtpServer, TestSmtpConnectionResponse} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
 import {smtpServerEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers";
 import ActivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/activateSmtpServer.tsx";
 import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/deactivateSmtpServer.tsx";
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
 import SetSmtpServerActiveDialog from "@coreModule/components/custom/smtpServers/setSmtpServerActiveDialog.tsx";
 import TestSmtpConnectionDialog from "@coreModule/components/custom/smtpServers/testSmtpConnectionDialog.tsx";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
 
 export type SmtpServerSheetViewOwnProps = {
     open: boolean;
@@ -58,12 +57,6 @@ function SmtpServerSheetView({
 
     const asSmtpServer = sheetData as SmtpServer;
 
-    const refreshSheetData = async () => {
-        const res = await apiClient.post<SmtpServer>(SMTP_SERVER_SINGLE_URL, {_id: entityId});
-        setSheetData(res.data);
-        onSheetRowPatched?.(res.data);
-    };
-
     return (
         <>
             <SheetViewRenderer
@@ -107,7 +100,10 @@ function SmtpServerSheetView({
                     open={action === "testSmtpConnection"}
                     onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
                     smtpServer={asSmtpServer}
-                    onTestComplete={() => { void refreshSheetData(); }}
+                    onTestComplete={(lastTest: TestSmtpConnectionResponse) => {
+                        setSheetData({...sheetData, ...lastTest});
+                        onSheetRowPatched?.({...sheetData, ...lastTest});
+                    }}
                 />
             )}
         </>

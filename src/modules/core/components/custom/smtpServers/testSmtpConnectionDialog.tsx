@@ -5,14 +5,14 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import type {SmtpServer, TestSmtpConnectionResponse} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
+import {HttpError} from "@coreModule/helpers/hooks/useHttpRequest.ts";
 
-type TestSmtpConnectionDialogProps = WithLanguageType &
-    WithAxiosType<TestSmtpConnectionResponse> & {
-        open: boolean;
-        onOpenChange: (open: boolean) => void;
-        smtpServer: SmtpServer;
-        onTestComplete?: (result: TestSmtpConnectionResponse) => void;
-    };
+type TestSmtpConnectionDialogProps = WithLanguageType & WithAxiosType<TestSmtpConnectionResponse> & {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    smtpServer: SmtpServer;
+    onTestComplete?: (lastTest: TestSmtpConnectionResponse) => void;
+};
 
 function TestSmtpConnectionDialog({
     open,
@@ -30,7 +30,12 @@ function TestSmtpConnectionDialog({
             onTestComplete?.(data);
             onOpenChange(false);
         },
-        error: () => {
+        error: (error: HttpError) => {
+            onTestComplete?.({
+                lastTestedAt: new Date(),
+                lastTestStatus: "failed",
+                lastTestMessage: error.message
+            });
             onOpenChange(false);
         },
     }));

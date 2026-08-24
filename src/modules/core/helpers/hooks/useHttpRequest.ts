@@ -44,9 +44,7 @@ export type HttpRequest = {
 }
 export type HttpError = {
     error: string,
-    errorAl: string,
     extraMessage: string,
-
     message: string,
     error_code: string,
     status?: number,

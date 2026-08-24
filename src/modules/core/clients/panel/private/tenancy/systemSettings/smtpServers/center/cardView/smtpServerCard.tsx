@@ -13,7 +13,7 @@ import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/syst
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
 import SetSmtpServerActiveDialog from "@coreModule/components/custom/smtpServers/setSmtpServerActiveDialog.tsx";
 import TestSmtpConnectionDialog from "@coreModule/components/custom/smtpServers/testSmtpConnectionDialog.tsx";
-import type {SmtpServer} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
+import type {SmtpServer, TestSmtpConnectionResponse} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
 import {smtpServerEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers";
 import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
@@ -80,11 +80,11 @@ const SmtpServerCard = memo(function SmtpServerCard({
                     {action === "testSmtpConnection" && (
                         <TestSmtpConnectionDialog
                             open
-                            onOpenChange={(open) => {
+                            onOpenChange={(open: boolean) => {
                                 if (!open) setAction("");
                             }}
                             smtpServer={entity}
-                            onTestComplete={retry}
+                            onTestComplete={(lastTest: TestSmtpConnectionResponse) => setEntity({...entity, ...lastTest})}
                         />
                     )}
                 </>
