@@ -3,13 +3,13 @@ import {Button} from '@coreModule/components/ui/button.tsx'
 import {Input} from '@coreModule/components/ui/input.tsx'
 import {type Table} from '@tanstack/react-table'
 import {MixerHorizontalIcon} from '@radix-ui/react-icons'
-import {DropdownMenuTrigger} from '@radix-ui/react-dropdown-menu'
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuLabel,
     DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from '@coreModule/components/ui/dropdown-menu.tsx'
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
