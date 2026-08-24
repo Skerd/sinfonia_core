@@ -54,11 +54,13 @@ function FormMaxLengthControl({
         };
     }, []);
 
-    const showHint = useCallback(() => {
+    const showHint = useCallback((length?: number) => {
+        const len = length ?? String(value ?? "").length;
+        if (len < maxLength) return;
         setOpen(true);
         if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
         hideTimerRef.current = setTimeout(() => setOpen(false), 2500);
-    }, []);
+    }, [maxLength, value]);
 
     if (!isValidElement(children)) {
         return children;
@@ -84,7 +86,7 @@ function FormMaxLengthControl({
         },
         onPaste: (e: ClipboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             const paste = e.clipboardData.getData("text");
-            if (currentLength + paste.length > maxLength) {
+            if (atMax || currentLength + paste.length > maxLength) {
                 showHint();
             }
             child.props.onPaste?.(e);
@@ -92,15 +94,23 @@ function FormMaxLengthControl({
         onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             const prev = String(child.props.value ?? value ?? "");
             const next = e.target.value;
-            if (next.length >= maxLength && prev.length < maxLength) {
-                showHint();
+            if (next.length === maxLength && prev.length < maxLength) {
+                showHint(next.length);
             }
             child.props.onChange?.(e);
         },
     });
 
     return (
-        <TooltipDisplayer open={open} onOpenChange={setOpen} tooltip={tooltip} side="top">
+        <TooltipDisplayer
+            open={open}
+            onOpenChange={(next: boolean) => {
+                // Only programmatic showHint opens the tooltip; ignore hover/focus.
+                if (!next) setOpen(false);
+            }}
+            tooltip={open ? tooltip : undefined}
+            side="top"
+        >
             {wrapped}
         </TooltipDisplayer>
     );
