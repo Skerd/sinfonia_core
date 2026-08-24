@@ -26,6 +26,8 @@ export type StringArrayFieldProps<TFieldValues extends FieldValues = FieldValues
     loading?: boolean;
     /** Optional: max number of items (no limit if omitted). */
     maxItems?: number;
+    /** Optional: max characters per item. */
+    maxLength?: number;
 };
 
 export function StringArrayField<TFieldValues extends FieldValues = FieldValues>({
@@ -35,7 +37,8 @@ export function StringArrayField<TFieldValues extends FieldValues = FieldValues>
     removeTooltipKey,
     resolveLanguageKey,
     loading = false,
-    maxItems
+    maxItems,
+    maxLength,
 }: StringArrayFieldProps<TFieldValues>) {
     const form = useFormContext<TFieldValues>();
     const [draft, setDraft] = useState("");
@@ -76,6 +79,7 @@ export function StringArrayField<TFieldValues extends FieldValues = FieldValues>
                                 }}
                                 placeholder={resolve(placeholderKey, resolveLanguageKey)}
                                 disabled={loading || atMax}
+                                maxLength={typeof maxLength === "number" ? maxLength : undefined}
                             />
                         </FormControl>
                         <Button type="button" onClick={add} disabled={loading || atMax}>

@@ -79,6 +79,7 @@ export function renderCompoundWidget(
                 resolveLanguageKey={resolveLanguageKey}
                 loading={extra?.loading ?? false}
                 maxItems={wp.maxItems}
+                maxLength={typeof wp.maxLength === "number" ? wp.maxLength : undefined}
             />
         );
     }
