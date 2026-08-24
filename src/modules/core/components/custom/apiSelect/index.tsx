@@ -21,6 +21,7 @@ import {Spinner} from "@coreModule/components/ui/spinner.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {CheckIcon, PlusCircledIcon} from "@radix-ui/react-icons";
+import SelectOptionLabel from "@coreModule/components/custom/selectOptionLabel.tsx";
 import {
     REF_SELECT_BY_API_URL,
     type RefSelectCreateFromSearch,
@@ -892,26 +893,26 @@ function ApiSelectCore({
                 <CommandItem
                     key={option.value}
                     value={option.value}
-                    className="flex gap-x-0"
+                    className="flex min-w-0 gap-x-0"
                     aria-selected={multiple ? isSelected : undefined}
                     onSelect={() => handleOptionSelect(option)}
                 >
                     {multiple ? (
                         <div
                             className={cn(
-                                'border-primary flex size-4 items-center justify-center rounded-sm border',
+                                'border-primary flex size-4 shrink-0 items-center justify-center rounded-sm border',
                                 isSelected ? 'bg-primary text-primary-foreground' : 'opacity-50 [&_svg]:invisible'
                             )}
                         >
                             <CheckIcon className={cn('text-background h-4 w-4')} />
                         </div>
                     ) : (
-                        <CheckIcon className={cn('text-primary h-4 w-4', isSelected ? 'opacity-100' : 'opacity-0')} />
+                        <CheckIcon className={cn('text-primary h-4 w-4 shrink-0', isSelected ? 'opacity-100' : 'opacity-0')} />
                     )}
                     {option.photo ? (
                         <SelectOptionAvatar photo={option.photo} label={option.label} />
                     ) : null}
-                    <p className="whitespace-nowrap">{option.label}</p>
+                    <SelectOptionLabel label={option.label} className="min-w-0 flex-1" />
                 </CommandItem>
             );
         },
@@ -921,9 +922,11 @@ function ApiSelectCore({
     const renderMultipleTriggerContent = () => {
         if (selectedOptions.length === 0) return placeholder;
         if (selectedOptions.length <= 2) {
-            return selectedOptions.map((o) => o.label).join(', ');
+            const text = selectedOptions.map((o) => o.label).join(", ");
+            return <SelectOptionLabel label={text} className="min-w-0 flex-1 text-left" />;
         }
-        return `${selectedOptions.slice(0, 2).map((o) => o.label).join(', ')} +${selectedOptions.length - 2} ${resolveLanguageKey("more")}`;
+        const text = `${selectedOptions.slice(0, 2).map((o) => o.label).join(", ")} +${selectedOptions.length - 2} ${resolveLanguageKey("more")}`;
+        return <SelectOptionLabel label={text} className="min-w-0 flex-1 text-left" />;
     };
 
     const renderSingleTriggerContent = () => {
@@ -932,11 +935,11 @@ function ApiSelectCore({
                 return (
                     <span className="flex min-w-0 items-center gap-2">
                         <SelectOptionAvatar photo={selectedOption.photo} label={selectedOption.label} />
-                        <span className="truncate">{selectedOption.label}</span>
+                        <SelectOptionLabel label={selectedOption.label} className="min-w-0 flex-1 text-left" />
                     </span>
                 );
             }
-            return selectedOption.label;
+            return <SelectOptionLabel label={selectedOption.label} className="min-w-0 flex-1 text-left" />;
         }
         if (pendingValue) {
             return (
@@ -1044,7 +1047,7 @@ function ApiSelectCore({
                                 className
                             )}
                         >
-                            <span className="truncate">
+                            <span className="min-w-0 flex-1 overflow-hidden text-left">
                                 {multiple ? renderMultipleTriggerContent() : renderSingleTriggerContent()}
                             </span>
                             <span className="ml-2 flex shrink-0 items-center gap-1">
@@ -1059,11 +1062,11 @@ function ApiSelectCore({
                 className={cn(
                     forTable
                         ? 'w-[200px] p-0'
-                        : 'w-max min-w-[var(--radix-popover-trigger-width)] max-w-[min(90vw,32rem)] p-0',
+                        : 'w-[var(--radix-popover-trigger-width)] min-w-[var(--radix-popover-trigger-width)] max-w-[min(90vw,32rem)] p-0',
                 )}
                 align="start"
             >
-                <Command className="h-auto w-max min-w-full overflow-hidden" shouldFilter={false}>
+                <Command className="flex h-auto min-h-0 w-full min-w-0 flex-col overflow-hidden" shouldFilter={false}>
                     <div className="relative">
                         <CommandInput
                             placeholder={`${resolveLanguageKey("search")}...`}

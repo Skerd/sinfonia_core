@@ -18,6 +18,7 @@ import { cn } from '@coreModule/components/lib/utils.ts';
 import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons';
 import withLanguage, { WithLanguageType } from '@coreModule/helpers/hocs/withLanguage.tsx';
 import { compose } from 'redux';
+import SelectOptionLabel from '@coreModule/components/custom/selectOptionLabel.tsx';
 
 export type SimpleSelectOption = {
     label: string;
@@ -175,23 +176,23 @@ function SimpleSelectRender({
                     // cmdk collapses items that share a normalized value; prefix avoids bare "0".
                     value={`item:${option.value}`}
                     keywords={[option.label, option.value]}
-                    className="flex gap-x-2"
+                    className="flex min-w-0 gap-x-2"
                     aria-selected={multiple ? isSelected : undefined}
                     onSelect={() => handleOptionSelect(option)}
                 >
                     {multiple ? (
                         <div
                             className={cn(
-                                'border-primary flex size-4 items-center justify-center rounded-sm border',
+                                'border-primary flex size-4 shrink-0 items-center justify-center rounded-sm border',
                                 isSelected ? 'bg-primary text-primary-foreground' : 'opacity-50 [&_svg]:invisible',
                             )}
                         >
                             <CheckIcon className={cn('text-background h-4 w-4')} />
                         </div>
                     ) : (
-                        <CheckIcon className={cn('text-primary h-4 w-4', isSelected ? 'opacity-100' : 'opacity-0')} />
+                        <CheckIcon className={cn('text-primary h-4 w-4 shrink-0', isSelected ? 'opacity-100' : 'opacity-0')} />
                     )}
-                    <p className="whitespace-nowrap">{option.label}</p>
+                    <SelectOptionLabel label={option.label} className="min-w-0 flex-1" />
                 </CommandItem>
             );
         },
@@ -201,13 +202,17 @@ function SimpleSelectRender({
     const renderMultipleTriggerContent = () => {
         if (selectedOptions.length === 0) return effectivePlaceholder;
         if (selectedOptions.length <= 2) {
-            return selectedOptions.map((o) => o.label).join(', ');
+            const text = selectedOptions.map((o) => o.label).join(', ');
+            return <SelectOptionLabel label={text} className="min-w-0 flex-1 text-left" />;
         }
-        return `${selectedOptions.slice(0, 2).map((o) => o.label).join(', ')} +${selectedOptions.length - 2} ${String(resolveLanguageKey('more'))}`;
+        const text = `${selectedOptions.slice(0, 2).map((o) => o.label).join(', ')} +${selectedOptions.length - 2} ${String(resolveLanguageKey('more'))}`;
+        return <SelectOptionLabel label={text} className="min-w-0 flex-1 text-left" />;
     };
 
     const renderSingleTriggerContent = () => {
-        if (selectedOption) return selectedOption.label;
+        if (selectedOption) {
+            return <SelectOptionLabel label={selectedOption.label} className="min-w-0 flex-1 text-left" />;
+        }
         return effectivePlaceholder;
     };
 
@@ -278,7 +283,7 @@ function SimpleSelectRender({
                                 className,
                             )}
                         >
-                            <span className="truncate">
+                            <span className="min-w-0 flex-1 overflow-hidden text-left">
                                 {multiple ? renderMultipleTriggerContent() : renderSingleTriggerContent()}
                             </span>
                             <span className="ml-2 flex shrink-0 items-center gap-1">
@@ -292,7 +297,7 @@ function SimpleSelectRender({
                 className={cn(
                     forTable
                         ? 'w-[200px] p-0'
-                        : 'w-max min-w-[var(--radix-popover-trigger-width)] max-w-[min(90vw,32rem)] p-0',
+                        : 'w-[var(--radix-popover-trigger-width)] min-w-[var(--radix-popover-trigger-width)] max-w-[min(90vw,32rem)] p-0',
                     'flex max-h-[min(24rem,var(--radix-popover-content-available-height))] flex-col overflow-hidden',
                 )}
                 align="start"
@@ -304,7 +309,7 @@ function SimpleSelectRender({
                 onClick={(event) => event.stopPropagation()}
                 onPointerDown={(event) => event.stopPropagation()}
             >
-                <Command className="flex h-auto min-h-0 w-full min-w-full flex-col overflow-hidden" shouldFilter={false}>
+                <Command className="flex h-auto min-h-0 w-full min-w-0 flex-col overflow-hidden" shouldFilter={false}>
                     <div className="relative">
                         <CommandInput
                             placeholder={String(searchPlaceholder ?? resolveLanguageKey('searchPlaceholder'))}
