@@ -263,7 +263,8 @@ function SimpleSelectRender({
                         )}
                     </Button>
                 ) : (
-                    <Button
+                    <div className="min-w-0 w-full max-w-full">
+                        <Button
                             ref={triggerRef}
                             variant="outline"
                             role="combobox"
@@ -274,8 +275,8 @@ function SimpleSelectRender({
                             onClick={stopCardActivation}
                             onPointerDown={stopCardActivation}
                             className={cn(
-                                // Override Button's shrink-0 so the trigger can shrink in flex rows (e.g. next to confirm/cancel).
-                                'min-w-0 w-full shrink justify-between',
+                                // Override Button's shrink-0 / min-content so long labels truncate in the form grid.
+                                'min-w-0 w-full max-w-full shrink overflow-hidden justify-between',
                                 'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive',
                                 {
                                     'text-muted-foreground': multiple ? selectedOptions.length === 0 : !selectedOption,
@@ -283,7 +284,7 @@ function SimpleSelectRender({
                                 className,
                             )}
                         >
-                            <span className="min-w-0 flex-1 overflow-hidden text-left">
+                            <span className="flex min-w-0 flex-1 overflow-hidden text-left">
                                 {multiple ? renderMultipleTriggerContent() : renderSingleTriggerContent()}
                             </span>
                             <span className="ml-2 flex shrink-0 items-center gap-1">
@@ -291,6 +292,7 @@ function SimpleSelectRender({
                                 <ChevronsUpDown className="h-4 w-4 opacity-50" />
                             </span>
                         </Button>
+                    </div>
                 )}
             </PopoverTrigger>
             <PopoverContent

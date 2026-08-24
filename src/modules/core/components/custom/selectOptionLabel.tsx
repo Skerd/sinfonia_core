@@ -12,7 +12,7 @@ export default function SelectOptionLabel({label, className}: SelectOptionLabelP
     if (!text) return null;
 
     return (
-        <TruncatedValue text={text} className={cn("min-w-0 truncate", className)}>
+        <TruncatedValue text={text} className={cn("block min-w-0 max-w-full truncate", className)}>
             {text}
         </TruncatedValue>
     );

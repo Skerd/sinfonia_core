@@ -933,7 +933,7 @@ function ApiSelectCore({
         if (selectedOption) {
             if (selectedOption.photo) {
                 return (
-                    <span className="flex min-w-0 items-center gap-2">
+                    <span className="flex min-w-0 max-w-full flex-1 items-center gap-2 overflow-hidden">
                         <SelectOptionAvatar photo={selectedOption.photo} label={selectedOption.label} />
                         <SelectOptionLabel label={selectedOption.label} className="min-w-0 flex-1 text-left" />
                     </span>
@@ -1029,7 +1029,7 @@ function ApiSelectCore({
                         )}
                     </Button>
                 ) : (
-                    <div className="w-full">
+                    <div className="min-w-0 w-full max-w-full">
                         <Button
                             ref={triggerRef}
                             variant="outline"
@@ -1039,7 +1039,8 @@ function ApiSelectCore({
                             aria-invalid={ariaInvalid}
                             disabled={disabled}
                             className={cn(
-                                'w-full justify-between',
+                                // Override Button's shrink-0 / min-content so long labels truncate in the form grid.
+                                'min-w-0 w-full max-w-full shrink overflow-hidden justify-between',
                                 'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive',
                                 {
                                     "text-muted-foreground": multiple ? selectedOptions.length === 0 : !selectedOption
@@ -1047,7 +1048,7 @@ function ApiSelectCore({
                                 className
                             )}
                         >
-                            <span className="min-w-0 flex-1 overflow-hidden text-left">
+                            <span className="flex min-w-0 flex-1 overflow-hidden text-left">
                                 {multiple ? renderMultipleTriggerContent() : renderSingleTriggerContent()}
                             </span>
                             <span className="ml-2 flex shrink-0 items-center gap-1">
