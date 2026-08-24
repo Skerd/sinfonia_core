@@ -1,5 +1,6 @@
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
+import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { Media } from "armonia/src/modules/core/types";
 import SheetMediaFilesStrip from "@coreModule/components/viewEngine/sheetMediaFilesStrip.tsx";
@@ -37,8 +38,19 @@ function formatCost(n: number): string {
 }
 
 const cardClass =
-    "text-sm p-2 rounded-md bg-muted/50 border border-border/30 flex flex-col gap-1";
+    "text-sm p-2 rounded-md bg-muted/50 border border-border/30 flex flex-col gap-1 min-w-0";
 const highlightClass = "text-success shrink-0 font-medium";
+
+function TruncatedMeta({label, value}: {label: string; value: string}) {
+    return (
+        <div className="inline-flex min-w-0 max-w-full items-baseline gap-1">
+            <span className="shrink-0">{label}:</span>
+            <TruncatedValue text={value} className="max-w-[8rem]">
+                {value}
+            </TruncatedValue>
+        </div>
+    );
+}
 
 export default function SheetModificationLineItems({
     items,
@@ -58,7 +70,7 @@ export default function SheetModificationLineItems({
     const notesLabel = String(resolveLanguageKey("notesLabel"));
 
     return (
-        <div className={cn("flex flex-col gap-y-2 w-full", className)}>
+        <div className={cn("flex flex-col gap-y-2 w-full min-w-0", className)}>
             <div className="flex flex-col gap-y-1.5 max-h-72 overflow-y-auto">
                 {items.map((row, index) => {
                 const isCost = variant === "costBreakdown" || variant === "expenditureItems";
@@ -76,14 +88,18 @@ export default function SheetModificationLineItems({
 
                 return (
                     <div key={index} className={cardClass}>
-                        <div className="flex justify-between items-start gap-2">
+                        <div className="flex justify-between items-start gap-2 min-w-0">
                             {row.item != null && row.item !== "" && (
-                                <p className="font-medium text-foreground">{row.item}</p>
+                                <TruncatedValue text={row.item} className="min-w-0 flex-1 font-medium text-foreground">
+                                    {row.item}
+                                </TruncatedValue>
                             )}
                             {lineTotal != null ? (
                                 <p className={highlightClass}>{lineTotal}</p>
                             ) : materialsHighlightText != null ? (
-                                <p className={highlightClass}>{materialsHighlightText}</p>
+                                <TruncatedValue text={materialsHighlightText} className={cn(highlightClass, "max-w-[10rem]")}>
+                                    {materialsHighlightText}
+                                </TruncatedValue>
                             ) : null}
                         </div>
                         <div className="flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-muted-foreground">
@@ -103,12 +119,14 @@ export default function SheetModificationLineItems({
                                     {(variant === "expenditureItems"
                                         ? row.measureUnitKey != null && row.measureUnitKey !== ""
                                         : row.unit != null && String(row.unit).trim() !== "") && (
-                                        <span>
-                                            {unitLabel}:{" "}
-                                            {variant === "expenditureItems" && row.measureUnitKey
-                                                ? String(resolveLanguageKey(`measureUnit.${row.measureUnitKey}`))
-                                                : row.unit}
-                                        </span>
+                                        <TruncatedMeta
+                                            label={unitLabel}
+                                            value={
+                                                variant === "expenditureItems" && row.measureUnitKey
+                                                    ? String(resolveLanguageKey(`measureUnit.${row.measureUnitKey}`))
+                                                    : String(row.unit)
+                                            }
+                                        />
                                     )}
                                     {row.cost !== undefined && (
                                         <span>
@@ -129,9 +147,7 @@ export default function SheetModificationLineItems({
                                         </span>
                                     )}
                                     {row.unit != null && row.unit !== "" && (
-                                        <span>
-                                            {unitLabel}: {row.unit}
-                                        </span>
+                                        <TruncatedMeta label={unitLabel} value={row.unit} />
                                     )}
                                     {row.notes != null && row.notes !== "" && (
                                         <div className="basis-full w-full min-w-0 pt-1 mt-0.5 border-t border-border/20">
