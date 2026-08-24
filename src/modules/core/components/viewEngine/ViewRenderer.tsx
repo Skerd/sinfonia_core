@@ -1545,6 +1545,8 @@ function renderDisplayCard(
             externalHref={externalLinkValue}
             internalHref={internalHrefValue}
             linkedReferenceSheet={linkedReferenceSheet}
+            expandable={wp.expandable === true}
+            maxLength={typeof wp.maxLength === "number" ? wp.maxLength : undefined}
         />
     );
 }

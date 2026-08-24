@@ -14,6 +14,7 @@ import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {IconInfoCircle, IconLink} from "@tabler/icons-react";
 import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
 import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
+import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
 
 /** Open/close wiring from `#DisplayCard`; renderer may bind extra props (e.g. `fetchId`). */
 export type DisplayCardLinkedSheetOuterProps = {
@@ -47,6 +48,9 @@ type DisplayCardProps = {
         resourceId: string;
         LinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps>;
     };
+    /** When true, long values show read more / read less inside the card. */
+    expandable?: boolean;
+    maxLength?: number;
 };
 
 const containerStyles: Record<DisplayCardVariant, string> = {
@@ -154,6 +158,8 @@ export default function DisplayCard({
     externalHref,
     internalHref,
     linkedReferenceSheet,
+    expandable = false,
+    maxLength,
 }: DisplayCardProps) {
     const accessResourceId = linkedReferenceSheet?.resourceId ?? "";
     const LinkedSheet = linkedReferenceSheet?.LinkedSheet;
@@ -187,12 +193,12 @@ export default function DisplayCard({
         <>
             <Item
                 variant="outline"
-                className={cn("h-fit gap-2 p-2", containerStyles[variant])}
+                className={cn("h-fit items-start gap-2 p-2", containerStyles[variant])}
             >
                 {Icon != null && (
                     <ItemMedia
                         className={cn(
-                            "p-2.5 rounded-md",
+                            "self-start p-2.5 rounded-md",
                             iconWrapStyles[variant],
                         )}
                     >
@@ -229,7 +235,7 @@ export default function DisplayCard({
                     {!dontRenderValue && (
                         <div
                             className={cn(
-                                "text-base font-semibold",
+                                expandable ? "text-sm font-normal" : "text-base font-semibold",
                                 value != null && value !== "" ? valueTextStyles[variant] : undefined,
                             )}
                         >
@@ -242,7 +248,13 @@ export default function DisplayCard({
                                 size={size}
                                 show={show}
                             >
-                                {children}
+                                {expandable
+                                    ? (formatted) => (
+                                        <ExpandableText maxLength={maxLength} className="font-normal">
+                                            {formatted}
+                                        </ExpandableText>
+                                    )
+                                    : children}
                             </DisplayValue>
                         </div>
                     )}
