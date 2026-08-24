@@ -13,6 +13,13 @@ import {
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import {cn} from "@coreModule/components/lib/utils.ts";
+
+const MODAL_CONTENT_SELECTOR = [
+    '[data-slot="alert-dialog-content"]',
+    '[data-slot="dialog-content"]',
+    '[data-slot="sheet-content"]',
+].join(",");
 
 function isInsertKeyAtMax(e: KeyboardEvent): boolean {
     if (e.ctrlKey || e.metaKey || e.altKey) return false;
@@ -36,17 +43,26 @@ function isInsertKeyAtMax(e: KeyboardEvent): boolean {
 type FormMaxLengthControlProps = WithLanguageType & {
     maxLength: number;
     value?: string | null;
+    className?: string;
     children: ReactNode;
 };
 
 function FormMaxLengthControl({
     maxLength,
     value,
+    className,
     children,
     resolveLanguageKey,
 }: FormMaxLengthControlProps) {
     const [open, setOpen] = useState(false);
+    const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
+    const wrapRef = useRef<HTMLDivElement>(null);
     const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        const modal = wrapRef.current?.closest(MODAL_CONTENT_SELECTOR);
+        setPortalContainer(modal instanceof HTMLElement ? modal : null);
+    }, []);
 
     useEffect(() => {
         return () => {
@@ -102,17 +118,20 @@ function FormMaxLengthControl({
     });
 
     return (
-        <TooltipDisplayer
-            open={open}
-            onOpenChange={(next: boolean) => {
-                // Only programmatic showHint opens the tooltip; ignore hover/focus.
-                if (!next) setOpen(false);
-            }}
-            tooltip={open ? tooltip : undefined}
-            side="top"
-        >
-            {wrapped}
-        </TooltipDisplayer>
+        <div ref={wrapRef} className={cn("w-full min-w-0", className)}>
+            <TooltipDisplayer
+                open={open}
+                onOpenChange={(next: boolean) => {
+                    if (!next) setOpen(false);
+                }}
+                tooltip={open ? tooltip : undefined}
+                side="top"
+                container={portalContainer}
+                contentClassName={portalContainer ? "z-[100]" : undefined}
+            >
+                {wrapped}
+            </TooltipDisplayer>
+        </div>
     );
 }
 

@@ -6,13 +6,14 @@ import {compose} from "redux";
 
 type TooltipDisplayerProps = VisibilityProps & {
     children: ReactNode;
-    /** String or value from resolveLanguageKey (coerced to string when rendering). */
     tooltip?: string | number | boolean | null | undefined;
     tooltipRender?: () => ReactNode;
     contentClassName?: string;
     side?: "top" | "right" | "bottom" | "left";
     open?: boolean,
     onOpenChange?: (open: boolean) => void
+    container?: HTMLElement | null
+    disablePortal?: boolean
 };
 
 export function TooltipDisplayer({
@@ -22,7 +23,9 @@ export function TooltipDisplayer({
     contentClassName,
     side = "top",
     open,
-    onOpenChange = () => {}
+    onOpenChange = () => {},
+    container,
+    disablePortal,
 }: TooltipDisplayerProps) {
 
     const [internalOpen, setInternalOpen] = useState(open ?? false);
@@ -44,7 +47,12 @@ export function TooltipDisplayer({
                 <TooltipTrigger asChild>
                     {children}
                 </TooltipTrigger>
-                <TooltipContent side={side} className={cn(contentClassName)}>
+                <TooltipContent
+                    side={side}
+                    className={cn(contentClassName)}
+                    container={container}
+                    disablePortal={disablePortal}
+                >
                     {
                         !!tooltipRender ?
                         <>{tooltipRender()}</>
