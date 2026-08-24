@@ -4,6 +4,7 @@ import { format, isValid, parse } from "date-fns"
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Calendar } from "@coreModule/components/ui/calendar.tsx"
 import { Input } from "@coreModule/components/ui/input.tsx"
+import { useDrawerPortalContainer } from "@coreModule/components/ui/drawer.tsx"
 import { Popover, PopoverContent, PopoverTrigger } from "@coreModule/components/ui/popover.tsx"
 import useSelectedLanguage, {
   type LanguageDictionary,
@@ -311,6 +312,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
           : "PPP")
 
     const [open, setOpen] = React.useState(false)
+    const drawerPortalContainer = useDrawerPortalContainer()
     const { currentLanguage } = useSelectedLanguage<LanguageDictionary>(
       LANGUAGE_PATH.replace(/\//g, "_").replace(/\.(tsx|ts)$/, ""),
       LANGUAGE_PATH,
@@ -395,7 +397,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
     const EndIcon = timeOnly ? IconClock : CalendarIcon
 
     return (
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover modal open={open} onOpenChange={setOpen}>
         <div className={cn("relative w-full", className)}>
           <PopoverTrigger asChild>
             <Input
@@ -437,7 +439,13 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
             />
           </div>
         </div>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent
+          className="w-auto overflow-visible p-0"
+          align="start"
+          container={drawerPortalContainer?.current ?? undefined}
+          onWheel={(event) => event.stopPropagation()}
+          onTouchMove={(event) => event.stopPropagation()}
+        >
           <div
             className={cn(
               "flex w-fit",

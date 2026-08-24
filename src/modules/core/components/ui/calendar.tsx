@@ -1,5 +1,4 @@
 import * as React from "react"
-import { createPortal } from "react-dom"
 import {
   DateLib,
   DayPicker,
@@ -66,24 +65,9 @@ function CompactCaptionDropdown({
   listWidthClass = "w-[4.5rem]",
 }: CompactCaptionDropdownProps) {
   const [open, setOpen] = React.useState(false)
-  const [listPosition, setListPosition] = React.useState({
-    top: 0,
-    left: 0,
-    minWidth: 0,
-  })
   const rootRef = React.useRef<HTMLSpanElement>(null)
   const listRef = React.useRef<HTMLDivElement>(null)
   const selected = options?.find((option) => option.value === value)
-
-  React.useLayoutEffect(() => {
-    if (!open || !rootRef.current) return
-    const rect = rootRef.current.getBoundingClientRect()
-    setListPosition({
-      top: rect.bottom + 4,
-      left: rect.left,
-      minWidth: rect.width,
-    })
-  }, [open])
 
   React.useLayoutEffect(() => {
     if (!open || !listRef.current) return
@@ -100,19 +84,14 @@ function CompactCaptionDropdown({
     const centeredTop =
       optionEl.offsetTop - list.clientHeight / 2 + optionEl.clientHeight / 2
     list.scrollTop = Math.max(0, centeredTop)
-  }, [open, value, options, scrollFallbackValue, listPosition])
+  }, [open, value, options, scrollFallbackValue])
 
   React.useEffect(() => {
     if (!open) return
 
     const onPointerDown = (event: PointerEvent) => {
       const target = event.target as Node
-      if (
-        rootRef.current?.contains(target) ||
-        listRef.current?.contains(target)
-      ) {
-        return
-      }
+      if (rootRef.current?.contains(target)) return
       setOpen(false)
     }
     const onKeyDown = (event: KeyboardEvent) => {
@@ -127,81 +106,86 @@ function CompactCaptionDropdown({
     }
   }, [open])
 
-  const listPanel =
-    open &&
-    createPortal(
-      <div
-        ref={listRef}
-        role="listbox"
-        aria-label={ariaLabel}
-        className={cn(
-          "fixed z-[250] max-h-48 overflow-y-auto rounded-md border border-border bg-popover p-1 shadow-md ring-1 ring-foreground/10",
-          listWidthClass,
-        )}
-        style={{
-          top: listPosition.top,
-          left: listPosition.left,
-          minWidth: listPosition.minWidth,
-        }}
-        onMouseDown={(event) => event.preventDefault()}
-      >
-        {options?.map((option) => (
-          <button
-            key={option.value}
-            type="button"
-            role="option"
-            data-option-value={option.value}
-            aria-selected={option.value === value}
-            disabled={option.disabled}
-            className={cn(
-              "w-full rounded px-2 py-1 text-left text-xs hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50",
-              option.value === value && "bg-accent text-accent-foreground",
-            )}
-            onClick={() => {
-              onChange?.({
-                target: { value: String(option.value) },
-              } as React.ChangeEvent<HTMLSelectElement>)
-              setOpen(false)
-            }}
-          >
-            {option.label}
-          </button>
-        ))}
-      </div>,
-      document.body,
-    )
+  // Dialog/sheet RemoveScroll captures wheel on document. Keep the event on this
+  // list so a 200-year dropdown can scroll when the calendar is inside a modal.
+  React.useEffect(() => {
+    if (!open) return
+    const el = listRef.current
+    if (!el) return
+    const stop = (event: Event) => event.stopPropagation()
+    el.addEventListener("wheel", stop, { capture: true })
+    el.addEventListener("touchmove", stop, { capture: true })
+    return () => {
+      el.removeEventListener("wheel", stop, { capture: true })
+      el.removeEventListener("touchmove", stop, { capture: true })
+    }
+  }, [open])
 
   return (
-    <>
-      <span
-        ref={rootRef}
+    <span
+      ref={rootRef}
+      className={cn(
+        "relative",
+        open && "z-50",
+        classNames.dropdown_root,
+      )}
+    >
+      <button
+        type="button"
+        disabled={disabled}
+        aria-label={ariaLabel}
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => !disabled && setOpen((prev) => !prev)}
         className={cn(
-          "relative",
-          open && "z-30",
-          classNames.dropdown_root,
+          "flex h-7 items-center justify-between gap-0.5 rounded-md px-1.5 text-xs font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50",
+          triggerWidthClass,
+          classNames.caption_label,
+          className,
         )}
       >
-        <button
-          type="button"
-          disabled={disabled}
+        <span className="min-w-0 truncate">{selected?.label}</span>
+        <IconChevronDown className="size-3 shrink-0 text-muted-foreground" />
+      </button>
+      {open ? (
+        <div
+          ref={listRef}
+          role="listbox"
           aria-label={ariaLabel}
-          aria-expanded={open}
-          aria-haspopup="listbox"
-          onMouseDown={(event) => event.preventDefault()}
-          onClick={() => !disabled && setOpen((prev) => !prev)}
           className={cn(
-            "flex h-7 items-center justify-between gap-0.5 rounded-md px-1.5 text-xs font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50",
-            triggerWidthClass,
-            classNames.caption_label,
-            className,
+            "absolute top-[calc(100%+4px)] left-0 z-50 max-h-48 overflow-y-auto overscroll-contain rounded-md border border-border bg-popover p-1 shadow-md ring-1 ring-foreground/10",
+            listWidthClass,
           )}
+          onMouseDown={(event) => event.preventDefault()}
+          onWheel={(event) => event.stopPropagation()}
+          onTouchMove={(event) => event.stopPropagation()}
         >
-          <span className="min-w-0 truncate">{selected?.label}</span>
-          <IconChevronDown className="size-3 shrink-0 text-muted-foreground" />
-        </button>
-      </span>
-      {listPanel}
-    </>
+          {options?.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              role="option"
+              data-option-value={option.value}
+              aria-selected={option.value === value}
+              disabled={option.disabled}
+              className={cn(
+                "w-full rounded px-2 py-1 text-left text-xs hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50",
+                option.value === value && "bg-accent text-accent-foreground",
+              )}
+              onClick={() => {
+                onChange?.({
+                  target: { value: String(option.value) },
+                } as React.ChangeEvent<HTMLSelectElement>)
+                setOpen(false)
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </span>
   )
 }
 
@@ -360,7 +344,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        "group/calendar bg-background p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(7)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
+        "group/calendar overflow-visible bg-background p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(7)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className
