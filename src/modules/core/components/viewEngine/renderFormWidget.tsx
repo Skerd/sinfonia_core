@@ -2,6 +2,7 @@ import type { ReactNode, HTMLAttributes } from "react";
 import type { FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type { Unit as UnitDto } from "armonia/src/modules/propertyManagement/api/realEstate/private/unit/unit/unit.dto.ts";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import FormMaxLengthControl from "@coreModule/components/custom/formMaxLengthControl.tsx";
 
 export type FormWidgetExtra = {
     loading?: boolean;
@@ -600,17 +601,19 @@ export function renderFormWidget(
     }
 
     if (binding.widget === "#Input" || binding.widget === "#Textarea") {
-        const { type, autoComplete, inputMode, ...restWp } = widgetProps;
+        const { type, autoComplete, inputMode, maxLength, ...restWp } = widgetProps;
         const defaults = inputA11yDefaults(
             typeof type === "string" ? type : undefined,
             binding.name,
         );
         const emptyValue = extra?.editMode ? null : undefined;
-        return (
+        const fieldValue = field.value ?? "";
+        const control = (
             <Widget
                 placeholder={placeholder}
                 {...field}
                 {...restWp}
+                maxLength={typeof maxLength === "number" ? maxLength : undefined}
                 {...(binding.widget === "#Input"
                     ? {
                           type: defaults.type ?? "text",
@@ -618,12 +621,22 @@ export function renderFormWidget(
                           autoComplete: autoComplete ?? defaults.autoComplete,
                       }
                     : {})}
-                value={field.value ?? ""}
+                value={fieldValue}
                 onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
                     field.onChange(e.target.value === "" ? emptyValue : e.target.value)
                 }
             />
         );
+
+        if (typeof maxLength === "number" && maxLength > 0) {
+            return (
+                <FormMaxLengthControl maxLength={maxLength} value={String(fieldValue)}>
+                    {control}
+                </FormMaxLengthControl>
+            );
+        }
+
+        return control;
     }
 
     return (

@@ -513,12 +513,13 @@ function renderTitle(
                 ? resolveLanguageKey(`${cat}.${String(rawTitle)}`)
                 : rawTitle;
         const titleCls = header.titleClassName ?? "md:text-xl";
+        const titleText = titleValue != null && titleValue !== "" ? String(titleValue) : "";
         return (
-            <SheetTitle className="flex flex-col flex-wrap justify-center gap-1">
+            <SheetTitle className="flex flex-col flex-wrap justify-center gap-1 min-w-0">
                 <HiddenElement randomLength={10}>
                     {canReadTitle ? (
-                        <TooltipDisplayer tooltip={resolveLanguageKey(header.titleField)}>
-                            <p className={`truncate w-fit ${titleCls}`}>{titleValue}</p>
+                        <TooltipDisplayer tooltip={titleText || resolveLanguageKey(header.titleField)}>
+                            <p className={`truncate min-w-0 max-w-full ${titleCls}`}>{titleValue}</p>
                         </TooltipDisplayer>
                     ) : null}
                 </HiddenElement>
@@ -536,7 +537,7 @@ function renderTitle(
         <SheetTitle className="flex flex-wrap items-center gap-2 mb-0">
             <HiddenElement randomLength={10}>
                 {hasAccessPath(readAccess, "name") && data.name ? (
-                    <span className="truncate">{data.name}</span>
+                    <span className="truncate min-w-0 max-w-full block">{data.name}</span>
                 ) : null}
             </HiddenElement>
         </SheetTitle>

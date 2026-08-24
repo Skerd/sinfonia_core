@@ -1,0 +1,4 @@
+{
+  "path": "src/modules/core/components/custom/formMaxLengthControl.tsx",
+  "maxLengthReached": "U arrit maksimumi prej {max} karakteresh"
+}

@@ -1,5 +1,5 @@
 import type {ComponentType, MouseEvent, ReactNode} from "react";
-import {Suspense, useState} from "react";
+import {isValidElement, Suspense, useState} from "react";
 import {Link} from "react-router-dom";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {
@@ -15,6 +15,17 @@ import {IconInfoCircle, IconLink} from "@tabler/icons-react";
 import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
 import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
+import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
+
+function plainTextFromNode(node: ReactNode): string {
+    if (node == null || typeof node === "boolean") return "";
+    if (typeof node === "string" || typeof node === "number") return String(node);
+    if (Array.isArray(node)) return node.map(plainTextFromNode).join("");
+    if (isValidElement(node) && node.props != null && typeof node.props === "object" && "children" in node.props) {
+        return plainTextFromNode((node.props as {children?: ReactNode}).children as ReactNode);
+    }
+    return "";
+}
 
 /** Open/close wiring from `#DisplayCard`; renderer may bind extra props (e.g. `fetchId`). */
 export type DisplayCardLinkedSheetOuterProps = {
@@ -233,12 +244,30 @@ export default function DisplayCard({
                         )}
                     </div>
                     {!dontRenderValue && (
-                        <div
-                            className={cn(
-                                expandable ? "text-sm font-normal" : "text-base font-semibold",
-                                value != null && value !== "" ? valueTextStyles[variant] : undefined,
-                            )}
-                        >
+                        expandable ? (
+                            <div
+                                className={cn(
+                                    "text-sm font-normal",
+                                    value != null && value !== "" ? valueTextStyles[variant] : undefined,
+                                )}
+                            >
+                                <DisplayValue
+                                    value={value}
+                                    path={path}
+                                    type={type}
+                                    languageKeyCategory={languageKeyCategory}
+                                    format={format}
+                                    size={size}
+                                    show={show}
+                                >
+                                    {(formatted) => (
+                                        <ExpandableText maxLength={maxLength} className="font-normal">
+                                            {formatted}
+                                        </ExpandableText>
+                                    )}
+                                </DisplayValue>
+                            </div>
+                        ) : (
                             <DisplayValue
                                 value={value}
                                 path={path}
@@ -248,15 +277,19 @@ export default function DisplayCard({
                                 size={size}
                                 show={show}
                             >
-                                {expandable
-                                    ? (formatted) => (
-                                        <ExpandableText maxLength={maxLength} className="font-normal">
-                                            {formatted}
-                                        </ExpandableText>
-                                    )
-                                    : children}
+                                {(formatted) => (
+                                    <TruncatedValue
+                                        text={plainTextFromNode(children ? children(formatted) : formatted)}
+                                        className={cn(
+                                            "text-base font-semibold",
+                                            value != null && value !== "" ? valueTextStyles[variant] : undefined,
+                                        )}
+                                    >
+                                        {children ? children(formatted) : formatted}
+                                    </TruncatedValue>
+                                )}
                             </DisplayValue>
-                        </div>
+                        )
                     )}
                 </ItemContent>
                 {(showExternalBadge || showInternalBadge || (showLinkedBadge && LinkedSheet != null)) && (
