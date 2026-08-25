@@ -1,4 +1,5 @@
 import type { ReactNode, HTMLAttributes } from "react";
+import { useWatch } from "react-hook-form";
 import type { FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type { Unit as UnitDto } from "armonia/src/modules/propertyManagement/api/realEstate/private/unit/unit/unit.dto.ts";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -413,6 +414,71 @@ function inputA11yDefaults(type: string | undefined, name: string): {
     return { type: type ?? "text" };
 }
 
+function isoDayOrEmpty(value: unknown): string {
+    if (typeof value !== "string") return "";
+    const d = value.trim().split("T")[0];
+    return /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : "";
+}
+
+/** `#DateInput` with optional `minDateField` / `maxDateField` watching sibling RHF paths. */
+function FormBoundDateInput({
+    Widget,
+    field,
+    widgetProps,
+    placeholder,
+    extra,
+}: {
+    Widget: React.ComponentType<any>;
+    field: any;
+    widgetProps: Record<string, any>;
+    placeholder?: string;
+    extra?: FormWidgetExtra;
+}) {
+    const {
+        minDateField,
+        maxDateField,
+        minDateExclusive,
+        maxDateExclusive,
+        minDate: staticMinDate,
+        maxDate: staticMaxDate,
+        ...restWp
+    } = widgetProps;
+    const watchedMin = useWatch({
+        name: typeof minDateField === "string" && minDateField.length > 0 ? minDateField : "startDate",
+    });
+    const watchedMax = useWatch({
+        name: typeof maxDateField === "string" && maxDateField.length > 0 ? maxDateField : "endDate",
+    });
+    const minDate =
+        typeof staticMinDate === "string" && staticMinDate
+            ? isoDayOrEmpty(staticMinDate)
+            : typeof minDateField === "string" && minDateField.length > 0
+              ? isoDayOrEmpty(watchedMin)
+              : undefined;
+    const maxDate =
+        typeof staticMaxDate === "string" && staticMaxDate
+            ? isoDayOrEmpty(staticMaxDate)
+            : typeof maxDateField === "string" && maxDateField.length > 0
+              ? isoDayOrEmpty(watchedMax)
+              : undefined;
+    const emptyValue = extra?.editMode ? null : undefined;
+    return (
+        <Widget
+            {...restWp}
+            value={field.value}
+            onChange={(v: string | undefined | null) =>
+                field.onChange(v === "" || v == null ? emptyValue : v)
+            }
+            placeholder={placeholder}
+            disabled={field.disabled || restWp.disabled}
+            minDate={minDate || undefined}
+            maxDate={maxDate || undefined}
+            minDateExclusive={minDateExclusive === true}
+            maxDateExclusive={maxDateExclusive === true}
+        />
+    );
+}
+
 export function renderFormWidget(
     Widget: React.ComponentType<any>,
     binding: FieldBinding,
@@ -536,18 +602,13 @@ export function renderFormWidget(
     }
 
     if (binding.widget === "#DateInput") {
-        const emptyValue = extra?.editMode ? null : undefined;
         return (
-            <Widget
-                value={field.value}
-                onChange={(v: string | undefined | null) =>
-                    field.onChange(v === "" || v == null ? emptyValue : v)
-                }
+            <FormBoundDateInput
+                Widget={Widget}
+                field={field}
+                widgetProps={widgetProps}
                 placeholder={placeholder}
-                disabled={field.disabled || widgetProps.disabled}
-                valueFormat={widgetProps.valueFormat}
-                displayFormat={widgetProps.displayFormat}
-                {...widgetProps}
+                extra={extra}
             />
         );
     }

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { format, isValid, parse } from "date-fns"
+import { format, isValid, parse, addDays } from "date-fns"
 
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Calendar } from "@coreModule/components/ui/calendar.tsx"
@@ -248,6 +248,15 @@ function resolvePlaceholder(
   return typeof p === "string" ? p : DEFAULT_PLACEHOLDER
 }
 
+/** Local calendar day from `yyyy-MM-dd` (avoids UTC-shift from `Date` parsing). */
+function parseIsoDayLocal(iso?: string): Date | undefined {
+  const s = iso?.trim() ?? ""
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return undefined
+  const [y, m, d] = s.split("-").map((x) => Number.parseInt(x, 10))
+  const dt = new Date(y, m - 1, d)
+  return isValid(dt) ? dt : undefined
+}
+
 type DateInputBase = Omit<
   React.ComponentProps<typeof Input>,
   "type" | "value" | "onChange" | "readOnly"
@@ -263,6 +272,12 @@ type DateInputBase = Omit<
    * tokens (e.g. `"HH:mm"`). Reuses the same scroll time panel as datetime mode.
    */
   timeOnly?: boolean
+  /** Inclusive `yyyy-MM-dd` lower bound for the calendar (unless `minDateExclusive`). */
+  minDate?: string
+  /** Inclusive `yyyy-MM-dd` upper bound for the calendar (unless `maxDateExclusive`). */
+  maxDate?: string
+  minDateExclusive?: boolean
+  maxDateExclusive?: boolean
 }
 
 /** `Date` values (default). */
@@ -292,8 +307,15 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       value,
       onChange,
       timeOnly = false,
+      minDate,
+      maxDate,
+      minDateExclusive = false,
+      maxDateExclusive = false,
+      // View-engine field links — consumed by FormBoundDateInput; strip so they never hit the DOM.
+      minDateField: _minDateField,
+      maxDateField: _maxDateField,
       ...inputProps
-    } = props
+    } = props as typeof props & { minDateField?: string; maxDateField?: string }
 
     const resolvedValueFormat =
       valueFormat ?? (timeOnly ? "HH:mm" : undefined)
@@ -375,6 +397,37 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       typeof currentLanguage?.clear === "string"
         ? currentLanguage.clear
         : "Clear"
+
+    const rangeCalendarProps = React.useMemo(() => {
+      const minBound = parseIsoDayLocal(minDate)
+      const maxBound = parseIsoDayLocal(maxDate)
+      const matchers: Array<{ before: Date } | { after: Date }> = []
+      if (minBound) {
+        matchers.push({ before: minDateExclusive ? addDays(minBound, 1) : minBound })
+      }
+      if (maxBound) {
+        matchers.push({ after: maxDateExclusive ? addDays(maxBound, -1) : maxBound })
+      }
+      const lowerNav = minBound
+        ? minDateExclusive
+          ? addDays(minBound, 1)
+          : minBound
+        : undefined
+      const upperNav = maxBound
+        ? maxDateExclusive
+          ? addDays(maxBound, -1)
+          : maxBound
+        : undefined
+      return {
+        disabled: matchers.length > 0 ? matchers : undefined,
+        startMonth: lowerNav
+          ? new Date(lowerNav.getFullYear(), lowerNav.getMonth(), 1)
+          : undefined,
+        endMonth: upperNav
+          ? new Date(upperNav.getFullYear(), upperNav.getMonth(), 1)
+          : undefined,
+      }
+    }, [minDate, maxDate, minDateExclusive, maxDateExclusive])
 
     const clearValue = React.useCallback(() => {
       if (disabled) return
@@ -471,6 +524,9 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 monthNames={monthNames}
                 weekdayNames={weekdayNames}
                 captionLayout={calendarProps?.captionLayout ?? "dropdown"}
+                disabled={calendarProps?.disabled != null ? ([rangeCalendarProps.disabled, calendarProps.disabled].flat().filter(Boolean)) :  !!rangeCalendarProps.disabled}
+                startMonth={calendarProps?.startMonth ?? rangeCalendarProps.startMonth}
+                endMonth={calendarProps?.endMonth ?? rangeCalendarProps.endMonth}
                 onSelect={(d) => {
                   if (resolvedValueFormat) {
                     if (!d || !isValid(d)) {
