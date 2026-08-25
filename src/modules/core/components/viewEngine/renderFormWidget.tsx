@@ -298,7 +298,12 @@ export function renderCompoundWidget(
 
     if (binding.widget === "#FormMultiLocalFileField") {
         const { fieldPrefix: _fp, ...restWp } = wp;
-        const name = _fp ? `${_fp}.${binding.name}` : binding.name;
+        // FormRepeater already prefixes `name` (`findings.structuralIssues.0.media`)
+        // and also injects `fieldPrefix`. Only prepend when `name` is still relative.
+        const name =
+            _fp && !String(binding.name).startsWith(`${_fp}.`)
+                ? `${_fp}.${binding.name}`
+                : binding.name;
         return (
             <Widget
                 {...restWp}
