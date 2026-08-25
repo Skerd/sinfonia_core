@@ -18,7 +18,6 @@ import {IconPicker} from "@coreModule/components/custom/iconPicker.tsx";
 import {PhoneInput} from "@coreModule/components/custom/phoneInput.tsx";
 import {GalleryCarousel} from "@coreModule/components/custom/images/galleryCarousel.tsx";
 import SheetMediaFilesStrip from "./sheetMediaFilesStrip.tsx";
-import SheetModificationLineItems from "./sheetModificationLineItems.tsx";
 import SheetMediaAvatar from "./sheetMediaAvatar.tsx";
 import SheetEmbeddedItemsList from "./sheetEmbeddedItemsList.tsx";
 import SheetEmbeddedAddressCard from "./sheetEmbeddedAddressCard.tsx";
@@ -77,8 +76,6 @@ const WIDGET_REGISTRY: Record<string, ComponentType<any>> = {
     "#SheetMediaFilesStrip": SheetMediaFilesStrip,
     /** Sheet read-only: configurable embedded `{field}[]` list; cards = full fields, compact = summary text only. Pair with `#ReferencesViewModeScope`. */
     "#SheetEmbeddedItemsList": SheetEmbeddedItemsList,
-    /** Sheet read-only: engineer `materialsPlan[]` or finance `costBreakdown[]` line items. */
-    "#SheetModificationLineItems": SheetModificationLineItems,
     /** Sheet read-only: logo-style `Avatar` for a single media id (string or populated `{ _id }`). */
     "#SheetMediaAvatar": SheetMediaAvatar,
     /** `#ReferencesRender` card for a single embedded address (non-compact/cards mode). */

@@ -438,7 +438,7 @@ function SheetEmbeddedItemsList({
 
     return (
         <div className="flex flex-col gap-y-2">
-            <div className={cn("flex flex-col gap-2 gap-y-2 max-h-[350px] overflow-y-auto", listClassName)}>{listBody}</div>
+            <div className={cn("flex flex-col gap-2 gap-y-2 p-2 max-h-[350px] overflow-y-auto", listClassName)}>{listBody}</div>
             <SheetListPaginationFooter
                 rangeLabel={pagination.rangeLabel}
                 pageIndex={pagination.pageIndex}

@@ -80,7 +80,7 @@ function SheetPaginatedReferenceCardList({
         <div className="flex flex-col gap-y-2">
             <div
                 className={cn(
-                    "flex flex-col gap-2 gap-y-2 max-h-[350px] overflow-y-auto",
+                    "flex flex-col gap-2 gap-y-2 p-2 max-h-[350px] overflow-y-auto",
                     listClassName,
                 )}
             >

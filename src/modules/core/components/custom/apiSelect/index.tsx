@@ -893,7 +893,7 @@ function ApiSelectCore({
                 <CommandItem
                     key={option.value}
                     value={option.value}
-                    className="flex min-w-0 gap-x-0"
+                    className="flex min-w-0 gap-x-2"
                     aria-selected={multiple ? isSelected : undefined}
                     onSelect={() => handleOptionSelect(option)}
                 >
@@ -1159,6 +1159,26 @@ function ApiSelectCore({
                 </Command>
             </PopoverContent>
         </Popover>
+        {showSelectedChips && multiple && selectedValues.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2 min-w-0 max-w-full">
+                {selectedValues.map((id) => {
+                    const label = selectedOptions.find(o => o.value === id)?.label ?? id;
+                    return (
+                        <div key={id} className="flex min-w-0 max-w-full items-center gap-2 px-3 py-1.5 bg-secondary rounded-md text-sm">
+                            <span className="min-w-0 truncate font-medium" title={label}>{label}</span>
+                            <button
+                                type="button"
+                                onClick={() => handleOptionSelect({ value: id, label })}
+                                disabled={disabled}
+                                className="text-destructive hover:text-destructive/80 ml-1 shrink-0"
+                            >
+                                ×
+                            </button>
+                        </div>
+                    );
+                })}
+            </div>
+        )}
         </div>
         {CreateAdapter ? (
             <Dialog
@@ -1178,26 +1198,6 @@ function ApiSelectCore({
                 </DialogContent>
             </Dialog>
         ) : null}
-        {showSelectedChips && multiple && selectedValues.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-2">
-                {selectedValues.map((id) => {
-                    const label = selectedOptions.find(o => o.value === id)?.label ?? id;
-                    return (
-                        <div key={id} className="flex items-center gap-2 px-3 py-1.5 bg-secondary rounded-md text-sm">
-                            <span className="font-medium">{label}</span>
-                            <button
-                                type="button"
-                                onClick={() => handleOptionSelect({ value: id, label })}
-                                disabled={disabled}
-                                className="text-destructive hover:text-destructive/80 ml-1"
-                            >
-                                ×
-                            </button>
-                        </div>
-                    );
-                })}
-            </div>
-        )}
         </>
     );
 }

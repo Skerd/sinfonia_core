@@ -26,7 +26,6 @@ import type { Country } from "armonia/src/modules/core/api/auxiliary/private/cou
 import type { State } from "armonia/src/modules/core/api/auxiliary/private/state/state.dto.ts";
 import type { City } from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
 import type { Currency } from "armonia/src/modules/core/api/finance/private/currency/currency.dto.ts";
-import type { Media } from "armonia/src/modules/core/types";
 import SheetPaginatedReferenceCardList, {
     type ReferenceStub,
 } from "./sheetPaginatedReferenceCardList.tsx";
@@ -714,126 +713,6 @@ function renderSheetField(
         );
     }
 
-    if (binding.widget === "#SheetModificationLineItems") {
-        if (!data) return null;
-        const show = !(node.permissions?.read && !hasAccessPath(ctx.access, node.permissions.read));
-        if (!show) return null;
-        const raw = resolvePath(data, binding.name);
-        const items = Array.isArray(raw) ? (raw as Record<string, unknown>[]) : [];
-        const LineItems = resolveWidget("#SheetModificationLineItems");
-        if (!LineItems) return null;
-        const variant =
-            wp.variant === "costBreakdown"
-                ? "costBreakdown"
-                : wp.variant === "expenditureItems"
-                  ? "expenditureItems"
-                  : "materialsPlan";
-        let currencyPrefix = "";
-        if (
-            (variant === "costBreakdown" || variant === "expenditureItems") &&
-            typeof wp.currencyPath === "string" &&
-            wp.currencyPath.length > 0
-        ) {
-            const cur = resolvePath(data, wp.currencyPath);
-            if (cur != null && typeof cur === "object") {
-                const c = cur as Record<string, unknown>;
-                const sym = c.symbol ?? c.abbreviation;
-                currencyPrefix = typeof sym === "string" && sym.length > 0 ? sym : "";
-            }
-        }
-        if (items.length === 0) return createElement(ValueNotSet, { key: index });
-        const parseQty = (row: Record<string, unknown>) => {
-            const rawAmt = row.amount ?? row.quantity;
-            const v = rawAmt;
-            if (typeof v === "number" && Number.isFinite(v)) return v;
-            if (typeof v === "string" && v.trim() !== "") {
-                const n = Number(v);
-                return Number.isFinite(n) ? n : undefined;
-            }
-            return undefined;
-        };
-        const parseCost = (row: Record<string, unknown>) => {
-            const v = row.pricePerUnit ?? row.cost;
-            if (typeof v === "number" && Number.isFinite(v)) return v;
-            if (typeof v === "string" && v.trim() !== "") {
-                const n = Number(v);
-                return Number.isFinite(n) ? n : undefined;
-            }
-            return undefined;
-        };
-        const normalized = items.map((row) => {
-            if (variant === "expenditureItems") {
-                const titleVal = row.title ?? row.item;
-                const rawMedia = row.media;
-                const lineMedia =
-                    Array.isArray(rawMedia) && rawMedia.length > 0
-                        ? (rawMedia.filter((m) => m != null && typeof m === "object") as Media[])
-                        : undefined;
-                return {
-                    item: typeof titleVal === "string" ? titleVal : undefined,
-                    quantity: parseQty(row),
-                    measureUnitKey: typeof row.unit === "string" ? row.unit : undefined,
-                    categoryKey: typeof row.category === "string" ? row.category : undefined,
-                    cost: parseCost(row),
-                    media: lineMedia,
-                };
-            }
-            const titleVal = row.title ?? row.item;
-            return {
-                item: typeof titleVal === "string" ? titleVal : undefined,
-                quantity: parseQty(row),
-                unit: typeof row.unit === "string" ? row.unit : undefined,
-                notes: typeof row.notes === "string" ? row.notes : undefined,
-                cost: parseCost(row),
-                source: typeof row.source === "string" ? row.source : undefined,
-            };
-        });
-        const formatLineItemMoney = (n: number) =>
-            Number(n).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-        let footerTotalLabel: string | undefined;
-        let footerTotalFormatted: string | undefined;
-        if (variant === "expenditureItems" || variant === "costBreakdown") {
-            let displayTotal: number | undefined;
-            if (typeof wp.totalPath === "string" && wp.totalPath.length > 0) {
-                const tv = resolvePath(data, wp.totalPath);
-                if (typeof tv === "number" && Number.isFinite(tv)) displayTotal = tv;
-            }
-            if (displayTotal === undefined) {
-                let sum = 0;
-                let any = false;
-                for (const row of items) {
-                    const q = parseQty(row);
-                    const c = parseCost(row);
-                    if (q !== undefined && c !== undefined) {
-                        sum += q * c;
-                        any = true;
-                    }
-                }
-                if (any) displayTotal = sum;
-            }
-            if (displayTotal !== undefined && Number.isFinite(displayTotal)) {
-                const labelKey =
-                    typeof wp.totalLabelKey === "string" && wp.totalLabelKey.length > 0
-                        ? wp.totalLabelKey
-                        : "documentSubtotal";
-                footerTotalLabel = String(ctx.resolveLanguageKey(labelKey));
-                footerTotalFormatted = `${currencyPrefix}${formatLineItemMoney(displayTotal)}`;
-            }
-        }
-
-        return createElement(LineItems as ComponentType<any>, {
-            key: index,
-            items: normalized,
-            variant,
-            resolveLanguageKey: ctx.resolveLanguageKey,
-            className: typeof wp.className === "string" ? wp.className : undefined,
-            currencyPrefix,
-            footerTotalLabel,
-            footerTotalFormatted,
-        });
-    }
-
     if (binding.widget === "#SheetMediaAvatar") {
         if (!data) return null;
         if (ctx.access && !hasAccessPath(ctx.access, binding.name)) return null;
@@ -1265,7 +1144,8 @@ function renderDisplayCard(
     const { data, resolveLanguageKey } = ctx;
     const wp = binding.widgetProps ?? {};
     const displayType = typeof wp.type === "string" && wp.type.length > 0 ? wp.type : undefined;
-    const skipPreFormat = !!displayType;
+    const bodyWidget = typeof wp.bodyWidget === "string" && wp.bodyWidget.length > 0 ? wp.bodyWidget : undefined;
+    const skipPreFormat = !!displayType || !!bodyWidget;
     let typeForCard = displayType;
 
     if (wp.valueType === "linkedObjectRefCardList") {
@@ -1341,6 +1221,19 @@ function renderDisplayCard(
         }
     } else if (data) {
         displayValue = resolvePath(data, binding.name);
+    }
+
+    if (bodyWidget) {
+        const renderer = getSheetFieldRenderer(bodyWidget);
+        if (renderer) {
+            displayValue = renderer({
+                node,
+                binding,
+                ctx,
+                index,
+                Component: resolveWidget(bodyWidget),
+            });
+        }
     }
 
     if (!skipPreFormat && wp.format === "locale" && displayValue != null && typeof displayValue === "number") {
@@ -1433,7 +1326,8 @@ function renderDisplayCard(
     const label = binding.label ? String(resolveLanguageKey(binding.label)) : binding.name;
     const tooltipText = wp.tooltip ? String(resolveLanguageKey(wp.tooltip)) : label;
 
-    let variant = wp.variant;
+    const cardColorVariants = new Set(["default", "success", "destructive", "warning", "info"]);
+    let variant = typeof wp.variant === "string" && cardColorVariants.has(wp.variant) ? wp.variant : undefined;
     if (wp.variantLookupField && wp.variantLookupMap != null && typeof wp.variantLookupMap === "object" && data) {
         const lk = resolvePath(data, wp.variantLookupField);
         if (lk != null && (typeof lk === "string" || typeof lk === "boolean" || typeof lk === "number")) {

@@ -244,7 +244,17 @@ export default function DisplayCard({
                         )}
                     </div>
                     {!dontRenderValue && (
-                        expandable ? (
+                        type === "media" || isValidElement(value) ? (
+                            <DisplayValue
+                                value={value}
+                                path={path}
+                                type={type}
+                                languageKeyCategory={languageKeyCategory}
+                                format={format}
+                                size={size}
+                                show={show}
+                            />
+                        ) : expandable ? (
                             <div
                                 className={cn(
                                     "text-sm font-normal",

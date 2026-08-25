@@ -8,6 +8,8 @@ import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {IconPhoto} from "@tabler/icons-react";
 import {accessFieldPathExists, useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import SheetMediaFilesStrip from "@coreModule/components/viewEngine/sheetMediaFilesStrip.tsx";
+import type {Media} from "armonia/src/modules/core/types";
 import {useAccessFieldsRead} from "./accessFields.tsx";
 import {formatDate} from "@coreModule/helpers/general";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -35,7 +37,8 @@ export type DisplayValueType =
     | "flag"
     | "user"
     | "currency"
-    | "enum";
+    | "enum"
+    | "media";
 
 type DisplayValueProps = {
     value: unknown;
@@ -89,6 +92,26 @@ const DATE_TIME_FORMAT: Intl.DateTimeFormatOptions = {
 
 function isEmptyValue(value: unknown): boolean {
     return value === null || value === undefined || value === "";
+}
+
+function toMediaList(value: unknown): Media[] {
+    const out: Media[] = [];
+    const push = (item: unknown) => {
+        if (item == null) return;
+        if (typeof item === "string" && item.length > 0) {
+            out.push({_id: item} as Media);
+            return;
+        }
+        if (typeof item === "object" && typeof (item as {_id?: unknown})._id === "string") {
+            out.push(item as Media);
+        }
+    };
+    if (Array.isArray(value)) {
+        for (const item of value) push(item);
+    } else {
+        push(value);
+    }
+    return out;
 }
 
 function formatGroupedNumber(value: number, fractionDigits?: number): string {
@@ -351,6 +374,14 @@ function formatByType(
     size?: number,
     languageKeyCategory?: string,
 ): ReactNode {
+    if (type === "media") {
+        return (
+            <SheetMediaFilesStrip
+                media={toMediaList(value)}
+                resolveLanguageKey={resolveLanguageKey}
+            />
+        );
+    }
     if (type === "enum") {
         return formatEnum(value, languageKeyCategory, resolveLanguageKey) ?? String(value);
     }
@@ -523,7 +554,8 @@ function DisplayValue({
             (type === "phoneNumber" && !parsePhoneNumber(value)) ||
             (type === "user" && !formatUser(value)) ||
             (type === "currency" && !formatCurrencyValue(value)) ||
-            (type === "enum" && !formatEnum(value, languageKeyCategory, resolveLanguageKey)))
+            (type === "enum" && !formatEnum(value, languageKeyCategory, resolveLanguageKey)) ||
+            (type === "media" && toMediaList(value).length === 0))
     ) {
         return wrap(<ValueNotSet />, className);
     }
