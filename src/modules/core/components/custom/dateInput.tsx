@@ -370,7 +370,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
         : ""
 
     const hasValue = displayValue.length > 0
-    const canClear = hasValue && !disabled
+    const canClear = hasValue
     const clearLabel =
       typeof currentLanguage?.clear === "string"
         ? currentLanguage.clear
@@ -423,14 +423,20 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 role="button"
                 tabIndex={-1}
                 aria-label={clearLabel}
-                className="pointer-events-auto rounded-sm p-0.5 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                onPointerDown={(event) => {
+                aria-disabled={disabled || undefined}
+                className={cn(
+                  "rounded-sm p-0.5 text-muted-foreground",
+                  disabled
+                    ? "cursor-not-allowed opacity-50"
+                    : "pointer-events-auto hover:cursor-pointer hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+                )}
+                onPointerDown={disabled ? undefined : (event) => {
                   event.preventDefault()
                   event.stopPropagation()
                 }}
-                onClick={handleClear}
+                onClick={disabled ? undefined : handleClear}
               >
-                <X className="h-4 w-4 hover:cursor-pointer" />
+                <X className="h-4 w-4" />
               </span>
             ) : null}
             <EndIcon

@@ -845,9 +845,7 @@ function ApiSelectCore({
         [clearValue]
     );
 
-    const canClear =
-        !disabled &&
-        (multiple ? selectedOptions.length > 0 : Boolean(selectedOption));
+    const canClear = multiple ? selectedOptions.length > 0 : Boolean(selectedOption);
 
     const renderClearTriggerControl = () =>
         canClear ? (
@@ -855,12 +853,18 @@ function ApiSelectCore({
                 role="button"
                 tabIndex={-1}
                 aria-label={String(resolveLanguageKey('clear'))}
-                className="rounded-sm p-0.5 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                onPointerDown={(e) => {
+                aria-disabled={disabled || undefined}
+                className={cn(
+                    'rounded-sm p-0.5 text-muted-foreground',
+                    disabled
+                        ? 'pointer-events-none cursor-not-allowed'
+                        : 'hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
+                )}
+                onPointerDown={disabled ? undefined : (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                 }}
-                onClick={handleClear}
+                onClick={disabled ? undefined : handleClear}
             >
                 <X className="h-3.5 w-3.5" />
             </span>
