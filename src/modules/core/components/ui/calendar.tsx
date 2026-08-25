@@ -255,16 +255,20 @@ function Calendar({
               const lib = dateLib ?? new DateLib()
               return monthNames[lib.getMonth(month)] ?? lib.format(month, "LLLL")
             },
-            formatCaption: (
-              month: Date,
-              options?: ConstructorParameters<typeof DateLib>[0],
-              dateLib?: DateLib
-            ) => {
-              const lib = dateLib ?? new DateLib(options)
-              const label =
-                monthNames[lib.getMonth(month)] ?? lib.format(month, "LLLL")
-              return `${label} ${lib.getYear(month)}`
-            },
+            ...(captionLayout === "label"
+              ? {
+                  formatCaption: (
+                    month: Date,
+                    options?: ConstructorParameters<typeof DateLib>[0],
+                    dateLib?: DateLib
+                  ) => {
+                    const lib = dateLib ?? new DateLib(options)
+                    const label =
+                      monthNames[lib.getMonth(month)] ?? lib.format(month, "LLLL")
+                    return `${label} ${lib.getYear(month)}`
+                  },
+                }
+              : {}),
           }
         : {
             formatMonthDropdown: (month: Date) =>
@@ -284,7 +288,7 @@ function Calendar({
     }
 
     return { ...fromLanguage, ...formatters }
-  }, [monthNames, weekdayNames, locale?.code, formatters])
+  }, [captionLayout, monthNames, weekdayNames, locale?.code, formatters])
 
   const mergedComponents = React.useMemo(
     () => ({
@@ -362,25 +366,25 @@ function Calendar({
         ),
         month: cn("flex w-full flex-col gap-4", defaultClassNames.month),
         nav: cn(
-          "absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1",
+          "absolute inset-x-0 top-0 z-30 flex w-full items-center justify-between gap-1 pointer-events-none",
           defaultClassNames.nav
         ),
         button_previous: cn(
           buttonVariants({ variant: buttonVariant }),
-          "size-(--cell-size) p-0 select-none aria-disabled:opacity-50",
+          "relative z-30 size-(--cell-size) p-0 select-none pointer-events-auto aria-disabled:opacity-50",
           defaultClassNames.button_previous
         ),
         button_next: cn(
           buttonVariants({ variant: buttonVariant }),
-          "size-(--cell-size) p-0 select-none aria-disabled:opacity-50",
+          "relative z-30 size-(--cell-size) p-0 select-none pointer-events-auto aria-disabled:opacity-50",
           defaultClassNames.button_next
         ),
         month_caption: cn(
-          "relative z-20 flex h-(--cell-size) w-full items-center justify-center overflow-visible px-(--cell-size)",
+          "relative z-10 flex h-(--cell-size) w-full items-center justify-center overflow-visible px-(--cell-size) pointer-events-none",
           defaultClassNames.month_caption
         ),
         dropdowns: cn(
-          "relative z-20 flex h-(--cell-size) w-full items-center justify-center gap-1 overflow-visible text-sm font-medium",
+          "relative z-20 flex h-(--cell-size) w-full items-center justify-center gap-1 overflow-visible text-sm font-medium pointer-events-auto [&>span[role=status]]:sr-only",
           defaultClassNames.dropdowns
         ),
         dropdown_root: cn(
