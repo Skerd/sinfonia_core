@@ -4,6 +4,7 @@
   "failedDescription": "Une erreur s'est produite lors du chargement de ce fournisseur. Cliquez pour réessayer.",
   "failedTooltipDescription": "Cliquez pour réessayer de charger les données.",
   "overview": "Aperçu",
+  "name": "Nom",
   "credentials": "Informations d'identification",
   "senders": "Expéditeurs",
   "lastTest": "Test de dernière connexion",

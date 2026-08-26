@@ -4,6 +4,7 @@
   "lifecycle": "Lifecycle",
   "createdBy": "Created by",
   "state": "State",
+  "name": "Name",
   "code": "Code",
   "country": "Country",
   "createdAt": "Created at",

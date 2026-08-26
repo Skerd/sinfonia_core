@@ -1,6 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx",
   "currency": "Devise",
+  "name": "Nom",
   "overview": "Aperçu",
   "lifecycle": "Cycle de vie",
   "symbol": "Symbole",

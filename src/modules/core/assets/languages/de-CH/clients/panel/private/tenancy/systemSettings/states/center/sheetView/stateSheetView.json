@@ -4,6 +4,7 @@
   "lifecycle": "Lebenszyklus",
   "createdBy": "Erstellt von",
   "state": "Kanton",
+  "name": "Name",
   "code": "Code",
   "country": "Land",
   "createdAt": "Erstellt am",

@@ -1,6 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx",
   "currency": "Monedha",
+  "name": "Emri",
   "overview": "Vështrim i përgjithshëm",
   "lifecycle": "Cikli i jetës",
   "symbol": "Simboli",

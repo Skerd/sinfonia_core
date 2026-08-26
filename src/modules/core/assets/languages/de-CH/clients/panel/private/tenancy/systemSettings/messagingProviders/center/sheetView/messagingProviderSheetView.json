@@ -4,6 +4,7 @@
   "failedDescription": "Something went wrong während laden diese provider. Click bis retry.",
   "failedTooltipDescription": "Click bis retry fetching daten.",
   "overview": "Übersicht",
+  "name": "Name",
   "credentials": "Credentials",
   "senders": "Senders",
   "lastTest": "Nach connection test",

@@ -5,6 +5,7 @@
   "failedTooltipDescription": "Klikoni për të provuar përsëri marrjen e të dhënave.",
   "host": "Host",
   "overview": "Vështrim i përgjithshëm",
+  "name": "Emri",
   "connection": "Lidhja",
   "sender": "Dërguesi",
   "lastTest": "Testi i fundit i lidhjes",

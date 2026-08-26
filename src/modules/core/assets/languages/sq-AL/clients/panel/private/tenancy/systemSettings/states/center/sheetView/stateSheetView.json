@@ -4,6 +4,7 @@
   "lifecycle": "Cikli i jetës",
   "createdBy": "Krijuar nga",
   "state": "Shtetit",
+  "name": "Emri",
   "code": "Kodi",
   "country": "Vendi",
   "createdAt": "Krijuar më",

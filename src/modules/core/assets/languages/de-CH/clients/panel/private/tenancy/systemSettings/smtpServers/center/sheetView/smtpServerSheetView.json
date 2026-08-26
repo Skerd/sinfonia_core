@@ -5,6 +5,7 @@
   "failedTooltipDescription": "Click bis retry fetching daten.",
   "host": "Host",
   "overview": "Übersicht",
+  "name": "Name",
   "connection": "Connection",
   "sender": "Sender",
   "lastTest": "Nach connection test",

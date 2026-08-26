@@ -4,6 +4,7 @@
   "failedDescription": "Qualcosa è andato storto durante il caricamento di questo provider. Fare clic per riprovare.",
   "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
   "overview": "Panoramica",
+  "name": "Nome",
   "credentials": "Credenziali",
   "senders": "Mittenti",
   "lastTest": "Ultimo test di connessione",

@@ -5,6 +5,7 @@
   "failedTooltipDescription": "Cliquez pour réessayer de charger les données.",
   "host": "Hôte",
   "overview": "Aperçu",
+  "name": "Nom",
   "connection": "Connexion",
   "sender": "Expéditeur",
   "lastTest": "Test de dernière connexion",
