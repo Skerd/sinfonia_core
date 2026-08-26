@@ -3,6 +3,7 @@ import {useState} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
+import MediaPreviewContent from "@coreModule/components/custom/files/mediaPreviewContent.tsx";
 
 type VideoWithRemoveProps = {
     src: string;
@@ -34,25 +35,15 @@ export function VideoWithRemove({
         <>
             <div className={cn("relative group", className)}>
                 <div className={cn(
-                    "relative rounded-lg overflow-hidden border-2 border-border bg-muted flex items-center justify-center",
+                    "relative rounded-lg overflow-hidden border-2 border-border bg-muted",
                     aspectSquare ? "w-full aspect-square" : sizeClasses[size]
                 )}>
-                    <div className="text-center">
-                        <div className={cn(
-                            "mx-auto mb-2 rounded-full bg-primary/10 flex items-center justify-center",
-                            aspectSquare ? "h-12 w-12" : "h-10 w-10"
-                        )}>
-                            <Play className={cn(
-                                "text-primary",
-                                aspectSquare ? "h-6 w-6" : "h-5 w-5"
-                            )} fill="currentColor" />
-                        </div>
-                        <p className={cn(
-                            "text-muted-foreground",
-                            aspectSquare ? "text-xs" : "text-xs"
-                        )}>{alt}</p>
-                    </div>
-                    {/* Remove overlay */}
+                    <MediaPreviewContent
+                        mode="thumb"
+                        src={src}
+                        alt={alt}
+                        fieldMediaType="video"
+                    />
                     <div className="absolute inset-0 bg-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
                         <Button
                             type="button"
@@ -78,22 +69,18 @@ export function VideoWithRemove({
                 </div>
             </div>
 
-            {/* Dialog for video playback */}
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="min-w-3xl w-auto p-2">
                     <div className="flex items-center justify-center">
-                        <video 
-                            src={src} 
-                            controls
-                            className="max-h-[85vh] max-w-full rounded-lg"
-                            autoPlay
-                        >
-                            Your browser does not support the video tag.
-                        </video>
+                        <MediaPreviewContent
+                            mode="dialog"
+                            src={src}
+                            alt={alt}
+                            fieldMediaType="video"
+                        />
                     </div>
                 </DialogContent>
             </Dialog>
         </>
     );
 }
-

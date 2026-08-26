@@ -5,13 +5,10 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import {
     EllipsisVertical,
     Eye,
-    FileText,
-    Music,
-    File as LucidFile,
     Trash2,
     Download,
 } from "lucide-react";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {
@@ -22,6 +19,11 @@ import {
 } from "@coreModule/components/ui/context-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Media} from "armonia/src/modules/core/types";
+import MediaPreviewContent from "@coreModule/components/custom/files/mediaPreviewContent.tsx";
+import {
+    classifyMedia,
+    isDialogPreviewable,
+} from "@coreModule/components/custom/files/mediaPreviewKind.ts";
 
 type FileToUpload = any & {}
 
@@ -31,6 +33,31 @@ function getMediaDisplayName(f: File | Media): string {
     }
     const m = f as Media & { originalName?: string };
     return (m.name ?? m.originalName ?? "").trim();
+}
+
+function resolvePreviewSource(innerFile: File | Media, previewPath?: string): {
+    url: string;
+    mime: string;
+    filename: string;
+    fileSizeBytes?: number;
+} {
+    const filename = getMediaDisplayName(innerFile);
+    if (innerFile instanceof File) {
+        const url = previewPath && previewPath.trim() !== "" ? previewPath : URL.createObjectURL(innerFile);
+        return {
+            url,
+            mime: innerFile.type ?? "",
+            filename,
+            fileSizeBytes: innerFile.size,
+        };
+    }
+    const media = innerFile as Media & { mimeType?: string; originalName?: string };
+    return {
+        url: "/api/auxiliary/media/" + innerFile._id,
+        mime: media.mime ?? media.mimeType ?? "",
+        filename,
+        fileSizeBytes: typeof media.size === "number" ? media.size : undefined,
+    };
 }
 
 type SingleFileProps = WithLanguageType & {
@@ -88,120 +115,10 @@ function SingleFile({
         document.body.removeChild(link);
     };
 
-    const renderPreviewCard = (innerFile: File | Media, controls: boolean = false, previewPath?: string) => {
-        function getFileExtension(fileName: string): string {
-            const parts = (fileName ?? "").split(".");
-            return parts.length > 1 ? parts.pop()!.toLowerCase() : "";
-        }
-
-        const displayName = getMediaDisplayName(innerFile);
-
-        let url: string;
-        let type: string;
-        if (innerFile instanceof File) {
-            url = previewPath && previewPath.trim() !== "" ? previewPath : URL.createObjectURL(innerFile);
-            type = innerFile.type ?? "";
-        } else {
-            url = "/api/auxiliary/media/" + innerFile._id;
-            const media = innerFile as Media & { mimeType?: string };
-            type = media.mime ?? media.mimeType ?? "";
-        }
-
-        const ext = getFileExtension(displayName);
-        if (!type && ext === "pdf") {
-            type = "application/pdf";
-        }
-
-        // card preview (small)
-        if (type.startsWith("image/")) {
-            return (
-                <img
-                    src={url}
-                    className={cn(
-                        "h-full w-full",
-                        isChat || controls ? "object-cover" : "object-fill",
-                        !isChat && "rounded-lg",
-                        {"rounded-se-none rounded-ss-none": (isBig && !controls && !isChat)},
-                    )}
-                    alt={displayName || "attachment"}
-                />
-            );
-        }
-        if (type.startsWith("video/")) {
-            return (
-                <video
-                    src={url}
-                    className={cn(
-                        "h-full w-full",
-                        isChat || controls ? "object-cover" : "object-fill",
-                        !isChat && "rounded-lg",
-                        {"rounded-se-none rounded-ss-none": (isBig && !controls && !isChat)},
-                    )}
-                    muted={!controls}
-                    controls={controls}
-                    autoPlay={controls}
-                />
-            )
-        }
-        if (type.startsWith("audio/") && controls) {
-            const audio = new Audio(url);
-            audio.addEventListener("loadedmetadata", () => {
-                setDuration(audio.duration);
-            });
-
-            return (
-                <div className="w-full h-full flex items-center justify-center">
-                    <audio src={url} controls />
-                </div>
-            );
-        }
-        if (type.startsWith("audio/") && !controls) {
-            return (
-                <div className="w-full h-full flex items-center justify-center">
-                    <div className="h-full w-full flex flex-col items-center justify-center gap-x-1">
-                        <Music className={cn({"w-16 h-16": isBig, "w-10 h-10": !isBig})}/>
-                        <p className="">{formatSeconds(duration || 0)}</p>
-                    </div>
-                </div>
-            );
-        }
-        if (type === "application/pdf") {
-            return (
-                <div className={cn(
-                    "flex h-full w-full items-center justify-center rounded-lg",
-                    isChat ? "bg-background/20" : "bg-muted",
-                )}>
-                    {
-                        controls ?
-                        <div className="min-h-32">
-                            <iframe src={url} className="h-full w-full border-none" />
-                        </div>
-                        :
-                        <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-2 text-center">
-                            <FileText className={cn({"w-16 h-16": isBig && !isChat, "w-10 h-10": !isBig || isChat})}/>
-                            <span className="max-w-full truncate text-3xs opacity-80">
-                                .{getFileExtension(displayName)}
-                            </span>
-                        </div>
-                    }
-                </div>
-            );
-        }
-
-        return (
-            <div className={cn(
-                "flex h-full w-full items-center justify-center rounded-lg",
-                isChat ? "bg-background/20" : "bg-muted",
-            )}>
-                <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-2 text-center">
-                    <LucidFile className={cn({"w-16 h-16": isBig && !isChat, "w-10 h-10": !isBig || isChat})}/>
-                    <span className="max-w-full truncate text-3xs opacity-80">
-                        .{getFileExtension(displayName)}
-                    </span>
-                </div>
-            </div>
-        );
-    };
+    const preview = useMemo(() => {
+        if (!file?.file) return null;
+        return resolvePreviewSource(file.file, file.path);
+    }, [file?.file, file?.path]);
 
     useEffect(() => {
         const inner = file?.file;
@@ -209,19 +126,29 @@ function SingleFile({
             setCanPreview(false);
             return;
         }
-        let type: string;
-        if (inner instanceof File) {
-            type = inner.type ?? "";
-        } else {
-            const media = inner as Media & { mimeType?: string };
-            type = media.mime ?? media.mimeType ?? "";
+        const source = resolvePreviewSource(inner, file.path);
+        const kind = classifyMedia({mime: source.mime, filename: source.filename});
+        setCanPreview(isDialogPreviewable(kind));
+    }, [file?.id, file?.file, file?.path]);
+
+    useEffect(() => {
+        if (!preview) {
+            setDuration(null);
+            return;
         }
-        setCanPreview(
-            type.startsWith("image/") ||
-                type.startsWith("video/") ||
-                type.startsWith("audio/"),
-        );
-    }, [file?.id, file?.file]);
+        const kind = classifyMedia({mime: preview.mime, filename: preview.filename});
+        if (kind !== "audio") {
+            setDuration(null);
+            return;
+        }
+        const audio = new Audio(preview.url);
+        const onMeta = () => setDuration(audio.duration);
+        audio.addEventListener("loadedmetadata", onMeta);
+        return () => {
+            audio.removeEventListener("loadedmetadata", onMeta);
+            audio.src = "";
+        };
+    }, [preview]);
 
     const openPreview = () => setOpen(true);
 
@@ -232,6 +159,37 @@ function SingleFile({
         else {
             downloadFile(`/api/auxiliary/media/` + file.file._id, file.file.name);
         }
+    };
+
+    const thumbObjectFit = isChat ? "cover" : "fill";
+
+    const renderPreviewCard = (mode: "thumb" | "dialog") => {
+        if (!preview) return null;
+        const kind = classifyMedia({mime: preview.mime, filename: preview.filename});
+        const audioCaption =
+            kind === "audio" && mode === "thumb" && duration != null ? formatSeconds(duration) : undefined;
+        return (
+            <div className="relative h-full w-full">
+                <MediaPreviewContent
+                    mode={mode}
+                    src={preview.url}
+                    mime={preview.mime}
+                    filename={preview.filename}
+                    alt={preview.filename || "attachment"}
+                    fileSizeBytes={preview.fileSizeBytes}
+                    variant={isChat ? "chat" : "default"}
+                    objectFit={mode === "thumb" ? thumbObjectFit : isChat ? "cover" : "fill"}
+                    iconSize={isBig && !isChat ? "lg" : "sm"}
+                    className={cn(
+                        !isChat && mode === "thumb" && "rounded-lg",
+                        {"rounded-se-none rounded-ss-none": (isBig && mode === "thumb" && !isChat)},
+                    )}
+                />
+                {audioCaption ? (
+                    <p className="absolute inset-x-0 bottom-1 text-center text-xs">{audioCaption}</p>
+                ) : null}
+            </div>
+        );
     };
 
     const renderDropDownMenu = () => {
@@ -383,9 +341,7 @@ function SingleFile({
                         )}
                         onClick={() => {if( canPreview ){ openPreview(); }}}
                     >
-                        {
-                            !!file && renderPreviewCard(file.file, false, file.path)
-                        }
+                        {!!file && renderPreviewCard("thumb")}
                     </div>
                 </div>
             </>
@@ -402,7 +358,7 @@ function SingleFile({
                 }}
             >
                 <div className="flex max-h-[85vh] items-center justify-center overflow-auto">
-                    {!!file && renderPreviewCard(file.file, true, file.path)}
+                    {!!file && renderPreviewCard("dialog")}
                 </div>
             </DialogContent>
         </Dialog>

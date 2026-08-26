@@ -5,6 +5,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
 import type {Media} from "armonia/src/modules/core/types";
 import type {AuditFieldHint} from "@coreModule/components/viewEngine/collectFieldLabelsFromViewConfig.ts";
+import {inferMimeFromFilename} from "@coreModule/components/custom/files/mediaPreviewKind.ts";
 
 const OBJECT_ID_HEX = /^[a-f0-9]{24}$/i;
 
@@ -100,23 +101,6 @@ function looksLikeSparseMediaStub(o: Record<string, unknown>): boolean {
         return false;
     }
     return !!(o.mime ?? o.mimeType ?? o.name ?? o.originalName);
-}
-
-function inferMimeFromFilename(name: string): string {
-    const ext = (name.split(".").pop() ?? "").toLowerCase();
-    if (["jpg", "jpeg", "png", "gif", "webp", "svg", "bmp", "ico"].includes(ext)) {
-        return ext === "jpg" ? "image/jpeg" : `image/${ext}`;
-    }
-    if (ext === "pdf") {
-        return "application/pdf";
-    }
-    if (["mp4", "webm", "mov", "mkv"].includes(ext)) {
-        return "video/mp4";
-    }
-    if (["mp3", "wav", "ogg", "m4a"].includes(ext)) {
-        return "audio/mpeg";
-    }
-    return "";
 }
 
 function asMediaStub(v: unknown, id: string): Media {

@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useFormContext, type FieldPath, type FieldValues } from "react-hook-form";
-import { X, Eye, Play, Plus, FileIcon, FileText } from "lucide-react";
+import { X, Eye, Play, Plus, FileText } from "lucide-react";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import { Dialog, DialogContent } from "@coreModule/components/ui/dialog.tsx";
@@ -13,12 +13,28 @@ import {
 } from "@coreModule/components/ui/form.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
+import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import MediaPreviewContent from "@coreModule/components/custom/files/mediaPreviewContent.tsx";
+import {
+    classifyMedia,
+    formatFileSize,
+    mediaIdFromSrc,
+    type FieldMediaType,
+} from "@coreModule/components/custom/files/mediaPreviewKind.ts";
 
 const DEFAULT_MEDIA_BASE_URL = "/api/auxiliary/media/";
 
 const VIDEO_ALT_MAX_LENGTH = 15;
 
-type MediaType = "image" | "video" | "file";
+type MediaType = FieldMediaType;
+
+type MediaInfoDto = {
+    mimeType: string;
+    originalName: string;
+    fileSize: number;
+    type: string;
+    extension: string;
+};
 
 /** Language keys used when resolveLanguageKey is provided: form.mediaField.videoUnsupported */
 type MediaPreviewWithRemoveProps = {
@@ -31,20 +47,12 @@ type MediaPreviewWithRemoveProps = {
     size?: "sm" | "md" | "lg";
     aspectSquare?: boolean;
     resolveLanguageKey?: (key: string) => string;
-    /** For mediaType "file": optional size/type for dialog details */
     fileSize?: string;
     fileType?: string;
+    filename?: string;
+    fileSizeBytes?: number;
+    fetchInfo?: boolean;
 };
-
-const DEFAULT_VIDEO_UNSUPPORTED = "Your browser does not support the video tag.";
-
-const FILE_NAME_MAX_LENGTH = 18;
-
-function formatFileSize(bytes: number): string {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
 
 function MediaPreviewWithRemove({
     mediaType,
@@ -58,18 +66,46 @@ function MediaPreviewWithRemove({
     resolveLanguageKey,
     fileSize,
     fileType,
+    filename,
+    fileSizeBytes,
+    fetchInfo = false,
 }: MediaPreviewWithRemoveProps) {
     const [open, setOpen] = useState(false);
+    const [info, setInfo] = useState<MediaInfoDto | null>(null);
     const sizeClasses = {
         sm: "w-32 h-32",
         md: "w-40 h-40",
         lg: "w-48 h-48",
     };
 
-    const isFileType = mediaType === "file";
-    const isVideoType = mediaType === "video";
-    const isImageType = mediaType === "image";
-    const needsCenteredBlock = isVideoType || isFileType;
+    useEffect(() => {
+        if (!fetchInfo) return;
+        const id = mediaIdFromSrc(src);
+        if (!id) return;
+        let cancelled = false;
+        apiClient
+            .get<MediaInfoDto>(`/api/auxiliary/media/${id}/info`)
+            .then((res) => {
+                if (!cancelled) setInfo(res.data);
+            })
+            .catch(() => {
+                /* keep field-level classification */
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [fetchInfo, src]);
+
+    const resolvedMime = info?.mimeType || fileType;
+    const resolvedName = info?.originalName || filename || alt;
+    const resolvedBytes = info?.fileSize ?? fileSizeBytes;
+    const resolvedSizeLabel = fileSize || (resolvedBytes != null ? formatFileSize(resolvedBytes) : undefined);
+    const kind = classifyMedia({
+        mime: resolvedMime,
+        filename: resolvedName,
+        fieldMediaType: mediaType,
+    });
+    const needsCenteredBlock = kind !== "image" && kind !== "video" && kind !== "pdf";
 
     return (
         <>
@@ -81,44 +117,16 @@ function MediaPreviewWithRemove({
                         aspectSquare ? "w-full aspect-square" : sizeClasses[size]
                     )}
                 >
-                    {isImageType ? (
-                        <img
-                            src={src}
-                            alt={alt}
-                            className="w-full h-full object-cover"
-                        />
-                    ) : (
-                        <div className="text-center p-2">
-                            <div
-                                className={cn(
-                                    "mx-auto mb-2 rounded-full bg-primary/10 flex items-center justify-center",
-                                    aspectSquare ? "h-12 w-12" : "h-10 w-10"
-                                )}
-                            >
-                                {isFileType ? (
-                                    <FileIcon
-                                        className={cn(
-                                            "text-primary",
-                                            aspectSquare ? "h-6 w-6" : "h-5 w-5"
-                                        )}
-                                    />
-                                ) : (
-                                    <Play
-                                        className={cn(
-                                            "text-primary",
-                                            aspectSquare ? "h-6 w-6" : "h-5 w-5"
-                                        )}
-                                        fill="currentColor"
-                                    />
-                                )}
-                            </div>
-                            <p className="text-muted-foreground text-xs break-all line-clamp-2">
-                                {isFileType && alt.length > FILE_NAME_MAX_LENGTH
-                                    ? `${alt.substring(0, FILE_NAME_MAX_LENGTH)}…`
-                                    : alt}
-                            </p>
-                        </div>
-                    )}
+                    <MediaPreviewContent
+                        mode="thumb"
+                        src={src}
+                        mime={resolvedMime}
+                        filename={resolvedName}
+                        alt={alt}
+                        fileSizeBytes={resolvedBytes}
+                        fileSizeLabel={resolvedSizeLabel}
+                        fieldMediaType={mediaType}
+                    />
                     <div className="absolute inset-0 bg-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
                         <Button
                             type="button"
@@ -128,12 +136,12 @@ function MediaPreviewWithRemove({
                             onClick={() => setOpen(true)}
                             disabled={disabled}
                         >
-                            {isImageType ? (
-                                <Eye className="h-5 w-5" />
-                            ) : isFileType ? (
-                                <FileText className="h-5 w-5" />
-                            ) : (
+                            {kind === "video" ? (
                                 <Play className="h-5 w-5" />
+                            ) : kind === "image" ? (
+                                <Eye className="h-5 w-5" />
+                            ) : (
+                                <FileText className="h-5 w-5" />
                             )}
                         </Button>
                         <Button
@@ -151,34 +159,19 @@ function MediaPreviewWithRemove({
             </div>
 
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className={cn("p-2", isVideoType ? "min-w-3xl w-auto" : "min-w-3xl")}>
+                <DialogContent className={cn("p-2", kind === "video" ? "min-w-3xl w-auto" : "min-w-3xl")}>
                     <div className="flex items-center justify-center">
-                        {isImageType ? (
-                            <img
-                                src={src}
-                                alt={alt}
-                                className="max-h-[85vh] max-w-full object-contain rounded-lg"
-                            />
-                        ) : isFileType ? (
-                            <div className="flex flex-col rounded-lg border border-border bg-muted/30 p-6 min-w-[280px] gap-y-2">
-                                <p className="font-medium break-all">{alt}</p>
-                                {fileType != null && fileType !== "" && (
-                                    <p className="text-sm text-muted-foreground">{fileType}</p>
-                                )}
-                                {fileSize != null && fileSize !== "" && (
-                                    <p className="text-sm text-muted-foreground">{fileSize}</p>
-                                )}
-                            </div>
-                        ) : (
-                            <video
-                                src={src}
-                                controls
-                                className="max-h-[85vh] max-w-full rounded-lg"
-                                autoPlay
-                            >
-                                {resolveLanguageKey?.("form.mediaField.videoUnsupported") ?? DEFAULT_VIDEO_UNSUPPORTED}
-                            </video>
-                        )}
+                        <MediaPreviewContent
+                            mode="dialog"
+                            src={src}
+                            mime={resolvedMime}
+                            filename={resolvedName}
+                            alt={alt}
+                            fileSizeBytes={resolvedBytes}
+                            fileSizeLabel={resolvedSizeLabel}
+                            fieldMediaType={mediaType}
+                            videoUnsupportedText={resolveLanguageKey?.("form.mediaField.videoUnsupported")}
+                        />
                     </div>
                 </DialogContent>
             </Dialog>
@@ -204,35 +197,17 @@ function FileMediaPreview({
     resolveLanguageKey,
 }: FileMediaPreviewProps) {
     const [url, setUrl] = useState<string | null>(null);
-    const isFileType = mediaType === "file";
 
     useEffect(() => {
-        if (isFileType) return;
         const u = URL.createObjectURL(file);
         setUrl(u);
         return () => URL.revokeObjectURL(u);
-    }, [file, isFileType]);
+    }, [file]);
 
     const alt =
         mediaType === "video"
             ? file.name.substring(0, VIDEO_ALT_MAX_LENGTH)
             : file.name;
-
-    if (isFileType) {
-        return (
-            <MediaPreviewWithRemove
-                mediaType={mediaType}
-                src=""
-                alt={alt}
-                onRemove={onRemove}
-                disabled={disabled}
-                aspectSquare={aspectSquare}
-                resolveLanguageKey={resolveLanguageKey}
-                fileSize={formatFileSize(file.size)}
-                fileType={file.type || undefined}
-            />
-        );
-    }
 
     if (!url) return null;
 
@@ -245,6 +220,10 @@ function FileMediaPreview({
             disabled={disabled}
             aspectSquare={aspectSquare}
             resolveLanguageKey={resolveLanguageKey}
+            fileSize={formatFileSize(file.size)}
+            fileType={file.type || undefined}
+            filename={file.name}
+            fileSizeBytes={file.size}
         />
     );
 }
@@ -492,6 +471,7 @@ function MediaField({
                                 disabled={loading}
                                 aspectSquare={true}
                                 resolveLanguageKey={resolveLanguageKey}
+                                fetchInfo={mediaType === "file"}
                             />
                         );
                     }

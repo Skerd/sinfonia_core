@@ -224,6 +224,12 @@ export default defineConfig(({ mode }) => {
                                 id.includes("react-pdf")
                             )
                                 return "vendor-pdf";
+                            if (
+                                id.includes("docx-preview") ||
+                                id.includes("/xlsx") ||
+                                id.endsWith("xlsx")
+                            )
+                                return "vendor-office";
                             // Recharts 3 uses @reduxjs/toolkit internally. Splitting them into separate chunks
                             // makes Rollup emit a circular import (redux chunk imports React hooks from charts chunk)
                             // while charts imports RTK — ESM init then runs vg()/React shim before `K` exists →
