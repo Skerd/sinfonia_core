@@ -40,6 +40,11 @@ interface GalleryCarouselProps {
     showPreviews?: boolean
     /** Where the preview strip appears when `showPreviews` is true. Default `"bottom"`. */
     previewLocation?: GalleryCarouselPreviewLocation
+    /**
+     * When set (width/height), skip natural media aspect and use this ratio.
+     * `1` renders a square — used for logos and other fixed tiles.
+     */
+    forcedAspectRatio?: number
     className?: string
 }
 
@@ -166,6 +171,7 @@ export function GalleryCarousel({
     modifyImagesOnDarkMode,
     showPreviews = false,
     previewLocation = "right",
+    forcedAspectRatio,
     className,
 }: GalleryCarouselProps) {
     const media = React.useMemo<Media[]>(
@@ -176,7 +182,12 @@ export function GalleryCarousel({
     const [open, setOpen] = React.useState(false)
     const [index, setIndex] = React.useState(-1)
     const [api, setApi] = React.useState<CarouselApi | null>(null)
-    const [aspectRatio, setAspectRatio] = React.useState<number | null>(null)
+    const [detectedAspectRatio, setDetectedAspectRatio] = React.useState<number | null>(null)
+    const forcedRatio =
+        typeof forcedAspectRatio === "number" && Number.isFinite(forcedAspectRatio) && forcedAspectRatio > 0
+            ? forcedAspectRatio
+            : null
+    const aspectRatio = forcedRatio ?? detectedAspectRatio
     const [fullscreenIndex, setFullscreenIndex] = React.useState(0)
     const [fullscreenApi, setFullscreenApi] = React.useState<CarouselApi | null>(null)
 
@@ -195,12 +206,16 @@ export function GalleryCarousel({
 
     /* ---------------- Resolve main image aspect ratio ---------------- */
     React.useEffect(() => {
+        if (forcedRatio != null) {
+            setDetectedAspectRatio(null)
+            return
+        }
         if (!media?.length) {
-            setAspectRatio(null)
+            setDetectedAspectRatio(null)
             return
         }
 
-        setAspectRatio(null)
+        setDetectedAspectRatio(null)
         const mainMedia = media[0]
         const url = resolveMediaUrl(mediaUrl, mainMedia)
 
@@ -208,7 +223,7 @@ export function GalleryCarousel({
             const img = new Image()
             img.src = url
             img.onload = () => {
-                setAspectRatio(img.naturalWidth / img.naturalHeight)
+                setDetectedAspectRatio(img.naturalWidth / img.naturalHeight)
             }
             return () => {
                 img.onload = null
@@ -220,13 +235,13 @@ export function GalleryCarousel({
             video.src = url
             video.preload = "metadata"
             video.onloadedmetadata = () => {
-                setAspectRatio(video.videoWidth / video.videoHeight)
+                setDetectedAspectRatio(video.videoWidth / video.videoHeight)
             }
             return () => {
                 video.onloadedmetadata = null
             }
         }
-    }, [media, mediaUrl])
+    }, [media, mediaUrl, forcedRatio])
 
     /* ---------------- Sync main carousel index → state ---------------- */
     React.useEffect(() => {
