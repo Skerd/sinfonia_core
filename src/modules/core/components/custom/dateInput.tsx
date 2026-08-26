@@ -524,7 +524,11 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 monthNames={monthNames}
                 weekdayNames={weekdayNames}
                 captionLayout={calendarProps?.captionLayout ?? "dropdown"}
-                disabled={calendarProps?.disabled != null ? ([rangeCalendarProps.disabled, calendarProps.disabled].flat().filter(Boolean)) :  !!rangeCalendarProps.disabled}
+                disabled={
+                  calendarProps?.disabled != null
+                    ? [rangeCalendarProps.disabled, calendarProps.disabled].flat().filter(Boolean)
+                    : rangeCalendarProps.disabled
+                }
                 startMonth={calendarProps?.startMonth ?? rangeCalendarProps.startMonth}
                 endMonth={calendarProps?.endMonth ?? rangeCalendarProps.endMonth}
                 onSelect={(d) => {
