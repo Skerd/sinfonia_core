@@ -9,14 +9,13 @@ import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
 import RoleCard from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/center/cardView/roleCard.tsx";
-import {RoleFormType} from "armonia/src/modules/core/api/company/private/roles/role.form.type.ts";
 import {CompanyRole as CompanyRoleType} from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
 import {IconUserPlus} from "@tabler/icons-react";
 import RoleSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx";
 import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
-import type {DeletedData, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
+import type {DeletedData, TableForm, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 
 function roleEditPath(role: CompanyRoleType) {
     const params = new URLSearchParams();
@@ -77,7 +76,7 @@ function Roles({resolveLanguageKey}: RolesProps) {
 
             <HiddenElement hideAll={true}>
                 {read && (
-                    <CardAndTableView<TableResponse<CompanyRoleType>, RoleFormType>
+                    <CardAndTableView<TableResponse<CompanyRoleType>, TableForm>
                         url="/api/company/roles"
                         tableConfigKey="roles"
                         access="roles"
