@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/resumeCronJobDialog.tsx",
+  "confirmTitle": "Ta vazhdojmë këtë punë?",
+  "confirmDescription": "Planifikuesi do ta ekzekutojë sërish këtë punë në kohën e radhës.",
+  "cancel": "Anulo",
+  "confirm": "Vazhdo",
+  "axios": {
+    "start": {
+      "title": "Po vazhdohet puna…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Puna vazhdoi",
+      "time": 3000
+    },
+    "error": {
+      "title": "Puna nuk u vazhdua",
+      "time": 3000
+    }
+  }
+}

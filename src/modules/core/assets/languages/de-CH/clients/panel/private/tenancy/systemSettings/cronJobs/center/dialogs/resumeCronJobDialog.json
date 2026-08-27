@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/resumeCronJobDialog.tsx",
+  "confirmTitle": "Diesen Job fortsetzen?",
+  "confirmDescription": "Der Scheduler führt diesen Job zum nächsten geplanten Zeitpunkt wieder aus.",
+  "cancel": "Abbrechen",
+  "confirm": "Fortsetzen",
+  "axios": {
+    "start": {
+      "title": "Job wird fortgesetzt…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Job fortgesetzt",
+      "time": 3000
+    },
+    "error": {
+      "title": "Job konnte nicht fortgesetzt werden",
+      "time": 3000
+    }
+  }
+}

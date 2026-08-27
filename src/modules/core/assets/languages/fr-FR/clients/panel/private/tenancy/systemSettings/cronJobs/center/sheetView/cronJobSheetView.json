@@ -4,23 +4,33 @@
   "failedDescription": "Une erreur s'est produite lors du chargement de cette tâche. Cliquez pour réessayer.",
   "failedTooltipDescription": "Cliquez pour réessayer de charger les données.",
   "overview": "Aperçu",
+  "schedule": "Planification",
+  "execution": "Exécution",
+  "description": "Description",
   "name": "Nom",
   "handler": "Gestionnaire",
-  "type": "Type d'horaire",
   "active": "Actif",
   "nextRunAt": "Prochaine exécution",
   "lastRunAt": "Dernière course",
   "code": "Code",
-  "yes": "Oui",
-  "no": "Non",
-  "typeValues": {
-    "interval": "Intervalle",
-    "cron": "Expression Cron",
-    "once": "Une fois",
-    "queue": "File d'attente"
+  "pausedAt": "En pause depuis",
+  "cronExpression": "Expression Cron",
+  "priority": "Priorité",
+  "maxRetries": "Nombre maximal de tentatives",
+  "retryDelaySeconds": "Délai de nouvelle tentative (secondes)",
+  "timeoutSeconds": "Délai d'expiration (secondes)",
+  "missedRunPolicy": "Politique des exécutions manquées",
+  "missedRunPolicyValues": {
+    "skip": "Ignorer le retard",
+    "run_once": "Exécuter une fois",
+    "catch_up": "Rattraper"
   },
-  "scopeValues": {
-    "global": "Mondial",
-    "company": "Entreprise"
-  }
+  "lifecycle": "Cycle de vie",
+  "createdAt": "Créé le",
+  "updatedAt": "Mis à jour le",
+  "createdBy": "Créé par",
+  "deletedAt": "Supprimé le",
+  "deletedBy": "Supprimé par",
+  "yes": "Oui",
+  "no": "Non"
 }

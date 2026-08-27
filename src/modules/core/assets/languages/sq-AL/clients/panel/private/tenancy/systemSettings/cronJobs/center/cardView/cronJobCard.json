@@ -1,8 +1,23 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/cardView/cronJobCard.tsx",
+  "failedTitle": "Ngarkimi i veprimit dështoi",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të provuar përsëri.",
+  "name": "Emri",
+  "code": "Kodi",
   "handler": "Handler",
+  "cronExpression": "Shprehje cron",
+  "description": "Përshkrimi",
+  "priority": "Prioriteti",
+  "pausedAt": "Ndaluar më",
   "nextRunAt": "Ekzekutimi i radhës",
+  "lastRunAt": "Ekzekutimi i fundit",
+  "maxRetries": "Riprovime maks.",
+  "retryDelaySeconds": "Vonesa e riprovimit (sekonda)",
+  "timeoutSeconds": "Timeout (sekonda)",
+  "missedRunPolicy": "Politika e ekzekutimeve të humbura",
   "active": "Aktiv",
+  "paused": "Ndaluar",
+  "deleted": "Fshirë",
   "yes": "Po",
   "no": "Jo"
 }

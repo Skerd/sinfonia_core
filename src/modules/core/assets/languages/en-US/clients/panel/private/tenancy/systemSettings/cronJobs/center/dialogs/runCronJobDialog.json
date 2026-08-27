@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/runCronJobDialog.tsx",
+  "confirmTitle": "Run this job now?",
+  "confirmDescription": "The handler will run immediately, even if the next scheduled time has not arrived.",
+  "cancel": "Cancel",
+  "confirm": "Run now",
+  "axios": {
+    "start": {
+      "title": "Starting job…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Job started",
+      "time": 3000
+    },
+    "error": {
+      "title": "Could not start job",
+      "time": 3000
+    }
+  }
+}

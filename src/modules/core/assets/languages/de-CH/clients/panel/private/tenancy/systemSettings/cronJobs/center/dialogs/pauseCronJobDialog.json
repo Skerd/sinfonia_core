@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/pauseCronJobDialog.tsx",
+  "confirmTitle": "Diesen Job pausieren?",
+  "confirmDescription": "Der Scheduler überspringt diesen Job, bis Sie ihn fortsetzen.",
+  "cancel": "Abbrechen",
+  "confirm": "Pausieren",
+  "axios": {
+    "start": {
+      "title": "Job wird pausiert…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Job pausiert",
+      "time": 3000
+    },
+    "error": {
+      "title": "Job konnte nicht pausiert werden",
+      "time": 3000
+    }
+  }
+}

@@ -4,23 +4,33 @@
   "failedDescription": "Qualcosa è andato storto durante il caricamento di questo lavoro. Fare clic per riprovare.",
   "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
   "overview": "Panoramica",
+  "schedule": "Pianificazione",
+  "execution": "Esecuzione",
+  "description": "Descrizione",
   "name": "Nome",
   "handler": "Gestore",
-  "type": "Tipo di pianificazione",
   "active": "Attivo",
   "nextRunAt": "Prossima corsa",
   "lastRunAt": "Ultima corsa",
   "code": "Codice",
-  "yes": "Sì",
-  "no": "No",
-  "typeValues": {
-    "interval": "Intervallo",
-    "cron": "Espressione cron",
-    "once": "Una volta",
-    "queue": "Coda"
+  "pausedAt": "In pausa dal",
+  "cronExpression": "Espressione cron",
+  "priority": "Priorità",
+  "maxRetries": "Numero massimo di tentativi",
+  "retryDelaySeconds": "Ritardo di nuovo tentativo (secondi)",
+  "timeoutSeconds": "Timeout (secondi)",
+  "missedRunPolicy": "Politica delle esecuzioni mancate",
+  "missedRunPolicyValues": {
+    "skip": "Salta il ritardo",
+    "run_once": "Esegui una volta",
+    "catch_up": "Recupera"
   },
-  "scopeValues": {
-    "global": "Globale",
-    "company": "Azienda"
-  }
+  "lifecycle": "Ciclo di vita",
+  "createdAt": "Creato il",
+  "updatedAt": "Aggiornato il",
+  "createdBy": "Creato da",
+  "deletedAt": "Eliminato il",
+  "deletedBy": "Eliminato da",
+  "yes": "Sì",
+  "no": "No"
 }

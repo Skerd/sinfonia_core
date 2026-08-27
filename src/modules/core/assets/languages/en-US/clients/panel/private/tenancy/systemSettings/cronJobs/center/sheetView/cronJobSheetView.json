@@ -4,23 +4,33 @@
   "failedDescription": "Something went wrong while loading this job. Click to retry.",
   "failedTooltipDescription": "Click to retry fetching data.",
   "overview": "Overview",
+  "schedule": "Schedule",
+  "execution": "Execution",
+  "description": "Description",
   "name": "Name",
   "handler": "Handler",
-  "type": "Schedule type",
   "active": "Active",
   "nextRunAt": "Next run",
   "lastRunAt": "Last run",
   "code": "Code",
-  "yes": "Yes",
-  "no": "No",
-  "typeValues": {
-    "interval": "Interval",
-    "cron": "Cron expression",
-    "once": "Once",
-    "queue": "Queue"
+  "pausedAt": "Paused at",
+  "cronExpression": "Cron expression",
+  "priority": "Priority",
+  "maxRetries": "Max retries",
+  "retryDelaySeconds": "Retry delay (seconds)",
+  "timeoutSeconds": "Timeout (seconds)",
+  "missedRunPolicy": "Missed run policy",
+  "missedRunPolicyValues": {
+    "skip": "Skip backlog",
+    "run_once": "Run once",
+    "catch_up": "Catch up"
   },
-  "scopeValues": {
-    "global": "Global",
-    "company": "Company"
-  }
+  "lifecycle": "Lifecycle",
+  "createdAt": "Created at",
+  "updatedAt": "Updated at",
+  "createdBy": "Created by",
+  "deletedAt": "Deleted at",
+  "deletedBy": "Deleted by",
+  "yes": "Yes",
+  "no": "No"
 }

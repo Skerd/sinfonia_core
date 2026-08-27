@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/resumeCronJobDialog.tsx",
+  "confirmTitle": "Resume this job?",
+  "confirmDescription": "The scheduler will start running this job again on its next scheduled time.",
+  "cancel": "Cancel",
+  "confirm": "Resume",
+  "axios": {
+    "start": {
+      "title": "Resuming job…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Job resumed",
+      "time": 3000
+    },
+    "error": {
+      "title": "Could not resume job",
+      "time": 3000
+    }
+  }
+}

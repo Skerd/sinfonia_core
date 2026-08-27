@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/runCronJobDialog.tsx",
+  "confirmTitle": "Eseguire questo lavoro ora?",
+  "confirmDescription": "Il gestore verrà eseguito immediatamente, anche se l’orario successivo non è ancora arrivato.",
+  "cancel": "Annulla",
+  "confirm": "Esegui ora",
+  "axios": {
+    "start": {
+      "title": "Avvio del lavoro…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Lavoro avviato",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile avviare il lavoro",
+      "time": 3000
+    }
+  }
+}

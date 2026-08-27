@@ -31,6 +31,8 @@ import EditSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSett
 import AllMessagingProviders from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders";
 import CreateMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/createMessagingProvider.tsx";
 import EditMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/editMessagingProvider.tsx";
+import AllCronJobs from "@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs";
+import EditCronJob from "@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs/editCronJob.tsx";
 import Apps from "@coreModule/clients/panel/private/apps";
 import PanelHomePage from "@coreModule/clients/panel/private/home/PanelHomePage.tsx";
 
@@ -86,6 +88,14 @@ function renderCoreCenterPanelContent({
     // Tenancy routes
     if (menu === "tenancy") {
         if (subview === "serverPerformance") return <OnlineResources />;
+        if (subview === "cronJobs") {
+            const cronJobId = searchParams.get("cronJobId") || undefined;
+            const cronJobName = safeDecode(searchParams.get("cronJobName")) || undefined;
+            if (segments[2] === "edit") {
+                return <EditCronJob entityId={cronJobId} entityName={cronJobName} />;
+            }
+            return <AllCronJobs />;
+        }
         if (subview === "systemSettings") {
             const resource = segments[2];
             const action = segments[3];
@@ -154,6 +164,14 @@ function renderCoreCenterPanelContent({
                     return <EditMessagingProvider entityId={messagingProviderId} entityName={messagingProviderName} />;
                 }
                 if (action === undefined) return <AllMessagingProviders />;
+            }
+            if (resource === "cronJobs") {
+                const cronJobId = searchParams.get("cronJobId") || undefined;
+                const cronJobName = safeDecode(searchParams.get("cronJobName")) || undefined;
+                if (action === "edit") {
+                    return <EditCronJob entityId={cronJobId} entityName={cronJobName} />;
+                }
+                if (action === undefined) return <AllCronJobs />;
             }
         }
     }

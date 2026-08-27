@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/pauseCronJobDialog.tsx",
+  "confirmTitle": "Mettere in pausa questo lavoro?",
+  "confirmDescription": "Lo scheduler ignorerà questo lavoro finché non lo riprendi.",
+  "cancel": "Annulla",
+  "confirm": "Pausa",
+  "axios": {
+    "start": {
+      "title": "Pausa del lavoro…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Lavoro in pausa",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile mettere in pausa il lavoro",
+      "time": 3000
+    }
+  }
+}

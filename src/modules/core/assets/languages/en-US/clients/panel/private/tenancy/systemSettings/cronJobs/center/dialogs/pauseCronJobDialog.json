@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/pauseCronJobDialog.tsx",
+  "confirmTitle": "Pause this job?",
+  "confirmDescription": "The scheduler will skip this job until you resume it.",
+  "cancel": "Cancel",
+  "confirm": "Pause",
+  "axios": {
+    "start": {
+      "title": "Pausing job…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Job paused",
+      "time": 3000
+    },
+    "error": {
+      "title": "Could not pause job",
+      "time": 3000
+    }
+  }
+}

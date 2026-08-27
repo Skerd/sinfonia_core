@@ -75,6 +75,9 @@
         "messagingProviders": {
           "title": "Provider di messaggistica"
         },
+        "cronJobs": {
+          "title": "Azioni pianificate"
+        },
         "core": {
           "title": "Nucleo"
         },

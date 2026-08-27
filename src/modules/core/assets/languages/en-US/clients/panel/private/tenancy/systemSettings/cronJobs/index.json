@@ -1,22 +1,39 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
   "title": "Scheduled actions",
-  "description": "Manage cron jobs and scheduled tasks",
-  "createCronJob": "Create scheduled action",
+  "description": "Run, pause, or edit schedule for server-created jobs",
   "searchPlaceholder": "Search by name, code, or handler...",
   "noData": "No scheduled actions found",
   "failTitle": "Failed to load scheduled actions",
   "failDescription": "An error occurred while loading scheduled actions. Please try again.",
   "tooltipDescription": "Click to retry fetching scheduled actions.",
   "fields": {
+    "!enums": {
+      "missedRunPolicy": {
+        "skip": "Skip backlog",
+        "run_once": "Run once",
+        "catch_up": "Catch up"
+      }
+    },
     "code": "Code",
     "name": "Name",
+    "description": "Description",
     "handler": "Handler",
-    "type": "Schedule type",
     "active": "Active",
-    "scope": "Scope",
+    "pausedAt": "Paused at",
+    "cronExpression": "Cron expression",
     "priority": "Priority",
     "nextRunAt": "Next run",
-    "lastRunAt": "Last run"
+    "lastRunAt": "Last run",
+    "maxRetries": "Max retries",
+    "retryDelaySeconds": "Retry delay (seconds)",
+    "timeoutSeconds": "Timeout (seconds)",
+    "missedRunPolicy": "Missed run policy",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "createdBy": "Created by",
+    "company": "Company",
+    "deletedAt": "Status",
+    "deletedBy": "Deleted by"
   }
 }

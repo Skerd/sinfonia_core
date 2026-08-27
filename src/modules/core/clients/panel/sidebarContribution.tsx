@@ -13,6 +13,7 @@ import {
     MessageSquare,
     Globe,
     UserCheck,
+    Timer,
 } from "lucide-react";
 import {
     IconBuilding,
@@ -176,6 +177,14 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
                             title: resolveLanguageKey("menus.company.settings.roles.title"),
                             url: "/tenancy/systemSettings/roles",
                             icon: IconUserKey,
+                            permissions: [],
+                            usersPermissions: [],
+                            atLeastOnePermission: true,
+                        },
+                        {
+                            title: resolveLanguageKey("menus.tenancy.systemSettings.cronJobs.title"),
+                            url: "/tenancy/systemSettings/cronJobs",
+                            icon: Timer,
                             permissions: [],
                             usersPermissions: [],
                             atLeastOnePermission: true,

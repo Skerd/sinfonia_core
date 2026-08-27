@@ -9,14 +9,32 @@
   "failDescription": "Beim Laden von scheduled massnahmen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
   "tooltipDescription": "Click bis retry fetching scheduled massnahmen.",
   "fields": {
+    "!enums": {
+      "missedRunPolicy": {
+        "skip": "Rückstand überspringen",
+        "run_once": "Einmal ausführen",
+        "catch_up": "Nachholen"
+      }
+    },
     "code": "Code",
     "name": "Name",
+    "description": "Beschreibung",
     "handler": "Handler",
-    "type": "Terminplan typ",
     "active": "Aktiv",
-    "scope": "Umfang",
+    "pausedAt": "Pausiert um",
+    "cronExpression": "Cron-Ausdruck",
     "priority": "Priority",
     "nextRunAt": "Nächste run",
-    "lastRunAt": "Nach run"
+    "lastRunAt": "Nach run",
+    "maxRetries": "Max. Wiederholungen",
+    "retryDelaySeconds": "Wiederholungsverzögerung (Sekunden)",
+    "timeoutSeconds": "Timeout (Sekunden)",
+    "missedRunPolicy": "Richtlinie für verpasste Ausführungen",
+    "createdAt": "Erstellt am",
+    "updatedAt": "Aktualisiert am",
+    "createdBy": "Erstellt von",
+    "company": "Firma",
+    "deletedAt": "Status",
+    "deletedBy": "Gelöscht von"
   }
 }

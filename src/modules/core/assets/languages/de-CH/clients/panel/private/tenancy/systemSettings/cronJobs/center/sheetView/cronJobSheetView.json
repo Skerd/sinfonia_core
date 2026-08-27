@@ -4,23 +4,33 @@
   "failedDescription": "Something went wrong während laden diese job. Click bis retry.",
   "failedTooltipDescription": "Click bis retry fetching daten.",
   "overview": "Übersicht",
+  "schedule": "Zeitplan",
+  "execution": "Ausführung",
+  "description": "Beschreibung",
   "name": "Name",
   "handler": "Handler",
-  "type": "Terminplan typ",
   "active": "Aktiv",
   "nextRunAt": "Nächste run",
   "lastRunAt": "Nach run",
   "code": "Code",
-  "yes": "Ja",
-  "no": "Nein",
-  "typeValues": {
-    "interval": "Intervall",
-    "cron": "Cron expression",
-    "once": "Once",
-    "queue": "Queue"
+  "pausedAt": "Pausiert um",
+  "cronExpression": "Cron expression",
+  "priority": "Priorität",
+  "maxRetries": "Max. Wiederholungen",
+  "retryDelaySeconds": "Wiederholungsverzögerung (Sekunden)",
+  "timeoutSeconds": "Timeout (Sekunden)",
+  "missedRunPolicy": "Richtlinie für verpasste Ausführungen",
+  "missedRunPolicyValues": {
+    "skip": "Rückstand überspringen",
+    "run_once": "Einmal ausführen",
+    "catch_up": "Nachholen"
   },
-  "scopeValues": {
-    "global": "Global",
-    "company": "Firma"
-  }
+  "lifecycle": "Lebenszyklus",
+  "createdAt": "Erstellt am",
+  "updatedAt": "Aktualisiert am",
+  "createdBy": "Erstellt von",
+  "deletedAt": "Gelöscht am",
+  "deletedBy": "Gelöscht von",
+  "yes": "Ja",
+  "no": "Nein"
 }

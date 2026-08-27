@@ -80,8 +80,8 @@ function KafkaServerConsumers({title, resolveLanguageKey}:{title: string, resolv
                         {title}: {running}/{expected}
                     </Badge>
                 </TooltipTrigger>
-                <TooltipContent className="min-w-md">
-                    <div className="flex flex-col text-xs gap-y-1 w-full">
+                <TooltipContent>
+                    <div className="flex w-max flex-col gap-y-1 text-xs">
                         {list.length === 0 ? (
                             <p>{resolveLanguageKey("noConsumersRegistered")}</p>
                         ) : (

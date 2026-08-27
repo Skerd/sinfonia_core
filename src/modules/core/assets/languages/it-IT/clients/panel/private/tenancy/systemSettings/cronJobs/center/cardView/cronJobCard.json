@@ -1,8 +1,23 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/cardView/cronJobCard.tsx",
+  "failedTitle": "Impossibile caricare l'azione pianificata",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento di questo lavoro. Fare clic per riprovare.",
+  "name": "Nome",
+  "code": "Codice",
   "handler": "Gestore",
+  "cronExpression": "Espressione cron",
+  "description": "Descrizione",
+  "priority": "Priorità",
+  "pausedAt": "In pausa dal",
   "nextRunAt": "Prossima corsa",
+  "lastRunAt": "Ultima corsa",
+  "maxRetries": "Numero massimo di tentativi",
+  "retryDelaySeconds": "Ritardo di nuovo tentativo (secondi)",
+  "timeoutSeconds": "Timeout (secondi)",
+  "missedRunPolicy": "Politica delle esecuzioni mancate",
   "active": "Attivo",
+  "paused": "In pausa",
+  "deleted": "Eliminato",
   "yes": "Sì",
   "no": "No"
 }

@@ -70,6 +70,9 @@
         },
         "messagingProviders": {
           "title": "Ofruesit e Mesazheve"
+        },
+        "cronJobs": {
+          "title": "Veprime të planifikuara"
         }
       }
     },

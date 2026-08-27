@@ -70,6 +70,9 @@
         },
         "messagingProviders": {
           "title": "Messaging providers"
+        },
+        "cronJobs": {
+          "title": "Scheduled actions"
         }
       }
     },

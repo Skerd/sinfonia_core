@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/runCronJobDialog.tsx",
+  "confirmTitle": "Exécuter cette tâche maintenant ?",
+  "confirmDescription": "Le gestionnaire s’exécute immédiatement, même si l’horaire suivant n’est pas encore atteint.",
+  "cancel": "Annuler",
+  "confirm": "Exécuter maintenant",
+  "axios": {
+    "start": {
+      "title": "Démarrage de la tâche…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Tâche démarrée",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossible de démarrer la tâche",
+      "time": 3000
+    }
+  }
+}

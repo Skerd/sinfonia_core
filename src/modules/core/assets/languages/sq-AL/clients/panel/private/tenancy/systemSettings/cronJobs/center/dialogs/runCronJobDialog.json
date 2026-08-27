@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/runCronJobDialog.tsx",
+  "confirmTitle": "Ta ekzekutojmë këtë punë tani?",
+  "confirmDescription": "Handler-i do të ekzekutohet menjëherë, edhe nëse koha e planifikuar nuk ka arritur.",
+  "cancel": "Anulo",
+  "confirm": "Ekzekuto tani",
+  "axios": {
+    "start": {
+      "title": "Po niset puna…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Puna nisi",
+      "time": 3000
+    },
+    "error": {
+      "title": "Puna nuk u nis",
+      "time": 3000
+    }
+  }
+}

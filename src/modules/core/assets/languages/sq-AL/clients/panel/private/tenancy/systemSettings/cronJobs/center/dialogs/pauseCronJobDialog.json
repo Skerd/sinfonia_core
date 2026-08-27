@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/pauseCronJobDialog.tsx",
+  "confirmTitle": "Ta ndalojmë këtë punë?",
+  "confirmDescription": "Planifikuesi do ta anashkalojë këtë punë derisa ta vazhdoni.",
+  "cancel": "Anulo",
+  "confirm": "Ndalo",
+  "axios": {
+    "start": {
+      "title": "Po ndalet puna…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Puna u ndal",
+      "time": 3000
+    },
+    "error": {
+      "title": "Puna nuk u ndal",
+      "time": 3000
+    }
+  }
+}

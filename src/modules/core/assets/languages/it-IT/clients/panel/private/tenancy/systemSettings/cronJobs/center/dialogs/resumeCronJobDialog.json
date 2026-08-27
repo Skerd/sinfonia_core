@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/resumeCronJobDialog.tsx",
+  "confirmTitle": "Riprendere questo lavoro?",
+  "confirmDescription": "Lo scheduler eseguirà di nuovo questo lavoro al prossimo orario pianificato.",
+  "cancel": "Annulla",
+  "confirm": "Riprendi",
+  "axios": {
+    "start": {
+      "title": "Ripresa del lavoro…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Lavoro ripreso",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile riprendere il lavoro",
+      "time": 3000
+    }
+  }
+}

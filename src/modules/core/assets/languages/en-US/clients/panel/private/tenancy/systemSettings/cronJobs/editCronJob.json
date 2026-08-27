@@ -1,6 +1,6 @@
 {
   "backToList": "Back to list",
-  "description": "Update schedule, scope, and execution settings.",
+  "description": "Update schedule and execution settings.",
   "errorDescription": "Please click here to retry fetching job data.",
   "errorTitle": "Failed to load scheduled action",
   "form": {
@@ -11,48 +11,26 @@
     "cronExpressionLabel": "Cron expression",
     "cronExpressionPlaceholder": "0 0 * * * *",
     "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Optional notes about this job",
     "handlerLabel": "Handler",
-    "intervalUnit": {
-      "days": "Days",
-      "hours": "Hours",
-      "minutes": "Minutes",
-      "seconds": "Seconds"
-    },
-    "intervalUnit.days": "Days",
-    "intervalUnit.hours": "Hours",
-    "intervalUnit.minutes": "Minutes",
-    "intervalUnit.seconds": "Seconds",
-    "intervalUnitLabel": "Interval unit",
-    "intervalValueLabel": "Interval value",
-    "intervalValuePlaceholder": "5",
     "maxRetriesLabel": "Max retries",
     "nameLabel": "Name",
     "priorityLabel": "Priority",
-    "scope": {
-      "company": "Company",
-      "global": "Global"
-    },
-    "scope.company": "Company",
-    "scope.global": "Global (platform)",
-    "scopeLabel": "Scope",
-    "type": {
-      "cron": "Cron",
-      "interval": "Interval",
-      "once": "Once",
-      "queue": "Queue"
-    },
-    "type.cron": "Cron expression",
-    "type.interval": "Interval",
-    "type.once": "Once",
-    "type.queue": "Queue",
-    "typeLabel": "Schedule type"
+    "retryDelaySecondsLabel": "Retry delay (seconds)",
+    "timeoutSecondsLabel": "Timeout (seconds)",
+    "missedRunPolicyLabel": "Missed run policy",
+    "missedRunPolicy": {
+      "skip": "Skip backlog",
+      "run_once": "Run once",
+      "catch_up": "Catch up"
+    }
   },
   "formButtons": {
     "cancel": "Cancel",
     "submit": "Save"
   },
   "formHeader": {
-    "description": "Update schedule, scope, and execution settings.",
+    "description": "Update schedule and execution settings.",
     "title": "Edit scheduled action"
   },
   "noId": "No scheduled action selected.",

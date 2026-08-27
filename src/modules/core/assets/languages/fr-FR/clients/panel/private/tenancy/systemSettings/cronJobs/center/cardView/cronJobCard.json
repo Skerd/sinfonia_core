@@ -1,8 +1,23 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/cardView/cronJobCard.tsx",
+  "failedTitle": "Échec du chargement de l'action planifiée",
+  "failedDescription": "Une erreur s'est produite lors du chargement de cette tâche. Cliquez pour réessayer.",
+  "name": "Nom",
+  "code": "Code",
   "handler": "Gestionnaire",
+  "cronExpression": "Expression Cron",
+  "description": "Description",
+  "priority": "Priorité",
+  "pausedAt": "En pause depuis",
   "nextRunAt": "Prochaine exécution",
+  "lastRunAt": "Dernière exécution",
+  "maxRetries": "Nombre maximal de tentatives",
+  "retryDelaySeconds": "Délai de nouvelle tentative (secondes)",
+  "timeoutSeconds": "Délai d'expiration (secondes)",
+  "missedRunPolicy": "Politique des exécutions manquées",
   "active": "Actif",
+  "paused": "En pause",
+  "deleted": "Supprimé",
   "yes": "Oui",
   "no": "Non"
 }

@@ -7,17 +7,21 @@ import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRender
 import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import type {CronJob} from "armonia/src/modules/core/api/auxiliary/private/cronJob/cronJob.dto.ts";
-import {cronJobEditPath} from "../../index.tsx";
+import {cronJobEditPath} from "../../cronJobPaths.ts";
+import RunCronJob from "../actions/run.tsx";
+import PauseCronJob from "../actions/pause.tsx";
+import ResumeCronJob from "../actions/resume.tsx";
+import CronJobActionDialogs from "../actions/cronJobActionDialogs.tsx";
 
 export type CronJobSheetViewOwnProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     cronJob?: CronJob;
-    /** Alias used by the list card (`sheetEntityProp="data"`). */
-    data?: CronJob;
     hideActions?: boolean;
     onDelete?: (response?: DeletedData) => void;
     onRestore?: () => void;
+    onModifySuccess?: (updated?: CronJob) => void;
+    onSheetRowPatched?: (row: Record<string, unknown>) => void;
     fetchId?: string;
 };
 
@@ -25,24 +29,30 @@ function CronJobSheetView({
     open,
     onOpenChange,
     cronJob: cronJobProp,
-    data: dataProp,
     resolveLanguageKey,
     hideActions = false,
     onDelete = () => {},
     onRestore = () => {},
+    onModifySuccess,
+    onSheetRowPatched,
     fetchId,
 }: CronJobSheetViewOwnProps & WithLanguageType) {
-    const access = useAccess("cronJobs");
+    const access = useAccess("cronjobs");
     const viewConfig = useViewConfig("cronjobs", "sheet");
-    const bootstrap = cronJobProp ?? dataProp;
-    const [sheetData, setSheetData] = useState<Record<string, unknown>>(bootstrap || {_id: fetchId});
+    const [sheetData, setSheetData] = useState<Record<string, unknown>>(cronJobProp || {_id: fetchId});
+    const [action, setAction] = useState("");
 
     useEffect(() => {
-        if (!bootstrap) return;
-        setSheetData(bootstrap);
-    }, [bootstrap]);
+        if (!open) setAction("");
+    }, [open]);
 
-    const entityId = bootstrap?._id ?? fetchId;
+    useEffect(() => {
+        if (!cronJobProp) return;
+        setSheetData(cronJobProp);
+    }, [cronJobProp]);
+
+    const entityId = cronJobProp?._id ?? fetchId;
+    const asJob = sheetData as CronJob;
 
     if (!viewConfig) {
         return null;
@@ -51,26 +61,55 @@ function CronJobSheetView({
         return null;
     }
 
+    const handleWorkflowSuccess = (updated: CronJob) => {
+        setSheetData(updated);
+        onModifySuccess?.(updated);
+        onSheetRowPatched?.(updated);
+        setAction("");
+    };
+
     return (
-        <SheetViewRenderer
-            config={viewConfig}
-            data={sheetData}
-            url="/api/auxiliary/cron-jobs/single"
-            fetchId={fetchId}
-            onDataFetched={(data) => setSheetData(data)}
-            open={open}
-            onOpenChange={onOpenChange}
-            resolveLanguageKey={resolveLanguageKey}
-            access={access}
-            hideActions={hideActions}
-            onDelete={onDelete}
-            onRestore={onRestore}
-            editPath={cronJobEditPath(sheetData as CronJob)}
-        />
+        <>
+            <SheetViewRenderer
+                config={viewConfig}
+                data={sheetData}
+                url="/api/auxiliary/cron-jobs/single"
+                fetchId={fetchId}
+                onDataFetched={(data) => setSheetData(data)}
+                open={open}
+                onOpenChange={onOpenChange}
+                resolveLanguageKey={resolveLanguageKey}
+                access={access}
+                hideActions={hideActions}
+                hideDelete
+                hideRestore
+                onDelete={onDelete}
+                onRestore={onRestore}
+                editPath={cronJobEditPath(asJob)}
+                actionMenuAllowCustomChildren
+                onSheetRowPatched={(row) => {
+                    setSheetData(row);
+                    onSheetRowPatched?.(row);
+                }}
+                actionMenuChildren={
+                    <>
+                        <RunCronJob job={asJob} onAction={setAction} />
+                        <PauseCronJob job={asJob} onAction={setAction} />
+                        <ResumeCronJob job={asJob} onAction={setAction} />
+                    </>
+                }
+            />
+            <CronJobActionDialogs
+                action={action}
+                job={asJob}
+                onClose={() => setAction("")}
+                onSuccess={handleWorkflowSuccess}
+            />
+        </>
     );
 }
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx"),
-    withDebug(true, true, "cronJobs")
+    withDebug(true, true, "cronjobs")
 )(CronJobSheetView);

@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/runCronJobDialog.tsx",
+  "confirmTitle": "Diesen Job jetzt ausführen?",
+  "confirmDescription": "Der Handler wird sofort ausgeführt, auch wenn der nächste Termin noch nicht erreicht ist.",
+  "cancel": "Abbrechen",
+  "confirm": "Jetzt ausführen",
+  "axios": {
+    "start": {
+      "title": "Job wird gestartet…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Job gestartet",
+      "time": 3000
+    },
+    "error": {
+      "title": "Job konnte nicht gestartet werden",
+      "time": 3000
+    }
+  }
+}

@@ -75,6 +75,9 @@
         "messagingProviders": {
           "title": "Fournisseurs de messagerie"
         },
+        "cronJobs": {
+          "title": "Actions planifiées"
+        },
         "core": {
           "title": "Cœur"
         },

@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/pauseCronJobDialog.tsx",
+  "confirmTitle": "Mettre cette tâche en pause ?",
+  "confirmDescription": "Le planificateur ignorera cette tâche jusqu’à ce que vous la repreniez.",
+  "cancel": "Annuler",
+  "confirm": "Mettre en pause",
+  "axios": {
+    "start": {
+      "title": "Mise en pause…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Tâche en pause",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossible de mettre la tâche en pause",
+      "time": 3000
+    }
+  }
+}

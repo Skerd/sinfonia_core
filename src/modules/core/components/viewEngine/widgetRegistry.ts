@@ -185,6 +185,8 @@ const LEGACY_TO_TABLER_EXPORT: Record<string, string> = {
     Accessibility: "IconAccessible",
     /** Lucide `AlarmClock`; Tabler exposes `IconAlarm` / `IconAlarmSnooze`, not `IconAlarmClock`. */
     AlarmClock: "IconAlarm",
+    /** Lucide `Timer`; Tabler has `IconStopwatch`, not `IconTimer`. */
+    Timer: "IconStopwatch",
     ArrowUpDown: "IconArrowsUpDown",
     Banknote: "IconCashBanknote",
     BedDouble: "IconBed",

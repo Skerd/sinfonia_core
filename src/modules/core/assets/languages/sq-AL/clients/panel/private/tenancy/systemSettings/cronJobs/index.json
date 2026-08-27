@@ -9,14 +9,32 @@
   "failDescription": "Ndodhi një gabim gjatë ngarkimit të veprimeve të planifikuara. Provoni përsëri.",
   "tooltipDescription": "Klikoni për të provuar përsëri ngarkimin e veprimeve të planifikuara.",
   "fields": {
+    "!enums": {
+      "missedRunPolicy": {
+        "skip": "Anashkalo vonesën",
+        "run_once": "Ekzekuto një herë",
+        "catch_up": "Rimerr"
+      }
+    },
     "code": "Kodi",
     "name": "Emri",
+    "description": "Përshkrimi",
     "handler": "Handler",
-    "type": "Lloji i orarit",
     "active": "Aktiv",
-    "scope": "Fusha",
+    "pausedAt": "Ndaluar më",
+    "cronExpression": "Shprehje cron",
     "priority": "Prioriteti",
     "nextRunAt": "Ekzekutimi i radhës",
-    "lastRunAt": "Ekzekutimi i fundit"
+    "lastRunAt": "Ekzekutimi i fundit",
+    "maxRetries": "Riprovime maks.",
+    "retryDelaySeconds": "Vonesa e riprovimit (sekonda)",
+    "timeoutSeconds": "Timeout (sekonda)",
+    "missedRunPolicy": "Politika e ekzekutimeve të humbura",
+    "createdAt": "Krijuar më",
+    "updatedAt": "Përditësuar më",
+    "createdBy": "Krijuar nga",
+    "company": "Kompania",
+    "deletedAt": "Statusi",
+    "deletedBy": "Fshirë nga"
   }
 }

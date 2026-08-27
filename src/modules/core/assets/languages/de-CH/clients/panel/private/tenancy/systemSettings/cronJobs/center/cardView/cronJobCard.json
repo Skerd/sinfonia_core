@@ -1,8 +1,23 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/cardView/cronJobCard.tsx",
+  "failedTitle": "Scheduled aktion konnten nicht geladen werden",
+  "failedDescription": "Something went wrong während laden diese job. Click bis retry.",
+  "name": "Name",
+  "code": "Code",
   "handler": "Handler",
+  "cronExpression": "Cron-Ausdruck",
+  "description": "Beschreibung",
+  "priority": "Priorität",
+  "pausedAt": "Pausiert um",
   "nextRunAt": "Nächste run",
+  "lastRunAt": "Nach run",
+  "maxRetries": "Max. Wiederholungen",
+  "retryDelaySeconds": "Wiederholungsverzögerung (Sekunden)",
+  "timeoutSeconds": "Timeout (Sekunden)",
+  "missedRunPolicy": "Richtlinie für verpasste Ausführungen",
   "active": "Aktiv",
+  "paused": "Pausiert",
+  "deleted": "Gelöscht",
   "yes": "Ja",
   "no": "Nein"
 }

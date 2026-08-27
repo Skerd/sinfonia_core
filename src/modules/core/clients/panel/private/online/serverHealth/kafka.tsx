@@ -75,8 +75,8 @@ function KafkaTopicCount({title, resolveLanguageKey}:{title: string, resolveLang
                         {title}: {count}
                     </Badge>
                 </TooltipTrigger>
-                <TooltipContent className="min-w-md">
-                    <div className="flex flex-col text-xs gap-y-1 max-h-64 overflow-y-auto">
+                <TooltipContent>
+                    <div className="flex w-max max-w-xs flex-col gap-y-1 overflow-y-auto text-xs max-h-64">
                         <div className="opacity-70">{resolveLanguageKey("topics")}:</div>
                         {list.length === 0 ? (
                             <div className="font-medium">{resolveLanguageKey("none")}</div>

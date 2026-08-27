@@ -9,14 +9,32 @@
   "failDescription": "Une erreur s'est produite lors du chargement des actions planifiées. Veuillez réessayer.",
   "tooltipDescription": "Cliquez pour réessayer de récupérer les actions planifiées.",
   "fields": {
+    "!enums": {
+      "missedRunPolicy": {
+        "skip": "Ignorer le retard",
+        "run_once": "Exécuter une fois",
+        "catch_up": "Rattraper"
+      }
+    },
     "code": "Code",
     "name": "Nom",
+    "description": "Description",
     "handler": "Gestionnaire",
-    "type": "Type d'horaire",
     "active": "Actif",
-    "scope": "Périmètre",
+    "pausedAt": "En pause depuis",
+    "cronExpression": "Expression Cron",
     "priority": "Priorité",
     "nextRunAt": "Prochaine exécution",
-    "lastRunAt": "Dernière course"
+    "lastRunAt": "Dernière course",
+    "maxRetries": "Nombre maximal de tentatives",
+    "retryDelaySeconds": "Délai de nouvelle tentative (secondes)",
+    "timeoutSeconds": "Délai d'expiration (secondes)",
+    "missedRunPolicy": "Politique des exécutions manquées",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "createdBy": "Créé par",
+    "company": "Entreprise",
+    "deletedAt": "Statut",
+    "deletedBy": "Supprimé par"
   }
 }

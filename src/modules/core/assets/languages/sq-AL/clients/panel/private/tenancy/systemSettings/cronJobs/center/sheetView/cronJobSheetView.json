@@ -4,23 +4,33 @@
   "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të provuar përsëri.",
   "failedTooltipDescription": "Klikoni për të provuar përsëri ngarkimin e të dhënave.",
   "overview": "Përmbledhje",
+  "schedule": "Orari",
+  "execution": "Ekzekutimi",
+  "description": "Përshkrimi",
   "name": "Emri",
   "handler": "Handler",
-  "type": "Lloji i orarit",
   "active": "Aktiv",
   "nextRunAt": "Ekzekutimi i radhës",
   "lastRunAt": "Ekzekutimi i fundit",
   "code": "Kodi",
-  "yes": "Po",
-  "no": "Jo",
-  "typeValues": {
-    "interval": "Interval",
-    "cron": "Shprehje cron",
-    "once": "Një herë",
-    "queue": "Radhë"
+  "pausedAt": "Ndaluar më",
+  "cronExpression": "Shprehje cron",
+  "priority": "Prioriteti",
+  "maxRetries": "Riprovime maks.",
+  "retryDelaySeconds": "Vonesa e riprovimit (sekonda)",
+  "timeoutSeconds": "Timeout (sekonda)",
+  "missedRunPolicy": "Politika e ekzekutimeve të humbura",
+  "missedRunPolicyValues": {
+    "skip": "Anashkalo vonesën",
+    "run_once": "Ekzekuto një herë",
+    "catch_up": "Rimerr"
   },
-  "scopeValues": {
-    "global": "Global",
-    "company": "Kompani"
-  }
+  "lifecycle": "Cikli i jetës",
+  "createdAt": "Krijuar më",
+  "updatedAt": "Përditësuar më",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga",
+  "yes": "Po",
+  "no": "Jo"
 }

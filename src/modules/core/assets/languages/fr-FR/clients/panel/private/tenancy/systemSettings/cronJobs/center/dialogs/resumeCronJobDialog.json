@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/resumeCronJobDialog.tsx",
+  "confirmTitle": "Reprendre cette tâche ?",
+  "confirmDescription": "Le planificateur relancera cette tâche à la prochaine échéance.",
+  "cancel": "Annuler",
+  "confirm": "Reprendre",
+  "axios": {
+    "start": {
+      "title": "Reprise de la tâche…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Tâche reprise",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossible de reprendre la tâche",
+      "time": 3000
+    }
+  }
+}
