@@ -10,7 +10,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {UpdateUserProfileSurnameFormType} from "armonia/src/modules/core/api/user/private/data/updateUserProfileSurname.form.type.ts";
-import {UpdateUserProfileSurnameFormResponse} from "armonia/src/modules/core/api/user/private/data/updateUserProfileSurname.form.respone.type.ts";
+import {UpdateUserProfileSurnameFormResponse} from "armonia/src/modules/core/api/user/private/data/updateUserProfileSurname.form.response.type.ts";
 
 type UpdateSurnameProps = WithLanguageType & WithAxiosType<UpdateUserProfileSurnameFormResponse, UpdateUserProfileSurnameFormType> & {
     updateCanEdit: Function,
