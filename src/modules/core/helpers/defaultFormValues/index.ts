@@ -4,7 +4,6 @@ import {AcceptInvitationFormType} from "armonia/src/modules/core/api/user/public
 import {SignUpFormType} from "armonia/src/modules/core/api/user/public/signUp/signup.form.type.ts";
 import {CreateUserFormType} from "armonia/src/modules/core/api/company/private/users/createUser.form.type.ts";
 import {InviteUserFormType} from "armonia/src/modules/core/api/company/private/users/inviteUser.form.type.ts";
-import {CreateCompanyFormType} from "armonia/src/modules/core/api/company/private/company/company.schema-def.ts";
 
 export function defaultSignInValues(): any{
     if( process.env.NODE_ENV === "development" ){
@@ -120,41 +119,4 @@ export function defaultInviteUserValues(): InviteUserFormType {
         welcomeMessage: ""
     }
 }
-
-export function defaultCreateCompanyValues(): Omit<CreateCompanyFormType, "allowedDomains"> & {allowedDomains: string} {
-
-    return process.env.NODE_ENV == "development" ?
-        {
-            name: `Company ${Math.floor(Math.random() * 1000000)}`,
-            email: `info@company${Math.floor(Math.random() * 1000000)}.com`,
-            phoneNumber: `+35568${Math.floor(100000 + Math.random() * 900000)}`,
-            website: `https://company${Math.floor(Math.random() * 1000000)}.com`,
-            vat: `AL${Math.floor(10000000 + Math.random() * 90000000)}`,
-            description: `This is a random generated description.`,
-            allowedDomains: `company${Math.floor(Math.random() * 1000000)}.com`,
-            addresses: [
-                {
-                    "street": "",
-                    "postalCode": "",
-                    "city": "",
-                    "state": "",
-                    "country": "",
-                    "latitude": 41.3275,
-                    "longitude": 19.8189
-                }
-            ]
-        }
-        :
-        {
-            name: "",
-            email: "",
-            phoneNumber: "",
-            website: "",
-            vat: "",
-            description: "",
-            allowedDomains: "",
-            addresses: []
-        };
-}
-
 

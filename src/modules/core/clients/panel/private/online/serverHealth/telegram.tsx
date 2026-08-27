@@ -7,7 +7,7 @@ import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModu
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {IconTelegram} from "@coreModule/assets/brand-icons";
+import {IconTelegram} from "@coreModule/assets/brand-icons/icon-telegram.tsx";
 
 /** Telegram long-poll + linking runs as its own dedicated process (telegramServer). */
 function useTelegram(){

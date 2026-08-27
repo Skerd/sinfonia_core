@@ -6,7 +6,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import UserLinkTelegramDeactivation from "@coreModule/clients/panel/private/apps/apps/telegram/disconnect";
 import {useDispatch, useSelector} from "react-redux";
 import {telegramLinked} from "@coreModule/helpers/redux/slices/uiSlice.ts";
-import {IconTelegram} from '@coreModule/assets/brand-icons'
+import {IconTelegram} from '@coreModule/assets/brand-icons/icon-telegram.tsx'
 import ConnectTelegram from "@coreModule/clients/panel/private/apps/apps/telegram/connect";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
