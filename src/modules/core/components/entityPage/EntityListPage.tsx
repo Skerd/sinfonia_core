@@ -213,12 +213,13 @@ export type EntityListPageProps<T extends BaseEntity> = {
     }) => ReactNode;
     /** Row ActionMenu & sheet ActionMenu tweaks (defaults match standard CRUD). */
     rowActionMenu?: {
-        hideDelete?: boolean;
         hideRestore?: boolean;
         hideView?: boolean;
         allowMenuForCustomChildren?: boolean;
         /** Per-row when a function (e.g. hide edit for paid reservations). */
         hideEdit?: boolean | ((entity: T) => boolean);
+        /** Per-row when a function (e.g. hide delete when `canDelete` is false). */
+        hideDelete?: boolean | ((entity: T) => boolean);
     };
     /**
      * Always-visible filter inputs rendered above the FilterBuilder row.
@@ -475,6 +476,8 @@ export default function EntityListPage<T extends BaseEntity>({
 
     const resolveHideEdit = (entity: T) =>
         typeof rowActionMenu?.hideEdit === "function" ? rowActionMenu.hideEdit(entity) : !!rowActionMenu?.hideEdit;
+    const resolveHideDelete = (entity: T) =>
+        typeof rowActionMenu?.hideDelete === "function" ? rowActionMenu.hideDelete(entity) : !!rowActionMenu?.hideDelete;
 
     const replaceRow = (row: T) => {
         listRef.current?.updateRow?.(row._id, row as unknown as Partial<T>);
@@ -569,7 +572,7 @@ export default function EntityListPage<T extends BaseEntity>({
                                 editPath={buildEditPath(entity)}
                                 hideEdit={resolveHideEdit(entity)}
                                 hideView={rowActionMenu?.hideView}
-                                hideDelete={rowActionMenu?.hideDelete}
+                                hideDelete={resolveHideDelete(entity)}
                                 hideRestore={rowActionMenu?.hideRestore}
                                 allowMenuForCustomChildren={rowActionMenu?.allowMenuForCustomChildren}
                             >

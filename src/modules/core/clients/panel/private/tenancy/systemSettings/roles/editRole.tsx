@@ -125,7 +125,7 @@ function EditRole({
     function onSubmit(data: FormValues) {
         if (!roleId) return;
         onFormDataChange({
-            id: roleId,
+            _id: roleId,
             name: data.name,
             description: data.description,
             permissions: permissions || {}

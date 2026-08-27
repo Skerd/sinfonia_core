@@ -14,6 +14,7 @@ import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
 import PermissionsTable from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/permissionsTable.tsx";
 import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
+import AccessFields from "@coreModule/components/custom/displayValue/accessFields.tsx";
 import {SheetGroup} from "@coreModule/components/custom/renderEngine/layout/sheet/group.tsx";
 import {SheetGrid} from "@coreModule/components/custom/renderEngine/layout/sheet/grid.tsx";
 import {IconCalendar, IconUser} from "@tabler/icons-react";
@@ -64,6 +65,7 @@ function RoleSheetView({
         <Sheet open={open} onOpenChange={onOpenChange}>
             <SheetContent side="right" className="max-w-[95vw] lg:max-w-[60vw] min-w-[40vw] overflow-hidden p-0">
                 <OverlayPortalContainer className="flex h-full min-h-0 flex-col overflow-hidden">
+                <AccessFields read={read}>
                 <SheetHeader className="flex shrink-0 p-0 group hover:cursor-pointer shadow-sm">
                     <div className="relative flex w-full items-stretch">
                         {(read?.deletedBy || read?.deletedAt) && (
@@ -187,6 +189,7 @@ function RoleSheetView({
                         </SheetGroup>
                     )}
                 </div>
+                </AccessFields>
                 </OverlayPortalContainer>
             </SheetContent>
 
