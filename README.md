@@ -19,6 +19,8 @@ The **core** module is always enabled and provides the UI foundation, routing sh
 
 ```
 src/modules/core/
+├── apps/
+│   └── core/               # Panel Vite entry (coreApp, coreEntryPoint)
 ├── assets/
 │   ├── brand-icons/
 │   └── languages/          # en-US, sq-AL locale JSON
@@ -31,8 +33,9 @@ src/modules/core/
 │       └── public/         # Login, signup, password reset
 ├── components/
 │   ├── ui/                 # Radix/shadcn primitives
-│   ├── uiKit/              # Composed layout patterns
+│   ├── animate-ui/         # Motion primitives
 │   ├── custom/             # Shared app components (filter builder, files, …)
+│   │   └── renderEngine/   # Layout widgets (grid/group/alert) used by viewEngine — not a second engine
 │   ├── entityPage/         # Generic CRUD page wrappers
 │   └── viewEngine/         # ViewConfig renderer
 ├── environment/            # Vite env, API base URLs
@@ -54,12 +57,15 @@ Feature modules register UI by exporting contribution files from `clients/panel/
 | `routeConfigContribution.tsx` | Maps URL segments → page components |
 | `widgetContribution.tsx` | Dashboard/home widgets |
 | `tenancySettingsContribution.tsx` | Company settings tabs (optional) |
+| `siteRoomContribution.tsx` | Extra tenancy system-settings rooms (optional) |
 
 Loaders live in `clients/panel/moduleContributions/`:
 
 - `loadSidebarContributions.ts`
 - `loadRouteConfigContributions.ts`
 - `loadWidgetContributions.ts`
+- `loadTenancySettingsContributions.ts`
+- `loadSiteRoomContributions.ts`
 
 Contributions are sorted by `order`, then `id`. Route contributions use first-match wins.
 
