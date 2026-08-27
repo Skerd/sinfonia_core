@@ -10,8 +10,7 @@
   "failDescription": "Impossible de charger les données. Veuillez cliquer ici pour réessayer.",
   "tooltipDescription": "Cliquez pour réessayer de récupérer les données",
   "failTableConfigTitle": "Échec du chargement de la configuration de la table",
-  "failTableConfigDescription": "Impossible de charger la configuration de la table. Veuillez cliquer ici pour réessayer.",
-  "tooltipTableConfigDescription": "Cliquez pour réessayer de récupérer la configuration de la table",
+  "failTableConfigDescription": "Impossible de charger la configuration de la table.",
   "noData": "Aucun résultat trouvé, pensez à changer les filtres",
   "loading": "Chargement..."
 }

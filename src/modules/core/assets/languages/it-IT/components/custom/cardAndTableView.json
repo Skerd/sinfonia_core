@@ -10,8 +10,7 @@
   "failDescription": "Impossibile caricare i dati. Fare clic qui per riprovare.",
   "tooltipDescription": "Fare clic per riprovare a recuperare i dati",
   "failTableConfigTitle": "Impossibile caricare la configurazione della tabella",
-  "failTableConfigDescription": "Impossibile caricare la configurazione della tabella. Fare clic qui per riprovare.",
-  "tooltipTableConfigDescription": "Fare clic per riprovare a recuperare la configurazione della tabella",
+  "failTableConfigDescription": "Impossibile caricare la configurazione della tabella.",
   "noData": "Nessun risultato trovato, valuta la possibilità di modificare i filtri",
   "loading": "Caricamento..."
 }

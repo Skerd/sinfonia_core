@@ -77,6 +77,9 @@ export type AccessContextValue = {
 
 const AccessContext = createContext<AccessContextValue>({});
 
+/** `null` outside `withAccess`. `false` until `/access/all` succeeds; then `true`. */
+const AccessHydrationContext = createContext<boolean | null>(null);
+
 type AccessDebugOverrideContextValue = {
     overrides: AccessDebugOverrides;
     setOverrides: Dispatch<SetStateAction<AccessDebugOverrides>>;
@@ -348,6 +351,14 @@ export function useAccessMap(): AccessContextValue {
     return useContext(AccessContext);
 }
 
+/**
+ * Whether the access map has been fetched. `null` outside `withAccess`.
+ * Empty `read` before this is true is "not loaded yet", not Forbidden.
+ */
+export function useAccessHydrated(): boolean | null {
+    return useContext(AccessHydrationContext);
+}
+
 /** Debug override state used by `withDebug` permission toggles. Null outside `withAccess`. */
 export function useAccessDebugOverrides(): AccessDebugOverrideContextValue | null {
     return useContext(AccessDebugOverrideContext);
@@ -415,6 +426,7 @@ const withAccess = () => <TProps extends object>(
         const [error, setError] = useState<boolean>(false);
         const [loading, setLoading] = useState<boolean>(false);
         const [accessMap, setAccessMap] = useState<AccessContextValue>({});
+        const [isHydrated, setIsHydrated] = useState(false);
         const [retryToken, setRetryToken] = useState(0);
         const [accessOverrides, setAccessOverrides] = useState<AccessDebugOverrides>({});
         const handleError = useErrorHandler(useMemo(() => ({context: "withAccess"}), []));
@@ -434,6 +446,7 @@ const withAccess = () => <TProps extends object>(
                 if (!authToken) {
                     setLoading(false);
                     setAccessMap({});
+                    setIsHydrated(false);
                     accessHydratedRef.current = false;
                     lastSuccessRetryRef.current = 0;
                     return;
@@ -458,6 +471,7 @@ const withAccess = () => <TProps extends object>(
                     );
                     if (abortController.signal.aborted) return;
                     setAccessMap(accessAllResponseToContext(response.data));
+                    setIsHydrated(true);
                     accessHydratedRef.current = true;
                     lastSuccessRetryRef.current = retryToken;
                 } catch (e: unknown) {
@@ -499,15 +513,17 @@ const withAccess = () => <TProps extends object>(
         }
 
         return (
-            <AccessContext.Provider value={accessMap}>
-                <AccessDebugOverrideContext.Provider value={accessDebugOverrideValue}>
-                    <WrappedComponent
-                        {...props}
-                        canAccess={Boolean(authToken) && !error && !loading}
-                        withAccess={siteAccessShell}
-                    />
-                </AccessDebugOverrideContext.Provider>
-            </AccessContext.Provider>
+            <AccessHydrationContext.Provider value={isHydrated}>
+                <AccessContext.Provider value={accessMap}>
+                    <AccessDebugOverrideContext.Provider value={accessDebugOverrideValue}>
+                        <WrappedComponent
+                            {...props}
+                            canAccess={Boolean(authToken) && !error && !loading}
+                            withAccess={siteAccessShell}
+                        />
+                    </AccessDebugOverrideContext.Provider>
+                </AccessContext.Provider>
+            </AccessHydrationContext.Provider>
         );
     }
 

@@ -10,8 +10,7 @@
   "failDescription": "Të dhënat nuk mund të ngarkoheshin. Ju lutemi klikoni këtu për të riprovuar.",
   "tooltipDescription": "Klikoni për të riprovuar marrjen e të dhënave",
   "failTableConfigTitle": "Ngarkimi i konfigurimit të tabelës dështoi",
-  "failTableConfigDescription": "Konfigurimi i tabelës nuk mund të ngarkohej. Ju lutemi klikoni këtu për të riprovuar.",
-  "tooltipTableConfigDescription": "Klikoni për të riprovuar marrjen e konfigurimit të tabelës",
+  "failTableConfigDescription": "Konfigurimi i tabelës nuk mund të ngarkohej.",
   "noData": "Nuk u gjetën rezultate, ju lutemi merrni parasysh ndryshimin e filtrave",
   "loading": "Po ngarkohet..."
 }

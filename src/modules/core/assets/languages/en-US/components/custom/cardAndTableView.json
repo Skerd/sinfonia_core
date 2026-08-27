@@ -10,8 +10,7 @@
   "failDescription": "Could not load data. Please click here to retry.",
   "tooltipDescription": "Click to retry fetching data",
   "failTableConfigTitle": "Failed to load table configuration",
-  "failTableConfigDescription": "Could not load table configuration. Please click here to retry.",
-  "tooltipTableConfigDescription": "Click to retry fetching table configuration",
+  "failTableConfigDescription": "Could not load table configuration.",
   "noData": "No results found, please consider changing filters",
   "loading": "Loading..."
 }

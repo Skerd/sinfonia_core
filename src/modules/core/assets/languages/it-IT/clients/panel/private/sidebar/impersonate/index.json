@@ -1,7 +1,0 @@
-{
-  "path": "src/modules/core/clients/panel/private/sidebar/impersonate/index.tsx",
-  "impersonate": "Impersonare",
-  "exit": "Esci dalla rappresentazione",
-  "failTitle": "Impossibile caricare le informazioni",
-  "failTitleTooltip": "Fare clic per riprovare. Se 5 tentativi falliscono, la rappresentazione verrà interrotta"
-}

@@ -1,7 +1,0 @@
-{
-  "path": "src/modules/core/components/custom/pages/internalServerError.tsx",
-  "title": "Oops! Something went wrong :')",
-  "description": "We apologize für die inconvenience.\n Bitte versuchen erneut later.",
-  "backLabel": "Go Back",
-  "backHome": "Zurück zu Startseite"
-}

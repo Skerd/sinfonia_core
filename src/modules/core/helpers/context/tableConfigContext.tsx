@@ -19,8 +19,11 @@ export type CachedTableConfig = {
 
 type TableConfigContextValue = {
     configs: Record<string, CachedTableConfig>;
+    /** True after the bulk `/api/auxiliary/tableConfigs` prefetch finishes (success or failure). */
+    isHydrated: boolean;
     setConfig: (resourceUrl: string, config: CachedTableConfig) => void;
     clearConfig: (resourceUrl: string) => void;
+    markHydrated: () => void;
     updateColumnVisibility: (tableConfigKey: string, visibility: Record<string, boolean>) => void;
 };
 
@@ -69,40 +72,48 @@ type TableConfigProviderProps = {
  */
 export function TableConfigProvider({ children }: TableConfigProviderProps) {
     const [configs, setConfigs] = useState<Record<string, CachedTableConfig>>({});
+    const [isHydrated, setIsHydrated] = useState(false);
 
     const setConfig = useCallback((resourceUrl: string, config: CachedTableConfig) => {
+        const key = resourceUrl.toLowerCase();
         const userId = getUser()?.id;
         const merged =
             userId && config.columnVisibility
-                ? mergeWithStored(config.columnVisibility, userId, resourceUrl)
+                ? mergeWithStored(config.columnVisibility, userId, key)
                 : config.columnVisibility;
         setConfigs((prev) => ({
             ...prev,
-            [resourceUrl]: { ...config, columnVisibility: merged },
+            [key]: { ...config, columnVisibility: merged },
         }));
     }, []);
 
     const clearConfig = useCallback((resourceUrl: string) => {
+        const key = resourceUrl.toLowerCase();
         setConfigs((prev) => {
             const next = { ...prev };
-            delete next[resourceUrl];
+            delete next[key];
             return next;
         });
     }, []);
 
+    const markHydrated = useCallback(() => {
+        setIsHydrated(true);
+    }, []);
+
     const updateColumnVisibility = useCallback((tableConfigKey: string, visibility: Record<string, boolean>) => {
+        const key = tableConfigKey.toLowerCase();
         const userId = getUser()?.id;
-        if (userId) saveStoredVisibility(userId, tableConfigKey, visibility);
+        if (userId) saveStoredVisibility(userId, key, visibility);
         setConfigs((prev) => {
-            const existing = prev[tableConfigKey];
+            const existing = prev[key];
             if (!existing) return prev;
-            return { ...prev, [tableConfigKey]: { ...existing, columnVisibility: visibility } };
+            return { ...prev, [key]: { ...existing, columnVisibility: visibility } };
         });
     }, []);
 
     const value = useMemo<TableConfigContextValue>(
-        () => ({ configs, setConfig, clearConfig, updateColumnVisibility }),
-        [configs, setConfig, clearConfig, updateColumnVisibility]
+        () => ({ configs, isHydrated, setConfig, clearConfig, markHydrated, updateColumnVisibility }),
+        [configs, isHydrated, setConfig, clearConfig, markHydrated, updateColumnVisibility]
     );
 
     return (

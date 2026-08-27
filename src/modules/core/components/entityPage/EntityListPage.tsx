@@ -487,7 +487,6 @@ export default function EntityListPage<T extends BaseEntity>({
 
     return (
         <div className="min-w-0 flex-full gap-4">
-
             {!hideHeader && (
             <Header
                 title={headerTitle ?? (resolveLanguageKey("title") as string)}
@@ -509,83 +508,80 @@ export default function EntityListPage<T extends BaseEntity>({
             )}
 
             <HiddenElement hideAll={true}>
-                {
-                    read &&
-                    <CardAndTableView<TableResponse<T>, Record<string, unknown>>
-                        url={apiUrl}
-                        tableConfigKey={tableConfigKey}
-                        access={accessModel}
-                        selfAccess={selfAccess}
-                        extraParams={mergedExtraParams}
-                        toolbarFilterDSL={combinedToolbarDSL}
-                        aboveToolbar={
-                            quickFilters?.length ? (
-                                <>
-                                    {aboveToolbar}
-                                    <QuickFilterBar
-                                        defs={quickFilters}
-                                        values={quickFilterValues}
-                                        labels={quickFilterLabels}
-                                        onChange={setQuickFilterValue}
-                                        onClearAll={clearQuickFilters}
-                                        extraParams={mergedExtraParams}
-                                    />
-                                </>
-                            ) : aboveToolbar
-                        }
-                        tableConfigOptions={{
-                            filterConfig: {
-                                placeholder: resolveLanguageKey("searchPlaceholder") as string,
-                                fields: resolveLanguageKey("fields"),
-                            },
-                        }}
-                        configurations={{limit: 20, ...configurations}}
-                        containersClassName={{
-                            cardViewClassName,
-                            scrollRootClassName: "flex-full",
-                        }}
-                        listRef={listRef}
-                        renderFunctions={{
-                            cardRender: (entity) =>
-                                typeof renderCard === "function"
-                                    ? (renderCard(
-                                        entity,
-                                        (row, response) => handleDelete(row ?? entity, response),
-                                        (row) => handleRestore(row ?? entity),
-                                        listRef as EntityListRefs<T>,
-                                    ) as JSX.Element)
-                                    : (<></> as unknown as JSX.Element),
-                            onRowClick: hasSheet
-                                ? (entity) => {
-                                    setAction("view");
+                <CardAndTableView<TableResponse<T>, Record<string, unknown>>
+                    url={apiUrl}
+                    tableConfigKey={tableConfigKey}
+                    access={accessModel}
+                    selfAccess={selfAccess}
+                    extraParams={mergedExtraParams}
+                    toolbarFilterDSL={combinedToolbarDSL}
+                    aboveToolbar={
+                        quickFilters?.length ? (
+                            <>
+                                {aboveToolbar}
+                                <QuickFilterBar
+                                    defs={quickFilters}
+                                    values={quickFilterValues}
+                                    labels={quickFilterLabels}
+                                    onChange={setQuickFilterValue}
+                                    onClearAll={clearQuickFilters}
+                                    extraParams={mergedExtraParams}
+                                />
+                            </>
+                        ) : aboveToolbar
+                    }
+                    tableConfigOptions={{
+                        filterConfig: {
+                            placeholder: resolveLanguageKey("searchPlaceholder") as string,
+                            fields: resolveLanguageKey("fields"),
+                        },
+                    }}
+                    configurations={{limit: 20, ...configurations}}
+                    containersClassName={{
+                        cardViewClassName,
+                        scrollRootClassName: "flex-full",
+                    }}
+                    listRef={listRef}
+                    renderFunctions={{
+                        cardRender: (entity) =>
+                            typeof renderCard === "function"
+                                ? (renderCard(
+                                    entity,
+                                    (row, response) => handleDelete(row ?? entity, response),
+                                    (row) => handleRestore(row ?? entity),
+                                    listRef as EntityListRefs<T>,
+                                ) as JSX.Element)
+                                : (<></> as unknown as JSX.Element),
+                        onRowClick: hasSheet
+                            ? (entity) => {
+                                setAction("view");
+                                setSheetEntity(entity);
+                            }
+                            : undefined,
+                        action: (entity) => (
+                            <ActionMenu
+                                accessModel={accessModel}
+                                deletedData={entity}
+                                onAction={(a: string) => {
+                                    setAction(a);
                                     setSheetEntity(entity);
-                                }
-                                : undefined,
-                            action: (entity) => (
-                                <ActionMenu
-                                    accessModel={accessModel}
-                                    deletedData={entity}
-                                    onAction={(a: string) => {
-                                        setAction(a);
-                                        setSheetEntity(entity);
-                                    }}
-                                    editPath={buildEditPath(entity)}
-                                    hideEdit={resolveHideEdit(entity)}
-                                    hideView={rowActionMenu?.hideView}
-                                    hideDelete={rowActionMenu?.hideDelete}
-                                    hideRestore={rowActionMenu?.hideRestore}
-                                    allowMenuForCustomChildren={rowActionMenu?.allowMenuForCustomChildren}
-                                >
-                                    {renderActionMenuChildren?.(
-                                        entity,
-                                        (a) => bindRowActionMenu(entity, a),
-                                        listHelpers,
-                                    )}
-                                </ActionMenu>
-                            ),
-                        }}
-                    />
-                }
+                                }}
+                                editPath={buildEditPath(entity)}
+                                hideEdit={resolveHideEdit(entity)}
+                                hideView={rowActionMenu?.hideView}
+                                hideDelete={rowActionMenu?.hideDelete}
+                                hideRestore={rowActionMenu?.hideRestore}
+                                allowMenuForCustomChildren={rowActionMenu?.allowMenuForCustomChildren}
+                            >
+                                {renderActionMenuChildren?.(
+                                    entity,
+                                    (a) => bindRowActionMenu(entity, a),
+                                    listHelpers,
+                                )}
+                            </ActionMenu>
+                        ),
+                    }}
+                />
             </HiddenElement>
 
             {

@@ -37,7 +37,12 @@ function withTableConfig<TProps extends object>() {
                         }
                     })
                     .catch(() => {
-                        // Silently ignore pre-fetch errors
+                        // Silently ignore pre-fetch errors — missing keys surface via useTableConfig
+                    })
+                    .finally(() => {
+                        if (!cancelled) {
+                            tableConfigContext.markHydrated();
+                        }
                     });
 
                 return () => {

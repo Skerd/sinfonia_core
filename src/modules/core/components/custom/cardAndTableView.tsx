@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess, useAccessHydrated} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {ToggleGroup, ToggleGroupItem} from "@coreModule/components/ui/toggle-group.tsx";
 import {LayoutGrid, List, SlidersVertical} from "lucide-react";
@@ -16,6 +16,7 @@ import { decodeFilterFromUrl, FILTER_URL_PARAM } from "@coreModule/helpers/filte
 import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import PageController from "@coreModule/components/custom/paginator";
 import NoData from "@coreModule/components/custom/noData.tsx";
 import {entityCardSkeletonItems, EntityTableSkeleton} from "@coreModule/components/custom/skeletons/entityListSkeleton.tsx";
@@ -24,7 +25,6 @@ import {Table, TableBody, TableCell, TableRow} from "@coreModule/components/ui/t
 import DataTableTableHeaderProps from "@coreModule/components/ui/table/table-header.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import DataTableViewOptions from "@coreModule/components/ui/table/view-options.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useTableConfig} from "@coreModule/helpers/hooks/useTableConfig.ts";
@@ -185,6 +185,7 @@ function CountryCenterView<
 }: CountryCenterViewProps<ResponseType, PostType, T>) {
 
     const {read} = useAccess(access, selfAccess ? "self" : "others");
+    const accessHydrated = useAccessHydrated();
     const isMobile = useIsMobile();
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
 
@@ -329,7 +330,7 @@ function CountryCenterView<
         setColumnVisibility(tableColumnVisibility);
     }, [tableColumnVisibility]);
     useEffect(() => {
-        if ( !loadingTableConfig ) {
+        if ( !loadingTableConfig && !tableConfigError ) {
             const { filter: fbFilterUnknown, ...filtersRest } = filters as Record<string, unknown> & {
                 filter?: FilterGroup;
             };
@@ -349,7 +350,7 @@ function CountryCenterView<
                 ...filterOut,
             } as unknown as PostType);
         }
-    }, [offset, limit, forceReload, sorting, filters, extraParameters, loadingTableConfig, toolbarFilterDSL]);
+    }, [offset, limit, forceReload, sorting, filters, extraParameters, loadingTableConfig, tableConfigError, toolbarFilterDSL]);
     const effectiveRef = listRefFromParent ?? refFromParent;
     useImperativeHandle(effectiveRef, () => listApi, [listApi]);
     useImperativeHandle(innerRef, () => ({
@@ -442,8 +443,10 @@ function CountryCenterView<
         getFacetedUniqueValues: getFacetedUniqueValues()
     });
 
-    if( !read || !Object.keys(read).length ){
-        return <HiddenElement />
+    const canRead = read === true
+        || (typeof read === "object" && read !== null && Object.keys(read).length > 0);
+    if (accessHydrated !== false && !canRead) {
+        return <Forbidden />;
     }
 
     /*
@@ -644,16 +647,13 @@ function CountryCenterView<
                                         <SimpleError
                                             title={resolveLanguageKey("failTableConfigTitle")}
                                             description={resolveLanguageKey("failTableConfigDescription")}
-                                            tooltipDescription={resolveLanguageKey("tooltipTableConfigDescription")}
-                                            error={error}
-                                            onClick={() => setForceReload((prev) => prev + 1)}
                                         />
                                 }
                             </>
                             :
                             <>
                                 {
-                                    (loadingTableConfig) || (firstCall && loading) ?
+                                    (loadingTableConfig) || (firstCall && loading) || accessHydrated === false ?
                                         (
                                             viewMode === "card"
                                                 ? renderCardContainer(entityCardSkeletonItems(skeletonCount, cardItemClassName))
