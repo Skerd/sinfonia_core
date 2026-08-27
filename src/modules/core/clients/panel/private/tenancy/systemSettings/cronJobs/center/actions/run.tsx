@@ -28,7 +28,7 @@ function RunCronJob({job, onAction, resolveLanguageKey}: RunCronJobProps) {
     }
 
     return (
-        <DropdownMenuItem onClick={(e) => { openDialog(); }}>
+        <DropdownMenuItem onClick={() => { openDialog(); }}>
             <Play size={16}/>
             {resolveLanguageKey("title")}
             <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>
