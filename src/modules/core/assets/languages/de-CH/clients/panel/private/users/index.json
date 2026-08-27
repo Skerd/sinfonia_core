@@ -50,7 +50,6 @@
       "lastLogin": "Nach anmelden",
       "roles": "Rollen"
     },
-    "finance": "Finanzen",
     "mfaStatus": "MFA status",
     "requests": {
       "mfaDeactivation": {

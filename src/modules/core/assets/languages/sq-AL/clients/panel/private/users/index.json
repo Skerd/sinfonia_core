@@ -50,7 +50,6 @@
       "lastLogin": "Hyrja e fundit",
       "roles": "Rolet"
     },
-    "finance": "Financa",
     "mfaStatus": "Statusi i MPJ-së",
     "requests": {
       "mfaDeactivation": {

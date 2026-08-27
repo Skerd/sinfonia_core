@@ -28,7 +28,6 @@
     "Countries": "shtetet",
     "Cronjobs": "Cron Jobs",
     "Currencies": "Monedhat",
-    "Finances": "Financa",
     "Lastchannelreadmessages": "Mesazhet e leximit të kanalit të fundit",
     "Loginhistories": "Historia e hyrjes",
     "Media": "Media",
@@ -40,7 +39,6 @@
     "Serviceuptimes": "Service Uptimes",
     "Smtpservers": "SMTP Servers",
     "States": "shtetet",
-    "Transactions": "Transaksionet",
     "Users": "Përdoruesit",
     "Usersessions": "Sesionet e përdoruesve"
   },
@@ -183,13 +181,6 @@
       "deletedBy": "Fshirë nga",
       "name": "Emri",
       "symbol": "Simboli",
-      "updatedAt": "UpdatedAt"
-    },
-    "Finances": {
-      "createdAt": "CreatedAt",
-      "currencies": "Monedhat",
-      "currencies_amount": "Shuma",
-      "currencies_currency": "Monedha",
       "updatedAt": "UpdatedAt"
     },
     "Lastchannelreadmessages": {
@@ -383,28 +374,11 @@
       "states": "States",
       "updatedAt": "UpdatedAt"
     },
-    "Transactions": {
-      "amount": "Shuma",
-      "createdAt": "CreatedAt",
-      "createdBy": "Krijuar nga",
-      "currency": "Monedha",
-      "date": "Data",
-      "receiver": "Marrësi",
-      "receiverFinance": "Financat e Marrësit",
-      "relatedTransactionId": "ID-ja e transaksionit të lidhur",
-      "sender": "Dërguesi",
-      "senderFinance": "Financat e dërguesit",
-      "status": "Statusi",
-      "transactions": "Transactions",
-      "type": "Lloji",
-      "updatedAt": "UpdatedAt"
-    },
     "Users": {
       "birthday": "ditëlindjen",
       "cover": "Foto e kopertinës",
       "createdAt": "CreatedAt",
       "emailVerifiedAt": "Email i verifikuar në",
-      "finance": "Financa",
       "isEmailVerified": "Email-i u verifikua",
       "mfaStatus": "2 Statusi FA",
       "name": "Emri",

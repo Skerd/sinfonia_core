@@ -28,7 +28,6 @@
     "Countries": "Countries",
     "Cronjobs": "Cron jobs",
     "Currencies": "Currencies",
-    "Finances": "Finance",
     "Lastchannelreadmessages": "Last channel read messages",
     "Loginhistories": "Login history",
     "Media": "Media",
@@ -40,7 +39,6 @@
     "Serviceuptimes": "Service uptimes",
     "Smtpservers": "SMTP servers",
     "States": "States",
-    "Transactions": "Transactions",
     "Users": "Users",
     "Usersessions": "User sessions"
   },
@@ -183,13 +181,6 @@
       "deletedBy": "Deleted by",
       "name": "Name",
       "symbol": "Symbol",
-      "updatedAt": "Updated at"
-    },
-    "Finances": {
-      "createdAt": "Created at",
-      "currencies": "Currencies",
-      "currencies_amount": "Amount",
-      "currencies_currency": "Currency",
       "updatedAt": "Updated at"
     },
     "Lastchannelreadmessages": {
@@ -383,28 +374,11 @@
       "states": "States",
       "updatedAt": "Updated at"
     },
-    "Transactions": {
-      "amount": "Amount",
-      "createdAt": "Created at",
-      "createdBy": "Created by",
-      "currency": "Currency",
-      "date": "Date",
-      "receiver": "Receiver",
-      "receiverFinance": "Receiver finance",
-      "relatedTransactionId": "Related transaction ID",
-      "sender": "Sender",
-      "senderFinance": "Sender finance",
-      "status": "Status",
-      "transactions": "Transactions",
-      "type": "Type",
-      "updatedAt": "Updated at"
-    },
     "Users": {
       "birthday": "Birthday",
       "cover": "Cover photo",
       "createdAt": "Created at",
       "emailVerifiedAt": "Email verified at",
-      "finance": "Finance",
       "isEmailVerified": "Email verified",
       "mfaStatus": "2FA status",
       "name": "Name",

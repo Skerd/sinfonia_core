@@ -28,7 +28,6 @@
     "Countries": "Pays",
     "Cronjobs": "Emplois Cron",
     "Currencies": "Devises",
-    "Finances": "Finances",
     "Lastchannelreadmessages": "Dernier canal lu les messages",
     "Loginhistories": "Historique de connexion",
     "Media": "Médias",
@@ -40,7 +39,6 @@
     "Serviceuptimes": "Disponibilité des services",
     "Smtpservers": "Serveurs SMTP",
     "States": "États / cantons",
-    "Transactions": "Transactions",
     "Users": "Utilisateurs",
     "Usersessions": "Sessions utilisateur"
   },
@@ -183,13 +181,6 @@
       "deletedBy": "Supprimé par",
       "name": "Nom",
       "symbol": "Symbole",
-      "updatedAt": "Mis à jour le"
-    },
-    "Finances": {
-      "createdAt": "Créé le",
-      "currencies": "Devises",
-      "currencies_amount": "Montant",
-      "currencies_currency": "Devise",
       "updatedAt": "Mis à jour le"
     },
     "Lastchannelreadmessages": {
@@ -383,28 +374,11 @@
       "states": "États / cantons",
       "updatedAt": "Mis à jour le"
     },
-    "Transactions": {
-      "amount": "Montant",
-      "createdAt": "Créé le",
-      "createdBy": "Créé par",
-      "currency": "Devise",
-      "date": "Date",
-      "receiver": "Récepteur",
-      "receiverFinance": "Financement du récepteur",
-      "relatedTransactionId": "ID de transaction associé",
-      "sender": "Expéditeur",
-      "senderFinance": "Financement de l'expéditeur",
-      "status": "Statut",
-      "transactions": "Transactions",
-      "type": "Type",
-      "updatedAt": "Mis à jour le"
-    },
     "Users": {
       "birthday": "Anniversaire",
       "cover": "Photo de couverture",
       "createdAt": "Créé le",
       "emailVerifiedAt": "E-mail vérifié à",
-      "finance": "Finances",
       "isEmailVerified": "E-mail vérifié",
       "mfaStatus": "Statut 2FA",
       "name": "Nom",

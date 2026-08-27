@@ -50,7 +50,6 @@
       "lastLogin": "Ultimo accesso",
       "roles": "Ruoli"
     },
-    "finance": "Finanza",
     "mfaStatus": "Stato dell'AMF",
     "requests": {
       "mfaDeactivation": {

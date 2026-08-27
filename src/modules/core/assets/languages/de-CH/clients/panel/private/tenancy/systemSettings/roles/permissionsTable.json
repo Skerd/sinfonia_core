@@ -28,7 +28,6 @@
     "Countries": "Countries",
     "Cronjobs": "Cron jobs",
     "Currencies": "Currencies",
-    "Finances": "Finanzen",
     "Lastchannelreadmessages": "Nach channel read nachrichten",
     "Loginhistories": "Anmelden history",
     "Media": "Medien",
@@ -40,7 +39,6 @@
     "Serviceuptimes": "Service uptimes",
     "Smtpservers": "SMTP servers",
     "States": "States",
-    "Transactions": "Transaktionen",
     "Users": "Benutzer",
     "Usersessions": "Benutzer sitzungen"
   },
@@ -183,13 +181,6 @@
       "deletedBy": "Gelöscht von",
       "name": "Name",
       "symbol": "Symbol",
-      "updatedAt": "Aktualisiert am"
-    },
-    "Finances": {
-      "createdAt": "Erstellt am",
-      "currencies": "Currencies",
-      "currencies_amount": "Betrag",
-      "currencies_currency": "Währung",
       "updatedAt": "Aktualisiert am"
     },
     "Lastchannelreadmessages": {
@@ -383,28 +374,11 @@
       "states": "States",
       "updatedAt": "Aktualisiert am"
     },
-    "Transactions": {
-      "amount": "Betrag",
-      "createdAt": "Erstellt am",
-      "createdBy": "Erstellt von",
-      "currency": "Währung",
-      "date": "Datum",
-      "receiver": "Receiver",
-      "receiverFinance": "Receiver finanzen",
-      "relatedTransactionId": "Zugehörig transaktion ID",
-      "sender": "Sender",
-      "senderFinance": "Sender finanzen",
-      "status": "Status",
-      "transactions": "Transaktionen",
-      "type": "Typ",
-      "updatedAt": "Aktualisiert am"
-    },
     "Users": {
       "birthday": "Birthday",
       "cover": "Cover foto",
       "createdAt": "Erstellt am",
       "emailVerifiedAt": "E-Mail verifiziert am",
-      "finance": "Finanzen",
       "isEmailVerified": "E-Mail verifiziert",
       "mfaStatus": "2FA status",
       "name": "Name",
