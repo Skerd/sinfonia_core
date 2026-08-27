@@ -1,10 +1,11 @@
 import {ReactNode, useEffect, useState} from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@coreModule/components/ui/tooltip.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
-import withVisibility, {VisibilityProps} from "@coreModule/helpers/hocs/withVisibility.tsx";
+import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
 import {compose} from "redux";
 
-type TooltipDisplayerProps = VisibilityProps & {
+type TooltipDisplayerProps = {
+    hideCondition?: boolean;
     children: ReactNode;
     tooltip?: string | number | boolean | null | undefined;
     tooltipRender?: () => ReactNode;
@@ -66,5 +67,5 @@ export function TooltipDisplayer({
 }
 
 export default compose(
-    withVisibility()
+    withHidden()
 )(TooltipDisplayer)

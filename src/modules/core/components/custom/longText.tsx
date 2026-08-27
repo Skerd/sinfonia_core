@@ -2,10 +2,11 @@ import {useRef, useState} from 'react'
 import {cn} from "@coreModule/components/lib/utils.ts"
 import {Popover, PopoverContent, PopoverTrigger} from '@coreModule/components/ui/popover.tsx'
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import withVisibility, {VisibilityProps} from "@coreModule/helpers/hocs/withVisibility.tsx";
+import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
 import {compose} from "redux";
 
-type LongTextProps = VisibilityProps & {
+type LongTextProps = {
+    hideCondition?: boolean;
     children: React.ReactNode
     className?: string
     contentClassName?: string
@@ -81,5 +82,5 @@ const checkOverflow = (textContainer: HTMLDivElement | null) => {
 }
 
 export default compose(
-    withVisibility()
+    withHidden()
 )(LongText)
