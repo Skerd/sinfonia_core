@@ -1,8 +1,0 @@
-{
-  "path": "src/modules/core/components/custom/arrayOfStringsField.tsx",
-  "label": "Positionen",
-  "placeholder": "Ein position… hinzufügen",
-  "removeTooltip": "Entfernen",
-  "addButtonLabel": "Position hinzufügen",
-  "maxItemsReached": "Maximum nummer von positionen reached."
-}
