@@ -145,6 +145,11 @@ type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: numbe
     toolbarFilterDSL?: FilterGroup;
     /** Rendered directly above the filter toolbar row. */
     aboveToolbar?: ReactNode;
+    /**
+     * Quick-filter inputs. Always visible above the toolbar on desktop.
+     * On mobile they share the existing sliders collapsible with FilterBuilder.
+     */
+    quickFilterBar?: ReactNode;
     /** When set, merges `extraFilters` into request state keys and deletes them when absent (clears stale params). */
     syncExtraFiltersKeys?: readonly string[];
 }
@@ -181,6 +186,7 @@ function CountryCenterView<
     extraFilters,
     toolbarFilterDSL,
     aboveToolbar,
+    quickFilterBar,
     syncExtraFiltersKeys,
 }: CountryCenterViewProps<ResponseType, PostType, T>) {
 
@@ -526,6 +532,7 @@ function CountryCenterView<
     return (
         <>
             {aboveToolbar}
+            {!isMobile && quickFilterBar}
 
             <div className="flex items-center justify-between gap-1">
                 <div className="flex grow">
@@ -596,9 +603,10 @@ function CountryCenterView<
             </div>
 
             {
-                isMobile && !!effectiveFilters && open &&
+                isMobile && open &&
                 <Collapsible open={open} onOpenChange={setOpen}>
-                    <CollapsibleContent>
+                    <CollapsibleContent className="flex flex-col gap-2 pt-1">
+                        {quickFilterBar}
                         {effectiveFilters({ filters, setFilters, extraParams })}
                     </CollapsibleContent>
                 </Collapsible>

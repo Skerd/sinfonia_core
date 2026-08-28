@@ -156,7 +156,7 @@ function TextOrNumberInput({def, value, onChange}: QuickFilterInputProps) {
             value={local}
             onChange={(e) => handleChange(e.target.value)}
             placeholder={def.placeholder ?? def.label}
-            className="h-8 text-sm min-w-[140px] max-w-[200px]"
+            className="h-8 text-sm min-w-[140px] max-w-[200px] max-md:w-full max-md:max-w-none"
         />
     );
 }
@@ -176,7 +176,7 @@ function DateInput({def, value, onChange}: QuickFilterInputProps) {
                     size="sm"
                     type="button"
                     className={cn(
-                        "h-8 min-w-[140px] max-w-[200px] justify-start text-left font-normal text-sm",
+                        "h-8 min-w-[140px] max-w-[200px] max-md:w-full max-md:max-w-none justify-start text-left font-normal text-sm",
                         !displayText && "text-muted-foreground",
                     )}
                 >
@@ -203,7 +203,7 @@ function EnumInput({def, value, onChange}: QuickFilterInputProps) {
             value={typeof value === "string" ? value : ""}
             onValueChange={(v: string | string[] | undefined) => onChange((v as string) || null)}
             placeholder={def.placeholder ?? def.label}
-            className="h-8 text-sm min-w-[140px] max-w-[200px]"
+            className="h-8 text-sm min-w-[140px] max-w-[200px] max-md:w-full max-md:max-w-none"
         />
     );
 }
@@ -223,7 +223,7 @@ function BooleanInput({def, value, onChange, resolveLanguageKey}: QuickFilterInp
                 onChange(v === "true");
             }}
             placeholder={def.placeholder ?? def.label}
-            className="h-8 text-sm min-w-[120px] max-w-[160px]"
+            className="h-8 text-sm min-w-[120px] max-w-[160px] max-md:w-full max-md:max-w-none"
         />
     );
 }
@@ -294,7 +294,7 @@ function ObjectIdInput({def, value, label, onChange, values, extraParams}: Quick
                 onChange(next as FilterValue | null, resolvedLabel);
             }}
             placeholder={def.placeholder ?? def.label}
-            className="h-8 text-sm min-w-[140px] max-w-[220px]"
+            className="h-8 text-sm min-w-[140px] max-w-[220px] max-md:w-full max-md:max-w-none"
             pageSize={50}
         />
     );
@@ -336,15 +336,15 @@ function QuickFilterBar({
     const anyActive = defs.some((d) => hasActiveValue(values[d.field]));
 
     return (
-        <div className="flex items-end gap-2 flex-wrap pb-1">
+        <div className="flex flex-col items-stretch gap-2 pb-1 md:flex-row md:flex-wrap md:items-end">
             {defs.map((def) => {
                 const active = hasActiveValue(values[def.field]);
                 return (
-                    <div key={def.field} className="flex flex-col gap-2 min-w-0">
+                    <div key={def.field} className="flex flex-col gap-2 min-w-0 max-md:w-full">
                         <label className="text-xs text-muted-foreground leading-none">
                             {def.label}
                         </label>
-                        <div className={cn("relative flex items-center", active && "ring-1 ring-primary/30 rounded-md")}>
+                        <div className={cn("relative flex items-center max-md:w-full", active && "ring-1 ring-primary/30 rounded-md")}>
                             <QuickFilterInput
                                 def={def}
                                 value={values[def.field] ?? null}

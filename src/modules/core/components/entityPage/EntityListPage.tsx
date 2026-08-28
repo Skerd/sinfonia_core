@@ -222,7 +222,8 @@ export type EntityListPageProps<T extends BaseEntity> = {
         hideDelete?: boolean | ((entity: T) => boolean);
     };
     /**
-     * Always-visible filter inputs rendered above the FilterBuilder row.
+     * Filter inputs rendered above the FilterBuilder row on desktop.
+     * On mobile they open with the existing sliders toggle.
      * Each def becomes a labeled input; their values AND-combine with the main DSL filter and with `extraFilters`.
      */
     quickFilters?: QuickFilterDef[];
@@ -518,20 +519,18 @@ export default function EntityListPage<T extends BaseEntity>({
                     selfAccess={selfAccess}
                     extraParams={mergedExtraParams}
                     toolbarFilterDSL={combinedToolbarDSL}
-                    aboveToolbar={
+                    aboveToolbar={aboveToolbar}
+                    quickFilterBar={
                         quickFilters?.length ? (
-                            <>
-                                {aboveToolbar}
-                                <QuickFilterBar
-                                    defs={quickFilters}
-                                    values={quickFilterValues}
-                                    labels={quickFilterLabels}
-                                    onChange={setQuickFilterValue}
-                                    onClearAll={clearQuickFilters}
-                                    extraParams={mergedExtraParams}
-                                />
-                            </>
-                        ) : aboveToolbar
+                            <QuickFilterBar
+                                defs={quickFilters}
+                                values={quickFilterValues}
+                                labels={quickFilterLabels}
+                                onChange={setQuickFilterValue}
+                                onClearAll={clearQuickFilters}
+                                extraParams={mergedExtraParams}
+                            />
+                        ) : undefined
                     }
                     tableConfigOptions={{
                         filterConfig: {
