@@ -199,6 +199,10 @@ function FileMediaPreview({
     const [url, setUrl] = useState<string | null>(null);
 
     useEffect(() => {
+        if (!(file instanceof Blob)) {
+            setUrl(null);
+            return;
+        }
         const u = URL.createObjectURL(file);
         setUrl(u);
         return () => URL.revokeObjectURL(u);
@@ -206,7 +210,7 @@ function FileMediaPreview({
 
     const alt =
         mediaType === "video"
-            ? file.name.substring(0, VIDEO_ALT_MAX_LENGTH)
+            ? (file.name ?? "").substring(0, VIDEO_ALT_MAX_LENGTH)
             : file.name;
 
     if (!url) return null;
@@ -332,11 +336,11 @@ function MediaField({
 
     if (isSingle) {
         const val = value as File | string | undefined;
-        if (editMode && typeof val === "string" && val) {
-            items.push({ type: "existing", id: val, index: 0 });
-        }
-        else if (val instanceof File) {
+        if (val instanceof File) {
             items.push({ type: "newFile", file: val, index: 0 });
+        }
+        else if (typeof val === "string" && val) {
+            items.push({ type: "existing", id: val, index: 0 });
         }
         if (items.length === 0) {
             items.push({ type: "placeholder", index: 0 });
@@ -345,10 +349,12 @@ function MediaField({
     else {
         const arr = (value as (File | string)[] | undefined) || [];
         arr.forEach((item: File | string, index: number) => {
-            if (editMode && typeof item === "string") {
+            // Discriminate on the runtime value, not on editMode: a stored media id can
+            // reach a create-mode field, and only a real File survives createObjectURL.
+            if (item instanceof File) {
+                items.push({ type: "newFile", file: item, index });
+            } else if (typeof item === "string" && item) {
                 items.push({ type: "existing", id: item, index });
-            } else {
-                items.push({ type: "newFile", file: item as File, index });
             }
         });
         const placeholdersNeeded = maxCount - items.length;
