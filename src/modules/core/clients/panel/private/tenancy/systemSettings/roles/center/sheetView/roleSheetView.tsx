@@ -66,129 +66,129 @@ function RoleSheetView({
             <SheetContent side="right" className="max-w-[95vw] lg:max-w-[60vw] min-w-[40vw] overflow-hidden p-0">
                 <OverlayPortalContainer className="flex h-full min-h-0 flex-col overflow-hidden">
                 <AccessFields read={read}>
-                <SheetHeader className="flex shrink-0 p-0 group hover:cursor-pointer shadow-sm">
-                    <div className="relative flex w-full items-stretch">
-                        {(read?.deletedBy || read?.deletedAt) && (
-                            <div className="h-full flex rounded-br-full items-stretch overflow-hidden">
-                                <DeletedInfo
-                                    restored={isRestored}
-                                    deletedAt={role.deletedAt}
-                                    deletedBy={role.deletedBy}
-                                />
-                            </div>
-                        )}
-                        <div className="flex items-start justify-between gap-2 p-2 w-full">
-                            <div className="min-w-0 flex-1 gap-y-1">
-                                <SheetTitle>
-                                    <HiddenElement>
-                                        {read?.name && !!role.name && <span className="truncate">{role.name}</span>}
-                                    </HiddenElement>
-                                </SheetTitle>
-                                <SheetDescription>
-                                    <HiddenElement>
-                                        {read?.slug && role.slug && <span className="text-sm">{role.slug}</span>}
-                                    </HiddenElement>
-                                </SheetDescription>
-                                {!!role.description && (
-                                    <HiddenElement>
-                                        {read?.description && (
-                                            <p className="mt-1 text-sm leading-snug text-muted-foreground">
-                                                {role.description}
-                                            </p>
-                                        )}
-                                    </HiddenElement>
-                                )}
-                            </div>
-                            <div className="shrink-0">
-                                {!hideActions && (
-                                    <ActionMenu
-                                        accessModel="roles"
-                                        deletedData={role}
-                                        onAction={(a: string) => setAction(a)}
-                                        editPath={roleEditPath(role)}
-                                        hideView={true}
-                                        hideEdit={!role.canEdit}
-                                        hideDelete={!role.canDelete}
+                    <SheetHeader className="flex shrink-0 p-0 group hover:cursor-pointer shadow-sm">
+                        <div className="relative flex w-full items-stretch">
+                            {(read?.deletedBy || read?.deletedAt) && (
+                                <div className="h-full flex rounded-br-full items-stretch overflow-hidden">
+                                    <DeletedInfo
+                                        restored={isRestored}
+                                        deletedAt={role.deletedAt}
+                                        deletedBy={role.deletedBy}
                                     />
-                                )}
+                                </div>
+                            )}
+                            <div className="flex items-start justify-between gap-2 p-2 w-full">
+                                <div className="min-w-0 flex-1 gap-y-1">
+                                    <SheetTitle>
+                                        <HiddenElement>
+                                            {read?.name && !!role.name && <span className="truncate">{role.name}</span>}
+                                        </HiddenElement>
+                                    </SheetTitle>
+                                    <SheetDescription>
+                                        <HiddenElement>
+                                            {read?.slug && role.slug && <span className="text-sm">{role.slug}</span>}
+                                        </HiddenElement>
+                                    </SheetDescription>
+                                    {!!role.description && (
+                                        <HiddenElement>
+                                            {read?.description && (
+                                                <p className="mt-1 text-sm leading-snug text-muted-foreground">
+                                                    {role.description}
+                                                </p>
+                                            )}
+                                        </HiddenElement>
+                                    )}
+                                </div>
+                                <div className="shrink-0">
+                                    {!hideActions && (
+                                        <ActionMenu
+                                            accessModel="roles"
+                                            deletedData={role}
+                                            onAction={(a: string) => setAction(a)}
+                                            editPath={roleEditPath(role)}
+                                            hideView={true}
+                                            hideEdit={!role.canEdit}
+                                            hideDelete={!role.canDelete}
+                                        />
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </SheetHeader>
+                    </SheetHeader>
 
-                <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-4 pb-[200px] mt-4 gap-y-6">
-                    <HiddenElement>
-                        {read?.permissions && permissionsTable && (
-                            <div className="flex flex-col gap-y-2">
-                                <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                                    {resolveLanguageKey("permissions")}
-                                </p>
-                                <div className="rounded-lg border border-border/50 bg-muted/20 p-2">{permissionsTable}</div>
-                            </div>
+                    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-4 pb-[200px] mt-4 gap-y-6">
+                        <HiddenElement>
+                            {read?.permissions && permissionsTable && (
+                                <div className="flex flex-col gap-y-2">
+                                    <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                                        {resolveLanguageKey("permissions")}
+                                    </p>
+                                    <div className="rounded-lg border border-border/50 bg-muted/20 p-2">{permissionsTable}</div>
+                                </div>
+                            )}
+                        </HiddenElement>
+                        {showLifecycle && (
+                            <SheetGroup
+                                title="lifecycle"
+                                resolveLanguageKey={resolveLanguageKey}
+                                collapseStorageKey="roles-lifecycle"
+                                defaultOpen={true}
+                            >
+                                <SheetGrid columns={3}>
+                                    {showCreatedAt && (
+                                        <DisplayCard
+                                            path="createdAt"
+                                            type="dateTime"
+                                            title={String(resolveLanguageKey("createdAt"))}
+                                            tooltip={String(resolveLanguageKey("createdAt"))}
+                                            Icon={IconCalendar}
+                                            value={role.createdAt}
+                                        />
+                                    )}
+                                    {showUpdatedAt && (
+                                        <DisplayCard
+                                            path="updatedAt"
+                                            type="dateTime"
+                                            title={String(resolveLanguageKey("updatedAt"))}
+                                            tooltip={String(resolveLanguageKey("updatedAt"))}
+                                            Icon={IconCalendar}
+                                            value={role.updatedAt}
+                                        />
+                                    )}
+                                    {showCreatedBy && (
+                                        <DisplayCard
+                                            path="createdBy"
+                                            type="user"
+                                            title={String(resolveLanguageKey("createdBy"))}
+                                            tooltip={String(resolveLanguageKey("createdBy"))}
+                                            Icon={IconUser}
+                                            value={role.createdBy}
+                                        />
+                                    )}
+                                    {showDeletedAt && (
+                                        <DisplayCard
+                                            path="deletedAt"
+                                            type="dateTime"
+                                            title={String(resolveLanguageKey("deletedAt"))}
+                                            tooltip={String(resolveLanguageKey("deletedAt"))}
+                                            Icon={IconCalendar}
+                                            value={role.deletedAt}
+                                        />
+                                    )}
+                                    {showDeletedBy && (
+                                        <DisplayCard
+                                            path="deletedBy"
+                                            type="user"
+                                            title={String(resolveLanguageKey("deletedBy"))}
+                                            tooltip={String(resolveLanguageKey("deletedBy"))}
+                                            Icon={IconUser}
+                                            value={role.deletedBy}
+                                        />
+                                    )}
+                                </SheetGrid>
+                            </SheetGroup>
                         )}
-                    </HiddenElement>
-                    {showLifecycle && (
-                        <SheetGroup
-                            title="lifecycle"
-                            resolveLanguageKey={resolveLanguageKey}
-                            collapseStorageKey="roles-lifecycle"
-                            defaultOpen={true}
-                        >
-                            <SheetGrid columns={3}>
-                                {showCreatedAt && (
-                                    <DisplayCard
-                                        path="createdAt"
-                                        type="dateTime"
-                                        title={String(resolveLanguageKey("createdAt"))}
-                                        tooltip={String(resolveLanguageKey("createdAt"))}
-                                        Icon={IconCalendar}
-                                        value={role.createdAt}
-                                    />
-                                )}
-                                {showUpdatedAt && (
-                                    <DisplayCard
-                                        path="updatedAt"
-                                        type="dateTime"
-                                        title={String(resolveLanguageKey("updatedAt"))}
-                                        tooltip={String(resolveLanguageKey("updatedAt"))}
-                                        Icon={IconCalendar}
-                                        value={role.updatedAt}
-                                    />
-                                )}
-                                {showCreatedBy && (
-                                    <DisplayCard
-                                        path="createdBy"
-                                        type="user"
-                                        title={String(resolveLanguageKey("createdBy"))}
-                                        tooltip={String(resolveLanguageKey("createdBy"))}
-                                        Icon={IconUser}
-                                        value={role.createdBy}
-                                    />
-                                )}
-                                {showDeletedAt && (
-                                    <DisplayCard
-                                        path="deletedAt"
-                                        type="dateTime"
-                                        title={String(resolveLanguageKey("deletedAt"))}
-                                        tooltip={String(resolveLanguageKey("deletedAt"))}
-                                        Icon={IconCalendar}
-                                        value={role.deletedAt}
-                                    />
-                                )}
-                                {showDeletedBy && (
-                                    <DisplayCard
-                                        path="deletedBy"
-                                        type="user"
-                                        title={String(resolveLanguageKey("deletedBy"))}
-                                        tooltip={String(resolveLanguageKey("deletedBy"))}
-                                        Icon={IconUser}
-                                        value={role.deletedBy}
-                                    />
-                                )}
-                            </SheetGrid>
-                        </SheetGroup>
-                    )}
-                </div>
+                    </div>
                 </AccessFields>
                 </OverlayPortalContainer>
             </SheetContent>
