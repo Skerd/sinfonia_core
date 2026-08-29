@@ -14,7 +14,9 @@ export default defineConfig({
         environment: "jsdom",
         globals: true,
         setupFiles: "./src/test/setup.ts",
-        include: ["src/**/*.test.{ts,tsx}"],
+        /* `scripts/` holds Node-side build tooling (the Studio's source index and
+           writer); its tests run in the same suite rather than a separate one. */
+        include: ["src/**/*.test.{ts,tsx}", "scripts/**/*.test.ts"],
         coverage: {
             provider: "v8",
             reporter: ["text", "html"],

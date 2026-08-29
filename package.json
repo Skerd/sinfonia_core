@@ -20,6 +20,7 @@
         "coreDev": "export NODE_ENV=development && vite --host",
         "publicDev": "export NODE_ENV=development VITE_SINFONIA_APP=public && vite --host",
         "dyeus": "export NODE_ENV=development VITE_SINFONIA_APP=dyeus && vite --host",
+        "studio": "export NODE_ENV=development VITE_SINFONIA_APP=studio && vite --host",
         "runXAndY": "export NODE_ENV=development VITE_ENABLED_MODULES=x,y && vite --host",
         "eCommerceMarketplace": "export NODE_ENV=development VITE_ENABLED_MODULES=eCommerceMarketplace && vite --host",
         "propertyManagement": "export NODE_ENV=development VITE_ENABLED_MODULES=propertyManagement && vite --host",

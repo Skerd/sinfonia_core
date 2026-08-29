@@ -11,6 +11,7 @@ import {createRequire} from "node:module";
 // import checker from "vite-plugin-checker";
 import {visualizer} from "rollup-plugin-visualizer";
 import { resolveSinfoniaApp } from "./scripts/sinfoniaApps";
+import { studioSourcePlugin } from "./scripts/studioSourcePlugin";
 import { buildViteModuleAliases, syncTsconfigModulePaths, } from "./scripts/moduleAliases";
 
 const require = createRequire(import.meta.url);
@@ -167,6 +168,12 @@ export default defineConfig(({ mode }) => {
             enabledModulesExcludePlugin(enabledModulesRaw),
             sinfoniaAppHtmlPlugin(sinfoniaApp.indexHtml, sinfoniaApp.appId),
             sinfoniaAppFaviconPlugin(sinfoniaApp.appRoot, viteBase),
+            /* Studio only, dev server only: reads and writes maestro's `*.views.ts`. The
+               plugin is `apply: "serve"`, so it cannot reach a production build. */
+            studioSourcePlugin({
+                maestroRoot: path.resolve(__dirname, "../maestro"),
+                enabled: sinfoniaApp.appId === "studio",
+            }),
             // checker({
             //     typescript: true
             // }),

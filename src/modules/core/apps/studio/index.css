@@ -1,0 +1,7 @@
+/*
+ * The Studio renders the panel's own components (Sheet, Table, Button, DisplayCard)
+ * through the unmodified view engine, so it must resolve the exact same design
+ * tokens. Importing the core app's stylesheet rather than copying it means the two
+ * can never drift — a token added for the panel is available here on the next build.
+ */
+@import "../core/index.css";

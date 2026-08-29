@@ -1,6 +1,7 @@
 import type {ComponentType, ReactNode} from "react";
 import type {FieldBinding, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ViewRendererContext} from "@coreModule/components/viewEngine/viewRendererHelpers.ts";
+import type {WidgetMeta} from "@coreModule/components/viewEngine/widgetMeta.ts";
 
 /**
  * Optional attach file: `src/modules/<pkg>/clients/panel/widgetContribution.ts(x)`.
@@ -38,6 +39,13 @@ export type WidgetContribution = {
     order?: number;
     /** Token → React component (same keys as legacy `WIDGET_REGISTRY`). */
     widgets?: Record<string, ComponentType<any>>;
+    /**
+     * Token → design-time description (which view modes it suits, whether it renders
+     * children, which props it reads). Purely additive: consumed by developer tooling
+     * such as the Studio's palette, props editor and lint, never by the renderer. A
+     * widget without an entry is treated as unconstrained, not invalid.
+     */
+    widgetMeta?: Record<string, WidgetMeta>;
     /**
      * Default prop name for `#ReferencesRender` when `itemDataProp` is omitted
      * (e.g. `#UnitCard` → `"unit"`).

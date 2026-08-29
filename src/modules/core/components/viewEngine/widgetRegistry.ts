@@ -43,6 +43,7 @@ import {FormGrid} from "@coreModule/components/custom/renderEngine/layout/form/g
 import {SheetGroup} from "@coreModule/components/custom/renderEngine/layout/sheet/group.tsx";
 import type {AuditSinglePostHint,SheetFieldRenderer} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
 import {getSortedWidgetContributions} from "@coreModule/clients/panel/moduleContributions/loadWidgetContributions.ts";
+import {CORE_WIDGET_META, type WidgetMeta} from "./widgetMeta.ts";
 
 const CurrencySheetViewLazy = lazy(() =>import("@coreModule/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx"));
 const CountrySheetViewLazy = lazy(() =>import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx"));
@@ -110,6 +111,12 @@ const REFERENCES_DEFAULT_ITEM_PROP: Record<string, string> = {};
 /** Custom sheet-mode field branches contributed by modules. */
 const SHEET_FIELD_RENDERERS: Record<string, SheetFieldRenderer> = {};
 
+/**
+ * Design-time widget descriptions. Read by developer tooling (the Studio), never by the
+ * renderer — an absent entry means "undescribed", not "unsupported".
+ */
+const WIDGET_META: Record<string, WidgetMeta> = {...CORE_WIDGET_META};
+
 /** Audit `singlePost` hints contributed by modules (+ core tenancy defaults). */
 const AUDIT_SINGLE_POST_HINTS: Record<string, AuditSinglePostHint> = {
     "#CurrencySheetView": {url: "/api/finance/currency/single", labelFields: ["name", "abbreviation", "symbol"]},
@@ -141,6 +148,11 @@ function ensureContributionsApplied(): void {
                 WIDGET_REGISTRY[token] = component;
             }
         }
+        if (contribution.widgetMeta) {
+            for (const [token, meta] of Object.entries(contribution.widgetMeta)) {
+                WIDGET_META[token] = meta;
+            }
+        }
         if (contribution.referencesDefaultItemProps) {
             for (const [token, prop] of Object.entries(contribution.referencesDefaultItemProps)) {
                 REFERENCES_DEFAULT_ITEM_PROP[token] = prop;
@@ -164,6 +176,21 @@ function ensureContributionsApplied(): void {
 export function getRegisteredWidgetTokens(): string[] {
     ensureContributionsApplied();
     return Object.keys(WIDGET_REGISTRY);
+}
+
+/** Design-time description for a token, or `undefined` when it has none. */
+export function getWidgetMeta(token: string): WidgetMeta | undefined {
+    ensureContributionsApplied();
+    return WIDGET_META[token];
+}
+
+export function getAllWidgetMeta(): Record<string, WidgetMeta> {
+    ensureContributionsApplied();
+    return WIDGET_META;
+}
+
+export function registerWidgetMeta(token: string, meta: WidgetMeta): void {
+    WIDGET_META[token] = meta;
 }
 
 /** Icons from view configs (`widgetProps.icon` / header badges). Tabler forwardRef components. */
