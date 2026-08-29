@@ -106,6 +106,37 @@ describe("buildModelFields", () => {
     });
 });
 
+describe('buildModelFields with scope "writable"', () => {
+    const writableFields = () =>
+        buildModelFields({readPaths, writePaths, columns, nodes, scope: "writable"});
+
+    it("lists the write allowlist instead of the read one", () => {
+        expect(writableFields().map((field) => field.path)).toEqual([
+            "address",
+            "address.city",
+            "legacyTotal",
+            "name",
+        ]);
+    });
+
+    it("drops a readable path the form could never offer", () => {
+        expect(writableFields().map((field) => field.path)).not.toContain("address.street");
+        expect(writableFields().map((field) => field.path)).not.toContain("currency");
+    });
+
+    it("keeps a path the view binds, marked read-only rather than off-schema", () => {
+        const bound = writableFields().find((field) => field.path === "address")!;
+        expect(bound).toMatchObject({writable: false, readable: true, inAllowlist: true});
+        expect(bound.renderedBy).toHaveLength(1);
+    });
+
+    it("still flags a bound path that is in neither allowlist", () => {
+        expect(
+            writableFields().find((field) => field.path === "legacyTotal")!.inAllowlist,
+        ).toBe(false);
+    });
+});
+
 describe("isRendered", () => {
     it("means a bound node in a view and a column in a table", () => {
         expect(isRendered(byPath("currency"), "view")).toBe(false);

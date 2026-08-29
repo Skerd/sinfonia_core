@@ -36,6 +36,9 @@ import ColumnInspector from "./columnInspector.tsx";
 import LintPanel from "../lint/lintPanel.tsx";
 import {lintTableColumns} from "../lint/tableLint.ts";
 import {computeCoverage} from "../coverage/viewCoverage.ts";
+import DeviceFrame from "../preview/deviceFrame.tsx";
+import DeviceToggle from "../preview/deviceToggle.tsx";
+import {usePreviewDevice} from "../preview/previewDevice.ts";
 import FieldsPane from "../fields/fieldsPane.tsx";
 import {buildModelFields} from "../fields/modelFields.ts";
 import ExportDialog from "../export/exportDialog.tsx";
@@ -136,6 +139,7 @@ export default function TableEditor({entry}: TableEditorProps) {
 
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [leftTab, setLeftTab] = useState<"columns" | "fields">("columns");
+    const [previewDevice, setPreviewDevice] = usePreviewDevice();
     const [exportOpen, setExportOpen] = useState(false);
     const [, setSearchParams] = useSearchParams();
 
@@ -260,6 +264,7 @@ export default function TableEditor({entry}: TableEditorProps) {
                 </span>
 
                 <div className="ml-auto flex items-center gap-2">
+                    <DeviceToggle device={previewDevice} onSelect={setPreviewDevice} />
                     <TooltipDisplayer tooltip="Discard this table's draft">
                         <Button
                             type="button"
@@ -357,22 +362,24 @@ export default function TableEditor({entry}: TableEditorProps) {
 
                 <div className="flex min-w-0 flex-1 flex-col overflow-hidden p-3">
                     {entry.apiUrl ? (
-                        <CardAndTableView<TableResponse<Record<string, unknown> & {_id: string}>>
-                            /* Remount when the draft changes so the table rebuilds its column defs. */
-                            key={`${previewKey}:${columns.map((c) => c.id).join("|")}`}
-                            url={entry.apiUrl}
-                            tableConfigKey={previewKey}
-                            access={entry.accessModel ?? entry.collection}
-                            configurations={{limit: 10}}
-                            containersClassName={{scrollRootClassName: "flex-full"}}
-                            tableConfigOptions={{
-                                filterConfig: {placeholder: "Search", fields: {}},
-                            }}
-                            renderFunctions={{
-                                cardRender: () => <></>,
-                                action: () => null,
-                            }}
-                        />
+                        <DeviceFrame device={previewDevice}>
+                            <CardAndTableView<TableResponse<Record<string, unknown> & {_id: string}>>
+                                /* Remount when the draft changes so the table rebuilds its column defs. */
+                                key={`${previewKey}:${columns.map((c) => c.id).join("|")}`}
+                                url={entry.apiUrl}
+                                tableConfigKey={previewKey}
+                                access={entry.accessModel ?? entry.collection}
+                                configurations={{limit: 10}}
+                                containersClassName={{scrollRootClassName: "flex-full"}}
+                                tableConfigOptions={{
+                                    filterConfig: {placeholder: "Search", fields: {}},
+                                }}
+                                renderFunctions={{
+                                    cardRender: () => <></>,
+                                    action: () => null,
+                                }}
+                            />
+                        </DeviceFrame>
                     ) : (
                         <p className="p-4 text-2xs text-muted-foreground">
                             No view config for this model, so its CRUD base path is unknown — the

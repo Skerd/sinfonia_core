@@ -59,10 +59,10 @@ import {useSplitter} from "../layout/useSplitter.ts";
 import SplitterHandle from "../layout/splitterHandle.tsx";
 import CoveragePane from "../coverage/coveragePane.tsx";
 import FieldsPane from "../fields/fieldsPane.tsx";
-import {buildModelFields, toCoveragePath} from "../fields/modelFields.ts";
+import {buildModelFields, toCoveragePath, type FieldScope} from "../fields/modelFields.ts";
 import AccessSimulator from "../simulate/accessSimulator.tsx";
 import {EMPTY_SIMULATION, type SimulationState} from "../simulate/simulationState.ts";
-import {simulateViewConfig} from "../simulate/filterNodesMirror.ts";
+import {appliesWriteAllowlist, simulateViewConfig} from "../simulate/filterNodesMirror.ts";
 import {useSourceIndex, targetKey} from "../source/sourceClient.ts";
 import {computeCoverage, type CoveragePath} from "../coverage/viewCoverage.ts";
 import {scaffoldNode, scaffoldNodes} from "../scaffold/scaffoldView.ts";
@@ -73,6 +73,9 @@ import {
     resolveIcon,
 } from "@coreModule/components/viewEngine/widgetRegistry.ts";
 import NodeInspector from "../inspector/nodeInspector.tsx";
+import DeviceFrame from "../preview/deviceFrame.tsx";
+import DeviceToggle from "../preview/deviceToggle.tsx";
+import {usePreviewDevice} from "../preview/previewDevice.ts";
 import SheetPreview from "../preview/sheetPreview.tsx";
 import FormPreview from "../preview/formPreview.tsx";
 import {useSampleRows} from "../preview/useSampleRows.ts";
@@ -168,6 +171,7 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
     const [leftTab, setLeftTab] = useState<"palette" | "fields" | "coverage" | "access">(
         "palette",
     );
+    const [previewDevice, setPreviewDevice] = usePreviewDevice();
     const [simulation, setSimulation] = useState<SimulationState>(EMPTY_SIMULATION);
 
     const {resolveLanguageKey} = useStudioLanguage(languagePath);
@@ -374,9 +378,13 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
     );
 
     /*
-     * The whole model, not just what this view is missing: read paths always, plus the write
-     * paths, since a create form binds fields a sheet may not read back.
+     * An edit form is gated on the write allowlist, so that is the list of fields it could
+     * ever offer; everywhere else the read paths are the subject. Same condition the mirror
+     * uses to decide whether the write allowlist applies at all.
      */
+    const fieldScope: FieldScope = config && appliesWriteAllowlist(config) ? "writable" : "all";
+
+    /* The whole model, not just what this view is missing. */
     const fields = useMemo(
         () =>
             buildModelFields({
@@ -384,8 +392,9 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                 writePaths: entry.writePaths,
                 columns: entry.columns,
                 nodes,
+                scope: fieldScope,
             }),
-        [entry.readPaths, entry.writePaths, entry.columns, nodes],
+        [entry.readPaths, entry.writePaths, entry.columns, nodes, fieldScope],
     );
 
     /** Appends into the selected container when there is one, else at root level. */
@@ -712,6 +721,7 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                                     <FieldsPane
                                         fields={fields}
                                         mode="view"
+                                        scope={fieldScope}
                                         onReveal={(_field, site) => site && revealPath(site.nodeKey)}
                                         onAdd={(field) =>
                                             appendNode(scaffoldNode(toCoveragePath(field), mode))
@@ -731,7 +741,7 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                                     <AccessSimulator
                                         readPaths={entry.readPaths}
                                         writePaths={entry.writePaths}
-                                        showWrite={mode === "form" && config.viewMode !== "create"}
+                                        showWrite={appliesWriteAllowlist(config)}
                                         state={simulation}
                                         onChange={setSimulation}
                                         summary={simulated}
@@ -811,20 +821,33 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                                 .
                             </p>
                         )}
-                        {mode === "sheet" ? (
-                            <SheetPreview
-                                config={previewConfig!}
-                                row={sampleRow}
-                                resolveLanguageKey={resolveLanguageKey}
+                        <div className="flex shrink-0 items-center gap-2 border-b px-2 py-1">
+                            <span className="text-3xs font-medium uppercase tracking-wide text-muted-foreground">
+                                Preview
+                            </span>
+                            <DeviceToggle
+                                className="ml-auto"
+                                device={previewDevice}
+                                onSelect={setPreviewDevice}
                             />
-                        ) : (
-                            <FormPreview
-                                config={previewConfig!}
-                                row={sampleRow}
-                                resolveLanguageKey={resolveLanguageKey}
-                                formExtras={undefined}
-                            />
-                        )}
+                        </div>
+
+                        <DeviceFrame device={previewDevice}>
+                            {mode === "sheet" ? (
+                                <SheetPreview
+                                    config={previewConfig!}
+                                    row={sampleRow}
+                                    resolveLanguageKey={resolveLanguageKey}
+                                />
+                            ) : (
+                                <FormPreview
+                                    config={previewConfig!}
+                                    row={sampleRow}
+                                    resolveLanguageKey={resolveLanguageKey}
+                                    formExtras={undefined}
+                                />
+                            )}
+                        </DeviceFrame>
                         <LintPanel
                             findings={findings}
                             selectedPath={selectedKey}

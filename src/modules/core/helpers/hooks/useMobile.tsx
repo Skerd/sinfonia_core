@@ -14,7 +14,17 @@ const MOBILE_BREAKPOINT = 768
  * - Initializes from the current media-query match when running in browser.
  * - Uses modern `addEventListener` with an `onchange` fallback.
  */
+/**
+ * Forces the answer for a subtree, for previews that render at a device width rather than
+ * the window's. `null` (the default) means "ask the window", so every existing caller is
+ * unaffected. A CSS media query inside a preview frame follows that frame's own viewport;
+ * this hook cannot, because the component still runs in the host window — hence the
+ * override. See the Studio's `deviceFrame`.
+ */
+export const MobileOverrideContext = React.createContext<boolean | null>(null)
+
 export function useIsMobile() {
+    const override = React.useContext(MobileOverrideContext)
     const [isMobile, setIsMobile] = React.useState<boolean>(() => {
         if (typeof window === 'undefined') return false
         return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`).matches
@@ -40,5 +50,5 @@ export function useIsMobile() {
         }
     }, [])
 
-    return isMobile
+    return override ?? isMobile
 }

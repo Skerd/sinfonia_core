@@ -12,6 +12,7 @@ import {
     isRendered,
     summarizeFields,
     type FieldRenderSite,
+    type FieldScope,
     type FieldStatusFilter,
     type FieldsMode,
     type ModelField,
@@ -20,6 +21,8 @@ import {
 type FieldsPaneProps = {
     fields: ModelField[];
     mode: FieldsMode;
+    /** Must match the scope the fields were built with; it decides how a row is labelled. */
+    scope?: FieldScope;
     /** Jumps to the node (or column) that renders a field. */
     onReveal?: (field: ModelField, site?: FieldRenderSite) => void;
     /** Adds an unrendered field. Omitted where the editor has no way to create one. */
@@ -51,7 +54,13 @@ function FieldPath({field}: {field: ModelField}) {
  * is why nothing is filtered out of it by default, not even paths a bound ancestor already
  * covers or paths bound but missing from the allowlist.
  */
-export default function FieldsPane({fields, mode, onReveal, onAdd}: FieldsPaneProps) {
+export default function FieldsPane({
+    fields,
+    mode,
+    scope = "all",
+    onReveal,
+    onAdd,
+}: FieldsPaneProps) {
     const [query, setQuery] = useState("");
     const [status, setStatus] = useState<FieldStatusFilter>("all");
     const [leavesOnly, setLeavesOnly] = useState(false);
@@ -66,7 +75,8 @@ export default function FieldsPane({fields, mode, onReveal, onAdd}: FieldsPanePr
         <div className="flex h-full min-h-0 flex-col">
             <div className="flex shrink-0 items-center gap-2 border-b px-2 py-1">
                 <span className="text-3xs text-muted-foreground">
-                    {summary.rendered} of {summary.total} field
+                    {summary.rendered} of {summary.total}{" "}
+                    {scope === "writable" ? "writable " : ""}field
                     {summary.total === 1 ? "" : "s"} {mode === "table" ? "have a column" : "rendered"}
                 </span>
                 {summary.unknown > 0 && (
@@ -122,7 +132,9 @@ export default function FieldsPane({fields, mode, onReveal, onAdd}: FieldsPanePr
                 {visible.length === 0 ? (
                     <p className="px-2 py-6 text-center text-3xs text-muted-foreground">
                         {fields.length === 0
-                            ? "No readable paths for this account, so there is nothing to list."
+                            ? scope === "writable"
+                                ? "No writable paths for this account, so this form has nothing to offer."
+                                : "No readable paths for this account, so there is nothing to list."
                             : "Nothing matches the filter."}
                     </p>
                 ) : (
@@ -164,13 +176,29 @@ export default function FieldsPane({fields, mode, onReveal, onAdd}: FieldsPanePr
                                             <IconAlertTriangle className="size-3 shrink-0 text-warning" />
                                         </TooltipDisplayer>
                                     )}
-                                    {field.writable && (
-                                        <TooltipDisplayer tooltip="Writable by this account">
-                                            <Badge variant="outline" className="shrink-0 px-1 text-3xs">
-                                                w
-                                            </Badge>
-                                        </TooltipDisplayer>
-                                    )}
+                                    {/* In a write-scoped list every row is writable but the
+                                        bound exceptions, so the exception is what gets a mark. */}
+                                    {scope === "writable"
+                                        ? !field.writable && (
+                                              <TooltipDisplayer tooltip="Bound by this form but not writable — maestro serves it disabled">
+                                                  <Badge
+                                                      variant="outline"
+                                                      className="shrink-0 px-1 text-3xs text-muted-foreground"
+                                                  >
+                                                      read-only
+                                                  </Badge>
+                                              </TooltipDisplayer>
+                                          )
+                                        : field.writable && (
+                                              <TooltipDisplayer tooltip="Writable by this account">
+                                                  <Badge
+                                                      variant="outline"
+                                                      className="shrink-0 px-1 text-3xs"
+                                                  >
+                                                      w
+                                                  </Badge>
+                                              </TooltipDisplayer>
+                                          )}
                                     {field.column && (
                                         <TooltipDisplayer
                                             tooltip={

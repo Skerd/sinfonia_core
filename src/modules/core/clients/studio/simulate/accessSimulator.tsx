@@ -6,6 +6,7 @@ import {Input} from "@coreModule/components/ui/input.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {SimulationState} from "./simulationState.ts";
 
@@ -19,6 +20,19 @@ type AccessSimulatorProps = {
     /** Reported back from the mirror, so the effect is visible without hunting for it. */
     summary: {pruned: number; disabled: number; wouldBeDropped: boolean} | null;
 };
+
+/**
+ * Stands in for a checkbox the path has no permission for, so the read and write columns
+ * line up down the list. A dashed outline rather than an empty gap: "there is nothing to
+ * revoke here" is information, and a gap reads as a rendering slip.
+ */
+function NoPermissionSlot({tooltip}: {tooltip: string}) {
+    return (
+        <TooltipDisplayer tooltip={tooltip}>
+            <span className="size-4 shrink-0 rounded-[4px] border border-dashed border-input/60" />
+        </TooltipDisplayer>
+    );
+}
 
 function toggle(set: ReadonlySet<string>, path: string): Set<string> {
     const next = new Set(set);
@@ -45,9 +59,14 @@ export default function AccessSimulator({
 }: AccessSimulatorProps) {
     const [query, setQuery] = useState("");
 
+    /*
+     * An edit form is gated on the write allowlist, so a path this account can only read is
+     * not a field it could offer — revoking read on it would change nothing you can see here.
+     * Everywhere else the read paths are the subject and the write column is off entirely.
+     */
     const paths = useMemo(() => {
         const needle = query.trim().toLowerCase();
-        const all = showWrite ? [...new Set([...readPaths, ...writePaths])] : readPaths;
+        const all = showWrite ? writePaths : readPaths;
         return all.filter((path) => !needle || path.toLowerCase().includes(needle)).sort();
     }, [query, readPaths, writePaths, showWrite]);
 
@@ -141,7 +160,7 @@ export default function AccessSimulator({
                                             >
                                                 {path}
                                             </span>
-                                            {readPaths.includes(path) && (
+                                            {readPaths.includes(path) ? (
                                                 <Checkbox
                                                     aria-label={`Revoke read on ${path}`}
                                                     checked={!readRevoked}
@@ -155,23 +174,32 @@ export default function AccessSimulator({
                                                         })
                                                     }
                                                 />
-                                            )}
-                                            {showWrite && writePaths.includes(path) && (
-                                                <Checkbox
-                                                    aria-label={`Revoke write on ${path}`}
-                                                    className="border-warning data-[state=checked]:bg-warning"
-                                                    checked={!writeRevoked}
-                                                    onCheckedChange={() =>
-                                                        onChange({
-                                                            ...state,
-                                                            revokedWrite: toggle(
-                                                                state.revokedWrite,
-                                                                path,
-                                                            ),
-                                                        })
-                                                    }
+                                            ) : (
+                                                <NoPermissionSlot
+                                                    tooltip={`${path} is not in the read allowlist — nothing to revoke`}
                                                 />
                                             )}
+                                            {showWrite &&
+                                                (writePaths.includes(path) ? (
+                                                    <Checkbox
+                                                        aria-label={`Revoke write on ${path}`}
+                                                        className="border-warning data-[state=checked]:bg-warning"
+                                                        checked={!writeRevoked}
+                                                        onCheckedChange={() =>
+                                                            onChange({
+                                                                ...state,
+                                                                revokedWrite: toggle(
+                                                                    state.revokedWrite,
+                                                                    path,
+                                                                ),
+                                                            })
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <NoPermissionSlot
+                                                        tooltip={`${path} is not in the write allowlist — nothing to revoke`}
+                                                    />
+                                                ))}
                                         </li>
                                     );
                                 })}

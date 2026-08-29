@@ -19,6 +19,17 @@ import type {CoveragePath} from "../coverage/viewCoverage.ts";
 
 export type FieldsMode = "view" | "table";
 
+/**
+ * Which allowlist decides what belongs in the list.
+ *
+ * `"writable"` is for edit forms, the one case where the read allowlist is not the subject:
+ * maestro's `filterViewConfig` gates their fields on write, so a path this account can only
+ * read is not a field the form could ever offer — listing it is noise in the one place the
+ * list is meant to be a worklist. Paths the config *does* bind stay in regardless, marked
+ * read-only, because a list that hides what the open config renders is worse than a long one.
+ */
+export type FieldScope = "all" | "writable";
+
 /** Where a view binds a field. `nodeKey` is the tree's positional key, so it can be revealed. */
 export type FieldRenderSite = {
     nodeKey: string;
@@ -66,6 +77,8 @@ export type ModelFieldsInput = {
     columns: TableColumnConfig[];
     /** The open view's nodes. Omitted for a table config, which binds nothing. */
     nodes?: ViewNode[];
+    /** Defaults to `"all"`. See {@link FieldScope}. */
+    scope?: FieldScope;
 };
 
 function renderSites(nodes: ViewNode[]): Map<string, FieldRenderSite[]> {
@@ -93,16 +106,24 @@ export function buildModelFields({
     writePaths,
     columns,
     nodes = [],
+    scope = "all",
 }: ModelFieldsInput): ModelField[] {
     const readable = new Set(readPaths);
     const writable = new Set(writePaths);
     const columnById = new Map(columns.map((column) => [column.id, column]));
     const sites = renderSites(nodes);
 
+    /*
+     * `readable` and `writable` are still judged against both lists, so a bound read-only
+     * path in a write-scoped list reads as read-only rather than as off-schema.
+     */
+    const listed =
+        scope === "writable"
+            ? [...writePaths, ...sites.keys()]
+            : [...readPaths, ...writePaths, ...sites.keys(), ...columnById.keys()];
+
     /* Sorted, which for dotted paths puts every parent directly above its own children. */
-    const universe = [
-        ...new Set([...readPaths, ...writePaths, ...sites.keys(), ...columnById.keys()]),
-    ].sort();
+    const universe = [...new Set(listed)].sort();
 
     return universe.map((path) => {
         const column = columnById.get(path);
