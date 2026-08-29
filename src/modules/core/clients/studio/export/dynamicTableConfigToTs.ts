@@ -30,6 +30,7 @@ type DynamicTableConfigPatch = {
     refDisplayKey?: string[];
     maxInlineItems?: number;
     hrefTemplate?: string;
+    avatarPath?: string;
     hideColumn?: boolean;
 };
 
@@ -75,6 +76,9 @@ export function diffTableColumns(
         if (column.meta?.hrefTemplate !== original.meta?.hrefTemplate) {
             patch.hrefTemplate = column.meta?.hrefTemplate;
         }
+        if (column.meta?.avatarPath !== original.meta?.avatarPath) {
+            patch.avatarPath = column.meta?.avatarPath;
+        }
         /* Dropping `filterConfig` in the editor means "exclude from filter generation",
            which is `filterable: false` on the schema path. */
         if (!!original.filterConfig && !column.filterConfig) patch.filterable = false;
@@ -102,6 +106,7 @@ const KEY_ORDER: (keyof DynamicTableConfigPatch)[] = [
     "refDisplayKey",
     "maxInlineItems",
     "hrefTemplate",
+    "avatarPath",
     "hideColumn",
 ];
 

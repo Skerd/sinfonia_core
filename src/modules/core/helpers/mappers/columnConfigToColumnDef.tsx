@@ -20,6 +20,7 @@ import {IconFileLike, IconFileXFilled} from "@tabler/icons-react";
 import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import SheetMediaAvatar from "@coreModule/components/viewEngine/sheetMediaAvatar.tsx";
 import {Link} from "react-router-dom";
 
 export type ColumnConfigToColumnDefOptions<T> = {
@@ -180,10 +181,11 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
         //
 
         if( col.cellType === "objectId" ){
-            const colMeta = col.meta as { refDisplayKey?: string[]; maxInlineItems?: number; hrefTemplate?: string } | undefined;
+            const colMeta = col.meta as { refDisplayKey?: string[]; maxInlineItems?: number; hrefTemplate?: string; avatarPath?: string } | undefined;
             const displayFields = colMeta?.refDisplayKey ?? ["name"];
             const maxInlineItems = colMeta?.maxInlineItems ?? 2;
             const hrefTemplate = typeof colMeta?.hrefTemplate === "string" ? colMeta.hrefTemplate : "";
+            const avatarPath = typeof colMeta?.avatarPath === "string" ? colMeta.avatarPath : "";
             const getByPath = (obj: Record<string, unknown>, path: string): unknown =>
                 path.split(".").reduce((a, k) => (a as Record<string, unknown>)?.[k], obj);
             const toDisplayLabel = (item: Record<string, unknown>): string => {
@@ -194,6 +196,14 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                     return x == null || typeof x === "object" ? "" : String(x).trim();
                 });
                 return parts.filter((p) => p !== "").join(hasLiteral ? "" : " ") || "";
+            };
+            /* A media id on the ref itself (`createdBy.photo`), populated or not. */
+            const resolveMediaId = (item: Record<string, unknown>): string | null => {
+                if (!avatarPath) return null;
+                const raw = getByPath(item, avatarPath);
+                if (typeof raw === "string" && raw !== "") return raw;
+                const id = (raw as {_id?: unknown} | null)?._id;
+                return id != null && id !== "" ? String(id) : null;
             };
             const resolveHref = (item: Record<string, unknown>): string | null => {
                 if (!hrefTemplate) return null;
@@ -216,18 +226,33 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                             item,
                             label: toDisplayLabel(item) || String(fallbackLabel),
                             href: resolveHref(item),
+                            mediaId: resolveMediaId(item),
                         }))
                         .filter(({label, href}) => label !== "" || !!href);
                     if (labeled.length === 0) return <></>;
                     const visible = labeled.slice(0, maxInlineItems);
                     const remaining = labeled.length - visible.length;
-                    const renderBadge = (label: string, href: string | null, key: number) => {
+                    const renderBadge = (label: string, href: string | null, key: number, mediaId?: string | null) => {
                         const badge = (
                             <Badge
                                 key={href ? undefined : key}
                                 variant="outline"
-                                className={href ? "cursor-pointer hover:bg-accent" : undefined}
+                                className={cn(
+                                    "gap-1",
+                                    /* `Badge` is a fixed `h-5` pill that clips its overflow, so
+                                       an avatar bigger than that gets its top and bottom shaved.
+                                       Grow the pill instead and seat the photo flush inside it. */
+                                    mediaId && "h-7 gap-1.5 pl-0.5 pr-2.5",
+                                    href ? "cursor-pointer hover:bg-accent" : undefined,
+                                )}
                             >
+                                {mediaId && (
+                                    <SheetMediaAvatar
+                                        mediaId={mediaId}
+                                        name={label}
+                                        className="size-6 border-0 shadow-none"
+                                    />
+                                )}
                                 {label}
                             </Badge>
                         );
@@ -240,7 +265,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                     };
                     return (
                         <div className="flex items-center gap-1 flex-wrap">
-                            {visible.map(({label, href}, i) => renderBadge(label, href, i))}
+                            {visible.map(({label, href, mediaId}, i) => renderBadge(label, href, i, mediaId))}
                             {remaining > 0 && (
                                 <Popover>
                                     <PopoverTrigger asChild>
@@ -250,7 +275,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                                     </PopoverTrigger>
                                     <PopoverContent align="start" className="w-auto max-w-lg px-2">
                                         <div className="max-h-60 w-fit overflow-y-auto flex flex-col gap-1.5">
-                                            {labeled.slice(maxInlineItems).map(({label, href}, i) => renderBadge(label, href, i))}
+                                            {labeled.slice(maxInlineItems).map(({label, href, mediaId}, i) => renderBadge(label, href, i, mediaId))}
                                         </div>
                                     </PopoverContent>
                                 </Popover>

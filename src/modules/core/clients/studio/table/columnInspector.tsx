@@ -203,6 +203,21 @@ export default function ColumnInspector({column, pristine, onChange}: ColumnInsp
                 </Row>
             ),
         },
+        {
+            key: "meta.avatarPath",
+            render: () => (
+                <Row
+                    label="meta.avatarPath"
+                    hint="Media path on the ref (e.g. photo); shown as an avatar on each badge."
+                >
+                    <Input
+                        value={column.meta?.avatarPath ?? ""}
+                        className="h-8 font-mono text-2xs"
+                        onChange={(e) => setMeta({avatarPath: e.target.value || undefined}, "meta.avatarPath")}
+                    />
+                </Row>
+            ),
+        },
     ];
 
     const primary = slots.filter((slot) => columnRelevanceFor(slot.key, column).state === "primary");

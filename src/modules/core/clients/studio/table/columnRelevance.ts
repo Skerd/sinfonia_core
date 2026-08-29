@@ -11,7 +11,7 @@ import type {Relevance} from "../inspector/fieldRelevance.ts";
  * type suggests:
  *
  *  - `refDisplayKey` — read in the `objectId` branch and again in the `address` branch.
- *  - `maxInlineItems`, `hrefTemplate` — read **only** in the `objectId` branch. The enum
+ *  - `maxInlineItems`, `hrefTemplate`, `avatarPath` — read **only** in the `objectId` branch. The enum
  *    branch hardcodes its own inline limit and never consults `maxInlineItems`.
  *  - `className` — applied to every column's header/cell meta, whatever the type.
  *  - `badgeMapping`, `dateFormat`, `timezonePath`, `componentKey`, `refPath` — read
@@ -30,7 +30,8 @@ export type ColumnInspectorKey =
     | "meta.className"
     | "meta.refDisplayKey"
     | "meta.maxInlineItems"
-    | "meta.hrefTemplate";
+    | "meta.hrefTemplate"
+    | "meta.avatarPath";
 
 export const COLUMN_INSPECTOR_KEYS: ColumnInspectorKey[] = [
     "visible",
@@ -42,6 +43,7 @@ export const COLUMN_INSPECTOR_KEYS: ColumnInspectorKey[] = [
     "meta.refDisplayKey",
     "meta.maxInlineItems",
     "meta.hrefTemplate",
+    "meta.avatarPath",
 ];
 
 /** `meta` keys the contract declares but no client code reads. */
@@ -86,6 +88,7 @@ export function columnRelevanceFor(
 
         case "meta.maxInlineItems":
         case "meta.hrefTemplate":
+        case "meta.avatarPath":
             return isObjectId
                 ? {state: "advanced"}
                 : {state: "inapplicable", reason: OBJECT_ID_ONLY};
