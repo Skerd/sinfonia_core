@@ -5,6 +5,7 @@ import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/vi
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
 import FormViewRenderer from "@coreModule/components/viewEngine/FormViewRenderer.tsx";
+import EditFormViewRenderer from "@coreModule/components/viewEngine/editFormViewRenderer.tsx";
 import {IconInfoCircle} from "@tabler/icons-react";
 import type {SampleRow} from "./useSampleRows.ts";
 
@@ -14,10 +15,20 @@ type FormPreviewProps = {
     row: SampleRow | null;
     resolveLanguageKey: ResolveLanguageKey;
     formExtras: Record<string, unknown> | undefined;
+    /**
+     * The account's write map, narrowed by the access simulator when it is on. Edit forms
+     * gate every field on it, so without it the preview shows fields the panel would not.
+     */
+    writeAccess: Record<string, unknown> | undefined;
 };
 
 /**
- * Renders the real `FormViewRenderer` with validation switched off.
+ * Renders the panel's own form renderers with validation switched off.
+ *
+ * Which renderer matters: create pages mount `FormViewRenderer`, edit pages mount
+ * `EditFormViewRenderer`, and only the latter applies the write gate that *removes* a field
+ * the account cannot write — maestro's `disabled` flag never gets a chance to show. Preview
+ * through the wrong one and the Studio answers a question the panel was never asked.
  *
  * Validation lives in an Armonia Zod factory that each page imports by name
  * (`createCountryFormSchema`); nothing in a `ViewConfig` points at it, so the Studio
@@ -31,6 +42,7 @@ export default function FormPreview({
     row,
     resolveLanguageKey,
     formExtras,
+    writeAccess,
 }: FormPreviewProps) {
     const innerRef = useRef<WithAxiosLifecycleRef<unknown> | null>(null);
 
@@ -54,21 +66,42 @@ export default function FormPreview({
                 Layout preview — validation is off and submit is inert.
             </p>
             <div className="min-h-0 flex-1 overflow-y-auto p-4">
-                <FormViewRenderer
-                    /* Remount when the shape changes so react-hook-form re-seeds defaults. */
-                    key={`${config.model}:${config.viewMode}:${row?._id ?? "blank"}`}
-                    config={config}
-                    resolveLanguageKey={resolveLanguageKey}
-                    formSchema={emptySchema}
-                    resolver={passThroughResolver}
-                    defaultValues={defaultValues}
-                    loading={false}
-                    innerRef={innerRef}
-                    onSubmit={() => {}}
-                    onCancel={() => {}}
-                    formExtras={formExtras}
-                    hideChrome
-                />
+                {config.viewMode === "edit" ? (
+                    <EditFormViewRenderer
+                        /* Remount when the shape changes so react-hook-form re-seeds defaults. */
+                        key={`${config.model}:edit:${row?._id ?? "blank"}`}
+                        config={config}
+                        resolveLanguageKey={resolveLanguageKey}
+                        formSchema={emptySchema}
+                        resolver={passThroughResolver}
+                        initialValues={defaultValues}
+                        loading={false}
+                        innerRef={innerRef}
+                        onSubmit={() => {}}
+                        onCancel={() => {}}
+                        onSuccess={() => {}}
+                        loadingDataErrorTitle="errorTitle"
+                        loadingDataErrorDescription="errorDescription"
+                        formExtras={formExtras}
+                        writeAccess={writeAccess}
+                        hideChrome
+                    />
+                ) : (
+                    <FormViewRenderer
+                        key={`${config.model}:${config.viewMode}:${row?._id ?? "blank"}`}
+                        config={config}
+                        resolveLanguageKey={resolveLanguageKey}
+                        formSchema={emptySchema}
+                        resolver={passThroughResolver}
+                        defaultValues={defaultValues}
+                        loading={false}
+                        innerRef={innerRef}
+                        onSubmit={() => {}}
+                        onCancel={() => {}}
+                        formExtras={formExtras}
+                        hideChrome
+                    />
+                )}
             </div>
         </div>
     );

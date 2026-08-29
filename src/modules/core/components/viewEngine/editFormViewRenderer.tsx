@@ -51,6 +51,10 @@ export type EditFormViewRendererProps<T extends FieldValues = FieldValues> = {
     onSuccess?: () => void;
     /** Extra disable reason for the primary submit control (e.g. client-side business rules). */
     submitDisabled?: boolean;
+    /** When set, hides page shell (header / heavy padding) for embedding in dialogs/sheets. */
+    hideChrome?: boolean;
+    /** When set, used instead of the default `zodResolver(formSchema)`. */
+    resolver?: Resolver<T>;
 };
 
 function resolveWriteAccess(writeAccess: Record<string, any>, key: string): boolean {
@@ -87,11 +91,15 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
     onForceReload,
     loadingDataErrorTitle,
     loadingDataErrorDescription,
-    loadingDataErrorTooltip
+    loadingDataErrorTooltip,
+    hideChrome = false,
+    resolver: resolverProp,
 }: EditFormViewRendererProps<T>) {
 
     const navigate = useNavigate();
-    const form = useForm<T>({resolver: zodResolver(formSchema) as Resolver<T>});
+    const form = useForm<T>({
+        resolver: (resolverProp ?? (zodResolver(formSchema) as Resolver<T>)) as Resolver<T>,
+    });
     const resetEntityKeyRef = useRef<string | undefined>(undefined);
 
     useEffect(() => {
@@ -210,11 +218,13 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
     return (
         // Avoid nested `.flex-full` (each sets overflow-y: auto) — panel content is the sole scroll root.
         <div className="flex flex-col gap-4">
-            <Header
-                title={buildPageTitle(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
-                description={resolveLanguageKey("formHeader.description")}
-            />
-            <div className="flex flex-col px-2 pb-[100px] gap-y-4">
+            {!hideChrome && (
+                <Header
+                    title={buildPageTitle(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
+                    description={resolveLanguageKey("formHeader.description")}
+                />
+            )}
+            <div className={`flex flex-col gap-y-4 ${hideChrome ? "px-0 pb-2" : "px-2 pb-[100px]"}`}>
                 {
                     loadingData ?
                     <Loader />

@@ -171,6 +171,16 @@ export default function FieldsPane({
                                         <FieldPath field={field} />
                                     )}
 
+                                    {field.serverManaged && (
+                                        <TooltipDisplayer tooltip="Written by the server on save (lifecycle / soft-delete / ownership plugin) — bound here, but a form input for it is ignored">
+                                            <Badge
+                                                variant="outline"
+                                                className="shrink-0 px-1 text-3xs text-muted-foreground"
+                                            >
+                                                server-managed
+                                            </Badge>
+                                        </TooltipDisplayer>
+                                    )}
                                     {!field.inAllowlist && (
                                         <TooltipDisplayer tooltip="Not in the read or write allowlist">
                                             <IconAlertTriangle className="size-3 shrink-0 text-warning" />

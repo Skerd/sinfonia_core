@@ -137,6 +137,44 @@ describe('buildModelFields with scope "writable"', () => {
     });
 });
 
+describe("buildModelFields with hideServerManaged", () => {
+    const formFields = () =>
+        buildModelFields({
+            readPaths: [...readPaths, "createdAt", "createdBy", "createdBy.name", "company"],
+            writePaths,
+            columns,
+            nodes,
+            hideServerManaged: true,
+        });
+
+    it("drops what maestro's plugins own, subtrees included", () => {
+        const paths = formFields().map((field) => field.path);
+        expect(paths).not.toContain("createdAt");
+        expect(paths).not.toContain("createdBy");
+        expect(paths).not.toContain("createdBy.name");
+        expect(paths).not.toContain("company");
+        expect(paths).toContain("name");
+    });
+
+    it("keeps one the config binds anyway, flagged rather than hidden", () => {
+        const bound = buildModelFields({
+            readPaths: ["name", "company"],
+            writePaths: [],
+            columns: [],
+            nodes: [{render: "#Input", field: {name: "company", widget: "#ApiSelect"}}],
+            hideServerManaged: true,
+        });
+
+        const company = bound.find((field) => field.path === "company")!;
+        expect(company.serverManaged).toBe(true);
+        expect(company.renderedBy).toHaveLength(1);
+    });
+
+    it("flags nothing of the model's own", () => {
+        expect(formFields().find((field) => field.path === "name")!.serverManaged).toBe(false);
+    });
+});
+
 describe("isRendered", () => {
     it("means a bound node in a view and a column in a table", () => {
         expect(isRendered(byPath("currency"), "view")).toBe(false);

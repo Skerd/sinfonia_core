@@ -28,6 +28,7 @@ import {Input} from "@coreModule/components/ui/input.tsx";
 import {Empty, EmptyDescription, EmptyHeader, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
+import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {StudioModelEntry} from "../catalog/useStudioCatalog.ts";
 import {useStudioDrafts} from "../draft/studioDraftProvider.tsx";
@@ -60,9 +61,12 @@ import SplitterHandle from "../layout/splitterHandle.tsx";
 import CoveragePane from "../coverage/coveragePane.tsx";
 import FieldsPane from "../fields/fieldsPane.tsx";
 import {buildModelFields, toCoveragePath, type FieldScope} from "../fields/modelFields.ts";
+import {withoutServerManaged} from "../fields/serverManagedFields.ts";
 import AccessSimulator from "../simulate/accessSimulator.tsx";
 import {EMPTY_SIMULATION, type SimulationState} from "../simulate/simulationState.ts";
 import {appliesWriteAllowlist, simulateViewConfig} from "../simulate/filterNodesMirror.ts";
+import {pruneAccessTree} from "../simulate/accessTree.ts";
+import {countHiddenByWriteGate} from "../simulate/formWriteGateMirror.ts";
 import {useSourceIndex, targetKey} from "../source/sourceClient.ts";
 import {computeCoverage, type CoveragePath} from "../coverage/viewCoverage.ts";
 import {scaffoldNode, scaffoldNodes} from "../scaffold/scaffoldView.ts";
@@ -367,14 +371,30 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
 
     /* Sheets are gated on the read allowlist, forms on the write allowlist — the same
        split maestro applies, so "unbound" means the same thing here as it does there. */
+    /*
+     * A form's own view of the allowlists. `createdAt`, `deletedBy`, `company` and the rest
+     * are written by maestro's plugins on save, so a form input bound to one is ignored —
+     * they are not candidates to add, not paths worth revoking, and not fields to list.
+     * Sheets keep them: displaying them is what the shared `lifecycleSheetGroup` is for.
+     */
+    const formMode = mode === "form";
+    const offeredReadPaths = useMemo(
+        () => (formMode ? withoutServerManaged(entry.readPaths) : entry.readPaths),
+        [formMode, entry.readPaths],
+    );
+    const offeredWritePaths = useMemo(
+        () => (formMode ? withoutServerManaged(entry.writePaths) : entry.writePaths),
+        [formMode, entry.writePaths],
+    );
+
     const coverage = useMemo(
         () =>
             computeCoverage(
                 nodes,
-                mode === "sheet" ? entry.readPaths : entry.writePaths,
+                mode === "sheet" ? offeredReadPaths : offeredWritePaths,
                 entry.columns,
             ),
-        [nodes, mode, entry.readPaths, entry.writePaths, entry.columns],
+        [nodes, mode, offeredReadPaths, offeredWritePaths, entry.columns],
     );
 
     /*
@@ -393,8 +413,9 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                 columns: entry.columns,
                 nodes,
                 scope: fieldScope,
+                hideServerManaged: formMode,
             }),
-        [entry.readPaths, entry.writePaths, entry.columns, nodes, fieldScope],
+        [entry.readPaths, entry.writePaths, entry.columns, nodes, fieldScope, formMode],
     );
 
     /** Appends into the selected container when there is one, else at root level. */
@@ -442,6 +463,31 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
         () => (config && simulated ? {...config, nodes: simulated.nodes} : config),
         [config, simulated],
     );
+
+    /*
+     * The previews mount the panel's own renderers, which read the access map at render time
+     * — `EditFormViewRenderer` drops a field it cannot write, `#DisplayCard` blurs a value it
+     * cannot read. Narrowing only the config would leave those two reading the real account's
+     * map, so the simulation has to narrow the map as well.
+     */
+    const account = useAccess(config?.accessModel ?? entry.accessModel ?? entry.collection);
+    const previewAccess = useMemo(() => {
+        if (!simulation.enabled) return account;
+        return {
+            ...account,
+            read: pruneAccessTree(account.read, simulation.revokedRead),
+            write: pruneAccessTree(account.write, simulation.revokedWrite),
+        };
+    }, [account, simulation]);
+
+    /** Fields the panel's edit-form gate removes outright, which maestro only marks disabled. */
+    const hiddenByWriteGate = useMemo(() => {
+        if (!config || !simulated || !appliesWriteAllowlist(config)) return 0;
+        return countHiddenByWriteGate(
+            simulated.nodes,
+            new Set(entry.writePaths.filter((path) => !simulation.revokedWrite.has(path))),
+        );
+    }, [config, simulated, entry.writePaths, simulation.revokedWrite]);
 
     const leftPaneRef = useRef<HTMLDivElement | null>(null);
 
@@ -739,8 +785,8 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                                 )}
                                 {leftTab === "access" && (
                                     <AccessSimulator
-                                        readPaths={entry.readPaths}
-                                        writePaths={entry.writePaths}
+                                        readPaths={offeredReadPaths}
+                                        writePaths={offeredWritePaths}
                                         showWrite={appliesWriteAllowlist(config)}
                                         state={simulation}
                                         onChange={setSimulation}
@@ -815,7 +861,10 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                         {simulation.enabled && simulated && (
                             <p className="shrink-0 border-b bg-info/10 px-3 py-1.5 text-3xs text-info">
                                 Simulating a narrower account: {simulated.pruned} node(s) pruned
-                                {simulated.disabled > 0 && `, ${simulated.disabled} field(s) disabled`}
+                                {hiddenByWriteGate > 0 &&
+                                    `, ${hiddenByWriteGate} field(s) hidden by the panel's write gate`}
+                                {simulated.disabled - hiddenByWriteGate > 0 &&
+                                    `, ${simulated.disabled - hiddenByWriteGate} field(s) disabled`}
                                 {simulated.wouldBeDropped &&
                                     " — maestro would drop this view entirely for such an account"}
                                 .
@@ -838,6 +887,7 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                                     config={previewConfig!}
                                     row={sampleRow}
                                     resolveLanguageKey={resolveLanguageKey}
+                                    access={previewAccess}
                                 />
                             ) : (
                                 <FormPreview
@@ -845,6 +895,9 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                                     row={sampleRow}
                                     resolveLanguageKey={resolveLanguageKey}
                                     formExtras={undefined}
+                                    writeAccess={
+                                        previewAccess.write as Record<string, unknown> | undefined
+                                    }
                                 />
                             )}
                         </DeviceFrame>

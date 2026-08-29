@@ -3,7 +3,7 @@ import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/vi
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import ViewRenderer, {type ViewRendererContext} from "@coreModule/components/viewEngine/ViewRenderer.tsx";
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import type {AccessObject} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {IconLayoutSidebarRightExpand} from "@tabler/icons-react";
 import type {SampleRow} from "./useSampleRows.ts";
@@ -12,6 +12,12 @@ type SheetPreviewProps = {
     config: ViewConfig;
     row: SampleRow | null;
     resolveLanguageKey: ResolveLanguageKey;
+    /**
+     * The account's access map, narrowed by the access simulator when it is on. `#DisplayCard`
+     * blurs values against `access.read` at render time, so a simulation that only narrows the
+     * config would still show the real account's values.
+     */
+    access: AccessObject;
 };
 
 /**
@@ -23,8 +29,12 @@ type SheetPreviewProps = {
  * overlay that would cover the tree being edited. "Open real sheet" mounts the genuine
  * component when header, action menu and audit chrome need checking too.
  */
-export default function SheetPreview({config, row, resolveLanguageKey}: SheetPreviewProps) {
-    const access = useAccess(config.accessModel);
+export default function SheetPreview({
+    config,
+    row,
+    resolveLanguageKey,
+    access,
+}: SheetPreviewProps) {
     const [realSheetOpen, setRealSheetOpen] = useState(false);
 
     const readAccess = access.read && typeof access.read === "object" ? access.read : {};

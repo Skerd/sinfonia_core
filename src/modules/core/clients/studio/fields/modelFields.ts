@@ -5,6 +5,7 @@ import type {
 import type {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators";
 import {flattenTree} from "../tree/nodeTreeOps.ts";
 import type {CoveragePath} from "../coverage/viewCoverage.ts";
+import {isServerManaged} from "./serverManagedFields.ts";
 
 /**
  * Every field of a model in one list, with what the open configuration does about it.
@@ -69,6 +70,8 @@ export type ModelField = {
      * field list to find.
      */
     inAllowlist: boolean;
+    /** Owned by a maestro plugin. Only ever listed when the open config binds it anyway. */
+    serverManaged: boolean;
 };
 
 export type ModelFieldsInput = {
@@ -79,6 +82,12 @@ export type ModelFieldsInput = {
     nodes?: ViewNode[];
     /** Defaults to `"all"`. See {@link FieldScope}. */
     scope?: FieldScope;
+    /**
+     * Drops the paths maestro's plugins own (`createdAt`, `deletedBy`, `company`, …). Forms
+     * pass this: those are written on save, so offering one as an input is offering a field
+     * the server will ignore. A path the config already binds stays, flagged.
+     */
+    hideServerManaged?: boolean;
 };
 
 function renderSites(nodes: ViewNode[]): Map<string, FieldRenderSite[]> {
@@ -107,6 +116,7 @@ export function buildModelFields({
     columns,
     nodes = [],
     scope = "all",
+    hideServerManaged = false,
 }: ModelFieldsInput): ModelField[] {
     const readable = new Set(readPaths);
     const writable = new Set(writePaths);
@@ -117,10 +127,19 @@ export function buildModelFields({
      * `readable` and `writable` are still judged against both lists, so a bound read-only
      * path in a write-scoped list reads as read-only rather than as off-schema.
      */
+    const allowed = hideServerManaged
+        ? (path: string) => !isServerManaged(path)
+        : () => true;
+
     const listed =
         scope === "writable"
-            ? [...writePaths, ...sites.keys()]
-            : [...readPaths, ...writePaths, ...sites.keys(), ...columnById.keys()];
+            ? [...writePaths.filter(allowed), ...sites.keys()]
+            : [
+                  ...readPaths.filter(allowed),
+                  ...writePaths.filter(allowed),
+                  ...sites.keys(),
+                  ...[...columnById.keys()].filter(allowed),
+              ];
 
     /* Sorted, which for dotted paths puts every parent directly above its own children. */
     const universe = [...new Set(listed)].sort();
@@ -143,6 +162,7 @@ export function buildModelFields({
             apiUrl: column?.filterConfig?.apiUrl,
             enumValues: column?.filterConfig?.enumValues,
             inAllowlist: readable.has(path) || writable.has(path),
+            serverManaged: isServerManaged(path),
         };
     });
 }
