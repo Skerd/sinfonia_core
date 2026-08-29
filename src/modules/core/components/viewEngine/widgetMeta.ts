@@ -272,6 +272,12 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
         docs: "The default sheet field renderer: icon, label and a resolved value.",
         widgetProps: [
             {name: "icon", type: "string", suggest: "icon"},
+            {
+                name: "avatarPath",
+                type: "string",
+                suggest: "readPath",
+                docs: "Media ref path (e.g. `createdBy.photo`) shown in place of the icon.",
+            },
             {name: "dontRenderValue", type: "boolean", docs: "Icon and label only."},
             {
                 name: "type",

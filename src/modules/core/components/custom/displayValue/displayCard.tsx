@@ -13,6 +13,8 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {IconInfoCircle, IconLink} from "@tabler/icons-react";
 import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
+import SheetMediaAvatar from "@coreModule/components/viewEngine/sheetMediaAvatar.tsx";
+import {Dialog, DialogContent, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
 import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
@@ -50,6 +52,12 @@ type DisplayCardProps = {
     variant?: DisplayCardVariant;
     title: string;
     Icon?: DisplayCardIcon;
+    /**
+     * Renders the referenced entity's photo in the icon slot instead of {@link Icon} — a user
+     * card reads better with the face on it than with a generic person glyph. `name` seeds the
+     * `alt` text and the two-letter fallback for a user with no photo.
+     */
+    avatar?: {mediaId: string; name: string};
     value: unknown;
     tooltip: string;
     dontRenderValue?: boolean;
@@ -163,6 +171,7 @@ export default function DisplayCard({
     variant = "default",
     title,
     Icon,
+    avatar,
     value,
     tooltip,
     dontRenderValue = false,
@@ -197,6 +206,7 @@ export default function DisplayCard({
     };
 
     const [linkedSheetOpen, setLinkedSheetOpen] = useState(false);
+    const [avatarOpen, setAvatarOpen] = useState(false);
     const tooltipText = tooltip != null ? String(tooltip).trim() : "";
     const hasTooltip = tooltipText.length > 0;
 
@@ -206,20 +216,38 @@ export default function DisplayCard({
                 variant="outline"
                 className={cn("h-fit items-start gap-2 p-2", containerStyles[variant])}
             >
-                {Icon != null && (
-                    <ItemMedia
-                        className={cn(
-                            "self-start p-2.5 rounded-md",
-                            iconWrapStyles[variant],
-                        )}
-                    >
-                        <Icon
-                            className={cn(
-                                "h-5 w-5",
-                                accentTextStyles[variant],
-                            )}
-                        />
+                {avatar != null ? (
+                    <ItemMedia className="self-start">
+                        <button
+                            type="button"
+                            aria-label={`View photo of ${avatar.name}`}
+                            className="cursor-pointer rounded-full outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-ring"
+                            onClick={() => setAvatarOpen(true)}
+                        >
+                            <SheetMediaAvatar
+                                mediaId={avatar.mediaId}
+                                name={avatar.name}
+                                /* Sized to the icon well it replaces, not to a profile header. */
+                                className="size-10 border-0 shadow-none"
+                            />
+                        </button>
                     </ItemMedia>
+                ) : (
+                    Icon != null && (
+                        <ItemMedia
+                            className={cn(
+                                "self-start p-2.5 rounded-md",
+                                iconWrapStyles[variant],
+                            )}
+                        >
+                            <Icon
+                                className={cn(
+                                    "h-5 w-5",
+                                    accentTextStyles[variant],
+                                )}
+                            />
+                        </ItemMedia>
+                    )
                 )}
                 <ItemContent className="min-w-0 gap-0.5">
                     <div className="flex items-center gap-1 min-w-0">
@@ -372,6 +400,20 @@ export default function DisplayCard({
                         setLinkedSheetOpen(false);
                     }}
                 />
+            )}
+            {avatar != null && (
+                /* `DialogContent` brings its own close button; the title is for screen
+                   readers only, since the photo is the whole dialog. */
+                <Dialog open={avatarOpen} onOpenChange={setAvatarOpen}>
+                    <DialogContent className="p-2 sm:max-w-lg">
+                        <DialogTitle className="sr-only">{avatar.name}</DialogTitle>
+                        <img
+                            src={`/api/auxiliary/media/${avatar.mediaId}`}
+                            alt={avatar.name}
+                            className="max-h-[80vh] w-full rounded-lg object-contain"
+                        />
+                    </DialogContent>
+                </Dialog>
             )}
         </>
     );

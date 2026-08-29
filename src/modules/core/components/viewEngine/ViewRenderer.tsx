@@ -1326,6 +1326,22 @@ function renderDisplayCard(
     const label = binding.label ? String(resolveLanguageKey(binding.label)) : binding.name;
     const tooltipText = wp.tooltip ? String(resolveLanguageKey(wp.tooltip)) : label;
 
+    /*
+     * `avatarPath` points at a media ref on the entity (`createdBy.photo`) and swaps the icon
+     * for that photo. Nothing to gate: a path the account cannot read never reaches the client,
+     * so `resolvePath` comes back empty and the card keeps its icon.
+     */
+    let avatar: {mediaId: string; name: string} | undefined;
+    if (typeof wp.avatarPath === "string" && wp.avatarPath.length > 0 && data) {
+        const mediaId = normalizeObjectIdRef(resolvePath(data, wp.avatarPath))?.fetchId;
+        if (mediaId) {
+            avatar = {
+                mediaId,
+                name: typeof displayValue === "string" ? displayValue : label,
+            };
+        }
+    }
+
     const cardColorVariants = new Set(["default", "success", "destructive", "warning", "info"]);
     let variant = typeof wp.variant === "string" && cardColorVariants.has(wp.variant) ? wp.variant : undefined;
     if (wp.variantLookupField && wp.variantLookupMap != null && typeof wp.variantLookupMap === "object" && data) {
@@ -1433,6 +1449,7 @@ function renderDisplayCard(
             }
             size={typeof wp.size === "number" ? wp.size : undefined}
             Icon={Icon ?? undefined}
+            avatar={avatar}
             value={displayValue}
             variant={variant}
             dontRenderValue={!!wp.dontRenderValue || !!externalLinkValue}
