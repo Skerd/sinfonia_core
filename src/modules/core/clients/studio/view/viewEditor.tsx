@@ -58,6 +58,8 @@ import LintPanel from "../lint/lintPanel.tsx";
 import {useSplitter} from "../layout/useSplitter.ts";
 import SplitterHandle from "../layout/splitterHandle.tsx";
 import CoveragePane from "../coverage/coveragePane.tsx";
+import FieldsPane from "../fields/fieldsPane.tsx";
+import {buildModelFields, toCoveragePath} from "../fields/modelFields.ts";
 import AccessSimulator from "../simulate/accessSimulator.tsx";
 import {EMPTY_SIMULATION, type SimulationState} from "../simulate/simulationState.ts";
 import {simulateViewConfig} from "../simulate/filterNodesMirror.ts";
@@ -163,7 +165,9 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
         max: 640,
         direction: "vertical",
     });
-    const [leftTab, setLeftTab] = useState<"palette" | "coverage" | "access">("palette");
+    const [leftTab, setLeftTab] = useState<"palette" | "fields" | "coverage" | "access">(
+        "palette",
+    );
     const [simulation, setSimulation] = useState<SimulationState>(EMPTY_SIMULATION);
 
     const {resolveLanguageKey} = useStudioLanguage(languagePath);
@@ -367,6 +371,21 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                 entry.columns,
             ),
         [nodes, mode, entry.readPaths, entry.writePaths, entry.columns],
+    );
+
+    /*
+     * The whole model, not just what this view is missing: read paths always, plus the write
+     * paths, since a create form binds fields a sheet may not read back.
+     */
+    const fields = useMemo(
+        () =>
+            buildModelFields({
+                readPaths: entry.readPaths,
+                writePaths: entry.writePaths,
+                columns: entry.columns,
+                nodes,
+            }),
+        [entry.readPaths, entry.writePaths, entry.columns, nodes],
     );
 
     /** Appends into the selected container when there is one, else at root level. */
@@ -640,7 +659,7 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                         style={{width: leftPane.size}}
                     >
                         <div className="flex shrink-0 items-center gap-1 border-b px-2 py-1">
-                            {(["palette", "coverage", "access"] as const).map((tab) => (
+                            {(["palette", "fields", "coverage", "access"] as const).map((tab) => (
                                 <button
                                     key={tab}
                                     type="button"
@@ -688,6 +707,16 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                             >
                                 {leftTab === "palette" && (
                                     <WidgetPalette onAppend={appendFromPalette} mode={mode} />
+                                )}
+                                {leftTab === "fields" && (
+                                    <FieldsPane
+                                        fields={fields}
+                                        mode="view"
+                                        onReveal={(_field, site) => site && revealPath(site.nodeKey)}
+                                        onAdd={(field) =>
+                                            appendNode(scaffoldNode(toCoveragePath(field), mode))
+                                        }
+                                    />
                                 )}
                                 {leftTab === "coverage" && (
                                     <CoveragePane

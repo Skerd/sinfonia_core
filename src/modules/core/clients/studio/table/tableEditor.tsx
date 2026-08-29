@@ -36,6 +36,8 @@ import ColumnInspector from "./columnInspector.tsx";
 import LintPanel from "../lint/lintPanel.tsx";
 import {lintTableColumns} from "../lint/tableLint.ts";
 import {computeCoverage} from "../coverage/viewCoverage.ts";
+import FieldsPane from "../fields/fieldsPane.tsx";
+import {buildModelFields} from "../fields/modelFields.ts";
 import ExportDialog from "../export/exportDialog.tsx";
 import {dynamicTableConfigToTs, tableChangeList} from "../export/dynamicTableConfigToTs.ts";
 import {singularizeCollection} from "../export/viewConfigToTs.ts";
@@ -133,6 +135,7 @@ export default function TableEditor({entry}: TableEditorProps) {
     const {getTableDraft, setTableDraft, clearTableDraft} = useStudioDrafts();
 
     const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [leftTab, setLeftTab] = useState<"columns" | "fields">("columns");
     const [exportOpen, setExportOpen] = useState(false);
     const [, setSearchParams] = useSearchParams();
 
@@ -227,6 +230,17 @@ export default function TableEditor({entry}: TableEditorProps) {
         [columns, entry.readPaths],
     );
 
+    /* Same list the view editor shows, minus the binding info a table has no notion of. */
+    const fields = useMemo(
+        () =>
+            buildModelFields({
+                readPaths: entry.readPaths,
+                writePaths: entry.writePaths,
+                columns,
+            }),
+        [entry.readPaths, entry.writePaths, columns],
+    );
+
     const selected = columns.find((column) => column.id === selectedId) ?? null;
     const changes = useMemo(
         () => (draft ? tableChangeList(entry.columns, draft) : []),
@@ -269,41 +283,76 @@ export default function TableEditor({entry}: TableEditorProps) {
             </div>
 
             <div className="flex min-h-0 flex-1 overflow-hidden">
-                <div className="w-80 shrink-0 overflow-y-auto border-r p-1">
-                    <DndContext
-                        sensors={sensors}
-                        collisionDetection={closestCenter}
-                        onDragEnd={handleDragEnd}
-                    >
-                        <SortableContext
-                            items={columns.map((column) => column.id)}
-                            strategy={verticalListSortingStrategy}
-                        >
-                            <div className="flex flex-col gap-px">
-                                {columns.map((column) => (
-                                    <SortableColumnRow
-                                        key={column.id}
-                                        column={column}
-                                        selected={selectedId === column.id}
-                                        onSelect={() => setSelectedId(column.id)}
-                                        onToggleVisible={() =>
-                                            commit(
-                                                columns.map((c) =>
-                                                    c.id === column.id
-                                                        ? {...c, visible: !c.visible}
-                                                        : c,
-                                                ),
-                                            )
-                                        }
-                                        onRemove={() => {
-                                            commit(columns.filter((c) => c.id !== column.id));
-                                            if (selectedId === column.id) setSelectedId(null);
-                                        }}
-                                    />
-                                ))}
-                            </div>
-                        </SortableContext>
-                    </DndContext>
+                <div className="flex w-80 shrink-0 flex-col overflow-hidden border-r">
+                    <div className="flex shrink-0 items-center gap-1 border-b px-2 py-1">
+                        {(["columns", "fields"] as const).map((tab) => (
+                            <button
+                                key={tab}
+                                type="button"
+                                onClick={() => setLeftTab(tab)}
+                                className={cn(
+                                    "rounded px-1.5 py-0.5 text-3xs font-medium uppercase tracking-wide transition-colors",
+                                    leftTab === tab
+                                        ? "bg-muted text-foreground"
+                                        : "text-muted-foreground hover:text-foreground",
+                                )}
+                            >
+                                {tab}
+                                <span className="ml-1 tabular-nums">
+                                    {tab === "columns" ? columns.length : fields.length}
+                                </span>
+                            </button>
+                        ))}
+                    </div>
+
+                    {leftTab === "fields" ? (
+                        <FieldsPane
+                            fields={fields}
+                            mode="table"
+                            /* No `onAdd`: a column is generated from the schema's
+                               `dynamicTableConfiguration`, so one cannot be conjured here. */
+                            onReveal={(field) =>
+                                field.column && setSelectedId(field.column.id)
+                            }
+                        />
+                    ) : (
+                        <div className="min-h-0 flex-1 overflow-y-auto p-1">
+                            <DndContext
+                                sensors={sensors}
+                                collisionDetection={closestCenter}
+                                onDragEnd={handleDragEnd}
+                            >
+                                <SortableContext
+                                    items={columns.map((column) => column.id)}
+                                    strategy={verticalListSortingStrategy}
+                                >
+                                    <div className="flex flex-col gap-px">
+                                        {columns.map((column) => (
+                                            <SortableColumnRow
+                                                key={column.id}
+                                                column={column}
+                                                selected={selectedId === column.id}
+                                                onSelect={() => setSelectedId(column.id)}
+                                                onToggleVisible={() =>
+                                                    commit(
+                                                        columns.map((c) =>
+                                                            c.id === column.id
+                                                                ? {...c, visible: !c.visible}
+                                                                : c,
+                                                        ),
+                                                    )
+                                                }
+                                                onRemove={() => {
+                                                    commit(columns.filter((c) => c.id !== column.id));
+                                                    if (selectedId === column.id) setSelectedId(null);
+                                                }}
+                                            />
+                                        ))}
+                                    </div>
+                                </SortableContext>
+                            </DndContext>
+                        </div>
+                    )}
                 </div>
 
                 <div className="flex min-w-0 flex-1 flex-col overflow-hidden p-3">
