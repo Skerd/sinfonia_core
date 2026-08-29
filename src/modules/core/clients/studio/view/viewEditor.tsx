@@ -24,6 +24,7 @@ import {
 import type {ViewConfig, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
+import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Empty, EmptyDescription, EmptyHeader, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
@@ -80,6 +81,7 @@ import NodeInspector from "../inspector/nodeInspector.tsx";
 import DeviceFrame from "../preview/deviceFrame.tsx";
 import DeviceToggle from "../preview/deviceToggle.tsx";
 import {usePreviewDevice} from "../preview/previewDevice.ts";
+import {useCheckedTargets} from "../catalog/checkedTargets.ts";
 import SheetPreview from "../preview/sheetPreview.tsx";
 import FormPreview from "../preview/formPreview.tsx";
 import {useSampleRows} from "../preview/useSampleRows.ts";
@@ -176,6 +178,8 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
         "palette",
     );
     const [previewDevice, setPreviewDevice] = usePreviewDevice();
+    const checked = useCheckedTargets();
+    const checkedTarget = {collection: entry.collection, viewKey};
     const [simulation, setSimulation] = useState<SimulationState>(EMPTY_SIMULATION);
 
     const {resolveLanguageKey} = useStudioLanguage(languagePath);
@@ -605,6 +609,19 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
         >
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
                 <div className="flex shrink-0 flex-wrap items-center gap-2 border-b px-3 py-2">
+                    <TooltipDisplayer
+                        tooltip={
+                            checked.isChecked(checkedTarget)
+                                ? "Marked as done — click to reopen"
+                                : "Mark this view as done"
+                        }
+                    >
+                        <Checkbox
+                            aria-label={`Mark ${entry.collection} ${viewKey} as done`}
+                            checked={checked.isChecked(checkedTarget)}
+                            onCheckedChange={() => checked.toggle(checkedTarget)}
+                        />
+                    </TooltipDisplayer>
                     <span className="font-mono text-sm">{entry.collection}</span>
                     <Badge variant="outline">{viewKey}</Badge>
                     {draft && <Badge variant="secondary">draft</Badge>}

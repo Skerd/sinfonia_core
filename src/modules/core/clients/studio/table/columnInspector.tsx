@@ -204,6 +204,21 @@ export default function ColumnInspector({column, pristine, onChange}: ColumnInsp
             ),
         },
         {
+            key: "meta.flagCodePath",
+            render: () => (
+                <Row
+                    label="meta.flagCodePath"
+                    hint="ISO code path on the ref (e.g. code); shown as a flag on each badge."
+                >
+                    <Input
+                        value={column.meta?.flagCodePath ?? ""}
+                        className="h-8 font-mono text-2xs"
+                        onChange={(e) => setMeta({flagCodePath: e.target.value || undefined}, "meta.flagCodePath")}
+                    />
+                </Row>
+            ),
+        },
+        {
             key: "meta.avatarPath",
             render: () => (
                 <Row

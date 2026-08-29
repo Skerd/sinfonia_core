@@ -1328,12 +1328,27 @@ function renderDisplayCard(
 
     /*
      * `avatarPath` points at a media ref on the entity (`createdBy.photo`) and swaps the icon
-     * for that photo. Nothing to gate: a path the account cannot read never reaches the client,
-     * so `resolvePath` comes back empty and the card keeps its icon.
+     * for that photo; `flagCodePath` does the same with a country ref's ISO code.
+     *
+     * Both media slots are gated on the account's read access for the path they read, the same
+     * `hasAccessPath` the value itself goes through. The server already strips an unreadable
+     * path from the payload, so this is the second of the two checks the engine runs
+     * everywhere — and it is the one the Studio's access simulator can narrow, which is what
+     * makes a revoked `country.code` fall back to the icon there as it would live.
+     *
+     * Falling back rather than hiding: a card with no media renders its `icon`, so a reader
+     * without the flag or the photo still gets a labelled card.
      */
+    const flagCodePath = typeof wp.flagCodePath === "string" ? wp.flagCodePath : "";
+    const flagCode =
+        flagCodePath && data && hasAccessPath(ctx.access, flagCodePath)
+            ? String(resolvePath(data, flagCodePath) ?? "").trim() || undefined
+            : undefined;
+
+    const avatarPath = typeof wp.avatarPath === "string" ? wp.avatarPath : "";
     let avatar: {mediaId: string; name: string} | undefined;
-    if (typeof wp.avatarPath === "string" && wp.avatarPath.length > 0 && data) {
-        const mediaId = normalizeObjectIdRef(resolvePath(data, wp.avatarPath))?.fetchId;
+    if (avatarPath && data && hasAccessPath(ctx.access, avatarPath)) {
+        const mediaId = normalizeObjectIdRef(resolvePath(data, avatarPath))?.fetchId;
         if (mediaId) {
             avatar = {
                 mediaId,
@@ -1450,6 +1465,7 @@ function renderDisplayCard(
             size={typeof wp.size === "number" ? wp.size : undefined}
             Icon={Icon ?? undefined}
             avatar={avatar}
+            flagCode={flagCode}
             value={displayValue}
             variant={variant}
             dontRenderValue={!!wp.dontRenderValue || !!externalLinkValue}

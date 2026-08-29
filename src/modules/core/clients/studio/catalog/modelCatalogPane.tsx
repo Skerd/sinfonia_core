@@ -19,6 +19,8 @@ import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import type {StudioCatalog, StudioModelEntry} from "./useStudioCatalog.ts";
 import {groupByModule} from "./studioModules.ts";
 import {usePersistedIdSet} from "./usePersistedIdSet.ts";
+import {checkedProgress, useCheckedTargets, type CheckedTargets} from "./checkedTargets.ts";
+import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {TABLE_TARGET, type StudioTarget} from "../studioTarget.ts";
 
 /** Collapse state lives per browser, like the pane splitters. */
@@ -56,6 +58,7 @@ function ModelRow({
     hasDraft,
     expanded,
     onToggleExpanded,
+    checked,
     onCreateView,
 }: {
     entry: StudioModelEntry;
@@ -64,12 +67,14 @@ function ModelRow({
     hasDraft: boolean;
     expanded: boolean;
     onToggleExpanded: () => void;
+    checked: CheckedTargets;
     onCreateView: (collection: string, viewKey: string, config: ViewConfig) => void;
 }) {
     const [newViewOpen, setNewViewOpen] = useState(false);
     /* A model with no view config still gets a Table row — table columns exist for every
        registered model, views only for those with a `*.views.ts`. */
     const targets = [...entry.viewKeys, ...(entry.columns.length > 0 ? [TABLE_TARGET] : [])];
+    const progress = checkedProgress(entry, checked.isChecked);
 
     return (
         <div className="mb-1">
@@ -98,10 +103,19 @@ function ModelRow({
                             no views
                         </Badge>
                     )}
-                    {!expanded && targets.length > 0 && (
-                        <span className="ml-auto shrink-0 pr-1 text-3xs tabular-nums text-muted-foreground">
-                            {targets.length}
-                        </span>
+                    {progress.total > 0 && (
+                        <TooltipDisplayer
+                            tooltip={`${progress.checked} of ${progress.total} target${progress.total === 1 ? "" : "s"} marked as done`}
+                        >
+                            <span
+                                className={cn(
+                                    "ml-auto shrink-0 pr-1 text-3xs tabular-nums",
+                                    progress.complete ? "text-success" : "text-muted-foreground",
+                                )}
+                            >
+                                {progress.checked}/{progress.total}
+                            </span>
+                        </TooltipDisplayer>
                     )}
                 </button>
                 <TooltipDisplayer
@@ -132,23 +146,48 @@ function ModelRow({
             />
             <div className={cn("flex flex-col", !expanded && "hidden")}>
                 {targets.map((viewKey) => {
+                    const target = {collection: entry.collection, viewKey};
                     const isActive =
                         selected?.collection === entry.collection && selected?.viewKey === viewKey;
+                    const isChecked = checked.isChecked(target);
                     return (
-                        <button
+                        <div
                             key={viewKey}
-                            type="button"
-                            onClick={() => onSelect({collection: entry.collection, viewKey})}
                             className={cn(
-                                "flex items-center gap-1.5 rounded-md px-2 py-1 pl-4 text-left text-2xs transition-colors",
+                                "flex items-center gap-1.5 rounded-md pl-4 pr-2 transition-colors",
                                 isActive
                                     ? "bg-primary text-primary-foreground"
                                     : "text-muted-foreground hover:bg-muted",
                             )}
                         >
-                            <ViewKeyIcon viewKey={viewKey} />
-                            <span className="truncate">{viewKeyLabel(viewKey)}</span>
-                        </button>
+                            <button
+                                type="button"
+                                onClick={() => onSelect(target)}
+                                className="flex min-w-0 flex-1 items-center gap-1.5 py-1 text-left text-2xs"
+                            >
+                                <ViewKeyIcon viewKey={viewKey} />
+                                <span className={cn("truncate", isChecked && !isActive && "text-foreground")}>
+                                    {viewKeyLabel(viewKey)}
+                                </span>
+                            </button>
+                            <TooltipDisplayer
+                                tooltip={
+                                    isChecked
+                                        ? "Marked as done — click to reopen"
+                                        : "Mark this target as done"
+                                }
+                            >
+                                <Checkbox
+                                    aria-label={`Mark ${entry.collection} ${viewKeyLabel(viewKey)} as done`}
+                                    checked={isChecked}
+                                    onCheckedChange={() => checked.toggle(target)}
+                                    className={cn(
+                                        "size-3.5 shrink-0",
+                                        isActive && "border-primary-foreground/60",
+                                    )}
+                                />
+                            </TooltipDisplayer>
+                        </div>
                     );
                 })}
             </div>
@@ -168,6 +207,7 @@ export default function ModelCatalogPane({
        wall of links this pane started as. Both sets survive a reload. */
     const collapsedModules = usePersistedIdSet(COLLAPSED_MODULES_KEY);
     const expandedModels = usePersistedIdSet(EXPANDED_MODELS_KEY);
+    const checked = useCheckedTargets();
 
     /* Opening a target from the palette, a URL or a restored session must reveal the row that
        is now highlighted, so selection expands its model. */
@@ -247,6 +287,7 @@ export default function ModelCatalogPane({
                                             selected={selected}
                                             onSelect={onSelect}
                                             hasDraft={draftedCollections.has(entry.collection)}
+                                            checked={checked}
                                             expanded={expandedModels.has(entry.collection)}
                                             onToggleExpanded={() =>
                                                 expandedModels.toggle(entry.collection)

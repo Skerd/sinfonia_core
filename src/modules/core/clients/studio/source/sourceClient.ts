@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useMemo, useState} from "react";
-import type {StudioTarget} from "../studioTarget.ts";
+import {studioTargetKey} from "../studioTarget.ts";
 
 /**
  * Client for the dev-server routes in `scripts/studioSourcePlugin.ts`.
@@ -57,9 +57,7 @@ export type ApplyResponse = {
     outcomes: ApplyOutcome[];
 };
 
-export function targetKey(target: StudioTarget): string {
-    return `${target.collection.toLowerCase()}:${target.viewKey}`;
-}
+export const targetKey = studioTargetKey;
 
 /** `vscode://` link that opens the file at the node. */
 export function editorLink(ref: SourceNodeRef): string {

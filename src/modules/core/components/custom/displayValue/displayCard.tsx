@@ -14,6 +14,7 @@ import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {IconInfoCircle, IconLink} from "@tabler/icons-react";
 import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
 import SheetMediaAvatar from "@coreModule/components/viewEngine/sheetMediaAvatar.tsx";
+import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
 import {Dialog, DialogContent, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
@@ -58,6 +59,8 @@ type DisplayCardProps = {
      * `alt` text and the two-letter fallback for a user with no photo.
      */
     avatar?: {mediaId: string; name: string};
+    /** ISO country code shown as a flag in the icon slot. Ignored when {@link avatar} is set. */
+    flagCode?: string;
     value: unknown;
     tooltip: string;
     dontRenderValue?: boolean;
@@ -172,6 +175,7 @@ export default function DisplayCard({
     title,
     Icon,
     avatar,
+    flagCode,
     value,
     tooltip,
     dontRenderValue = false,
@@ -231,6 +235,23 @@ export default function DisplayCard({
                                 className="size-10 border-0 shadow-none"
                             />
                         </button>
+                    </ItemMedia>
+                ) : flagCode ? (
+                    /* The same 40px square an icon's well occupies (20px glyph + p-2.5), but
+                       filled edge to edge. `object-cover` crops the flag's sides rather than
+                       stretching it out of its 4:3. */
+                    <ItemMedia
+                        className={cn(
+                            "size-10 shrink-0 self-start overflow-hidden rounded-md",
+                            iconWrapStyles[variant],
+                        )}
+                    >
+                        <CountryFlag
+                            code={flagCode}
+                            width={40}
+                            height={40}
+                            className="h-full w-full rounded-none object-cover"
+                        />
                     </ItemMedia>
                 ) : (
                     Icon != null && (

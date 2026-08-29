@@ -28,6 +28,11 @@ export type StudioTarget = {
     viewKey: string;
 };
 
+/** `"<collection>:<viewKey>"` — the key every per-target store is keyed by. */
+export function studioTargetKey(target: StudioTarget): string {
+    return `${target.collection.toLowerCase()}:${target.viewKey}`;
+}
+
 export function isTableTarget(target: StudioTarget | null): boolean {
     return target?.viewKey === TABLE_TARGET;
 }

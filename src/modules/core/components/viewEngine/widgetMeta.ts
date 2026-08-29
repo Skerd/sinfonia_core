@@ -273,6 +273,12 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
         widgetProps: [
             {name: "icon", type: "string", suggest: "icon"},
             {
+                name: "flagCodePath",
+                type: "string",
+                suggest: "readPath",
+                docs: "ISO code path (e.g. `country.code`) shown as a flag in place of the icon.",
+            },
+            {
                 name: "avatarPath",
                 type: "string",
                 suggest: "readPath",

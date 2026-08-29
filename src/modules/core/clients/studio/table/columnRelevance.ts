@@ -31,7 +31,8 @@ export type ColumnInspectorKey =
     | "meta.refDisplayKey"
     | "meta.maxInlineItems"
     | "meta.hrefTemplate"
-    | "meta.avatarPath";
+    | "meta.avatarPath"
+    | "meta.flagCodePath";
 
 export const COLUMN_INSPECTOR_KEYS: ColumnInspectorKey[] = [
     "visible",
@@ -44,6 +45,7 @@ export const COLUMN_INSPECTOR_KEYS: ColumnInspectorKey[] = [
     "meta.maxInlineItems",
     "meta.hrefTemplate",
     "meta.avatarPath",
+    "meta.flagCodePath",
 ];
 
 /** `meta` keys the contract declares but no client code reads. */
@@ -89,6 +91,7 @@ export function columnRelevanceFor(
         case "meta.maxInlineItems":
         case "meta.hrefTemplate":
         case "meta.avatarPath":
+        case "meta.flagCodePath":
             return isObjectId
                 ? {state: "advanced"}
                 : {state: "inapplicable", reason: OBJECT_ID_ONLY};

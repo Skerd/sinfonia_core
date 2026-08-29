@@ -25,6 +25,7 @@ import {tableConfigToFilterConfig} from "armonia/src/modules/core/database/filte
 import {listChromeParam, LIST_VIEW_PARAM} from "@coreModule/helpers/hooks/useListUrlState.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
+import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import CardAndTableView from "@coreModule/components/custom/cardAndTableView.tsx";
 import {useTableConfigContext} from "@coreModule/helpers/context/tableConfigContext.tsx";
@@ -39,12 +40,13 @@ import {computeCoverage} from "../coverage/viewCoverage.ts";
 import DeviceFrame from "../preview/deviceFrame.tsx";
 import DeviceToggle from "../preview/deviceToggle.tsx";
 import {usePreviewDevice} from "../preview/previewDevice.ts";
+import {useCheckedTargets} from "../catalog/checkedTargets.ts";
 import FieldsPane from "../fields/fieldsPane.tsx";
 import {buildModelFields} from "../fields/modelFields.ts";
 import ExportDialog from "../export/exportDialog.tsx";
 import {dynamicTableConfigToTs, tableChangeList} from "../export/dynamicTableConfigToTs.ts";
 import {singularizeCollection} from "../export/viewConfigToTs.ts";
-import {studioTableConfigKey} from "../studioTarget.ts";
+import {studioTableConfigKey, TABLE_TARGET} from "../studioTarget.ts";
 
 type TableEditorProps = {
     entry: StudioModelEntry;
@@ -140,6 +142,8 @@ export default function TableEditor({entry}: TableEditorProps) {
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [leftTab, setLeftTab] = useState<"columns" | "fields">("columns");
     const [previewDevice, setPreviewDevice] = usePreviewDevice();
+    const checked = useCheckedTargets();
+    const checkedTarget = {collection: entry.collection, viewKey: TABLE_TARGET};
     const [exportOpen, setExportOpen] = useState(false);
     const [, setSearchParams] = useSearchParams();
 
@@ -254,6 +258,19 @@ export default function TableEditor({entry}: TableEditorProps) {
     return (
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
             <div className="flex shrink-0 flex-wrap items-center gap-2 border-b px-3 py-2">
+                <TooltipDisplayer
+                    tooltip={
+                        checked.isChecked(checkedTarget)
+                            ? "Marked as done — click to reopen"
+                            : "Mark this table as done"
+                    }
+                >
+                    <Checkbox
+                        aria-label={`Mark ${entry.collection} table as done`}
+                        checked={checked.isChecked(checkedTarget)}
+                        onCheckedChange={() => checked.toggle(checkedTarget)}
+                    />
+                </TooltipDisplayer>
                 <span className="font-mono text-sm">{entry.collection}</span>
                 <Badge variant="outline">table</Badge>
                 {draft && <Badge variant="secondary">draft</Badge>}

@@ -21,6 +21,7 @@ import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.t
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import SheetMediaAvatar from "@coreModule/components/viewEngine/sheetMediaAvatar.tsx";
+import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
 import {Link} from "react-router-dom";
 
 export type ColumnConfigToColumnDefOptions<T> = {
@@ -181,11 +182,12 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
         //
 
         if( col.cellType === "objectId" ){
-            const colMeta = col.meta as { refDisplayKey?: string[]; maxInlineItems?: number; hrefTemplate?: string; avatarPath?: string } | undefined;
+            const colMeta = col.meta as { refDisplayKey?: string[]; maxInlineItems?: number; hrefTemplate?: string; avatarPath?: string; flagCodePath?: string } | undefined;
             const displayFields = colMeta?.refDisplayKey ?? ["name"];
             const maxInlineItems = colMeta?.maxInlineItems ?? 2;
             const hrefTemplate = typeof colMeta?.hrefTemplate === "string" ? colMeta.hrefTemplate : "";
             const avatarPath = typeof colMeta?.avatarPath === "string" ? colMeta.avatarPath : "";
+            const flagCodePath = typeof colMeta?.flagCodePath === "string" ? colMeta.flagCodePath : "";
             const getByPath = (obj: Record<string, unknown>, path: string): unknown =>
                 path.split(".").reduce((a, k) => (a as Record<string, unknown>)?.[k], obj);
             const toDisplayLabel = (item: Record<string, unknown>): string => {
@@ -204,6 +206,12 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                 if (typeof raw === "string" && raw !== "") return raw;
                 const id = (raw as {_id?: unknown} | null)?._id;
                 return id != null && id !== "" ? String(id) : null;
+            };
+            /* An ISO code on the ref (`country.code`), which stands in for a photo. */
+            const resolveFlagCode = (item: Record<string, unknown>): string | null => {
+                if (!flagCodePath) return null;
+                const raw = getByPath(item, flagCodePath);
+                return typeof raw === "string" && raw.trim() !== "" ? raw.trim() : null;
             };
             const resolveHref = (item: Record<string, unknown>): string | null => {
                 if (!hrefTemplate) return null;
@@ -227,12 +235,19 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                             label: toDisplayLabel(item) || String(fallbackLabel),
                             href: resolveHref(item),
                             mediaId: resolveMediaId(item),
+                            flagCode: resolveFlagCode(item),
                         }))
                         .filter(({label, href}) => label !== "" || !!href);
                     if (labeled.length === 0) return <></>;
                     const visible = labeled.slice(0, maxInlineItems);
                     const remaining = labeled.length - visible.length;
-                    const renderBadge = (label: string, href: string | null, key: number, mediaId?: string | null) => {
+                    const renderBadge = (
+                        label: string,
+                        href: string | null,
+                        key: number,
+                        mediaId?: string | null,
+                        flagCode?: string | null,
+                    ) => {
                         const badge = (
                             <Badge
                                 key={href ? undefined : key}
@@ -246,12 +261,15 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                                     href ? "cursor-pointer hover:bg-accent" : undefined,
                                 )}
                             >
-                                {mediaId && (
+                                {mediaId ? (
                                     <SheetMediaAvatar
                                         mediaId={mediaId}
                                         name={label}
                                         className="size-6 border-0 shadow-none"
                                     />
+                                ) : (
+                                    /* A flag is a rectangle, so it needs no pill-growing. */
+                                    flagCode && <CountryFlag code={flagCode} width={18} height={14} />
                                 )}
                                 {label}
                             </Badge>
@@ -265,7 +283,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                     };
                     return (
                         <div className="flex items-center gap-1 flex-wrap">
-                            {visible.map(({label, href, mediaId}, i) => renderBadge(label, href, i, mediaId))}
+                            {visible.map(({label, href, mediaId, flagCode}, i) => renderBadge(label, href, i, mediaId, flagCode))}
                             {remaining > 0 && (
                                 <Popover>
                                     <PopoverTrigger asChild>
@@ -275,7 +293,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                                     </PopoverTrigger>
                                     <PopoverContent align="start" className="w-auto max-w-lg px-2">
                                         <div className="max-h-60 w-fit overflow-y-auto flex flex-col gap-1.5">
-                                            {labeled.slice(maxInlineItems).map(({label, href, mediaId}, i) => renderBadge(label, href, i, mediaId))}
+                                            {labeled.slice(maxInlineItems).map(({label, href, mediaId, flagCode}, i) => renderBadge(label, href, i, mediaId, flagCode))}
                                         </div>
                                     </PopoverContent>
                                 </Popover>
