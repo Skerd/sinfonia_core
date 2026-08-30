@@ -878,6 +878,8 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                         {simulation.enabled && simulated && (
                             <p className="shrink-0 border-b bg-info/10 px-3 py-1.5 text-3xs text-info">
                                 Simulating a narrower account: {simulated.pruned} node(s) pruned
+                                {simulated.locked > 0 &&
+                                    `, ${simulated.locked} card(s) locked`}
                                 {hiddenByWriteGate > 0 &&
                                     `, ${hiddenByWriteGate} field(s) hidden by the panel's write gate`}
                                 {simulated.disabled - hiddenByWriteGate > 0 &&

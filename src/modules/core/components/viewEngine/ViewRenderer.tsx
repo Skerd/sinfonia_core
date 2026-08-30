@@ -288,11 +288,19 @@ function renderNode(node: ViewNode, ctx: ViewRendererContext, index: number): Re
         return null;
     }
 
+    /*
+     * Mirrors maestro's `filterNodes`: a card the account cannot read renders locked rather
+     * than vanishing, because a missing card says "no such data" when the truth is "not yours
+     * to see". Anything else with no place to put a lock — a group, a media strip — still goes.
+     */
+    let lockedByAccess = false;
     if (ctx.mode === "sheet" && ctx.access) {
-        if (node.permissions?.readAny?.length) {
-            if (!node.permissions.readAny.some((k) => hasAccessPath(ctx.access, k))) return null;
-        } else if (node.permissions?.read && !hasAccessPath(ctx.access, node.permissions.read)) {
-            return null;
+        const readDenied = node.permissions?.readAny?.length
+            ? !node.permissions.readAny.some((k) => hasAccessPath(ctx.access, k))
+            : !!node.permissions?.read && !hasAccessPath(ctx.access, node.permissions.read);
+        if (readDenied) {
+            if (node.render !== "#DisplayCard" || !node.field) return null;
+            lockedByAccess = true;
         }
     }
 
@@ -321,7 +329,8 @@ function renderNode(node: ViewNode, ctx: ViewRendererContext, index: number): Re
     }
 
     if (node.field && ctx.mode === "sheet") {
-        return renderSheetField(node, node.field, ctx, index);
+        const binding = lockedByAccess ? {...node.field, locked: true} : node.field;
+        return renderSheetField(node, binding, ctx, index);
     }
 
     const token = node.render;
@@ -1339,6 +1348,9 @@ function renderDisplayCard(
      * Falling back rather than hiding: a card with no media renders its `icon`, so a reader
      * without the flag or the photo still gets a labelled card.
      */
+    /* Locked: no value reached the client, so the card renders a lock where the value goes. */
+    const locked = binding.locked === true || !hasDisplayCardValueAccess(ctx.access, binding);
+
     const flagCodePath = typeof wp.flagCodePath === "string" ? wp.flagCodePath : "";
     const flagCode =
         flagCodePath && data && hasAccessPath(ctx.access, flagCodePath)
@@ -1454,7 +1466,8 @@ function renderDisplayCard(
             key={index}
             title={label}
             tooltip={tooltipText}
-            show={wp.show === true || hasDisplayCardValueAccess(ctx.access, binding)}
+            show={wp.show === true || !locked}
+            locked={locked && wp.show !== true}
             path={binding.name}
             type={typeForCard}
             languageKeyCategory={

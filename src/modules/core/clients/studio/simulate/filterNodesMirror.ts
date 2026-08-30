@@ -27,6 +27,8 @@ export type SimulationResult = {
     pruned: number;
     /** Fields the write allowlist forced to `disabled`. */
     disabled: number;
+    /** Sheet cards kept but locked, rather than pruned. */
+    locked: number;
 };
 
 /**
@@ -48,25 +50,37 @@ export function appliesWriteAllowlist(config: Pick<ViewConfig, "viewType" | "vie
     return config.viewType === "form" && config.viewMode !== "create";
 }
 
+/** Mirrors the server's `lockCardInstead`: a sheet card is locked, not dropped. */
+function lockCardInstead(node: ViewNode, lockUnreadableCards: boolean): ViewNode | null {
+    if (!lockUnreadableCards || node.render !== "#DisplayCard" || !node.field) return null;
+    return {...node, field: {...node.field, locked: true}, children: undefined};
+}
+
 export function filterNodesMirror(
     nodes: ViewNode[],
     allowlists: SimulationAllowlists,
     applyWriteAllowlistAsDisabled: boolean,
+    lockUnreadableCards = false,
 ): SimulationResult {
     let pruned = 0;
     let disabled = 0;
+    let locked = 0;
 
     const walk = (list: ViewNode[]): ViewNode[] => {
         const result: ViewNode[] = [];
 
         for (const node of list) {
-            if (node.permissions?.readAny?.length) {
-                if (!node.permissions.readAny.some((key) => allowlists.read.has(key))) {
+            const readDenied = node.permissions?.readAny?.length
+                ? !node.permissions.readAny.some((key) => allowlists.read.has(key))
+                : !!node.permissions?.read && !allowlists.read.has(node.permissions.read);
+            if (readDenied) {
+                const lockedNode = lockCardInstead(node, lockUnreadableCards);
+                if (lockedNode) {
+                    locked++;
+                    result.push(lockedNode);
+                } else {
                     pruned++;
-                    continue;
                 }
-            } else if (node.permissions?.read && !allowlists.read.has(node.permissions.read)) {
-                pruned++;
                 continue;
             }
 
@@ -112,7 +126,7 @@ export function filterNodesMirror(
     };
 
     const filtered = walk(nodes);
-    return {nodes: filtered, pruned, disabled};
+    return {nodes: filtered, pruned, disabled, locked};
 }
 
 /**
@@ -126,6 +140,11 @@ export function simulateViewConfig(
     config: ViewConfig,
     allowlists: SimulationAllowlists,
 ): SimulationResult & {wouldBeDropped: boolean} {
-    const result = filterNodesMirror(config.nodes, allowlists, appliesWriteAllowlist(config));
+    const result = filterNodesMirror(
+        config.nodes,
+        allowlists,
+        appliesWriteAllowlist(config),
+        config.viewType === "sheet",
+    );
     return {...result, wouldBeDropped: result.nodes.length === 0 && config.nodes.length > 0};
 }

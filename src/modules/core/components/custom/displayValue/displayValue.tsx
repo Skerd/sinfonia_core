@@ -544,7 +544,7 @@ function DisplayValue({
     }
 
     if (!allowed) {
-        return wrap(<HiddenElement randomLength={HIDDEN_RANDOM_LENGTH} />, className);
+        return wrap(<HiddenElement showLock randomLength={HIDDEN_RANDOM_LENGTH} />, className);
     }
 
     if (

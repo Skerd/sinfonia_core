@@ -12,6 +12,7 @@ import {
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import {IconInfoCircle, IconLink} from "@tabler/icons-react";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
 import SheetMediaAvatar from "@coreModule/components/viewEngine/sheetMediaAvatar.tsx";
 import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
@@ -44,6 +45,11 @@ export type DisplayCardIcon = ComponentType<{className?: string}>;
 
 type DisplayCardProps = {
     show?: boolean;
+    /**
+     * The account may not read this field. The card still renders — label, icon and all — with
+     * a lock where the value would be, so the field reads as withheld rather than absent.
+     */
+    locked?: boolean;
     path?: string;
     type?: DisplayValueType;
     languageKeyCategory?: string;
@@ -165,6 +171,7 @@ function normalizeExternalHref(href: string): string | null {
  */
 export default function DisplayCard({
     show,
+    locked = false,
     path,
     type,
     languageKeyCategory,
@@ -292,7 +299,9 @@ export default function DisplayCard({
                             </TooltipDisplayer>
                         )}
                     </div>
-                    {!dontRenderValue && (
+                    {!dontRenderValue && locked ? (
+                        <HiddenElement showLock />
+                    ) : !dontRenderValue && (
                         type === "media" || isValidElement(value) ? (
                             <DisplayValue
                                 value={value}

@@ -180,3 +180,59 @@ describe("simulateViewConfig", () => {
         expect(simulateViewConfig(config([]), lists()).wouldBeDropped).toBe(false);
     });
 });
+
+describe("locking unreadable sheet cards", () => {
+    const allowlists = {read: new Set(["name"]), write: new Set<string>()};
+
+    const card = (name: string): ViewNode => ({
+        render: "#DisplayCard",
+        permissions: {read: name},
+        field: {name, widget: "#DisplayCard"},
+    });
+
+    it("keeps a card the account cannot read, marked locked", () => {
+        const result = filterNodesMirror([card("secret")], allowlists, false, true);
+
+        expect(result.nodes).toHaveLength(1);
+        expect(result.nodes[0]!.field?.locked).toBe(true);
+        expect(result).toMatchObject({locked: 1, pruned: 0});
+    });
+
+    it("leaves a readable card alone", () => {
+        const result = filterNodesMirror([card("name")], allowlists, false, true);
+
+        expect(result.nodes[0]!.field?.locked).toBeUndefined();
+        expect(result).toMatchObject({locked: 0, pruned: 0});
+    });
+
+    it("still prunes what has nowhere to put a lock", () => {
+        const group: ViewNode = {
+            render: "#SheetGroup",
+            permissions: {read: "secret"},
+            children: [card("name")],
+        };
+        const result = filterNodesMirror([group], allowlists, false, true);
+
+        expect(result.nodes).toHaveLength(0);
+        expect(result).toMatchObject({locked: 0, pruned: 1});
+    });
+
+    it("prunes rather than locks when locking is off, as forms do", () => {
+        const result = filterNodesMirror([card("secret")], allowlists, false);
+
+        expect(result.nodes).toHaveLength(0);
+        expect(result).toMatchObject({locked: 0, pruned: 1});
+    });
+
+    it("locks on the readAny branch too", () => {
+        const node: ViewNode = {
+            render: "#DisplayCard",
+            permissions: {readAny: ["secret", "other"]},
+            field: {name: "secret", widget: "#DisplayCard"},
+        };
+        const result = filterNodesMirror([node], allowlists, false, true);
+
+        expect(result.nodes[0]!.field?.locked).toBe(true);
+        expect(result.locked).toBe(1);
+    });
+});
