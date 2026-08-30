@@ -6,8 +6,8 @@ import {usePageHeader} from "@coreModule/helpers/context/pageHeaderContext.tsx";
 type SimpleHeaderProps = {
     /**
      * A bare string, or {@link buildPageTitle} output when the page is scoped to
-     * an entity — the context segments become breadcrumb crumbs rather than
-     * being flattened into the heading.
+     * an entity — context is printed into the heading (`States: Italy`) and
+     * also published as breadcrumb crumbs.
      */
     title: string | PageTitle,
     description?: string,
@@ -22,12 +22,13 @@ function normalize(value: string | undefined) {
 /**
  * Page-level heading for panel views.
  *
- * Two things happen here that used to be three separate headers:
- *
- * 1. Entity context is published to the shell breadcrumb instead of being
- *    printed into the title, so it stays navigable.
- * 2. The `<h1>` is hidden visually — not removed — when it would only repeat
- *    the trailing breadcrumb, which is the common case for every list page
+ * 1. Entity context is published to the shell breadcrumb so the parent names
+ *    stay in the trail.
+ * 2. That same context is joined into the `<h1>` (`States: Italy`) — publishing
+ *    crumbs is not a substitute for the heading; without it a scoped list
+ *    reads as the generic resource name.
+ * 3. The `<h1>` is hidden visually — not removed — when it would only repeat
+ *    the trailing breadcrumb, which is the common case for unscoped list pages
  *    ("Real Estate › Projects" directly above "Projects"). The heading stays in
  *    the accessibility tree so the document outline and screen-reader page
  *    announcement are unchanged; only the duplicated pixels go.
@@ -41,6 +42,9 @@ export default function Header({
     const pageHeader = usePageHeader();
     const setContextCrumbs = pageHeader?.setContextCrumbs;
     const {title: heading, context} = toPageTitle(title);
+    const displayHeading = context.length > 0
+        ? `${heading}: ${context.join(" / ")}`
+        : heading;
 
     // Depended on by value, not identity: `context` is a fresh array each render.
     const contextKey = context.join("\u0000");
@@ -69,7 +73,7 @@ export default function Header({
                             : "truncate text-lg font-semibold tracking-tight md:text-xl",
                     )}
                 >
-                    {heading}
+                    {displayHeading}
                 </h1>
                 {description && (
                     <p className={cn("truncate text-sm text-muted-foreground", !isRedundant && "mt-0.5")}>
