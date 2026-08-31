@@ -57,28 +57,54 @@ function KindFallback({
     const Icon = iconForMedia(kind, mime, filename);
     const ext = extensionFromFilename(filename || alt);
     const label = filename || alt || "";
-    const truncated =
-        label.length > FILE_NAME_MAX_LENGTH ? `${label.substring(0, FILE_NAME_MAX_LENGTH)}…` : label;
+    const nameWithoutExt =
+        ext && label.toLowerCase().endsWith(`.${ext.toLowerCase()}`)
+            ? label.slice(0, -(ext.length + 1))
+            : label;
+    const compact = iconSize === "sm";
+    const displayName = compact
+        ? nameWithoutExt
+        : nameWithoutExt.length > FILE_NAME_MAX_LENGTH
+          ? `${nameWithoutExt.substring(0, FILE_NAME_MAX_LENGTH)}…`
+          : nameWithoutExt;
     const iconClass =
-        iconSize === "lg" ? "h-8 w-8" : iconSize === "sm" ? "h-5 w-5" : "h-6 w-6";
+        iconSize === "lg" ? "h-7 w-7" : compact ? "h-3 w-3" : "h-5 w-5";
     const wrapClass =
-        iconSize === "lg" ? "h-16 w-16" : iconSize === "sm" ? "h-10 w-10" : "h-12 w-12";
+        iconSize === "lg" ? "h-12 w-12" : compact ? "h-6 w-6" : "h-10 w-10";
 
     return (
         <div
             className={cn(
-                "flex h-full w-full flex-col items-center justify-center gap-1 px-2 text-center",
+                "flex h-full w-full min-w-0 flex-col items-center justify-center overflow-hidden text-center",
+                compact ? "gap-0.5 px-2.5 py-1.5" : "gap-1 px-2.5 py-1.5",
                 variant === "chat" ? "bg-background/20" : "bg-muted",
                 className,
             )}
         >
-            <div className={cn("mx-auto rounded-full bg-primary/10 flex items-center justify-center", wrapClass)}>
+            <div
+                className={cn(
+                    "mx-auto shrink-0 rounded-full bg-primary/10 flex items-center justify-center",
+                    wrapClass,
+                )}
+            >
                 <Icon className={cn("text-primary", iconClass)} />
             </div>
-            {truncated ? (
-                <p className="text-muted-foreground text-xs break-all line-clamp-2">{truncated}</p>
+            {displayName ? (
+                <p
+                    title={label}
+                    className={cn(
+                        "w-full min-w-0 text-muted-foreground",
+                        compact ? "truncate text-3xs leading-tight" : "break-all line-clamp-2 text-xs",
+                    )}
+                >
+                    {displayName}
+                </p>
             ) : null}
-            {ext ? <span className="max-w-full truncate text-3xs opacity-80">.{ext}</span> : null}
+            {ext ? (
+                <span className="w-full min-w-0 shrink-0 truncate text-3xs leading-none opacity-70">
+                    .{ext}
+                </span>
+            ) : null}
         </div>
     );
 }
