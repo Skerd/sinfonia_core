@@ -45,6 +45,12 @@ type FormMaxLengthControlProps = WithLanguageType & {
     value?: string | null;
     className?: string;
     children: ReactNode;
+    withLanguage?: unknown;
+    id?: string;
+    "aria-invalid"?: boolean | "true" | "false";
+    "aria-describedby"?: string;
+    "aria-required"?: boolean | "true" | "false";
+    "data-slot"?: string;
 };
 
 function FormMaxLengthControl({
@@ -53,6 +59,14 @@ function FormMaxLengthControl({
     className,
     children,
     resolveLanguageKey,
+    currentLanguage: _currentLanguage,
+    languageCode: _languageCode,
+    withLanguage: _withLanguage,
+    id,
+    "aria-invalid": ariaInvalid,
+    "aria-describedby": ariaDescribedBy,
+    "aria-required": ariaRequired,
+    "data-slot": dataSlot,
 }: FormMaxLengthControlProps) {
     const [open, setOpen] = useState(false);
     const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
@@ -93,7 +107,14 @@ function FormMaxLengthControl({
         onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     }>;
 
+    // FormControl's Slot merges aria-invalid / id onto this component. Forward them to the
+    // actual input so error borders (`aria-invalid:border-destructive`) still apply.
     const wrapped = cloneElement(child, {
+        ...(id !== undefined ? {id} : {}),
+        ...(ariaInvalid !== undefined ? {"aria-invalid": ariaInvalid} : {}),
+        ...(ariaDescribedBy !== undefined ? {"aria-describedby": ariaDescribedBy} : {}),
+        ...(ariaRequired !== undefined ? {"aria-required": ariaRequired} : {}),
+        ...(dataSlot !== undefined ? {"data-slot": dataSlot} : {}),
         onKeyDown: (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             if (atMax && isInsertKeyAtMax(e)) {
                 showHint();

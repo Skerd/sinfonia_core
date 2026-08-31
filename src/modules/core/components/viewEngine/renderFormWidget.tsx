@@ -596,7 +596,6 @@ export function renderFormWidget(
                 className={widgetProps.className}
                 forTable={widgetProps.forTable}
                 searchPlaceholder={widgetProps.searchPlaceholder}
-                aria-invalid={widgetProps["aria-invalid"]}
             />
         );
     }
