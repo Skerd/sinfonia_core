@@ -46,13 +46,20 @@ export default function PdfDialogViewer({src, className}: PdfDialogViewerProps) 
         if (!data || !canvas || numPages < 1 || failed) return;
         setReady(false);
         const controller = new AbortController();
-        const cssWidth = Math.min(Math.max(window.innerWidth * 0.7, 320), 900);
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const mobile = vw < 640;
+        const cssWidth = mobile
+            ? Math.max(vw - 8, 280)
+            : Math.min(Math.max(vw * 0.7, 320), 900);
+        const cssMaxHeight = mobile ? vh * 0.92 : vh * 0.75;
         (async () => {
             try {
                 await renderPdfPageToCanvas({
                     data,
                     pageNumber: page,
                     cssWidth,
+                    cssMaxHeight,
                     canvas,
                     signal: controller.signal,
                 });
@@ -74,7 +81,10 @@ export default function PdfDialogViewer({src, className}: PdfDialogViewerProps) 
         <div className={cn("flex flex-col items-center gap-2", className)}>
             <canvas
                 ref={canvasRef}
-                className={cn("max-h-[75vh] max-w-full rounded-lg", !ready && "min-h-40")}
+                className={cn(
+                    "max-h-[92dvh] max-w-full rounded-lg sm:max-h-[75vh]",
+                    !ready && "min-h-40",
+                )}
             />
             {numPages > 1 && (
                 <div className="flex items-center gap-2">

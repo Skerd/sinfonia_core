@@ -219,7 +219,6 @@ function SheetEmbeddedItemsListHost(props: {
 
     const raw = resolvePath(data, binding.name);
     const items = Array.isArray(raw) ? raw : [];
-    if (items.length === 0) return <ValueNotSet key={index} />;
 
     const pageSize =
         typeof wp.pageSize === "number" && Number.isFinite(wp.pageSize) && wp.pageSize >= 1

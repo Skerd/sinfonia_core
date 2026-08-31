@@ -351,13 +351,13 @@ function SingleFile({
     const previewDialog = (
         <Dialog open={open} onOpenChange={setOpen} modal>
             <DialogContent
-                className="max-h-[90vh] w-auto max-w-[min(96vw,56rem)] p-2 sm:max-w-[min(96vw,56rem)]"
+                className="max-h-[100dvh] w-[calc(100vw-0.5rem)] max-w-[calc(100vw-0.5rem)] p-1 sm:max-h-[90vh] sm:w-auto sm:max-w-[min(96vw,56rem)] sm:p-2"
                 onContextMenu={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                 }}
             >
-                <div className="flex max-h-[85vh] items-center justify-center overflow-auto">
+                <div className="flex max-h-[96dvh] items-center justify-center overflow-auto sm:max-h-[85vh]">
                     {!!file && renderPreviewCard("dialog")}
                 </div>
             </DialogContent>

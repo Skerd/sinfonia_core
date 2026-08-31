@@ -25,6 +25,8 @@ export type RenderPdfPageOptions = {
     data: Uint8Array;
     pageNumber: number;
     cssWidth: number;
+    /** When set, scale is the min of width-fit and height-fit so the page stays on screen. */
+    cssMaxHeight?: number;
     canvas: HTMLCanvasElement;
     signal?: AbortSignal;
 };
@@ -71,7 +73,11 @@ export async function renderPdfPageToCanvas(options: RenderPdfPageOptions): Prom
             }
 
             const unscaled = page.getViewport({scale: 1});
-            const scale = cssWidth / unscaled.width;
+            const scaleByWidth = cssWidth / unscaled.width;
+            const cssMaxHeight = options.cssMaxHeight;
+            const scaleByHeight =
+                cssMaxHeight != null && cssMaxHeight > 0 ? cssMaxHeight / unscaled.height : scaleByWidth;
+            const scale = Math.min(scaleByWidth, scaleByHeight);
             const viewport = page.getViewport({scale});
             const outputScale = Math.min(window.devicePixelRatio || 1, DPR_CAP);
 
