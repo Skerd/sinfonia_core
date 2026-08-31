@@ -19,7 +19,7 @@ export default createGenericEditPage<SmtpServer, EditSmtpServerFormType>({
         encryption: writeFields.encryption ? data.encryption : undefined,
         authType: writeFields.authType ? data.authType : undefined,
         username: writeFields.username ? data.username ?? "" : undefined,
-        password: undefined,
+        passwordEncrypted: undefined,
         fromEmail: writeFields.fromEmail ? data.fromEmail : undefined,
         fromName: writeFields.fromName ? data.fromName ?? "" : undefined,
         replyTo: writeFields.replyTo ? data.replyTo ?? "" : undefined,
