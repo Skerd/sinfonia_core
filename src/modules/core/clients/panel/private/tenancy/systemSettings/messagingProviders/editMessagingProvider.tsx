@@ -15,7 +15,7 @@ export default createGenericEditPage<MessagingProvider, EditMessagingProviderFor
         name: writeFields.name ? data.name : undefined,
         providerType: writeFields.providerType ? data.providerType : undefined,
         accountSid: writeFields.accountSid ? data.accountSid : undefined,
-        authToken: undefined,
+        authTokenEncrypted: undefined,
         fromPhone: writeFields.fromPhone ? data.fromPhone ?? "" : undefined,
         fromWhatsapp: writeFields.fromWhatsapp ? data.fromWhatsapp ?? "" : undefined,
     }),

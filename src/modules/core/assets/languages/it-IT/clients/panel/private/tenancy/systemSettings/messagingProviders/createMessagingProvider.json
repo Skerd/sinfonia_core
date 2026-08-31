@@ -3,9 +3,8 @@
   "form": {
     "accountSidLabel": "SID dell'account",
     "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "authTokenEditLabel": "Etichetta di modifica del token di autenticazione",
-    "authTokenLabel": "Token di autenticazione",
-    "authTokenPlaceholder": "••••••••",
+    "authTokenEncryptedLabel": "Token di autenticazione",
+    "authTokenEncryptedPlaceholder": "••••••••",
     "fromPhoneLabel": "Mittente SMS (E.164)",
     "fromPhonePlaceholder": "+15551234567",
     "fromWhatsappLabel": "Mittente WhatsApp (E.164)",

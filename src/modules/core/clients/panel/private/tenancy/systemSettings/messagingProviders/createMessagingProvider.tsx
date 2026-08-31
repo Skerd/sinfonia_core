@@ -9,7 +9,7 @@ export default createGenericCreatePage<CreateMessagingProviderFormType>({
     accessModel:    "messagingProviders",
     apiUrl:         "/api/auxiliary/messagingProvider",
     schema:         createMessagingProviderFormSchema,
-    defaultValues:  {name: "", providerType: "twilio", accountSid: "", authToken: ""},
+    // defaultValues:  {name: "", providerType: "twilio", accountSid: "", authTokenEncrypted: ""},
     successPath:    "/tenancy/systemSettings/messagingProviders",
     submitIcon:     <MessageSquarePlus />,
 });
