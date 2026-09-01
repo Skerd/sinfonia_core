@@ -1,4 +1,4 @@
-import type { ReactNode, HTMLAttributes } from "react";
+import { forwardRef, type ReactNode, type HTMLAttributes } from "react";
 import { useWatch } from "react-hook-form";
 import type { FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type { Unit as UnitDto } from "armonia/src/modules/propertyManagement/api/realEstate/private/unit/unit/unit.dto.ts";
@@ -421,19 +421,19 @@ function isoDayOrEmpty(value: unknown): string {
 }
 
 /** `#DateInput` with optional `minDateField` / `maxDateField` watching sibling RHF paths. */
-function FormBoundDateInput({
-    Widget,
-    field,
-    widgetProps,
-    placeholder,
-    extra,
-}: {
-    Widget: React.ComponentType<any>;
-    field: any;
-    widgetProps: Record<string, any>;
-    placeholder?: string;
-    extra?: FormWidgetExtra;
-}) {
+const FormBoundDateInput = forwardRef<
+    HTMLInputElement,
+    {
+        Widget: React.ComponentType<any>;
+        field: any;
+        widgetProps: Record<string, any>;
+        placeholder?: string;
+        extra?: FormWidgetExtra;
+    }
+>(function FormBoundDateInput(
+    {Widget, field, widgetProps, placeholder, extra, ...slotProps},
+    ref,
+) {
     const {
         minDateField,
         maxDateField,
@@ -465,6 +465,8 @@ function FormBoundDateInput({
     return (
         <Widget
             {...restWp}
+            {...slotProps}
+            ref={ref}
             value={field.value}
             onChange={(v: string | undefined | null) =>
                 field.onChange(v === "" || v == null ? emptyValue : v)
@@ -477,7 +479,7 @@ function FormBoundDateInput({
             maxDateExclusive={maxDateExclusive === true}
         />
     );
-}
+});
 
 export function renderFormWidget(
     Widget: React.ComponentType<any>,
