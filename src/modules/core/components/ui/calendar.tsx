@@ -154,7 +154,7 @@ function CompactCaptionDropdown({
           role="listbox"
           aria-label={ariaLabel}
           className={cn(
-            "absolute top-[calc(100%+4px)] left-0 z-50 max-h-48 overflow-y-auto overscroll-contain rounded-md border border-border bg-popover p-1 shadow-md ring-1 ring-foreground/10",
+            "absolute top-[calc(100%+4px)] left-0 z-50 max-h-48 overflow-y-auto overscroll-contain rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 pointer-events-auto isolate",
             listWidthClass,
           )}
           onMouseDown={(event) => event.preventDefault()}
@@ -364,7 +364,7 @@ function Calendar({
           "relative flex flex-col gap-4 md:flex-row",
           defaultClassNames.months
         ),
-        month: cn("flex w-full flex-col gap-4", defaultClassNames.month),
+        month: cn("relative isolate flex w-full flex-col gap-4", defaultClassNames.month),
         nav: cn(
           "absolute inset-x-0 top-0 z-30 flex w-full items-center justify-between gap-1 pointer-events-none",
           defaultClassNames.nav
@@ -380,7 +380,7 @@ function Calendar({
           defaultClassNames.button_next
         ),
         month_caption: cn(
-          "relative z-10 flex h-(--cell-size) w-full items-center justify-center overflow-visible px-(--cell-size) pointer-events-none",
+          "relative z-20 flex h-(--cell-size) w-full items-center justify-center overflow-visible px-(--cell-size) pointer-events-none",
           defaultClassNames.month_caption
         ),
         dropdowns: cn(
@@ -410,7 +410,10 @@ function Calendar({
             : "flex items-center gap-1 rounded-(--cell-radius) px-1 text-xs [&>svg]:size-3 [&>svg]:text-muted-foreground",
           defaultClassNames.caption_label
         ),
-        table: "w-full border-collapse",
+        month_grid: cn(
+          "relative z-0 isolate w-full border-collapse",
+          defaultClassNames.month_grid
+        ),
         weekdays: cn("flex", defaultClassNames.weekdays),
         weekday: cn(
           "flex-1 rounded-(--cell-radius) text-[0.8rem] font-normal text-muted-foreground select-none",

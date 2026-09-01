@@ -62,7 +62,11 @@ function SheetPaginatedReferenceCardList({
     const pagination = useSheetListPagination(items, pageSize);
 
     if (!total) {
-        return <ValueNotSet />;
+        return (
+            <div className="p-4">
+                <ValueNotSet />
+            </div>
+        );
     }
 
     const shared = {

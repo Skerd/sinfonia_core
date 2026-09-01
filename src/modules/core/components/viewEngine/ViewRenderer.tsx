@@ -1184,48 +1184,53 @@ function renderDisplayCard(
         }
     } else if (wp.valuePath && Array.isArray(wp.valuePath) && data) {
         const parent = wp.parent ? resolvePath(data, wp.parent) : data;
-        if (!parent) return null;
-        const rawValuePath = (wp.valuePath as unknown[]).filter(
-            (p): p is string => typeof p === "string" && p.length > 0,
-        );
-        const valuePath =
-            typeof wp.parent === "string" && wp.parent.length > 0
-                ? filterAccessibleValuePath(ctx.access, wp.parent, rawValuePath)
-                : rawValuePath;
-        if (valuePath.length > 0) {
-            // Currency cards: pass {amount, currency} — do not join into "€ 123" (DisplayValue rejects that).
-            if (displayType === "currency" && !wp.pickFirstTruthyValuePath) {
-                displayValue = currencyStubFromValuePath(parent as Record<string, unknown>, valuePath);
-            } else {
-                let pathParts = valuePath.map((p: string) => resolvePath(parent, p));
-                const categoriesByPath = wp.languageKeyCategoriesByPath as Record<string, string> | undefined;
-                if (categoriesByPath && typeof categoriesByPath === "object") {
-                    pathParts = pathParts.map((part, i) => {
-                        const segment = String(valuePath[i] ?? "");
-                        const category =
-                            categoriesByPath[segment] ?? categoriesByPath[segment.split(".")[0] ?? ""];
-                        if (category && part != null && typeof part === "string" && part.length > 0) {
-                            return resolveLanguageKey(`${category}.${part}`);
-                        }
-                        return part;
-                    });
-                }
-                if (wp.format === "locale") {
-                    pathParts = pathParts.map((part: unknown) =>
-                        part != null && typeof part === "number" ? part.toLocaleString() : part
-                    );
-                }
-                if (wp.pickFirstTruthyValuePath) {
-                    displayValue = pathParts.find((part) => part != null && part !== "") ?? null;
-                } else {
-                    const parts = pathParts.filter(
-                        (part) => part !== null && part !== undefined && part !== ""
-                    );
-                    displayValue = parts.join(wp.joinSeparator ?? " ");
-                }
-            }
-        } else {
+        // Missing linked parent is an empty value, not a reason to omit the card.
+        // Sheets that should hide the tile use `dependent` on the node.
+        if (!parent) {
             displayValue = null;
+        } else {
+            const rawValuePath = (wp.valuePath as unknown[]).filter(
+                (p): p is string => typeof p === "string" && p.length > 0,
+            );
+            const valuePath =
+                typeof wp.parent === "string" && wp.parent.length > 0
+                    ? filterAccessibleValuePath(ctx.access, wp.parent, rawValuePath)
+                    : rawValuePath;
+            if (valuePath.length > 0) {
+                // Currency cards: pass {amount, currency} — do not join into "€ 123" (DisplayValue rejects that).
+                if (displayType === "currency" && !wp.pickFirstTruthyValuePath) {
+                    displayValue = currencyStubFromValuePath(parent as Record<string, unknown>, valuePath);
+                } else {
+                    let pathParts = valuePath.map((p: string) => resolvePath(parent, p));
+                    const categoriesByPath = wp.languageKeyCategoriesByPath as Record<string, string> | undefined;
+                    if (categoriesByPath && typeof categoriesByPath === "object") {
+                        pathParts = pathParts.map((part, i) => {
+                            const segment = String(valuePath[i] ?? "");
+                            const category =
+                                categoriesByPath[segment] ?? categoriesByPath[segment.split(".")[0] ?? ""];
+                            if (category && part != null && typeof part === "string" && part.length > 0) {
+                                return resolveLanguageKey(`${category}.${part}`);
+                            }
+                            return part;
+                        });
+                    }
+                    if (wp.format === "locale") {
+                        pathParts = pathParts.map((part: unknown) =>
+                            part != null && typeof part === "number" ? part.toLocaleString() : part
+                        );
+                    }
+                    if (wp.pickFirstTruthyValuePath) {
+                        displayValue = pathParts.find((part) => part != null && part !== "") ?? null;
+                    } else {
+                        const parts = pathParts.filter(
+                            (part) => part !== null && part !== undefined && part !== ""
+                        );
+                        displayValue = parts.join(wp.joinSeparator ?? " ");
+                    }
+                }
+            } else {
+                displayValue = null;
+            }
         }
     } else if (data) {
         displayValue = resolvePath(data, binding.name);
