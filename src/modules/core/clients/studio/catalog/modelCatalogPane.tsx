@@ -91,7 +91,14 @@ function ModelRow({
                     ) : (
                         <IconChevronRight className="size-3.5 shrink-0 text-muted-foreground" />
                     )}
-                    <span className="truncate text-sm font-medium">{entry.collection}</span>
+                    <span
+                        className={cn(
+                            "truncate text-sm font-medium",
+                            progress.complete && "text-success",
+                        )}
+                    >
+                        {entry.collection}
+                    </span>
                     {hasDraft && (
                         <span
                             aria-label="has unexported draft"
