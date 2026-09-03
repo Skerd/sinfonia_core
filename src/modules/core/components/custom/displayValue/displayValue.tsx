@@ -428,7 +428,8 @@ function formatByType(
     if (type === "number") {
         const n = toNumber(value);
         if (n == null) return String(value);
-        return Number.isInteger(n) ? formatGroupedNumber(n, 0) : formatGroupedNumber(n, 2);
+        if (Number.isInteger(n)) return formatGroupedNumber(n, 0);
+        return n.toLocaleString(undefined, {useGrouping: true, maximumFractionDigits: 4});
     }
     if (type === "longText") {
         return <LongText>{String(value)}</LongText>;

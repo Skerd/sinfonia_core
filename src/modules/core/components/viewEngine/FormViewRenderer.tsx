@@ -159,6 +159,7 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
             <div className={`flex flex-col gap-4 ${hideChrome ? "px-0 pb-2" : "px-2 pb-[100px]"}`}>
                 <Form {...form}>
                     <form
+                        noValidate
                         onSubmit={form.handleSubmit(onSubmit as any, (errors) => {
                             const first = Object.keys(errors)[0];
                             if (first) form.setFocus(first as any);

@@ -253,6 +253,7 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
                             :
                             <Form {...form}>
                                 <form
+                                    noValidate
                                     onSubmit={form.handleSubmit(onSubmit as any, (errors) => {
                                         const first = Object.keys(errors)[0];
                                         if (first) form.setFocus(first as any);

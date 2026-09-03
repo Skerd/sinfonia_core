@@ -666,7 +666,7 @@ export function renderFormWidget(
                 {...numericRest}
                 type="number"
                 inputMode={widgetProps.type === "decimal" ? "decimal" : "numeric"}
-                step={step !== undefined ? step : widgetProps.type === "decimal" ? "0.01" : undefined}
+                step={widgetProps.type === "decimal" ? "any" : step}
                 value={field.value ?? ""}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     field.onChange(e.target.value === "" ? emptyValue : parseFloat(e.target.value))
