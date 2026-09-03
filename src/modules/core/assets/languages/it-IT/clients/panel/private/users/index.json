@@ -5,6 +5,50 @@
   "activeFilters": "attivo",
   "administrationTitle": "Elenco degli utenti di amministrazione",
   "description": "Gestisci i tuoi utenti e i loro ruoli qui.",
+  "help": {
+    "ariaLabel": "Informazioni su Elenco utenti",
+    "title": "Informazioni su Elenco utenti",
+    "overview": "Questo elenco contiene i membri con ruoli predefiniti per la registrazione e quelli senza ruoli. Esclude l’utente attualmente connesso ed è distinto dall’elenco Amministrazione.",
+    "sections": [
+      {
+        "title": "Aggiungere e gestire membri",
+        "items": [
+          "Create un utente con password o invitatelo via e-mail.",
+          "Dal menu riga modificate il membro e i ruoli assegnati.",
+          "Le schede mostrano stato, MFA e richieste di invito, attivazione e reimpostazione password."
+        ]
+      },
+      {
+        "title": "Chi appare qui",
+        "items": [
+          "I ruoli predefiniti per la registrazione collocano i membri in questo elenco.",
+          "I ruoli staff e amministrativi non predefiniti appaiono in Amministrazione."
+        ]
+      }
+    ]
+  },
+  "administrationHelp": {
+    "ariaLabel": "Informazioni su Elenco degli utenti di amministrazione",
+    "title": "Informazioni su Elenco degli utenti di amministrazione",
+    "overview": "Questo elenco contiene utenti con ruoli staff o amministrativi non predefiniti per la registrazione, oltre agli utenti bot. L’utente attualmente connesso è escluso.",
+    "sections": [
+      {
+        "title": "Aggiungere amministratori",
+        "items": [
+          "Create un utente con password o invitatelo via e-mail; riceverà un ruolo amministrativo.",
+          "Dal menu riga modificate account e ruoli.",
+          "Le schede mostrano stato, MFA e richieste relative all’account."
+        ]
+      },
+      {
+        "title": "Separato da Utenti",
+        "items": [
+          "I ruoli non predefiniti per la registrazione collocano le persone in Amministrazione.",
+          "I membri ordinari con ruoli predefiniti appaiono in Azienda → Utenti."
+        ]
+      }
+    ]
+  },
   "administrationDescription": "Gestisci gli utenti dell'amministrazione aziendale e i loro ruoli qui.",
   "photo": "Foto",
   "emailVerified": "E-mail attuale",

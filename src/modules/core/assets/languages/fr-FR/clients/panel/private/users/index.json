@@ -5,6 +5,50 @@
   "activeFilters": "actif",
   "administrationTitle": "Liste des utilisateurs administratifs",
   "description": "Gérez vos utilisateurs et leurs rôles ici.",
+  "help": {
+    "ariaLabel": "À propos de Liste des utilisateurs",
+    "title": "À propos de Liste des utilisateurs",
+    "overview": "Cette liste contient les membres dont les rôles sont définis par défaut à l’inscription, ainsi que ceux sans rôle. L’utilisateur connecté est exclu et cette liste est distincte de l’Administration.",
+    "sections": [
+      {
+        "title": "Ajouter et gérer des membres",
+        "items": [
+          "Créez un utilisateur avec un mot de passe ou invitez-le par e-mail.",
+          "Le menu de ligne permet de modifier le membre et ses rôles.",
+          "Les cartes affichent le statut, la MFA et les demandes d’invitation, d’activation et de réinitialisation du mot de passe."
+        ]
+      },
+      {
+        "title": "Qui apparaît ici",
+        "items": [
+          "Les rôles par défaut à l’inscription placent les membres dans cette liste.",
+          "Les rôles de personnel ou d’administration non définis par défaut apparaissent sous Administration."
+        ]
+      }
+    ]
+  },
+  "administrationHelp": {
+    "ariaLabel": "À propos de Liste des utilisateurs administratifs",
+    "title": "À propos de Liste des utilisateurs administratifs",
+    "overview": "Cette liste contient les utilisateurs ayant des rôles de personnel ou d’administration non définis par défaut à l’inscription, ainsi que les robots. L’utilisateur connecté est exclu.",
+    "sections": [
+      {
+        "title": "Ajouter des administrateurs",
+        "items": [
+          "Créez un utilisateur avec un mot de passe ou invitez-le par e-mail ; il reçoit un rôle d’administration.",
+          "Le menu de ligne permet de modifier le compte et ses rôles.",
+          "Les cartes affichent le statut, la MFA et les demandes liées au compte."
+        ]
+      },
+      {
+        "title": "Distinct des Utilisateurs",
+        "items": [
+          "Les rôles non définis par défaut à l’inscription placent les personnes dans Administration.",
+          "Les membres ordinaires avec des rôles par défaut figurent dans Entreprise → Utilisateurs."
+        ]
+      }
+    ]
+  },
   "administrationDescription": "Gérez ici les utilisateurs de l’administration de l’entreprise et leurs rôles.",
   "photo": "Photo",
   "emailVerified": "Courriel actuel",

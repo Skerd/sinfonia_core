@@ -5,6 +5,50 @@
   "activeFilters": "aktiv",
   "administrationTitle": "Administration users liste",
   "description": "Ihr users und their rollen here. verwalten",
+  "help": {
+    "ariaLabel": "Über Benutzer liste",
+    "title": "Über Benutzer liste",
+    "overview": "Diese Liste enthält Firmenmitglieder mit Rollen, die als Standard für die Registrierung markiert sind, sowie Mitglieder ohne Rollen. Der aktuell angemeldete Benutzer ist ausgeschlossen; dies ist nicht die Administrationsliste.",
+    "sections": [
+      {
+        "title": "Mitglieder verwalten",
+        "items": [
+          "Erstellen Sie einen Benutzer mit Passwort oder laden Sie eine Person per E-Mail ein.",
+          "Bearbeiten Sie Mitglied und Rollen über das Zeilenmenü.",
+          "Karten zeigen Status, MFA sowie Einladungs-, Aktivierungs- und Passwort-Zurücksetzungsanfragen."
+        ]
+      },
+      {
+        "title": "Wer hier erscheint",
+        "items": [
+          "Standardrollen für die Registrierung führen Mitglieder in dieser Benutzerliste.",
+          "Personal- und Administrationsrollen ohne diese Einstellung erscheinen unter Administration."
+        ]
+      }
+    ]
+  },
+  "administrationHelp": {
+    "ariaLabel": "Über Administration users liste",
+    "title": "Über Administration users liste",
+    "overview": "Diese Liste enthält Benutzer mit Personal- oder Administrationsrollen, die nicht als Standard für die Registrierung markiert sind, sowie Bot-Benutzer. Der aktuell angemeldete Benutzer ist ausgeschlossen.",
+    "sections": [
+      {
+        "title": "Administratoren verwalten",
+        "items": [
+          "Erstellen Sie einen Benutzer mit Passwort oder laden Sie eine Person per E-Mail ein; sie erhält eine Administrationsrolle.",
+          "Bearbeiten Sie Konto und Rollen über das Zeilenmenü.",
+          "Karten zeigen Status, MFA sowie Einladungs-, Aktivierungs- und Passwort-Zurücksetzungsanfragen."
+        ]
+      },
+      {
+        "title": "Abgrenzung zu Benutzer",
+        "items": [
+          "Rollen ohne «Standard für die Registrierung» führen Personen in der Administration.",
+          "Reguläre Firmenmitglieder mit Standardrollen erscheinen unter Firma → Benutzer."
+        ]
+      }
+    ]
+  },
   "administrationDescription": "Firma administration users und their rollen here. verwalten",
   "photo": "Foto",
   "emailVerified": "Current e-Mail",

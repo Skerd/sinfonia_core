@@ -2,6 +2,21 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx",
   "title": "Städte",
   "description": "Städte sowie den zugehörigen Kanton und das Land verwalten",
+  "help": {
+    "ariaLabel": "Über Städte",
+    "title": "Über Städte",
+    "overview": "Städte werden in Adressen von Firmen, Gebäuden und weiteren Datensätzen verwendet. Name und Land sind erforderlich; der Kanton oder das Bundesland ist optional.",
+    "sections": [
+      {
+        "title": "Städte verwalten",
+        "items": [
+          "Erstellen oder bearbeiten Sie Stadtname und Land und wählen Sie bei Bedarf einen Kanton.",
+          "Halten Sie die Kombination aus Land und Kanton konsistent.",
+          "Das Löschen ist ein Soft-Delete und kann rückgängig gemacht werden."
+        ]
+      }
+    ]
+  },
   "createCity": "Ort erstellen",
   "searchPlaceholder": "Suchen von name oder hinzufügen filters...",
   "noData": "Keine cities gefunden",

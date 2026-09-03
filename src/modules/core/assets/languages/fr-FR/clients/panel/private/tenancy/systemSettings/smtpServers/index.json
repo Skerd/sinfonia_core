@@ -2,6 +2,29 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
   "title": "Serveurs de courrier sortant",
   "description": "Configurez les serveurs SMTP pour cette entreprise. La séquence inférieure est essayée en premier.",
+  "help": {
+    "ariaLabel": "À propos de Serveurs de courrier sortant",
+    "title": "À propos de Serveurs de courrier sortant",
+    "overview": "Les serveurs de courrier sortant assurent l’envoi SMTP de cette entreprise. Un nouveau serveur est inactif et ne doit être activé qu’après un test de connexion réussi.",
+    "sections": [
+      {
+        "title": "Configuration",
+        "items": [
+          "Renseignez le nom, l’hôte, le port, le chiffrement, le type d’authentification et l’adresse d’expéditeur obligatoire.",
+          "L’identifiant et le mot de passe sont facultatifs si l’authentification le permet ; le nom d’expéditeur et l’adresse de réponse le sont aussi.",
+          "Testez la connexion avant l’activation."
+        ]
+      },
+      {
+        "title": "Ordre d’envoi",
+        "items": [
+          "La priorité ou séquence la plus basse est essayée en premier.",
+          "Seuls les serveurs actifs et non supprimés envoient des e-mails.",
+          "La suppression est logique et le serveur peut être restauré."
+        ]
+      }
+    ]
+  },
   "createSmtpServer": "Ajouter un serveur SMTP",
   "searchPlaceholder": "Rechercher par nom ou par hôte...",
   "noData": "Aucun serveur SMTP configuré",

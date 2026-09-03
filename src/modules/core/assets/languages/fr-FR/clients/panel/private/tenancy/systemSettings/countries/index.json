@@ -2,6 +2,27 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/index.tsx",
   "title": "Pays",
   "description": "Gérer les pays et les paramètres de configuration",
+  "help": {
+    "ariaLabel": "À propos de Pays",
+    "title": "À propos de Pays",
+    "overview": "Les pays sont la racine de la géographie utilisée par les adresses d’entreprise, de bâtiment et autres. Le nom, un code ISO de deux ou trois lettres et l’indicatif téléphonique sont obligatoires.",
+    "sections": [
+      {
+        "title": "Sur cette page",
+        "items": [
+          "Créez ou modifiez un pays et maintenez son code ISO et son indicatif exacts.",
+          "Le menu de ligne ouvre les États / cantons ou les villes déjà limités à ce pays.",
+          "La suppression est logique et le pays peut être restauré."
+        ]
+      },
+      {
+        "title": "Utilisation",
+        "items": [
+          "Les formulaires d’adresse sélectionnent d’abord un pays."
+        ]
+      }
+    ]
+  },
   "create": "Créer un pays",
   "searchPlaceholder": "Recherchez par nom, code ou ajoutez des filtres...",
   "noData": "Aucun pays trouvé",

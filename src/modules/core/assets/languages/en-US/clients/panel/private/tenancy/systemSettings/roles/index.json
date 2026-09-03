@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/index.tsx",
   "title": "All roles",
   "description": "View and edit company roles",
+  "help": {
+    "ariaLabel": "About All roles",
+    "title": "About All roles",
+    "overview": "Roles are permission packs assigned to company users. The default-for-signup setting also determines whether people appear under Company → Users or Company → Administration.",
+    "sections": [
+      {
+        "title": "Manage roles",
+        "items": [
+          "Create a role, then edit its permission matrix to control what assigned users can access.",
+          "Roles marked as default for signup place their users in Company → Users. Roles without that setting place their users in Company → Administration.",
+          "Some built-in roles cannot be edited or deleted."
+        ]
+      },
+      {
+        "title": "Deletion and recovery",
+        "items": [
+          "Deleting a role is a soft delete, so it can be restored later.",
+          "Review who uses a role before changing its permissions or deleting it."
+        ]
+      }
+    ]
+  },
   "searchPlaceholder": "Search by name or description, or add filters...",
   "failTitle": "Failed to load roles",
   "failTitleTooltip": "Click here to retry loading roles",

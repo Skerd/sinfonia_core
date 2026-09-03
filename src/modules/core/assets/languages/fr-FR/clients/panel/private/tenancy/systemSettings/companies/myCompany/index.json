@@ -2,6 +2,33 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/index.tsx",
   "title": "Entreprise",
   "description": "Informations sur l'entreprise",
+  "help": {
+    "ariaLabel": "À propos de Entreprise",
+    "title": "À propos de Entreprise",
+    "overview": "Cette page gère la fiche de l’entreprise du tenant actuel, et non une liste d’entreprises. Modifier ouvre le formulaire.",
+    "sections": [
+      {
+        "title": "Informations de l’entreprise",
+        "items": [
+          "Le nom et le numéro de TVA sont obligatoires. E-mail, téléphone, site web, réseaux sociaux, description, logo et domaines autorisés sont facultatifs.",
+          "Une nouvelle adresse exige rue, code postal, ville, pays et coordonnées cartographiques ; l’État ou canton est facultatif."
+        ]
+      },
+      {
+        "title": "Chat IA public",
+        "items": [
+          "Activez le robot visiteur et définissez son message d’accueil et sa personnalité.",
+          "Choisissez l’identification obligatoire et le transfert à un humain. Ces réglages alimentent les chats du site web."
+        ]
+      },
+      {
+        "title": "Statut",
+        "items": [
+          "Activez ou désactivez cette entreprise uniquement lorsqu’elle possède une entreprise parente."
+        ]
+      }
+    ]
+  },
   "failTitle": "Échec du chargement de la société",
   "failTitleTooltip": "Cliquez pour réessayer de charger les informations sur l'entreprise"
 }

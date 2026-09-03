@@ -10,6 +10,7 @@ import { FieldGroup } from "@coreModule/components/ui/field.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { LoaderCircle, Save } from "lucide-react";
 import Header from "@coreModule/components/custom/header.tsx";
+import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import ViewRenderer, { type ViewRendererContext } from "./ViewRenderer.tsx";
 import { resolveWidget } from "./widgetRegistry.ts";
 import { renderFormWidget, isCompoundFormWidget, renderCompoundWidget } from "./renderFormWidget.tsx";
@@ -152,6 +153,7 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
                 <Header
                     title={buildPageTitle(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
                     description={resolveLanguageKey("formHeader.description")}
+                    help={readPageHelp(resolveLanguageKey)}
                 />
             )}
             <div className={`flex flex-col gap-4 ${hideChrome ? "px-0 pb-2" : "px-2 pb-[100px]"}`}>

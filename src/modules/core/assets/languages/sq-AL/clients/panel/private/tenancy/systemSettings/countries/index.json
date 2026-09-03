@@ -2,6 +2,27 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/index.tsx",
   "title": "Vendet",
   "description": "Menaxhoni vendet dhe cilësimet e konfigurimit",
+  "help": {
+    "ariaLabel": "Rreth Vendet",
+    "title": "Rreth Vendet",
+    "overview": "Vendet janë rrënja e gjeografisë që përdoret në adresat e kompanive, ndërtesave dhe regjistrimeve të tjera. Kërkohen emri, kodi ISO me dy ose tre shkronja dhe prefiksi telefonik.",
+    "sections": [
+      {
+        "title": "Në këtë faqe",
+        "items": [
+          "Krijoni ose ndryshoni një vend dhe mbani të saktë kodin ISO dhe prefiksin.",
+          "Nga menuja e rreshtit hapni Shtetet ose Qytetet të filtruara për atë vend.",
+          "Fshirja është e butë dhe vendi mund të rikthehet."
+        ]
+      },
+      {
+        "title": "Përdorimi",
+        "items": [
+          "Formularët e adresave zgjedhin fillimisht vendin."
+        ]
+      }
+    ]
+  },
   "create": "Krijo shtet",
   "searchPlaceholder": "Kërko sipas emrit, kodit ose shto filtra...",
   "noData": "Nuk u gjet asnjë shtet",

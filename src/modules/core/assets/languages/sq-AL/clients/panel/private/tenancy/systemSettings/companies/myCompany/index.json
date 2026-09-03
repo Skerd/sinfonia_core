@@ -2,6 +2,33 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/index.tsx",
   "title": "Kompania",
   "description": "Informacioni i kompanisë",
+  "help": {
+    "ariaLabel": "Rreth Kompania",
+    "title": "Rreth Kompania",
+    "overview": "Kjo faqe menaxhon regjistrimin e kompanisë së qiramarrësit aktual, jo një listë kompanish. Ndrysho hap formularin e kompanisë.",
+    "sections": [
+      {
+        "title": "Të dhënat e kompanisë",
+        "items": [
+          "Emri dhe TVSH-ja janë të detyrueshme. Emaili, telefoni, faqja, rrjetet sociale, përshkrimi, logoja dhe domenet e lejuara janë opsionale.",
+          "Çdo adresë e re kërkon rrugën, kodin postar, qytetin, vendin dhe koordinatat e hartës; shteti është opsional."
+        ]
+      },
+      {
+        "title": "Biseda publike me AI",
+        "items": [
+          "Aktivizoni botin për vizitorët dhe caktoni përshëndetjen dhe personazhin.",
+          "Zgjidhni nëse kërkohet identifikim dhe kalim te një person. Këto cilësime ushqejnë bisedat e faqes."
+        ]
+      },
+      {
+        "title": "Statusi i kompanisë",
+        "items": [
+          "Aktivizoni ose çaktivizoni këtë kompani vetëm kur ka një kompani mëmë."
+        ]
+      }
+    ]
+  },
   "failTitle": "Ngarkimi i kompanisë dështoi",
   "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e informacionit të kompanisë"
 }

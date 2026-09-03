@@ -2,6 +2,21 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
   "title": "Shtetet",
   "description": "Menaxhoni shtetet dhe vendin përkatës",
+  "help": {
+    "ariaLabel": "Rreth Shtetet",
+    "title": "Rreth Shtetet",
+    "overview": "Shtetet, kantonet ose provincat janë niveli i mesëm i gjeografisë së adresave. Çdo regjistrim kërkon emër dhe kod dhe duhet t’i përkasë një vendi.",
+    "sections": [
+      {
+        "title": "Menaxhimi i shteteve",
+        "items": [
+          "Krijoni ose ndryshoni emrin, kodin dhe vendin përkatës.",
+          "Një qytet mund t’i referohet një shteti, por kjo zgjedhje është opsionale.",
+          "Fshirja është e butë dhe regjistrimi mund të rikthehet."
+        ]
+      }
+    ]
+  },
   "createState": "Krijo shtet",
   "searchPlaceholder": "Kërko sipas emrit, kodit ose shto filtra...",
   "noData": "Nuk u gjet asnjë shtet",

@@ -2,6 +2,27 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/index.tsx",
   "title": "Countries",
   "description": "Manage countries and configuration settings",
+  "help": {
+    "ariaLabel": "About Countries",
+    "title": "About Countries",
+    "overview": "Countries are the root of the geography used by company, edifice, and other addresses. Each country requires a name, a two- or three-letter ISO code, and a phone calling prefix.",
+    "sections": [
+      {
+        "title": "On this page",
+        "items": [
+          "Create or edit a country and keep its ISO code and calling prefix accurate.",
+          "Use the row menu to open States or Cities already scoped to that country.",
+          "Deleting a country is a soft delete and the record can be restored."
+        ]
+      },
+      {
+        "title": "How countries are used",
+        "items": [
+          "Address forms select a country before any optional state and city context."
+        ]
+      }
+    ]
+  },
   "create": "Create country",
   "searchPlaceholder": "Search by name, code, or add filters...",
   "noData": "No countries found",

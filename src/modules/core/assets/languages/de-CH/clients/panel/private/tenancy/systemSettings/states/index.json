@@ -2,6 +2,21 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
   "title": "Kantone / Bundesländer",
   "description": "Kantone und Bundesländer sowie das zugehörige Land verwalten",
+  "help": {
+    "ariaLabel": "Über Kantone / Bundesländer",
+    "title": "Über Kantone / Bundesländer",
+    "overview": "Kantone und Bundesländer bilden die mittlere Ebene der Adressgeografie. Jeder Eintrag benötigt einen Namen und Code und muss einem Land zugeordnet sein.",
+    "sections": [
+      {
+        "title": "Kantone und Bundesländer verwalten",
+        "items": [
+          "Erstellen oder bearbeiten Sie Name, Code und Länderzuordnung.",
+          "Eine Stadt kann optional auf einen Kanton oder ein Bundesland verweisen.",
+          "Das Löschen ist ein Soft-Delete und der Eintrag kann wiederhergestellt werden."
+        ]
+      }
+    ]
+  },
   "createState": "Kanton erstellen",
   "searchPlaceholder": "Suchen von name, code, oder hinzufügen filters...",
   "noData": "Keine states gefunden",

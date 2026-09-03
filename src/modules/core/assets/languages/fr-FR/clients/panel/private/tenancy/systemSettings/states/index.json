@@ -2,6 +2,21 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
   "title": "États / cantons",
   "description": "Gérer les états et le pays associé",
+  "help": {
+    "ariaLabel": "À propos de États / cantons",
+    "title": "À propos de États / cantons",
+    "overview": "Les États, cantons ou provinces forment le niveau intermédiaire de la géographie des adresses. Chaque entrée exige un nom, un code et un pays.",
+    "sections": [
+      {
+        "title": "Gérer les États et cantons",
+        "items": [
+          "Créez ou modifiez le nom, le code et le pays associé.",
+          "Une ville peut référencer un État ou canton, mais ce choix reste facultatif.",
+          "La suppression est logique et l’entrée peut être restaurée."
+        ]
+      }
+    ]
+  },
   "createState": "Créer un état",
   "searchPlaceholder": "Recherchez par nom, code ou ajoutez des filtres...",
   "noData": "Aucun état trouvé",

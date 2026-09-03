@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
   "title": "Provider di messaggistica",
   "description": "Configura i provider SMS e WhatsApp per questa azienda. Per i messaggi in uscita vengono utilizzati solo i provider attivi.",
+  "help": {
+    "ariaLabel": "Informazioni su Provider di messaggistica",
+    "title": "Informazioni su Provider di messaggistica",
+    "overview": "I provider di messaggistica inviano SMS e messaggi WhatsApp dell’azienda. Attualmente è supportato solo Twilio e i nuovi provider sono attivi.",
+    "sections": [
+      {
+        "title": "Configurazione",
+        "items": [
+          "Nome, SID account e token di autenticazione sono obbligatori; i numeri mittente SMS e WhatsApp sono facoltativi.",
+          "I token sono conservati in forma crittografata.",
+          "Usate il test di connessione per verificare le credenziali."
+        ]
+      },
+      {
+        "title": "Invio ed eliminazione",
+        "items": [
+          "Solo i provider attivi inviano SMS e messaggi WhatsApp.",
+          "L’eliminazione è logica e il provider può essere ripristinato."
+        ]
+      }
+    ]
+  },
   "createMessagingProvider": "Aggiungi fornitore di messaggistica",
   "searchPlaceholder": "Cerca per nome o SID dell'account...",
   "noData": "Nessun provider di messaggistica configurato",

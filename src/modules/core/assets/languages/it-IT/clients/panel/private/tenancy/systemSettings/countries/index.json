@@ -2,6 +2,27 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/index.tsx",
   "title": "Paesi",
   "description": "Gestisci paesi e impostazioni di configurazione",
+  "help": {
+    "ariaLabel": "Informazioni su Paesi",
+    "title": "Informazioni su Paesi",
+    "overview": "I paesi sono la radice della geografia usata dagli indirizzi di aziende, edifici e altri record. Sono obbligatori nome, codice ISO di due o tre lettere e prefisso telefonico.",
+    "sections": [
+      {
+        "title": "In questa pagina",
+        "items": [
+          "Create o modificate un paese mantenendo corretti codice ISO e prefisso.",
+          "Dal menu riga aprite Stati / cantoni o Città già filtrati per quel paese.",
+          "L’eliminazione è logica e il paese può essere ripristinato."
+        ]
+      },
+      {
+        "title": "Utilizzo",
+        "items": [
+          "I moduli degli indirizzi selezionano prima il paese."
+        ]
+      }
+    ]
+  },
   "create": "Crea paese",
   "searchPlaceholder": "Cerca per nome, codice o aggiungi filtri...",
   "noData": "Nessun paese trovato",

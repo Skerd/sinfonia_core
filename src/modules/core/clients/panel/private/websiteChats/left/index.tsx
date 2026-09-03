@@ -6,6 +6,7 @@ import {useEffect, useRef, useState} from "react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import {PageHelp, readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";
 import WebsiteChannelsList from "@coreModule/clients/panel/private/websiteChats/left/channelsList.tsx";
 
@@ -32,6 +33,11 @@ function LeftWebsiteChatPanel({resolveLanguageKey, websiteChannels}: LeftWebsite
         return <HiddenElement />;
     }
 
+    const help = readPageHelp(
+        resolveLanguageKey,
+        websiteChannels === "mine" ? "helpMine" : "helpWaiting",
+    );
+
     return (
         <div className="flex-full w-full gap-y-0.5">
             <div className="px-2 pb-3 shadow-md sm:static sm:z-auto sm:mx-0 sm:p-0 sm:shadow-none">
@@ -40,6 +46,7 @@ function LeftWebsiteChatPanel({resolveLanguageKey, websiteChannels}: LeftWebsite
                         <p className="text-xl font-bold">
                             {resolveLanguageKey(websiteChannels === "mine" ? "titleMine" : "titleWaiting")}
                         </p>
+                        {help && <PageHelp help={help} />}
                         <Globe size={20} />
                     </div>
                 </div>

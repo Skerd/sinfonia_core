@@ -49,6 +49,7 @@ function Users({resolveLanguageKey, administration}: UsersProps) {
                 resolveLanguageKey={resolveLanguageKey}
                 headerTitle={resolveLanguageKey(administration ? "administrationTitle" : "title") as string}
                 headerDescription={resolveLanguageKey(administration ? "administrationDescription" : "description") as string}
+                helpLanguageKey={administration ? "administrationHelp" : "help"}
                 headerActions={
                     <>
                         <UsersInviteDialog administration={administration} />

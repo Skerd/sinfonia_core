@@ -2,6 +2,33 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/index.tsx",
   "title": "Firma",
   "description": "Firma info",
+  "help": {
+    "ariaLabel": "Über Firma",
+    "title": "Über Firma",
+    "overview": "Diese Seite verwaltet den Firmendatensatz des aktuellen Mandanten, nicht eine Firmenliste. Mit Bearbeiten öffnen Sie das Firmenformular.",
+    "sections": [
+      {
+        "title": "Firmendaten",
+        "items": [
+          "Name und MWST-Nummer sind erforderlich. E-Mail, Telefon, Website, Social Links, Beschreibung, Logo und erlaubte Domains sind optional.",
+          "Neue Adressen benötigen Strasse, Postleitzahl, Stadt, Land und Kartenkoordinaten; der Kanton ist optional."
+        ]
+      },
+      {
+        "title": "Öffentlicher AI-Chat",
+        "items": [
+          "Aktivieren Sie den Besucher-Bot und legen Sie Begrüssung und Persona fest.",
+          "Bestimmen Sie Identifikationspflicht und Übergabe an Menschen. Diese Einstellungen speisen die Website-Chats."
+        ]
+      },
+      {
+        "title": "Firmenstatus",
+        "items": [
+          "Aktivieren oder deaktivieren Sie diese Firma nur, wenn sie eine Mutterfirma hat."
+        ]
+      }
+    ]
+  },
   "failTitle": "Firma konnten nicht geladen werden",
   "failTitleTooltip": "Click bis retry laden firma info"
 }

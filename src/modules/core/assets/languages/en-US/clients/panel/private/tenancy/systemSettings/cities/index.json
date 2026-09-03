@@ -2,6 +2,21 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx",
   "title": "Cities",
   "description": "Manage cities and their state and country assignment",
+  "help": {
+    "ariaLabel": "About Cities",
+    "title": "About Cities",
+    "overview": "Cities are used on company, edifice, and other addresses. A city requires a name and country; its state or canton is optional.",
+    "sections": [
+      {
+        "title": "Manage cities",
+        "items": [
+          "Create or edit the city name and country assignment, and select a state when applicable.",
+          "Keep the country and state combination consistent so address choices remain clear.",
+          "Deleting a city is a soft delete and it can be restored."
+        ]
+      }
+    ]
+  },
   "createCity": "Create city",
   "searchPlaceholder": "Search by name or add filters...",
   "noData": "No cities found",

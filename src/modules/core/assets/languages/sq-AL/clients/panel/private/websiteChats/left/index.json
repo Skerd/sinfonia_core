@@ -1,6 +1,41 @@
 {
   "path": "src/modules/core/clients/panel/private/websiteChats/left/index.tsx",
   "titleWaiting": "Në pritje",
+  "helpWaiting": {
+    "ariaLabel": "Rreth Në pritje",
+    "title": "Rreth Në pritje",
+    "overview": "Në pritje përmban bisedat e vizitorëve të faqes publike që presin një person dhe që ende nuk i keni marrë.",
+    "sections": [
+      {
+        "title": "Menaxhimi i radhës",
+        "items": [
+          "Shikoni një bisedë pa u bashkuar me të.",
+          "Bashkohuni për ta marrë përsipër dhe për ta kaluar te Të miat.",
+          "Kthejeni te boti ose mbylleni kur është e përshtatshme."
+        ]
+      },
+      {
+        "title": "Boti dhe dorëzimi",
+        "items": [
+          "Cilësimet e bisedës publike me AI te Kompania kontrollojnë përshëndetjen, sjelljen e botit, identifikimin dhe kalimin te një person."
+        ]
+      }
+    ]
+  },
   "titleMine": "Të miat",
+  "helpMine": {
+    "ariaLabel": "Rreth Të miat",
+    "title": "Rreth Të miat",
+    "overview": "Të miat përmban bisedat e faqes së internetit ku jeni bashkuar. Në pritje është radha që ende nuk e keni marrë.",
+    "sections": [
+      {
+        "title": "Bisedat tuaja",
+        "items": [
+          "Vazhdoni këtu bisedën me vizitorin.",
+          "Kthejeni bisedën te boti ose mbylleni kur të përfundojë."
+        ]
+      }
+    ]
+  },
   "searchChat": "Kërko bisedat"
 }

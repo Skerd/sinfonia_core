@@ -2,6 +2,33 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/index.tsx",
   "title": "Azienda",
   "description": "Informazioni sull'azienda",
+  "help": {
+    "ariaLabel": "Informazioni su Azienda",
+    "title": "Informazioni su Azienda",
+    "overview": "Questa pagina gestisce il record aziendale del tenant corrente, non un elenco di aziende. Modifica apre il modulo dell’azienda.",
+    "sections": [
+      {
+        "title": "Dati aziendali",
+        "items": [
+          "Nome e partita IVA sono obbligatori. E-mail, telefono, sito, social, descrizione, logo e domini consentiti sono facoltativi.",
+          "Ogni nuovo indirizzo richiede via, CAP, città, paese e coordinate della mappa; stato o cantone è facoltativo."
+        ]
+      },
+      {
+        "title": "Chat IA pubblica",
+        "items": [
+          "Attivate il bot per i visitatori e impostate saluto e personalità.",
+          "Scegliete identificazione obbligatoria e passaggio a un operatore. Queste impostazioni alimentano le chat del sito."
+        ]
+      },
+      {
+        "title": "Stato azienda",
+        "items": [
+          "Attivate o disattivate questa azienda solo quando ha un’azienda capogruppo."
+        ]
+      }
+    ]
+  },
   "failTitle": "Caricamento azienda non riuscito",
   "failTitleTooltip": "Fare clic per riprovare a caricare le informazioni sull'azienda"
 }

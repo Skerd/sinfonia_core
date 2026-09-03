@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
   "title": "Azioni pianificate",
   "description": "Gestisci i lavori cron e le attività pianificate",
+  "help": {
+    "ariaLabel": "Informazioni su Azioni pianificate",
+    "title": "Informazioni su Azioni pianificate",
+    "overview": "Le azioni pianificate sono attività create dal server. Questa pagina controlla e configura quelle esistenti, ma non crea attività né inventa i relativi gestori.",
+    "sections": [
+      {
+        "title": "Azioni disponibili",
+        "items": [
+          "Eseguite subito un’attività, mettetela in pausa o riprendetela.",
+          "Modificate nome, descrizione, espressione cron, tentativi, ritardo tra tentativi, timeout e priorità.",
+          "Per le esecuzioni mancate scegliete se saltare l’arretrato, eseguire una volta o recuperare."
+        ]
+      },
+      {
+        "title": "Identità dell’attività",
+        "items": [
+          "Gestore e codice identificano l’attività del server e non vengono definiti qui.",
+          "Verificate pianificazione e tentativi prima di riprendere un’attività."
+        ]
+      }
+    ]
+  },
   "createCronJob": "Crea un'azione pianificata",
   "searchPlaceholder": "Cerca per nome, codice o gestore...",
   "noData": "Nessuna azione pianificata trovata",

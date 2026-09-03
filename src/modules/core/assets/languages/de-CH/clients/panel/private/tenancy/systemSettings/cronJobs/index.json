@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
   "title": "Scheduled massnahmen",
   "description": "Cron jobs und scheduled tasks verwalten",
+  "help": {
+    "ariaLabel": "Über Scheduled massnahmen",
+    "title": "Über Scheduled massnahmen",
+    "overview": "Geplante Aktionen sind vom Server angelegte Jobs. Hier steuern und konfigurieren Sie bestehende Jobs; neue Jobs oder Handler werden auf dieser Seite nicht erstellt.",
+    "sections": [
+      {
+        "title": "Verfügbare Aktionen",
+        "items": [
+          "Führen Sie einen Job sofort aus, pausieren Sie ihn oder setzen Sie ihn fort.",
+          "Bearbeiten Sie Name, Beschreibung, Cron-Ausdruck, Wiederholungen, Verzögerung, Timeout und Priorität.",
+          "Bestimmen Sie bei verpassten Ausführungen: Rückstand überspringen, einmal ausführen oder nachholen."
+        ]
+      },
+      {
+        "title": "Identität des Jobs",
+        "items": [
+          "Handler und Code identifizieren den Server-Job und werden hier nicht frei festgelegt.",
+          "Prüfen Sie Zeitplan und Wiederholungen, bevor Sie einen pausierten Job fortsetzen."
+        ]
+      }
+    ]
+  },
   "createCronJob": "Scheduled aktion erstellen",
   "searchPlaceholder": "Suchen von name, code, oder handler...",
   "noData": "Keine scheduled massnahmen gefunden",

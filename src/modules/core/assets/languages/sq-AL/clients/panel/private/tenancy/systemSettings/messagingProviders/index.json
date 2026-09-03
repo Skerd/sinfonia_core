@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
   "title": "Ofruesit e mesazheve",
   "description": "Konfiguroni ofruesit SMS dhe WhatsApp për këtë kompani. Përdoren vetëm ofruesit aktivë për mesazhet dalëse.",
+  "help": {
+    "ariaLabel": "Rreth Ofruesit e mesazheve",
+    "title": "Rreth Ofruesit e mesazheve",
+    "overview": "Ofruesit e mesazheve dërgojnë SMS dhe mesazhe WhatsApp të kompanisë. Aktualisht mbështetet vetëm Twilio dhe ofruesit e rinj nisin aktivë.",
+    "sections": [
+      {
+        "title": "Konfigurimi",
+        "items": [
+          "Emri, SID-i i llogarisë dhe tokeni i autentikimit janë të detyrueshëm; numrat dërgues për SMS dhe WhatsApp janë opsionalë.",
+          "Tokenët ruhen të enkriptuar.",
+          "Përdorni testin e lidhjes për të verifikuar kredencialet."
+        ]
+      },
+      {
+        "title": "Dërgimi dhe fshirja",
+        "items": [
+          "Vetëm ofruesit aktivë dërgojnë SMS dhe mesazhe WhatsApp.",
+          "Fshirja është e butë dhe ofruesi mund të rikthehet."
+        ]
+      }
+    ]
+  },
   "createMessagingProvider": "Shto ofrues mesazhesh",
   "searchPlaceholder": "Kërko sipas emrit ose Account SID...",
   "noData": "Nuk ka ofrues mesazhesh",

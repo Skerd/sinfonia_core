@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
   "title": "Messaging-Anbieter",
   "description": "SMS- und WhatsApp-Anbieter für diese Firma konfigurieren. Für ausgehende Nachrichten werden nur aktive Anbieter verwendet.",
+  "help": {
+    "ariaLabel": "Über Messaging-Anbieter",
+    "title": "Über Messaging-Anbieter",
+    "overview": "Messaging-Anbieter versenden SMS- und WhatsApp-Nachrichten dieser Firma. Derzeit wird Twilio unterstützt; neue Anbieter sind standardmässig aktiv.",
+    "sections": [
+      {
+        "title": "Konfiguration",
+        "items": [
+          "Name, Account-SID und Auth-Token sind erforderlich; SMS- und WhatsApp-Absendernummern sind optional.",
+          "Auth-Tokens werden verschlüsselt gespeichert.",
+          "Prüfen Sie Zugangsdaten und Anbieterzugriff mit «Verbindung testen»."
+        ]
+      },
+      {
+        "title": "Versand und Löschen",
+        "items": [
+          "Nur aktive Anbieter werden für ausgehende SMS und WhatsApp-Nachrichten verwendet.",
+          "Das Löschen ist ein Soft-Delete und kann rückgängig gemacht werden."
+        ]
+      }
+    ]
+  },
   "createMessagingProvider": "Messaging provider hinzufügen",
   "searchPlaceholder": "Suchen von name oder konto SID...",
   "noData": "Keine messaging providers configured",

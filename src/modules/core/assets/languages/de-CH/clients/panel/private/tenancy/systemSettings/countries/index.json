@@ -2,6 +2,27 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/index.tsx",
   "title": "Länder",
   "description": "Länder und Konfigurationseinstellungen verwalten",
+  "help": {
+    "ariaLabel": "Über Länder",
+    "title": "Über Länder",
+    "overview": "Länder bilden die Wurzel der Geografie für Adressen von Firmen, Gebäuden und weiteren Datensätzen. Erforderlich sind Name, ein zwei- oder dreistelliger ISO-Code und die Telefonvorwahl.",
+    "sections": [
+      {
+        "title": "Auf dieser Seite",
+        "items": [
+          "Erstellen oder bearbeiten Sie ein Land und halten Sie ISO-Code und Telefonvorwahl korrekt.",
+          "Öffnen Sie im Zeilenmenü Kantone / Bundesländer oder Städte, bereits auf dieses Land eingeschränkt.",
+          "Das Löschen ist ein Soft-Delete und kann rückgängig gemacht werden."
+        ]
+      },
+      {
+        "title": "Verwendung",
+        "items": [
+          "Adressformulare wählen zuerst ein Land; Kanton und Stadt ergänzen den geografischen Bezug."
+        ]
+      }
+    ]
+  },
   "create": "Land erstellen",
   "searchPlaceholder": "Suchen von name, code, oder hinzufügen filters...",
   "noData": "Keine countries gefunden",

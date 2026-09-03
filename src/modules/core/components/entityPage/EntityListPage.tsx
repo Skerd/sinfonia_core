@@ -11,6 +11,7 @@ import {
 } from "@coreModule/helpers/hooks/useListUrlState.ts";
 import {useAccess, type AccessObject} from "@coreModule/helpers/hocs/withAccess.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
+import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
@@ -146,6 +147,11 @@ export type EntityListPageProps<T extends BaseEntity> = {
     headerTitle?: string | PageTitle;
     /** Overrides `resolveLanguageKey("description")` for the page header. */
     headerDescription?: string;
+    /**
+     * Dictionary key for {@link readPageHelp} (default `"help"`).
+     * Use when one language file serves two menus (e.g. Users vs Administration).
+     */
+    helpLanguageKey?: string;
     /** Hide page header chrome (e.g. embedded dashboard / overview tabs). */
     hideHeader?: boolean;
     /** Custom delete/restore confirm label (default uses `read.name` + `entity.name`). */
@@ -247,6 +253,7 @@ export default function EntityListPage<T extends BaseEntity>({
     resolveLanguageKey,
     headerTitle,
     headerDescription,
+    helpLanguageKey,
     hideHeader,
     buildDeleteConfirmLabel,
     renderCard,
@@ -495,6 +502,7 @@ export default function EntityListPage<T extends BaseEntity>({
             <Header
                 title={headerTitle ?? (resolveLanguageKey("title") as string)}
                 description={(headerDescription ?? resolveLanguageKey("description")) as string}
+                help={readPageHelp(resolveLanguageKey, helpLanguageKey)}
             >
                 <div className="flex items-center gap-2">
                     <HiddenElement hideAll={true}>

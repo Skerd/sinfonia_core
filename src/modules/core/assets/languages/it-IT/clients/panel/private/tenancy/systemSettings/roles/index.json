@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/index.tsx",
   "title": "Tutti i ruoli",
   "description": "Visualizza e modifica i ruoli aziendali",
+  "help": {
+    "ariaLabel": "Informazioni su Tutti i ruoli",
+    "title": "Informazioni su Tutti i ruoli",
+    "overview": "I ruoli sono pacchetti di autorizzazioni assegnati agli utenti aziendali. L’opzione «predefinito per la registrazione» determina anche se le persone appaiono in Azienda → Utenti o Azienda → Amministrazione.",
+    "sections": [
+      {
+        "title": "Gestire i ruoli",
+        "items": [
+          "Create un ruolo e modificatene la matrice delle autorizzazioni.",
+          "I ruoli predefiniti per la registrazione collocano gli utenti in Utenti; gli altri in Amministrazione.",
+          "Alcuni ruoli integrati non possono essere modificati o eliminati."
+        ]
+      },
+      {
+        "title": "Eliminazione e ripristino",
+        "items": [
+          "L’eliminazione è logica e il ruolo può essere ripristinato.",
+          "Controllate chi utilizza il ruolo prima di cambiarne le autorizzazioni o eliminarlo."
+        ]
+      }
+    ]
+  },
   "searchPlaceholder": "Cerca per nome o descrizione, o aggiungi filtri...",
   "failTitle": "Impossibile caricare i ruoli",
   "failTitleTooltip": "Fare clic qui per riprovare a caricare i ruoli",

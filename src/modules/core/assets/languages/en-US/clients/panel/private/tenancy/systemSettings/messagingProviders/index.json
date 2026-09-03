@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
   "title": "Messaging providers",
   "description": "Configure SMS and WhatsApp providers for this company. Only active providers are used for outbound messages.",
+  "help": {
+    "ariaLabel": "About Messaging providers",
+    "title": "About Messaging providers",
+    "overview": "Messaging providers deliver this company's SMS and WhatsApp messages. Twilio is currently the supported provider, and new providers start active.",
+    "sections": [
+      {
+        "title": "Configuration",
+        "items": [
+          "Name, account SID, and auth token are required. SMS sender and WhatsApp sender numbers are optional.",
+          "Auth tokens are stored encrypted.",
+          "Use Test connection to verify the credentials and provider access."
+        ]
+      },
+      {
+        "title": "Sending and deletion",
+        "items": [
+          "Only active providers are used for outgoing SMS and WhatsApp messages.",
+          "Deleting a provider is a soft delete and it can be restored."
+        ]
+      }
+    ]
+  },
   "createMessagingProvider": "Add messaging provider",
   "searchPlaceholder": "Search by name or account SID...",
   "noData": "No messaging providers configured",

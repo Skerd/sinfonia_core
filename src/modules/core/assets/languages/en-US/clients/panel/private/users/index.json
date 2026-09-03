@@ -5,6 +5,50 @@
   "activeFilters": "active",
   "administrationTitle": "Administration users list",
   "description": "Manage your users and their roles here.",
+  "help": {
+    "ariaLabel": "About User list",
+    "title": "About User list",
+    "overview": "This list contains company members whose roles are marked as default for signup, plus members with no roles. It excludes the currently signed-in user and is separate from the Administration list.",
+    "sections": [
+      {
+        "title": "Add and manage members",
+        "items": [
+          "Create a user with a password or invite someone by email.",
+          "Open the row menu to edit a member and their assigned roles.",
+          "Cards show account status, MFA, and invitation, activation, and password-reset requests."
+        ]
+      },
+      {
+        "title": "Who appears here",
+        "items": [
+          "Default-for-signup roles place members in this Users list.",
+          "Staff and admin role packs that are not default for signup appear under Administration instead."
+        ]
+      }
+    ]
+  },
+  "administrationHelp": {
+    "ariaLabel": "About Administration users list",
+    "title": "About Administration users list",
+    "overview": "This list contains users with staff or administration role packs that are not marked as default for signup, plus bot users. The currently signed-in user is excluded.",
+    "sections": [
+      {
+        "title": "Add administrators",
+        "items": [
+          "Create a user with a password or invite someone by email; the person receives an administration role.",
+          "Open the row menu to edit the account and its assigned roles.",
+          "Cards show account status, MFA, and invitation, activation, and password-reset requests."
+        ]
+      },
+      {
+        "title": "Separate from Users",
+        "items": [
+          "Roles without the default-for-signup setting place people in Administration.",
+          "Regular company members with default-for-signup roles appear in Company → Users."
+        ]
+      }
+    ]
+  },
   "administrationDescription": "Manage company administration users and their roles here.",
   "photo": "Photo",
   "emailVerified": "Current email",

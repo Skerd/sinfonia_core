@@ -2,6 +2,26 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
   "title": "Währungen",
   "description": "Währungen, Symbole und Dezimalstellen verwalten",
+  "help": {
+    "ariaLabel": "Über Währungen",
+    "title": "Über Währungen",
+    "overview": "Währungen bestimmen die Bezeichnung und Darstellung von Preisen und Verkaufsbeträgen. Name, Symbol, dreistellige Abkürzung und 0 bis 8 Dezimalstellen sind erforderlich.",
+    "sections": [
+      {
+        "title": "Währungen verwalten",
+        "items": [
+          "Erstellen oder bearbeiten Sie Anzeigename, Symbol, Abkürzung und Dezimalgenauigkeit.",
+          "Das Löschen ist ein Soft-Delete und kann rückgängig gemacht werden."
+        ]
+      },
+      {
+        "title": "Historische Beträge",
+        "items": [
+          "Eine spätere Änderung der Dezimalstellen schreibt historische Beträge nicht um."
+        ]
+      }
+    ]
+  },
   "createCurrency": "Währung erstellen",
   "searchPlaceholder": "Suchen von name, abbreviation, oder hinzufügen filters...",
   "noData": "Keine currencies gefunden",

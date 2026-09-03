@@ -2,6 +2,26 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
   "title": "Valute",
   "description": "Gestisci valute, simboli e decimali",
+  "help": {
+    "ariaLabel": "Informazioni su Valute",
+    "title": "Informazioni su Valute",
+    "overview": "Le valute definiscono etichetta e visualizzazione di prezzi e vendite. Sono obbligatori nome, simbolo, abbreviazione di tre lettere e da 0 a 8 decimali.",
+    "sections": [
+      {
+        "title": "Gestire le valute",
+        "items": [
+          "Create o modificate nome, simbolo, abbreviazione e precisione decimale.",
+          "L’eliminazione è logica e la valuta può essere ripristinata."
+        ]
+      },
+      {
+        "title": "Importi storici",
+        "items": [
+          "Cambiare in seguito i decimali non riscrive gli importi storici."
+        ]
+      }
+    ]
+  },
   "createCurrency": "Crea valuta",
   "searchPlaceholder": "Cerca per nome, abbreviazione o aggiungi filtri...",
   "noData": "Nessuna valuta trovata",

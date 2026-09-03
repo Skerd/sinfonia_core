@@ -8,6 +8,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import SearchChatUsers from "@coreModule/clients/panel/private/chat/searchChatUsers";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import {PageHelp, readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 
 type LeftChatPanelProps = WithLanguageType & {}
 
@@ -34,6 +35,8 @@ function LeftChatPanel({
         return <HiddenElement />
     }
 
+    const help = readPageHelp(resolveLanguageKey);
+
     return (
         <div className="flex-full w-full gap-y-0.5">
 
@@ -41,6 +44,7 @@ function LeftChatPanel({
                 <div className='flex items-center justify-between py-2'>
                     <div className='flex items-center gap-2'>
                         <p className='text-xl font-bold'>{resolveLanguageKey("title")}</p>
+                        {help && <PageHelp help={help} />}
                         <MessagesSquare size={20} />
                     </div>
                     {

@@ -2,6 +2,29 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
   "title": "Server di posta in uscita",
   "description": "Configura i server SMTP per questa azienda. La sequenza inferiore viene provata per prima.",
+  "help": {
+    "ariaLabel": "Informazioni su Server di posta in uscita",
+    "title": "Informazioni su Server di posta in uscita",
+    "overview": "I server di posta in uscita gestiscono l’invio SMTP dell’azienda. I nuovi server sono inattivi e vanno attivati solo dopo un test di connessione riuscito.",
+    "sections": [
+      {
+        "title": "Configurazione",
+        "items": [
+          "Inserite nome, host, porta, crittografia, tipo di autenticazione e indirizzo mittente obbligatorio.",
+          "Nome utente e password sono facoltativi quando l’autenticazione lo consente; anche nome mittente e Reply-To sono facoltativi.",
+          "Testate la connessione prima dell’attivazione."
+        ]
+      },
+      {
+        "title": "Ordine di invio",
+        "items": [
+          "La priorità o sequenza più bassa viene provata per prima.",
+          "Solo i server attivi e non eliminati inviano e-mail.",
+          "L’eliminazione è logica e il server può essere ripristinato."
+        ]
+      }
+    ]
+  },
   "createSmtpServer": "Aggiungi il server SMTP",
   "searchPlaceholder": "Cerca per nome o host...",
   "noData": "Nessun server SMTP configurato",

@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/index.tsx",
   "title": "Të gjitha rolet",
   "description": "Shikoni dhe modifikoni rolet e kompanisë",
+  "help": {
+    "ariaLabel": "Rreth Të gjitha rolet",
+    "title": "Rreth Të gjitha rolet",
+    "overview": "Rolet janë paketa lejesh që u caktohen përdoruesve të kompanisë. Opsioni «i paracaktuar për regjistrim» përcakton gjithashtu nëse personat shfaqen te Kompania → Përdoruesit apo Kompania → Administrata.",
+    "sections": [
+      {
+        "title": "Menaxhimi i roleve",
+        "items": [
+          "Krijoni një rol dhe më pas ndryshoni matricën e lejeve për të kontrolluar qasjen.",
+          "Rolet e paracaktuara për regjistrim i vendosin përdoruesit te Përdoruesit; rolet e tjera te Administrata.",
+          "Disa role të integruara nuk mund të ndryshohen ose të fshihen."
+        ]
+      },
+      {
+        "title": "Fshirja dhe rikthimi",
+        "items": [
+          "Fshirja është e butë dhe roli mund të rikthehet.",
+          "Kontrolloni kush e përdor rolin para se t’i ndryshoni lejet ose ta fshini."
+        ]
+      }
+    ]
+  },
   "searchPlaceholder": "Kërko sipas emrit ose përshkrimit, ose shto filtra...",
   "failTitle": "Ngarkimi i roleve dështoi",
   "failTitleTooltip": "Kliko këtu për të riprovuar ngarkimin e roleve",

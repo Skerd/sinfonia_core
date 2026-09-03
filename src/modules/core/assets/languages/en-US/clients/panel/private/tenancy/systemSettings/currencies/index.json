@@ -2,6 +2,26 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
   "title": "Currencies",
   "description": "Manage currencies, symbols, and decimal places",
+  "help": {
+    "ariaLabel": "About Currencies",
+    "title": "About Currencies",
+    "overview": "Currencies define how prices and sales amounts are labelled and displayed. Name, symbol, three-letter abbreviation, and decimal places from 0 to 8 are required.",
+    "sections": [
+      {
+        "title": "Manage currencies",
+        "items": [
+          "Create or edit the display name, symbol, abbreviation, and decimal precision.",
+          "Deleting a currency is a soft delete and it can be restored."
+        ]
+      },
+      {
+        "title": "Historical amounts",
+        "items": [
+          "Changing decimal places affects later display and entry rules; it does not rewrite historical amounts."
+        ]
+      }
+    ]
+  },
   "createCurrency": "Create currency",
   "searchPlaceholder": "Search by name, abbreviation, or add filters...",
   "noData": "No currencies found",

@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/index.tsx",
   "title": "Tous les rôles",
   "description": "Afficher et modifier les rôles dans l'entreprise",
+  "help": {
+    "ariaLabel": "À propos de Tous les rôles",
+    "title": "À propos de Tous les rôles",
+    "overview": "Les rôles sont des ensembles d’autorisations attribués aux utilisateurs de l’entreprise. Le réglage « par défaut à l’inscription » détermine aussi si les personnes figurent dans Entreprise → Utilisateurs ou Entreprise → Administration.",
+    "sections": [
+      {
+        "title": "Gérer les rôles",
+        "items": [
+          "Créez un rôle, puis modifiez sa matrice d’autorisations pour contrôler les accès.",
+          "Les rôles par défaut à l’inscription placent leurs utilisateurs dans Utilisateurs ; les autres les placent dans Administration.",
+          "Certains rôles intégrés ne peuvent être ni modifiés ni supprimés."
+        ]
+      },
+      {
+        "title": "Suppression et restauration",
+        "items": [
+          "La suppression est logique et le rôle peut être restauré.",
+          "Vérifiez qui utilise un rôle avant de modifier ses autorisations ou de le supprimer."
+        ]
+      }
+    ]
+  },
   "searchPlaceholder": "Rechercher par nom ou description, ou ajouter des filtres...",
   "failTitle": "Échec du chargement des rôles",
   "failTitleTooltip": "Cliquez ici pour réessayer de charger les rôles",

@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
   "title": "Veprime të planifikuara",
   "description": "Menaxho punët e planifikuara (cron)",
+  "help": {
+    "ariaLabel": "Rreth Veprime të planifikuara",
+    "title": "Rreth Veprime të planifikuara",
+    "overview": "Veprimet e planifikuara janë punë të krijuara nga serveri. Kjo faqe kontrollon dhe rregullon punët ekzistuese; nuk krijon punë apo përpunues të rinj.",
+    "sections": [
+      {
+        "title": "Veprimet e disponueshme",
+        "items": [
+          "Ekzekutoni një punë tani, ndalojeni përkohësisht ose rifillojeni.",
+          "Ndryshoni emrin, përshkrimin, shprehjen cron, riprovimet, vonesën e riprovimit, afatin dhe përparësinë.",
+          "Për ekzekutimet e humbura zgjidhni: kapërceni radhën, ekzekutoni një herë ose plotësoni prapambetjen."
+        ]
+      },
+      {
+        "title": "Identiteti i punës",
+        "items": [
+          "Përpunuesi dhe kodi e identifikojnë punën e serverit dhe nuk përcaktohen këtu.",
+          "Kontrolloni orarin dhe riprovimet para rifillimit."
+        ]
+      }
+    ]
+  },
   "createCronJob": "Krijo veprim të planifikuar",
   "searchPlaceholder": "Kërko sipas emrit, kodit ose handler-it...",
   "noData": "Nuk u gjetën veprime të planifikuara",

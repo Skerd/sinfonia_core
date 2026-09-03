@@ -2,6 +2,7 @@ import {useEffect, useMemo, type ReactNode} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {toPageTitle, type PageTitle} from "@coreModule/helpers/general";
 import {usePageHeader} from "@coreModule/helpers/context/pageHeaderContext.tsx";
+import {PageHelp, type PageHelpContent} from "@coreModule/components/custom/pageHelp.tsx";
 
 type SimpleHeaderProps = {
     /**
@@ -11,6 +12,8 @@ type SimpleHeaderProps = {
      */
     title: string | PageTitle,
     description?: string,
+    /** Optional page-overview sheet. The info control sits immediately after the heading. */
+    help?: PageHelpContent,
     children?: ReactNode,
     className?: string,
 }
@@ -36,6 +39,7 @@ function normalize(value: string | undefined) {
 export default function Header({
     title,
     description,
+    help,
     children,
     className,
 }: SimpleHeaderProps) {
@@ -57,24 +61,28 @@ export default function Header({
 
     const isRedundant = useMemo(() => {
         if (!pageHeader || context.length > 0) return false;
-        // A subtitle needs a visible heading; hiding the h1 leaves only muted text.
-        if (description?.trim()) return false;
+        // A subtitle or help control needs a visible heading; hiding the h1
+        // would leave an orphaned icon or only muted text.
+        if (description?.trim() || help) return false;
         const trail = [...pageHeader.routeCrumbs, ...pageHeader.contextCrumbs];
         return normalize(trail.at(-1)?.label) === normalize(heading);
-    }, [pageHeader, context.length, heading, description]);
+    }, [pageHeader, context.length, heading, description, help]);
 
     return (
         <div className={cn("flex min-h-8 items-center justify-between gap-3", className)}>
             <div className="min-w-0 flex-1">
-                <h1
-                    className={cn(
-                        isRedundant
-                            ? "sr-only"
-                            : "truncate text-lg font-semibold tracking-tight md:text-xl",
-                    )}
-                >
-                    {displayHeading}
-                </h1>
+                <div className="flex min-w-0 items-center gap-1.5">
+                    <h1
+                        className={cn(
+                            isRedundant
+                                ? "sr-only"
+                                : "truncate text-lg font-semibold tracking-tight md:text-xl",
+                        )}
+                    >
+                        {displayHeading}
+                    </h1>
+                    {help && <PageHelp help={help} />}
+                </div>
                 {description && (
                     <p className={cn("truncate text-sm text-muted-foreground", !isRedundant && "mt-0.5")}>
                         {description}

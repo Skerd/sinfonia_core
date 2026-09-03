@@ -2,6 +2,29 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
   "title": "Serverët SMTP",
   "description": "Konfiguroni serverët SMTP për këtë kompani. Sekuenca më e ulët provohet e para.",
+  "help": {
+    "ariaLabel": "Rreth Serverët SMTP",
+    "title": "Rreth Serverët SMTP",
+    "overview": "Serverët e postës dalëse mundësojnë dërgimin SMTP për këtë kompani. Serverët e rinj nisin joaktivë dhe duhen aktivizuar vetëm pas një testi të suksesshëm.",
+    "sections": [
+      {
+        "title": "Konfigurimi",
+        "items": [
+          "Vendosni emrin, hostin, portën, enkriptimin, llojin e autentikimit dhe emailin e detyrueshëm të dërguesit.",
+          "Emri i përdoruesit dhe fjalëkalimi janë opsionalë kur autentikimi e lejon; edhe emri i dërguesit dhe Reply-To janë opsionalë.",
+          "Testoni lidhjen para aktivizimit."
+        ]
+      },
+      {
+        "title": "Rendi i dërgimit",
+        "items": [
+          "Përparësia ose sekuenca më e ulët provohet e para.",
+          "Vetëm serverët aktivë dhe të pafshirë dërgojnë email.",
+          "Fshirja është e butë dhe serveri mund të rikthehet."
+        ]
+      }
+    ]
+  },
   "createSmtpServer": "Shto server SMTP",
   "searchPlaceholder": "Kërko sipas emrit ose hostit...",
   "noData": "Nuk ka serverë SMTP",

@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
   "title": "Fournisseurs de messagerie",
   "description": "Configurez les fournisseurs SMS et WhatsApp pour cette entreprise. Seuls les fournisseurs actifs sont utilisés pour les messages sortants.",
+  "help": {
+    "ariaLabel": "À propos de Fournisseurs de messagerie",
+    "title": "À propos de Fournisseurs de messagerie",
+    "overview": "Les fournisseurs de messagerie envoient les SMS et messages WhatsApp de l’entreprise. Twilio est actuellement le seul fournisseur pris en charge et les nouveaux fournisseurs démarrent actifs.",
+    "sections": [
+      {
+        "title": "Configuration",
+        "items": [
+          "Le nom, le SID du compte et le jeton d’authentification sont obligatoires ; les numéros d’expéditeur SMS et WhatsApp sont facultatifs.",
+          "Les jetons sont stockés chiffrés.",
+          "Testez la connexion pour vérifier les identifiants."
+        ]
+      },
+      {
+        "title": "Envoi et suppression",
+        "items": [
+          "Seuls les fournisseurs actifs envoient des SMS et messages WhatsApp.",
+          "La suppression est logique et le fournisseur peut être restauré."
+        ]
+      }
+    ]
+  },
   "createMessagingProvider": "Ajouter un fournisseur de messagerie",
   "searchPlaceholder": "Recherche par nom ou SID de compte...",
   "noData": "Aucun fournisseur de messagerie configuré",

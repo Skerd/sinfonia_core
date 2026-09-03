@@ -1,5 +1,20 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/left/index.tsx",
   "title": "Inbox",
+  "help": {
+    "ariaLabel": "Rreth Inbox",
+    "title": "Rreth Inbox",
+    "overview": "Inbox është komunikimi i brendshëm mes stafit të kompanisë. Nuk është radha e bisedave me vizitorët e faqes publike.",
+    "sections": [
+      {
+        "title": "Bisedat",
+        "items": [
+          "Kërkoni një koleg për të nisur një bisedë.",
+          "Kanalet në grup mund të përfshijnë disa anëtarë të stafit.",
+          "Nga kreu i bisedës shikoni anëtarët ose largohuni nga kanali."
+        ]
+      }
+    ]
+  },
   "searchChat": "Kërko bisedën"
 }

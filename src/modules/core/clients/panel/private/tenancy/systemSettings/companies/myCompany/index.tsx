@@ -8,6 +8,8 @@ import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import Header from "@coreModule/components/custom/header.tsx";
+import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 
 type MyCompanyProps = WithLanguageType & WithAxiosType<Company> & {
@@ -48,8 +50,15 @@ function MyCompany({
     }
 
     return (
-        <div className="flex justify-center items-center w-full pt-1">
-            <CompanyCard single={true} company={data} overrideCompanyId={data._id} />
+        <div className="flex min-w-0 flex-col gap-4">
+            <Header
+                title={resolveLanguageKey("title") as string}
+                description={resolveLanguageKey("description") as string}
+                help={readPageHelp(resolveLanguageKey)}
+            />
+            <div className="flex w-full items-center justify-center pt-1">
+                <CompanyCard single={true} company={data} overrideCompanyId={data._id} />
+            </div>
         </div>
     )
 }

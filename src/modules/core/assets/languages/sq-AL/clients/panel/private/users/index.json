@@ -5,6 +5,50 @@
   "activeFilters": "aktive",
   "administrationTitle": "Lista e përdoruesve të administratës",
   "description": "Menaxho përdoruesit dhe rolet e tyre këtu.",
+  "help": {
+    "ariaLabel": "Rreth Lista e përdoruesve",
+    "title": "Rreth Lista e përdoruesve",
+    "overview": "Kjo listë përmban anëtarët me role të paracaktuara për regjistrim, si dhe anëtarët pa role. Përdoruesi i kyçur aktualisht përjashtohet dhe kjo nuk është lista e Administratës.",
+    "sections": [
+      {
+        "title": "Shtimi dhe menaxhimi",
+        "items": [
+          "Krijoni një përdorues me fjalëkalim ose ftojeni me email.",
+          "Nga menuja e rreshtit ndryshoni anëtarin dhe rolet e tij.",
+          "Kartat tregojnë statusin, MFA-në dhe kërkesat për ftesë, aktivizim dhe rivendosje fjalëkalimi."
+        ]
+      },
+      {
+        "title": "Kush shfaqet këtu",
+        "items": [
+          "Rolet e paracaktuara për regjistrim i vendosin anëtarët në këtë listë.",
+          "Rolet e stafit dhe administratës që nuk janë të paracaktuara shfaqen te Administrata."
+        ]
+      }
+    ]
+  },
+  "administrationHelp": {
+    "ariaLabel": "Rreth Lista e përdoruesve të administratës",
+    "title": "Rreth Lista e përdoruesve të administratës",
+    "overview": "Kjo listë përmban përdoruesit me role stafi ose administrate që nuk janë të paracaktuara për regjistrim, si dhe përdoruesit bot. Përdoruesi i kyçur aktualisht përjashtohet.",
+    "sections": [
+      {
+        "title": "Shtimi i administratorëve",
+        "items": [
+          "Krijoni një përdorues me fjalëkalim ose ftojeni me email; ai merr rol administrate.",
+          "Nga menuja e rreshtit ndryshoni llogarinë dhe rolet.",
+          "Kartat tregojnë statusin, MFA-në dhe kërkesat e llogarisë."
+        ]
+      },
+      {
+        "title": "Ndarja nga Përdoruesit",
+        "items": [
+          "Rolet që nuk janë të paracaktuara për regjistrim i vendosin personat te Administrata.",
+          "Anëtarët e zakonshëm me role të paracaktuara shfaqen te Kompania → Përdoruesit."
+        ]
+      }
+    ]
+  },
   "administrationDescription": "Menaxho përdoruesit e administratës së kompanisë dhe rolet e tyre këtu.",
   "photo": "Foto",
   "emailVerified": "Email aktual",

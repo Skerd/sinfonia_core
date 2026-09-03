@@ -1,5 +1,20 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/left/index.tsx",
   "title": "Posta in arrivo",
+  "help": {
+    "ariaLabel": "Informazioni su Posta in arrivo",
+    "title": "Informazioni su Posta in arrivo",
+    "overview": "La Posta in arrivo è la messaggistica interna tra il personale dell’azienda. Non contiene le conversazioni dei visitatori del sito pubblico.",
+    "sections": [
+      {
+        "title": "Conversazioni",
+        "items": [
+          "Cercate un collega per iniziare una conversazione.",
+          "I canali di gruppo possono includere più membri del personale.",
+          "Dall’intestazione vedete i membri o abbandonate il canale."
+        ]
+      }
+    ]
+  },
   "searchChat": "Cerca chat"
 }

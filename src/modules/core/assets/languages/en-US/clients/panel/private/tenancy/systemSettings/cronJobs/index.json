@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
   "title": "Scheduled actions",
   "description": "Run, pause, or edit schedule for server-created jobs",
+  "help": {
+    "ariaLabel": "About Scheduled actions",
+    "title": "About Scheduled actions",
+    "overview": "Scheduled actions are server-created jobs. This page lets operators control and tune existing jobs; it does not create jobs or invent their handlers.",
+    "sections": [
+      {
+        "title": "Available actions",
+        "items": [
+          "Run a job now, pause it, or resume it.",
+          "Edit its name, description, cron expression, retry count, retry delay, timeout, and priority.",
+          "Choose how missed runs are handled: skip the backlog, run once, or catch up."
+        ]
+      },
+      {
+        "title": "Job identity",
+        "items": [
+          "The handler and code identify the server job and are not authored on this page.",
+          "Check the schedule and retry settings carefully before resuming a paused job."
+        ]
+      }
+    ]
+  },
   "searchPlaceholder": "Search by name, code, or handler...",
   "noData": "No scheduled actions found",
   "failTitle": "Failed to load scheduled actions",

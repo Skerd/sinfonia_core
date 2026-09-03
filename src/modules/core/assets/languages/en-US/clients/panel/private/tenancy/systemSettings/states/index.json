@@ -2,6 +2,21 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
   "title": "States",
   "description": "Manage states and their country assignment",
+  "help": {
+    "ariaLabel": "About States",
+    "title": "About States",
+    "overview": "States, cantons, or provinces provide the middle level of the address geography. Every record requires a name and code and must belong to a country.",
+    "sections": [
+      {
+        "title": "Manage states",
+        "items": [
+          "Create or edit the name, code, and country assignment.",
+          "Cities may reference a state, but that state selection is optional.",
+          "Deleting a state is a soft delete and it can be restored."
+        ]
+      }
+    ]
+  },
   "createState": "Create state",
   "searchPlaceholder": "Search by name, code, or add filters...",
   "noData": "No states found",

@@ -2,6 +2,29 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
   "title": "Outgoing mail servers",
   "description": "Configure SMTP servers for this company. Lower sequence is tried first.",
+  "help": {
+    "ariaLabel": "About Outgoing mail servers",
+    "title": "About Outgoing mail servers",
+    "overview": "Outgoing mail servers provide SMTP delivery for this company. New servers start inactive and should be activated only after a successful connection test.",
+    "sections": [
+      {
+        "title": "Configuration",
+        "items": [
+          "Enter a name, host, port, encryption and authentication type, and a required From email address.",
+          "Username and password are optional when the chosen authentication allows it. From name and Reply-To are also optional.",
+          "Use Test connection before activating a server."
+        ]
+      },
+      {
+        "title": "Delivery order",
+        "items": [
+          "A lower priority or sequence number is tried first.",
+          "Only active, non-deleted servers can send mail.",
+          "Deleting a server is a soft delete and it can be restored."
+        ]
+      }
+    ]
+  },
   "createSmtpServer": "Add SMTP server",
   "searchPlaceholder": "Search by name or host...",
   "noData": "No SMTP servers configured",

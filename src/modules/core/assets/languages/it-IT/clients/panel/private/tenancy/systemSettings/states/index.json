@@ -2,6 +2,21 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
   "title": "Stati / cantoni",
   "description": "Gestisci gli stati e il paese associato",
+  "help": {
+    "ariaLabel": "Informazioni su Stati / cantoni",
+    "title": "Informazioni su Stati / cantoni",
+    "overview": "Stati, cantoni e province sono il livello intermedio della geografia degli indirizzi. Ogni record richiede nome, codice e paese.",
+    "sections": [
+      {
+        "title": "Gestire stati e cantoni",
+        "items": [
+          "Create o modificate nome, codice e paese associato.",
+          "Una città può riferirsi facoltativamente a uno stato o cantone.",
+          "L’eliminazione è logica e il record può essere ripristinato."
+        ]
+      }
+    ]
+  },
   "createState": "Crea stato",
   "searchPlaceholder": "Cerca per nome, codice o aggiungi filtri...",
   "noData": "Nessuno stato trovato",

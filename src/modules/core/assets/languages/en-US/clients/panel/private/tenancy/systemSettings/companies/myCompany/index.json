@@ -2,6 +2,33 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/index.tsx",
   "title": "Company",
   "description": "Company info",
+  "help": {
+    "ariaLabel": "About Company",
+    "title": "About Company",
+    "overview": "This page manages the current tenant's company record, not a list of companies. Use Edit to open the company form.",
+    "sections": [
+      {
+        "title": "Company details",
+        "items": [
+          "Name and VAT are required. Email, phone, website, social links, description, logo, and allowed domains are optional.",
+          "Each added address requires street, postal code, city, country, and map coordinates; state or canton is optional."
+        ]
+      },
+      {
+        "title": "Public AI chat",
+        "items": [
+          "Enable or disable the visitor bot and set its greeting and persona.",
+          "Choose whether visitors must identify themselves and whether human handoff is available. These settings feed Website chats."
+        ]
+      },
+      {
+        "title": "Company status",
+        "items": [
+          "Activate or deactivate this company only when it has a parent company."
+        ]
+      }
+    ]
+  },
   "failTitle": "Failed to load company",
   "failTitleTooltip": "Click to retry loading company info"
 }

@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
   "title": "Actions planifiées",
   "description": "Gérer les tâches cron et les tâches planifiées",
+  "help": {
+    "ariaLabel": "À propos de Actions planifiées",
+    "title": "À propos de Actions planifiées",
+    "overview": "Les actions planifiées sont des tâches créées par le serveur. Cette page permet de piloter et régler les tâches existantes, mais pas d’en créer ni d’inventer leurs gestionnaires.",
+    "sections": [
+      {
+        "title": "Actions disponibles",
+        "items": [
+          "Exécutez une tâche maintenant, mettez-la en pause ou reprenez-la.",
+          "Modifiez son nom, sa description, son expression cron, ses tentatives, le délai entre tentatives, le délai maximal et la priorité.",
+          "Pour les exécutions manquées, ignorez le retard, exécutez une fois ou rattrapez les exécutions."
+        ]
+      },
+      {
+        "title": "Identité de la tâche",
+        "items": [
+          "Le gestionnaire et le code identifient la tâche serveur et ne sont pas définis ici.",
+          "Contrôlez la planification et les tentatives avant de reprendre une tâche."
+        ]
+      }
+    ]
+  },
   "createCronJob": "Créer une action planifiée",
   "searchPlaceholder": "Recherchez par nom, code ou gestionnaire...",
   "noData": "Aucune action planifiée trouvée",

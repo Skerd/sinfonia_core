@@ -1,5 +1,20 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/left/index.tsx",
   "title": "Boîte de réception",
+  "help": {
+    "ariaLabel": "À propos de Boîte de réception",
+    "title": "À propos de Boîte de réception",
+    "overview": "La boîte de réception sert à la messagerie interne entre les collaborateurs de l’entreprise. Elle ne contient pas les conversations des visiteurs du site public.",
+    "sections": [
+      {
+        "title": "Conversations",
+        "items": [
+          "Recherchez un collègue pour commencer une conversation.",
+          "Les canaux de groupe peuvent réunir plusieurs collaborateurs.",
+          "L’en-tête de la conversation permet de voir les membres ou de quitter le canal."
+        ]
+      }
+    ]
+  },
   "searchChat": "Rechercher une discussion"
 }

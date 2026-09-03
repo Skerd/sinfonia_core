@@ -1,6 +1,41 @@
 {
   "path": "src/modules/core/clients/panel/private/websiteChats/left/index.tsx",
   "titleWaiting": "In attesa",
+  "helpWaiting": {
+    "ariaLabel": "Informazioni su In attesa",
+    "title": "Informazioni su In attesa",
+    "overview": "In attesa contiene le conversazioni dei visitatori del sito pubblico pronte per un operatore ma non ancora prese da voi.",
+    "sections": [
+      {
+        "title": "Gestire la coda",
+        "items": [
+          "Date un’occhiata alla conversazione senza partecipare.",
+          "Partecipate per prenderla in carico e spostarla in Mie.",
+          "Restituitela al bot o chiudetela quando opportuno."
+        ]
+      },
+      {
+        "title": "Bot e passaggio",
+        "items": [
+          "Le impostazioni della chat IA pubblica in Azienda controllano saluto, comportamento del bot, identificazione e passaggio a un operatore."
+        ]
+      }
+    ]
+  },
   "titleMine": "Mie",
+  "helpMine": {
+    "ariaLabel": "Informazioni su Mie",
+    "title": "Informazioni su Mie",
+    "overview": "Mie contiene le conversazioni del sito web a cui avete partecipato. In attesa è la coda non ancora presa in carico.",
+    "sections": [
+      {
+        "title": "Le vostre conversazioni",
+        "items": [
+          "Continuate qui lo scambio con il visitatore.",
+          "Restituite la conversazione al bot o chiudetela quando conclusa."
+        ]
+      }
+    ]
+  },
   "searchChat": "Cerca chat"
 }

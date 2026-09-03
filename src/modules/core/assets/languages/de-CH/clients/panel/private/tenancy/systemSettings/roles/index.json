@@ -2,6 +2,28 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/index.tsx",
   "title": "Alle rollen",
   "description": "Und bearbeiten firma rollen anzeigen",
+  "help": {
+    "ariaLabel": "Über Alle rollen",
+    "title": "Über Alle rollen",
+    "overview": "Rollen sind Berechtigungspakete, die Benutzern der Firma zugewiesen werden. Die Einstellung «Standard für die Registrierung» bestimmt zudem, ob Personen unter Firma → Benutzer oder Firma → Administration erscheinen.",
+    "sections": [
+      {
+        "title": "Rollen verwalten",
+        "items": [
+          "Erstellen Sie eine Rolle und bearbeiten Sie anschliessend die Berechtigungsmatrix.",
+          "Rollen mit «Standard für die Registrierung» führen ihre Benutzer unter Firma → Benutzer; Rollen ohne diese Einstellung unter Firma → Administration.",
+          "Einige integrierte Rollen können weder bearbeitet noch gelöscht werden."
+        ]
+      },
+      {
+        "title": "Löschen und Wiederherstellen",
+        "items": [
+          "Das Löschen ist ein Soft-Delete; die Rolle kann später wiederhergestellt werden.",
+          "Prüfen Sie vor Änderungen oder dem Löschen, wer die Rolle verwendet."
+        ]
+      }
+    ]
+  },
   "searchPlaceholder": "Nach Name oder Beschreibung suchen, oder Filter hinzufügen...",
   "failTitle": "Rollen konnten nicht geladen werden",
   "failTitleTooltip": "Click here bis retry laden rollen",

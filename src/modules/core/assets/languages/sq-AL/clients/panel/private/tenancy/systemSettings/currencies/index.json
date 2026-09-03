@@ -2,6 +2,26 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
   "title": "Monedhat",
   "description": "Menaxhoni monedhat, simbolet dhe shifrat dhjetore",
+  "help": {
+    "ariaLabel": "Rreth Monedhat",
+    "title": "Rreth Monedhat",
+    "overview": "Monedhat përcaktojnë si emërtohen dhe shfaqen çmimet dhe shitjet. Kërkohen emri, simboli, shkurtesa me tri shkronja dhe 0 deri në 8 shifra dhjetore.",
+    "sections": [
+      {
+        "title": "Menaxhimi i monedhave",
+        "items": [
+          "Krijoni ose ndryshoni emrin, simbolin, shkurtesën dhe saktësinë dhjetore.",
+          "Fshirja është e butë dhe monedha mund të rikthehet."
+        ]
+      },
+      {
+        "title": "Shumat historike",
+        "items": [
+          "Ndryshimi i mëvonshëm i shifrave dhjetore nuk i rishkruan shumat historike."
+        ]
+      }
+    ]
+  },
   "createCurrency": "Krijo monedhë",
   "searchPlaceholder": "Kërkoni sipas emrit, shkurtesës ose shtoni filtra...",
   "noData": "Nuk u gjet asnjë monedhë",

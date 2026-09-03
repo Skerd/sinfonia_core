@@ -1,6 +1,41 @@
 {
   "path": "src/modules/core/clients/panel/private/websiteChats/left/index.tsx",
   "titleWaiting": "Waiting",
+  "helpWaiting": {
+    "ariaLabel": "About Waiting",
+    "title": "About Waiting",
+    "overview": "Waiting contains public-site visitor conversations that are ready for a human but have not yet been taken by you.",
+    "sections": [
+      {
+        "title": "Handle the queue",
+        "items": [
+          "Peek to read a conversation without joining it.",
+          "Join to take ownership and move the conversation to Mine.",
+          "Release a conversation back to the bot or close it when appropriate."
+        ]
+      },
+      {
+        "title": "Bot and handoff",
+        "items": [
+          "Public AI chat settings on Company control the visitor greeting, bot behaviour, identification, and human handoff."
+        ]
+      }
+    ]
+  },
   "titleMine": "Mine",
+  "helpMine": {
+    "ariaLabel": "About Mine",
+    "title": "About Mine",
+    "overview": "Mine contains public website conversations that you have joined. Waiting is the queue of conversations you have not taken.",
+    "sections": [
+      {
+        "title": "Work your conversations",
+        "items": [
+          "Continue the visitor thread from this list.",
+          "Release the conversation to the bot when human handling is no longer needed, or close it when finished."
+        ]
+      }
+    ]
+  },
   "searchChat": "Search chats"
 }

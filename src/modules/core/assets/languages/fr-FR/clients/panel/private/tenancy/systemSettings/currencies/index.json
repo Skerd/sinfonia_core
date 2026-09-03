@@ -2,6 +2,26 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/index.tsx",
   "title": "Devises",
   "description": "Gérer les devises, symboles et décimales",
+  "help": {
+    "ariaLabel": "À propos de Devises",
+    "title": "À propos de Devises",
+    "overview": "Les devises définissent le libellé et l’affichage des prix et ventes. Le nom, le symbole, l’abréviation à trois lettres et 0 à 8 décimales sont obligatoires.",
+    "sections": [
+      {
+        "title": "Gérer les devises",
+        "items": [
+          "Créez ou modifiez le nom, le symbole, l’abréviation et la précision décimale.",
+          "La suppression est logique et la devise peut être restaurée."
+        ]
+      },
+      {
+        "title": "Montants historiques",
+        "items": [
+          "Modifier ultérieurement les décimales ne réécrit pas les montants historiques."
+        ]
+      }
+    ]
+  },
   "createCurrency": "Créer une devise",
   "searchPlaceholder": "Recherchez par nom, abréviation ou ajoutez des filtres...",
   "noData": "Aucune devise trouvée",

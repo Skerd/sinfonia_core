@@ -1,6 +1,41 @@
 {
   "path": "src/modules/core/clients/panel/private/websiteChats/left/index.tsx",
   "titleWaiting": "Wartend",
+  "helpWaiting": {
+    "ariaLabel": "Über Wartend",
+    "title": "Über Wartend",
+    "overview": "Wartend enthält Unterhaltungen von Besuchern der öffentlichen Website, die auf eine Person warten und von Ihnen noch nicht übernommen wurden.",
+    "sections": [
+      {
+        "title": "Warteschlange bearbeiten",
+        "items": [
+          "Lesen Sie mit «Einsehen» eine Unterhaltung, ohne ihr beizutreten.",
+          "Mit «Beitreten» übernehmen Sie die Unterhaltung; sie wechselt zu Meine.",
+          "Geben Sie sie an den Bot zurück oder schliessen Sie sie ab."
+        ]
+      },
+      {
+        "title": "Bot und Übergabe",
+        "items": [
+          "Die Einstellungen für den öffentlichen AI-Chat unter Firma steuern Begrüssung, Bot-Verhalten, Identifikation und Übergabe an Menschen."
+        ]
+      }
+    ]
+  },
   "titleMine": "Meine",
+  "helpMine": {
+    "ariaLabel": "Über Meine",
+    "title": "Über Meine",
+    "overview": "Meine enthält Website-Unterhaltungen, denen Sie beigetreten sind. Wartend ist die noch nicht übernommene Warteschlange.",
+    "sections": [
+      {
+        "title": "Eigene Unterhaltungen",
+        "items": [
+          "Führen Sie den Austausch mit dem Besucher hier weiter.",
+          "Geben Sie die Unterhaltung an den Bot zurück oder schliessen Sie sie ab."
+        ]
+      }
+    ]
+  },
   "searchChat": "Chats suchen"
 }
