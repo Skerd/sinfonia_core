@@ -4,6 +4,7 @@ import type { FieldBinding } from "armonia/src/modules/core/api/auxiliary/privat
 import type { Unit as UnitDto } from "armonia/src/modules/propertyManagement/api/realEstate/private/unit/unit/unit.dto.ts";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import FormMaxLengthControl from "@coreModule/components/custom/formMaxLengthControl.tsx";
+import {isContributedCompoundFormWidget} from "./widgetRegistry.ts";
 
 export type FormWidgetExtra = {
     loading?: boolean;
@@ -15,6 +16,7 @@ export type FormWidgetExtra = {
 /**
  * Widget tokens for compound fields that manage their own FormField/FormItem
  * internally via useFormContext(). These must NOT be wrapped in FormField again.
+ * Core-owned tokens only. Module tokens: `WidgetContribution.compoundFormWidgets`.
  */
 const COMPOUND_WIDGETS = new Set([
     "#MediaField",
@@ -40,7 +42,7 @@ const COMPOUND_WIDGETS = new Set([
 ]);
 
 export function isCompoundFormWidget(widgetToken: string): boolean {
-    return COMPOUND_WIDGETS.has(widgetToken);
+    return COMPOUND_WIDGETS.has(widgetToken) || isContributedCompoundFormWidget(widgetToken);
 }
 
 /**
@@ -372,9 +374,14 @@ export function renderCompoundWidget(
 
     return (
         <Widget
+            name={binding.name}
+            label={binding.label ? String(resolveLanguageKey(binding.label)) : undefined}
+            placeholder={binding.placeholder ? String(resolveLanguageKey(binding.placeholder)) : undefined}
             resolveLanguageKey={resolveLanguageKey}
             loading={extra?.loading ?? false}
+            disabled={binding.disabled}
             editMode={extra?.editMode ?? false}
+            formExtras={extra?.formExtras}
             {...wp}
         />
     );

@@ -148,6 +148,14 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
                 if (writeAccess && !writeAccess.media) {
                     return null;
                 }
+            } else if (writeAccess && binding.name !== "_id" && !binding.skipWriteAccessGate) {
+                const anyKeys =
+                    binding.renderWhenWriteAny && binding.renderWhenWriteAny.length > 0
+                        ? binding.renderWhenWriteAny
+                        : [binding.name];
+                if (!anyKeys.some((k) => resolveWriteAccess(writeAccess, k))) {
+                    return null;
+                }
             }
             return (
                 <div key={index}>

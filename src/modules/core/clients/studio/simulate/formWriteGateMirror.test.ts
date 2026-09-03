@@ -48,6 +48,15 @@ describe("rendersOnEditForm", () => {
         ).toBe(false);
     });
 
+    it("gates other compound widgets on field.name", () => {
+        expect(
+            rendersOnEditForm(field({name: "notes", widget: "#Textarea"}), write),
+        ).toBe(false);
+        expect(
+            rendersOnEditForm(field({name: "name", widget: "#SomeCompoundField"}), write),
+        ).toBe(true);
+    });
+
     it("lets `#FormTabbedRepeater` name its key, falling back to the field name", () => {
         expect(
             rendersOnEditForm(

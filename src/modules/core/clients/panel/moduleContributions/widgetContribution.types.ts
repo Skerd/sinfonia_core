@@ -54,6 +54,11 @@ export type WidgetContribution = {
     /** Token → custom sheet field branch (replaces hard-coded ViewRenderer cases). */
     sheetFieldRenderers?: Record<string, SheetFieldRenderer>;
     /**
+     * Form tokens that own their own `FormField` (must not be wrapped again).
+     * Merged into Core’s compound set — do not list module tokens in `renderFormWidget`.
+     */
+    compoundFormWidgets?: string[];
+    /**
      * Widget / linked-sheet tokens → audit `singlePost` hints.
      * Merged into `collectFieldLabelsFromViewConfig` LOOKUPs.
      */

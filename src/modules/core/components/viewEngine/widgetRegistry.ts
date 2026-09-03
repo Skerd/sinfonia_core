@@ -111,6 +111,9 @@ const REFERENCES_DEFAULT_ITEM_PROP: Record<string, string> = {};
 /** Custom sheet-mode field branches contributed by modules. */
 const SHEET_FIELD_RENDERERS: Record<string, SheetFieldRenderer> = {};
 
+/** Module form tokens that own their own FormField. Core tokens live in `renderFormWidget`. */
+const COMPOUND_FORM_WIDGETS = new Set<string>();
+
 /**
  * Design-time widget descriptions. Read by developer tooling (the Studio), never by the
  * renderer — an absent entry means "undescribed", not "unsupported".
@@ -161,6 +164,11 @@ function ensureContributionsApplied(): void {
         if (contribution.sheetFieldRenderers) {
             for (const [token, renderer] of Object.entries(contribution.sheetFieldRenderers)) {
                 SHEET_FIELD_RENDERERS[token] = renderer;
+            }
+        }
+        if (contribution.compoundFormWidgets) {
+            for (const token of contribution.compoundFormWidgets) {
+                COMPOUND_FORM_WIDGETS.add(token);
             }
         }
         if (contribution.auditSinglePostHints) {
@@ -296,6 +304,11 @@ export function registerSheetFieldRenderer(token: string, renderer: SheetFieldRe
 export function getSheetFieldRenderer(token: string): SheetFieldRenderer | undefined {
     ensureContributionsApplied();
     return SHEET_FIELD_RENDERERS[token];
+}
+
+export function isContributedCompoundFormWidget(token: string): boolean {
+    ensureContributionsApplied();
+    return COMPOUND_FORM_WIDGETS.has(token);
 }
 
 export function registerAuditSinglePostHint(token: string, hint: AuditSinglePostHint): void {
