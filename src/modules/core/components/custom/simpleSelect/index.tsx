@@ -303,8 +303,8 @@ function SimpleSelectRender({
             <PopoverContent
                 className={cn(
                     forTable
-                        ? 'w-[200px] p-0'
-                        : 'w-[var(--radix-popover-trigger-width)] min-w-[var(--radix-popover-trigger-width)] max-w-[min(90vw,32rem)] p-0',
+                        ? 'w-64 p-0'
+                        : 'w-[var(--radix-popover-trigger-width)] min-w-64 max-w-[min(90vw,32rem)] p-0',
                     'flex max-h-[min(24rem,var(--radix-popover-content-available-height))] flex-col overflow-hidden',
                 )}
                 align="start"
