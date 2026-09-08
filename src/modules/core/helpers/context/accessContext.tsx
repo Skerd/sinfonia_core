@@ -1,28 +1,23 @@
 import {
-    ComponentType,
     createContext,
     Dispatch,
     SetStateAction,
     useContext,
     useEffect,
     useMemo,
-    useRef,
     useState,
+    type ReactNode,
 } from "react";
 import {useSelector} from "react-redux";
-import {getClientConfig} from "@coreModule/helpers/general";
 import {AccessFormResponseType} from "armonia/src/modules/core/api/user/private/permissions/access.form.response.type.ts";
 import {
     AccessAllFormResponseType,
 } from "armonia/src/modules/core/api/user/private/permissions/accessAll.form.response.type.ts";
 import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
 import useErrorHandler from "@coreModule/helpers/hooks/useErrorHandler.ts";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {compose} from "redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {ReadOrWriteFields} from "armonia/src/modules/core/types";
-import Loader from "@coreModule/components/custom/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
 
 export type AccessObject = {
     read: ReadOrWriteFields | boolean | any;
@@ -77,7 +72,7 @@ export type AccessContextValue = {
 
 const AccessContext = createContext<AccessContextValue>({});
 
-/** `null` outside `withAccess`. `false` until `/access/all` succeeds; then `true`. */
+/** `null` outside `AccessProvider`. `false` until `/access/all` succeeds; then `true`. */
 const AccessHydrationContext = createContext<boolean | null>(null);
 
 type AccessDebugOverrideContextValue = {
@@ -346,26 +341,26 @@ function mergeAccessOverride(
     return next;
 }
 
-/** Full access map from the nearest `withAccess` provider (real server values, no debug overrides). */
+/** Full access map from the nearest `AccessProvider` (real server values, no debug overrides). */
 export function useAccessMap(): AccessContextValue {
     return useContext(AccessContext);
 }
 
 /**
- * Whether the access map has been fetched. `null` outside `withAccess`.
+ * Whether the access map has been fetched. `null` outside `AccessProvider`.
  * Empty `read` before this is true is "not loaded yet", not Forbidden.
  */
 export function useAccessHydrated(): boolean | null {
     return useContext(AccessHydrationContext);
 }
 
-/** Debug override state used by `withDebug` permission toggles. Null outside `withAccess`. */
+/** Debug override state used by `withDebug` permission toggles. Null outside `AccessProvider`. */
 export function useAccessDebugOverrides(): AccessDebugOverrideContextValue | null {
     return useContext(AccessDebugOverrideContext);
 }
 
 /**
- * Reads access for a resource from the nearest `withAccess` provider.
+ * Reads access for a resource from the nearest `AccessProvider`.
  *
  * @param resourceId - camelCase plural resource id (e.g. `users`, `companyUsers`).
  * @param perspective - `self` (default) or `others`; when the schema is `loose`, `others` is omitted and `self` is used.
@@ -398,138 +393,87 @@ export function useAccess(
     }, override);
 }
 
-const siteAccessShell: AccessObject = {
-    read: false,
-    write: false,
-    create: false,
-    delete: false,
-    restore: false,
-    resourceId: "",
-    ifProp: "specificUserId",
-    ifPropValue: false,
-    renderComponentOnError: false,
-};
-
 /**
  * Loads all model access flags once (POST `/api/user/permissions/access/all`, empty body).
- * Provides data via `useAccess(resourceId)` and React context. No request caching; intended for a single call on private layout mount.
- *
- * Injects `canAccess` (manifest loaded successfully) and `withAccess` (placeholder object for compositional typing).
+ * Shows the setup step, starts the fetch, and immediately continues.
+ * Provides data via `useAccess(resourceId)` as the response arrives.
  */
-const withAccess = () => <TProps extends object>(
-    WrappedComponent: ComponentType<TProps & WithLanguageType & WithAccessType>
-) => {
-    function EnhancedComponent_WithAccess(props: TProps & WithLanguageType) {
-        const {resolveLanguageKey} = props;
-        const config = getClientConfig();
-        const authToken = useSelector((state: RootState) => state.authentication.token);
-        const [error, setError] = useState<boolean>(false);
-        const [loading, setLoading] = useState<boolean>(false);
-        const [accessMap, setAccessMap] = useState<AccessContextValue>({});
-        const [isHydrated, setIsHydrated] = useState(false);
-        const [retryToken, setRetryToken] = useState(0);
-        const [accessOverrides, setAccessOverrides] = useState<AccessDebugOverrides>({});
-        const handleError = useErrorHandler(useMemo(() => ({context: "withAccess"}), []));
-        /** After first successful load; avoids full-page loader on effect re-runs (e.g. parent re-renders when auth is outermost). */
-        const accessHydratedRef = useRef(false);
-        /** Matches `retryToken` of the last successful fetch so user-initiated retries still show the loader. */
-        const lastSuccessRetryRef = useRef(0);
-        const accessDebugOverrideValue = useMemo(
-            () => ({overrides: accessOverrides, setOverrides: setAccessOverrides}),
-            [accessOverrides],
-        );
+export function AccessProvider({
+    children,
+    setupStep = 2,
+    setupTotal = SESSION_SETUP_TOTAL_STEPS,
+}: {
+    children: ReactNode;
+    setupStep?: number;
+    setupTotal?: number;
+}) {
+    const authToken = useSelector((state: RootState) => state.authentication.token);
+    const [accessMap, setAccessMap] = useState<AccessContextValue>({});
+    const [isHydrated, setIsHydrated] = useState(false);
+    const [showSetup, setShowSetup] = useState(true);
+    const [accessOverrides, setAccessOverrides] = useState<AccessDebugOverrides>({});
+    const handleError = useErrorHandler(useMemo(() => ({context: "AccessProvider"}), []));
+    const accessDebugOverrideValue = useMemo(
+        () => ({overrides: accessOverrides, setOverrides: setAccessOverrides}),
+        [accessOverrides],
+    );
 
-        useEffect(() => {
-            const abortController = new AbortController();
+    useEffect(() => {
+        setShowSetup(false);
+    }, []);
 
-            const fetchAllAccess = async () => {
-                if (!authToken) {
-                    setLoading(false);
-                    setAccessMap({});
-                    setIsHydrated(false);
-                    accessHydratedRef.current = false;
-                    lastSuccessRetryRef.current = 0;
-                    return;
+    useEffect(() => {
+        if (!authToken) {
+            setAccessMap({});
+            setIsHydrated(false);
+            return;
+        }
+
+        const abortController = new AbortController();
+        apiClient
+            .post<AccessAllFormResponseType>(
+                `/api/user/permissions/access/all`,
+                {},
+                {
+                    signal: abortController.signal,
+                    headers: {
+                        "Cache-Control": "no-store",
+                        Pragma: "no-cache",
+                    },
                 }
-                const showBlockingLoader =
-                    !accessHydratedRef.current || retryToken !== lastSuccessRetryRef.current;
-                try {
-                    if (showBlockingLoader) {
-                        setLoading(true);
-                    }
-                    setError(false);
-                    const response = await apiClient.post<AccessAllFormResponseType>(
-                        `/api/user/permissions/access/all`,
-                        {},
-                        {
-                            signal: abortController.signal,
-                            headers: {
-                                "Cache-Control": "no-store",
-                                Pragma: "no-cache",
-                            },
-                        }
-                    );
-                    if (abortController.signal.aborted) return;
-                    setAccessMap(accessAllResponseToContext(response.data));
-                    setIsHydrated(true);
-                    accessHydratedRef.current = true;
-                    lastSuccessRetryRef.current = retryToken;
-                } catch (e: unknown) {
-                    if (abortController.signal.aborted) return;
-                    handleError(e);
-                    setError(true);
-                } finally {
-                    if (abortController.signal.aborted) return;
-                    setLoading(false);
-                }
-            };
+            )
+            .then((response) => {
+                if (abortController.signal.aborted) return;
+                setAccessMap(accessAllResponseToContext(response.data));
+                setIsHydrated(true);
+            })
+            .catch((e: unknown) => {
+                if (abortController.signal.aborted) return;
+                handleError(e);
+            });
 
-            void fetchAllAccess();
+        return () => abortController.abort();
+    }, [authToken, handleError]);
 
-            return () => abortController.abort();
-        }, [authToken, retryToken]);
-
-        if (error && config.withResourceAccess.showError ) {
-            return (
-                <div className="flex p-4 items-center justify-center w-full border rounded-lg">
-                    <SimpleError
-                        title={String(resolveLanguageKey("failTitle"))}
-                        description={String(resolveLanguageKey("failDescription"))}
-                        tooltipDescription={String(resolveLanguageKey("tooltipDescription"))}
-                        onClick={() => setRetryToken((n) => n + 1)}
-                    />
-                </div>
-            );
-        }
-
-        if (error && !config.withResourceAccess.showError) {
-            return <></>;
-        }
-
-        if (loading && (config.withResourceAccess.showLoading)) {
-            return (
-                <Loader title={resolveLanguageKey("loading")} />
-            );
-        }
-
+    if (showSetup) {
         return (
-            <AccessHydrationContext.Provider value={isHydrated}>
-                <AccessContext.Provider value={accessMap}>
-                    <AccessDebugOverrideContext.Provider value={accessDebugOverrideValue}>
-                        <WrappedComponent
-                            {...props}
-                            canAccess={Boolean(authToken) && !error && !loading}
-                            withAccess={siteAccessShell}
-                        />
-                    </AccessDebugOverrideContext.Provider>
-                </AccessContext.Provider>
-            </AccessHydrationContext.Provider>
+            <SessionSetupScreen
+                step={setupStep}
+                total={setupTotal}
+                phase="access"
+                error={false}
+                onRetry={() => {}}
+            />
         );
     }
 
-    return compose(withLanguage("src/modules/core/helpers/hocs/withAccess.tsx"))(
-        EnhancedComponent_WithAccess as ComponentType<TProps & WithLanguageType>
+    return (
+        <AccessHydrationContext.Provider value={isHydrated}>
+            <AccessContext.Provider value={accessMap}>
+                <AccessDebugOverrideContext.Provider value={accessDebugOverrideValue}>
+                    {children}
+                </AccessDebugOverrideContext.Provider>
+            </AccessContext.Provider>
+        </AccessHydrationContext.Provider>
     );
-};
-
-export default withAccess;
+}

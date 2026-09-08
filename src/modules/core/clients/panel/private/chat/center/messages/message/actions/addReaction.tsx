@@ -9,7 +9,7 @@ import {updateMessageReaction} from "@coreModule/helpers/redux/slices/chatSlice.
 import {useDispatch} from "react-redux";
 import {AddReactionFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/addReaction.form.response.type.ts";
 import {AddReactionFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/addReaction.form.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ReactToMessageProps = WithLanguageType & WithAxiosType<AddReactionFormResponseType, AddReactionFormType> & {

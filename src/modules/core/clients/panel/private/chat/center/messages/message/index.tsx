@@ -29,7 +29,7 @@ import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
 import {MessageSenderType, MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";

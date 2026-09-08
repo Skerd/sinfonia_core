@@ -1,4 +1,4 @@
-import { getCookie, setCookie, removeCookie } from '@coreModule/helpers/context/cookies/cookies.ts'
+import {getLocalStorageValue, removeLocalStorageValue, setLocalStorageValue} from '@coreModule/helpers/context/localStorage/localStorageProvider.ts'
 import {createContext, useCallback, useContext, useEffect, useMemo, useState, ReactNode} from 'react'
 
 /**
@@ -9,13 +9,11 @@ type Theme = 'dark' | 'light' | 'system'
 type ResolvedTheme = Exclude<Theme, 'system'>
 
 const DEFAULT_THEME = 'system'
-const THEME_COOKIE_NAME = 'client-ui-theme'
-const THEME_COOKIE_MAX_AGE = 60 * 60 * 24 * 365 // 1 year
+const THEME_STORAGE_KEY = 'client-ui-theme'
 
 type ThemeProviderProps = {
   children: ReactNode
   defaultTheme?: Theme
-  storageKey?: string
 }
 
 type ThemeProviderState = {
@@ -29,7 +27,7 @@ type ThemeProviderState = {
 const VALID_THEMES: readonly Theme[] = ['dark', 'light', 'system']
 
 /**
- * Runtime guard used when reading persisted values from cookies.
+ * Runtime guard used when reading persisted values from localStorage.
  */
 function isTheme(value: unknown): value is Theme {
   return typeof value === 'string' && VALID_THEMES.includes(value as Theme)
@@ -50,23 +48,17 @@ const ThemeContext = createContext<ThemeProviderState | undefined>(undefined)
 
 /**
  * Provides theme state to descendants and keeps it synchronized with:
- * - the persisted cookie value
+ * - the persisted localStorage value
  * - the document root CSS class (`light` / `dark`)
  * - system color-scheme changes while `theme === "system"`
  */
-export function ThemeProvider({
-  children,
-  defaultTheme = DEFAULT_THEME,
-  storageKey = THEME_COOKIE_NAME,
-}: ThemeProviderProps) {
+export function ThemeProvider({children, defaultTheme = DEFAULT_THEME}: ThemeProviderProps) {
   const initialTheme = useMemo<Theme>(() => {
-    const persistedTheme = getCookie(storageKey)
+    const persistedTheme = getLocalStorageValue(THEME_STORAGE_KEY)
     return isTheme(persistedTheme) ? persistedTheme : defaultTheme
-  }, [defaultTheme, storageKey])
+  }, [defaultTheme])
 
-  const [theme, _setTheme] = useState<Theme>(
-    initialTheme
-  )
+  const [theme, _setTheme] = useState<Theme>(initialTheme)
 
   const resolvedTheme = useMemo((): ResolvedTheme => {
     if (theme === 'system') {
@@ -114,14 +106,14 @@ export function ThemeProvider({
   }, [theme, resolvedTheme])
 
   const setTheme = useCallback((nextTheme: Theme) => {
-    setCookie(storageKey, nextTheme, THEME_COOKIE_MAX_AGE)
+    setLocalStorageValue(THEME_STORAGE_KEY, nextTheme)
     _setTheme(nextTheme)
-  }, [storageKey])
+  }, [])
 
   const resetTheme = useCallback(() => {
-    removeCookie(storageKey)
+    removeLocalStorageValue(THEME_STORAGE_KEY)
     _setTheme(defaultTheme)
-  }, [defaultTheme, storageKey])
+  }, [defaultTheme])
 
   const contextValue = useMemo(() => ({
     defaultTheme,
@@ -138,7 +130,6 @@ export function ThemeProvider({
   )
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 /**
  * Accesses the active theme context.
  * Throws when used outside `ThemeProvider`.
@@ -151,7 +142,6 @@ export const useTheme = () => {
   return context
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 /**
  * Non-throwing variant for shared primitives that may render in the public and
  * shop apps, which do not mount `ThemeProvider`. Prefer `useTheme` in panel code

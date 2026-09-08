@@ -7,9 +7,8 @@ import {useEffect, useState} from "react";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
 
 type AccountSecurityOtpEnableOTPProps = WithLanguageType & WithAxiosType<GenerateMfaQrCodeFormResponseType> & {
     onSuccess: Function,
@@ -63,7 +62,6 @@ function AccountSecurityOtpEnableOTP({
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/otp/enableOTP/index.tsx"),
     withAxios(
         {

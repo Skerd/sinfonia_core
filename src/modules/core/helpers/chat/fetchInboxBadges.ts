@@ -6,14 +6,6 @@ import {hydrateInboxBadges} from "@coreModule/helpers/redux/slices/chatSlice.ts"
 import {InboxBadgesFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/inboxBadges.form.response.type.ts";
 
 /**
- * Loads sidebar chat badges: staff unread, waiting website chats, and unread on mine.
- */
-export async function fetchChatInboxBadges(): Promise<InboxBadgesFormResponseType> {
-    const response = await apiClient.get<InboxBadgesFormResponseType>("/api/user/chats/channels/inbox-badges");
-    return response.data;
-}
-
-/**
  * Runs once the authenticated panel shell is up (and again if the company changes).
  */
 export function useFetchChatInboxBadgesOnPanelLoad() {
@@ -25,8 +17,8 @@ export function useFetchChatInboxBadgesOnPanelLoad() {
             return;
         }
         let cancelled = false;
-        fetchChatInboxBadges()
-            .then((badges) => {
+        apiClient.get<InboxBadgesFormResponseType>("/api/user/chats/channels/inbox-badges")
+            .then(({data: badges}) => {
                 if (!cancelled) {
                     dispatch(hydrateInboxBadges(badges));
                 }

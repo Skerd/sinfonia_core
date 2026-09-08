@@ -9,8 +9,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {UserStatusFormResponseType} from "armonia/src/modules/core/api/user/private/status/userStatus.form.response.type.ts";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type UserAccountSecurityDisableAccountProps = WithAxiosType<UserStatusFormResponseType> & WithLanguageType & {
@@ -76,9 +75,17 @@ function UserAccountSecurityDisableAccount({
             <>
                 {
                     openWhat === "disable" ?
-                    <UserAccountSecurityDisableAccountForm hideCondition={!write.roles?.keys?.active} specificUserId={specificUserId} userData={data} onSuccess={() => {setInnerActive(false); onActiveChange(false)}}/>
+                    write.roles?.keys?.active ? (
+                    <UserAccountSecurityDisableAccountForm specificUserId={specificUserId} userData={data} onSuccess={() => {setInnerActive(false); onActiveChange(false)}}/>
+                    ) : (
+                        <HiddenElement />
+                    )
                     :
-                    <UserAccountSecurityEnableAccountForm hideCondition={!write.roles?.keys?.active} specificUserId={specificUserId} userData={data} onSuccess={() => {setInnerActive(true); onActiveChange(true)}}/>
+                    write.roles?.keys?.active ? (
+                    <UserAccountSecurityEnableAccountForm specificUserId={specificUserId} userData={data} onSuccess={() => {setInnerActive(true); onActiveChange(true)}}/>
+                    ) : (
+                        <HiddenElement />
+                    )
                 }
             </>
         </TitleWithCollapse>
@@ -86,7 +93,6 @@ function UserAccountSecurityDisableAccount({
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/disableAccount/index.tsx"),
     withAxios(
         {

@@ -7,7 +7,7 @@ import {Check, Pencil, X} from "lucide-react";
 import {useImperativeHandle} from "react";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {ToggledUserRole} from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/index.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {ChangeUserRolesFormType} from "armonia/src/modules/core/api/user/private/permissions/changeUserRoles.form.type.ts";
 import {ChangeUserRolesFormResponseType} from "armonia/src/modules/core/api/user/private/permissions/changeUserRoles.form.response.type.ts";

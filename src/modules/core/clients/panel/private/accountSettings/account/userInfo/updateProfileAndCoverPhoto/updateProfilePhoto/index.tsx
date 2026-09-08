@@ -8,8 +8,7 @@ import NewPhoto from "@coreModule/clients/panel/private/accountSettings/account/
 import DeletePhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/deletePhoto.tsx";
 import {User} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 const avatarSize = "120px";
@@ -53,7 +52,7 @@ function UpdateProfilePhoto({
     }, [open]);
 
     if( !read.photo ){
-        return <HiddenElement />
+        return <HiddenProfilePhoto />
     }
     if( (!!read.photo && !write.photo) ){
         return (
@@ -146,6 +145,5 @@ function UpdateProfilePhoto({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/index.tsx"),
-    withHidden(<HiddenProfilePhoto />),
     withDebug(true, true, "users")
 )(UpdateProfilePhoto);

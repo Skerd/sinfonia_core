@@ -7,7 +7,7 @@ import {ChangeEvent, useEffect, useState} from "react";
 import Telegram from "@coreModule/clients/panel/private/apps/apps/telegram";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type AppType = 'all' | 'connected' | 'notConnected';

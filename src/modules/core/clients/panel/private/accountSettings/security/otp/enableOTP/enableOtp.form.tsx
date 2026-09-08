@@ -17,7 +17,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {EnableMfaFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.response.type.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type AccountSecurityEnableOtpFormProps = WithLanguageType & WithAxiosType<EnableMfaFormResponseType, EnableMfaFormType> & {

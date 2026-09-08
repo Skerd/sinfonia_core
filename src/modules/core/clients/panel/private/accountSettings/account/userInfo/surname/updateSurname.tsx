@@ -7,7 +7,7 @@ import {Check, X} from "lucide-react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {UpdateUserProfileSurnameFormType} from "armonia/src/modules/core/api/user/private/data/updateUserProfileSurname.form.type.ts";
 import {UpdateUserProfileSurnameFormResponse} from "armonia/src/modules/core/api/user/private/data/updateUserProfileSurname.form.response.type.ts";

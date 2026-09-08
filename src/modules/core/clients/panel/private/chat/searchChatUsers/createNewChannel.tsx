@@ -8,7 +8,7 @@ import {openChannel, upsertChannel} from "@coreModule/helpers/redux/slices/chatS
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {CreateChannelFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.response.type.ts";
 import {CreateChannelFormType} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type CreateNewChannelProps = WithLanguageType & WithAxiosType<CreateChannelFormResponseType, CreateChannelFormType> & {

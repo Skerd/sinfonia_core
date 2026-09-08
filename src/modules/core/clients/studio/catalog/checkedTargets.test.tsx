@@ -1,7 +1,7 @@
 import {act, renderHook} from "@testing-library/react";
 import {beforeEach, describe, expect, it} from "vitest";
 import type {TableColumnConfig} from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type";
-import {checkedProgress, modelTargets, useCheckedTargets} from "./checkedTargets.ts";
+import {checkedProgress, groupComplete, modelTargets, useCheckedTargets} from "./checkedTargets.ts";
 import type {StudioModelEntry} from "./useStudioCatalog.ts";
 import {TABLE_TARGET} from "../studioTarget.ts";
 
@@ -57,6 +57,28 @@ describe("checkedProgress", () => {
             total: 0,
             complete: false,
         });
+    });
+});
+
+describe("groupComplete", () => {
+    const all = ["sheet", "form:create", "form:edit", TABLE_TARGET];
+    const isChecked = (done: string[]) => (target: {collection: string; viewKey: string}) =>
+        done.includes(`${target.collection}:${target.viewKey}`);
+
+    it("is true only when every model in the group is complete", () => {
+        const countries = entry({collection: "countries"});
+        const cities = entry({collection: "cities"});
+        const done = [
+            ...all.map((viewKey) => `countries:${viewKey}`),
+            ...all.map((viewKey) => `cities:${viewKey}`),
+        ];
+        expect(groupComplete([countries, cities], isChecked(done))).toBe(true);
+        expect(groupComplete([countries, cities], isChecked(done.slice(0, all.length)))).toBe(false);
+    });
+
+    it("is false for an empty group or a model with no targets", () => {
+        expect(groupComplete([], isChecked([]))).toBe(false);
+        expect(groupComplete([entry({viewKeys: [], columns: []})], isChecked([]))).toBe(false);
     });
 });
 

@@ -6,8 +6,7 @@ import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/ale
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import ToggleUserActiveState from "@coreModule/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type UserAccountSecurityEnableAccountFormProps = WithLanguageType & {specificUserId?: string, onSuccess: Function; userData: any};
@@ -58,7 +57,6 @@ function UserAccountSecurityEnableAccountForm({
                     {
                         disableUser &&
                         <ToggleUserActiveState
-                            hideCondition={!write?.roles?.keys?.active}
                             active={disableUser.active}
                             specificUserId={disableUser._id}
                             username={disableUser.username}
@@ -75,7 +73,6 @@ function UserAccountSecurityEnableAccountForm({
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/disableAccount/enableAccount.form.tsx"),
     withDebug(true, true, "users")
 )(UserAccountSecurityEnableAccountForm);

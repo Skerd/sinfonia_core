@@ -47,10 +47,7 @@ export function ReloginProvider({children}: {children: ReactNode}) {
         setFetchCount((c) => c + 1);
     }, []);
 
-    const value = useMemo<ReloginContextValue>(
-        () => ({triggerRelogin}),
-        [triggerRelogin]
-    );
+    const value = useMemo<ReloginContextValue>(() => ({triggerRelogin}), [triggerRelogin]);
 
     return (
         <ReloginContext.Provider value={value}>

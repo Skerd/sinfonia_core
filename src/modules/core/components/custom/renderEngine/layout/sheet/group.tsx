@@ -26,6 +26,10 @@ type SheetGroupProps = {
     defaultOpen?: boolean;
     /** When false, renders a static header (no collapse). Default true when a title is present. */
     collapsible?: boolean;
+    /** Root class (e.g. nested card chrome under a parent `#SheetGroup`). */
+    className?: string;
+    /** Merged onto the title. Use to drop section-header casing for nested groups. */
+    titleClassName?: string;
 };
 
 const STORAGE_PREFIX = "sheetGroupCollapse:";
@@ -66,6 +70,8 @@ export function SheetGroup({
     collapseStorageKey,
     defaultOpen = true,
     collapsible = true,
+    className,
+    titleClassName,
 }: SheetGroupProps) {
     const label = resolveLanguageKey && title ? String(resolveLanguageKey(title)) : title;
     const canCollapse = collapsible && !!label;
@@ -86,7 +92,12 @@ export function SheetGroup({
             {titleIcon != null ? (
                 <div className="shrink-0 rounded-md bg-background p-1">{titleIcon}</div>
             ) : null}
-            <p className="text-base font-semibold uppercase tracking-wide text-muted-foreground transition-colors group-hover/sheet-group:text-foreground">
+            <p
+                className={cn(
+                    "text-base font-semibold uppercase tracking-wide text-muted-foreground transition-colors group-hover/sheet-group:text-foreground",
+                    titleClassName,
+                )}
+            >
                 {label}
             </p>
         </>
@@ -97,7 +108,7 @@ export function SheetGroup({
             className={cn(
                 "flex w-full min-w-0 items-center gap-2",
                 "transition-colors",
-                open ? "border-b border-transparent pb-0" : "border-b border-border/70 pb-2",
+                !canCollapse || open ? "border-b border-transparent pb-0" : "border-b border-border/70 pb-2",
                 opts?.collapsible && !open && "group/sheet-group hover:border-foreground/25",
             )}
         >
@@ -151,7 +162,7 @@ export function SheetGroup({
 
     if (!canCollapse) {
         return (
-            <div className="flex flex-col gap-y-2">
+            <div className={cn("flex flex-col gap-y-2", className)}>
                 {label ? headerRow() : null}
                 {children}
             </div>
@@ -159,7 +170,7 @@ export function SheetGroup({
     }
 
     return (
-        <Collapsible open={open} onOpenChange={onOpenChange} className="flex flex-col gap-y-2">
+        <Collapsible open={open} onOpenChange={onOpenChange} className={cn("flex flex-col gap-y-2", className)}>
             {headerRow({collapsible: true})}
             <CollapsibleContent className="flex flex-col gap-y-2 data-[state=closed]:animate-none">
                 {children}

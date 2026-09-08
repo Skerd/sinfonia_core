@@ -8,7 +8,7 @@ import {useState} from "react";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {UserProfile} from "@coreModule/clients/panel/private/users/center/cardView";
 import {ChannelUser} from "armonia/src/modules/core/types";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ChatMemberInfoProps = WithLanguageType & {

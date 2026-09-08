@@ -1,26 +1,27 @@
-import {compose} from "redux";
 import { Outlet } from "react-router-dom";
-import withAuthentication from "@coreModule/helpers/hocs/withAuthentication.tsx";
-import withAccess from "@coreModule/helpers/hocs/withAccess.tsx";
-import withTableConfig from "@coreModule/helpers/hocs/withTableConfig.tsx";
-import withViewConfig from "@coreModule/helpers/hocs/withViewConfig.tsx";
-import withWebSocket from "@coreModule/helpers/hocs/withWebSocket.tsx";
-import withSiteRoom from "@coreModule/helpers/hocs/withSiteRoom.tsx";
+import {AccessProvider} from "@coreModule/helpers/context/accessContext.tsx";
+import {WebSocketProvider} from "@coreModule/helpers/context/webSocketContext.tsx";
+import {SiteRoomProvider} from "@coreModule/helpers/context/siteRoomContext.tsx";
+import {AuthenticationProvider} from "@coreModule/helpers/context/authenticationContext.tsx";
+import {TableConfigProvider} from "@coreModule/helpers/context/tableConfigContext.tsx";
+import {ViewConfigProvider} from "@coreModule/helpers/context/viewConfigContext.tsx";
 
-type PrivatePageProp = {}
-
-function PrivatePage({}:PrivatePageProp) {
-    return (<Outlet/>)
-    // return (<></>)
+function PrivatePage() {
+    return (
+        <AuthenticationProvider setupStep={1}>
+            <AccessProvider setupStep={2}>
+                <WebSocketProvider setupStep={3}>
+                    <SiteRoomProvider setupStep={4}>
+                        <TableConfigProvider setupStep={5}>
+                            <ViewConfigProvider setupStep={6}>
+                                <Outlet />
+                            </ViewConfigProvider>
+                        </TableConfigProvider>
+                    </SiteRoomProvider>
+                </WebSocketProvider>
+            </AccessProvider>
+        </AuthenticationProvider>
+    )
 }
 
-export default compose(
-    withAuthentication(),
-    withWebSocket(),
-    withSiteRoom(),
-    withTableConfig(),
-    withViewConfig(),
-    withAccess(),
-    // withImpersonation()
-)
-(PrivatePage)
+export default PrivatePage

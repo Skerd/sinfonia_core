@@ -3,9 +3,8 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import UserAccountSecurityChangePasswordForm from "@coreModule/clients/panel/private/accountSettings/security/changePassword/changePassword.form.tsx";
 import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
 
 type UserAccountSecurityChangePasswordProps = WithLanguageType & {
     specificUserId?: string;
@@ -33,7 +32,6 @@ function UserAccountSecurityChangePassword({
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/changePassword/index.tsx"),
     withDebug(true, true, "users")
 )(UserAccountSecurityChangePassword)

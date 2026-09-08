@@ -5,7 +5,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {toast} from "sonner";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
@@ -15,7 +15,7 @@ import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import {useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
 import type {FieldValues, UseFormReturn} from "react-hook-form";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
-import {resolveEntityPageKeys} from "@coreModule/components/entityPage/resolveEntityPageKeys.ts";
+import {resolveEntityPageKeys} from "@coreModule/helpers/general";
 
 type GenericEditPageConfig<TDto, TForm extends FieldValues> = {
     languagePath: string;

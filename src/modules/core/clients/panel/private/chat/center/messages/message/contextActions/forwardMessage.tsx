@@ -6,7 +6,7 @@ import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/co
 import {useDispatch} from "react-redux";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 

@@ -5,8 +5,7 @@ import {toast} from "sonner";
 import {KeyRound} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {getDeviceId} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
@@ -210,7 +209,6 @@ function UserAccountSecurityUserSession({specificUserId, resolveLanguageKey}: Us
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/userSession/index.tsx"),
     withDebug(true, true, "userSessions")
 )(UserAccountSecurityUserSession);

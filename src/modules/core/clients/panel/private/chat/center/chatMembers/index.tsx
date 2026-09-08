@@ -16,7 +16,7 @@ import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {ChannelUser} from "armonia/src/modules/core/types";
 import {AllChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.response.type.ts";
 import {AllChannelMembersFormType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ChatMembersProps = WithLanguageType & WithAxiosType<AllChannelMembersFormResponseType, AllChannelMembersFormType> & {

@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {clientWebSocket} from "@coreModule/helpers/hocs/withWebSocket.tsx";
+import {clientWebSocket} from "@coreModule/helpers/context/webSocketContext.tsx";
 import {openChannel, isPeekingWebsiteChannel, upsertChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import LeftChatPanel from "@coreModule/clients/panel/private/chat/left";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";

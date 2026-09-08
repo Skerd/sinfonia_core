@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/components/ui/sessionSetupScreen.tsx",
+  "hello": "Hello, {name}",
+  "helloFallback": "Hello",
+  "setupProgress": "Setting up the system {current}/{total}",
+  "fetching": {
+    "auth": "Verifying your session",
+    "access": "Loading your permissions",
+    "websocket": "Opening a live connection",
+    "siteRoom": "Joining the workspace",
+    "table": "Fetching table configurations",
+    "view": "Fetching view layouts"
+  },
+  "fail": {
+    "auth": {
+      "title": "Your session has expired"
+    },
+    "access": {
+      "title": "Could not load your permissions"
+    },
+    "websocket": {
+      "title": "Could not open a live connection"
+    },
+    "siteRoom": {
+      "title": "Could not join the workspace"
+    },
+    "table": {
+      "title": "Could not load table configurations"
+    },
+    "view": {
+      "title": "Could not load view layouts"
+    },
+    "description": "Try again. If this continues, refresh the page or sign in again."
+  },
+  "retry": "Try again",
+  "signOut": "Sign out"
+}

@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {memo, type RefObject} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {accessFieldPathExists} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {Mail, Power, Server} from "lucide-react";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import DisplayValue from "@coreModule/components/custom/displayValue/displayValue.tsx";

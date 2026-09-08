@@ -15,7 +15,7 @@ import {updateMessageReaction} from "@coreModule/helpers/redux/slices/chatSlice.
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {RemoveReactionFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/removeReaction.form.response.type.ts";
 import {RemoveReactionFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/removeReaction.form.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 
 type ReactionsProps = WithLanguageType & WithAxiosType<RemoveReactionFormResponseType, RemoveReactionFormType> & {
     messageId: string,

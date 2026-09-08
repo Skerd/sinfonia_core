@@ -297,6 +297,7 @@ export function getReferencesDefaultItemProp(token: string): string | undefined 
     return REFERENCES_DEFAULT_ITEM_PROP[token];
 }
 
+/** Safe after `widgetRegistry` finishes evaluating. Do not call from ViewRenderer module scope. */
 export function registerSheetFieldRenderer(token: string, renderer: SheetFieldRenderer): void {
     SHEET_FIELD_RENDERERS[token] = renderer;
 }

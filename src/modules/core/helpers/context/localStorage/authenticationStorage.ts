@@ -8,11 +8,10 @@ import {
 } from "@coreModule/helpers/context/localStorage/localStorageProvider.ts";
 
 const STORAGE_KEYS = {
-    token: "token",
-    refreshToken: "refreshToken",
-    user: "user",
-    deviceId: "deviceId",
-    impersonate: "impersonate",
+    token: "client-ui-user-token",
+    refreshToken: "client-ui-user-refreshToken",
+    user: "client-ui-user",
+    deviceId: "client-ui-user-deviceId"
 } as const;
 
 export const getToken = (): string | null => getLocalStorageValue(STORAGE_KEYS.token);
@@ -25,6 +24,12 @@ export const clearRefreshToken = (): void => removeLocalStorageValue(STORAGE_KEY
 
 export const getDeviceId = (): string | null => getLocalStorageValue(STORAGE_KEYS.deviceId);
 export const setDeviceId = (deviceId: string): void => setLocalStorageValue(STORAGE_KEYS.deviceId, deviceId);
+export const ensuredDeviceId = (): void => {
+    const deviceId = getDeviceId();
+    if (!deviceId){
+        setDeviceId(crypto.randomUUID());
+    }
+};
 
 export const getUser = (): ValidateTokenFormResponseType | null => {
     const raw = getLocalStorageValue(STORAGE_KEYS.user);
@@ -35,11 +40,9 @@ export const getUser = (): ValidateTokenFormResponseType | null => {
         return null;
     }
 };
-
 export const setUser = (user: ValidateTokenFormResponseType): void => {
     setLocalStorageValue(STORAGE_KEYS.user, JSON.stringify(user));
 };
-
 export const clearUser = (): void => removeLocalStorageValue(STORAGE_KEYS.user);
 
 export const clearAuth = (): void => {

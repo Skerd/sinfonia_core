@@ -9,7 +9,7 @@ import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {AddChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/addChannelMembers.form.response.type.ts";
 import {AddChannelMembersFormType} from "armonia/src/modules/core/api/user/private/chats/channels/addChannelMembers.form.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
 import {AllChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.response.type.ts";

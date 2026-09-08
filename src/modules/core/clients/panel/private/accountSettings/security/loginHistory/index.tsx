@@ -3,8 +3,7 @@ import {useMemo, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
 import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
@@ -169,7 +168,6 @@ function UserAccountSecurityLoginHistory({specificUserId, resolveLanguageKey}: U
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx"),
     withDebug(true, true, "loginHistories")
 )(UserAccountSecurityLoginHistory);

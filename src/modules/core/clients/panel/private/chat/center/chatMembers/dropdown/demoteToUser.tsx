@@ -12,7 +12,7 @@ import {useDispatch} from "react-redux";
 import {demoteToUser as demoteToUserAction} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {RemoveUserFromChannelAdminFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/removeUserFromChannelAdmin.form.response.type.ts";
 import {RemoveUserFromChannelAdminFormType} from "armonia/src/modules/core/api/user/private/chats/channels/removeUserFromChannelAdmin.form.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type DemoteToUserProps = WithLanguageType & WithAxiosType<RemoveUserFromChannelAdminFormResponseType, RemoveUserFromChannelAdminFormType> & {

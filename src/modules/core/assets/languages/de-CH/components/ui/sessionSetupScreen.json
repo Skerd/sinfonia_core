@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/components/ui/sessionSetupScreen.tsx",
+  "hello": "Hallo, {name}",
+  "helloFallback": "Hallo",
+  "setupProgress": "System wird eingerichtet {current}/{total}",
+  "fetching": {
+    "auth": "Sitzung wird überprüft",
+    "access": "Berechtigungen werden geladen",
+    "websocket": "Live-Verbindung wird hergestellt",
+    "siteRoom": "Arbeitsbereich wird betreten",
+    "table": "Tabellenkonfigurationen werden geladen",
+    "view": "Ansichtslayouts werden geladen"
+  },
+  "fail": {
+    "auth": {
+      "title": "Ihre Sitzung ist abgelaufen"
+    },
+    "access": {
+      "title": "Berechtigungen konnten nicht geladen werden"
+    },
+    "websocket": {
+      "title": "Live-Verbindung konnte nicht hergestellt werden"
+    },
+    "siteRoom": {
+      "title": "Arbeitsbereich konnte nicht betreten werden"
+    },
+    "table": {
+      "title": "Tabellenkonfigurationen konnten nicht geladen werden"
+    },
+    "view": {
+      "title": "Ansichtslayouts konnten nicht geladen werden"
+    },
+    "description": "Bitte erneut versuchen. Wenn das Problem weiterhin besteht, aktualisieren Sie die Seite oder melden Sie sich erneut an."
+  },
+  "retry": "Erneut versuchen",
+  "signOut": "Abmelden"
+}

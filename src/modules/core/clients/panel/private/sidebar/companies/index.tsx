@@ -16,7 +16,7 @@ import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 
 type CompaniesSwitcherProps = WithLanguageType & WithAxiosType<BasicCompanyInfoFormResponseType> & {};
 

@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import Message from "@coreModule/clients/panel/private/chat/center/messages/message";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {memo, useEffect, useRef, type RefObject} from "react";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";

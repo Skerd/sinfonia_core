@@ -1,7 +1,7 @@
 import {CheckCircle2, Clock, Globe2, MonitorSmartphone, XCircle} from "lucide-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {LoginHistory} from "armonia/src/modules/core/api/user/private/loginHistory/loginHistory.dto.ts";

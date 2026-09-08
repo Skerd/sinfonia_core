@@ -9,7 +9,7 @@ import {UpdateEmailPreferenceFormType} from "armonia/src/modules/core/api/user/p
 import {UpdateEmailPreferenceFormResponseType} from "armonia/src/modules/core/api/user/private/data/updateEmailPreference.form.response.type.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type UpdateEmailProps = WithLanguageType & WithAxiosType<UpdateEmailPreferenceFormResponseType, UpdateEmailPreferenceFormType> & {

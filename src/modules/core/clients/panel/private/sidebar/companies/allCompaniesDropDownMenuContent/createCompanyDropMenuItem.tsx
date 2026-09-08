@@ -4,7 +4,7 @@ import {useState} from "react";
 import {DropdownMenuItem, DropdownMenuSeparator} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Plus} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {
     Dialog,

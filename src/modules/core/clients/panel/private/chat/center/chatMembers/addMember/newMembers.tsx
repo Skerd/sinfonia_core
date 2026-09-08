@@ -17,7 +17,7 @@ import {SimpleUsersFormResponseType} from "armonia/src/modules/core/api/company/
 import {SimpleUsersFormType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.type.ts";
 import {SimpleUserType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.response.type.ts";
 import {createChannelFormSchema} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.validator.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import InfiniteList from "@coreModule/components/custom/infiniteList";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";

@@ -1,5 +1,5 @@
 {
-  "path": "src/modules/core/components/hooks/axiosRequestToast.tsx",
+  "path": "src/modules/core/helpers/hocs/withAxios.tsx",
   "error": "ERRORE",
   "success": "Successo",
   "requestInfo": "Richiedi informazioni"

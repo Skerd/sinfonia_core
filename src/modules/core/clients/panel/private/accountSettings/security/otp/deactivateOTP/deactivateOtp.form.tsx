@@ -17,7 +17,7 @@ import {deactivateMfaFormSchema} from "armonia/src/modules/core/api/user/private
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type AccountSecurityDeactivateOtpFormProps = WithAxiosType<DeactivateMfaFormResponseType, DeactivateMfaFormType> & WithLanguageType & {

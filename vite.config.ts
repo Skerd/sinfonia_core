@@ -53,17 +53,13 @@ function sinfoniaAppHtmlPlugin(appHtmlPath: string, appId: string): Plugin {
  * Serve / copy each client's `apps/<id>/assets/favIcon.png` as `/favIcon.png`,
  * overriding the shared `public/favIcon.png` when the per-app file exists.
  */
-function sinfoniaAppFaviconPlugin(appRoot: string, viteBase: string): Plugin {
+function sinfoniaAppFaviconPlugin(appRoot: string): Plugin {
     const faviconPath = path.join(appRoot, "assets", "favIcon.png");
     let outDir = path.resolve(__dirname, "dist");
 
     const isFaviconRequest = (rawUrl: string | undefined): boolean => {
         const pathname = (rawUrl ?? "").split("?")[0] ?? "";
-        if (pathname === "/favIcon.png") {
-            return true;
-        }
-        const basePath = viteBase.endsWith("/") ? viteBase.slice(0, -1) : viteBase;
-        return pathname === `${basePath}/favIcon.png`;
+        return pathname === "/favIcon.png";
     };
 
     return {
@@ -139,16 +135,6 @@ function enabledModulesExcludePlugin(rawEnv: string | undefined): Plugin {
 }
 
 
-/** Normalize deploy path to a Vite `base` (always `/` or `/segment/`). */
-function normalizeViteBasePath(raw: string | undefined): string {
-    const value = (raw ?? "/").trim() || "/";
-    if (value === "/") {
-        return "/";
-    }
-    const trimmed = value.replace(/^\/+|\/+$/g, "");
-    return `/${trimmed}/`;
-}
-
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, __dirname, "");
     const enabledModulesRaw =
@@ -156,18 +142,15 @@ export default defineConfig(({ mode }) => {
     const sinfoniaApp = resolveSinfoniaApp(
         process.env.VITE_SINFONIA_APP ?? env.VITE_SINFONIA_APP,
     );
-    const viteBase = normalizeViteBasePath(
-        process.env.VITE_BASE_PATH ?? env.VITE_BASE_PATH,
-    );
     // Scan `src/modules/*` → `@${dir}Module` aliases; keep tsconfig `paths` in sync for the IDE.
     syncTsconfigModulePaths();
 
     return {
-        base: viteBase,
+        base: "/",
         plugins: [
             enabledModulesExcludePlugin(enabledModulesRaw),
             sinfoniaAppHtmlPlugin(sinfoniaApp.indexHtml, sinfoniaApp.appId),
-            sinfoniaAppFaviconPlugin(sinfoniaApp.appRoot, viteBase),
+            sinfoniaAppFaviconPlugin(sinfoniaApp.appRoot),
             /* Studio only, dev server only: reads and writes maestro's `*.views.ts`. The
                plugin is `apply: "serve"`, so it cannot reach a production build. */
             studioSourcePlugin({

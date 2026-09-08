@@ -99,11 +99,7 @@ export function getCookie(name: string): string | undefined {
  * @param value - Cookie value (unencoded)
  * @param maxAgeOrOptions - Max age seconds or a full cookie options object.
  */
-export function setCookie(
-  name: string,
-  value: string,
-  maxAgeOrOptions?: number | SetCookieOptions
-): void {
+export function setCookie(name: string, value: string, maxAgeOrOptions?: number | SetCookieOptions): void {
   if (typeof document === 'undefined' || !name) return
 
   const options = normalizeSetCookieOptions(maxAgeOrOptions)

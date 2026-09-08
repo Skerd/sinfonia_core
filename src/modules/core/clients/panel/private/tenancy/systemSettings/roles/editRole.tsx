@@ -22,7 +22,7 @@ import {
 import {ActionMessage, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import PermissionsTable from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/permissionsTable.tsx";
 import {SimpleSelect} from "@coreModule/components/custom/simpleSelect";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";

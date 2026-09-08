@@ -8,9 +8,8 @@ import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import NewPhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/newPhoto.tsx";
 import DeletePhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/deletePhoto.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 
@@ -145,6 +144,5 @@ function UpdateCoverPhoto({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/index.tsx"),
-    withHidden(<HiddenCoverPhoto />),
     withDebug(true, true, "users")
 )(UpdateCoverPhoto);

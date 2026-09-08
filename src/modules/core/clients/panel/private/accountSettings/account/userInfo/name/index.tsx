@@ -13,8 +13,7 @@ import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import UpdateName from "@coreModule/clients/panel/private/accountSettings/account/userInfo/name/updateName.tsx";
 import {UserProfileNameFormResponse} from "armonia/src/modules/core/api/user/private/data/userProfileName.form.response.type.ts";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 
@@ -153,7 +152,6 @@ function AccountProfileName({
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/account/userInfo/name/index.tsx"),
     withAxios(
         {

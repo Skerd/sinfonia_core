@@ -29,7 +29,7 @@ import {Input} from "@coreModule/components/ui/input.tsx";
 import {Empty, EmptyDescription, EmptyHeader, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {StudioModelEntry} from "../catalog/useStudioCatalog.ts";
 import {useStudioDrafts} from "../draft/studioDraftProvider.tsx";
@@ -103,9 +103,9 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
     const viewCtx = useViewConfigContext();
     const {getViewDraft, setViewDraft, clearViewDraft, undo, redo} = useStudioDrafts();
 
-    /* The pristine server payload, deliberately read through `getApiViewConfig` so the
-       editor's "reset" and change list compare against the source, not the draft. */
-    const apiConfig = viewCtx?.getApiViewConfig(entry.collection, viewKey);
+    /* Server payload from the cache. Draft overlay is local so Reset / the change list
+       still compare against the source. */
+    const apiConfig = viewCtx?.getViewConfig(entry.collection, viewKey);
     const draft = getViewDraft(entry.collection, viewKey);
     const config: ViewConfig | undefined = draft ?? apiConfig;
 

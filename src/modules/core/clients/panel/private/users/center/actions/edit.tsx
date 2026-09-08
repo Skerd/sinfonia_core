@@ -3,7 +3,7 @@ import {compose} from "redux";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {UserPen} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {useDispatch} from "react-redux";
 import {editUser} from "@coreModule/helpers/redux/slices/uiSlice.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";

@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import {useAccess, useAccessHydrated} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess, useAccessHydrated} from "@coreModule/helpers/context/accessContext.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {ToggleGroup, ToggleGroupItem} from "@coreModule/components/ui/toggle-group.tsx";
 import {LayoutGrid, List, SlidersVertical} from "lucide-react";

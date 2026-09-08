@@ -3,7 +3,7 @@ import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/vi
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import ViewRenderer, {type ViewRendererContext} from "@coreModule/components/viewEngine/ViewRenderer.tsx";
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
-import type {AccessObject} from "@coreModule/helpers/hocs/withAccess.tsx";
+import type {AccessObject} from "@coreModule/helpers/context/accessContext.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {IconLayoutSidebarRightExpand} from "@tabler/icons-react";
 import type {SampleRow} from "./useSampleRows.ts";

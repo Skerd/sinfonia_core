@@ -7,7 +7,7 @@ import {Check, X} from "lucide-react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {UpdatePhoneNumberFormType} from "armonia/src/modules/core/api/user/private/data/updatePhoneNumber.form.type.ts";
 import {UpdatePhoneNumberFormResponseType} from "armonia/src/modules/core/api/user/private/data/updatePhoneNumber.form.response.type.ts";

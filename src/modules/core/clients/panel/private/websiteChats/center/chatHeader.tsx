@@ -14,7 +14,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {isPeekingWebsiteChannel, openChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {getName} from "@coreModule/helpers/general";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import ReleaseToBot from "@coreModule/clients/panel/private/websiteChats/center/releaseToBot.tsx";
 import ClosePublicChat from "@coreModule/clients/panel/private/websiteChats/center/closePublicChat.tsx";

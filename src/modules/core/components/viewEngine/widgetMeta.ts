@@ -100,6 +100,9 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
                 type: "string",
                 docs: "Overrides the collapse storage key derived from title + sheet model.",
             },
+            {name: "className", type: "string"},
+            {name: "titleClassName", type: "string"},
+            {name: "collapsible", type: "boolean", default: true},
         ],
     },
     "#SheetGrid": {
@@ -303,6 +306,12 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
                 docs: "Joined with `parent` to build the value, and to gate read access.",
             },
             {name: "bodyWidget", type: "string", suggest: "widgetToken"},
+            {
+                name: "titleActions",
+                type: "string",
+                suggest: "widgetToken",
+                docs: "Widget token on the card header row, e.g. `#ReferencesViewModeToggle`.",
+            },
             {name: "valueType", type: "enum", enum: ["linkedObjectRefCardList"]},
             {name: "linkedSheetModel", type: "string"},
             {name: "linkedSheetWidget", type: "string", suggest: "widgetToken"},

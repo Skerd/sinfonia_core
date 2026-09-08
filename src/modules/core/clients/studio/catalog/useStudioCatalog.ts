@@ -5,7 +5,7 @@ import type {
 } from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type";
 import {useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
 import {useTableConfigContext} from "@coreModule/helpers/context/tableConfigContext.tsx";
-import {useAccessMap} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccessMap} from "@coreModule/helpers/context/accessContext.tsx";
 import {useStudioDrafts} from "../draft/studioDraftProvider.tsx";
 import {moduleForModel, type StudioModuleId} from "./studioModules.ts";
 import {STUDIO_PREVIEW_KEY_PREFIX} from "../studioTarget.ts";
@@ -13,12 +13,12 @@ import {STUDIO_PREVIEW_KEY_PREFIX} from "../studioTarget.ts";
 /**
  * The Studio's model catalog.
  *
- * Assembled entirely from data the guard's HOCs have already fetched — there is no
+ * Assembled entirely from data the guard has already fetched — there is no
  * Studio endpoint and no new Maestro surface:
  *
- *  - `withViewConfig`  → `GET /api/auxiliary/viewConfigs`   → sheet / form trees
- *  - `withTableConfig` → `GET /api/auxiliary/tableConfigs`  → column configs
- *  - `withAccess`      → `POST /api/user/permissions/access/all` → readable / writable paths
+ *  - `ViewConfigProvider`  → `GET /api/auxiliary/viewConfigs`   → sheet / form trees
+ *  - `TableConfigProvider` → `GET /api/auxiliary/tableConfigs`  → column configs
+ *  - `AccessProvider`     → `POST /api/user/permissions/access/all` → readable / writable paths
  *
  * All three are keyed by the Mongoose collection name (`countries`, `units`), which is
  * also the `tableConfigKey` and the `model` on a `ViewConfig`.

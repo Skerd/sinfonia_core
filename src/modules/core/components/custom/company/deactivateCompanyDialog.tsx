@@ -4,7 +4,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {DeactivateCompanyFormType} from "armonia/src/modules/core/api/company/private/company/deactivateCompany.form.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {
     AlertDialog,
     AlertDialogAction,

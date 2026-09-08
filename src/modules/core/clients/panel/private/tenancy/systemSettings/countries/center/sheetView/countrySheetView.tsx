@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {useEffect, useState} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {Country} from "armonia/src/modules/core/api/auxiliary/private/country/country.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import ViewStates from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewStates.tsx";

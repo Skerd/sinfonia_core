@@ -33,7 +33,7 @@ import {
     API_SELECT_CREATE_ADAPTER_BY_API_URL,
     API_SELECT_INLINE_CREATE_FALLBACK_LABEL_KEY_BY_API_URL,
 } from "@coreModule/components/custom/apiSelect/createFromSearchRegistry.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 

@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/components/ui/sessionSetupScreen.tsx",
+  "hello": "Përshëndetje, {name}",
+  "helloFallback": "Përshëndetje",
+  "setupProgress": "Po konfigurohet sistemi {current}/{total}",
+  "fetching": {
+    "auth": "Po verifikon seancën",
+    "access": "Po ngarkon lejet",
+    "websocket": "Po hapet lidhja e drejtpërdrejtë",
+    "siteRoom": "Po bashkohet me hapësirën e punës",
+    "table": "Po ngarkon konfigurimet e tabelës",
+    "view": "Po ngarkon paraqitjet e pamjes"
+  },
+  "fail": {
+    "auth": {
+      "title": "Seanca juaj ka skaduar"
+    },
+    "access": {
+      "title": "Lejet nuk mund të ngarkoheshin"
+    },
+    "websocket": {
+      "title": "Lidhja e drejtpërdrejtë nuk mund të hapet"
+    },
+    "siteRoom": {
+      "title": "Nuk u bashkua me hapësirën e punës"
+    },
+    "table": {
+      "title": "Konfigurimet e tabelës nuk mund të ngarkoheshin"
+    },
+    "view": {
+      "title": "Paraqitjet e pamjes nuk mund të ngarkoheshin"
+    },
+    "description": "Provo sërish. Nëse problemi vazhdon, rifresko faqen ose regjistrohu përsëri."
+  },
+  "retry": "Provo sërish",
+  "signOut": "Dilni"
+}

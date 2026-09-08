@@ -10,7 +10,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {accessFieldPathExists} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {ImageDown, Maximize2, Minimize2} from "lucide-react";
 import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx";

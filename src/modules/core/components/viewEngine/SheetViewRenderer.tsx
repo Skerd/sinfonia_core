@@ -1,7 +1,7 @@
 import {useState, type ReactNode, useEffect, useImperativeHandle, type ComponentType, useMemo, useRef, useCallback} from "react";
 import type { ViewConfig, ViewNode, SheetHeaderConfig } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
-import type { AccessObject } from "@coreModule/helpers/hocs/withAccess.tsx";
+import type { AccessObject } from "@coreModule/helpers/context/accessContext.tsx";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@coreModule/components/ui/sheet.tsx";
 import { Badge } from "@coreModule/components/ui/badge.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";

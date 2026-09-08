@@ -18,7 +18,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {openChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {getName} from "@coreModule/helpers/general";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 
 type MessageHeaderProps = {
     defaultTitle: string

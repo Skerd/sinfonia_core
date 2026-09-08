@@ -28,7 +28,7 @@ import ProfilePhoto
     from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/profilePhoto.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {getName} from "@coreModule/helpers/general";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import type {
     CompanyUserRequestsType,
     CompanyUserType
@@ -298,20 +298,28 @@ function UserProfileCardInner({
                         (read.photo || read.cover) &&
                         <div className="relative p-0 rounded-ee-none gap-0 rounded-es-none mb-2 border"
                              style={{height: bannerSize}}>
+                            {read.cover ? (
                             <CoverPhoto
                                 key={`cover-${data._id}-${data.cover ?? ""}`}
                                 specificUserId={data._id}
-                                hideCondition={!read.cover}
                             />
+                            ) : (
+                                <div className="flex items-center justify-center w-full min-h-[150px]">
+                                    <HiddenElement />
+                                </div>
+                            )}
                             <div
                                 className="flex items-center justify-center bg-muted-foreground border-4 border-background absolute bottom-[-25px] left-8 rounded-full"
                                 style={{width: avatarSize, height: avatarSize}}>
                                 <div className="w-full h-full rounded-full">
+                                    {read.photo ? (
                                     <ProfilePhoto
                                         key={`photo-${data._id}-${data.photo ?? ""}`}
                                         specificUserId={data._id}
-                                        hideCondition={!read.photo}
                                     />
+                                    ) : (
+                                        <HiddenElement />
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -2,7 +2,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {GroupedPermissions} from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {
     ColumnDef,

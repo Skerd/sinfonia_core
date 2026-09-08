@@ -18,8 +18,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@c
 import ToggleUserActiveState from "@coreModule/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx";
 import {disableAccountFormSchema} from "armonia/src/modules/core/api/user/private/status/disableAccount.form.validator.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type UserAccountSecurityDisableAccountFormProps = WithAxiosType<DisableAccountFormResponseType, DisableAccountFormType> & WithLanguageType & {
@@ -167,7 +166,6 @@ function UserAccountSecurityDisableAccountForm({
                         <ToggleUserActiveState
                             active={disableUser.active}
                             specificUserId={disableUser._id}
-                            hideCondition={!write?.roles?.keys?.active}
                             username={disableUser.username}
                             onSuccess={(newState: boolean) => {onSuccess(newState);}}
                             onComplete={() => {
@@ -182,7 +180,6 @@ function UserAccountSecurityDisableAccountForm({
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/disableAccount/disableAccount.form.tsx"),
     withAxios(
         {

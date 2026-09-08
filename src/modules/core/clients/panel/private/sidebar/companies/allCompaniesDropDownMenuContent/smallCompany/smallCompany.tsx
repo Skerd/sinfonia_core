@@ -4,7 +4,7 @@ import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 
 type SmallCompanyProps = { company: BasicCompanyInfoFormResponseType, index: number}
 

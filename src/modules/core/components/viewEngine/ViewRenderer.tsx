@@ -17,6 +17,7 @@ import { cn } from "@coreModule/components/lib/utils.ts";
 import {
     getReferencesDefaultItemProp,
     getSheetFieldRenderer,
+    registerSheetFieldRenderer,
     resolveWidget,
     resolveIcon,
 } from "./widgetRegistry.ts";
@@ -246,10 +247,25 @@ function SheetEmbeddedItemsListHost(props: {
         cardColumns,
         pageSize,
         listClassName: typeof wp.listClassName === "string" ? wp.listClassName : undefined,
+        className: typeof wp.className === "string" ? wp.className : undefined,
         sortField: typeof wp.sortField === "string" ? wp.sortField : undefined,
         sortDescending: wp.sortDescending !== false,
         sheetLanguageKey: resolveLanguageKey,
     });
+}
+
+/**
+ * Core sheet-field branches that also serve `#DisplayCard` `bodyWidget`.
+ * Must not run at module top-level: `widgetRegistry` is still in TDZ while cards
+ * → sheets → ViewRenderer load (`Cannot access 'SHEET_FIELD_RENDERERS' before initialization`).
+ */
+let coreSheetFieldRenderersRegistered = false;
+function ensureCoreSheetFieldRenderers(): void {
+    if (coreSheetFieldRenderersRegistered) return;
+    coreSheetFieldRenderersRegistered = true;
+    registerSheetFieldRenderer("#SheetEmbeddedItemsList", ({node, binding, ctx, index}) =>
+        createElement(SheetEmbeddedItemsListHost, {node, binding, ctx, index}),
+    );
 }
 
 type ViewRendererProps = {
@@ -469,6 +485,7 @@ function renderSheetField(
     ctx: ViewRendererContext,
     index: number
 ): ReactNode {
+    ensureCoreSheetFieldRenderers();
     const { data } = ctx;
     const wp = binding.widgetProps ?? {};
 
@@ -1465,6 +1482,24 @@ function renderDisplayCard(
         }
     }
 
+    const actionsToken =
+        typeof wp.titleActions === "string" && wp.titleActions.startsWith("#")
+            ? wp.titleActions
+            : wp.showViewModeToggle === true
+              ? "#ReferencesViewModeToggle"
+              : "";
+    let headerActions: ReactNode | undefined;
+    if (actionsToken.length > 0) {
+        const ActionsComp = resolveWidget(actionsToken);
+        if (ActionsComp) {
+            headerActions = createElement(ActionsComp, {
+                ...(actionsToken === "#ReferencesViewModeToggle" && ctx.resolveLanguageKey
+                    ? {sheetLanguageKey: ctx.resolveLanguageKey}
+                    : {}),
+            });
+        }
+    }
+
     return (
         <Component
             key={index}
@@ -1491,6 +1526,7 @@ function renderDisplayCard(
             linkedReferenceSheet={linkedReferenceSheet}
             expandable={wp.expandable === true}
             maxLength={typeof wp.maxLength === "number" ? wp.maxLength : undefined}
+            headerActions={headerActions}
         />
     );
 }

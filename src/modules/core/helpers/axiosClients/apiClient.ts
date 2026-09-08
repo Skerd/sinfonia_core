@@ -33,11 +33,8 @@ const getErrorCode = (error: AxiosError): string | undefined => {
     if (!data || typeof data !== "object") {
         return undefined;
     }
-    const record = data as Record<string, unknown>;
-    // authMW serializes as `errorCode`; some paths use `error_code`
-    if (typeof record.errorCode === "string") return record.errorCode;
-    if (typeof record.error_code === "string") return record.error_code;
-    return undefined;
+    const errorCode = (data as Record<string, unknown>).error_code;
+    return typeof errorCode === "string" ? errorCode : undefined;
 };
 
 const isSessionExpiredError = (error: AxiosError): boolean => {
@@ -81,8 +78,7 @@ apiClient.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
         if (isSessionExpiredError(error) && shouldHandleSessionExpiry()) {
-            // Do not hard-redirect: withAuthentication shows the session-expired dialog,
-            // then signs out / navigates after the delay or OK click.
+            // Do not hard-redirect: AuthenticationProvider shows the session setup screen.
             store.dispatch(markSessionExpired());
         }
         return Promise.reject(error);

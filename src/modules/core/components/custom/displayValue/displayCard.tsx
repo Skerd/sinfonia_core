@@ -6,11 +6,12 @@ import {
     Item,
     ItemActions,
     ItemContent,
+    ItemHeader,
     ItemMedia,
     ItemTitle,
 } from "@coreModule/components/ui/item.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {IconInfoCircle, IconLink} from "@tabler/icons-react";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
@@ -79,6 +80,8 @@ type DisplayCardProps = {
     /** When true, long values show read more / read less inside the card. */
     expandable?: boolean;
     maxLength?: number;
+    /** Trailing header controls (e.g. Compact/Cards) on the same row as icon + title. */
+    headerActions?: ReactNode;
 };
 
 const containerStyles: Record<DisplayCardVariant, string> = {
@@ -191,6 +194,7 @@ export default function DisplayCard({
     linkedReferenceSheet,
     expandable = false,
     maxLength,
+    headerActions,
 }: DisplayCardProps) {
     const accessResourceId = linkedReferenceSheet?.resourceId ?? "";
     const LinkedSheet = linkedReferenceSheet?.LinkedSheet;
@@ -220,6 +224,82 @@ export default function DisplayCard({
     const [avatarOpen, setAvatarOpen] = useState(false);
     const tooltipText = tooltip != null ? String(tooltip).trim() : "";
     const hasTooltip = tooltipText.length > 0;
+    const stackedBody = type !== "media" && isValidElement(value);
+
+    const media = avatar != null ? (
+        <ItemMedia className={stackedBody ? undefined : "self-start"}>
+            <button
+                type="button"
+                aria-label={`View photo of ${avatar.name}`}
+                className="cursor-pointer rounded-full outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-ring"
+                onClick={() => setAvatarOpen(true)}
+            >
+                <SheetMediaAvatar
+                    mediaId={avatar.mediaId}
+                    name={avatar.name}
+                    /* Sized to the icon well it replaces, not to a profile header. */
+                    className="size-10 border-0 shadow-none"
+                />
+            </button>
+        </ItemMedia>
+    ) : flagCode ? (
+        /* The same 40px square an icon's well occupies (20px glyph + p-2.5), but
+           filled edge to edge. `object-cover` crops the flag's sides rather than
+           stretching it out of its 4:3. */
+        <ItemMedia
+            className={cn(
+                "size-10 shrink-0 overflow-hidden rounded-md",
+                !stackedBody && "self-start",
+                iconWrapStyles[variant],
+            )}
+        >
+            <CountryFlag
+                code={flagCode}
+                width={40}
+                height={40}
+                className="h-full w-full rounded-none object-cover"
+            />
+        </ItemMedia>
+    ) : Icon != null ? (
+        <ItemMedia
+            className={cn(
+                "p-2.5 rounded-md",
+                !stackedBody && "self-start",
+                iconWrapStyles[variant],
+            )}
+        >
+            <Icon
+                className={cn(
+                    "h-5 w-5",
+                    accentTextStyles[variant],
+                )}
+            />
+        </ItemMedia>
+    ) : null;
+
+    const titleRow = (
+        <div className="flex min-w-0 items-center gap-1">
+            <ItemTitle className="min-w-0 font-medium text-muted-foreground">
+                {title}
+            </ItemTitle>
+            {hasTooltip && (
+                <TooltipDisplayer tooltip={tooltipText}>
+                    <button
+                        type="button"
+                        className={cn(
+                            "inline-flex shrink-0 items-center justify-center rounded-full",
+                            "text-muted-foreground/70 hover:text-muted-foreground",
+                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                        )}
+                        aria-label={tooltipText}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <IconInfoCircle className="size-3.5" stroke={1.75} />
+                    </button>
+                </TooltipDisplayer>
+            )}
+        </div>
+    );
 
     return (
         <>
@@ -227,82 +307,27 @@ export default function DisplayCard({
                 variant="outline"
                 className={cn("h-fit items-start gap-2 p-2", containerStyles[variant])}
             >
-                {avatar != null ? (
-                    <ItemMedia className="self-start">
-                        <button
-                            type="button"
-                            aria-label={`View photo of ${avatar.name}`}
-                            className="cursor-pointer rounded-full outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-ring"
-                            onClick={() => setAvatarOpen(true)}
-                        >
-                            <SheetMediaAvatar
-                                mediaId={avatar.mediaId}
-                                name={avatar.name}
-                                /* Sized to the icon well it replaces, not to a profile header. */
-                                className="size-10 border-0 shadow-none"
-                            />
-                        </button>
-                    </ItemMedia>
-                ) : flagCode ? (
-                    /* The same 40px square an icon's well occupies (20px glyph + p-2.5), but
-                       filled edge to edge. `object-cover` crops the flag's sides rather than
-                       stretching it out of its 4:3. */
-                    <ItemMedia
-                        className={cn(
-                            "size-10 shrink-0 self-start overflow-hidden rounded-md",
-                            iconWrapStyles[variant],
-                        )}
-                    >
-                        <CountryFlag
-                            code={flagCode}
-                            width={40}
-                            height={40}
-                            className="h-full w-full rounded-none object-cover"
-                        />
-                    </ItemMedia>
+                {stackedBody ? (
+                    <ItemHeader className="min-w-0 flex-nowrap">
+                        <div className="flex min-w-0 items-center gap-2">
+                            {media}
+                            {titleRow}
+                        </div>
+                        {headerActions != null ? (
+                            <div className="flex shrink-0 items-center">{headerActions}</div>
+                        ) : null}
+                    </ItemHeader>
                 ) : (
-                    Icon != null && (
-                        <ItemMedia
-                            className={cn(
-                                "self-start p-2.5 rounded-md",
-                                iconWrapStyles[variant],
-                            )}
-                        >
-                            <Icon
-                                className={cn(
-                                    "h-5 w-5",
-                                    accentTextStyles[variant],
-                                )}
-                            />
-                        </ItemMedia>
-                    )
+                    <>
+                        {media}
+                    </>
                 )}
-                <ItemContent className="min-w-0 gap-0.5">
-                    <div className="flex items-center gap-1 min-w-0">
-                        <ItemTitle className="min-w-0 font-medium text-muted-foreground">
-                            {title}
-                        </ItemTitle>
-                        {hasTooltip && (
-                            <TooltipDisplayer tooltip={tooltipText}>
-                                <button
-                                    type="button"
-                                    className={cn(
-                                        "inline-flex shrink-0 items-center justify-center rounded-full",
-                                        "text-muted-foreground/70 hover:text-muted-foreground",
-                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                                    )}
-                                    aria-label={tooltipText}
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    <IconInfoCircle className="size-3.5" stroke={1.75} />
-                                </button>
-                            </TooltipDisplayer>
-                        )}
-                    </div>
+                <ItemContent className={cn("min-w-0 gap-0.5", stackedBody && "basis-full")}>
+                    {stackedBody ? null : titleRow}
                     {!dontRenderValue && locked ? (
                         <HiddenElement showLock />
                     ) : !dontRenderValue && (
-                        type === "media" || isValidElement(value) ? (
+                        type === "media" ? (
                             <DisplayValue
                                 value={value}
                                 path={path}
@@ -312,6 +337,23 @@ export default function DisplayCard({
                                 size={size}
                                 show={show}
                             />
+                        ) : isValidElement(value) ? (
+                            <div
+                                className={cn(
+                                    "text-sm font-normal",
+                                    value != null ? valueTextStyles[variant] : undefined,
+                                )}
+                            >
+                                <DisplayValue
+                                    value={value}
+                                    path={path}
+                                    type={type}
+                                    languageKeyCategory={languageKeyCategory}
+                                    format={format}
+                                    size={size}
+                                    show={show}
+                                />
+                            </div>
                         ) : expandable ? (
                             <div
                                 className={cn(

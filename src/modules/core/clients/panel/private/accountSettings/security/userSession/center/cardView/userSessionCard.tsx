@@ -1,7 +1,7 @@
 import {Clock, Globe2, Monitor, ShieldCheck} from "lucide-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {UserSession} from "armonia/src/modules/core/api/user/private/userSession/userSession.dto.ts";

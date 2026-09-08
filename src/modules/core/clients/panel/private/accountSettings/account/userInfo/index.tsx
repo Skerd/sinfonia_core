@@ -14,7 +14,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import AccountCompaniesCardEditRoles from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles";
 import {RequestsSection, hasRequestsData} from "@coreModule/clients/panel/private/users/center/cardView/userProfileCard.tsx";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
@@ -79,11 +79,14 @@ function UserAccountProfileUserInfo({
 
     return (
         <div className="flex flex-col gap-y-4">
-            <AccountProfileAndCoverPhoto
-                hideCondition={!read?.photo && !read?.cover}
-                specificUserId={specificUserId}
-                onPhotoUpdate={(updates: any) => updateRow?.(specificUserId ?? id, updates)}
-            />
+            {(read.photo || read.cover) ? (
+                <AccountProfileAndCoverPhoto
+                    specificUserId={specificUserId}
+                    onPhotoUpdate={(updates: any) => updateRow?.(specificUserId ?? id, updates)}
+                />
+            ) : (
+                <HiddenElement />
+            )}
 
             <div className="flex items-center flex-wrap gap-x-0.5">
                 <HiddenElement>
@@ -121,12 +124,12 @@ function UserAccountProfileUserInfo({
                 </HiddenElement>
             </div>
 
+            {read.username ? (
             <AccountProfileEmail
                 invited={data?.status === "invited"}
                 defaultValue={data?.username}
                 defaultVerified={data?.verified}
                 defaultUnverifiedEmail={data?.unverifiedEmail}
-                hideCondition={!read?.username}
                 specificUserId={specificUserId}
                 onUpdate={(email: string) => {
                     // Reflect pending email verification + activation request immediately on the card/list
@@ -146,9 +149,12 @@ function UserAccountProfileUserInfo({
                     setForceReload(Date.now());
                 }}
             />
+            ) : (
+                <HiddenElement />
+            )}
+            {read.name ? (
             <AccountProfileName
                 defaultValue={data?.name}
-                hideCondition={!read?.name}
                 specificUserId={specificUserId}
                 onUpdate={(name: string) => {
                     updateRow?.(specificUserId ?? id, {name});
@@ -157,9 +163,12 @@ function UserAccountProfileUserInfo({
                     }
                 }}
             />
+            ) : (
+                <HiddenElement />
+            )}
+            {read.surname ? (
             <AccountProfileSurname
                 defaultValue={data?.surname}
-                hideCondition={!read?.surname}
                 specificUserId={specificUserId}
                 onUpdate={(surname: string) => {
                     updateRow?.(specificUserId ?? id, {surname})
@@ -168,9 +177,12 @@ function UserAccountProfileUserInfo({
                     }
                 }}
             />
+            ) : (
+                <HiddenElement />
+            )}
+            {read.phoneNumber ? (
             <AccountProfilePhoneNumber
                 defaultValue={data?.phoneNumber}
-                hideCondition={!read?.phoneNumber}
                 specificUserId={specificUserId}
                 onUpdate={(phoneNumber: string) => {
                     updateRow?.(specificUserId ?? id, {phoneNumber});
@@ -179,15 +191,21 @@ function UserAccountProfileUserInfo({
                     }
                 }}
             />
+            ) : (
+                <HiddenElement />
+            )}
+            {read.timezone ? (
             <AccountProfileTimeZone
                 defaultValue={data?.timezone}
-                hideCondition={!read?.timezone}
                 specificUserId={specificUserId}
                 onTimeZoneUpdate={(timezone: string) => {
                     setCurrentTimeZone(timezone);
                     updateRow?.(specificUserId ?? id, { timezone });
                 }}
             />
+            ) : (
+                <HiddenElement />
+            )}
             <AccountCompaniesCardEditRoles
                 specificUserId={specificUserId}
                 roles={data?.roles || []}

@@ -90,7 +90,7 @@ export function buildTsModulePaths() {
     return Object.fromEntries(
         listModuleDirs().map((name) => [
             `@${name}Module/*`,
-            [`src/modules/${name}/*`],
+            [`./src/modules/${name}/*`],
         ]),
     );
 }

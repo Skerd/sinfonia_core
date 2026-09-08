@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {compose} from "redux";
-import {clientWebSocket} from "@coreModule/helpers/hocs/withWebSocket.tsx";
+import {clientWebSocket} from "@coreModule/helpers/context/webSocketContext.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import EndpointPerformance from "@coreModule/clients/panel/private/online/serverStats/endpointPerformance.tsx";
 import UserActivity from "@coreModule/clients/panel/private/online/serverStats/userActivity.tsx";

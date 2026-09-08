@@ -7,7 +7,7 @@ import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/
 import {useState} from "react";
 import AddMembersToChannel from "@coreModule/clients/panel/private/chat/center/chatMembers/addMember/addMembersToChannel.tsx";
 import NewChatMembers from "@coreModule/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type AddMemberProps = WithLanguageType & {

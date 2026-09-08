@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import {
     GenerateTelegramQrCodeFormResponseType

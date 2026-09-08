@@ -20,7 +20,7 @@ const MISSING_TABLE_CONFIG_ERROR = new Error("table_config_not_found");
 
 /**
  * Reads table configuration from TableConfigContext by key (e.g. "cities", "countries").
- * Config is pre-populated by withTableConfig HOC. Returns filters, columns, columnVisibility.
+ * Config is pre-populated by TableConfigProvider. Returns filters, columns, columnVisibility.
  * Pass null or empty string to skip.
  * After the bulk prefetch hydrates, a missing key is an error rather than endless loading.
  */

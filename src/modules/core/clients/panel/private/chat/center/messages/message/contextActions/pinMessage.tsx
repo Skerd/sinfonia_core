@@ -8,7 +8,7 @@ import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcu
 import {useImperativeHandle} from "react";
 import {updateMessagePinned} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch} from "react-redux";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {PinMessageFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/pinMessage.form.response.type.ts";
 import {PinMessageFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/pinMessage.form.type.ts";

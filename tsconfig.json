@@ -31,17 +31,23 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@coreModule/*": ["src/modules/core/*"],
-      "@eCommerceModule/*": ["src/modules/eCommerce/*"],
-      "@eCommerceMarketplaceModule/*": ["src/modules/eCommerceMarketplace/*"],
-      "@financeModule/*": ["src/modules/finance/*"],
-      "@musicIndustryModule/*": ["src/modules/musicIndustry/*"],
-      "@propertyManagementModule/*": ["src/modules/propertyManagement/*"],
-      "@swissOutreachModule/*": ["src/modules/swissOutreach/*"],
+      "@coreModule/*": ["./src/modules/core/*"],
+      "@eCommerceModule/*": ["./src/modules/eCommerce/*"],
+      "@eCommerceMarketplaceModule/*": ["./src/modules/eCommerceMarketplace/*"],
+      "@financeModule/*": ["./src/modules/finance/*"],
+      "@musicIndustryModule/*": ["./src/modules/musicIndustry/*"],
+      "@propertyManagementModule/*": ["./src/modules/propertyManagement/*"],
+      "@swissOutreachModule/*": ["./src/modules/swissOutreach/*"],
       "armonia/*": ["../armonia/*"],
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
+  "include": [
+    "src",
+    "scripts",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist"

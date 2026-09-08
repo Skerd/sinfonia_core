@@ -4,7 +4,7 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {LockKeyholeOpen} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
 import type {UnlockInvitationFormType} from "armonia/src/modules/core/api/company/private/users/unlockInvitation.form.type.ts";
 import type {UnlockInvitationFormResponseType} from "armonia/src/modules/core/api/company/private/users/unlockInvitation.form.response.type.ts";

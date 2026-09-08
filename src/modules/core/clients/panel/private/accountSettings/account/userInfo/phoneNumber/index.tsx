@@ -13,8 +13,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import UpdatePhoneNumber from "@coreModule/clients/panel/private/accountSettings/account/userInfo/phoneNumber/updatePhoneNumber.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type AccountProfilePhoneNumberProps = WithLanguageType & WithAxiosType<PhoneNumberFormResponseType> & {
@@ -153,7 +152,6 @@ function AccountProfilePhoneNumber({
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/account/userInfo/phoneNumber/index.tsx"),
     withAxios(
         {

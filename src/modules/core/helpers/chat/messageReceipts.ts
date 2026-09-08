@@ -1,4 +1,4 @@
-import {sendWebsocketMessage} from "@coreModule/helpers/hocs/withWebSocket.tsx";
+import {sendWebsocketMessage} from "@coreModule/helpers/context/webSocketContext.tsx";
 import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {MarkMessageReceiptFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/markMessageReceipt.form.response.type.ts";

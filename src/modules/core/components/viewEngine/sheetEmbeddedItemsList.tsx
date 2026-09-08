@@ -315,6 +315,8 @@ export type SheetEmbeddedItemsListProps = WithLanguageType & {
     /** Items per page; omit to show all. */
     pageSize?: number;
     listClassName?: string;
+    /** Merged onto the list root (e.g. `p-0` when the list is a `#DisplayCard` body). */
+    className?: string;
     sortField?: string;
     sortDescending?: boolean;
     sheetLanguageKey?: ResolveLanguageKey;
@@ -330,6 +332,7 @@ function SheetEmbeddedItemsList({
     cardColumns,
     pageSize,
     listClassName,
+    className,
     sortField,
     sortDescending = true,
     resolveLanguageKey,
@@ -362,7 +365,7 @@ function SheetEmbeddedItemsList({
 
     if (!Array.isArray(items) || items.length === 0 || pagination.total === 0) {
         return (
-            <div className="p-4">
+            <div className={cn("flex flex-col gap-y-2 p-4", className)}>
                 <ValueNotSet />
             </div>
         );
@@ -375,7 +378,7 @@ function SheetEmbeddedItemsList({
 
     const listBody =
         displayMode === "compact" ? (
-            <div className="flex flex-col gap-y-1">
+            <div className="flex flex-col gap-y-0.5">
                 {pagination.slice.map((item, i) => {
                     const parts = buildCompactSummaryParts(
                         item,
@@ -385,7 +388,7 @@ function SheetEmbeddedItemsList({
                     );
                     if (parts.length === 0) return null;
                     return (
-                        <div key={itemKey(item, i)} className="flex items-start gap-2 py-0.5">
+                        <div key={itemKey(item, i)} className="flex items-start gap-2 rounded-lg px-3 py-1">
                             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/50" />
                             <p className="text-sm text-muted-foreground line-clamp-2 min-w-0">
                                 {parts.map((part, pi) => (
@@ -507,7 +510,7 @@ function SheetEmbeddedItemsList({
         );
 
     return (
-        <div className="flex flex-col gap-y-2 p-4">
+        <div className={cn("flex flex-col gap-y-2 p-4", className)}>
             <div className={cn("flex flex-col gap-2 gap-y-2 max-h-[350px] overflow-y-auto", listClassName)}>{listBody}</div>
             <SheetListPaginationFooter
                 rangeLabel={pagination.rangeLabel}

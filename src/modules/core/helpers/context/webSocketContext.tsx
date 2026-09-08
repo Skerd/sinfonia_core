@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo} from "react";
+import {useCallback, useEffect, useMemo, useState, type ReactNode} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     newMessage,
@@ -28,6 +28,7 @@ import {GetMessageSingleFormResponseType} from "armonia/src/modules/core/api/use
 import {MessageReactionType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {sendReceiptsNow} from "@coreModule/helpers/chat/messageReceipts.ts";
 import useWebSocket from "react-use-websocket";
+import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
 import {GetMessageReactionsSingleFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/getMessageReactionsSingle.form.response.type.ts";
 import {GetMessagePinSingleFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/getMessagePinSingle.form.response.type.ts";
 import {NotificationType} from "armonia/src/modules/core/api/user/private/notifications/notifications.dto.ts";
@@ -42,7 +43,7 @@ import {ServerStatsDto} from "armonia/src/modules/core/api/auxiliary/private/ser
 
 
 /**
- * Shared websocket instance used by the chat HOC.
+ * Shared websocket instance used by chat, receipts, and presence consumers.
  * It is module-scoped so reconnect guards can prevent duplicate connections.
  */
 export let clientWebSocket: any = null;
@@ -62,16 +63,6 @@ export let sendWebsocketMessage: any = null;
  * - Socket `error`, message parse failures, and connection exceptions are forwarded via `onError`.
  * - Connection status is mirrored in redux through `updateWebSocketConnectionStatus`.
  */
-
-//     case "MESSAGE_MENTIONED": {
-//         if (isObject(payload) && payload.message && payload.channelId) {
-//             dispatch(newMessage({channelId: payload.channelId, message: payload.message}));
-//             toast(payload.message.sender?.username || "Someone", {
-//                 description: `@${payload.message.sender?.username || "someone"} mentioned you in ${payload.channelId || "a channel"}`
-//             });
-//         }
-//         break;
-//     }
 
 const PUBLIC_CHAT_HANDOFF_CODE = "PUBLIC_CHAT_HANDOFF_REQUESTED";
 
@@ -230,79 +221,100 @@ function messageEvaluator(message: MessageEvent, dispatch: any, userId: string) 
     }
 }
 
+type WebSocketProviderProps = {
+    children: ReactNode;
+    setupStep?: number;
+    setupTotal?: number;
+};
 
+/**
+ * Shows the setup step, starts the socket, and immediately continues.
+ * The connection completes in the background — the panel does not wait for it.
+ */
+export function WebSocketProvider({
+    children,
+    setupStep = 3,
+    setupTotal = SESSION_SETUP_TOTAL_STEPS,
+}: WebSocketProviderProps) {
+    const dispatch = useDispatch();
+    const token = useSelector((state: RootState) => state.authentication.token);
+    const userId = useSelector((state: RootState) => state.authentication.user?.id);
+    const languageCode = useSelector((state: RootState) => state.language.languageCode);
+    const [showSetup, setShowSetup] = useState(true);
 
-const withWebSocket = () => (WrappedComponent: any) => {
-    function EnhancedComponent_WithWebSocket(props: any) {
+    const WS_URL = useMemo(() => {
+        if (!token) return null;
+        return `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws/${token}/${languageCode}`;
+    }, [token, languageCode]);
+    const handleMessage = useCallback((message: MessageEvent) => {
+        messageEvaluator(message, dispatch, userId);
+    }, [dispatch, userId]);
 
-        const dispatch = useDispatch();
-        const token = useSelector((state: RootState) => state.authentication.token);
-        const userId = useSelector((state: RootState) => state.authentication.user?.id);
-        const languageCode = useSelector((state: RootState) => state.language.languageCode);
+    useEffect(() => {
+        window.addEventListener('beforeunload', () => {
+            console.log('PAGE RELOAD TRIGGERED');
+        });
+    }, []);
 
-        const WS_URL = useMemo(() => {
-            if (!token) return null;
-            return `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws/${token}/${languageCode}`;
-        }, [token, languageCode]);
-        const handleMessage = useCallback((message: MessageEvent) => {
-            messageEvaluator(message, dispatch, userId);
-        }, [dispatch, userId]);
-
-        useEffect(() => {
-            window.addEventListener('beforeunload', () => {
-                console.log('PAGE RELOAD TRIGGERED');
-            });
-        }, []);
-
-        const {sendJsonMessage, getWebSocket} = useWebSocket(
-            WS_URL,
-            {
-                retryOnError: true,
-                reconnectAttempts: Infinity,
-                reconnectInterval: (attemptNumber) => {
-                    const backoffMs = Math.min(30000, 1000 * Math.pow(2, attemptNumber));
-                    return backoffMs + Math.floor(Math.random() * 1000);
-                },
-                shouldReconnect: (closeEvent) => {
-                    return ![1000, 1008].includes(closeEvent.code);
-                },
-                onOpen: () => {
-                    clientWebSocket = getWebSocket();
-                    console.log("WS: Websocket connection opened successfully");
-                    dispatch(updateWebSocketConnectionStatus(true));
-                },
-                onClose: (event) => {
-                    clientWebSocket = null;
-                    console.log(`WS: Websocket connection closed (code: ${event.code}, reason: ${event.reason || 'none'})`);
-                    dispatch(updateWebSocketConnectionStatus(false));
-                },
-                onError: (error) => {
-                    console.error("WS: Websocket error:", error);
-                    dispatch(updateWebSocketConnectionStatus(false));
-                },
-                onMessage: handleMessage
-            }
-        );
-
-        useEffect(() => {
-            sendWebsocketMessage = (message: any) => {
-                sendJsonMessage(message)
-            };
-            clientWebSocket = getWebSocket();
-            return () => {
-                sendWebsocketMessage = null;
+    const {sendJsonMessage, getWebSocket} = useWebSocket(
+        WS_URL,
+        {
+            retryOnError: true,
+            reconnectAttempts: Infinity,
+            reconnectInterval: (attemptNumber) => {
+                const backoffMs = Math.min(30000, 1000 * Math.pow(2, attemptNumber));
+                return backoffMs + Math.floor(Math.random() * 1000);
+            },
+            shouldReconnect: (closeEvent) => {
+                return ![1000, 1008].includes(closeEvent.code);
+            },
+            onOpen: () => {
+                clientWebSocket = getWebSocket();
+                console.log("WS: Websocket connection opened successfully");
+                dispatch(updateWebSocketConnectionStatus(true));
+            },
+            onClose: (event) => {
                 clientWebSocket = null;
-            };
-        }, [sendJsonMessage, getWebSocket]);
+                console.log(`WS: Websocket connection closed (code: ${event.code}, reason: ${event.reason || 'none'})`);
+                dispatch(updateWebSocketConnectionStatus(false));
+            },
+            onError: (error) => {
+                console.error("WS: Websocket error:", error);
+                dispatch(updateWebSocketConnectionStatus(false));
+            },
+            onMessage: handleMessage
+        }
+    );
 
+    useEffect(() => {
+        sendWebsocketMessage = (message: any) => {
+            sendJsonMessage(message)
+        };
+        clientWebSocket = getWebSocket();
+        return () => {
+            sendWebsocketMessage = null;
+            clientWebSocket = null;
+        };
+    }, [sendJsonMessage, getWebSocket]);
+
+    useEffect(() => {
+        setShowSetup(false);
+    }, []);
+
+    if (showSetup) {
         return (
-            <WrappedComponent {...props} />
-        )
+            <SessionSetupScreen
+                step={setupStep}
+                total={setupTotal}
+                phase="websocket"
+                error={false}
+                onRetry={() => {}}
+            />
+        );
     }
 
-    return EnhancedComponent_WithWebSocket;
+    return children;
 }
 
-export default withWebSocket;
 
 

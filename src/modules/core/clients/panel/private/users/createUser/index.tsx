@@ -6,7 +6,7 @@ import CreateUserForm from "@coreModule/clients/panel/private/users/createUser/c
 import {UserPlus} from "lucide-react";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type CreateUsersProps = WithLanguageType & {

@@ -9,7 +9,6 @@ import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Media} from "armonia/src/modules/core/types";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
 
 type ProfilePhotoProps = WithLanguageType & WithAxiosType<Media> & {
     photoUrl: string | null;
@@ -76,7 +75,6 @@ function CoverPhoto({
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/coverPhoto.tsx"),
     withAxios(
         {

@@ -51,3 +51,11 @@ export function checkedProgress(
     ).length;
     return {checked, total: targets.length, complete: targets.length > 0 && checked === targets.length};
 }
+
+/** True when every model in the group is itself complete — the module header turns green. */
+export function groupComplete(
+    entries: readonly StudioModelEntry[],
+    isChecked: (target: StudioTarget) => boolean,
+): boolean {
+    return entries.length > 0 && entries.every((entry) => checkedProgress(entry, isChecked).complete);
+}

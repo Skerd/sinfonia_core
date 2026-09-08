@@ -7,7 +7,7 @@ import {
     type ReactNode,
     type RefObject,
 } from "react";
-import {useAccess, accessFieldPathExists} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess, accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {useEntityCard} from "@coreModule/helpers/hooks/useEntityCard.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";

@@ -12,7 +12,7 @@ import {changePasswordFormSchema} from "armonia/src/modules/core/api/user/privat
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {ChangePasswordFormType} from "armonia/src/modules/core/api/user/private/data/changePassword.form.type.ts";
 import {ChangePasswordFormResponseType} from "armonia/src/modules/core/api/user/private/data/changePassword.form.response.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type UserAccountSecurityChangePasswordFormProps = WithLanguageType & WithAxiosType<ChangePasswordFormResponseType, ChangePasswordFormType> & {

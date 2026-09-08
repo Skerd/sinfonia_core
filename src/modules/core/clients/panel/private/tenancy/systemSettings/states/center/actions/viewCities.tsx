@@ -5,7 +5,7 @@ import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcu
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Building2} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 
 type ViewCitiesProps = WithLanguageType & {
     countryId?: string;

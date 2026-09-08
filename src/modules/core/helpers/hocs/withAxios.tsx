@@ -1,5 +1,6 @@
 import {toast} from "sonner";
 import {ComponentType, RefObject, useEffect, useRef, useState} from 'react';
+import JsonView from "@uiw/react-json-view";
 import {replaceFilesWithIds} from "@coreModule/helpers/media/uploadFilesForSubmit.ts";
 import useIsInViewport from "@coreModule/helpers/hooks/useIsInViewPort.ts";
 import {getClientConfig} from "@coreModule/helpers/general";
@@ -9,9 +10,58 @@ import useHttpRequest, {
     HttpRequestLifecycleFunctions,
     RequestPayload
 } from "@coreModule/helpers/hooks/useHttpRequest.ts";
-import AxiosRequestToast from "@coreModule/components/hooks/axiosRequestToast.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 
 const config = getClientConfig();
+
+const WITH_AXIOS_LANGUAGE_PATH = "src/modules/core/helpers/hocs/withAxios.tsx";
+
+type AxiosRequestToastProps = WithLanguageType & {
+    url: string;
+    headers: Record<string, string>;
+    response: unknown;
+    requestData?: unknown;
+    isError?: boolean;
+    httpRequest: string;
+};
+
+function AxiosRequestToast({
+    url,
+    headers,
+    response,
+    requestData,
+    isError = false,
+    httpRequest,
+    resolveLanguageKey,
+}: AxiosRequestToastProps) {
+    return (
+        <div className="min-w-xs max-w-xs overflow-auto min-h-[20vh] max-h-[20vh]">
+            <div className="flex items-center gap-x-1">
+                <p className="uppercase font-semibold">[{httpRequest}]</p>
+                {
+                    isError ?
+                    <p className="text-destructive uppercase font-semibold">[{resolveLanguageKey("error")}]</p>
+                    :
+                    <p className="text-green-600 uppercase font-semibold">[{resolveLanguageKey("success")}]</p>
+                }
+                <p>
+                    {resolveLanguageKey("requestInfo")}:
+                </p>
+            </div>
+            <JsonView
+                value={{
+                    url: url,
+                    headers: headers ?? {},
+                    requestData: requestData ?? {},
+                    response: response ?? {}
+                }}
+                collapsed={1}
+            />
+        </div>
+    );
+}
+
+const LocalizedAxiosRequestToast = withLanguage(WITH_AXIOS_LANGUAGE_PATH)(AxiosRequestToast);
 
 /**
  * Combines multipart payload and optional JSON metadata.
@@ -85,7 +135,7 @@ function hasNestedFile(value: unknown): boolean {
  * Behavior:
  * - Starts fetching immediately by default.
  * - When `childPost` is true, waits until one of the mutators triggers a fetch.
- * - Re-fetches when payload changes or impersonated user changes.
+ * - Re-fetches when payload changes.
  * - Can defer requests until the observed element is in viewport.
  */
 const withAxios =
@@ -128,14 +178,16 @@ const withAxios =
                 const inViewPort = !!httpRequest.onlyCallWhenInViewPort ? isInViewPort : true;
 
                 function updateRequestToast() {
+                    const snapshot = toastStateRef.current;
                     toastIdRef.current = toast(
-                        <AxiosRequestToast
-                            url={toastStateRef.current.url}
-                            headers={toastStateRef.current.headers}
-                            response={toastStateRef.current.response}
-                            requestData={toastStateRef.current.data}
-                            isError={toastStateRef.current.isError}
-                            httpRequest={toastStateRef.current.httpRequest}
+                        <LocalizedAxiosRequestToast
+                            key={`${snapshot.httpRequest}-${snapshot.isError}-${snapshot.response == null ? "pending" : "done"}`}
+                            url={snapshot.url}
+                            headers={snapshot.headers}
+                            response={snapshot.response}
+                            requestData={snapshot.data}
+                            isError={snapshot.isError}
+                            httpRequest={snapshot.httpRequest}
                         />,
                         {id: toastIdRef.current}
                     );
@@ -157,7 +209,7 @@ const withAxios =
                 }
 
                 function notifySuccess(data: { data: ResponseType | null }) {
-                    if (config.debugging.enableFormResponseSuccessInfo) {
+                    if (config.debugging.enableFormPostInfo || config.debugging.enableFormResponseSuccessInfo) {
                         toastStateRef.current = {
                             ...toastStateRef.current,
                             response: data.data,
@@ -168,7 +220,7 @@ const withAxios =
                 }
 
                 function notifyError(data: { data: unknown }) {
-                    if (config.debugging.enableFormResponseErrorInfo) {
+                    if (config.debugging.enableFormPostInfo || config.debugging.enableFormResponseErrorInfo) {
                         toastStateRef.current = {
                             ...toastStateRef.current,
                             response: data.data,

@@ -9,7 +9,7 @@ import {
     readQuickFilterLabelsFromUrl,
     readQuickFiltersFromUrl,
 } from "@coreModule/helpers/hooks/useListUrlState.ts";
-import {useAccess, type AccessObject} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess, type AccessObject} from "@coreModule/helpers/context/accessContext.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
 import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
@@ -20,7 +20,7 @@ import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
 import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
-import {useDynamicLanguage} from "@coreModule/components/entityPage/useDynamicLanguage.ts";
+import {useDynamicLanguage} from "@coreModule/helpers/hooks/useDynamicLanguage.ts";
 import type {DeletedData, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import type {FilterGroup, FilterValue} from "armonia/src/modules/core/database/filter";
 import {generateUUID, type PageTitle} from "@coreModule/helpers/general";

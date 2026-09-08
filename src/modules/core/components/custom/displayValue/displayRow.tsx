@@ -4,7 +4,7 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Item, ItemMedia} from "@coreModule/components/ui/item.tsx";
 import {useRestrictedField} from "@coreModule/components/custom/infoRowGroup.tsx";
-import {accessFieldPathExists} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {formatDate} from "@coreModule/helpers/general";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {useAccessFieldsRead} from "./accessFields.tsx";

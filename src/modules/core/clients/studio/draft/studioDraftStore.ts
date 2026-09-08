@@ -7,9 +7,8 @@ import type {
  * Studio drafts — edits that have not been exported back into source yet.
  *
  * Deliberately client-only. `*.views.ts` and the Mongoose `dynamicTableConfiguration`
- * blocks stay the single source of truth; a draft is an overlay that the Studio
- * previews through the existing {@link import("@coreModule/helpers/context/viewConfigMergeContext.tsx").ViewConfigMergeProvider}
- * and then prints as TypeScript for a human to reconcile.
+ * blocks stay the single source of truth; a draft is an overlay the editor applies
+ * locally (`draft ?? apiConfig`) and then prints as TypeScript for a human to reconcile.
  */
 
 const STORAGE_KEY = "studio:draft:v1";

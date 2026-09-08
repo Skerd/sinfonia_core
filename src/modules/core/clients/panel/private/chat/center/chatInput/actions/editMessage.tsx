@@ -8,7 +8,7 @@ import {Pencil, X} from "lucide-react";
 import {getName} from "@coreModule/helpers/general";
 import {editMessage as editMessageAction, setActionMessage} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import withLanguage from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {EditMessageFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/editMessage.form.response.type.ts";
 import {EditMessageFormType} from "armonia/src/modules/core/api/user/private/chats/messages/editMessage.form.type.ts";

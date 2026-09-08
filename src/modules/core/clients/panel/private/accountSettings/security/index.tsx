@@ -7,7 +7,8 @@ import UserAccountSecurityOTP from "@coreModule/clients/panel/private/accountSet
 import UserAccountSecurityLoginHistory from "@coreModule/clients/panel/private/accountSettings/security/loginHistory";
 import UserAccountSecurityUserSession from "@coreModule/clients/panel/private/accountSettings/security/userSession";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
 type SecurityProps = WithLanguageType & { specificUserId?: string }
 
@@ -24,11 +25,23 @@ function Security({
             desc={resolveLanguageKey("description")}
         >
             <div className="flex flex-col gap-y-4">
-                <UserAccountSecurityChangePassword hideCondition={!write.password} specificUserId={specificUserId}/>
-                <UserAccountSecurityOTP hideCondition={!read?.mfaStatus}  specificUserId={specificUserId}/>
+                {write.password ? (
+                    <UserAccountSecurityChangePassword specificUserId={specificUserId}/>
+                ) : (
+                    <HiddenElement />
+                )}
+                {read.mfaStatus ? (
+                    <UserAccountSecurityOTP specificUserId={specificUserId}/>
+                ) : (
+                    <HiddenElement />
+                )}
                 <UserAccountSecurityUserSession specificUserId={specificUserId}/>
                 <UserAccountSecurityLoginHistory specificUserId={specificUserId}/>
-                <UserAccountSecurityDisableAccount hideCondition={!read?.roles?.keys?.active} specificUserId={specificUserId} onActiveChange={(status: boolean) => { updateRow?.(specificUserId!, {status: status ? "active" : "inactive"}) }}/>
+                {read.roles?.keys?.active ? (
+                    <UserAccountSecurityDisableAccount specificUserId={specificUserId} onActiveChange={(status: boolean) => { updateRow?.(specificUserId!, {status: status ? "active" : "inactive"}) }}/>
+                ) : (
+                    <HiddenElement />
+                )}
             </div>
         </ContentSection>
     )

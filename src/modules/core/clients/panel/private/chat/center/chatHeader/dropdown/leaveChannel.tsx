@@ -13,7 +13,7 @@ import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import {DeleteChannelFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/deleteChannel.form.response.type.ts";
 import {DeleteChannelFormType} from "armonia/src/modules/core/api/user/private/chats/channels/deleteChannel.form.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ToastPromiseHandlers = {

@@ -9,7 +9,7 @@ import {deleteChannel, openChannel} from "@coreModule/helpers/redux/slices/chatS
 import {useDispatch} from "react-redux";
 import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import type {ActionMessage, SingleForm} from "armonia/src/modules/core/types/shared.types";
 

@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {ReactNode, useEffect, useLayoutEffect, useRef, useState} from "react";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {EllipsisVertical} from "lucide-react";

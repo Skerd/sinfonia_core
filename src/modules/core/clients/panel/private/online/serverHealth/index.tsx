@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {compose} from "redux";
 import {CheckCircle, AlertCircle} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {clientWebSocket} from "@coreModule/helpers/hocs/withWebSocket.tsx";
+import {clientWebSocket} from "@coreModule/helpers/context/webSocketContext.tsx";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";

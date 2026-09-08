@@ -19,7 +19,7 @@ import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import type {StudioCatalog, StudioModelEntry} from "./useStudioCatalog.ts";
 import {groupByModule} from "./studioModules.ts";
 import {usePersistedIdSet} from "./usePersistedIdSet.ts";
-import {checkedProgress, useCheckedTargets, type CheckedTargets} from "./checkedTargets.ts";
+import {checkedProgress, groupComplete, useCheckedTargets, type CheckedTargets} from "./checkedTargets.ts";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {TABLE_TARGET, type StudioTarget} from "../studioTarget.ts";
 
@@ -262,6 +262,7 @@ export default function ModelCatalogPane({
                         /* A filter that matched inside a collapsed group would hide its own
                            results, so filtering always shows what it found. */
                         const isCollapsed = !isFiltering && collapsedModules.has(group.id);
+                        const allComplete = groupComplete(group.entries, checked.isChecked);
                         return (
                             <div key={group.id} className="mb-2">
                                 <button
@@ -275,7 +276,12 @@ export default function ModelCatalogPane({
                                     ) : (
                                         <IconChevronDown className="size-3.5 shrink-0 text-muted-foreground" />
                                     )}
-                                    <span className="truncate text-2xs font-semibold uppercase tracking-wide text-muted-foreground">
+                                    <span
+                                        className={cn(
+                                            "truncate text-2xs font-semibold uppercase tracking-wide",
+                                            allComplete ? "text-success" : "text-muted-foreground",
+                                        )}
+                                    >
                                         {group.label}
                                     </span>
                                     <Badge

@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from '@coreModule/helpers/context/cookies/cookies.ts'
+import {getLocalStorageValue, setLocalStorageValue} from '@coreModule/helpers/context/localStorage/localStorageProvider.ts'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, ReactNode } from 'react'
 
 /**
@@ -10,8 +10,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, R
 export type Density = 'comfortable' | 'compact'
 
 const DEFAULT_DENSITY: Density = 'comfortable'
-const DENSITY_COOKIE_NAME = 'client-ui-density'
-const DENSITY_COOKIE_MAX_AGE = 60 * 60 * 24 * 365 // 1 year
+const DENSITY_STORAGE_KEY = 'client-ui-density'
 
 const VALID_DENSITIES: readonly Density[] = ['comfortable', 'compact']
 
@@ -27,18 +26,13 @@ type DensityProviderState = {
 type DensityProviderProps = {
     children: ReactNode
     defaultDensity?: Density
-    storageKey?: string
 }
 
 const DensityContext = createContext<DensityProviderState | undefined>(undefined)
 
-export function DensityProvider({
-    children,
-    defaultDensity = DEFAULT_DENSITY,
-    storageKey = DENSITY_COOKIE_NAME,
-}: DensityProviderProps) {
+export function DensityProvider({children, defaultDensity = DEFAULT_DENSITY}: DensityProviderProps) {
     const [density, _setDensity] = useState<Density>(() => {
-        const persisted = getCookie(storageKey)
+        const persisted = getLocalStorageValue(DENSITY_STORAGE_KEY)
         return isDensity(persisted) ? persisted : defaultDensity
     })
 
@@ -54,16 +48,15 @@ export function DensityProvider({
     }, [density])
 
     const setDensity = useCallback((next: Density) => {
-        setCookie(storageKey, next, DENSITY_COOKIE_MAX_AGE)
+        setLocalStorageValue(DENSITY_STORAGE_KEY, next)
         _setDensity(next)
-    }, [storageKey])
+    }, [])
 
     const contextValue = useMemo(() => ({ density, setDensity }), [density, setDensity])
 
     return <DensityContext value={contextValue}>{children}</DensityContext>
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useDensity = () => {
     const context = useContext(DensityContext)
     if (context === undefined) throw new Error('useDensity must be used within a DensityProvider')

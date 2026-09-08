@@ -10,7 +10,7 @@ import SaveNewCompanyRoles from "@coreModule/clients/panel/private/accountSettin
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {AccessibleRolesFormResponseType} from "armonia/src/modules/core/api/user/private/permissions/accessibleRoles.form.response.type.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";

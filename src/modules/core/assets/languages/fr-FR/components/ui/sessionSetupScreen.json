@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/components/ui/sessionSetupScreen.tsx",
+  "hello": "Bonjour, {name}",
+  "helloFallback": "Bonjour",
+  "setupProgress": "Configuration du système {current}/{total}",
+  "fetching": {
+    "auth": "Vérification de votre session",
+    "access": "Chargement de vos autorisations",
+    "websocket": "Ouverture de la connexion en direct",
+    "siteRoom": "Connexion à l'espace de travail",
+    "table": "Récupération des configurations de tableau",
+    "view": "Récupération des mises en page"
+  },
+  "fail": {
+    "auth": {
+      "title": "Votre session a expiré"
+    },
+    "access": {
+      "title": "Impossible de charger vos autorisations"
+    },
+    "websocket": {
+      "title": "Impossible d'ouvrir la connexion en direct"
+    },
+    "siteRoom": {
+      "title": "Impossible de rejoindre l'espace de travail"
+    },
+    "table": {
+      "title": "Impossible de charger les configurations de tableau"
+    },
+    "view": {
+      "title": "Impossible de charger les mises en page"
+    },
+    "description": "Réessayez. Si le problème persiste, actualisez la page ou reconnectez-vous."
+  },
+  "retry": "Réessayer",
+  "signOut": "Se déconnecter"
+}

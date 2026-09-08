@@ -5,7 +5,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useEffect, useImperativeHandle, useState} from "react";
 import {LoaderCircle, Trash2} from "lucide-react";
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle} from "@coreModule/components/ui/alert-dialog.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";

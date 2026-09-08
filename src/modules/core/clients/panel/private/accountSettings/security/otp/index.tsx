@@ -12,9 +12,8 @@ import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.t
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
 
 function ToggleButton({otpEnabled, setOpenWhat, loading, resolveLanguageKey}:{otpEnabled: boolean, setOpenWhat: Function, loading: boolean, resolveLanguageKey: Function, specificUserId?: string}){
     return (
@@ -137,19 +136,25 @@ function UserAccountSecurityOTP({
                 <>
                     {
                         openWhat === "disable" ?
+                        write.mfaStatus ? (
                         <AccountSecurityDeactivateOtpForm
-                            hideCondition={!write.mfaStatus}
                             onSuccess={() => {setOtpEnabled(false); setOpenWhat(null);}}
                             onCancel={() => {setOpenWhat(null);}}
                             specificUserId={specificUserId}
                         />
+                        ) : (
+                            <HiddenElement />
+                        )
                         :
+                        write.mfaStatus ? (
                         <AccountSecurityOtpEnableOTP
-                            hideCondition={!write.mfaStatus}
                             onSuccess={() => {setOtpEnabled(true); setOpenWhat(null);}}
                             onCancel={() => {setOpenWhat(null);}}
                             specificUserId={specificUserId}
                         />
+                        ) : (
+                            <HiddenElement />
+                        )
                     }
                 </>
             }
@@ -158,7 +163,6 @@ function UserAccountSecurityOTP({
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/otp/index.tsx"),
     withAxios(
         {

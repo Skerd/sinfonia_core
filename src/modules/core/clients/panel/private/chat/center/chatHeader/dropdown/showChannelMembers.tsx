@@ -8,7 +8,7 @@ import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {Users} from "lucide-react";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import ChatMembers from "@coreModule/clients/panel/private/chat/center/chatMembers";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ShowChannelMembersProps = WithLanguageType & {

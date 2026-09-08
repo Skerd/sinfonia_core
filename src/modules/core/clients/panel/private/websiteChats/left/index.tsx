@@ -4,7 +4,7 @@ import {Globe, SearchIcon} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useEffect, useRef, useState} from "react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {PageHelp, readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";

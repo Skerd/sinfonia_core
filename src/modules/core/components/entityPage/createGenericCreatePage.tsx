@@ -4,14 +4,14 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import FormViewRenderer from "@coreModule/components/viewEngine/FormViewRenderer.tsx";
 import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import {useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
 import type {FieldValues} from "react-hook-form";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
-import {resolveEntityPageKeys} from "@coreModule/components/entityPage/resolveEntityPageKeys.ts";
+import {resolveEntityPageKeys} from "@coreModule/helpers/general";
 
 type GenericCreatePageConfig<TForm extends FieldValues> = {
     languagePath: string;

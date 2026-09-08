@@ -99,10 +99,7 @@ export function collectObjectIdValuesFromDsl(dsl: FilterDSL | undefined): Record
 }
 
 /** Keep only labels for ids still referenced by the applied DSL (keeps URLs smaller). */
-export function pruneFilterLabelsToDsl(
-    labels: FilterRefLabels,
-    dsl: FilterDSL | undefined,
-): FilterRefLabels {
+export function pruneFilterLabelsToDsl(labels: FilterRefLabels, dsl: FilterDSL | undefined,): FilterRefLabels {
     const used = collectObjectIdValuesFromDsl(dsl);
     const out: FilterRefLabels = {};
     for (const [fieldPath, idMap] of Object.entries(labels)) {
@@ -126,11 +123,7 @@ export function buildFilterGroup(rules: FilterRule[]): FilterGroup {
     };
 }
 
-export function buildFilterRule(
-    field: string,
-    operator: FilterRule["operator"],
-    value: FilterRule["value"],
-): FilterRule {
+export function buildFilterRule(field: string, operator: FilterRule["operator"], value: FilterRule["value"],): FilterRule {
     return {
         id: generateUUID(),
         field,
@@ -185,10 +178,7 @@ function isListChromeParamKey(key: string): boolean {
     );
 }
 
-function applyScope(
-    params: URLSearchParams,
-    scope: Record<string, string | null | undefined>,
-): void {
+function applyScope(params: URLSearchParams, scope: Record<string, string | null | undefined>,): void {
     for (const [key, value] of Object.entries(scope)) {
         if (value == null || value === "") params.delete(key);
         else params.set(key, value);

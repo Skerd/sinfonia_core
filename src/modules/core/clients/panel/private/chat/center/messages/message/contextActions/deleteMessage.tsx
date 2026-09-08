@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type DeleteMessageProps = WithLanguageType & {

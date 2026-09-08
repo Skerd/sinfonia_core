@@ -6,7 +6,7 @@ import {useEffect, useImperativeHandle, useState} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {DeleteProfileCoverPhotoFormResponseType} from "armonia/src/modules/core/api/user/private/data/deleteProfileCoverPhoto.form.response.type.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type DeletePhotoProps = WithLanguageType & WithAxiosType<DeleteProfileCoverPhotoFormResponseType> & {

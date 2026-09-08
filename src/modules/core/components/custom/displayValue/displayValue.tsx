@@ -7,7 +7,7 @@ import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
 import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {IconPhoto} from "@tabler/icons-react";
-import {accessFieldPathExists, useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {accessFieldPathExists, useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import SheetMediaFilesStrip from "@coreModule/components/viewEngine/sheetMediaFilesStrip.tsx";
 import type {Media} from "armonia/src/modules/core/types";
 import {useAccessFieldsRead} from "./accessFields.tsx";

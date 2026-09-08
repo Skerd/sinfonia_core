@@ -14,7 +14,7 @@ import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
 import {getName} from "@coreModule/helpers/general";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 
 type ChatMemberProps = WithLanguageType & {

@@ -1,7 +1,7 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess, accessFieldPathExists} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess, accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {CompanyRole as CompanyRoleType} from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
 import {DeleteResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle} from "@coreModule/components/ui/sheet.tsx";

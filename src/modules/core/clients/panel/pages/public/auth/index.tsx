@@ -9,26 +9,7 @@ import AcceptInvitation from "@coreModule/clients/panel/public/auth/acceptInvita
 import LanguageSwitch from "@coreModule/components/custom/languageSwitch.tsx";
 import ThemeSwitch from "@coreModule/components/custom/themeSwitch.tsx";
 import {resolveAuthPanelComponent} from "@coreModule/clients/panel/moduleContributions/loadAuthPanelContributions.ts";
-import {ReactNode} from "react";
 import {GalleryVerticalEnd} from "lucide-react";
-
-type AuthLayoutProps = {
-    children: ReactNode
-}
-
-function AuthLayout({ children }: AuthLayoutProps) {
-    return (
-        <div className='container grid grid-cols-1 h-svh max-w-none items-center justify-center px-2'>
-            <div className='mx-auto flex w-full flex-col justify-center gap-y-2 py-8 sm:w-[480px] sm:p-8'>
-                <div className='mb-4 flex items-center justify-center'>
-                    <GalleryVerticalEnd className='me-2' />
-                    <h1 className='text-xl font-medium'>{window.location.host}</h1>
-                </div>
-                {children}
-            </div>
-        </div>
-    )
-}
 
 export default function AuthenticationPage() {
 
@@ -36,19 +17,25 @@ export default function AuthenticationPage() {
     const ModuleAuthPanel = resolveAuthPanelComponent(panel);
 
     return (
-        <AuthLayout>
-            {panel === "login" && <Login />}
-            {panel === "requestResetPassword" && <ForgotPassword />}
-            {panel === "resetPassword" && <ChangeForgottenPassword />}
-            {panel === "deactivateOTP" && <ConfirmOTPDeactivation />}
-            {panel === "signUp" && <SignUp />}
-            {panel === "activateAccount" && <ActivateAccount />}
-            {panel === "acceptInvitation" && <AcceptInvitation />}
-            {ModuleAuthPanel ? <ModuleAuthPanel /> : null}
-            <div className="flex justify-center">
-                <LanguageSwitch showTitles={true} />
-                <ThemeSwitch showTitles={true}/>
+        <div className='container grid grid-cols-1 h-svh max-w-none items-center justify-center px-2'>
+            <div className='mx-auto flex w-full flex-col justify-center gap-y-2 py-8 sm:w-[480px] sm:p-8'>
+                <div className='mb-4 flex items-center justify-center'>
+                    <GalleryVerticalEnd className='me-2' />
+                    <h1 className='text-xl font-medium'>{window.location.host}</h1>
+                </div>
+                {panel === "login" && <Login />}
+                {panel === "requestResetPassword" && <ForgotPassword />}
+                {panel === "resetPassword" && <ChangeForgottenPassword />}
+                {panel === "deactivateOTP" && <ConfirmOTPDeactivation />}
+                {panel === "signUp" && <SignUp />}
+                {panel === "activateAccount" && <ActivateAccount />}
+                {panel === "acceptInvitation" && <AcceptInvitation />}
+                {ModuleAuthPanel ? <ModuleAuthPanel /> : null}
+                <div className="flex justify-center">
+                    <LanguageSwitch showTitles={true} />
+                    <ThemeSwitch showTitles={true}/>
+                </div>
             </div>
-        </AuthLayout>
+        </div>
     )
 }

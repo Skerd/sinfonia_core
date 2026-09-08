@@ -12,7 +12,7 @@ import {ChannelUser} from "armonia/src/modules/core/types";
 import {removeUsersFromChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {RemoveChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/removeChannelMembers.form.response.type.ts";
 import {RemoveChannelMembersFormType} from "armonia/src/modules/core/api/user/private/chats/channels/removeChannelMembers.form.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ChatMemberRemoveFromGroupProps = WithLanguageType & WithAxiosType<RemoveChannelMembersFormResponseType, RemoveChannelMembersFormType> & {

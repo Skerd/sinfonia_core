@@ -12,7 +12,7 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, 
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import {EllipsisVertical, PowerOff} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {TelegramStatusFormResponseType} from "armonia/src/modules/core/api/user/private/telegram/telegramStatus.form.response.type.ts";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";

@@ -7,8 +7,7 @@ import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, Di
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {UpdateAccountStatusFormType} from "armonia/src/modules/core/api/user/private/status/updateAccountStatus.form.type.ts";
 import {UpdateAccountStatusFormResponseType} from "armonia/src/modules/core/api/user/private/status/updateAccountStatus.form.response.type.ts";
-import withHidden from "@coreModule/helpers/hocs/withHidden.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ToggleUserActiveProps = WithLanguageType & WithAxiosType<UpdateAccountStatusFormResponseType, UpdateAccountStatusFormType> & {
@@ -96,7 +95,6 @@ function ToggleUserActiveState({
 }
 
 export default compose(
-    withHidden(),
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx"),
     withAxios({
         url: `/api/user/status`,

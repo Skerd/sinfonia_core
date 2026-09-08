@@ -15,7 +15,7 @@ import {useDispatch} from "react-redux";
 import {newUserCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
 import {LoaderCircle, UserPlus} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {CreateUserFormResponseType} from "armonia/src/modules/core/api/company/private/users/createUser.form.response.type.ts";
 import {CreateUserFormType} from "armonia/src/modules/core/api/company/private/users/createUser.form.type.ts";

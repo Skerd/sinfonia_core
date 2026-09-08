@@ -5,7 +5,7 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {DeactivateTelegramFormResponseType} from "armonia/src/modules/core/api/user/private/telegram/deactivateTelegram.form.response.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {LoaderCircle} from "lucide-react";
 
 type UserLinkTelegramDeactivationProps = WithAxiosType<DeactivateTelegramFormResponseType> & WithLanguageType & {

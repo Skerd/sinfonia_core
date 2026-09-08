@@ -6,7 +6,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {UpdateProfileCoverPhotoFormResponseType} from "armonia/src/modules/core/api/user/private/data/updateProfileCoverPhoto.form.response.type.ts";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type NewPhotoProps = WithLanguageType & WithAxiosType<UpdateProfileCoverPhotoFormResponseType> & {

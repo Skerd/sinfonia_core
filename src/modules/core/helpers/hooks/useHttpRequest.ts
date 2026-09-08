@@ -461,18 +461,16 @@ export default function useHttpRequest<TData = unknown>(
                 if (rawData instanceof Blob) {
                     try { rawData = JSON.parse(await rawData.text()); } catch { rawData = {}; }
                 }
-                const responseData = (isPlainObject(rawData) ? rawData : {}) as Partial<HttpError> & {
-                    errorCode?: string;
-                };
+                const responseData = (isPlainObject(rawData) ? rawData : {}) as Partial<HttpError>;
                 const status = axiosLikeError?.response?.status;
-                const errorCode = responseData.error_code || responseData.errorCode;
+                const errorCode = responseData.error_code;
                 const isSessionExpired =
                     status === 401 ||
                     errorCode === "token_verification_failed" ||
                     errorCode === "no_token" ||
                     errorCode === "session_not_found";
 
-                setError({...responseData, status, error_code: errorCode || responseData.error_code} as HttpError);
+                setError({...responseData, status} as HttpError);
                 if (
                     responseData?.error_code === "rate_limit_exceeded" &&
                     typeof responseData?.availableIn === "number" &&
@@ -486,7 +484,7 @@ export default function useHttpRequest<TData = unknown>(
                         rateLimitTimeoutRef.current = null;
                     }, responseData.availableIn * 1000);
                 }
-                // Session expiry is handled by withAuthentication's dialog — skip the error toast.
+                // Session expiry is handled by AuthenticationProvider's setup screen — skip the error toast.
                 if (!currentProps.hideIfError && !isSessionExpired) {
                     toastReject({...responseData, status});
                 } else if (isSessionExpired) {

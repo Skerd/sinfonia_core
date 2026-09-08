@@ -6,7 +6,7 @@ import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import PermissionsTable from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/permissionsTable.tsx";
 import React, {useState} from "react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {accessFieldPathExists} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {ChevronDown, ChevronUp} from "lucide-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";

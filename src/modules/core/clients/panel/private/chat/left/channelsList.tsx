@@ -15,7 +15,7 @@ import ChannelsFetcher from "@coreModule/clients/panel/private/chat/left/channel
 import LongText from "@coreModule/components/custom/longText.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {getName} from "@coreModule/helpers/general";
-import {useAccess} from "@coreModule/helpers/hocs/withAccess.tsx";
+import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {MessageSenderType, MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
 import {IconAi} from "@tabler/icons-react";
