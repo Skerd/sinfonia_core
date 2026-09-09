@@ -41,7 +41,7 @@
     "createdBy": "Created by",
     "createdAt": "Created at",
     "updatedAt": "Updated at",
-    "deletedAt": "Status",
+    "deletedAt": "Deleted at",
     "deletedBy": "Deleted by"
   }
 }

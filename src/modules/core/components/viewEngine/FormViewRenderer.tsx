@@ -44,6 +44,8 @@ export type FormViewRendererProps<T extends FieldValues = FieldValues> = {
     submitDisabled?: boolean;
     /** When set, hides page shell (header / heavy padding) for embedding in dialogs/sheets. */
     hideChrome?: boolean;
+    /** When set, omits cancel/submit. Studio gallery and other layout-only mounts. */
+    hideActions?: boolean;
     /** When set, used instead of the default `zodResolver(formSchema)`. */
     resolver?: Resolver<T>;
 };
@@ -65,6 +67,7 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
     extraTitles = [],
     submitDisabled = false,
     hideChrome = false,
+    hideActions = false,
     resolver: resolverProp,
 }: FormViewRendererProps<T>) {
 
@@ -174,15 +177,17 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
 
                             {children}
 
-                            <div className="flex items-center justify-end gap-2">
-                                <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
-                                    {resolveLanguageKey("formButtons.cancel")}
-                                </Button>
-                                <Button type="submit" disabled={loading || submitDisabled}>
-                                    {loading ? <LoaderCircle className="animate-spin h-4 w-4" /> : (submitIcon ?? <Save />)}
-                                    {resolveLanguageKey("formButtons.submit")}
-                                </Button>
-                            </div>
+                            {!hideActions && (
+                                <div className="flex items-center justify-end gap-2">
+                                    <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
+                                        {resolveLanguageKey("formButtons.cancel")}
+                                    </Button>
+                                    <Button type="submit" disabled={loading || submitDisabled}>
+                                        {loading ? <LoaderCircle className="animate-spin h-4 w-4" /> : (submitIcon ?? <Save />)}
+                                        {resolveLanguageKey("formButtons.submit")}
+                                    </Button>
+                                </div>
+                            )}
                         </FieldGroup>
                     </form>
                 </Form>

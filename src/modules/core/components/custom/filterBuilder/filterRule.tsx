@@ -101,6 +101,7 @@ export function FilterRuleComponent({
                         value={rule.value}
                         onChange={(v: any) => onUpdate(groupId, rule.id, { value: v })}
                         resolveLanguageKey={resolveLanguageKey}
+                        fieldsLanguage={fieldsLanguage}
                     />
                 </div>
             )}

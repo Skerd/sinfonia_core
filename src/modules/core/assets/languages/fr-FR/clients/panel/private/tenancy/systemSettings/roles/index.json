@@ -41,7 +41,7 @@
     "createdBy": "Créé par",
     "createdAt": "Créé le",
     "updatedAt": "Mis à jour le",
-    "deletedAt": "Statut",
+    "deletedAt": "Supprimé le",
     "deletedBy": "Supprimé par"
   }
 }

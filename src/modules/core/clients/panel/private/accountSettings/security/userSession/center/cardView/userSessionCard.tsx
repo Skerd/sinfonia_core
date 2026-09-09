@@ -62,7 +62,7 @@ export default function UserSessionCard({
 
     return (
         <EntityCardShell
-            disableClick
+            onClick={() => onMenuAction("view")}
             className={cn(!isActive && "opacity-70")}
         >
             <div className="flex w-full items-stretch">

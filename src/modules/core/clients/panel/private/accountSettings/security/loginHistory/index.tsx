@@ -114,6 +114,9 @@ function UserAccountSecurityLoginHistory({specificUserId, resolveLanguageKey}: U
                             }}
                         />
                     ),
+                    onRowClick: (row) => {
+                        rowMenu("view", row);
+                    },
                     action: (row) => (
                         <LoginHistoryActionMenu
                             entry={row}

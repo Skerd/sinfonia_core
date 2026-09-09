@@ -87,6 +87,8 @@
     "registeredFrom": "Registered from",
     "registerDate": "Joined on",
     "online": "Online",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
     "roles": {
       "active": "Status",
       "unsuccessfulLogins": "Unsuccessful logins",

@@ -101,7 +101,8 @@ export type WithAxiosType<ResponseType = unknown, PostType extends Record<string
     loading: boolean,
     innerRef: RefObject<WithAxiosLifecycleRef<ResponseType> | null>,
     viewPortRef: RefObject<HTMLDivElement>,
-    error: HttpError | null
+    error: HttpError | null,
+    justForceRefresh: () => void
 }
 
 type WithAxiosBaseProps<PostType extends Record<string, unknown>> = {

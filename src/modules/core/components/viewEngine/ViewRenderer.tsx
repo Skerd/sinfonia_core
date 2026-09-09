@@ -837,6 +837,33 @@ function renderSheetField(
         return createElement(SheetEmbeddedItemsListHost, { node, binding, ctx, index });
     }
 
+    if (binding.widget === "#CountryFlag") {
+        const raw = data ? resolvePath(data, binding.name) : undefined;
+        const fromField = typeof raw === "string" && raw.length > 0 ? raw : "";
+        const fromProps = typeof wp.code === "string" && wp.code.length > 0 ? wp.code : "";
+        const code = fromField || fromProps;
+        if (!code) return createElement(ValueNotSet, {key: index});
+        return createElement(Component, {...wp, key: index, code});
+    }
+
+    if (binding.widget === "#Badge") {
+        const raw = data ? resolvePath(data, binding.name) : undefined;
+        const fromField =
+            raw != null && raw !== "" && typeof raw !== "object" ? String(raw) : "";
+        const fromProps = typeof wp.children === "string" ? wp.children : "";
+        const label = fromProps || fromField;
+        if (!label) return createElement(ValueNotSet, {key: index});
+        const {children: _badgeChildren, ...badgeWp} = wp;
+        void _badgeChildren;
+        return createElement(Component, {...badgeWp, key: index}, label);
+    }
+
+    if (binding.widget === "#EmbeddedAddressCard") {
+        const address = data ? resolvePath(data, binding.name) : wp.address;
+        if (address == null) return createElement(ValueNotSet, {key: index});
+        return createElement(Component, {...wp, key: index, address});
+    }
+
     return createElement(Component, { ...wp, key: index });
 }
 

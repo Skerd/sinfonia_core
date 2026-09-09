@@ -38,6 +38,12 @@
   "active": "Attivo",
   "fromEmail": "Dall'e-mail",
   "fields": {
+    "!enums": {
+      "lastTestStatus": {
+        "ok": "OK",
+        "failed": "Non riuscito"
+      }
+    },
     "name": "Nome",
     "sequence": "Priorità",
     "active": "Attivo",
@@ -52,7 +58,7 @@
     "updatedAt": "Aggiornato il",
     "createdBy": "Creato da",
     "company": "Azienda",
-    "deletedAt": "Stato",
+    "deletedAt": "Eliminato il",
     "deletedBy": "Eliminato da"
   }
 }

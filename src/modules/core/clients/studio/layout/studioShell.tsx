@@ -1,5 +1,5 @@
 import {useCallback, useMemo} from "react";
-import {useSearchParams} from "react-router-dom";
+import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {
     IconArrowBackUp,
@@ -7,6 +7,7 @@ import {
     IconTrash,
     IconInfoCircle,
     IconAlertTriangle,
+    IconLayoutGrid,
 } from "@tabler/icons-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -41,6 +42,7 @@ export default function StudioShell() {
         setViewDraft,
     } = useStudioDrafts();
     const user = useSelector((state: RootState) => state.authentication.user);
+    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
 
     /* Selection lives in the URL so a specific view is linkable and survives a reload. */
@@ -140,6 +142,14 @@ export default function StudioShell() {
                             <IconTrash />
                         </Button>
                     </TooltipDisplayer>
+                    <TooltipDisplayer tooltip="Every form and sheet widget, live">
+                        <Button variant="ghost" size="sm" asChild>
+                            <Link to="/gallery">
+                                <IconLayoutGrid />
+                                Widgets
+                            </Link>
+                        </Button>
+                    </TooltipDisplayer>
                     <ThemeSwitch />
                 </div>
             </header>
@@ -162,6 +172,7 @@ export default function StudioShell() {
                 catalog={catalog}
                 onSelect={selectTarget}
                 actions={[
+                    {id: "gallery", label: "Open widget gallery", run: () => navigate("/gallery")},
                     {id: "undo", label: "Undo", run: undo},
                     {id: "redo", label: "Redo", run: redo},
                     {

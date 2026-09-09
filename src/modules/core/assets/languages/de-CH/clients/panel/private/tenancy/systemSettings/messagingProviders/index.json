@@ -39,6 +39,12 @@
   "no": "Nein",
   "lastTestStatus": "Nach test",
   "fields": {
+    "!enums": {
+      "lastTestStatus": {
+        "success": "Erfolgreich",
+        "failed": "Fehlgeschlagen"
+      }
+    },
     "name": "Name",
     "providerType": "Anbieter",
     "accountSid": "Konto SID",
@@ -51,7 +57,7 @@
     "updatedAt": "Aktualisiert am",
     "createdBy": "Erstellt von",
     "company": "Firma",
-    "deletedAt": "Status",
+    "deletedAt": "Gelöscht am",
     "deletedBy": "Gelöscht von"
   }
 }

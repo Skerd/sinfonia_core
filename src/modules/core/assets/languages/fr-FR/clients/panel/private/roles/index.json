@@ -15,7 +15,7 @@
     "slug": "Identifiant",
     "createdBy": "Créé par",
     "company": "Entreprise",
-    "deletedAt": "Statut",
+    "deletedAt": "Supprimé le",
     "deletedBy": "Supprimé par"
   }
 }

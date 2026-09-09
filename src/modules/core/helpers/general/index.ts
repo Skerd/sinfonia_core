@@ -331,6 +331,14 @@ export function toPageTitle(value: string | PageTitle): PageTitle {
 }
 
 export function findFromLanguage(values: TranslationValue, path: string): TranslationValue{
+  if (
+    values != null
+    && typeof values === "object"
+    && !Array.isArray(values)
+    && Object.prototype.hasOwnProperty.call(values, path)
+  ) {
+    return (values as Record<string, TranslationValue>)[path];
+  }
   let tempValue = values;
   for( let part of path.split(".") ){
     if( tempValue?.[part] ){

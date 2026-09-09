@@ -9,6 +9,8 @@ type PdfFirstPageThumbProps = {
     fileSizeBytes?: number;
     className?: string;
     onFail?: () => void;
+    /** `cover` crops to fill the tile. `contain` keeps the full page visible. */
+    fit?: "cover" | "contain";
 };
 
 /**
@@ -20,6 +22,7 @@ export default function PdfFirstPageThumb({
     fileSizeBytes,
     className,
     onFail,
+    fit = "cover",
 }: PdfFirstPageThumbProps) {
     const onFailRef = useRef(onFail);
     onFailRef.current = onFail;
@@ -27,6 +30,8 @@ export default function PdfFirstPageThumb({
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [visible, setVisible] = useState(false);
     const [ready, setReady] = useState(false);
+    const [box, setBox] = useState({width: 0, height: 0});
+    const [payload, setPayload] = useState<Uint8Array | null>(null);
 
     useEffect(() => {
         const el = wrapRef.current;
@@ -44,6 +49,30 @@ export default function PdfFirstPageThumb({
     }, [src]);
 
     useEffect(() => {
+        const el = wrapRef.current;
+        if (!el || !visible) return;
+        let timeout = 0;
+        const measure = () => {
+            const width = Math.round(el.clientWidth);
+            const height = Math.round(el.clientHeight);
+            window.clearTimeout(timeout);
+            timeout = window.setTimeout(() => {
+                setBox((current) => (
+                    current.width === width && current.height === height ? current : {width, height}
+                ));
+            }, 80);
+        };
+        measure();
+        const resizeObserver = new ResizeObserver(measure);
+        resizeObserver.observe(el);
+        return () => {
+            window.clearTimeout(timeout);
+            resizeObserver.disconnect();
+        };
+    }, [src, visible]);
+
+    useEffect(() => {
+        setPayload(null);
         setReady(false);
         if (!visible) return;
         if (fileSizeBytes != null && fileSizeBytes > PDF_THUMB_MAX_BYTES) {
@@ -51,13 +80,7 @@ export default function PdfFirstPageThumb({
             return;
         }
 
-        const canvas = canvasRef.current;
-        const wrap = wrapRef.current;
-        if (!canvas || !wrap) return;
-
-        const cssWidth = Math.max(wrap.clientWidth || 150, 80);
         const controller = new AbortController();
-
         (async () => {
             try {
                 const data = await fetchMediaBytes(src, controller.signal);
@@ -66,14 +89,7 @@ export default function PdfFirstPageThumb({
                     onFailRef.current?.();
                     return;
                 }
-                await renderPdfPageToCanvas({
-                    data,
-                    pageNumber: 1,
-                    cssWidth,
-                    canvas,
-                    signal: controller.signal,
-                });
-                if (!controller.signal.aborted) setReady(true);
+                setPayload(data);
             } catch {
                 if (controller.signal.aborted) return;
                 onFailRef.current?.();
@@ -83,12 +99,46 @@ export default function PdfFirstPageThumb({
         return () => controller.abort();
     }, [src, visible, fileSizeBytes]);
 
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas || !payload || (box.width < 40 && box.height < 40)) return;
+
+        const controller = new AbortController();
+        setReady(false);
+        const cssWidth = Math.max(box.width, 80);
+        const cssMaxHeight = Math.max(box.height, 80);
+
+        (async () => {
+            try {
+                await renderPdfPageToCanvas({
+                    data: payload,
+                    pageNumber: 1,
+                    cssWidth,
+                    cssMaxHeight,
+                    fit,
+                    canvas,
+                    signal: controller.signal,
+                });
+                canvas.style.width = "100%";
+                canvas.style.height = "100%";
+                canvas.style.objectFit = fit;
+                if (!controller.signal.aborted) setReady(true);
+            } catch {
+                if (controller.signal.aborted) return;
+                onFailRef.current?.();
+            }
+        })();
+
+        return () => controller.abort();
+    }, [payload, box.width, box.height, fit]);
+
     return (
-        <div ref={wrapRef} className={cn("relative h-full w-full bg-muted", className)}>
+        <div ref={wrapRef} className={cn("relative h-full w-full min-h-0 min-w-0 bg-muted", className)}>
             <canvas
                 ref={canvasRef}
                 className={cn(
-                    "h-full w-full object-cover",
+                    "absolute inset-0 size-full object-center",
+                    fit === "contain" ? "object-contain" : "object-cover",
                     !ready && "opacity-0",
                 )}
             />

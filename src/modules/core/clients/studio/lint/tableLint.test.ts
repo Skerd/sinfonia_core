@@ -45,6 +45,23 @@ describe("lintTableColumns", () => {
         expect(rules(findings)).toContain("column-not-filterable");
     });
 
+    it("does not flag a display-only address column with no filter", () => {
+        const findings = lintTableColumns(
+            [
+                column({
+                    id: "geolocation",
+                    accessorPath: "geolocation",
+                    labelKey: "geolocation",
+                    cellType: COLUMN_TYPE.ADDRESS,
+                    filterConfig: undefined,
+                    meta: {refDisplayKey: ["city", "country"]},
+                }),
+            ],
+            {readPaths: ["geolocation"]},
+        );
+        expect(rules(findings)).not.toContain("column-not-filterable");
+    });
+
     it("flags a cellType that disagrees with the derived filter type", () => {
         const findings = lintTableColumns(
             [column({cellType: COLUMN_TYPE.NUMBER})],

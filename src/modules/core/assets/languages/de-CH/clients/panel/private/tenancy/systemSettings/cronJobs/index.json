@@ -56,7 +56,7 @@
     "updatedAt": "Aktualisiert am",
     "createdBy": "Erstellt von",
     "company": "Firma",
-    "deletedAt": "Status",
+    "deletedAt": "Gelöscht am",
     "deletedBy": "Gelöscht von"
   }
 }

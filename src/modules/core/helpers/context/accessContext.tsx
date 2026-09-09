@@ -123,6 +123,38 @@ const emptyAccessObject = (resourceId: string): AccessObject => ({
     renderComponentOnError: false,
 });
 
+function allowAllAccessObject(resourceId: string): AccessObject {
+    return {
+        read: true,
+        write: true,
+        create: true,
+        delete: true,
+        restore: true,
+        resourceId,
+        ifProp: "specificUserId",
+        ifPropValue: false,
+        renderComponentOnError: false,
+    };
+}
+
+/**
+ * Nested map that grants every resource. Studio gallery mounts `*Card` widgets the
+ * session may not be allowed to read — without this they render as empty HiddenElement.
+ */
+export function AccessAllowAllProvider({children}: {children: ReactNode}) {
+    const value = useMemo(
+        () =>
+            new Proxy({} as AccessContextValue, {
+                get(_target, resourceId) {
+                    if (typeof resourceId !== "string") return undefined;
+                    return {self: allowAllAccessObject(resourceId)};
+                },
+            }),
+        [],
+    );
+    return <AccessContext.Provider value={value}>{children}</AccessContext.Provider>;
+}
+
 type AccessFieldNode = {
     [key: string]: {
         keys?: AccessFieldNode;

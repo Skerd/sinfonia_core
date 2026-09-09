@@ -1,23 +1,68 @@
 import { useCallback, useMemo } from "react";
 import { format, isValid, parse } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import { Input } from "@coreModule/components/ui/input.tsx";
-import { Button } from "@coreModule/components/ui/button.tsx";
-import { Calendar } from "@coreModule/components/ui/calendar.tsx";
-import { Popover, PopoverContent, PopoverTrigger } from "@coreModule/components/ui/popover.tsx";
+import { DateInput } from "@coreModule/components/custom/dateInput.tsx";
 import { SimpleSelect } from "@coreModule/components/custom/simpleSelect";
 import { ApiSelect } from "@coreModule/components/custom/apiSelect";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterFieldConfig, FilterOperator, FilterValue } from "armonia/src/modules/core/database/filter";
+import { COLUMN_TYPE, isDateColumnType } from "armonia/src/modules/core/database/filter/typeOperators";
 import { compose } from "redux";
-import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, { TranslationValue, WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import { findFromLanguage } from "@coreModule/helpers/general";
 import { useFilterBuilder } from "./filterBuilderContext.tsx";
+
+export function enumLabel(fields: TranslationValue | undefined, path: string, value: string): string {
+    const key = `!enums.${path}.${value}`;
+    const label = findFromLanguage(fields ?? {}, key);
+    return typeof label === "string" && label !== key ? label : value;
+}
+
+const DATE_VALUE_FORMAT = "yyyy-MM-dd";
+const DATETIME_VALUE_FORMAT = "yyyy-MM-dd'T'HH:mm";
+
+function valueFormatForColumn(type: COLUMN_TYPE) {
+    return type === COLUMN_TYPE.DATETIME ? DATETIME_VALUE_FORMAT : DATE_VALUE_FORMAT;
+}
+
+function normalizeDateFilterValue(value: string, valueFormat: string) {
+    if (!value) return "";
+    const parsed = parse(value, valueFormat, new Date());
+    if (isValid(parsed)) return value;
+    const iso = new Date(value);
+    return isValid(iso) ? format(iso, valueFormat) : "";
+}
+
+function DateFilterInput({
+    type,
+    value,
+    onChange,
+    placeholder,
+}: {
+    type: COLUMN_TYPE;
+    value: string;
+    onChange: (next: string) => void;
+    placeholder?: string;
+}) {
+    const withTime = type === COLUMN_TYPE.DATETIME;
+    const valueFormat = valueFormatForColumn(type);
+    return (
+        <DateInput
+            valueFormat={valueFormat}
+            displayFormat={withTime ? "PPp" : undefined}
+            value={normalizeDateFilterValue(value, valueFormat)}
+            onChange={onChange}
+            placeholder={placeholder}
+        />
+    );
+}
 
 type FilterValueInputProps = WithLanguageType & {
     fieldConfig: FilterFieldConfig | undefined;
     operator: FilterOperator;
     value: FilterValue;
     onChange: (value: FilterValue) => void;
+    fieldsLanguage?: TranslationValue;
 };
 
 const inputBase = "w-full";
@@ -103,13 +148,19 @@ export function FilterValueInput({
     operator,
     value,
     onChange,
-    resolveLanguageKey
+    resolveLanguageKey,
+    fieldsLanguage,
 }: FilterValueInputProps) {
     const filterBuilderCtx = useFilterBuilder();
     const { mergeRefLabels, refLabelsByFieldPath } = filterBuilderCtx;
     const onVal = useCallback((v: FilterValue) => onChange(v), [onChange]);
 
     if (!fieldConfig) return null;
+
+    const enumOptions = (fieldConfig.enumValues ?? []).map((value) => ({
+        value,
+        label: enumLabel(fieldsLanguage, fieldConfig.path, value),
+    }));
 
     const boolOptions = [
         { value: "true", label: String(resolveLanguageKey("yes")) },
@@ -134,64 +185,26 @@ export function FilterValueInput({
         const toTuple = (a: string, b: string): [string, string] | [number, number] =>
             fieldConfig.type === "number" ? [Number(a) || 0, Number(b) || 0] : [a, b];
 
-        if (fieldConfig.type === "date" ) {
-            const dateFromStr = (s: string) => (!s ? undefined : parse(s, "yyyy-MM-dd", new Date()));
-            const strFromDate = (d: Date | undefined) => (d ? format(d, "yyyy-MM-dd") : "");
+        if (isDateColumnType(fieldConfig.type)) {
             const minStr = String(tuple[0] ?? "");
             const maxStr = String(tuple[1] ?? "");
             return (
                 <div className="flex items-center gap-1 min-w-0 w-full">
                     <div className="flex grow max-w-1/2">
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    type="button"
-                                    className={cn(
-                                        "w-full justify-start text-left font-normal",
-                                        !minStr && "text-muted-foreground"
-                                    )}
-                                >
-                                    <CalendarIcon className="mr-2 size-4" />
-                                    {minStr ? (() => { const d = dateFromStr(minStr); return d && isValid(d) ? format(d, "PPP") : minStr; })() : resolveLanguageKey("min")}
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                                <Calendar
-                                    mode="single"
-                                    selected={dateFromStr(minStr)}
-                                    onSelect={(d) => onVal(toTuple(strFromDate(d), maxStr))}
-                                    captionLayout="dropdown"
-                                />
-                            </PopoverContent>
-                        </Popover>
+                        <DateFilterInput
+                            type={fieldConfig.type}
+                            value={minStr}
+                            onChange={(next) => onVal(toTuple(next, maxStr))}
+                            placeholder={resolveLanguageKey("min")}
+                        />
                     </div>
                     <div className="flex grow max-w-1/2">
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    type="button"
-                                    className={cn(
-                                        "w-full justify-start text-left font-normal",
-                                        !maxStr && "text-muted-foreground"
-                                    )}
-                                >
-                                    <CalendarIcon className="mr-2 size-4" />
-                                    {maxStr ? (() => { const d = dateFromStr(maxStr); return d && isValid(d) ? format(d, "PPP") : maxStr; })() : resolveLanguageKey("max")}
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                                <Calendar
-                                    mode="single"
-                                    selected={dateFromStr(maxStr)}
-                                    onSelect={(d) => onVal(toTuple(minStr, strFromDate(d)))}
-                                    captionLayout="dropdown"
-                                />
-                            </PopoverContent>
-                        </Popover>
+                        <DateFilterInput
+                            type={fieldConfig.type}
+                            value={maxStr}
+                            onChange={(next) => onVal(toTuple(minStr, next))}
+                            placeholder={resolveLanguageKey("max")}
+                        />
                     </div>
                 </div>
             );
@@ -234,11 +247,10 @@ export function FilterValueInput({
 
     if (operator === "in" || operator === "notIn") {
         const arr = Array.isArray(value) ? (value as string[]) : [];
-        const opts = fieldConfig.enumValues?.map((v: string) => ({ value: v, label: v })) ?? [];
-        if (opts.length > 0) {
+        if (enumOptions.length > 0) {
             return (
                 <SimpleSelect
-                    options={opts}
+                    options={enumOptions}
                     value={arr}
                     onValueChange={(v: string | string[] | undefined) =>
                         onVal(Array.isArray(v) ? v : v ? [v] : [])
@@ -272,7 +284,7 @@ export function FilterValueInput({
     if (fieldConfig.type === "enum") {
         return (
             <SimpleSelect
-                options={(fieldConfig.enumValues ?? []).map((v: string) => ({ value: v, label: v }))}
+                options={enumOptions}
                 value={typeof value === "string" ? value : ""}
                 onValueChange={(v: string | string[] | undefined) => onVal((v ?? null) as FilterValue)}
                 placeholder={resolveLanguageKey("selectValue")}
@@ -310,39 +322,15 @@ export function FilterValueInput({
         );
     }
 
-    if (fieldConfig.type === "date") {
-        const str = typeof value === "string" ? value : value instanceof Date ? value.toISOString().slice(0, 10) : "";
-        const dateFromStr = (s: string) => (!s ? undefined : parse(s, "yyyy-MM-dd", new Date()));
-        const strFromDate = (d: Date | undefined) => (d ? format(d, "yyyy-MM-dd") : null);
-        const selectedDate = str ? dateFromStr(str) : undefined;
-        const displayText =
-            str && selectedDate && isValid(selectedDate) ? format(selectedDate, "PPP") : null;
-
+    if (isDateColumnType(fieldConfig.type)) {
+        const str = typeof value === "string" ? value : "";
         return (
-            <Popover>
-                <PopoverTrigger asChild>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        type="button"
-                        className={cn(
-                            "w-full justify-start text-left font-normal",
-                            !displayText && "text-muted-foreground"
-                        )}
-                    >
-                        <CalendarIcon className="mr-2 size-4" />
-                        {displayText ?? resolveLanguageKey("selectValue")}
-                    </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                        mode="single"
-                        selected={selectedDate}
-                        onSelect={(d) => onVal(strFromDate(d))}
-                        captionLayout="dropdown"
-                    />
-                </PopoverContent>
-            </Popover>
+            <DateFilterInput
+                type={fieldConfig.type}
+                value={str}
+                onChange={(next) => onVal(next || null)}
+                placeholder={resolveLanguageKey("selectValue")}
+            />
         );
     }
 

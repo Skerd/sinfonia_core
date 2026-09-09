@@ -39,6 +39,12 @@
   "no": "No",
   "lastTestStatus": "Ultima prova",
   "fields": {
+    "!enums": {
+      "lastTestStatus": {
+        "success": "Riuscito",
+        "failed": "Non riuscito"
+      }
+    },
     "name": "Nome",
     "providerType": "Fornitore",
     "accountSid": "SID dell'account",
@@ -51,7 +57,7 @@
     "updatedAt": "Aggiornato il",
     "createdBy": "Creato da",
     "company": "Azienda",
-    "deletedAt": "Stato",
+    "deletedAt": "Eliminato il",
     "deletedBy": "Eliminato da"
   }
 }

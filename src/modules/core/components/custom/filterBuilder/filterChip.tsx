@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@coreModule/components/ui/popover.tsx";
 import { SimpleSelect } from "@coreModule/components/custom/simpleSelect";
-import FilterValueInput from "./filterValueInput.tsx";
+import FilterValueInput, {enumLabel} from "./filterValueInput.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterRule, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import withLanguage, {ResolveLanguageKey, TranslationValue, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -13,6 +13,7 @@ function formatChipValue(
     val: unknown,
     resolveLanguageKey: ResolveLanguageKey,
     fieldConfig: FilterFieldConfig | undefined,
+    fieldsLanguage: TranslationValue,
     refLabels?: Record<string, string>
 ): string {
     if (val == null) return "";
@@ -23,6 +24,12 @@ function formatChipValue(
             return val.map((id) => (typeof id === "string" && refLabels[id] ? refLabels[id] : String(id))).join(", ");
         }
         if (typeof val === "string" && refLabels[val]) return refLabels[val];
+    }
+    if (fieldConfig?.enumValues?.length && fieldConfig.path) {
+        if (Array.isArray(val)) {
+            return val.map((item) => enumLabel(fieldsLanguage, fieldConfig.path, String(item))).join(", ");
+        }
+        return enumLabel(fieldsLanguage, fieldConfig.path, String(val));
     }
     if (Array.isArray(val)) {
         return val.join(", ");
@@ -40,7 +47,7 @@ function formatChipLabel(
     const label = findFromLanguage(fieldsLanguage, fc?.label ?? rule.field);
     if (rule.operator === "exists") return `${label} ${resolveLanguageKey(rule.value ? "exists" : "empty")}`;
     const refLabels = fc?.path ? refLabelsByFieldPath[fc.path] : undefined;
-    const val = formatChipValue(rule.value, resolveLanguageKey, fc, refLabels);
+    const val = formatChipValue(rule.value, resolveLanguageKey, fc, fieldsLanguage, refLabels);
     const needsQuotes = typeof rule.value === "string" || (Array.isArray(rule.value) && rule.value.every((v) => typeof v === "string"));
     return `${label} ${resolveLanguageKey(`chipOperators.${rule.operator}`)} ${val ? (needsQuotes ? `"${val}"` : val) : "?"}`;
 }
@@ -125,6 +132,7 @@ export function FilterChip({
                                 value={rule.value}
                                 onChange={(v: any) => onUpdate(groupId, rule.id, { value: v })}
                                 resolveLanguageKey={resolveLanguageKey}
+                                fieldsLanguage={fieldsLanguage}
                             />
                         </div>
                     </div>

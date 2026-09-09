@@ -14,6 +14,7 @@ import {ensuredDeviceId} from "@coreModule/helpers/context/localStorage/authenti
 
 const StudioGuard = lazy(() => import("@coreModule/clients/studio/studioGuard.tsx"));
 const StudioShell = lazy(() => import("@coreModule/clients/studio/layout/studioShell.tsx"));
+const WidgetGalleryPage = lazy(() => import("@coreModule/clients/studio/gallery/widgetGalleryPage.tsx"));
 const AuthenticationPage = lazy(() => import("@coreModule/clients/panel/pages/public/auth"));
 
 function ToasterContainer() {
@@ -58,6 +59,14 @@ function StudioApp() {
                                             }
                                         />
                                         <Route element={<StudioGuard />}>
+                                            <Route
+                                                path="/gallery"
+                                                element={
+                                                    <ErrorBoundary>
+                                                        <WidgetGalleryPage />
+                                                    </ErrorBoundary>
+                                                }
+                                            />
                                             <Route
                                                 path="/*"
                                                 element={

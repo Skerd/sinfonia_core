@@ -87,6 +87,8 @@
     "registeredFrom": "Regjistruar nga",
     "registerDate": "U bashkua",
     "online": "Online",
+    "createdAt": "Krijuar më",
+    "updatedAt": "Përditësuar më",
     "roles": {
       "active": "Statusi",
       "unsuccessfulLogins": "Identifikimi i pasuksesshëm",

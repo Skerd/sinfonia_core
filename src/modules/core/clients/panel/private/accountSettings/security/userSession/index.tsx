@@ -148,6 +148,9 @@ function UserAccountSecurityUserSession({specificUserId, resolveLanguageKey}: Us
                             viewingSelf={viewingSelf}
                         />
                     ),
+                    onRowClick: (session) => {
+                        rowMenu("view", session);
+                    },
                     action: (session) => (
                         <UserSessionActionMenu
                             session={session}

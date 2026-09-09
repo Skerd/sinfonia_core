@@ -31,6 +31,11 @@ export type ColumnConfigToColumnDefOptions<T> = {
     timezone: string;
 };
 
+function labelFromFields(fields: TranslationValue, labelKey: string): string {
+    const value = findFromLanguage(fields, labelKey);
+    return typeof value === "string" ? value : labelKey;
+}
+
 export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options: ColumnConfigToColumnDefOptions<T>): ColumnDef<T>[] {
     const { fields, renderActions, timezone } = options;
 
@@ -44,12 +49,12 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
             header: ({ column }) => (
                 <DataTableColumnHeader
                     column={column}
-                    title={findFromLanguage(fields, col.labelKey)}
+                    title={labelFromFields(fields, col.labelKey)}
                 />
             ),
             meta: {
                 ...(col.meta?.className && { className: col.meta.className }),
-                ...(col.labelKey && { label: findFromLanguage(fields, col.labelKey) }),
+                ...(col.labelKey && { label: labelFromFields(fields, col.labelKey) }),
             },
             enableSorting: col.sortable,
         };
@@ -427,22 +432,9 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                 cell: ({ row }) => {
                     const value = (col.dtoPath ? findFromObject(row.original, col.dtoPath) : row.getValue(col.accessorPath)) as boolean | undefined;
                     return (
-                        <div className="flex items-center" style={{border: "0px solid red"}}>
-                            {/*<Badge variant="outline" className={cn("capitalize", value ? "bg-success" : "bg-destructive")}>*/}
-                            {/*    <Check />*/}
-                            {/*    <CircleSlash />*/}
-                            {/*</Badge>*/}
-                            <Switch disabled={false} checked={value}/>
-
-                            {/*<Checkbox*/}
-                            {/*    id={col.id}*/}
-                            {/*    name={col.accessorPath}*/}
-                            {/*    defaultChecked={!value}*/}
-                            {/*    disabled={true}*/}
-                            {/*    className="size-4"*/}
-                            {/*/>*/}
+                        <div className="flex items-center">
+                            <Switch disabled checked={Boolean(value)} />
                         </div>
-
                     )
                 },
             } as ColumnDef<T>;

@@ -1211,7 +1211,10 @@ function PolygonSelector({
                     )}
 
                     {!hideControls && (
-                    <div className={cn("absolute bottom-2 left-0 z-20 w-full flex items-center justify-center", {"bottom-4 ":  zoom !== 100})}>
+                    <div
+                        data-polygon-zoom-bar
+                        className={cn("absolute bottom-2 left-0 z-20 w-full flex items-center justify-center", {"bottom-4 ":  zoom !== 100})}
+                    >
                         <div
                             data-polygon-zoom-controls
                             className="flex flex-row items-center gap-2 rounded-lg border border-border bg-background p-1 shadow-md"

@@ -87,6 +87,8 @@
     "registeredFrom": "Inscrit depuis",
     "registerDate": "Rejoint le",
     "online": "En ligne",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
     "roles": {
       "active": "Statut",
       "unsuccessfulLogins": "Connexions infructueuses",

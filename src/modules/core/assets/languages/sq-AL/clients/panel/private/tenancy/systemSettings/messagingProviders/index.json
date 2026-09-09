@@ -39,6 +39,12 @@
   "no": "Jo",
   "lastTestStatus": "Testi i fundit",
   "fields": {
+    "!enums": {
+      "lastTestStatus": {
+        "success": "Sukses",
+        "failed": "Dështoi"
+      }
+    },
     "name": "Emri",
     "providerType": "Ofruesi",
     "accountSid": "Account SID",
@@ -51,7 +57,7 @@
     "updatedAt": "Përditësuar më",
     "createdBy": "Krijuar nga",
     "company": "Kompania",
-    "deletedAt": "Statusi",
+    "deletedAt": "Fshirë më",
     "deletedBy": "Fshirë nga"
   }
 }

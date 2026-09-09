@@ -6,6 +6,22 @@ import {columnDeadEntries} from "../table/columnRelevance.ts";
 import type {LintFinding, LintSeverity} from "./viewLint.ts";
 
 /**
+ * Cell types `schemaTypeToFilterConfig` can attach operators to. Address / mixed /
+ * file columns are display-only: Core never puts them in the Filter Builder, and
+ * nested scalars (e.g. `geolocation.city`) carry the filters instead.
+ */
+const FILTER_DERIVED_CELL_TYPES = new Set<COLUMN_TYPE>([
+    COLUMN_TYPE.STRING,
+    COLUMN_TYPE.NUMBER,
+    COLUMN_TYPE.DATE,
+    COLUMN_TYPE.DATETIME,
+    COLUMN_TYPE.BOOLEAN,
+    COLUMN_TYPE.ENUM,
+    COLUMN_TYPE.OBJECT_ID,
+    COLUMN_TYPE.PERCENTAGE,
+]);
+
+/**
  * Static checks for table column config, mirroring `viewLint` for the view side.
  *
  * The failures here are quieter than a view's: a column with no derived filter never
@@ -43,12 +59,14 @@ export function lintTableColumns(
         }
 
         if (!column.filterConfig) {
-            add(
-                "column-not-filterable",
-                "warning",
-                "No derived filter config, so `tableConfigToFilterConfig` drops it and this column never reaches the Filter Builder.",
-            );
-        } else if (column.filterConfig.type !== column.cellType) {
+            if (FILTER_DERIVED_CELL_TYPES.has(column.cellType)) {
+                add(
+                    "column-not-filterable",
+                    "warning",
+                    "No derived filter config, so `tableConfigToFilterConfig` drops it and this column never reaches the Filter Builder.",
+                );
+            }
+        } else if (column.cellType !== column.filterConfig.type) {
             /* The cell renders per `cellType`, the filter builds per `filterConfig.type`. */
             add(
                 "celltype-filter-mismatch",

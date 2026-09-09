@@ -58,6 +58,8 @@ export type EmbeddedItemFieldConfig = {
     linkedSheetWidget?: string;
     linkedSheetEntityProp?: string;
     icon?: string;
+    /** When true, the field value is an ISO country code shown as a flag in the icon slot. */
+    flagFromValue?: boolean;
 };
 
 function normalizeExternalHref(href: string): string | null {
@@ -100,9 +102,9 @@ function ExternalTextLink({
 }
 
 function cardColumnsClass(columns: number | undefined): string {
-    if (columns === 2) return "grid grid-cols-2 gap-2";
-    if (columns === 3) return "grid grid-cols-3 gap-2";
-    if (columns === 4) return "grid grid-cols-4 gap-2";
+    if (columns === 2) return "grid grid-cols-1 sm:grid-cols-2 gap-2";
+    if (columns === 3) return "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2";
+    if (columns === 4) return "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2";
     return "flex flex-col gap-2";
 }
 
@@ -301,6 +303,77 @@ function renderLinkedRefField(
     );
 }
 
+function renderScalarEmbeddedField(
+    item: Record<string, any>,
+    field: EmbeddedItemFieldConfig,
+    resolveSheet: ResolveLanguageKey,
+    key: string | number,
+    cardColumns: number | undefined,
+) {
+    const text = resolveEmbeddedFieldText(item, field, resolveSheet);
+    if (!text) return null;
+    const label =
+        typeof field.labelKey === "string" && field.labelKey.length > 0
+            ? resolveSheet(field.labelKey)
+            : null;
+    const spanFull = Boolean(cardColumns);
+    const wrapClass = spanFull ? "col-span-full min-w-0" : "min-w-0";
+
+    if (field.type === "expandableText") {
+        const display = label ? `${label}: ${text}` : text;
+        return (
+            <div key={key} className={wrapClass}>
+                <ExpandableText show className={field.className ?? "text-sm"}>
+                    {display}
+                </ExpandableText>
+            </div>
+        );
+    }
+
+    const href = hrefForText(text, field.type === "url");
+    const Icon = field.icon ? resolveIcon(field.icon) ?? undefined : undefined;
+    const flagCode =
+        field.flagFromValue && /^[A-Za-z]{2}$/.test(text.trim())
+            ? text.trim().toUpperCase()
+            : undefined;
+    const asTile = Boolean(field.icon) || Boolean(field.flagFromValue) || Boolean(cardColumns && label);
+
+    if (asTile) {
+        return (
+            <div key={key} className="min-w-0">
+                <DisplayCard
+                    show
+                    title={label ? String(label) : text}
+                    tooltip={label ? String(label) : text}
+                    Icon={flagCode ? undefined : Icon}
+                    flagCode={flagCode}
+                    value={text}
+                    externalHref={href ?? undefined}
+                />
+            </div>
+        );
+    }
+
+    const valueNode = href ? (
+        <ExternalTextLink href={href} className={field.className ?? "text-sm"}>
+            {text}
+        </ExternalTextLink>
+    ) : (
+        text
+    );
+    return (
+        <p key={key} className={href ? "text-sm min-w-0" : cn(field.className ?? "text-sm", "min-w-0")}>
+            {label ? (
+                <>
+                    {label}: {valueNode}
+                </>
+            ) : (
+                valueNode
+            )}
+        </p>
+    );
+}
+
 export type SheetEmbeddedItemsListProps = WithLanguageType & {
     items: Record<string, any>[];
     fields: EmbeddedItemFieldConfig[];
@@ -409,18 +482,40 @@ function SheetEmbeddedItemsList({
                 })}
             </div>
         ) : (
-            <div className="flex flex-col gap-y-2">
+            <div className="flex flex-col gap-y-3">
                 {pagination.slice.map((item, i) => {
                     const globalIndex =
                         pagination.pageSize < pagination.total
                             ? pagination.pageIndex * pagination.pageSize + i + 1
                             : i + 1;
+                    const groupSnapshots = pagination.total > 1;
+                    const headerParts = buildCompactSummaryParts(
+                        item,
+                        fields,
+                        summaryFieldNames,
+                        resolveSheet,
+                    );
+                    const headerText = headerParts.map((part) => part.text).join(compactSummaryJoinSeparator);
                     return (
                     <div
                         key={itemKey(item, i)}
-                        className="flex flex-col rounded-lg border border-border/60 bg-card p-3 gap-y-2"
+                        className={cn(
+                            "flex flex-col gap-y-2 min-w-0",
+                            groupSnapshots && "rounded-lg border border-border/60 bg-card p-3",
+                        )}
                     >
-                        <span className="text-xs font-medium text-muted-foreground">#{globalIndex}</span>
+                        {groupSnapshots ? (
+                            <div className="flex items-baseline justify-between gap-2 min-w-0">
+                                <p className="text-sm font-medium text-foreground truncate min-w-0">
+                                    {headerText || `#${globalIndex}`}
+                                </p>
+                                {headerText ? (
+                                    <span className="text-xs font-medium text-muted-foreground shrink-0">
+                                        #{globalIndex}
+                                    </span>
+                                ) : null}
+                            </div>
+                        ) : null}
                         <div className={fieldsLayoutClass}>
                         {fields.map((f, fi) => {
                             if (f.type === "mediaStrip") {
@@ -439,7 +534,7 @@ function SheetEmbeddedItemsList({
                                     <div
                                         key={fi}
                                         className={cn(
-                                            "flex flex-col gap-1",
+                                            "flex flex-col gap-1 min-w-0",
                                             cardColumns ? "col-span-full" : undefined,
                                         )}
                                     >
@@ -461,46 +556,12 @@ function SheetEmbeddedItemsList({
                             }
                             if (f.type === "linkedRef") {
                                 return (
-                                    <div key={fi} className={cardColumns ? "col-span-full" : undefined}>
+                                    <div key={fi} className={cn("min-w-0", cardColumns ? "col-span-full" : undefined)}>
                                         {renderLinkedRefField(item, f, resolveSheet, fi)}
                                     </div>
                                 );
                             }
-                            const text = resolveEmbeddedFieldText(item, f, resolveSheet);
-                            if (!text) return null;
-                            const label =
-                                typeof f.labelKey === "string" && f.labelKey.length > 0
-                                    ? resolveSheet(f.labelKey)
-                                    : null;
-                            if (f.type === "expandableText") {
-                                const display = label ? `${label}: ${text}` : text;
-                                return (
-                                    <div key={fi} className={cardColumns ? "col-span-full" : undefined}>
-                                        <ExpandableText show className={f.className ?? "text-sm"}>
-                                            {display}
-                                        </ExpandableText>
-                                    </div>
-                                );
-                            }
-                            const href = hrefForText(text, f.type === "url");
-                            const valueNode = href ? (
-                                <ExternalTextLink href={href} className={f.className ?? "text-sm"}>
-                                    {text}
-                                </ExternalTextLink>
-                            ) : (
-                                text
-                            );
-                            return (
-                                <p key={fi} className={href ? "text-sm" : (f.className ?? "text-sm")}>
-                                    {label ? (
-                                        <>
-                                            {label}: {valueNode}
-                                        </>
-                                    ) : (
-                                        valueNode
-                                    )}
-                                </p>
-                            );
+                            return renderScalarEmbeddedField(item, f, resolveSheet, fi, cardColumns);
                         })}
                         </div>
                     </div>

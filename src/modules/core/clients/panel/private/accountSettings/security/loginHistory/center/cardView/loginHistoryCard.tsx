@@ -41,7 +41,7 @@ export default function LoginHistoryCard({entry, resolveLanguageKey, viewingSelf
 
     return (
         <EntityCardShell
-            disableClick
+            onClick={() => onMenuAction("view")}
             className={cn(entry.deletedAt != null && "opacity-80")}
         >
             <div className="flex w-full items-stretch">
