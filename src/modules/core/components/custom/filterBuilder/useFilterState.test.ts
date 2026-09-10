@@ -2,6 +2,7 @@ import {describe, expect, it} from "vitest";
 import type {FilterGroup, FilterRule} from "armonia/src/modules/core/database/filter";
 import {
     classifyUrlFilterParam,
+    completeRulesWereRemoved,
     hasDraftRules,
     searchParamAfterSet,
     shouldAutoCommit,
@@ -35,6 +36,44 @@ describe("filter builder URL sync helpers", () => {
         const dsl = group([complete("a")]);
         const local = group([complete("a"), draft("b")]);
         expect(shouldAutoCommit(dsl, local)).toBe(true);
+    });
+
+    it("does not wipe ?filter= when the applied rule is demoted to a draft", () => {
+        const last = group([complete("a")]);
+        const local = group([draft("a")]);
+        expect(completeRulesWereRemoved(last, local)).toBe(false);
+        expect(shouldAutoCommit(undefined, local, last)).toBe(false);
+    });
+
+    it("commits the empty tree when a chip is removed and only a leftover draft remains", () => {
+        const last = group([complete("a")]);
+        const local = group([draft("blank")]);
+        expect(completeRulesWereRemoved(last, local)).toBe(true);
+        expect(shouldAutoCommit(undefined, local, last)).toBe(true);
+    });
+
+    it("commits when one complete rule is removed even if another was demoted to a draft", () => {
+        const last = group([complete("a"), complete("b")]);
+        const local = group([draft("b")]);
+        expect(completeRulesWereRemoved(last, local)).toBe(true);
+        expect(shouldAutoCommit(undefined, local, last)).toBe(true);
+    });
+
+    it("detects a removed nested complete rule", () => {
+        const last: FilterGroup = {
+            id: "root",
+            operator: "and",
+            rules: [],
+            groups: [group([complete("nested")], "child")],
+        };
+        const local: FilterGroup = {
+            id: "root",
+            operator: "and",
+            rules: [draft("blank")],
+            groups: [group([], "child")],
+        };
+        expect(completeRulesWereRemoved(last, local)).toBe(true);
+        expect(shouldAutoCommit(undefined, local, last)).toBe(true);
     });
 
     it("re-attaches local drafts after a slower URL hydrate", () => {

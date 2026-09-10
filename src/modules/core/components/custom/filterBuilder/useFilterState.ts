@@ -71,13 +71,41 @@ export function withPreservedDrafts(urlRoot: FilterGroup, localRoot: FilterGroup
     return {...urlRoot, rules: [...urlRoot.rules, ...toAdd]};
 }
 
+function collectCompleteRuleIds(group: FilterGroup): string[] {
+    const ids: string[] = [];
+    for (const rule of group.rules) {
+        if (isCompleteRule(rule)) ids.push(rule.id);
+    }
+    for (const child of group.groups) {
+        ids.push(...collectCompleteRuleIds(child));
+    }
+    return ids;
+}
+
+/** True when a previously applied complete rule is gone and is not an in-progress draft. */
+export function completeRulesWereRemoved(lastCommitted: FilterGroup, localRoot: FilterGroup): boolean {
+    const localComplete = new Set(collectCompleteRuleIds(localRoot));
+    const localDrafts = new Set(collectDraftRules(localRoot).map((rule) => rule.id));
+    return collectCompleteRuleIds(lastCommitted).some(
+        (id) => !localComplete.has(id) && !localDrafts.has(id),
+    );
+}
+
 /**
  * Auto-apply writes complete rules to the URL. Do not auto-clear while a draft
- * exists — changing a field nulls `value` and would otherwise wipe `?filter=`.
+ * exists solely because changing a field nulls `value` — that would wipe `?filter=`.
+ * Removing a chip/rule must still commit, even if a blank draft sits beside it
+ * (popover open, leftover half-filled row).
  */
-export function shouldAutoCommit(serialized: FilterDSL | undefined, localRoot: FilterGroup): boolean {
+export function shouldAutoCommit(
+    serialized: FilterDSL | undefined,
+    localRoot: FilterGroup,
+    lastCommitted?: FilterDSL | null,
+): boolean {
     if (serialized) return true;
-    return !hasDraftRules(localRoot);
+    if (!hasDraftRules(localRoot)) return true;
+    if (!lastCommitted) return false;
+    return completeRulesWereRemoved(lastCommitted, localRoot);
 }
 
 /**

@@ -96,10 +96,13 @@ function FilterBuilderInner({
     /** Suppress auto-apply once after URL hydrate / programmatic commit. */
     const suppressAutoApplyRef = useRef(1);
     const lastCommittedKeyRef = useRef<string | null>(null);
+    const lastCommittedDslRef = useRef<FilterDSL | null>(initialFilter ?? null);
     const lastSyncedFilterParam = useRef<string | null>(filterParam);
     const lastSyncedLabelsParam = useRef<string | null>(labelsParam);
     /** True after we `replace` the URL until that exact `?filter=` / `?filterLabels=` pair is visible. */
     const pendingUrlWriteRef = useRef(false);
+    /** Chip/rule/group remove should commit on this turn, not after the typing debounce. */
+    const commitImmediatelyRef = useRef(false);
     const rootRef = useRef(root);
     rootRef.current = root;
     const autoCommitTimerRef = useRef<number>(0);
@@ -141,6 +144,7 @@ function FilterBuilderInner({
             if (encodedLabels) replaceRefLabels(prunedLabels);
             else replaceRefLabels({});
             lastCommittedKeyRef.current = JSON.stringify(dsl ?? null);
+            lastCommittedDslRef.current = dsl ?? null;
             if (options?.closePopover) setPopoverOpen(false);
         },
         [setFilters, extraParams, setSearchParams, refLabelsByFieldPath, replaceRefLabels, listPageParam],
@@ -178,20 +182,23 @@ function FilterBuilderInner({
             setRoot(withPreservedDrafts(urlFilter, rootRef.current));
             setFilters((prev) => ({ ...prev, ...extraParams, filter: urlFilter }));
             lastCommittedKeyRef.current = JSON.stringify(urlFilter);
+            lastCommittedDslRef.current = urlFilter;
             return;
         }
 
         // Only clear when the param is gone. If decode fails (corrupt / too long),
         // keep existing applied state — do not wipe filters or fight the URL.
         if (filterParam == null || filterParam === "") {
-            if (hasDraftRules(rootRef.current)) return;
-            reset();
             setFilters((prev) => {
                 const next = { ...prev, ...extraParams };
                 delete next.filter;
                 return next;
             });
             lastCommittedKeyRef.current = JSON.stringify(null);
+            lastCommittedDslRef.current = null;
+            // Keep in-progress drafts in the builder; still drop the applied filter.
+            if (hasDraftRules(rootRef.current)) return;
+            reset();
         }
     }, [filterParam, labelsParam, urlFilter, setRoot, reset, setFilters, extraParams]);
 
@@ -224,14 +231,24 @@ function FilterBuilderInner({
         if (suppressAutoApplyRef.current > 0) {
             suppressAutoApplyRef.current -= 1;
             lastCommittedKeyRef.current = appliedKey;
+            lastCommittedDslRef.current = appliedDsl ?? null;
+            commitImmediatelyRef.current = false;
             return;
         }
-        if (appliedKey === lastCommittedKeyRef.current) return;
-        if (!shouldAutoCommit(appliedDsl, root)) return;
+        if (appliedKey === lastCommittedKeyRef.current) {
+            commitImmediatelyRef.current = false;
+            return;
+        }
+        if (!shouldAutoCommit(appliedDsl, root, lastCommittedDslRef.current)) {
+            commitImmediatelyRef.current = false;
+            return;
+        }
         window.clearTimeout(autoCommitTimerRef.current);
+        const delay = commitImmediatelyRef.current ? 0 : AUTO_COMMIT_MS;
+        commitImmediatelyRef.current = false;
         autoCommitTimerRef.current = window.setTimeout(() => {
             commitFilters(appliedDsl, { closePopover: false });
-        }, AUTO_COMMIT_MS);
+        }, delay);
         return () => window.clearTimeout(autoCommitTimerRef.current);
     }, [appliedKey, appliedDsl, commitFilters, root]);
 
@@ -242,6 +259,22 @@ function FilterBuilderInner({
         if (root.rules.some(isDraftRule)) return;
         addRule(root.id);
     }, [popoverOpen, root.rules, root.id, addRule]);
+
+    const handleRemoveRule = useCallback(
+        (groupId: string, ruleId: string) => {
+            commitImmediatelyRef.current = true;
+            removeRule(groupId, ruleId);
+        },
+        [removeRule],
+    );
+
+    const handleRemoveGroup = useCallback(
+        (parentId: string, groupId: string) => {
+            commitImmediatelyRef.current = true;
+            removeGroup(parentId, groupId);
+        },
+        [removeGroup],
+    );
 
     const onApply = useCallback(() => {
         commitFilters(serialize(), { closePopover: true });
@@ -293,7 +326,7 @@ function FilterBuilderInner({
                                                     fields={fields}
                                                     fieldsLanguage={configuration.fields}
                                                     onUpdate={updateRule}
-                                                    onRemove={removeRule}
+                                                    onRemove={handleRemoveRule}
                                                 />
                                             </div>
                                         )
@@ -358,10 +391,10 @@ function FilterBuilderInner({
                         fieldsLanguage={configuration.fields}
                         fields={fields}
                         onAddRule={addRule}
-                        onRemoveRule={removeRule}
+                        onRemoveRule={handleRemoveRule}
                         onUpdateRule={updateRule}
                         onAddGroup={addGroup}
-                        onRemoveGroup={removeGroup}
+                        onRemoveGroup={handleRemoveGroup}
                         onUpdateGroupOperator={updateGroupOperator}
                     />
                 </div>
