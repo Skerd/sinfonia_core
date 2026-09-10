@@ -6,7 +6,7 @@ import { SimpleSelect } from "@coreModule/components/custom/simpleSelect";
 import { ApiSelect } from "@coreModule/components/custom/apiSelect";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterFieldConfig, FilterOperator, FilterValue } from "armonia/src/modules/core/database/filter";
-import { COLUMN_TYPE, isDateColumnType } from "armonia/src/modules/core/database/filter/typeOperators";
+import { COLUMN_TYPE, isDateColumnType, isNumberColumnType } from "armonia/src/modules/core/database/filter/typeOperators";
 import { compose } from "redux";
 import withLanguage, { TranslationValue, WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import { findFromLanguage } from "@coreModule/helpers/general";
@@ -183,7 +183,7 @@ export function FilterValueInput({
     if (operator === "between") {
         const tuple = Array.isArray(value) && value.length === 2 ? value : ["", ""];
         const toTuple = (a: string, b: string): [string, string] | [number, number] =>
-            fieldConfig.type === "number" ? [Number(a) || 0, Number(b) || 0] : [a, b];
+            isNumberColumnType(fieldConfig.type) ? [Number(a) || 0, Number(b) || 0] : [a, b];
 
         if (isDateColumnType(fieldConfig.type)) {
             const minStr = String(tuple[0] ?? "");
@@ -210,7 +210,7 @@ export function FilterValueInput({
             );
         }
 
-        const inputType = fieldConfig.type === "number" ? "number" : "text";
+        const inputType = isNumberColumnType(fieldConfig.type) ? "number" : "text";
         return (
             <div className="flex items-center gap-1 min-w-0 w-full">
                 <Input
@@ -306,7 +306,7 @@ export function FilterValueInput({
         );
     }
 
-    if (fieldConfig.type === "number") {
+    if (isNumberColumnType(fieldConfig.type)) {
         const numVal = typeof value === "number" ? value : "";
         return (
             <Input

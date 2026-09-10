@@ -6,7 +6,7 @@ import {Search, Trash2} from "lucide-react";
 import { FilterBuilderProvider, useFilterBuilder } from "./filterBuilderContext.tsx";
 import FilterGroup from "./filterGroup.tsx";
 import FilterChip from "./filterChip.tsx";
-import { isCompleteRule, useFilterState } from "./useFilterState.ts";
+import { classifyUrlFilterParam, hasDraftRules, isCompleteRule, isDraftRule, searchParamAfterSet, shouldAutoCommit, useFilterState, withPreservedDrafts } from "./useFilterState.ts";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterDSL, FilterRule, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import {
@@ -25,6 +25,8 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 
 type RuleWithGroup = { groupId: string; rule: FilterRule };
 
+const AUTO_COMMIT_MS = 300;
+
 function collectRulesWithGroups(group: FilterDSL, fields: FilterFieldConfig[]): RuleWithGroup[] {
     const result: RuleWithGroup[] = [];
     for (const r of group.rules ?? []) {
@@ -42,15 +44,12 @@ function countActiveRules(group: FilterDSL): number {
     return rules + nested;
 }
 
-/** Incomplete rule waiting for field/value (not shown as a chip yet). */
-function isDraftRule(rule: FilterRule): boolean {
-    return !isCompleteRule(rule);
-}
-
 type FilterBuilderProps = WithLanguageType & {
     resourceUrl: string;
     filters: Record<string, unknown>;
-    setFilters: (filters: Record<string, unknown>) => void;
+    setFilters: (
+        filters: Record<string, unknown> | ((prev: Record<string, unknown>) => Record<string, unknown>),
+    ) => void;
     extraParams?: Record<string, unknown>;
     /** When provided, use these filter fields instead of fetching. Enables single-request flow with table-config. */
     filterFields?: import("armonia/src/modules/core/database/filter").FilterFieldConfig[];
@@ -99,10 +98,24 @@ function FilterBuilderInner({
     const lastCommittedKeyRef = useRef<string | null>(null);
     const lastSyncedFilterParam = useRef<string | null>(filterParam);
     const lastSyncedLabelsParam = useRef<string | null>(labelsParam);
+    /** True after we `replace` the URL until that exact `?filter=` / `?filterLabels=` pair is visible. */
+    const pendingUrlWriteRef = useRef(false);
+    const rootRef = useRef(root);
+    rootRef.current = root;
+    const autoCommitTimerRef = useRef<number>(0);
 
     const commitFilters = useCallback(
         (dsl: FilterDSL | undefined, options?: { closePopover?: boolean }) => {
+            window.clearTimeout(autoCommitTimerRef.current);
             const prunedLabels = pruneFilterLabelsToDsl(refLabelsByFieldPath, dsl);
+            const encodedFilter = dsl ? encodeFilterToUrl(dsl) : null;
+            const encodedLabels =
+                dsl && Object.keys(prunedLabels).length > 0
+                    ? encodeFilterLabelsToUrl(prunedLabels)
+                    : null;
+            lastSyncedFilterParam.current = searchParamAfterSet(FILTER_URL_PARAM, encodedFilter);
+            lastSyncedLabelsParam.current = searchParamAfterSet(FILTER_LABELS_URL_PARAM, encodedLabels);
+            pendingUrlWriteRef.current = true;
             setFilters((prev) => {
                 const next = { ...prev, ...extraParams };
                 if (dsl) next.filter = dsl;
@@ -111,10 +124,10 @@ function FilterBuilderInner({
             });
             setSearchParams((prev) => {
                 const next = new URLSearchParams(prev);
-                if (dsl) {
-                    next.set(FILTER_URL_PARAM, encodeFilterToUrl(dsl));
-                    if (Object.keys(prunedLabels).length > 0) {
-                        next.set(FILTER_LABELS_URL_PARAM, encodeFilterLabelsToUrl(prunedLabels));
+                if (encodedFilter) {
+                    next.set(FILTER_URL_PARAM, encodedFilter);
+                    if (encodedLabels) {
+                        next.set(FILTER_LABELS_URL_PARAM, encodedLabels);
                     } else {
                         next.delete(FILTER_LABELS_URL_PARAM);
                     }
@@ -125,15 +138,9 @@ function FilterBuilderInner({
                 next.delete(listPageParam);
                 return next;
             }, { replace: true });
-            lastSyncedFilterParam.current = dsl ? encodeFilterToUrl(dsl) : null;
-            lastSyncedLabelsParam.current =
-                dsl && Object.keys(prunedLabels).length > 0
-                    ? encodeFilterLabelsToUrl(prunedLabels)
-                    : null;
-            if (Object.keys(prunedLabels).length > 0) replaceRefLabels(prunedLabels);
+            if (encodedLabels) replaceRefLabels(prunedLabels);
             else replaceRefLabels({});
             lastCommittedKeyRef.current = JSON.stringify(dsl ?? null);
-            suppressAutoApplyRef.current += 1;
             if (options?.closePopover) setPopoverOpen(false);
         },
         [setFilters, extraParams, setSearchParams, refLabelsByFieldPath, replaceRefLabels, listPageParam],
@@ -141,14 +148,34 @@ function FilterBuilderInner({
 
     // Re-sync UI + applied filters whenever the URL `filter` param changes
     // (refresh, shared links, browser back/forward). Apply/Clear write the URL;
-    // this effect is the reader.
+    // this effect is the reader. Skip echoes of our own write — a slower `?filter=`
+    // arriving after the next keystroke used to `setRoot` and wipe in-progress drafts.
     useEffect(() => {
-        if (lastSyncedFilterParam.current === filterParam) return;
+        const writeLanded =
+            lastSyncedFilterParam.current === filterParam &&
+            lastSyncedLabelsParam.current === labelsParam;
+        if (writeLanded) {
+            pendingUrlWriteRef.current = false;
+            return;
+        }
+        // Filter-only echo while labels are still in flight must not clear pending —
+        // a slower empty `filterLabels` would then hydrate and wipe ObjectId chips.
+        if (pendingUrlWriteRef.current) return;
+        if (
+            classifyUrlFilterParam(
+                filterParam,
+                lastSyncedFilterParam.current,
+                pendingUrlWriteRef.current,
+            ) === "echo"
+        ) {
+            return;
+        }
+
         lastSyncedFilterParam.current = filterParam;
         suppressAutoApplyRef.current += 1;
 
         if (urlFilter) {
-            setRoot(urlFilter);
+            setRoot(withPreservedDrafts(urlFilter, rootRef.current));
             setFilters((prev) => ({ ...prev, ...extraParams, filter: urlFilter }));
             lastCommittedKeyRef.current = JSON.stringify(urlFilter);
             return;
@@ -157,6 +184,7 @@ function FilterBuilderInner({
         // Only clear when the param is gone. If decode fails (corrupt / too long),
         // keep existing applied state — do not wipe filters or fight the URL.
         if (filterParam == null || filterParam === "") {
+            if (hasDraftRules(rootRef.current)) return;
             reset();
             setFilters((prev) => {
                 const next = { ...prev, ...extraParams };
@@ -165,11 +193,17 @@ function FilterBuilderInner({
             });
             lastCommittedKeyRef.current = JSON.stringify(null);
         }
-    }, [filterParam, urlFilter, setRoot, reset, setFilters, extraParams]);
+    }, [filterParam, labelsParam, urlFilter, setRoot, reset, setFilters, extraParams]);
 
     // Keep ObjectId chip labels in sync with `filterLabels` (provider also seeds on mount).
     useEffect(() => {
-        if (lastSyncedLabelsParam.current === labelsParam) return;
+        const kind = classifyUrlFilterParam(
+            labelsParam,
+            lastSyncedLabelsParam.current,
+            pendingUrlWriteRef.current,
+        );
+        if (kind === "echo") return;
+        if (kind === "stale") return;
         lastSyncedLabelsParam.current = labelsParam;
         if (urlLabels) {
             replaceRefLabels(urlLabels);
@@ -184,6 +218,8 @@ function FilterBuilderInner({
     const appliedKey = useMemo(() => JSON.stringify(appliedDsl ?? null), [appliedDsl]);
 
     // Auto-apply when complete rules change (chip edit/remove, or draft → badge).
+    // Debounce so typing a value does not replace `?filter=` on every keystroke —
+    // a slower echo of an earlier write used to hydrate and drop later rules.
     useEffect(() => {
         if (suppressAutoApplyRef.current > 0) {
             suppressAutoApplyRef.current -= 1;
@@ -191,8 +227,13 @@ function FilterBuilderInner({
             return;
         }
         if (appliedKey === lastCommittedKeyRef.current) return;
-        commitFilters(appliedDsl, { closePopover: false });
-    }, [appliedKey, appliedDsl, commitFilters]);
+        if (!shouldAutoCommit(appliedDsl, root)) return;
+        window.clearTimeout(autoCommitTimerRef.current);
+        autoCommitTimerRef.current = window.setTimeout(() => {
+            commitFilters(appliedDsl, { closePopover: false });
+        }, AUTO_COMMIT_MS);
+        return () => window.clearTimeout(autoCommitTimerRef.current);
+    }, [appliedKey, appliedDsl, commitFilters, root]);
 
     // When the builder opens, ensure there is a blank rule ready to edit.
     // After a draft becomes a chip (and auto-applies), add another blank rule.
@@ -207,11 +248,10 @@ function FilterBuilderInner({
     }, [commitFilters, serialize]);
 
     const onClear = useCallback(() => {
+        window.clearTimeout(autoCommitTimerRef.current);
         reset();
         replaceRefLabels({});
         commitFilters(undefined, { closePopover: true });
-        lastSyncedFilterParam.current = null;
-        lastSyncedLabelsParam.current = null;
     }, [reset, replaceRefLabels, commitFilters]);
 
     const handlePopoverOpenChange = useCallback((open: boolean) => {

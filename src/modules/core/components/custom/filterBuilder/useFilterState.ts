@@ -38,6 +38,74 @@ export function isCompleteRule(rule: FilterRule): boolean {
     return true;
 }
 
+/** Incomplete rule waiting for field/value (not shown as a chip yet). */
+export function isDraftRule(rule: FilterRule): boolean {
+    return !isCompleteRule(rule);
+}
+
+export function collectDraftRules(group: FilterGroup): FilterRule[] {
+    const drafts: FilterRule[] = [];
+    for (const rule of group.rules) {
+        if (isDraftRule(rule)) drafts.push(rule);
+    }
+    for (const child of group.groups) {
+        drafts.push(...collectDraftRules(child));
+    }
+    return drafts;
+}
+
+export function hasDraftRules(group: FilterGroup): boolean {
+    return collectDraftRules(group).length > 0;
+}
+
+/**
+ * URL hydrate replaces the whole tree. Re-attach in-progress drafts so a slower
+ * `?filter=` echo cannot wipe a rule the user is still editing.
+ */
+export function withPreservedDrafts(urlRoot: FilterGroup, localRoot: FilterGroup): FilterGroup {
+    const drafts = collectDraftRules(localRoot);
+    if (drafts.length === 0) return urlRoot;
+    const existingIds = new Set(urlRoot.rules.map((rule) => rule.id));
+    const toAdd = drafts.filter((draft) => !existingIds.has(draft.id));
+    if (toAdd.length === 0) return urlRoot;
+    return {...urlRoot, rules: [...urlRoot.rules, ...toAdd]};
+}
+
+/**
+ * Auto-apply writes complete rules to the URL. Do not auto-clear while a draft
+ * exists — changing a field nulls `value` and would otherwise wipe `?filter=`.
+ */
+export function shouldAutoCommit(serialized: FilterDSL | undefined, localRoot: FilterGroup): boolean {
+    if (serialized) return true;
+    return !hasDraftRules(localRoot);
+}
+
+/**
+ * Our `?filter=` writes use `replace` and can echo out of order. A slower
+ * earlier write must not hydrate over the tree we just committed.
+ *
+ * - `echo` — URL matches the last write (clear pending, skip hydrate)
+ * - `stale` — a write is in flight and this param is not it (ignore)
+ * - `hydrate` — external change (back/forward, pasted URL, shared link)
+ */
+export function classifyUrlFilterParam(
+    incomingParam: string | null,
+    lastSyncedParam: string | null,
+    pendingWrite: boolean,
+): "echo" | "stale" | "hydrate" {
+    if (incomingParam === lastSyncedParam) return "echo";
+    if (pendingWrite) return "stale";
+    return "hydrate";
+}
+
+/** What `searchParams.get` returns after `URLSearchParams.set` of an encoded filter. */
+export function searchParamAfterSet(key: string, encoded: string | null): string | null {
+    if (encoded == null) return null;
+    const probe = new URLSearchParams();
+    probe.set(key, encoded);
+    return probe.get(key);
+}
+
 type FilterAction =
     | { type: "addRule"; groupId: string }
     | { type: "removeRule"; groupId: string; ruleId: string }

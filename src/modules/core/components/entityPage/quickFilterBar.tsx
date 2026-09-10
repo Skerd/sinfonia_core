@@ -69,7 +69,7 @@ type QuickFilterBarProps = WithLanguageType & {
 };
 
 function defaultOperator(type: COLUMN_TYPE): FilterOperator {
-    if (type === COLUMN_TYPE.STRING) return "contains";
+    if (type === COLUMN_TYPE.STRING || type === COLUMN_TYPE.ARRAY) return "contains";
     return "equals";
 }
 

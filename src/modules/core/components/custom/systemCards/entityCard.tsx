@@ -21,6 +21,7 @@ import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
 import {EntityCardFetchGuard} from "@coreModule/components/custom/cards/EntityCardFetchGuard.tsx";
 import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
+import {isDialogDismissGuarded} from "@coreModule/components/ui/dialog.tsx";
 import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
 import {useEntityCardFetch} from "@coreModule/helpers/hooks/useEntityCardFetch.ts";
 
@@ -297,7 +298,10 @@ function EntityCardRoot<T extends SoftDeletable>({
                             <EntityCardShell
                                 ref={shellRef}
                                 className={resolvedShellClassName}
-                                onClick={() => setAction("view")}
+                                onClick={() => {
+                                    if (isDialogDismissGuarded()) return;
+                                    setAction("view");
+                                }}
                             >
                                 <div className="flex w-full items-stretch">
                                     {showDeleted && (

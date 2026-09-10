@@ -6,9 +6,11 @@ import {columnDeadEntries} from "../table/columnRelevance.ts";
 import type {LintFinding, LintSeverity} from "./viewLint.ts";
 
 /**
- * Cell types `schemaTypeToFilterConfig` can attach operators to. Address / mixed /
- * file columns are display-only: Core never puts them in the Filter Builder, and
- * nested scalars (e.g. `geolocation.city`) carry the filters instead.
+ * Cell types `schemaTypeToFilterConfig` can attach operators to. Address / mixed
+ * stay display-only (nested scalars such as `geolocation.city` carry the filters).
+ * File / avatar / primitive-array columns may carry operators when the schema leaves
+ * them filterable; they stay out of this set so opted-out photos and string lists
+ * are not flagged.
  */
 const FILTER_DERIVED_CELL_TYPES = new Set<COLUMN_TYPE>([
     COLUMN_TYPE.STRING,

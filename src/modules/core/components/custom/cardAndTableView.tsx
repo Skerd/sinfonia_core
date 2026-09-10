@@ -22,6 +22,7 @@ import NoData from "@coreModule/components/custom/noData.tsx";
 import {entityCardSkeletonItems, EntityTableSkeleton} from "@coreModule/components/custom/skeletons/entityListSkeleton.tsx";
 import {ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, type Row, useReactTable} from "@tanstack/react-table";
 import {Table, TableBody, TableCell, TableRow} from "@coreModule/components/ui/table/table.tsx";
+import {isDialogDismissGuarded} from "@coreModule/components/ui/dialog.tsx";
 import DataTableTableHeaderProps from "@coreModule/components/ui/table/table-header.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import DataTableViewOptions from "@coreModule/components/ui/table/view-options.tsx";
@@ -480,8 +481,9 @@ function CountryCenterView<
 
     const activateRow = (item: T, e?: { target: EventTarget | null }) => {
         if (!onRowActivate) return;
+        if (isDialogDismissGuarded()) return;
         const el = e?.target as HTMLElement | null;
-        if (el?.closest("button, a, input, [role=checkbox], [data-slot=dropdown-menu-trigger], [data-slot=checkbox]")) {
+        if (el?.closest("button, a, input, [role=checkbox], [data-slot=avatar], [data-slot=dropdown-menu-trigger], [data-slot=checkbox]")) {
             return;
         }
         onRowActivate(item);

@@ -4,6 +4,10 @@ import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/ava
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {User} from "lucide-react";
 
+function stopRowActivate(e: {stopPropagation: () => void}) {
+    e.stopPropagation();
+}
+
 export default function TableAvatar({mediaId}: {mediaId: string}) {
     const [open, setOpen] = useState(false);
     const mediaPath = "/api/auxiliary/media/";
@@ -11,18 +15,27 @@ export default function TableAvatar({mediaId}: {mediaId: string}) {
 
     return (
         <>
-            <Avatar
+            <button
+                type="button"
+                disabled={!imageSrc}
+                aria-label="View image"
                 className={cn(
-                    "flex items-center border hover:border-muted-foreground size-8",
-                    imageSrc && "hover:cursor-pointer"
+                    "rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    imageSrc && "hover:cursor-pointer",
                 )}
-                onClick={() => imageSrc && setOpen(true)}
+                onClick={(e) => {
+                    stopRowActivate(e);
+                    if (imageSrc) setOpen(true);
+                }}
+                onPointerDown={stopRowActivate}
             >
-                {!!mediaId && <AvatarImage src={imageSrc} alt={mediaId + " media"} />}
-                <AvatarFallback>
-                    <User size={18} />
-                </AvatarFallback>
-            </Avatar>
+                <Avatar className="flex items-center border hover:border-muted-foreground size-8">
+                    {!!mediaId && <AvatarImage src={imageSrc} alt={mediaId + " media"} />}
+                    <AvatarFallback>
+                        <User size={18} />
+                    </AvatarFallback>
+                </Avatar>
+            </button>
 
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="max-w-[90vw] max-h-[90vh] min-w-[min(90vw,560px)] min-h-[min(80vh,420px)] w-fit p-0 overflow-auto bg-transparent border-0 flex items-center justify-center">

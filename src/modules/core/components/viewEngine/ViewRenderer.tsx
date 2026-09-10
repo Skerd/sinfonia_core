@@ -1385,7 +1385,8 @@ function renderDisplayCard(
 
     /*
      * `avatarPath` points at a media ref on the entity (`createdBy.photo`) and swaps the icon
-     * for that photo; `flagCodePath` does the same with a country ref's ISO code.
+     * for that photo; `flagCodePath` does the same with a country ref's ISO code;
+     * `mdiIconPath` does the same with an MDI icon name (`unitType.icon`).
      *
      * Both media slots are gated on the account's read access for the path they read, the same
      * `hasAccessPath` the value itself goes through. The server already strips an unreadable
@@ -1403,6 +1404,12 @@ function renderDisplayCard(
     const flagCode =
         flagCodePath && data && hasAccessPath(ctx.access, flagCodePath)
             ? String(resolvePath(data, flagCodePath) ?? "").trim() || undefined
+            : undefined;
+
+    const mdiIconPath = typeof wp.mdiIconPath === "string" ? wp.mdiIconPath : "";
+    const mdiIcon =
+        mdiIconPath && data && hasAccessPath(ctx.access, mdiIconPath)
+            ? String(resolvePath(data, mdiIconPath) ?? "").trim() || undefined
             : undefined;
 
     const avatarPath = typeof wp.avatarPath === "string" ? wp.avatarPath : "";
@@ -1545,6 +1552,7 @@ function renderDisplayCard(
             Icon={Icon ?? undefined}
             avatar={avatar}
             flagCode={flagCode}
+            mdiIcon={mdiIcon}
             value={displayValue}
             variant={variant}
             dontRenderValue={!!wp.dontRenderValue || !!externalLinkValue}

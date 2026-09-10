@@ -5,6 +5,27 @@ import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button } from "@coreModule/components/ui/button.tsx"
 import { IconX } from "@tabler/icons-react"
 
+const DISMISS_GUARD_MS = 500
+let dismissGuardUntil = 0
+
+function armDialogDismissGuard() {
+  dismissGuardUntil = performance.now() + DISMISS_GUARD_MS
+  const swallow = (event: Event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    event.stopImmediatePropagation()
+  }
+  document.addEventListener("click", swallow, true)
+  window.setTimeout(() => {
+    document.removeEventListener("click", swallow, true)
+  }, DISMISS_GUARD_MS)
+}
+
+/** True for a short window after a dialog closes from an outside pointer. */
+function isDialogDismissGuarded() {
+  return performance.now() < dismissGuardUntil
+}
+
 function Dialog({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
@@ -49,6 +70,7 @@ function DialogContent({
   className,
   children,
   showCloseButton = true,
+  onPointerDownOutside,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean
@@ -70,6 +92,11 @@ function DialogContent({
           className
         )}
         {...props}
+        onPointerDownOutside={(event) => {
+          onPointerDownOutside?.(event)
+          if (event.defaultPrevented) return
+          armDialogDismissGuard()
+        }}
       >
         {children}
         {showCloseButton && (
@@ -167,4 +194,5 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+  isDialogDismissGuarded,
 }

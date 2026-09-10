@@ -57,9 +57,12 @@ export default function PdfFirstPageThumb({
             const height = Math.round(el.clientHeight);
             window.clearTimeout(timeout);
             timeout = window.setTimeout(() => {
-                setBox((current) => (
-                    current.width === width && current.height === height ? current : {width, height}
-                ));
+                setBox((current) => {
+                    if (Math.abs(current.width - width) < 2 && Math.abs(current.height - height) < 2) {
+                        return current;
+                    }
+                    return {width, height};
+                });
             }, 80);
         };
         measure();
@@ -101,12 +104,14 @@ export default function PdfFirstPageThumb({
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas || !payload || (box.width < 40 && box.height < 40)) return;
+        /* Table file tiles are `size-9` (~36px). Skipping below 40px left those
+           canvases at opacity-0 forever. Only wait for an unmeasured box. */
+        if (!canvas || !payload || box.width < 1 || box.height < 1) return;
 
         const controller = new AbortController();
         setReady(false);
-        const cssWidth = Math.max(box.width, 80);
-        const cssMaxHeight = Math.max(box.height, 80);
+        const cssWidth = box.width;
+        const cssMaxHeight = box.height;
 
         (async () => {
             try {

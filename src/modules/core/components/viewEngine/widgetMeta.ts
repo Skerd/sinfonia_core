@@ -287,6 +287,12 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
                 suggest: "readPath",
                 docs: "Media ref path (e.g. `createdBy.photo`) shown in place of the icon.",
             },
+            {
+                name: "mdiIconPath",
+                type: "string",
+                suggest: "readPath",
+                docs: "MDI icon name path (e.g. `unitType.icon`) shown in place of the icon.",
+            },
             {name: "dontRenderValue", type: "boolean", docs: "Icon and label only."},
             {
                 name: "type",

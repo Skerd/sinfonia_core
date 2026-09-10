@@ -10,6 +10,10 @@ type PdfDialogViewerProps = {
     className?: string;
 };
 
+function isAbort(err: unknown, signal: AbortSignal): boolean {
+    return signal.aborted || (err instanceof DOMException && err.name === "AbortError");
+}
+
 export default function PdfDialogViewer({src, className}: PdfDialogViewerProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const wrapRef = useRef<HTMLDivElement>(null);
@@ -35,13 +39,18 @@ export default function PdfDialogViewer({src, className}: PdfDialogViewerProps) 
                 const count = await getPdfPageCount(data, controller.signal);
                 if (controller.signal.aborted) return;
                 setNumPages(count);
-            } catch {
-                if (!controller.signal.aborted) setFailed(true);
+            } catch (err) {
+                if (!isAbort(err, controller.signal)) setFailed(true);
             }
         })();
         return () => controller.abort();
     }, [src]);
 
+    /*
+     * Measure a box that does not include the canvas in its layout. Sizing the
+     * wrap from the canvas (or toggling min-height while rendering) feeds
+     * ResizeObserver and re-fetches/re-renders forever.
+     */
     useEffect(() => {
         const el = wrapRef.current;
         if (!el) return;
@@ -51,48 +60,51 @@ export default function PdfDialogViewer({src, className}: PdfDialogViewerProps) 
             const height = Math.round(el.clientHeight);
             window.clearTimeout(timeout);
             timeout = window.setTimeout(() => {
-                setBox((current) => (
-                    current.width === width && current.height === height ? current : {width, height}
-                ));
-            }, 80);
+                setBox((current) => {
+                    if (Math.abs(current.width - width) < 8 && Math.abs(current.height - height) < 8) {
+                        return current;
+                    }
+                    return {width, height};
+                });
+            }, 120);
         };
         measure();
+        const frame = window.requestAnimationFrame(measure);
         const resizeObserver = new ResizeObserver(measure);
         resizeObserver.observe(el);
         window.addEventListener("resize", measure);
         return () => {
             window.clearTimeout(timeout);
+            window.cancelAnimationFrame(frame);
             resizeObserver.disconnect();
             window.removeEventListener("resize", measure);
         };
-    }, [src, numPages]);
+    }, [src]);
 
     useEffect(() => {
         const data = dataRef.current;
         const canvas = canvasRef.current;
         if (!data || !canvas || numPages < 1 || failed) return;
-        setReady(false);
+        if (box.width < 40 || box.height < 40) return;
         const controller = new AbortController();
-        const cssWidth = Math.max(box.width || window.innerWidth - 32, 280);
-        const cssMaxHeight = Math.max(box.height || Math.floor(window.innerHeight * 0.92), 200);
         (async () => {
             try {
                 await renderPdfPageToCanvas({
                     data,
                     pageNumber: page,
-                    cssWidth,
-                    cssMaxHeight,
+                    cssWidth: box.width,
+                    cssMaxHeight: box.height,
                     fit: "contain",
                     canvas,
                     signal: controller.signal,
                 });
                 if (!controller.signal.aborted) setReady(true);
-            } catch {
-                if (!controller.signal.aborted) setFailed(true);
+            } catch (err) {
+                if (!isAbort(err, controller.signal)) setFailed(true);
             }
         })();
         return () => controller.abort();
-    }, [page, numPages, failed, src, box.width, box.height]);
+    }, [page, numPages, failed, box.width, box.height]);
 
     if (failed) {
         return (
@@ -101,16 +113,21 @@ export default function PdfDialogViewer({src, className}: PdfDialogViewerProps) 
     }
 
     return (
-        <div className={cn("flex min-h-0 w-full flex-col items-center gap-2", className)}>
+        <div
+            className={cn(
+                "flex h-[min(85vh,52rem)] w-[min(96vw,56rem)] max-w-full min-h-0 flex-col items-center gap-2",
+                className,
+            )}
+        >
             <div
                 ref={wrapRef}
-                className="flex min-h-0 w-full flex-1 items-center justify-center"
+                className="relative min-h-0 w-full flex-1"
             >
                 <canvas
                     ref={canvasRef}
                     className={cn(
-                        "max-h-full max-w-full",
-                        !ready && "min-h-40",
+                        "absolute inset-0 m-auto max-h-full max-w-full",
+                        !ready && "opacity-0",
                     )}
                 />
             </div>

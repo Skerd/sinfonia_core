@@ -17,6 +17,7 @@ import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
 import SheetMediaAvatar from "@coreModule/components/viewEngine/sheetMediaAvatar.tsx";
 import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
+import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {Dialog, DialogContent, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
@@ -68,6 +69,11 @@ type DisplayCardProps = {
     avatar?: {mediaId: string; name: string};
     /** ISO country code shown as a flag in the icon slot. Ignored when {@link avatar} is set. */
     flagCode?: string;
+    /**
+     * MDI icon name in the icon slot (e.g. a unit type's `icon`). Ignored when {@link avatar}
+     * or {@link flagCode} is set; falls back to {@link Icon} when empty.
+     */
+    mdiIcon?: string;
     value: unknown;
     tooltip: string;
     dontRenderValue?: boolean;
@@ -186,6 +192,7 @@ export default function DisplayCard({
     Icon,
     avatar,
     flagCode,
+    mdiIcon,
     value,
     tooltip,
     dontRenderValue = false,
@@ -258,6 +265,25 @@ export default function DisplayCard({
                 width={40}
                 height={40}
                 className="h-full w-full rounded-none object-cover"
+            />
+        </ItemMedia>
+    ) : mdiIcon ? (
+        <ItemMedia
+            className={cn(
+                "p-2.5 rounded-md",
+                !stackedBody && "self-start",
+                iconWrapStyles[variant],
+            )}
+        >
+            <MdiIcon
+                icon={mdiIcon}
+                /* @mdi/react: size 1 = 1.5rem (24px). 5/6 → 1.25rem, same as Tabler `h-5`. */
+                size={5 / 6}
+                showFallback
+                className={cn(
+                    "h-5 w-5",
+                    accentTextStyles[variant],
+                )}
             />
         </ItemMedia>
     ) : Icon != null ? (
