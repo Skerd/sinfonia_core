@@ -227,7 +227,7 @@ export const FileUploader = forwardRef<
                     aria-label="File upload"
                     onKeyDownCapture={handleKeyDown}
                     className={cn(
-                        "grid w-full overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg",
+                        "grid w-full min-w-0 overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg",
                         className,
                         { "gap-2": value && value.length > 0 },
                     )}
@@ -252,7 +252,7 @@ export const FileUploaderContent = forwardRef<
 
     return (
         <div
-            className={cn("w-full px-1")}
+            className={cn("w-full min-w-0 px-1")}
             ref={containerRef}
             aria-description="content file holder"
         >
@@ -260,7 +260,7 @@ export const FileUploaderContent = forwardRef<
                 {...props}
                 ref={ref}
                 className={cn(
-                    "flex rounded-xl gap-1",
+                    "flex rounded-xl gap-1 min-w-0",
                     orientation === "horizontal" ? "flex-row flex-wrap" : "flex-col",
                     className,
                 )}
@@ -284,19 +284,24 @@ export const FileUploaderItem = forwardRef<
             ref={ref}
             className={cn(
                 buttonVariants({ variant: "ghost" }),
-                "h-6 p-1 justify-between cursor-pointer relative",
+                "h-6 p-1 justify-between cursor-pointer relative w-full min-w-0 overflow-hidden",
                 className,
                 isSelected ? "bg-muted" : "",
             )}
             {...props}
         >
-            <div className="font-medium leading-none tracking-tight flex items-center gap-1.5 h-full w-full">
+            <div
+                className={cn(
+                    "font-medium leading-none tracking-tight flex items-center gap-1.5 h-full w-full min-w-0 overflow-hidden",
+                    direction === "rtl" ? "pl-5" : "pr-5",
+                )}
+            >
                 {children}
             </div>
             <button
                 type="button"
                 className={cn(
-                    "absolute",
+                    "absolute shrink-0",
                     direction === "rtl" ? "top-1 left-1" : "top-1 right-1",
                 )}
                 onClick={(e) => {
