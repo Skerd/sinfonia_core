@@ -130,7 +130,13 @@ function ActionMenu({
     }
 
     return (
-        <div ref={rootRef} data-action-menu-root className="flex justify-end">
+        <div
+            ref={rootRef}
+            data-action-menu-root
+            className="flex justify-end"
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()}
+        >
             <DropdownMenu
                 open={open}
                 onOpenChange={(next) => {

@@ -8,12 +8,26 @@ import { IconX } from "@tabler/icons-react"
 const DISMISS_GUARD_MS = 500
 let dismissGuardUntil = 0
 
+const OVERLAY_INTERIOR =
+  "[data-slot=dialog-content], [data-slot=alert-dialog-content], [data-slot=sheet-content]"
+
+function isOverlayInterior(target: EventTarget | null) {
+  return target instanceof Element && !!target.closest(OVERLAY_INTERIOR)
+}
+
+/**
+ * Swallow the leftover `click` that fires on the element under a closing overlay
+ * (dropdown item, dialog dismiss). Without this, table rows treat that click as
+ * "view" and open the sheet instead of the action's dialog.
+ */
 function armDialogDismissGuard() {
   dismissGuardUntil = performance.now() + DISMISS_GUARD_MS
   const swallow = (event: Event) => {
+    if (isOverlayInterior(event.target)) return
     event.preventDefault()
     event.stopPropagation()
     event.stopImmediatePropagation()
+    document.removeEventListener("click", swallow, true)
   }
   document.addEventListener("click", swallow, true)
   window.setTimeout(() => {
@@ -194,5 +208,6 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+  armDialogDismissGuard,
   isDialogDismissGuarded,
 }

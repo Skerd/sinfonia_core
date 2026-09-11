@@ -483,7 +483,7 @@ function CountryCenterView<
         if (!onRowActivate) return;
         if (isDialogDismissGuarded()) return;
         const el = e?.target as HTMLElement | null;
-        if (el?.closest("button, a, input, [role=checkbox], [data-slot=avatar], [data-slot=dropdown-menu-trigger], [data-slot=checkbox]")) {
+        if (el?.closest("button, a, input, [role=checkbox], [role=menuitem], [data-slot=avatar], [data-slot=dropdown-menu-trigger], [data-slot=dropdown-menu-content], [data-slot=dropdown-menu-item], [data-slot=checkbox]")) {
             return;
         }
         onRowActivate(item);
@@ -523,6 +523,8 @@ function CountryCenterView<
                         cell.column.id === "select" && "sticky left-0 z-10",
                         (cell.column.columnDef.meta as { className?: string } | undefined)?.className
                     )}
+                    onClick={cell.column.id === "actions" ? (e) => e.stopPropagation() : undefined}
+                    onPointerDown={cell.column.id === "actions" ? (e) => e.stopPropagation() : undefined}
                 >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
@@ -718,6 +720,8 @@ function CountryCenterView<
                                                                                         cell.column.id === "select" && "sticky left-0 z-10",
                                                                                         (cell.column.columnDef.meta as { className?: string } | undefined)?.className
                                                                                     )}
+                                                                                    onClick={cell.column.id === "actions" ? (e) => e.stopPropagation() : undefined}
+                                                                                    onPointerDown={cell.column.id === "actions" ? (e) => e.stopPropagation() : undefined}
                                                                                 >
                                                                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                                                                 </TableCell>

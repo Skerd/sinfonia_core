@@ -721,7 +721,7 @@ function renderSheetField(
                 : null;
         const stripIcon = typeof wp.icon === "string" ? wp.icon : null;
         if (mediaList.length === 0) {
-            return wrapSheetMediaWithLabel(stripLabel, <ValueNotSet />, index, stripIcon);
+            return wrapSheetMediaWithLabel(stripLabel, <ValueNotSet />, index, stripIcon, true);
         }
         return wrapSheetMediaWithLabel(
             stripLabel,
@@ -799,7 +799,7 @@ function renderSheetField(
             imageGallery.length > 0 ||
             videoGallery.length > 0;
         if (!hasMedia) {
-            return wrapSheetMediaWithLabel(galleryLabel, <ValueNotSet />, index, galleryIcon);
+            return wrapSheetMediaWithLabel(galleryLabel, <ValueNotSet />, index, galleryIcon, true);
         }
 
         const {icon: _galleryIconProp, ...galleryWp} = wp;
@@ -873,9 +873,13 @@ function wrapSheetMediaWithLabel(
     content: ReactNode,
     key: number,
     iconToken?: string | null,
+    empty = false,
 ): ReactNode {
+    const body = empty
+        ? createElement("div", {className: "p-4"}, content)
+        : content;
     if (!label) {
-        return createElement("div", {key}, content);
+        return createElement("div", {key}, body);
     }
     const Icon = typeof iconToken === "string" && iconToken.length > 0 ? resolveIcon(iconToken) : null;
     const heading = createElement(
@@ -890,7 +894,7 @@ function wrapSheetMediaWithLabel(
             : null,
         createElement("p", {className: "text-sm font-medium text-muted-foreground"}, label),
     );
-    return createElement("div", {key, className: "flex flex-col gap-1.5"}, heading, content);
+    return createElement("div", {key, className: "flex flex-col gap-1.5"}, heading, body);
 }
 
 function formatSheetSmallInfoTemporal(value: unknown, mode: "date" | "dateTime"): string | null {

@@ -138,7 +138,9 @@ function resolveEmbeddedFieldText(
     }
 
     if (field.languageKeyCategory && typeof raw === "boolean") {
-        raw = resolveLanguageKey(`${field.languageKeyCategory}.${raw ? "true" : "false"}`);
+        const key = `${field.languageKeyCategory}.${raw ? "true" : "false"}`;
+        const resolved = resolveLanguageKey(key);
+        raw = resolved !== key ? resolved : raw;
     } else if (
         field.languageKeyCategory &&
         (typeof raw === "string" || typeof raw === "number") &&
@@ -320,6 +322,23 @@ function renderScalarEmbeddedField(
     const wrapClass = spanFull ? "col-span-full min-w-0" : "min-w-0";
 
     if (field.type === "expandableText") {
+        const Icon = field.icon ? resolveIcon(field.icon) ?? undefined : undefined;
+        const asTile = Boolean(field.icon) || Boolean(cardColumns && label);
+        if (asTile) {
+            return (
+                <div key={key} className={wrapClass}>
+                    <DisplayCard
+                        show
+                        title={label ? String(label) : text}
+                        tooltip={label ? String(label) : text}
+                        Icon={Icon}
+                        value={text}
+                        expandable
+                        maxLength={250}
+                    />
+                </div>
+            );
+        }
         const display = label ? `${label}: ${text}` : text;
         return (
             <div key={key} className={wrapClass}>
@@ -448,10 +467,14 @@ function SheetEmbeddedItemsList({
         typeof item._id === "string" && item._id.length > 0 ? item._id : `embedded-item-${index}`;
 
     const fieldsLayoutClass = cardColumnsClass(cardColumns);
+    const compactLeadField = fields.find((f) => f.name === summaryFieldNames[0]);
+    const compactLeadIcon = compactLeadField?.icon
+        ? resolveIcon(compactLeadField.icon) ?? undefined
+        : undefined;
 
     const listBody =
         displayMode === "compact" ? (
-            <div className="flex flex-col gap-y-0.5">
+            <div className={cn("flex flex-col", compactLeadIcon ? "gap-y-2" : "gap-y-0.5")}>
                 {pagination.slice.map((item, i) => {
                     const parts = buildCompactSummaryParts(
                         item,
@@ -460,6 +483,25 @@ function SheetEmbeddedItemsList({
                         resolveSheet,
                     );
                     if (parts.length === 0) return null;
+                    if (compactLeadIcon) {
+                        const restText = parts
+                            .slice(1)
+                            .map((part) => part.text)
+                            .join(compactSummaryJoinSeparator);
+                        const href = parts.find((part) => part.href)?.href;
+                        return (
+                            <DisplayCard
+                                key={itemKey(item, i)}
+                                show
+                                title={parts[0].text}
+                                tooltip={parts[0].text}
+                                Icon={compactLeadIcon}
+                                value={restText || null}
+                                dontRenderValue={!restText}
+                                externalHref={href ?? undefined}
+                            />
+                        );
+                    }
                     return (
                         <div key={itemKey(item, i)} className="flex items-start gap-2 rounded-lg px-3 py-1">
                             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/50" />
