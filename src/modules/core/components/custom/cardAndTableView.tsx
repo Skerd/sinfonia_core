@@ -483,7 +483,7 @@ function CountryCenterView<
         if (!onRowActivate) return;
         if (isDialogDismissGuarded()) return;
         const el = e?.target as HTMLElement | null;
-        if (el?.closest("button, a, input, [role=checkbox], [role=menuitem], [data-slot=avatar], [data-slot=dropdown-menu-trigger], [data-slot=dropdown-menu-content], [data-slot=dropdown-menu-item], [data-slot=checkbox]")) {
+        if (el?.closest("button, a, input, [role=checkbox], [role=menuitem], [data-slot=avatar], [data-slot=dropdown-menu-trigger], [data-slot=dropdown-menu-content], [data-slot=dropdown-menu-item], [data-slot=checkbox], [data-slot=popover-trigger], [data-slot=popover-content]")) {
             return;
         }
         onRowActivate(item);
