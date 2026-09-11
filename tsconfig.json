@@ -36,6 +36,7 @@
       "@eCommerceMarketplaceModule/*": ["./src/modules/eCommerceMarketplace/*"],
       "@financeModule/*": ["./src/modules/finance/*"],
       "@musicIndustryModule/*": ["./src/modules/musicIndustry/*"],
+      "@propertyDevelopmentModule/*": ["./src/modules/propertyDevelopment/*"],
       "@propertyManagementModule/*": ["./src/modules/propertyManagement/*"],
       "@swissOutreachModule/*": ["./src/modules/swissOutreach/*"],
       "armonia/*": ["../armonia/*"],
