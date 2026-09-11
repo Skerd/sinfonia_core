@@ -19,6 +19,7 @@ describe("apiNamespace", () => {
 describe("moduleForModel", () => {
     it("maps a view's api namespace to its module", () => {
         expect(moduleForModel("units", "/api/realEstate/unit")).toBe("propertyManagement");
+        expect(moduleForModel("snags", "/api/propertyDevelopment/snag")).toBe("propertyDevelopment");
         expect(moduleForModel("countries", "/api/auxiliary/country")).toBe("core");
         expect(moduleForModel("currencies", "/api/finance/currency")).toBe("finance");
     });
@@ -47,6 +48,7 @@ describe("groupByModule", () => {
             entry("products", "eCommerce"),
             entry("countries", "core"),
             entry("units", "propertyManagement"),
+            entry("snags", "propertyDevelopment"),
             entry("widgets", OTHER_MODULE_ID),
             entry("cities", "core"),
             entry("edifices", "propertyManagement"),
@@ -55,6 +57,7 @@ describe("groupByModule", () => {
         expect(groups.map((group) => group.id)).toEqual([
             "core",
             "propertyManagement",
+            "propertyDevelopment",
             "eCommerce",
             OTHER_MODULE_ID,
         ]);
