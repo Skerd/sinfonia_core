@@ -91,6 +91,7 @@ Mirrors maestro's `ENABLED_MODULES`.
 | `@eCommerceModule/*` | `src/modules/eCommerce/*` |
 | `@eCommerceMarketplaceModule/*` | `src/modules/eCommerceMarketplace/*` |
 | `@propertyManagementModule/*` | `src/modules/propertyManagement/*` |
+| `@propertyDevelopmentModule/*` | `src/modules/propertyDevelopment/*` |
 | `armonia/*` | `../armonia/*` |
 | `@/*` | `src/*` |
 
@@ -103,6 +104,7 @@ Feature modules extend core and are documented separately:
 - [`src/modules/eCommerce`](src/modules/eCommerce/README.md)
 - [`src/modules/eCommerceMarketplace`](src/modules/eCommerceMarketplace/README.md)
 - [`src/modules/propertyManagement`](src/modules/propertyManagement/README.md)
+- [`src/modules/propertyDevelopment`](src/modules/propertyDevelopment/README.md)
 
 Armonia contracts: [`../armonia/README.md`](../armonia/README.md)  
 Maestro API: [`../maestro/README.md`](../maestro/README.md)
