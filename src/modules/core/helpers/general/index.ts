@@ -7,7 +7,7 @@ import environmentConfig from "@coreModule/environment/environment.json";
 import { ChannelUser } from "armonia/src/modules/core/types";
 import type { DeletedData } from "armonia/src/modules/core/types/shared.types.ts";
 import { MessageSenderType } from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
-import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
+import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {ResolveLanguageKey, TranslationValue} from "@coreModule/helpers/hocs/withLanguage.tsx";
 
 type ClientConfig = typeof environmentConfig;

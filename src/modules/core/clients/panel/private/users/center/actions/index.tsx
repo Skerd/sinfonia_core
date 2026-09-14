@@ -3,7 +3,7 @@ import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import EditUserAction from "@coreModule/clients/panel/private/users/center/actions/edit.tsx";
-import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
+import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 

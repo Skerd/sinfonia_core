@@ -2,8 +2,8 @@ import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {BadgeCheck, Calendar, Clock9, Lock, Mail, MessageSquareText, UserPlus} from "lucide-react";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
-import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
-import type {CompanyUserRequestsType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
+import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
+import type {CompanyUserRequestsType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {
     DropdownMenu,
     DropdownMenuContent,

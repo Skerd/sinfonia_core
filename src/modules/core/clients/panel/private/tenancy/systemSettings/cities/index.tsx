@@ -48,7 +48,7 @@ function AllCities({
 
     const headerTitle = buildPageTitle(resolveLanguageKey("title") as string, [countryName, stateName]);
 
-    const extraParams = useMemo(() => {
+    const extraFilters = useMemo(() => {
         if (!countryId && !stateId) return undefined;
         return {
             ...(countryId ? {country: countryId} : {}),
@@ -70,6 +70,7 @@ function AllCities({
             headerTitle={headerTitle}
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
             configurations={{limit: 20}}
+            extraFilters={extraFilters}
             renderCard={(city, onDelete, onRestore) => (
                 <CityCard
                     countryId={countryId}
@@ -94,7 +95,6 @@ function AllCities({
                     onRestore={onRestore}
                 />
             )}
-            extraParams={extraParams}
         />
     );
 }

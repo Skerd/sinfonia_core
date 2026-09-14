@@ -13,7 +13,7 @@ import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {AccessibleRolesFormResponseType} from "armonia/src/modules/core/api/user/private/permissions/accessibleRoles.form.response.type.ts";
-import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
+import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {ApiSelectDatum} from "armonia/src/modules/core/types/shared.types.ts";
 import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
 

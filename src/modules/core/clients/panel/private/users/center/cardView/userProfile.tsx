@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
+import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {UserProfileCard} from "./userProfileCard.tsx";
 import {useSelector} from "react-redux";

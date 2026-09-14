@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useFieldArray, useFormContext, type FieldValues } from "react-hook-form";
 import {compose} from "redux";
 import withLanguage, {type ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -8,6 +8,7 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreM
 import { Input } from "@coreModule/components/ui/input.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { CirclePlus, Trash2 } from "lucide-react";
+import {buildFilterGroup, buildFilterRule} from "@coreModule/helpers/filter/filterUrl.ts";
 
 export type FormAddressWithMapLabels = {
     country: string;
@@ -57,6 +58,17 @@ function fieldPath(prefix: string, key: string): keyof FieldValues {
     return `${prefix}.${key}` as keyof FieldValues;
 }
 
+/** ApiSelect POST body with DSL `filters` for cascade equals rules. */
+function selectBodyWithEqualsFilters(
+    entries: {field: string; value: unknown}[],
+): Record<string, unknown> | undefined {
+    const rules = entries
+        .filter((e) => e.value != null && e.value !== "")
+        .map((e) => buildFilterRule(e.field, "equals", String(e.value)));
+    if (rules.length === 0) return undefined;
+    return {filters: buildFilterGroup(rules)};
+}
+
 /**
  * Config-driven block: country / state / city (cascade), street / postal, lat / lng, optional map column.
  * Driven entirely via `widgetProps` from maestro view configs.
@@ -101,6 +113,18 @@ export function SingleFormAddressWithMap({
     const watchCountry = form.watch(pCountry as any);
     const watchState = form.watch(pState as any);
     const recordId = form.watch("_id" as any);
+
+    const stateSelectPostBody = useMemo(
+        () => selectBodyWithEqualsFilters([{field: "country", value: watchCountry}]),
+        [watchCountry],
+    );
+    const citySelectPostBody = useMemo(
+        () => selectBodyWithEqualsFilters([
+            {field: "country", value: watchCountry},
+            {field: "state", value: watchState},
+        ]),
+        [watchCountry, watchState],
+    );
 
     useEffect(() => {
         if (!editMode) return;
@@ -236,7 +260,7 @@ export function SingleFormAddressWithMap({
                                             <ApiSelect
                                                 apiUrl={stateApiUrl}
                                                 method={apiMethod}
-                                                postBody={{ country: watchCountry }}
+                                                postBody={stateSelectPostBody}
                                                 value={field.value}
                                                 onValueChange={(value: string) => field.onChange(value)}
                                                 placeholder={resolveLanguageKey(labels.statePlaceholder)}
@@ -262,7 +286,7 @@ export function SingleFormAddressWithMap({
                                             <ApiSelect
                                                 apiUrl={cityApiUrl}
                                                 method={apiMethod}
-                                                postBody={{ country: watchCountry, state: watchState }}
+                                                postBody={citySelectPostBody}
                                                 value={field.value}
                                                 onValueChange={(value: string) => field.onChange(value)}
                                                 placeholder={resolveLanguageKey(labels.cityPlaceholder)}

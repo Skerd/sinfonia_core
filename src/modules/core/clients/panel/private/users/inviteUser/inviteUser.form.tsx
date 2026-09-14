@@ -17,12 +17,12 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {InviteUserFormResponseType} from "armonia/src/modules/core/api/company/private/users/inviteUser.form.response.type.ts";
+import type {ActionMessage} from "armonia/src/modules/core/types/shared.types.ts";
 import {InviteUserFormType} from "armonia/src/modules/core/api/company/private/users/inviteUser.form.type.ts";
 import {inviteCompanyUserFormSchema} from "armonia/src/modules/core/api/company/private/users/inviteUser.form.validator.ts";
 
 
-type InviteUserFormProps = WithLanguageType & WithAxiosType<InviteUserFormResponseType, InviteUserFormType> & {
+type InviteUserFormProps = WithLanguageType & WithAxiosType<ActionMessage, InviteUserFormType> & {
     onClose: Function,
     administration: boolean
 }

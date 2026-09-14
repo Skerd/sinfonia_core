@@ -13,7 +13,7 @@ import * as React from "react";
 import {InputWithIcon} from "@coreModule/components/custom/inputWithIcon.tsx";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
-import {SimpleUsersFormResponseType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.response.type.ts";
+import type {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import {SimpleUsersFormType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.type.ts";
 import {SimpleUserType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.response.type.ts";
 import {createChannelFormSchema} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.validator.ts";
@@ -66,7 +66,7 @@ function MemberRow({
     );
 }
 
-type MembersInfiniteListProps = WithAxiosType<SimpleUsersFormResponseType, SimpleUsersFormType> & {
+type MembersInfiniteListProps = WithAxiosType<TableResponse<SimpleUserType>, SimpleUsersFormType> & {
     resolveLanguageKey: ResolveLanguageKey;
     nameSearch: string;
     selectedUserIds: string[];

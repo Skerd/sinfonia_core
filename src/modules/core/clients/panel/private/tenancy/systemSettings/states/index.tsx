@@ -79,7 +79,7 @@ function AllStates({resolveLanguageKey, countryId, countryName}: AllStatesProps)
                     onRestore={onRestore}
                 />
             )}
-            extraParams={countryId ? {country: countryId} : undefined}
+            extraFilters={countryId ? {country: countryId} : undefined}
         />
     );
 }

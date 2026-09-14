@@ -1,5 +1,5 @@
 import {createContext, useContext} from "react";
-import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
+import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 
 type TableUpdateContextType = {
     updateRow: (rowId: string, updates: Partial<CompanyUserType>) => void;

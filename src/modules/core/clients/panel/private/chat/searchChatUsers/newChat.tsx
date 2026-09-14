@@ -14,7 +14,7 @@ import * as React from "react";
 import {InputWithIcon} from "@coreModule/components/custom/inputWithIcon.tsx";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import {createChannelFormSchema} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.validator.ts";
-import {SimpleUsersFormResponseType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.response.type.ts";
+import type {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import {SimpleUsersFormType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.type.ts";
 import {SimpleUserType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.response.type.ts";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
@@ -24,7 +24,7 @@ import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 
-type MembersInfiniteListProps = WithAxiosType<SimpleUsersFormResponseType, SimpleUsersFormType> & {
+type MembersInfiniteListProps = WithAxiosType<TableResponse<SimpleUserType>, SimpleUsersFormType> & {
     resolveLanguageKey: Function;
     nameSearch: string;
     selectedUserIds: string[];

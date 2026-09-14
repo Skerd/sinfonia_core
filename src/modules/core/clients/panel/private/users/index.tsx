@@ -9,7 +9,7 @@ import CreateUsers from "@coreModule/clients/panel/private/users/createUser";
 import {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
 import EntityListPage from "@coreModule/components/entityPage/EntityListPage.tsx";
 import {UserCard} from "@coreModule/clients/panel/private/users/center/cardView";
-import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
+import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import EditUser from "@coreModule/clients/panel/private/users/editUser";
 import EditUserAction from "@coreModule/clients/panel/private/users/center/actions/edit.tsx";
 import {TableUpdateContext} from "@coreModule/components/custom/tableUpdateContext.tsx";

@@ -7,16 +7,16 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {useImperativeHandle, useState} from "react";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
-import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
-import type {UnlockMfaDeactivationFormType} from "armonia/src/modules/core/api/company/private/users/unlockMfaDeactivation.form.type.ts";
-import type {UnlockMfaDeactivationFormResponseType} from "armonia/src/modules/core/api/company/private/users/unlockMfaDeactivation.form.response.type.ts";
+import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
+import type {UnlockUserRequestFormType} from "armonia/src/modules/core/api/company/private/users/unlockUserRequest.form.type.ts";
+import type {ActionMessage} from "armonia/src/modules/core/types/shared.types.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
 
-type UnlockMfaDeactivationActionProps = WithLanguageType & WithAxiosType<UnlockMfaDeactivationFormResponseType, UnlockMfaDeactivationFormType> & {
+type UnlockMfaDeactivationActionProps = WithLanguageType & WithAxiosType<ActionMessage, UnlockUserRequestFormType> & {
     user: CompanyUserType;
     specificUserId?: string;
 }

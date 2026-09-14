@@ -32,7 +32,7 @@ import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import type {
     CompanyUserRequestsType,
     CompanyUserType
-} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
+} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Tabs, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
 import {ActivationRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/activationRequestTabContent.tsx";

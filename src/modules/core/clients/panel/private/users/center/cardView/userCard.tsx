@@ -3,7 +3,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {UserProfileCard} from "./userProfileCard.tsx";
 import UserActions from "@coreModule/clients/panel/private/users/center/actions";
-import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
+import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 
 type UserCardProps = {
     user: CompanyUserType;

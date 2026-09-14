@@ -4,15 +4,14 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Mail} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/allUsers.form.response.type.ts";
-import type {ResendActivationEmailFormType} from "armonia/src/modules/core/api/company/private/users/resendActivationEmail.form.type.ts";
-import type {ResendActivationEmailFormResponseType} from "armonia/src/modules/core/api/company/private/users/resendActivationEmail.form.response.type.ts";
+import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
+import type {ResendUserEmailFormResponseType} from "armonia/src/modules/core/api/company/private/users/resendUserEmail.form.response.type.ts";
 import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
 import {useImperativeHandle, useState} from "react";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 
-type ResendActivationActionProps = WithLanguageType & WithAxiosType<ResendActivationEmailFormResponseType, ResendActivationEmailFormType> & {
+type ResendActivationActionProps = WithLanguageType & WithAxiosType<ResendUserEmailFormResponseType> & {
     user: CompanyUserType;
     specificUserId?: string;
 };
