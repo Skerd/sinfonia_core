@@ -6,8 +6,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import FormViewRenderer from "@coreModule/components/viewEngine/FormViewRenderer.tsx";
-import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
-import {useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
+import {useViewConfigState} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import type {FieldValues} from "react-hook-form";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
@@ -63,17 +62,11 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
         const navigate = useNavigate();
         const {accessKey, viewCollectionKey} = resolveEntityPageKeys(config);
         const {create} = useAccess(accessKey);
-        const viewConfigCtx = useViewConfigContext();
-        const viewConfig = useViewConfig(viewCollectionKey, "form:create");
+        const {config: viewConfig, loading: viewConfigLoading} = useViewConfigState(viewCollectionKey, "form:create");
         const formSchema = config.schema(languageCode, resolveLanguageKey("form"));
 
         if (!create) return <Forbidden />;
-        if (!viewConfig) {
-            if (viewConfigCtx && !viewConfigCtx.isHydrated) {
-                return <Loader />;
-            }
-            return <Forbidden />;
-        }
+        if (!viewConfig) return viewConfigLoading ? <Loader /> : <Forbidden />;
 
         function handleSuccessNavigate() {
             config.afterSuccess?.();

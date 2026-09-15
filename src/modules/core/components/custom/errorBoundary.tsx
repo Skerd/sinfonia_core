@@ -1,8 +1,9 @@
 import {Component, ErrorInfo, ReactNode} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
-import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
-import type {LanguageDictionary} from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
+import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
+import type {LanguageDictionary} from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
+import {handleError} from "@baseModule/helpers/general/errors.ts";
 const LANGUAGE_PATH = "src/modules/core/components/custom/errorBoundary.tsx";
 
 type ErrorBoundaryFallbackProps = {
@@ -70,7 +71,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-        console.error("ErrorBoundary caught an error", error, errorInfo);
+        handleError(error, {context: "ErrorBoundary", ignoreAbort: false, details: {componentStack: errorInfo.componentStack}});
     }
 
     componentDidUpdate(prevProps: ErrorBoundaryProps) {

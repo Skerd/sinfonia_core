@@ -16,7 +16,8 @@ import {Separator} from '@coreModule/components/ui/separator.tsx';
 import {ChevronsUpDown, User, X} from 'lucide-react';
 import {cn} from '@coreModule/components/lib/utils.ts';
 import apiClient from '@baseModule/helpers/apiClient/apiClient.ts';
-import PageIncrementer from '@coreModule/components/custom/apiSelect/pageIncrementer.tsx';
+import {handleError, isAbortError} from '@baseModule/helpers/general/errors.ts';
+import LoadMoreSentinel from '@coreModule/components/custom/loadMoreSentinel.tsx';
 import {Spinner} from "@coreModule/components/ui/spinner.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
@@ -587,10 +588,10 @@ function ApiSelectCore({
             }
 
         } catch (err: unknown) {
-            if (controller.signal.aborted) {
+            if (isAbortError(err, controller.signal)) {
                 return;
             }
-            console.error('Failed to load options:', err);
+            handleError(err, {context: 'ApiSelect'});
             fetchedPagesRef.current.delete(pageNum);
             if (pageNum === 1) {
                 setOptions([]);
@@ -1122,12 +1123,9 @@ function ApiSelectCore({
                                         </CommandGroup>
                                         {
                                             hasMore &&
-                                            <PageIncrementer
-                                                ready={isReady}
-                                                page={page}
-                                                setPage={setPage}
-                                                total={total}
-                                                limit={pageSize}
+                                            <LoadMoreSentinel
+                                                canLoadMore={isReady && page * pageSize < total}
+                                                onLoadMore={() => setPage((current) => current + 1)}
                                                 scrollRoot={listRef}
                                             />
                                         }

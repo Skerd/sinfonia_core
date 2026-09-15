@@ -1,6 +1,6 @@
 import {useMemo} from "react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {useDynamicLanguage} from "@coreModule/helpers/hooks/useDynamicLanguage.ts";
+import {useDynamicLanguage} from "@baseModule/helpers/hooks/useDynamicLanguage.ts";
 
 /**
  * Preview label resolution.

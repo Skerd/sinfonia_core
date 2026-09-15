@@ -12,7 +12,7 @@ import {useSelector} from "react-redux";
 import {AccessFormResponseType} from "armonia/src/modules/core/api/user/private/permissions/access.form.response.type.ts";
 import {AccessAllFormResponseType,} from "armonia/src/modules/core/api/user/private/permissions/accessAll.form.response.type.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
-import useErrorHandler from "@coreModule/helpers/hooks/useErrorHandler.ts";
+import useErrorHandler from "@baseModule/helpers/hooks/useErrorHandler.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {ReadOrWriteFields} from "armonia/src/modules/core/types";
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
@@ -442,7 +442,7 @@ export function AccessProvider({
     const [isHydrated, setIsHydrated] = useState(false);
     const [showSetup, setShowSetup] = useState(true);
     const [accessOverrides, setAccessOverrides] = useState<AccessDebugOverrides>({});
-    const handleError = useErrorHandler(useMemo(() => ({context: "AccessProvider"}), []));
+    const handleError = useErrorHandler({context: "AccessProvider"});
     const accessDebugOverrideValue = useMemo(
         () => ({overrides: accessOverrides, setOverrides: setAccessOverrides}),
         [accessOverrides],

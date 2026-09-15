@@ -18,7 +18,7 @@ import {
     FILTER_URL_PARAM,
     pruneFilterLabelsToDsl,
 } from "@coreModule/helpers/filter/filterUrl.ts";
-import { LIST_PAGE_PARAM } from "@coreModule/helpers/hooks/useListUrlState.ts";
+import { LIST_PAGE_PARAM } from "@baseModule/helpers/useListUrlState.ts";
 import {compose} from "redux";
 import withLanguage, {TranslationValue, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";

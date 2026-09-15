@@ -8,7 +8,7 @@ import { useDrawerPortalContainer } from "@coreModule/components/ui/drawer.tsx"
 import { Popover, PopoverContent, PopoverTrigger } from "@coreModule/components/ui/popover.tsx"
 import useSelectedLanguage, {
   type LanguageDictionary,
-} from "@coreModule/helpers/hooks/useSelectedLanguage.ts"
+} from "@baseModule/helpers/hooks/useSelectedLanguage.ts"
 import { Calendar as CalendarIcon, X } from "lucide-react"
 import {IconClock} from "@tabler/icons-react";
 

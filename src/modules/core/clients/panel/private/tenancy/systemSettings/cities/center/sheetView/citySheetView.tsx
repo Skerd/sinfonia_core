@@ -6,7 +6,7 @@ import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
-import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
+import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
 
 export type CitySheetViewOwnProps = {
     open: boolean;

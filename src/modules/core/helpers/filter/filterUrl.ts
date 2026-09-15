@@ -12,8 +12,8 @@ import { generateUUID } from "@coreModule/helpers/general";
  * - `projectId` / `edificeId` / `floorId` / `*Name` — scope/default filters (extraFilters)
  * - `listView` / `listPage` / `listSort` — list chrome (useListUrlState)
  *
- * Chrome / quick-filter prefixes are duplicated as literals here to avoid a cycle
- * with `useListUrlState` (which owns the runtime chrome helpers).
+ * The param-key constants live here and `useListUrlState` (which owns the runtime chrome
+ * helpers) re-exports them. This module must not import `useListUrlState`, or the two would cycle.
  */
 
 export const FILTER_URL_PARAM = "filter";
@@ -24,10 +24,12 @@ export const FILTER_LABELS_URL_MAX_LENGTH = 4000;
 /** Prefix for non-DSL list body params mirrored in the URL. */
 export const EXTRA_PARAM_PREFIX = "ep_";
 
-const LIST_VIEW_PARAM = "listView";
-const LIST_PAGE_PARAM = "listPage";
-const LIST_SORT_PARAM = "listSort";
-const QUICK_FILTER_PARAM_PREFIX = "qf_";
+/** List chrome params (namespaced per list by `listChromeParam` in `useListUrlState`). */
+export const LIST_VIEW_PARAM = "listView";
+export const LIST_PAGE_PARAM = "listPage";
+export const LIST_SORT_PARAM = "listSort";
+/** Prefix for QuickFilterBar values mirrored in the URL. */
+export const QUICK_FILTER_PARAM_PREFIX = "qf_";
 
 /** fieldPath → objectId → display label */
 export type FilterRefLabels = Record<string, Record<string, string>>;

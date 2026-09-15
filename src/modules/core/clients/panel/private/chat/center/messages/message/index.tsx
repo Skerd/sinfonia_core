@@ -15,7 +15,7 @@ import UnpinMessage from "@coreModule/clients/panel/private/chat/center/messages
 import ReactMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/react.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import ReactToMessage from "@coreModule/clients/panel/private/chat/center/messages/message/actions/addReaction.tsx";
-import {useOutsideClick} from "@coreModule/helpers/hooks/useOutsideClick.ts";
+import {useOutsideClick} from "@baseModule/helpers/hooks/useOutsideClick.ts";
 import ToggleDelete from "@coreModule/clients/panel/private/chat/center/messages/message/actions/toggleDelete.tsx";
 import {formatDate, getName} from "@coreModule/helpers/general";
 import Reactions from "@coreModule/clients/panel/private/chat/center/messages/message/info/reactions.tsx";
@@ -86,7 +86,7 @@ function Message({
     const openDelete = useSelector((state: RootState) => state.chat.openDelete);
     const interactionLocked = !!openedChannel.metaData?.readOnly || isPeekingWebsiteChannel(openedChannel, user.id);
 
-    useOutsideClick(pickerRef, () => setReactionPickerOpened(false));
+    useOutsideClick(pickerRef, () => setReactionPickerOpened(false), {enabled: reactionPickerOpened});
 
     function youOrOther(messageUser: MessageSenderType, toLowerCase?: boolean): string {
         if( messageUser?._id === user.id ){

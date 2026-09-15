@@ -8,7 +8,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@coreModule/components/ui/command.tsx";
 import {ScrollArea} from "@coreModule/components/ui/scroll-area.tsx";
-import useSelectedLanguage, { LanguageDictionary } from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
+import useSelectedLanguage, { LanguageDictionary } from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 const LANGUAGE_PATH = "src/modules/core/components/custom/phoneInput.tsx";
 const DEFAULT_TEXT = {
     searchCountry: "Search country...",

@@ -6,7 +6,7 @@ import { tableConfigToFilterConfig } from "armonia/src/modules/core/database/fil
 import {getLocalStorageValue, setLocalStorageValue} from "@coreModule/helpers/context/localStorage/localStorageProvider.ts";
 import {getUser} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
-import useErrorHandler from "@coreModule/helpers/hooks/useErrorHandler.ts";
+import useErrorHandler from "@baseModule/helpers/hooks/useErrorHandler.ts";
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
 
 export type CachedTableConfig = {
@@ -71,7 +71,8 @@ function configsFromResponse(data: TableConfiguration): Record<string, CachedTab
     return next;
 }
 
-const TableConfigContext = createContext<TableConfigContextValue | null>(null);
+/** Exported for tests and previews that supply configs directly; app code mounts `TableConfigProvider`. */
+export const TableConfigContext = createContext<TableConfigContextValue | null>(null);
 
 type TableConfigProviderProps = {
     children: ReactNode;
@@ -92,7 +93,7 @@ export function TableConfigProvider({
     const [isHydrated, setIsHydrated] = useState(false);
     const [error, setError] = useState(false);
     const [retryToken, setRetryToken] = useState(0);
-    const handleError = useErrorHandler(useMemo(() => ({context: "TableConfigProvider"}), []));
+    const handleError = useErrorHandler({context: "TableConfigProvider"});
 
     const setConfig = useCallback((resourceUrl: string, config: CachedTableConfig) => {
         const key = resourceUrl.toLowerCase();

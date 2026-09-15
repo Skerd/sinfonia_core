@@ -28,7 +28,7 @@ import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Empty, EmptyDescription, EmptyHeader, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import {useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
+import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {StudioModelEntry} from "../catalog/useStudioCatalog.ts";
@@ -100,12 +100,11 @@ type ViewEditorProps = {
 };
 
 export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
-    const viewCtx = useViewConfigContext();
     const {getViewDraft, setViewDraft, clearViewDraft, undo, redo} = useStudioDrafts();
 
     /* Server payload from the cache. Draft overlay is local so Reset / the change list
        still compare against the source. */
-    const apiConfig = viewCtx?.getViewConfig(entry.collection, viewKey);
+    const apiConfig = useViewConfig(entry.collection, viewKey);
     const draft = getViewDraft(entry.collection, viewKey);
     const config: ViewConfig | undefined = draft ?? apiConfig;
 

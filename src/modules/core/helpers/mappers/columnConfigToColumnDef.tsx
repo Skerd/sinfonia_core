@@ -17,7 +17,7 @@ import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui
 import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
 import { MdiIcon } from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {IconFileLike, IconFileXFilled} from "@tabler/icons-react";
-import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
+import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import SheetMediaAvatar from "@coreModule/components/viewEngine/sheetMediaAvatar.tsx";

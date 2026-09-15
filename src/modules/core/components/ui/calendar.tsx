@@ -11,6 +11,7 @@ import {
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button, buttonVariants } from "@coreModule/components/ui/button.tsx"
 import { IconChevronLeft, IconChevronRight, IconChevronDown } from "@tabler/icons-react"
+import { useOutsideClick } from "@baseModule/helpers/hooks/useOutsideClick.ts"
 
 /** Year dropdown span when callers do not set explicit navigation bounds. */
 export const CALENDAR_DROPDOWN_YEARS_BACK = 100
@@ -86,25 +87,7 @@ function CompactCaptionDropdown({
     list.scrollTop = Math.max(0, centeredTop)
   }, [open, value, options, scrollFallbackValue])
 
-  React.useEffect(() => {
-    if (!open) return
-
-    const onPointerDown = (event: PointerEvent) => {
-      const target = event.target as Node
-      if (rootRef.current?.contains(target)) return
-      setOpen(false)
-    }
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false)
-    }
-
-    document.addEventListener("pointerdown", onPointerDown)
-    document.addEventListener("keydown", onKeyDown)
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown)
-      document.removeEventListener("keydown", onKeyDown)
-    }
-  }, [open])
+  useOutsideClick(rootRef, () => setOpen(false), { enabled: open, escape: true })
 
   // Dialog/sheet RemoveScroll captures wheel on document. Keep the event on this
   // list so a 200-year dropdown can scroll when the calendar is inside a modal.

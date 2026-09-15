@@ -3,7 +3,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
-import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
+import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import {useEffect, useState} from "react";
 import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx";
 import DeactivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx";

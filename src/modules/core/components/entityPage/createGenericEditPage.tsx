@@ -11,8 +11,7 @@ import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import type {HttpRequestHeaderBuilder} from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import EditFormViewRenderer from "@coreModule/components/viewEngine/editFormViewRenderer.tsx";
-import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
-import {useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
+import {useViewConfigState} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import type {FieldValues, UseFormReturn} from "react-hook-form";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import {resolveEntityPageKeys} from "@coreModule/helpers/general";
@@ -133,8 +132,7 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
         const [loadingEntity, setLoadingEntity] = useState(true);
         const [entityError, setEntityError] = useState(false);
 
-        const viewConfigCtx = useViewConfigContext();
-        const viewConfig = useViewConfig(viewCollectionKey, "form:edit");
+        const {config: viewConfig, loading: viewConfigLoading} = useViewConfigState(viewCollectionKey, "form:edit");
         const formSchema = config.schema(languageCode, resolveLanguageKey("form"), writeFields, readFields);
 
         useEffect(() => {
@@ -159,12 +157,7 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
 
         if (!write) return <Forbidden />;
         if (!entityId) return <Forbidden />;
-        if (!viewConfig) {
-            if (viewConfigCtx && !viewConfigCtx.isHydrated) {
-                return <Loader />;
-            }
-            return <Forbidden />;
-        }
+        if (!viewConfig) return viewConfigLoading ? <Loader /> : <Forbidden />;
         if (loadingEntity) return <Loader />;
         if (entityError || !entityData) {
             return (

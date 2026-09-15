@@ -3,7 +3,7 @@ import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/with
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
-import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
+import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import type {UserSession} from "armonia/src/modules/core/api/user/private/userSession/userSession.dto.ts";
 import {UserSessionRevokeMenuItem} from "@coreModule/clients/panel/private/accountSettings/security/userSession/center/actions/userSessionActionMenu.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";

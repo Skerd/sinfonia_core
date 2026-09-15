@@ -22,7 +22,7 @@ import type {
     TableColumnConfig,
 } from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type";
 import {tableConfigToFilterConfig} from "armonia/src/modules/core/database/filter/pathUtils.ts";
-import {listChromeParam, LIST_VIEW_PARAM} from "@coreModule/helpers/hooks/useListUrlState.ts";
+import {listChromeParam, LIST_VIEW_PARAM} from "@baseModule/helpers/useListUrlState.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";

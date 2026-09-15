@@ -1,6 +1,5 @@
 import {
     createContext,
-    useCallback,
     useContext,
     useEffect,
     useMemo,
@@ -9,20 +8,20 @@ import {
 } from "react";
 import type { ViewConfig, ViewConfiguration } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
-import useErrorHandler from "@coreModule/helpers/hooks/useErrorHandler.ts";
+import useErrorHandler from "@baseModule/helpers/hooks/useErrorHandler.ts";
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
 
 export type CachedViewConfigs = Record<string, ViewConfig>;
 
 type ViewConfigContextValue = {
+    /** Cached configs by lower-cased collection name. Read them through `useViewConfig`. */
     configs: Record<string, CachedViewConfigs>;
     /** True after the bulk `/api/auxiliary/viewConfigs` prefetch finishes. */
     isHydrated: boolean;
-    setModelConfigs: (model: string, views: CachedViewConfigs) => void;
-    getViewConfig: (model: string, viewKey: string) => ViewConfig | undefined;
 };
 
-const ViewConfigContext = createContext<ViewConfigContextValue | null>(null);
+/** Exported for tests and previews that supply configs directly; app code mounts `ViewConfigProvider`. */
+export const ViewConfigContext = createContext<ViewConfigContextValue | null>(null);
 
 type ViewConfigProviderProps = {
     children: ReactNode;
@@ -51,15 +50,7 @@ export function ViewConfigProvider({
     const [isHydrated, setIsHydrated] = useState(false);
     const [error, setError] = useState(false);
     const [retryToken, setRetryToken] = useState(0);
-    const handleError = useErrorHandler(useMemo(() => ({context: "ViewConfigProvider"}), []));
-
-    const setModelConfigs = useCallback((model: string, views: CachedViewConfigs) => {
-        setConfigs((prev) => ({ ...prev, [model.toLowerCase()]: views }));
-    }, []);
-
-    const getViewConfig = useCallback((model: string, viewKey: string): ViewConfig | undefined => {
-        return configs[model.toLowerCase()]?.[viewKey];
-    }, [configs]);
+    const handleError = useErrorHandler({context: "ViewConfigProvider"});
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -86,9 +77,7 @@ export function ViewConfigProvider({
         };
     }, [handleError, retryToken]);
 
-    const value = useMemo<ViewConfigContextValue>(() => ({
-        configs, isHydrated, setModelConfigs, getViewConfig
-    }), [configs, isHydrated, setModelConfigs, getViewConfig]);
+    const value = useMemo<ViewConfigContextValue>(() => ({configs, isHydrated}), [configs, isHydrated]);
 
     if( error || !isHydrated ){
         return (

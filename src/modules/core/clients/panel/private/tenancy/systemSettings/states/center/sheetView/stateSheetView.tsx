@@ -6,7 +6,7 @@ import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {State} from "armonia/src/modules/core/api/auxiliary/private/state/state.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
-import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
+import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/actions/viewCities.tsx";
 import {stateEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/states";
 

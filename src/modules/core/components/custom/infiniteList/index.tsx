@@ -1,10 +1,10 @@
-import {Fragment, ReactNode, RefObject, useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {Fragment, ReactNode, RefObject, useCallback, useEffect, useMemo, useRef} from "react";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import NoData from "@coreModule/components/custom/noData.tsx";
-import {PaginatedResponse, useInfiniteScroll} from "@coreModule/helpers/hooks/useInfiniteScroll.ts";
+import {PaginatedResponse, useInfiniteScroll} from "@baseModule/helpers/hooks/useInfiniteScroll.ts";
 import type {HttpError} from "@baseModule/helpers/hooks/useHttpRequest.ts";
-import OffsetIncrementer from "@coreModule/components/custom/infiniteList/offsetIncrementer.tsx";
+import LoadMoreSentinel from "@coreModule/components/custom/loadMoreSentinel.tsx";
 
 export type InfiniteListRenderItem<T> = (
     item: T,
@@ -47,7 +47,7 @@ export default function InfiniteList<T extends {_id?: string | number}>({
     enabled = true,
     forceReload,
     extraParams,
-    getId = (item: T) => item._id ?? String(item),
+    getId,
     renderItem,
     renderError,
     renderLoading,
@@ -59,7 +59,6 @@ export default function InfiniteList<T extends {_id?: string | number}>({
 }: InfiniteListProps<T>) {
     const scrollRootRef = useRef<HTMLDivElement>(null);
     const allItemsRef = useRef<T[]>([]);
-    const [internalReload, setInternalReload] = useState(0);
     const extraParamsRef = useRef(extraParams);
 
     extraParamsRef.current = extraParams;
@@ -83,15 +82,12 @@ export default function InfiniteList<T extends {_id?: string | number}>({
         } as PaginatedResponse<T>;
     }, [data, getItems, getTotal]);
 
-    const effectiveForceReload = (forceReload ?? 0) + internalReload;
-
     const {
         accumulatedItems,
         offset,
-        total,
         hasMoreData,
-        isReady,
-        handleOffsetIncrement,
+        canLoadMore,
+        loadMore,
         handleReset
     } = useInfiniteScroll({
         data: normalizedData,
@@ -99,7 +95,7 @@ export default function InfiniteList<T extends {_id?: string | number}>({
         onFilterChange: wrappedOnFilterChange,
         limit,
         enabled,
-        forceReload: effectiveForceReload,
+        forceReload,
         getId
     });
 
@@ -115,7 +111,6 @@ export default function InfiniteList<T extends {_id?: string | number}>({
             return; // Skip on mount – initial fetch handled by useInfiniteScroll
         }
         handleReset();
-        setInternalReload((v) => v + 1);
     }, [extraParamsKey, handleReset]);
 
     useEffect(() => {
@@ -125,16 +120,12 @@ export default function InfiniteList<T extends {_id?: string | number}>({
     const typedError = error && typeof error === "object" ? (error as HttpError) : undefined;
 
     const renderErrorNode = () => {
-        const onRetry = () => {
-            handleReset();
-            setInternalReload((value) => value + 1);
-        };
-        if (renderError) return renderError({onRetry});
+        if (renderError) return renderError({onRetry: handleReset});
         return (
             <SimpleError
                 title="Error"
                 description="Something went wrong."
-                onClick={onRetry}
+                onClick={handleReset}
                 error={typedError}
             />
         );
@@ -161,23 +152,16 @@ export default function InfiniteList<T extends {_id?: string | number}>({
             ) : (
                 <div>
                     <div className={className}>
-                        {accumulatedItems.map((item, index) => {
-                            const key = getId ? getId(item) : index;
-                            return (
-                                <Fragment key={key ?? index}>
-                                    {renderItem(item, allItemsRef)}
-                                </Fragment>
-                            );
-                        })}
-                        {
-                            hasMoreData && (
-                            <OffsetIncrementer
-                                ready={isReady}
-                                offset={offset}
-                                setOffset={handleOffsetIncrement}
-                                total={total}
-                                limit={limit}
-                                scrollRoot={scrollRootRef as RefObject<HTMLElement>}
+                        {accumulatedItems.map((item, index) => (
+                            <Fragment key={getId?.(item) ?? item._id ?? index}>
+                                {renderItem(item, allItemsRef)}
+                            </Fragment>
+                        ))}
+                        {hasMoreData && (
+                            <LoadMoreSentinel
+                                canLoadMore={canLoadMore}
+                                onLoadMore={loadMore}
+                                scrollRoot={scrollRootRef}
                             />
                         )}
                     </div>

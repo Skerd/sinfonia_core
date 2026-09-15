@@ -8,7 +8,7 @@ import {
     type RefObject,
 } from "react";
 import {useAccess, accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
-import {useEntityCard} from "@coreModule/helpers/hooks/useEntityCard.ts";
+import {useEntityCard} from "@baseModule/helpers/hooks/useEntityCard.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -23,7 +23,7 @@ import {EntityCardFetchGuard} from "@coreModule/components/custom/cards/EntityCa
 import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
 import {isDialogDismissGuarded} from "@coreModule/components/ui/dialog.tsx";
 import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
-import {useEntityCardFetch} from "@coreModule/helpers/hooks/useEntityCardFetch.ts";
+import {useEntityCardFetch} from "@baseModule/helpers/hooks/useEntityCardFetch.ts";
 
 const CARD_CONTENT_CLASS =
     "flex w-full min-w-0 flex-col gap-(--density-pad) p-(--density-pad) [&>[data-slot=gallery-carousel]]:-mx-(--density-pad) [&>[data-slot=gallery-carousel]]:-mt-(--density-pad) [&>[data-slot=gallery-carousel]]:w-[calc(100%+2*var(--density-pad))]";

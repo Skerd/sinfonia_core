@@ -6,7 +6,7 @@ import {LayoutGrid, List, SlidersVertical} from "lucide-react";
 import {JSX, type KeyboardEvent, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {TableVirtuoso} from "react-virtuoso";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
-import {useListUrlState, listChromeParam, LIST_PAGE_PARAM, type EntityListViewMode as UrlViewMode} from "@coreModule/helpers/hooks/useListUrlState.ts";
+import {useListUrlState, listChromeParam, LIST_PAGE_PARAM, type EntityListViewMode as UrlViewMode} from "@baseModule/helpers/useListUrlState.ts";
 import type {RowSelectionState} from "@tanstack/react-table";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -28,8 +28,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import DataTableViewOptions from "@coreModule/components/ui/table/view-options.tsx";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
-import {useTableConfig} from "@coreModule/helpers/hooks/useTableConfig.ts";
-import {useTableConfigContext} from "@coreModule/helpers/context/tableConfigContext.tsx";
+import {useTableConfig} from "@baseModule/helpers/hooks/useTableConfig.ts";
 import {GRID_MASONRY_ITEM} from "@coreModule/components/custom/cards/entityCard.constants.ts";
 import {columnConfigToColumnDef} from "@coreModule/helpers/mappers/columnConfigToColumnDef.tsx";
 import FilterBuilder from "@coreModule/components/custom/filterBuilder/filterBuilder.tsx";
@@ -265,10 +264,9 @@ function CountryCenterView<
         columnVisibility: tableColumnVisibility,
         columns: tableColumns,
         filters: tableFilters,
-        error: tableConfigError
+        error: tableConfigError,
+        setColumnVisibility: saveColumnVisibility,
     } = useTableConfig(tableConfigKey);
-
-    const tableConfigContext = useTableConfigContext();
 
     // console.log(tableFilters);
 
@@ -437,7 +435,7 @@ function CountryCenterView<
         onColumnVisibilityChange: (updater) => {
             setColumnVisibility((prev) => {
                 const next = typeof updater === "function" ? updater(prev ?? {}) : updater;
-                if (tableConfigKey) tableConfigContext?.updateColumnVisibility(tableConfigKey, next);
+                saveColumnVisibility(next);
                 return next;
             });
         },

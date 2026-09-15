@@ -1,7 +1,7 @@
-import {createContext, useCallback, useMemo, useRef} from "react";
+import {createContext, useCallback, useMemo} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import useSelectedLanguage, {LanguageDictionary} from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
+import useSelectedLanguage, {LanguageDictionary} from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 
 /**
  * Supported translation payload values.
@@ -17,6 +17,29 @@ export type TranslationValue = string | number | boolean | null | LanguageDictio
  * @returns resolved translation value, `null`, or fallback placeholder (`---key---`)
  */
 export type ResolveLanguageKey = (key: string, returnUndefinedIfNeeded?: boolean) => TranslationValue;
+
+/**
+ * Walks a dot-notation `key` (`auth.login.title`, `options.0`) through a language dictionary.
+ * Any value that exists is returned as-is — strings (including `""`), numbers, booleans, objects
+ * and arrays. A missing key (or `null`) yields `null` when `returnUndefinedIfNeeded`, otherwise
+ * the `---key---` placeholder that makes untranslated copy obvious.
+ */
+export function resolveTranslationKey(
+    dictionary: unknown,
+    key: string,
+    returnUndefinedIfNeeded = false,
+): TranslationValue {
+    let value: unknown = dictionary;
+    for (const segment of key.split(".")) {
+        if (value == null || typeof value !== "object") {
+            value = undefined;
+            break;
+        }
+        value = (value as Record<string, unknown>)[segment];
+    }
+    if (value == null) return returnUndefinedIfNeeded ? null : `---${key}---`;
+    return value as TranslationValue;
+}
 
 /**
  * Nearest ancestor card/sheet/page dictionary. Nested widgets (e.g. `DisplayValue`)
@@ -61,43 +84,10 @@ const withLanguage = (componentFilePath: string) => (WrappedComponent: any) => {
 
         const {currentLanguage} = useSelectedLanguage(componentFilePath.replaceAll("/", "_"), componentFilePath);
 
-        const keyPathCache = useRef<Map<string, string[]>>(new Map());
-
-        const getKeyPath = useCallback((key: string): string[] => {
-            const cachedPath = keyPathCache.current.get(key);
-            if (cachedPath) {
-                return cachedPath;
-            }
-            const path = key.split(".");
-            keyPathCache.current.set(key, path);
-            return path;
-        }, []);
-
-        const resolveLanguageKey: ResolveLanguageKey = useCallback((key, returnUndefinedIfNeeded = false) => {
-            try {
-                const keySplits = getKeyPath(key);
-                let returnThis: unknown = currentLanguage;
-                for (let i = 0; i < keySplits.length; i++) {
-                    if (returnThis == null || typeof returnThis !== "object") {
-                        throw new Error("Missing translation key");
-                    }
-                    returnThis = (returnThis as Record<string, unknown>)[keySplits[i]];
-                }
-                if (typeof returnThis !== "string") {
-                    if (!returnThis) {
-                        throw new Error("Missing translation value");
-                    }
-                    return returnThis as TranslationValue;
-                }
-                return returnThis;
-            } catch {
-                if (returnUndefinedIfNeeded) {
-                    return null;
-                } else {
-                    return (`---${key}---`);
-                }
-            }
-        }, [currentLanguage, getKeyPath]);
+        const resolveLanguageKey: ResolveLanguageKey = useCallback(
+            (key, returnUndefinedIfNeeded = false) => resolveTranslationKey(currentLanguage, key, returnUndefinedIfNeeded),
+            [currentLanguage],
+        );
 
         const withLanguageData = useMemo(() => ({
             languageCode,

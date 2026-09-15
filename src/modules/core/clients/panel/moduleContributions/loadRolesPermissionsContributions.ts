@@ -1,4 +1,4 @@
-import type {LanguageDictionary} from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
+import type {LanguageDictionary} from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
 
 /**

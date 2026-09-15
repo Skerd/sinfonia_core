@@ -8,7 +8,7 @@ import {
     quickFilterParamKey,
     readQuickFilterLabelsFromUrl,
     readQuickFiltersFromUrl,
-} from "@coreModule/helpers/hooks/useListUrlState.ts";
+} from "@baseModule/helpers/useListUrlState.ts";
 import {useAccess, type AccessObject} from "@coreModule/helpers/context/accessContext.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
 import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
@@ -19,8 +19,8 @@ import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.ts
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
-import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
-import {useDynamicLanguage} from "@coreModule/helpers/hooks/useDynamicLanguage.ts";
+import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
+import {useDynamicLanguage} from "@baseModule/helpers/hooks/useDynamicLanguage.ts";
 import type {DeletedData, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import type {FilterGroup, FilterValue} from "armonia/src/modules/core/database/filter";
 import {generateUUID, type PageTitle} from "@coreModule/helpers/general";
