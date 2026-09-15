@@ -1,4 +1,4 @@
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 
 export async function uploadFilesForSubmit(files: File[]): Promise<string[]> {
     if (!files.length) return [];

@@ -94,7 +94,8 @@ function sinfoniaAppFaviconPlugin(appRoot: string): Plugin {
 /**
  * When `VITE_ENABLED_MODULES` is set, stub files under disabled `src/modules/<name>`
  * packages so eager contribution globs do not pull them into the graph.
- * `core` is always kept.
+ * `core` and `base` are always kept. `base` holds the shared `apiClient`; stubbing it
+ * (`export default undefined`) makes `apiClient.get` throw at runtime.
  */
 function enabledModulesExcludePlugin(rawEnv: string | undefined): Plugin {
     const raw = rawEnv?.trim();
@@ -103,6 +104,7 @@ function enabledModulesExcludePlugin(rawEnv: string | undefined): Plugin {
     }
     const enabled = new Set([
         "core",
+        "base",
         ...raw
             .split(",")
             .map((s) => s.trim())

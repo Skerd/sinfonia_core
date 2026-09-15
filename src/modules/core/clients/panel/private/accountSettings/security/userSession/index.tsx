@@ -8,7 +8,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {getDeviceId} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
 import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";

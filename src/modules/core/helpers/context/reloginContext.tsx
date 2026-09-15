@@ -2,7 +2,7 @@ import {createContext, useCallback, useContext, useMemo, useState, type ReactNod
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {logIn, signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
-import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import useHttpRequest from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import type {ReloginDifferentCompanyFormResponseType} from "armonia/src/modules/core/api/user/private/login/reloginDifferentCompany.form.response.type.ts";
 
 type ReloginContextValue = {
@@ -32,11 +32,12 @@ export function ReloginProvider({children}: {children: ReactNode}) {
                     dispatch(logIn({token: data.token, refreshToken: data.refreshToken}));
                 } else {
                     dispatch(signOut());
+                    navigate("/authenticate/login");
                 }
             },
             error: () => {
-                navigate("/authenticate/login");
                 dispatch(signOut());
+                navigate("/authenticate/login");
             },
         },
         {}

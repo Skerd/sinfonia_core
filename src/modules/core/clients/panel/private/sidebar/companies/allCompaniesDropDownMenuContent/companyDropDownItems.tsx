@@ -8,7 +8,7 @@ import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import NoData from "@coreModule/components/custom/noData.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {HttpError} from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import {HttpError} from "@baseModule/helpers/hooks/useHttpRequest.ts";
 
 type CompanyDropDownItemsProps = WithLanguageType & {
     data: BasicCompanyInfoFormResponseType[] | null;

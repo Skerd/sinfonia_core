@@ -1,5 +1,5 @@
 import {sendWebsocketMessage} from "@coreModule/helpers/context/webSocketContext.tsx";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {MarkMessageReceiptFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/markMessageReceipt.form.response.type.ts";
 import {WebSocketFEMessageCodes} from "armonia/src/modules/core/websocket/types.ts";

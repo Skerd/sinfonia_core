@@ -4,7 +4,7 @@ import {Input} from "@coreModule/components/ui/input.tsx";
 import {Textarea} from "@coreModule/components/ui/textarea.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {useCallback, useEffect, useImperativeHandle, useMemo, useState} from "react";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
 import {Resolver, useForm} from "react-hook-form";
@@ -27,7 +27,7 @@ import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {buildPageTitle} from "@coreModule/helpers/general";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {z} from "zod";
 
 type EditRoleProps = WithLanguageType & WithAxiosType<ActionMessage, EditRoleFormType> & {

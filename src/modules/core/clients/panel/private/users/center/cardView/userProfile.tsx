@@ -1,5 +1,5 @@
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {compose} from "redux";
 import {useEffect, useState} from "react";
 import Loader from "@coreModule/components/custom/loader.tsx";

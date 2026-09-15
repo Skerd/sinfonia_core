@@ -15,7 +15,7 @@ import {Badge} from '@coreModule/components/ui/badge.tsx';
 import {Separator} from '@coreModule/components/ui/separator.tsx';
 import {ChevronsUpDown, User, X} from 'lucide-react';
 import {cn} from '@coreModule/components/lib/utils.ts';
-import apiClient from '@coreModule/helpers/axiosClients/apiClient.ts';
+import apiClient from '@baseModule/helpers/apiClient/apiClient.ts';
 import PageIncrementer from '@coreModule/components/custom/apiSelect/pageIncrementer.tsx';
 import {Spinner} from "@coreModule/components/ui/spinner.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";

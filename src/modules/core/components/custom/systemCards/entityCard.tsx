@@ -10,7 +10,7 @@ import {
 import {useAccess, accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {useEntityCard} from "@coreModule/helpers/hooks/useEntityCard.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import DeletedInfo from "@coreModule/components/custom/deletedInfo";
 import AccessFields from "@coreModule/components/custom/displayValue/accessFields.tsx";

@@ -1,11 +1,11 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {RefObject, useEffect, useImperativeHandle, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import useIsInViewport from "@coreModule/helpers/hooks/useIsInViewPort.ts";
+import useIsInViewport from "@baseModule/helpers/hooks/useIsInViewport.ts";
 import {addMessages, isPeekingWebsiteChannel, setMessages} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {sendMessageReceiptBatch} from "@coreModule/helpers/chat/messageReceipts.ts";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";

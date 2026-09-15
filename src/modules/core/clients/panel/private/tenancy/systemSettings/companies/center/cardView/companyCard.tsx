@@ -23,7 +23,7 @@ import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
-import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {openActionMenuFromContextMenu} from "@coreModule/components/custom/actions/menu/openActionMenuFromContextMenu.ts";
 
 const CompanyMap = lazy(() => import("@coreModule/components/custom/addresses/mapWithMultiplePins.tsx"));
@@ -115,7 +115,7 @@ const CompanyCard = memo(function CompanyCard({
                 failedDescription=""
                 titlePath="name"
                 innerRef={innerRef}
-                shellClassName={(row) =>
+                shellClassName={() =>
                     cn(
                         "relative overflow-hidden border-l max-w-6xl"
                     )

@@ -14,7 +14,7 @@ import TestMessagingProviderConnectionDialog from "@coreModule/components/custom
 import type {MessagingProvider} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
 import {messagingProviderEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders";
 import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
-import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 
 type MessagingProviderCardProps = WithLanguageType & {
     messagingProvider: MessagingProvider;
@@ -66,12 +66,12 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                     {(action === "activateMessagingProvider" || action === "deactivateMessagingProvider") && (
                         <SetMessagingProviderActiveDialog
                             open
-                            onOpenChange={(open) => {
+                            onOpenChange={(open: boolean) => {
                                 if (!open) setAction("");
                             }}
                             messagingProvider={entity}
                             targetActive={action === "activateMessagingProvider"}
-                            onSuccess={(provider) => {
+                            onSuccess={(provider: MessagingProvider) => {
                                 setEntity(provider);
                                 retry();
                             }}
@@ -80,7 +80,7 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                     {action === "testMessagingProviderConnection" && (
                         <TestMessagingProviderConnectionDialog
                             open
-                            onOpenChange={(open) => {
+                            onOpenChange={(open: boolean) => {
                                 if (!open) setAction("");
                             }}
                             messagingProvider={entity}

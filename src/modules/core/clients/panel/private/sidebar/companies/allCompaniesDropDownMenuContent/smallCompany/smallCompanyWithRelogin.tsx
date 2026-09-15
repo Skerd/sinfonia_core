@@ -1,5 +1,5 @@
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
+import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
 import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";

@@ -1,6 +1,6 @@
 import {useEffect, useState, useCallback} from "react";
 import {useDispatch} from "react-redux";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {setNotificationNumber} from "@coreModule/helpers/redux/slices/notificationSlice.ts";
 import Header from "@coreModule/components/custom/header.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
@@ -8,7 +8,7 @@ import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {NotificationType} from "armonia/src/modules/core/api/user/private/notifications/notifications.dto.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {ListNotificationsFormType} from "armonia/src/modules/core/api/user/private/notifications/listNotifications.form.type.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";

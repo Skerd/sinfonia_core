@@ -14,7 +14,7 @@ import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import RoleSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
-import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 import type {RefObject} from "react";
 
 function roleEditPath(role: CompanyRoleType) {

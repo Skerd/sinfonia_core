@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {hydrateInboxBadges} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {InboxBadgesFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/inboxBadges.form.response.type.ts";

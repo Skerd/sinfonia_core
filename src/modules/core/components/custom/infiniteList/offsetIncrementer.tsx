@@ -1,5 +1,5 @@
 import {RefObject, useEffect, useRef, useState} from "react";
-import useIsInViewport from "@coreModule/helpers/hooks/useIsInViewPort.ts";
+import useIsInViewport from "@baseModule/helpers/hooks/useIsInViewport.ts";
 
 type OffsetIncrementerProps = {
     total: number,

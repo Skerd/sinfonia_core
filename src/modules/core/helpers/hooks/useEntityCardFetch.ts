@@ -2,7 +2,7 @@ import {useEffect, useMemo, useRef, useState} from "react";
 import useHttpRequest, {
     type HttpError,
     type HttpRequest,
-} from "@coreModule/helpers/hooks/useHttpRequest.ts";
+} from "@baseModule/helpers/hooks/useHttpRequest.ts";
 
 type UseEntityCardFetchOptions<T> = {
     fetchId?: string;

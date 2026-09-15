@@ -526,7 +526,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 captionLayout={calendarProps?.captionLayout ?? "dropdown"}
                 disabled={
                   calendarProps?.disabled != null
-                    ? [rangeCalendarProps.disabled, calendarProps.disabled].flat().filter(Boolean)
+                    ? [rangeCalendarProps.disabled, calendarProps.disabled].flat().filter((matcher): matcher is NonNullable<typeof matcher> => matcher != null)
                     : rangeCalendarProps.disabled
                 }
                 startMonth={calendarProps?.startMonth ?? rangeCalendarProps.startMonth}

@@ -15,6 +15,7 @@ export type SystemMapCluster =
 export type SystemMapModule =
     | "eCommerce"
     | "eCommerceMarketplace"
+    | "finance"
     | "propertyManagement"
     | "shared";
 

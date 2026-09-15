@@ -10,7 +10,7 @@ import {logIn} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import { Button } from '@coreModule/components/ui/button.tsx';
 import {getClientConfig} from "@coreModule/helpers/general";
 import { zodResolver } from '@hookform/resolvers/zod';
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import { PasswordInput } from '@coreModule/components/custom/passwordInput.tsx';
 import {HTMLAttributes, useEffect, useImperativeHandle, useState} from 'react';
 import {defaultSignInValues} from "@coreModule/helpers/defaultFormValues";

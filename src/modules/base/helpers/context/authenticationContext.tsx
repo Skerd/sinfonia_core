@@ -2,11 +2,10 @@ import {useEffect, useState, type ReactNode} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {signOut, updateToken, updateUserData} from "@coreModule/helpers/redux/slices/authSlice.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
-import {
-    ValidateTokenFormResponseType
-} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
+import {useNavigate} from "react-router-dom";
 
 type AuthenticationProviderProps = {
     children: ReactNode;
@@ -24,6 +23,7 @@ export function AuthenticationProvider({
     setupTotal = SESSION_SETUP_TOTAL_STEPS,
 }: AuthenticationProviderProps) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isHydrated, setIsHydrated] = useState(false);
     const [error, setError] = useState(false);
     const [retryToken, setRetryToken] = useState(0);
@@ -32,7 +32,7 @@ export function AuthenticationProvider({
 
     function goToLogin() {
         dispatch(signOut());
-        window.location.href = "/authenticate/login";
+        navigate("/authenticate/login");
     }
 
     useEffect(() => {

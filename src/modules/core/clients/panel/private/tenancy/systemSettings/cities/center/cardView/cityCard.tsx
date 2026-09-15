@@ -9,7 +9,7 @@ import CitySheetView from "@coreModule/clients/panel/private/tenancy/systemSetti
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconFlag, IconGridDots} from "@tabler/icons-react";
 import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
-import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 
 function cityEditPath(
     countryId: string | undefined,

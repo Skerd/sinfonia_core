@@ -3,7 +3,7 @@ import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import NoData from "@coreModule/components/custom/noData.tsx";
 import {PaginatedResponse, useInfiniteScroll} from "@coreModule/helpers/hooks/useInfiniteScroll.ts";
-import type {HttpError} from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import type {HttpError} from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import OffsetIncrementer from "@coreModule/components/custom/infiniteList/offsetIncrementer.tsx";
 
 export type InfiniteListRenderItem<T> = (

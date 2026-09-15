@@ -13,7 +13,8 @@
   },
   "fail": {
     "auth": {
-      "title": "Your session has expired"
+      "title": "Your session has expired",
+      "description": "Signing you out in"
     },
     "access": {
       "title": "Could not load your permissions"

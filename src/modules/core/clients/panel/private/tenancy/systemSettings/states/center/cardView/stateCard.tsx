@@ -13,7 +13,7 @@ import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings
 import {IconFlag} from "@tabler/icons-react";
 import {stateEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/states";
 import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
-import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 
 type StateCardProps = WithLanguageType & {
     countryId?: string;

@@ -13,7 +13,8 @@
   },
   "fail": {
     "auth": {
-      "title": "Seanca juaj ka skaduar"
+      "title": "Seanca juaj ka skaduar",
+      "description": "Do të dilni pas"
     },
     "access": {
       "title": "Lejet nuk mund të ngarkoheshin"

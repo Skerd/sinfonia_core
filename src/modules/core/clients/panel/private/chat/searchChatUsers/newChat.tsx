@@ -2,10 +2,10 @@ import {useCallback, useEffect, useState} from 'react'
 import {Check, UserRoundSearch, X} from 'lucide-react'
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
-import {useForm} from "react-hook-form";
+import {type Resolver, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -213,7 +213,8 @@ function NewChat({
     const formSchema = createChannelFormSchema(languageCode, resolveLanguageKey("form"));
 
     const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+        // `userIds` is preprocessed, so its zod input type is `unknown`; the form works with the parsed output.
+        resolver: zodResolver(formSchema) as Resolver<z.infer<typeof formSchema>>,
         defaultValues: {
             name: "Group",
             userIds: [] as string[],

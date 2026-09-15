@@ -10,10 +10,8 @@ import {
 } from "react";
 import {useSelector} from "react-redux";
 import {AccessFormResponseType} from "armonia/src/modules/core/api/user/private/permissions/access.form.response.type.ts";
-import {
-    AccessAllFormResponseType,
-} from "armonia/src/modules/core/api/user/private/permissions/accessAll.form.response.type.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import {AccessAllFormResponseType,} from "armonia/src/modules/core/api/user/private/permissions/accessAll.form.response.type.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import useErrorHandler from "@coreModule/helpers/hooks/useErrorHandler.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {ReadOrWriteFields} from "armonia/src/modules/core/types";

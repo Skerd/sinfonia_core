@@ -1,5 +1,5 @@
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {compose} from "redux";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {useEffect, useImperativeHandle, useRef} from "react";
@@ -11,7 +11,7 @@ import {AddChannelMembersFormResponseType} from "armonia/src/modules/core/api/us
 import {AddChannelMembersFormType} from "armonia/src/modules/core/api/user/private/chats/channels/addChannelMembers.form.type.ts";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {AllChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.response.type.ts";
 
 type AddMembersToChannelProps = WithLanguageType & WithAxiosType<AddChannelMembersFormResponseType, AddChannelMembersFormType> & {

@@ -9,7 +9,7 @@ import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {newMessage, setActionMessage} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {Forward} from "lucide-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import InfiniteList from "@coreModule/components/custom/infiniteList";

@@ -3,7 +3,7 @@ import { useForm, type Resolver, type FieldValues, type UseFormReturn } from "re
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { ViewConfig, ViewNode, FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import type { WithAxiosLifecycleRef } from "@coreModule/helpers/hocs/withAxios.tsx";
+import type { WithAxiosLifecycleRef } from "@baseModule/helpers/hocs/withAxios.tsx";
 import type { RefObject } from "react";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";
 import { FieldGroup } from "@coreModule/components/ui/field.tsx";

@@ -1,7 +1,7 @@
 import {compose} from "redux";
 import {useImperativeHandle} from 'react';
 import {Button} from "@coreModule/components/ui/button.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {DeactivateTelegramFormResponseType} from "armonia/src/modules/core/api/user/private/telegram/deactivateTelegram.form.response.type.ts";

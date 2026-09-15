@@ -13,7 +13,7 @@ import {ApiSelect} from "@coreModule/components/custom/apiSelect";
 import {defaultInviteUserValues} from "@coreModule/helpers/defaultFormValues";
 import {newUserCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
 import {useDispatch} from "react-redux";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";

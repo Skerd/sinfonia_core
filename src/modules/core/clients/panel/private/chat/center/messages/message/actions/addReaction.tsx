@@ -2,7 +2,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import {compose} from "redux";
 import EmojiPicker, {Categories} from "emoji-picker-react";
 import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useImperativeHandle} from "react";
 import {updateMessageReaction} from "@coreModule/helpers/redux/slices/chatSlice.ts";

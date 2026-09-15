@@ -11,7 +11,7 @@ import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {Currency} from "armonia/src/modules/core/api/finance/private/currency/currency.dto.ts";
 import {currencyEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/currencies";
 import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
-import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 
 type CurrencyCardProps = WithLanguageType & {
     currency: Currency;

@@ -1,17 +1,20 @@
+import {useRef} from "react";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {AlertCircle} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Progress} from "@coreModule/components/ui/progress.tsx";
 import {Spinner} from "@coreModule/components/ui/spinner.tsx";
+import {Countdown} from "@coreModule/components/custom/countdown.tsx";
 
 export const SESSION_SETUP_TOTAL_STEPS = 6;
 export const STUDIO_SESSION_SETUP_TOTAL_STEPS = 4;
+export const SESSION_EXPIRED_AUTO_SIGN_OUT_SECONDS = 10;
 
 type SessionSetupPhase = "auth" | "access" | "websocket" | "siteRoom" | "table" | "view";
 
@@ -45,7 +48,11 @@ function SessionSetupScreenComponent({
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {name, surname} = useSelector((state: RootState) => state.authentication.user);
+    const sessionExpired = useSelector((state: RootState) => state.authentication.sessionExpired);
     const displayName = displayNameFromUser(name, surname);
+    const signingOutRef = useRef(false);
+
+    const isSessionExpiredError = error && sessionExpired;
 
     const hello = displayName
         ? interpolate(String(resolveLanguageKey("hello")), {name: displayName})
@@ -56,14 +63,21 @@ function SessionSetupScreenComponent({
     });
     const status = String(resolveLanguageKey(error ? `fail.${phase}.title` : `fetching.${phase}`));
     const failDescription = String(resolveLanguageKey("fail.description"));
+    const expiredDescription = String(resolveLanguageKey("fail.auth.description"));
     const retryLabel = String(resolveLanguageKey("retry"));
     const signOutLabel = String(resolveLanguageKey("signOut"));
 
     const progressValue = (step / total) * 100;
 
     async function handleSignOut() {
+        if (signingOutRef.current) {
+            return;
+        }
+        signingOutRef.current = true;
         try {
-            await apiClient.post("/api/user/userSession/currentRevoke");
+            await apiClient.post("/api/user/userSession/currentRevoke").then((res) => {
+                console.log(res.data);
+            });
         } catch {
             // Local logout must still complete when the network or session is already gone.
         } finally {
@@ -98,16 +112,35 @@ function SessionSetupScreenComponent({
                         <p className={error ? "font-medium text-destructive" : "text-muted-foreground"}>
                             {status}
                         </p>
-                        {error ? (
+                        {isSessionExpiredError ? (
+                            <div className="mt-1 flex items-center gap-x-1 text-muted-foreground">
+                                <span>{expiredDescription}</span>
+                                <Countdown
+                                    seconds={SESSION_EXPIRED_AUTO_SIGN_OUT_SECONDS}
+                                    formatAsTime={false}
+                                    onComplete={handleSignOut}
+                                    suffix="s"
+                                    ariaLabel={expiredDescription}
+                                />
+                            </div>
+                        ) : error ? (
                             <p className="mt-1 text-muted-foreground">{failDescription}</p>
                         ) : null}
                     </div>
                 </div>
                 {error ? (
-                    <div className="mt-6 flex items-center justify-between gap-3">
-                        <Button type="button" className="cursor-pointer" onClick={onRetry}>
-                            {retryLabel}
-                        </Button>
+                    <div
+                        className={
+                            isSessionExpiredError
+                                ? "mt-6 flex items-center justify-end gap-3"
+                                : "mt-6 flex items-center justify-between gap-3"
+                        }
+                    >
+                        {isSessionExpiredError ? null : (
+                            <Button type="button" className="cursor-pointer" onClick={onRetry}>
+                                {retryLabel}
+                            </Button>
+                        )}
                         <Button type="button" variant="outline" className="cursor-pointer" onClick={handleSignOut}>
                             {signOutLabel}
                         </Button>

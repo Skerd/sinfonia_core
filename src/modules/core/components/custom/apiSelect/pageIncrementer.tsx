@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useRef } from "react";
-import useIsInViewport from "@coreModule/helpers/hooks/useIsInViewPort.ts";
+import useIsInViewport from "@baseModule/helpers/hooks/useIsInViewport.ts";
 
 type PageIncrementerProps = {
     total: number;

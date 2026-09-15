@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {useEffect, useState} from "react";
 import ChatMember from "@coreModule/clients/panel/private/chat/center/chatMembers/chatMember.tsx";

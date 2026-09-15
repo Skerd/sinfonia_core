@@ -8,7 +8,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ErrorBoundary from "@coreModule/components/custom/errorBoundary.tsx";
 import {lazy, Suspense} from "react";
 import Loader from "@coreModule/components/custom/loader.tsx";
-import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
+import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {StudioDraftProvider} from "@coreModule/clients/studio/draft/studioDraftProvider.tsx";
 import {ensuredDeviceId} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 

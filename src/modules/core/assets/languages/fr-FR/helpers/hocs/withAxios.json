@@ -2,5 +2,7 @@
   "path": "src/modules/core/helpers/hocs/withAxios.tsx",
   "error": "ERREUR",
   "success": "Succès",
-  "requestInfo": "Demander des informations"
+  "requestInfo": "Demander des informations",
+  "loadFailedTitle": "Impossible de charger les données",
+  "loadFailedDescription": "Une erreur s'est produite. Cliquez pour réessayer."
 }

@@ -25,6 +25,8 @@ export type CountdownProps = {
   formatAsTime?: boolean;
   /** Accessible label for the countdown (e.g. "Time remaining") */
   ariaLabel?: string;
+  /** Suffix to add to the countdown */
+  suffix?: string;
 };
 
 export function Countdown({
@@ -33,6 +35,7 @@ export function Countdown({
   onComplete,
   formatAsTime = true,
   ariaLabel = "Time remaining",
+  suffix = "",
 }: CountdownProps) {
   const initial = Math.max(0, Math.floor(initialSeconds));
   const [remaining, setRemaining] = useState(initial);
@@ -68,7 +71,7 @@ export function Countdown({
       aria-live="polite"
       aria-label={ariaLabel}
     >
-      {display}
+      {display}{suffix}
     </p>
   );
 }

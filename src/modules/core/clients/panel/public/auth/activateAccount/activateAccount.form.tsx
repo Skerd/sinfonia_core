@@ -3,7 +3,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {OctagonAlert, ShieldAlert} from "lucide-react";
 import {useNavigate, useParams} from "react-router-dom";
 import {SiTicktick} from "@icons-pack/react-simple-icons";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {useEffect, useImperativeHandle, useState} from 'react';
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import GoBackToLogin from "@coreModule/clients/panel/public/auth/shared/goBackToLogin.tsx";

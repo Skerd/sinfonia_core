@@ -4,8 +4,10 @@
  * - `VITE_ENABLED_MODULES` (comma-separated) limits which `src/modules/*` packages
  *   register contributions at runtime / in the Vite graph.
  * - When unset, every present module package is enabled.
- * - `core` is always included.
+ * - `core` and `base` are always included. `base` is infrastructure (`apiClient`), not a feature toggle.
  */
+
+const ALWAYS_ENABLED_MODULES = ["base", "core"] as const;
 
 function parseEnabledModuleList(raw: string | undefined): string[] | null {
     const trimmed = raw?.trim();
@@ -16,7 +18,7 @@ function parseEnabledModuleList(raw: string | undefined): string[] | null {
         .split(",")
         .map((s) => s.trim())
         .filter(Boolean);
-    return [...new Set(["core", ...requested.filter((name) => name !== "core")])].sort();
+    return [...new Set([...ALWAYS_ENABLED_MODULES, ...requested])].sort();
 }
 
 /** `null` means all modules are enabled. */

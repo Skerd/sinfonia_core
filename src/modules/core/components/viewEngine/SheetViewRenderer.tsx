@@ -15,7 +15,7 @@ import RestoreAction from "@coreModule/components/custom/actions/restoreAction.t
 import ViewRenderer, { hasAccessPath, resolvePath, type ViewRendererContext } from "./ViewRenderer.tsx";
 import { resolveIcon } from "./widgetRegistry.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {type DeletedData, SingleForm} from "armonia/src/modules/core/types/shared.types.ts";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import {ErrorView} from "@coreModule/components/custom/errorView.tsx";

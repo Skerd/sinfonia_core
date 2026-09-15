@@ -12,7 +12,7 @@ import {Bell, ChevronsUpDown, LogOut, UserCog, Wrench} from "lucide-react";
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@coreModule/components/ui/sidebar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger}from "@coreModule/components/ui/dropdown-menu.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 
 type LoggedUserProps = WithLanguageType & {}
 

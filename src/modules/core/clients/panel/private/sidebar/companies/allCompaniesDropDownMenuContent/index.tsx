@@ -6,7 +6,7 @@ import {useSidebar} from "@coreModule/components/ui/sidebar.tsx";
 import CompanyDropDownItems from "@coreModule/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/companyDropDownItems.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
-import {HttpError} from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import {HttpError} from "@baseModule/helpers/hooks/useHttpRequest.ts";
 
 type AllCompaniesDropDownMenuContentProps = WithLanguageType & {
     companiesList: BasicCompanyInfoFormResponseType[] | null;

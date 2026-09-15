@@ -13,7 +13,8 @@
   },
   "fail": {
     "auth": {
-      "title": "Ihre Sitzung ist abgelaufen"
+      "title": "Ihre Sitzung ist abgelaufen",
+      "description": "Abmeldung in"
     },
     "access": {
       "title": "Berechtigungen konnten nicht geladen werden"

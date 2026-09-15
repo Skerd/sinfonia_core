@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {useEffect, useMemo, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {ReloginProvider} from "@coreModule/helpers/context/reloginContext.tsx";
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem} from "@coreModule/components/ui/sidebar.tsx";
 import {ChevronsUpDown} from "lucide-react";
@@ -10,7 +10,7 @@ import {DropdownMenu, DropdownMenuTrigger} from "@coreModule/components/ui/dropd
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import AllCompaniesDropDownMenuContent from "@coreModule/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent";
 import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
-import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import useHttpRequest from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";

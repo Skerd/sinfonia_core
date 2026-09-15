@@ -1,27 +1,16 @@
 import {render, screen, waitFor} from "@testing-library/react";
 import {beforeAll, describe, expect, it} from "vitest";
-import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
+import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import DeviceFrame from "./deviceFrame.tsx";
 import {deviceById} from "./previewDevice.ts";
 
-/** jsdom has no layout, so it has neither ResizeObserver nor matchMedia. */
+/** jsdom has no layout, so it has no ResizeObserver. (`useIsMobile` copes without matchMedia.) */
 beforeAll(() => {
     globalThis.ResizeObserver ??= class {
         observe() {}
         unobserve() {}
         disconnect() {}
     } as unknown as typeof ResizeObserver;
-
-    window.matchMedia ??= ((query: string) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addEventListener() {},
-        removeEventListener() {},
-        addListener() {},
-        removeListener() {},
-        dispatchEvent: () => false,
-    })) as unknown as typeof window.matchMedia;
 });
 
 function Probe() {

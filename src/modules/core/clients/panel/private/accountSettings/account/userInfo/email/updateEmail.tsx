@@ -4,7 +4,7 @@ import {useEffect, useImperativeHandle} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Check, X} from "lucide-react";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {UpdateEmailPreferenceFormType} from "armonia/src/modules/core/api/user/private/data/updateEmailPreference.form.type.ts";
 import {UpdateEmailPreferenceFormResponseType} from "armonia/src/modules/core/api/user/private/data/updateEmailPreference.form.response.type.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";

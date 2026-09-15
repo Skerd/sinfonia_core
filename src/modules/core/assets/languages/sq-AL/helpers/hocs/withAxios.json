@@ -2,5 +2,7 @@
   "path": "src/modules/core/helpers/hocs/withAxios.tsx",
   "error": "GABIM",
   "success": "Suksese",
-  "requestInfo": "Kërko Informacion"
+  "requestInfo": "Kërko Informacion",
+  "loadFailedTitle": "Të dhënat nuk u ngarkuan",
+  "loadFailedDescription": "Diçka shkoi keq. Kliko për të provuar përsëri."
 }

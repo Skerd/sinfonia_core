@@ -691,7 +691,6 @@ function Message({
                     {messageAvatar()}
                     <div className={cn("group flex min-w-0 flex-col", owner && "items-end")}>
                         <ContextMenu
-                            open={contextOpened && !attachmentsOpen}
                             onOpenChange={(open) => {
                                 if (attachmentsOpen) {
                                     setContextOpened(false);
@@ -748,7 +747,6 @@ function Message({
                     <PopoverTrigger asChild>
                         <div className={cn("group flex min-w-0 flex-col", owner && "items-end")}>
                             <ContextMenu
-                                open={contextOpened && !attachmentsOpen}
                                 onOpenChange={(open) => {
                                     if (attachmentsOpen) {
                                         setContextOpened(false);

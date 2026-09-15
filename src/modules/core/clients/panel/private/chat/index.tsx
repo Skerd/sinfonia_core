@@ -12,7 +12,7 @@ import ChatHeader from "@coreModule/clients/panel/private/chat/center/chatHeader
 import ChatInputAll from "@coreModule/clients/panel/private/chat/center/chatInput/input.tsx";
 import {MessageFetcherRender} from "@coreModule/clients/panel/private/chat/center/messages/messagesFetcher.tsx";
 import MessagesList from "@coreModule/clients/panel/private/chat/center/messages/messagesList.tsx";
-import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
+import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
 import TypingIndicators from "@coreModule/clients/panel/private/chat/center/typingIndicators.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -20,7 +20,7 @@ import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/priv
 import LeftWebsiteChatPanel from "@coreModule/clients/panel/private/websiteChats/left/index.tsx";
 import WebsiteChatHeader from "@coreModule/clients/panel/private/websiteChats/center/chatHeader.tsx";
 import PeekComposerBar from "@coreModule/clients/panel/private/websiteChats/center/peekComposerBar.tsx";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {GetChannelSingleFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/getChannelSingle.form.response.type.ts";
 
 type ChatProps = WithLanguageType & {

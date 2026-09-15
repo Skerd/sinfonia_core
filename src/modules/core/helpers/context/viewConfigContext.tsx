@@ -8,7 +8,7 @@ import {
     type ReactNode,
 } from "react";
 import type { ViewConfig, ViewConfiguration } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import useErrorHandler from "@coreModule/helpers/hooks/useErrorHandler.ts";
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
 

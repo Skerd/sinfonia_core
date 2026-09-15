@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {useEffect, useState} from "react";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import UserAccountSecurityDisableAccountForm from "@coreModule/clients/panel/private/accountSettings/security/disableAccount/disableAccount.form.tsx";
 import UserAccountSecurityEnableAccountForm from "@coreModule/clients/panel/private/accountSettings/security/disableAccount/enableAccount.form.tsx";

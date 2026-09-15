@@ -9,7 +9,7 @@ import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {formatDate, getName} from "@coreModule/helpers/general";
 import {useImperativeHandle, useState} from "react";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {updateMessageReaction} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";

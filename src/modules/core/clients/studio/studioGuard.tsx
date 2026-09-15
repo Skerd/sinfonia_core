@@ -1,6 +1,6 @@
 import {Outlet} from "react-router-dom";
 import {AccessProvider} from "@coreModule/helpers/context/accessContext.tsx";
-import {AuthenticationProvider} from "@coreModule/helpers/context/authenticationContext.tsx";
+import {AuthenticationProvider} from "@baseModule/helpers/context/authenticationContext.tsx";
 import {TableConfigProvider} from "@coreModule/helpers/context/tableConfigContext.tsx";
 import {ViewConfigProvider} from "@coreModule/helpers/context/viewConfigContext.tsx";
 import {STUDIO_SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";

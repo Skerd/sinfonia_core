@@ -7,7 +7,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {CardFooter} from "@coreModule/components/ui/card.tsx";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useNavigate, useParams} from "react-router-dom";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {PasswordInput} from "@coreModule/components/custom/passwordInput.tsx";
 import {useEffect, useImperativeHandle, useState} from 'react';
 import PasswordStrength from "@coreModule/components/custom/passwordStrength.tsx";
@@ -20,7 +20,7 @@ import GoBackToLogin from "@coreModule/clients/panel/public/auth/shared/goBackTo
 import {acceptInvitationFormSchema} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.validator.ts";
 import {AcceptInvitationFormType} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.type.ts";
 import {AcceptInvitationFormResponseType} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.response.type.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 
 type AcceptInvitationProps =  WithLanguageType & WithAxiosType<AcceptInvitationFormResponseType, AcceptInvitationFormType> & {}
 

@@ -3,7 +3,7 @@ import {z} from "zod";
 import type {FieldValues, Resolver} from "react-hook-form";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 import FormViewRenderer from "@coreModule/components/viewEngine/FormViewRenderer.tsx";
 import EditFormViewRenderer from "@coreModule/components/viewEngine/editFormViewRenderer.tsx";
 import {IconInfoCircle} from "@tabler/icons-react";

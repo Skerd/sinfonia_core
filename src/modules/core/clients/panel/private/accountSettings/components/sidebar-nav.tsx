@@ -68,7 +68,6 @@ export function SidebarNav({
         </div>
 
         <ScrollArea
-            orientation='horizontal'
             type='always'
             className='bg-background hidden w-full min-w-40 md:block'
         >

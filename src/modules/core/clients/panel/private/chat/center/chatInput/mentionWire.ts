@@ -28,7 +28,7 @@ function resolveLabel(
     mentionedUsers: MessageSenderType[] | undefined,
     channelUsers: ChannelUser[] | undefined
 ): string {
-    const fromMention = mentionedUsers?.find((u) => u.id === userId);
+    const fromMention = mentionedUsers?.find((u) => u._id === userId);
     if (fromMention) {
         return getName(fromMention);
     }

@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {useEffect, useState} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import UserLinkTelegramDeactivation from "@coreModule/clients/panel/private/apps/apps/telegram/disconnect";

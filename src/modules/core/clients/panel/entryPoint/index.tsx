@@ -11,7 +11,7 @@ import withLanguage, {WithLanguageType, type ResolveLanguageKey} from "@coreModu
 import {PageHeaderProvider, usePageHeader} from "@coreModule/helpers/context/pageHeaderContext.tsx";
 import {renderCenterPanelContent} from "@coreModule/clients/panel/entryPoint/routeConfig.tsx";
 import NotificationBell from "@coreModule/components/custom/notificationBell";
-import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
+import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {resolveCenterPanelClassName} from "@coreModule/clients/panel/moduleContributions/loadPanelLayoutContributions.ts";

@@ -21,7 +21,7 @@ import {RemoveUserFromChannelAdminFormResponseType} from "armonia/src/modules/co
 import {MakeUserChannelAdminFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/makeUserChannelAdmin.form.response.type.ts";
 import {RemoveChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/removeChannelMembers.form.response.type.ts";
 import {AddChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/addChannelMembers.form.response.type.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {GetChannelSingleFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/getChannelSingle.form.response.type.ts";
 import {DeleteChannelFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/deleteChannel.form.response.type.ts";
 import {GetMessageSingleFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/getMessageSingle.form.response.type.ts";

@@ -2,7 +2,7 @@ import {Fragment, useEffect, useState, type ReactElement} from "react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import type {Media} from "armonia/src/modules/core/types";
 import type {AuditFieldHint} from "@coreModule/components/viewEngine/collectFieldLabelsFromViewConfig.ts";
 import {inferMimeFromFilename} from "@coreModule/components/custom/files/mediaPreviewKind.ts";

@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {useImperativeHandle} from 'react';
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";

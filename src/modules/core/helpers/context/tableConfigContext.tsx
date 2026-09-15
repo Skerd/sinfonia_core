@@ -5,7 +5,7 @@ import { TableConfiguration } from "armonia/src/modules/core/api/auxiliary/priva
 import { tableConfigToFilterConfig } from "armonia/src/modules/core/database/filter/pathUtils.ts";
 import {getLocalStorageValue, setLocalStorageValue} from "@coreModule/helpers/context/localStorage/localStorageProvider.ts";
 import {getUser} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import useErrorHandler from "@coreModule/helpers/hooks/useErrorHandler.ts";
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
 

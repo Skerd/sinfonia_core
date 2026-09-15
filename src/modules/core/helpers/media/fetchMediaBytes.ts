@@ -1,4 +1,4 @@
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 
 function isLocalBlobOrData(src: string): boolean {
     return src.startsWith("blob:") || src.startsWith("data:");

@@ -1,4 +1,4 @@
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {compose} from "redux";
 import {RotateCcw} from "lucide-react";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";

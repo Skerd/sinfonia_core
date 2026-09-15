@@ -1,6 +1,6 @@
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {LoaderCircle, Trash2} from "lucide-react";
 import {useEffect, useImperativeHandle, useState} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";

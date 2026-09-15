@@ -11,7 +11,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import MarkAllAsReadButton from "@coreModule/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {NotificationListItem} from "@coreModule/components/custom/notificationListItem.tsx";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {
     setNotificationItems,
     setNotificationNumber,

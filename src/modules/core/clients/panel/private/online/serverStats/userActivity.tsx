@@ -34,7 +34,7 @@ function roomTitle(room: WebSocketRoomStat): string {
     return room.name && room.name !== room.id ? room.name : humanizeRoomLabel(room.id);
 }
 
-type RoomUsersListProps = WithLanguageType & {
+type RoomUsersListProps = Pick<WithLanguageType, "resolveLanguageKey"> & {
     users: WebSocketRoomUserStat[];
 };
 

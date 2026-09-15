@@ -13,7 +13,8 @@
   },
   "fail": {
     "auth": {
-      "title": "Votre session a expiré"
+      "title": "Votre session a expiré",
+      "description": "Déconnexion dans"
     },
     "access": {
       "title": "Impossible de charger vos autorisations"

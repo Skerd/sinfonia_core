@@ -62,7 +62,7 @@ function filterNavItems(
     map: AccessContextValue,
     hydrated: boolean | null,
 ): NavItem[] {
-    return items.flatMap((item) => {
+    return items.flatMap<NavItem>((item) => {
         if (!item.items) {
             return navItemAllowed(item, map, hydrated) ? [item] : [];
         }

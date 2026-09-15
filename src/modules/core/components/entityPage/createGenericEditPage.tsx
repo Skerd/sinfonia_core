@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {useEffect, useState, type ReactNode} from "react";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
@@ -8,8 +8,8 @@ import {toast} from "sonner";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
-import type {HttpRequestHeaderBuilder} from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+import type {HttpRequestHeaderBuilder} from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import EditFormViewRenderer from "@coreModule/components/viewEngine/editFormViewRenderer.tsx";
 import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import {useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";

@@ -1,7 +1,7 @@
 import {compose} from "redux";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import withLanguage, {ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle} from "@coreModule/components/ui/sheet.tsx";
 import {FLOATING_SHEET_CONTENT_CLASS} from "@coreModule/components/viewEngine/sheetFloatingChrome.ts";

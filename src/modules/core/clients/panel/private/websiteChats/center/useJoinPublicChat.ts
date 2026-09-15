@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {decrementWaitingCount, openChannel, upsertChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import type {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 
 export function useJoinPublicChat() {

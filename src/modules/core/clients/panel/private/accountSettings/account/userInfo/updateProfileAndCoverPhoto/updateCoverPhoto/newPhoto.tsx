@@ -3,7 +3,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import {Camera, LoaderCircle, Save} from "lucide-react";
 import {useEffect, useImperativeHandle, useRef, useState} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {UpdateProfileCoverPhotoFormResponseType} from "armonia/src/modules/core/api/user/private/data/updateProfileCoverPhoto.form.response.type.ts";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";

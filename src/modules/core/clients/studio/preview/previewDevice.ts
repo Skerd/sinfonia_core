@@ -1,4 +1,5 @@
 import {useCallback, useState} from "react";
+import {MOBILE_BREAKPOINT} from "@baseModule/helpers/hooks/useMobile.tsx";
 
 /**
  * Device widths the preview can be rendered at.
@@ -19,8 +20,8 @@ export type PreviewDevice = {
     height?: number;
 };
 
-/** Mirrors `MOBILE_BREAKPOINT` in `helpers/hooks/useMobile.tsx`. */
-export const MOBILE_BREAKPOINT = 768;
+/** Re-exported from `helpers/hooks/useMobile.tsx`, so the preview and the hook share one threshold. */
+export {MOBILE_BREAKPOINT};
 
 export const PREVIEW_DEVICES: PreviewDevice[] = [
     {id: "desktop", label: "Desktop"},

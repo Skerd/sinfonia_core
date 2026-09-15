@@ -1,5 +1,5 @@
 import {AlertCircle} from "lucide-react";
-import {HttpError} from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import {HttpError} from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import {Countdown} from "@coreModule/components/custom/countdown.tsx";
 import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/alert.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";

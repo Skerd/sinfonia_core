@@ -8,7 +8,7 @@ import {TableVirtuoso} from "react-virtuoso";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {useListUrlState, listChromeParam, LIST_PAGE_PARAM, type EntityListViewMode as UrlViewMode} from "@coreModule/helpers/hooks/useListUrlState.ts";
 import type {RowSelectionState} from "@tanstack/react-table";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type { FilterGroup } from "armonia/src/modules/core/database/filter";
 import { isFilterGroupEmpty, mergeAndFilterDSL } from "@coreModule/helpers/filter/mergeFilterDsl.ts";
@@ -27,7 +27,7 @@ import DataTableTableHeaderProps from "@coreModule/components/ui/table/table-hea
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import DataTableViewOptions from "@coreModule/components/ui/table/view-options.tsx";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
-import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
+import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {useTableConfig} from "@coreModule/helpers/hooks/useTableConfig.ts";
 import {useTableConfigContext} from "@coreModule/helpers/context/tableConfigContext.tsx";
 import {GRID_MASONRY_ITEM} from "@coreModule/components/custom/cards/entityCard.constants.ts";
@@ -179,7 +179,6 @@ function CountryCenterView<
     // getTotal,
     getId = (item: T) => (item as { _id?: string | number })._id ?? String(item),
     innerRef,
-    viewPortRef,
     onRegister,
     ref: refFromParent,
     listRef: listRefFromParent,
@@ -616,7 +615,7 @@ function CountryCenterView<
                 </Collapsible>
             }
 
-            <div ref={viewPortRef} className={cn("min-w-0 flex-1 min-h-0 flex flex-col overflow-x-hidden", containersClassName?.scrollRootClassName)}>
+            <div className={cn("min-w-0 flex-1 min-h-0 flex flex-col overflow-x-hidden", containersClassName?.scrollRootClassName)}>
 
                 {
                     /*

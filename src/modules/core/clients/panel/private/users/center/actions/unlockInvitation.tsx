@@ -1,6 +1,6 @@
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {LockKeyholeOpen} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -14,7 +14,7 @@ import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.t
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
 import {useImperativeHandle, useState} from "react";
-import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
+import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
 
 type UnlockInvitationActionProps = WithLanguageType & WithAxiosType<ActionMessage, UnlockUserRequestFormType> & {
     user: CompanyUserType;
@@ -47,7 +47,7 @@ function UnlockInvitationAction({user, resolveLanguageKey, onFilterChange, loadi
     }));
 
     const shortcut = "6";
-    useKeyboardShortcuts(shortcut, () => { if (hasLock) setOpen(true); });
+    useKeyboardShortcuts(shortcut, () => setOpen(true), {enabled: hasLock});
 
     if (!hasLock) return null;
     if (!write?.requests?.keys?.invitation?.keys?.lockedUntil) return <HiddenElement />;

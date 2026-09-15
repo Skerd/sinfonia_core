@@ -13,7 +13,8 @@
   },
   "fail": {
     "auth": {
-      "title": "La tua sessione è scaduta"
+      "title": "La tua sessione è scaduta",
+      "description": "Disconnessione tra"
     },
     "access": {
       "title": "Impossibile caricare i permessi"

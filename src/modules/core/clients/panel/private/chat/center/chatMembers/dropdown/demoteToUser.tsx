@@ -5,8 +5,8 @@ import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import {ChannelUser} from "armonia/src/modules/core/types";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
-import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
+import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
 import {useImperativeHandle} from "react";
 import {useDispatch} from "react-redux";
 import {demoteToUser as demoteToUserAction} from "@coreModule/helpers/redux/slices/chatSlice.ts";

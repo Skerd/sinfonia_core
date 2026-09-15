@@ -7,7 +7,7 @@ import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/ale
 import {cn} from "@coreModule/components/lib/utils.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import SaveNewCompanyRoles from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/saveNewCompanyRoles.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";

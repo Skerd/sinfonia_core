@@ -23,7 +23,7 @@ import {
   TooltipTrigger,
 } from "@coreModule/components/ui/tooltip.tsx"
 import { IconLayoutSidebar } from "@tabler/icons-react"
-import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
+import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7

@@ -4,7 +4,7 @@ import type {ReactElement} from "react";
 import {createGenericEditPage, type GenericEditPageProps} from "@coreModule/components/entityPage/createGenericEditPage.tsx";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {newCompanyCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import type {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import {editCompanyFormSchema} from "armonia/src/modules/core/api/company/private/company/editCompany.form.validator.ts";
 import {EditCompanyFormType} from "armonia/src/modules/core/api/company/private/company/company.schema-def.ts";
@@ -83,6 +83,7 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormData>({
             allowedDomains: data.allowedDomains || [],
             publicAiChat:   data.publicAiChat,
             addresses:      (data.addresses || []).map((addr) => ({
+                _id:        addr._id,
                 street:     addr.street,
                 postalCode: addr.postalCode,
                 city:       addr.city,

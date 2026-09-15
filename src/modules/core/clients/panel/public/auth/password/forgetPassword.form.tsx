@@ -10,7 +10,7 @@ import { ArrowRight, Loader2 } from 'lucide-react';
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useImperativeHandle, useState} from 'react';
 import {SiTicktick} from "@icons-pack/react-simple-icons";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@coreModule/components/ui/form.tsx';
 import {ForgotPasswordFormType} from "armonia/src/modules/core/api/user/public/forgotPassword/forgotPassword.form.type.ts";

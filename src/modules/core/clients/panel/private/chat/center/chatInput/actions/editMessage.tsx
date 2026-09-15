@@ -1,4 +1,4 @@
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {useEffect, useImperativeHandle} from "react";
 import {useDispatch} from "react-redux";
 import {compose} from "redux";

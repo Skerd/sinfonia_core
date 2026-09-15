@@ -5,7 +5,7 @@ import {clientWebSocket} from "@coreModule/helpers/context/webSocketContext.tsx"
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import EndpointPerformance from "@coreModule/clients/panel/private/online/serverStats/endpointPerformance.tsx";
 import UserActivity from "@coreModule/clients/panel/private/online/serverStats/userActivity.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {ServerStatsDto} from "armonia/src/modules/core/api/auxiliary/private/serverStats/serverStats.dto.ts";
 import {updateServerStats} from "@coreModule/helpers/redux/slices/serverResourceSlice.ts";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";

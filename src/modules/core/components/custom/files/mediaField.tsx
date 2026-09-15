@@ -13,7 +13,7 @@ import {
 } from "@coreModule/components/ui/form.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import MediaPreviewContent from "@coreModule/components/custom/files/mediaPreviewContent.tsx";
 import {
     classifyMedia,

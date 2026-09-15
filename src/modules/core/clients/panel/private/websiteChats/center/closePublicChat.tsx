@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {CircleX} from "lucide-react";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";

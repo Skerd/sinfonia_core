@@ -6,7 +6,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {CardFooter} from "@coreModule/components/ui/card.tsx";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useNavigate, useParams} from "react-router-dom";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {PasswordInput} from "@coreModule/components/custom/passwordInput.tsx";
 import {useEffect, useImperativeHandle, useState} from 'react';
 import PasswordStrength from "@coreModule/components/custom/passwordStrength.tsx";
@@ -20,7 +20,7 @@ import {ChangeForgottenPasswordFormResponseType} from "armonia/src/modules/core/
 import {changeForgottenPasswordFormSchema} from "armonia/src/modules/core/api/user/public/forgotPassword/changeForgottenPassword.form.validator.ts";
 import {defaultChangeForgottenPasswordValues} from "@coreModule/helpers/defaultFormValues";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import apiClient from "@coreModule/helpers/axiosClients/apiClient.ts";
+import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 
 type ChangeForgottenPasswordProps = WithLanguageType & WithAxiosType<ChangeForgottenPasswordFormResponseType, ChangeForgottenPasswordFormType> & {}
 

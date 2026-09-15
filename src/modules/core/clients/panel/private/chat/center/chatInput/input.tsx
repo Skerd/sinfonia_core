@@ -9,7 +9,7 @@ import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import DeleteMessages from "@coreModule/clients/panel/private/chat/center/chatInput/actions/deleteMessages.tsx";
-import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {addMessages, setActionMessage, upsertChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {sendWebsocketMessage} from "@coreModule/helpers/context/webSocketContext.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
