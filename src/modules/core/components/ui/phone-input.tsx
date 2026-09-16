@@ -164,10 +164,7 @@ const PhoneInput = React.forwardRef<
     { className, onChange, value, searchPlaceholder, noCountryFound, ...props },
     ref
 ) {
-    const { currentLanguage } = useSelectedLanguage<LanguageDictionary>(
-        LANGUAGE_PATH.replace(/\//g, "_").replace(/\.(tsx|ts)$/, ""),
-        LANGUAGE_PATH
-    );
+    const { currentLanguage } = useSelectedLanguage<LanguageDictionary>(LANGUAGE_PATH);
 
     const placeholder = searchPlaceholder ?? getString(currentLanguage ?? null, "searchCountry") ?? DEFAULTS.searchPlaceholder;
     const emptyText = noCountryFound ?? getString(currentLanguage ?? null, "noCountryFound") ?? DEFAULTS.noCountryFound;

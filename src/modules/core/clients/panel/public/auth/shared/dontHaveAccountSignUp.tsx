@@ -1,8 +1,8 @@
 import {compose} from "redux";
 import {Link} from "react-router-dom";
 import {getClientConfig} from "@coreModule/helpers/general";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 
 type DontHaveAccountSignUpProps = WithLanguageType & {};
 

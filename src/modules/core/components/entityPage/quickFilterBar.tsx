@@ -9,10 +9,10 @@ import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui
 import {SimpleSelect} from "@coreModule/components/custom/simpleSelect";
 import {ApiSelect} from "@coreModule/components/custom/apiSelect";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators";
 import type {FilterGroup, FilterOperator, FilterRule, FilterValue} from "armonia/src/modules/core/database/filter";
-import {generateUUID} from "@coreModule/helpers/general";
+import {generateUUID} from "@baseModule/helpers/general/uuid.ts";
 
 export type QuickFilterDef = {
     field: string;

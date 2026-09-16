@@ -3,8 +3,8 @@ import { Button } from '@coreModule/components/ui/button.tsx'
 import { type Column } from '@tanstack/react-table'
 import {ArrowDownIcon, ArrowUpIcon, CaretSortIcon, EyeNoneIcon} from '@radix-ui/react-icons'
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger} from '@coreModule/components/ui/dropdown-menu.tsx'
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import type {TranslationValue} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import type {TranslationValue} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {HTMLAttributes} from "react";
 
@@ -22,19 +22,19 @@ export function DataTableColumnHeader<TData, TValue>({
 
 }: DataTableColumnHeaderProps<TData, TValue> & WithLanguageType) {
   if (!column.getCanSort()) {
-    return <div className={cn(className)}>{title}</div>
+    return <div className={cn('truncate', className)}>{title}</div>
   }
 
   return (
-    <div className={cn('flex items-center gap-x-2', className)}>
+    <div className={cn('flex min-w-0 items-center gap-x-2', className)}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant='ghost'
             size='sm'
-            className='data-[state=open]:bg-accent h-8'
+            className='data-[state=open]:bg-accent h-8 min-w-0'
           >
-            <span>{title}</span>
+            <span className='truncate'>{title}</span>
             {column.getIsSorted() === 'desc' ? (
               <ArrowDownIcon className='ms-2 h-4 w-4' />
             ) : column.getIsSorted() === 'asc' ? (

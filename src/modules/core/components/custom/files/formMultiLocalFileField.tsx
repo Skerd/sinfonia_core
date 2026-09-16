@@ -1,6 +1,6 @@
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import type {Media} from "armonia/src/modules/core/types";
-import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useFormContext} from "react-hook-form";
 import MultiLocalFilePicker from "@coreModule/components/custom/files/multiLocalFilePicker.tsx";
 import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";

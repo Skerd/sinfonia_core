@@ -1,15 +1,15 @@
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import EmojiPicker, {Categories} from "emoji-picker-react";
-import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
+import EmojiPicker, {Categories, Theme as EmojiTheme} from "emoji-picker-react";
+import {useTheme} from "@baseModule/helpers/context/providers/theme-provider.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useImperativeHandle} from "react";
 import {updateMessageReaction} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch} from "react-redux";
 import {AddReactionFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/addReaction.form.response.type.ts";
 import {AddReactionFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/addReaction.form.type.ts";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ReactToMessageProps = WithLanguageType & WithAxiosType<AddReactionFormResponseType, AddReactionFormType> & {
@@ -28,11 +28,7 @@ function ReactToMessage({
 
     const {write} = useAccess("messages");
     const dispatch = useDispatch();
-    const { theme } = useTheme();
-    function resolveTheme(theme: "dark" | "light" | "system"): any{
-        if (theme === "system") {return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";}
-        return theme;
-    }
+    const { resolvedTheme } = useTheme();
 
     useImperativeHandle(innerRef, () => ({
         success: (data: AddReactionFormResponseType) => {
@@ -55,7 +51,7 @@ function ReactToMessage({
 
     return (
         <EmojiPicker
-            theme={resolveTheme(theme)}
+            theme={resolvedTheme as EmojiTheme}
             reactionsDefaultOpen
             searchPlaceholder={resolveLanguageKey("searchPlaceholder")}
             className="shadow-lg"

@@ -1,7 +1,7 @@
 import {useMemo} from "react";
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconBuildingPlus} from "@tabler/icons-react";
@@ -46,7 +46,7 @@ function AllCities({
     countryName,
 }: AllCitiesProps) {
 
-    const headerTitle = buildPageTitle(resolveLanguageKey("title") as string, [countryName, stateName]);
+    const headerTitle = buildPageTitle(resolveLanguageKey("title"), [countryName, stateName]);
 
     const extraFilters = useMemo(() => {
         if (!countryId && !stateId) return undefined;

@@ -9,7 +9,7 @@ import {
     setRefreshToken,
     setToken,
     setUser
-} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
+} from "@baseModule/helpers/context/localStorage/authenticationStorage.ts";
 
 /**
  * Authentication state shared across guarded routes.

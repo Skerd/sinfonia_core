@@ -1,11 +1,11 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import SignUpForm from "@coreModule/clients/panel/public/auth/signUp/signup.form.tsx";
 import GoBackToLogin from "@coreModule/clients/panel/public/auth/shared/goBackToLogin.tsx";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import TermsAndConditions from "@coreModule/clients/panel/public/auth/shared/termsAndConditions.tsx";
 import ThirdPartyAuthentication from "@coreModule/clients/panel/public/auth/shared/thirdPartyAuthentication.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 
 type SignUpProps = WithLanguageType & {}
 function SignUp({

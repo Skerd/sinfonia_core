@@ -1,8 +1,8 @@
 import { compose } from "redux";
 import { createElement, Suspense, useEffect, type ComponentType } from "react";
 import { useReferencesViewModeOptional } from "./referencesViewModeContext.tsx";
-import withLanguage, { WithLanguageType, type ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withLanguage, { WithLanguageType, type ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import { ReferenceStubCompactRow } from "./referenceStubCompactRow.tsx";

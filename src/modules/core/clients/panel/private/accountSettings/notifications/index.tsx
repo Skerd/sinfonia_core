@@ -6,7 +6,7 @@ import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, Form
 import { RadioGroup, RadioGroupItem } from '@coreModule/components/ui/radio-group.tsx'
 import { Switch } from '@coreModule/components/ui/switch.tsx'
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {
     ContentSection
 } from "@coreModule/clients/panel/private/accountSettings/components/content-section.tsx";

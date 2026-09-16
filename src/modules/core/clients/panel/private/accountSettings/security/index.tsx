@@ -1,13 +1,13 @@
 import {compose} from "redux";
 import { ContentSection } from '../components/content-section.tsx'
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import UserAccountSecurityChangePassword from "@coreModule/clients/panel/private/accountSettings/security/changePassword";
 import UserAccountSecurityDisableAccount from "@coreModule/clients/panel/private/accountSettings/security/disableAccount";
 import UserAccountSecurityOTP from "@coreModule/clients/panel/private/accountSettings/security/otp";
 import UserAccountSecurityLoginHistory from "@coreModule/clients/panel/private/accountSettings/security/loginHistory";
 import UserAccountSecurityUserSession from "@coreModule/clients/panel/private/accountSettings/security/userSession";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
 type SecurityProps = WithLanguageType & { specificUserId?: string }

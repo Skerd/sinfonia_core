@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFieldArray, useFormContext, type FieldValues } from "react-hook-form";
 import {compose} from "redux";
-import withLanguage, {type ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {type ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import { ApiSelect } from "@coreModule/components/custom/apiSelect";
 import MapWithPins from "@coreModule/components/custom/addresses/mapWithPins.tsx";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";
 import { Input } from "@coreModule/components/ui/input.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { CirclePlus, Trash2 } from "lucide-react";
-import {buildFilterGroup, buildFilterRule} from "@coreModule/helpers/filter/filterUrl.ts";
+import {buildFilterGroup, buildFilterRule} from "@baseModule/helpers/filter/filterUrl.ts";
 
 export type FormAddressWithMapLabels = {
     country: string;

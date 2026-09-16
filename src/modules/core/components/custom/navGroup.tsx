@@ -6,7 +6,7 @@ import {Collapsible, CollapsibleContent, CollapsibleTrigger} from '@coreModule/c
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from '@coreModule/components/ui/dropdown-menu.tsx';
 import {SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar} from '@coreModule/components/ui/sidebar.tsx';
 import {NavCollapsible, NavItem, NavLink, NavLinkItem, NavSubCollapsible, type ProtectedNav} from "@coreModule/helpers/panel/sidebarNav.types.ts";
-import {useAccessHydrated, useAccessMap, type AccessContextValue} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccessHydrated, useAccessMap, type AccessContextValue} from "@baseModule/helpers/context/accessContext.tsx";
 import {compose} from "redux";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";

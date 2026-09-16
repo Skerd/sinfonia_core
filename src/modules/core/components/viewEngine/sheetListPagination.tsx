@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 export type SheetListPaginationState = {
     slice: Record<string, any>[];

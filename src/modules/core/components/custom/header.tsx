@@ -1,8 +1,9 @@
-import {useEffect, useMemo, type ReactNode} from "react";
+import {useMemo, type ReactNode} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {toPageTitle, type PageTitle} from "@coreModule/helpers/general";
-import {usePageHeader} from "@coreModule/helpers/context/pageHeaderContext.tsx";
+import {usePageHeader} from "@baseModule/helpers/context/pageHeaderContext.tsx";
+import {usePageContextCrumbs} from "@baseModule/helpers/hooks/usePageContextCrumbs.ts";
 import {PageHelp, type PageHelpContent} from "@coreModule/components/custom/pageHelp.tsx";
+import {PageTitle} from "@baseModule/helpers/types/pageTitle.types.ts";
 
 type SimpleHeaderProps = {
     /**
@@ -44,28 +45,19 @@ export default function Header({
     className,
 }: SimpleHeaderProps) {
     const pageHeader = usePageHeader();
-    const setContextCrumbs = pageHeader?.setContextCrumbs;
-    const {title: heading, context} = toPageTitle(title);
+    const {title: heading, context} = typeof title === "string" ? {title: title, context: []} : title;
     const displayHeading = context.length > 0
         ? `${heading}: ${context.join(" / ")}`
         : heading;
 
-    // Depended on by value, not identity: `context` is a fresh array each render.
-    const contextKey = context.join("\u0000");
-
-    useEffect(() => {
-        if (!setContextCrumbs) return;
-        setContextCrumbs(contextKey ? contextKey.split("\u0000").map((label) => ({label})) : []);
-        return () => setContextCrumbs([]);
-    }, [contextKey, setContextCrumbs]);
+    usePageContextCrumbs(context.map((label) => ({label})));
 
     const isRedundant = useMemo(() => {
         if (!pageHeader || context.length > 0) return false;
         // A subtitle or help control needs a visible heading; hiding the h1
         // would leave an orphaned icon or only muted text.
         if (description?.trim() || help) return false;
-        const trail = [...pageHeader.routeCrumbs, ...pageHeader.contextCrumbs];
-        return normalize(trail.at(-1)?.label) === normalize(heading);
+        return normalize(pageHeader.trail.at(-1)?.label) === normalize(heading);
     }, [pageHeader, context.length, heading, description, help]);
 
     return (

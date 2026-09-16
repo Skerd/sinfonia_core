@@ -3,16 +3,16 @@ import {useImperativeHandle} from 'react';
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {changePasswordFormSchema} from "armonia/src/modules/core/api/user/private/data/changePassword.form.validator.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {ChangePasswordFormType} from "armonia/src/modules/core/api/user/private/data/changePassword.form.type.ts";
 import {ChangePasswordFormResponseType} from "armonia/src/modules/core/api/user/private/data/changePassword.form.response.type.ts";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type UserAccountSecurityChangePasswordFormProps = WithLanguageType & WithAxiosType<ChangePasswordFormResponseType, ChangePasswordFormType> & {

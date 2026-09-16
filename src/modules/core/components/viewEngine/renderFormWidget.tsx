@@ -2,7 +2,7 @@ import { forwardRef, type ReactNode, type HTMLAttributes } from "react";
 import { useWatch } from "react-hook-form";
 import type { FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type { Unit as UnitDto } from "armonia/src/modules/propertyManagement/api/realEstate/private/unit/unit/unit.dto.ts";
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import FormMaxLengthControl from "@coreModule/components/custom/formMaxLengthControl.tsx";
 import {isContributedCompoundFormWidget} from "./widgetRegistry.ts";
 

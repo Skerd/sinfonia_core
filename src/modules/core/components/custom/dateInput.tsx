@@ -335,10 +335,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
 
     const [open, setOpen] = React.useState(false)
     const drawerPortalContainer = useDrawerPortalContainer()
-    const { currentLanguage } = useSelectedLanguage<LanguageDictionary>(
-      LANGUAGE_PATH.replace(/\//g, "_").replace(/\.(tsx|ts)$/, ""),
-      LANGUAGE_PATH,
-    )
+    const { currentLanguage } = useSelectedLanguage<LanguageDictionary>(LANGUAGE_PATH)
 
     const monthNames = parseMonthNames(currentLanguage)
     const weekdayNames = parseWeekdayNames(currentLanguage)

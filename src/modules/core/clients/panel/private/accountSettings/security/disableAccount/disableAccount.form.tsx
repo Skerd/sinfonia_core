@@ -8,7 +8,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/alert.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {DisableAccountFormType} from "armonia/src/modules/core/api/user/private/status/disableAccount.form.type.ts";
 import {DisableAccountFormResponseType} from "armonia/src/modules/core/api/user/private/status/disableAccount.form.response.type.ts";
 import {useForm} from "react-hook-form";
@@ -17,8 +17,8 @@ import {z} from "zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import ToggleUserActiveState from "@coreModule/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx";
 import {disableAccountFormSchema} from "armonia/src/modules/core/api/user/private/status/disableAccount.form.validator.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type UserAccountSecurityDisableAccountFormProps = WithAxiosType<DisableAccountFormResponseType, DisableAccountFormType> & WithLanguageType & {
@@ -29,6 +29,7 @@ type UserAccountSecurityDisableAccountFormProps = WithAxiosType<DisableAccountFo
 
 function UserAccountSecurityDisableAccountForm({
     resolveLanguageKey,
+    resolveLanguageValue,
     languageCode,
     loading,
     onFilterChange,
@@ -94,7 +95,7 @@ function UserAccountSecurityDisableAccountForm({
                     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
                         <div>
                             {
-                                Object.values(resolveLanguageKey("steps") || {})?.map((step: string, index: number) => {
+                                Object.values(resolveLanguageValue("steps") ?? {}).map((step: string, index) => {
                                     let showThis = step;
                                     if (showThis.indexOf("!!!") > 0) {
                                         showThis = showThis.replace("!!!", resolveLanguageKey("deactivateButton"))

@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {useEffect, useMemo, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {getPanelNavGroups} from "@coreModule/helpers/panel/panelNavGroups.ts";
@@ -11,7 +11,7 @@ import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Empty, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import {LayoutGrid, Search} from "lucide-react";
-import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Kbd, KbdGroup} from "@coreModule/components/ui/kbd.tsx";
 
 const TILE_COLORS = [

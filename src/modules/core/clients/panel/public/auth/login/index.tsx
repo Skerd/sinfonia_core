@@ -1,14 +1,14 @@
 import {compose} from "redux";
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import SignInForm from "@coreModule/clients/panel/public/auth/login/signin.form.tsx";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import TermsAndConditions from "@coreModule/clients/panel/public/auth/shared/termsAndConditions.tsx";
 import DontHaveAccountSignUp from "@coreModule/clients/panel/public/auth/shared/dontHaveAccountSignUp.tsx";
 import ThirdPartyAuthentication from "@coreModule/clients/panel/public/auth/shared/thirdPartyAuthentication.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {getToken} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {getToken} from "@baseModule/helpers/context/localStorage/authenticationStorage.ts";
 
 type LoginProps = WithLanguageType & {}
 

@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {useCallback, useEffect, useMemo, useState} from "react";
-import withLanguage, {ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle} from "@coreModule/components/ui/sheet.tsx";

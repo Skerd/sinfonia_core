@@ -1,19 +1,19 @@
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {clientWebSocket} from "@coreModule/helpers/context/webSocketContext.tsx";
+import {useWebSocketRoom} from "@coreModule/helpers/websocket/useWebSocketRoom.ts";
 import {openChannel, isPeekingWebsiteChannel, upsertChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import LeftChatPanel from "@coreModule/clients/panel/private/chat/left";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import ChatHeader from "@coreModule/clients/panel/private/chat/center/chatHeader";
 import ChatInputAll from "@coreModule/clients/panel/private/chat/center/chatInput/input.tsx";
 import {MessageFetcherRender} from "@coreModule/clients/panel/private/chat/center/messages/messagesFetcher.tsx";
 import MessagesList from "@coreModule/clients/panel/private/chat/center/messages/messagesList.tsx";
 import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
-import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
+import {useTheme} from "@baseModule/helpers/context/providers/theme-provider.tsx";
 import TypingIndicators from "@coreModule/clients/panel/private/chat/center/typingIndicators.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";
@@ -29,7 +29,7 @@ type ChatProps = WithLanguageType & {
 
 function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
 
-    const {theme} = useTheme();
+    const {resolvedTheme} = useTheme();
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
     const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -40,7 +40,6 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
         setScrollRootRevision((n) => n + 1);
     }, []);
     const isMobile = useIsMobile();
-    const webSocketConnected = useSelector((state: RootState) => state.ui.webSocketConnected);
     const activeChannelId = useSelector((state: RootState) => state.chat.activeChannelId);
     const userId = useSelector((state: RootState) => state.authentication.user?.id);
     const openedChannel = useSelector((state: RootState) => state.chat.channels[activeChannelId ?? ""]);
@@ -49,16 +48,7 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
     const room = isWebsiteInbox ? "websiteChats" : "allChats";
     const openChannelId = isWebsiteInbox ? searchParams.get("channelId")?.trim() || null : null;
 
-    useEffect(() => {
-        if( !!webSocketConnected && clientWebSocket?.readyState === 1 ){
-            clientWebSocket.send(JSON.stringify({code: "JOIN_ROOM", payload: [room] }));
-        }
-        return () => {
-            if( !!webSocketConnected && clientWebSocket?.readyState === 1 ){
-                clientWebSocket.send(JSON.stringify({code: "LEAVE_ROOM", payload: [room] }));
-            }
-        }
-    }, [webSocketConnected, room]);
+    useWebSocketRoom(room);
 
     // Clear selection when entering / switching inbox (mine ↔ waiting).
     useEffect(() => {
@@ -116,8 +106,8 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
                 aria-hidden
                 className="pointer-events-none absolute inset-0 bg-contain bg-center"
                 style={{
-                    backgroundImage: theme === "light" ? "url('/chatBackground.jpg')" : "url('/chatBackgroundDark.png')",
-                    opacity: theme === "light" ? 0.4 : 0.1,
+                    backgroundImage: resolvedTheme === "light" ? "url('/chatBackground.jpg')" : "url('/chatBackgroundDark.png')",
+                    opacity: resolvedTheme === "light" ? 0.4 : 0.1,
                     zIndex: 0,
                 }}
             />

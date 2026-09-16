@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {useImperativeHandle} from 'react';
 import {Button} from "@coreModule/components/ui/button.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {DeactivateMfaFormType} from "armonia/src/modules/core/api/user/private/mfa/deactivateMfa.form.type.ts";
 import {DeactivateMfaFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/deactivateMfa.form.response.type.ts";
 import {useForm} from "react-hook-form";
@@ -14,10 +14,10 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@c
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Check, X} from "lucide-react";
 import {deactivateMfaFormSchema} from "armonia/src/modules/core/api/user/private/mfa/deactivateMfa.form.validator.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type AccountSecurityDeactivateOtpFormProps = WithAxiosType<DeactivateMfaFormResponseType, DeactivateMfaFormType> & WithLanguageType & {

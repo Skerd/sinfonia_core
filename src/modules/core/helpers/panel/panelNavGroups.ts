@@ -1,4 +1,4 @@
-import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type {NavGroup} from "@coreModule/helpers/panel/sidebarNav.types.ts";
 import type {SidebarContributionContext} from "@coreModule/clients/panel/moduleContributions/sidebarContribution.types.ts";
 import {getModuleSidebarNavGroups} from "@coreModule/clients/panel/moduleContributions/loadSidebarContributions.ts";

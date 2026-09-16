@@ -1,4 +1,4 @@
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
 import { resolveIcon } from "./widgetRegistry.ts";
 import { useReferencesViewModeOptional } from "./referencesViewModeContext.tsx";

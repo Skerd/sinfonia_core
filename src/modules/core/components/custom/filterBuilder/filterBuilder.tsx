@@ -17,10 +17,10 @@ import {
     FILTER_LABELS_URL_PARAM,
     FILTER_URL_PARAM,
     pruneFilterLabelsToDsl,
-} from "@coreModule/helpers/filter/filterUrl.ts";
-import { LIST_PAGE_PARAM } from "@baseModule/helpers/useListUrlState.ts";
+} from "@baseModule/helpers/filter/filterUrl.ts";
+import { LIST_PAGE_PARAM } from "@baseModule/helpers/hooks/useListUrlState.ts";
 import {compose} from "redux";
-import withLanguage, {TranslationValue, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {TranslationValue, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 
 type RuleWithGroup = { groupId: string; rule: FilterRule };
@@ -68,7 +68,7 @@ function FilterBuilderInner({
     resolveLanguageKey,
     configuration,
     listPageParam = LIST_PAGE_PARAM,
-}: Omit<FilterBuilderProps, "resourceUrl">) {
+}: Omit<FilterBuilderProps, "resourceUrl" | "resolveLanguageValue">) {
 
     const { fields, refLabelsByFieldPath, replaceRefLabels } = useFilterBuilder();
     const [searchParams, setSearchParams] = useSearchParams();

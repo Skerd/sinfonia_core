@@ -1,7 +1,7 @@
 import {compose} from "redux";
 import {memo, type RefObject} from "react";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {MessageSquare, Phone, Power} from "lucide-react";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import MessagingProviderSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx";

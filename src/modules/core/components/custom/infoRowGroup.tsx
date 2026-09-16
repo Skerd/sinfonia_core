@@ -2,7 +2,7 @@ import {createContext, useCallback, useContext, useEffect, useMemo, useState, ty
 import {LockKeyhole} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {ItemGroup} from "@coreModule/components/ui/item.tsx";
 import {CARD_INFO_ROWS_CLASS} from "@coreModule/components/custom/cards/entityCard.constants.ts";
 

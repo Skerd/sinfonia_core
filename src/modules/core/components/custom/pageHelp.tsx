@@ -2,6 +2,7 @@ import {useState} from "react";
 import {IconInfoCircle} from "@tabler/icons-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {
     Sheet,
     SheetContent,
@@ -60,7 +61,7 @@ function parseSection(value: unknown): PageHelpSection | undefined {
  * Missing object / `overview` means the header icon is not shown.
  */
 export function readPageHelp(
-    resolveLanguageKey: (key: string) => unknown,
+    resolveLanguageKey: ResolveLanguageKey,
     languageKey = "help",
 ): PageHelpContent | undefined {
     const raw = resolveLanguageKey(languageKey);

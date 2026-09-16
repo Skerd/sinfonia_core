@@ -7,7 +7,8 @@ import {
     type ReactNode,
     type RefObject,
 } from "react";
-import {useAccess, accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
+import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {useEntityCard} from "@baseModule/helpers/hooks/useEntityCard.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
@@ -146,6 +147,7 @@ function EntityCardHeader({
     const {
         resource,
         entity,
+        read,
         hideActions,
         hideDelete,
         hideRestore,
@@ -157,14 +159,15 @@ function EntityCardHeader({
     const titlePath = titlePathProp ?? hostTitlePath;
     const hasMenuChildren = children != null && children !== false;
 
+    /* `show` overrides DisplayValue's own path gate, so it has to carry the ACL answer itself. */
     return (
         <EntityTextCardHeader
             className="p-0"
             iconTile={icon}
-            title={<DisplayValue path={titlePath} value={title} show />}
+            title={<DisplayValue path={titlePath} value={title} show={accessFieldPathExists(read, titlePath)} />}
             subtitle={
                 subtitle !== undefined ? (
-                    <DisplayValue path={subtitlePath} value={subtitle} show />
+                    <DisplayValue path={subtitlePath} value={subtitle} show={accessFieldPathExists(read, subtitlePath)} />
                 ) : undefined
             }
             badges={badges}

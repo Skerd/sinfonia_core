@@ -3,7 +3,7 @@ import {MapContainer, TileLayer, Marker, useMapEvents, useMap} from 'react-leafl
 //@ts-ignore
 import L, {LeafletMouseEvent} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
+import {useTheme} from "@baseModule/helpers/context/providers/theme-provider.tsx";
 
 const LIGHT_TILE_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const DARK_TILE_URL = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
@@ -41,15 +41,7 @@ function MapClickHandler({onPinSet, latitude, longitude}: {onPinSet: (latitude: 
 
 const SinglePinMap: React.FC<SinglePinMapProps> = ({ onPinChange, latitude, longitude, readOnly }) => {
 
-    const { theme } = useTheme()
-    function resolveTheme(theme: "dark" | "light" | "system") {
-        if (theme === "system") {
-            return window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? "dark"
-                : "light";
-        }
-        return theme;
-    }
+    const { resolvedTheme } = useTheme()
 
     const [lat, setLat] = useState<number>(latitude); // Default: Tirana, Albania
     const [lng, setLng] = useState<number>(longitude); // Default: Tirana, Albania
@@ -88,7 +80,7 @@ const SinglePinMap: React.FC<SinglePinMapProps> = ({ onPinChange, latitude, long
                 }
             `}</style>
             <MapContainer center={[lat, lng]} zoom={13} className="w-full h-full min-h-[200px]" style={{ zIndex: 1, background: "darkgrey"}}>
-                <TileLayer url={resolveTheme(theme) === "dark" ? DARK_TILE_URL : LIGHT_TILE_URL}/>
+                <TileLayer url={resolvedTheme === "dark" ? DARK_TILE_URL : LIGHT_TILE_URL}/>
                 <MapClickHandler
                     latitude={latitude}
                     longitude={longitude}

@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useEffect, useImperativeHandle} from "react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {ApiSelect} from "@coreModule/components/custom/apiSelect";
@@ -14,8 +14,8 @@ import {defaultCreateUserValues} from "@coreModule/helpers/defaultFormValues";
 import {useDispatch} from "react-redux";
 import {newUserCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
 import {LoaderCircle, UserPlus} from "lucide-react";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {CreateUserFormResponseType} from "armonia/src/modules/core/api/company/private/users/createUser.form.response.type.ts";
 import {CreateUserFormType} from "armonia/src/modules/core/api/company/private/users/createUser.form.type.ts";

@@ -16,7 +16,7 @@ import { Separator } from '@coreModule/components/ui/separator.tsx';
 import { ChevronsUpDown, X } from 'lucide-react';
 import { cn } from '@coreModule/components/lib/utils.ts';
 import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons';
-import withLanguage, { WithLanguageType } from '@coreModule/helpers/hocs/withLanguage.tsx';
+import withLanguage, { WithLanguageType } from '@baseModule/helpers/hocs/withLanguage.tsx';
 import { compose } from 'redux';
 import SelectOptionLabel from '@coreModule/components/custom/selectOptionLabel.tsx';
 

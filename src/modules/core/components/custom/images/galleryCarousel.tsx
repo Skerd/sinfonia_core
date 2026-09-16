@@ -11,6 +11,7 @@ import { Dialog, DialogContent } from "@coreModule/components/ui/dialog.tsx"
 import { Media } from "armonia/src/modules/core/types"
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
+import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
 
 function resolveMediaUrl(url: string, media: Media): string {
     return `${url}${media._id}`
@@ -658,4 +659,46 @@ export function GalleryCarousel({
             )}
         </div>
     )
+}
+
+const DEFAULT_GALLERY_READ_PATHS = {
+    mainImage: "mainImage",
+    imageGallery: "imageGallery",
+    videoGallery: "videoGallery",
+} as const;
+
+/**
+ * Drops gallery props the session cannot read so cards match sheet `#GalleryCarousel`
+ * field ACL (and withDebug field toggles).
+ */
+export function AccessGatedGalleryCarousel({
+    read,
+    mainImage,
+    imageGallery,
+    videoGallery,
+    mainImagePath = DEFAULT_GALLERY_READ_PATHS.mainImage,
+    imageGalleryPath = DEFAULT_GALLERY_READ_PATHS.imageGallery,
+    videoGalleryPath = DEFAULT_GALLERY_READ_PATHS.videoGallery,
+    ...rest
+}: GalleryCarouselProps & {
+    read: unknown;
+    mainImagePath?: string;
+    imageGalleryPath?: string;
+    videoGalleryPath?: string;
+}) {
+    /* No map at all means the caller is not gating; an empty or false one is a real deny. */
+    const canRead = (path: string) => read == null || accessFieldPathExists(read, path);
+    const canMain = canRead(mainImagePath);
+    const canImages = canRead(imageGalleryPath);
+    const canVideos = canRead(videoGalleryPath);
+    if (!canMain && !canImages && !canVideos) return null;
+
+    return (
+        <GalleryCarousel
+            {...rest}
+            mainImage={canMain ? mainImage : undefined}
+            imageGallery={canImages ? imageGallery : []}
+            videoGallery={canVideos ? videoGallery : []}
+        />
+    );
 }

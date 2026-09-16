@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { useFormContext, type FieldValues } from "react-hook-form";
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import { Badge } from "@coreModule/components/ui/badge.tsx";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@coreModule/components/ui/tooltip.tsx";
 import { ApiSelect } from "@coreModule/components/custom/apiSelect";

@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {CheckCheck, FileText, Globe, Mail, Phone} from "lucide-react";
 import "leaflet/dist/leaflet.css";
@@ -8,9 +8,9 @@ import {RefObject, useCallback, useRef, useState, lazy, memo, Suspense} from "re
 import {useReactToPrint} from "react-to-print";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
+import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {ImageDown, Maximize2, Minimize2} from "lucide-react";
 import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx";

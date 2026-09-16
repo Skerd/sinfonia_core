@@ -14,11 +14,11 @@ import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {UserProfile} from "@coreModule/clients/panel/private/users/center/cardView";
 import LeaveChannel from "@coreModule/clients/panel/private/chat/center/chatHeader/dropdown/leaveChannel.tsx";
 import ShowChannelMembers from "@coreModule/clients/panel/private/chat/center/chatHeader/dropdown/showChannelMembers.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {openChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {getName} from "@coreModule/helpers/general";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 
 type MessageHeaderProps = {
     defaultTitle: string

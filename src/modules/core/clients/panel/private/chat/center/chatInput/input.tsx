@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Paperclip, Reply, RotateCw, Send, X} from "lucide-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
@@ -11,13 +11,13 @@ import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import DeleteMessages from "@coreModule/clients/panel/private/chat/center/chatInput/actions/deleteMessages.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {addMessages, setActionMessage, upsertChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
-import {sendWebsocketMessage} from "@coreModule/helpers/context/webSocketContext.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {sendWebsocketMessage} from "@baseModule/helpers/context/webSocketContext.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {getName} from "@coreModule/helpers/general";
 import {toast} from "sonner";
 import EditMessage from "@coreModule/clients/panel/private/chat/center/chatInput/actions/editMessage.tsx";
 import ForwardMessageDialog from "@coreModule/clients/panel/private/chat/center/chatInput/actions/forwardMessageDialog.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {NewMessageFormType} from "armonia/src/modules/core/api/user/private/chats/messages/newMessage.form.type.ts";
 import {MessageTypeWithParticipants} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import type {ChannelUser} from "armonia/src/modules/core/types";
@@ -346,7 +346,7 @@ function ChatInputAll({
 
             <div className="flex items-end border rounded-lg px-1 gap-x-1" style={{border: "0px solid red"}}>
 
-                <TooltipDisplayer tooltip={(resolveLanguageKey("attach") as string)?.replace("{}", formatMaxSize(MAX_FILE_SIZE_BYTES))}>
+                <TooltipDisplayer tooltip={(resolveLanguageKey("attach"))?.replace("{}", formatMaxSize(MAX_FILE_SIZE_BYTES))}>
                     <div className="bg-card rounded-full flex items-center justify-center md:p-1">
                         <Button
                             size='icon'

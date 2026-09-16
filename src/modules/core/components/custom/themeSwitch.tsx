@@ -2,9 +2,9 @@ import {compose} from "redux";
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Check, Moon, Sun } from 'lucide-react'
 import { Button } from '@coreModule/components/ui/button.tsx'
-import { useTheme } from '@coreModule/helpers/context/providers/theme-provider.tsx'
-import { useDensity } from '@coreModule/helpers/context/providers/density-provider.tsx'
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import { useTheme } from '@baseModule/helpers/context/providers/theme-provider.tsx'
+import { useDensity } from '@baseModule/helpers/context/providers/density-provider.tsx'
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {
     DropdownMenu,
     DropdownMenuContent,

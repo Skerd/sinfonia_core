@@ -6,10 +6,10 @@ import {useNavigate} from "react-router-dom";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import MarkAllAsReadButton from "@coreModule/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {NotificationListItem} from "@coreModule/components/custom/notificationListItem.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {

@@ -1,4 +1,5 @@
-import {type CachedViewConfigs, useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
+import {type CachedViewConfigs} from "@baseModule/helpers/context/viewConfigContext.tsx";
+import {useViewConfigContext} from "@baseModule/helpers/hooks/useViewConfigContext.ts";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 
 export type ViewConfigState = {

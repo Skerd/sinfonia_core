@@ -32,10 +32,7 @@ type PhoneInputProps = Omit<
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
     React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
         ({ className, onChange, value, ...props }, ref) => {
-            const { currentLanguage } = useSelectedLanguage<LanguageDictionary>(
-                LANGUAGE_PATH.replace(/\//g, "_").replace(/\.(tsx|ts)$/, ""),
-                LANGUAGE_PATH
-            );
+            const { currentLanguage } = useSelectedLanguage<LanguageDictionary>(LANGUAGE_PATH);
 
             const searchCountryPlaceholder = getLanguageText(currentLanguage, "searchCountry");
             const noCountryFoundText = getLanguageText(currentLanguage, "noCountryFound");

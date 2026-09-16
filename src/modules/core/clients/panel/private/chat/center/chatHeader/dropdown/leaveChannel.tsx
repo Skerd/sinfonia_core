@@ -1,10 +1,10 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {LogOut} from "lucide-react";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useEffect, useImperativeHandle, useState} from "react";
 import {toast} from "sonner";
 import {deleteChannel, openChannel, updateChannelReadOnlyState} from "@coreModule/helpers/redux/slices/chatSlice.ts";
@@ -13,7 +13,7 @@ import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import {DeleteChannelFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/deleteChannel.form.response.type.ts";
 import {DeleteChannelFormType} from "armonia/src/modules/core/api/user/private/chats/channels/deleteChannel.form.type.ts";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ToastPromiseHandlers = {
@@ -28,6 +28,7 @@ type LeaveChannelProps = WithLanguageType & WithAxiosType<DeleteChannelFormRespo
 function LeaveChannel({
     channel,
     resolveLanguageKey,
+    resolveLanguageValue,
     loading,
     onFilterChange,
     innerRef
@@ -42,6 +43,10 @@ function LeaveChannel({
 
     useKeyboardShortcuts(shortCut, () => {setOpen(true);})
 
+    /* These keys hold `{title, time}` objects, not plain strings. */
+    const toastCopy = (key: string) => resolveLanguageValue<{title: string; time?: number}>(key);
+    const leaveInsteadOfDelete = channel.metaData.isGroup && !channel.metaData.readOnly;
+
     useImperativeHandle(innerRef, () => ({
         start: () => {
             const newPromise = new Promise((resolve, reject) => {
@@ -49,10 +54,10 @@ function LeaveChannel({
                 toastPromiseHandlersRef.reject = reject;
             });
             toast.promise(newPromise, {
-                loading: resolveLanguageKey(    channel.metaData.isGroup && !channel.metaData.readOnly ? "axiosOnFunction.startLeave" : "axiosOnFunction.startDelete").title,
-                success: resolveLanguageKey(    channel.metaData.isGroup && !channel.metaData.readOnly ? "axiosOnFunction.successLeave" : "axiosOnFunction.successDelete").title,
-                error: () => resolveLanguageKey(channel.metaData.isGroup && !channel.metaData.readOnly ? "axiosOnFunction.errorLeave" : "axiosOnFunction.errorDelete").title,
-                duration: resolveLanguageKey(   channel.metaData.isGroup && !channel.metaData.readOnly ? "axiosOnFunction.startLeave" : "axiosOnFunction.startDelete").time
+                loading: toastCopy(    leaveInsteadOfDelete ? "axiosOnFunction.startLeave" : "axiosOnFunction.startDelete")?.title,
+                success: toastCopy(    leaveInsteadOfDelete ? "axiosOnFunction.successLeave" : "axiosOnFunction.successDelete")?.title,
+                error: () => toastCopy(leaveInsteadOfDelete ? "axiosOnFunction.errorLeave" : "axiosOnFunction.errorDelete")?.title,
+                duration: toastCopy(   leaveInsteadOfDelete ? "axiosOnFunction.startLeave" : "axiosOnFunction.startDelete")?.time
             });
         },
         success: () => {

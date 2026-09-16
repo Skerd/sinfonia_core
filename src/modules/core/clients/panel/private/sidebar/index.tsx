@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {Link, useLocation} from "react-router-dom";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import NavUser from "@coreModule/clients/panel/private/sidebar/navUser";
 import CompaniesSwitcher from "@coreModule/clients/panel/private/sidebar/companies";
 import {
@@ -17,7 +17,7 @@ import {
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@coreModule/helpers/redux/slices/chatSlice.ts";
-import {useFetchChatInboxBadgesOnPanelLoad} from "@coreModule/helpers/chat/fetchInboxBadges.ts";
+import {useChatInboxBadges} from "@baseModule/helpers/hooks/useChatInboxBadges.ts";
 import {IconHome} from "@tabler/icons-react";
 import type {ComponentProps, ReactNode} from "react";
 import {ModuleSidebarNavGroups} from "@coreModule/clients/panel/moduleContributions/ModuleSidebarNavGroups.tsx";
@@ -44,7 +44,8 @@ function AdministrativePanelSideBar({
     preChildren,
     postChildren,
 }: ComponentProps<typeof Sidebar> & AdministrativePanelSideBarProps) {
-    useFetchChatInboxBadgesOnPanelLoad();
+
+    useChatInboxBadges();
     const chatUnreadTotal = useSelector(selectInternalChatUnread);
     const publicChatWaitingCount = useSelector((state: RootState) => state.chat.waitingCount);
     const publicChatMineUnread = useSelector(selectWebsiteChatMineUnread);

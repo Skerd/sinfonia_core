@@ -1,6 +1,6 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {memo, type RefObject} from "react";
 import {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";

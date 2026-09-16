@@ -1,6 +1,6 @@
 import { useCallback, useReducer } from "react";
 import type { FilterDSL, FilterGroup, FilterRule } from "armonia/src/modules/core/database/filter";
-import {generateUUID} from "@coreModule/helpers/general";
+import {generateUUID} from "@baseModule/helpers/general/uuid.ts";
 
 type FilterState = {
     root: FilterGroup;

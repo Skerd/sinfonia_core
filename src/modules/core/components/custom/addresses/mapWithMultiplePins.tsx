@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import {MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
 import L, {type LatLngBoundsExpression, type LatLngExpression} from "leaflet";
 import {ExternalLink} from "lucide-react";
-import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
+import {useTheme} from "@baseModule/helpers/context/providers/theme-provider.tsx";
 
 //@ts-ignore
 import iconUrl from "leaflet/dist/images/marker-icon.png";
@@ -72,13 +72,6 @@ function InvalidateSizeOnResize() {
     return null;
 }
 
-function resolveTheme(theme: "dark" | "light" | "system"): "dark" | "light" {
-    if (theme === "system") {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    }
-    return theme;
-}
-
 type MapWithMultiplePinsProps = {
     addresses: MapAddress[];
     openInGoogleMaps?: string;
@@ -90,7 +83,7 @@ export default function MapWithMultiplePins({
     openInGoogleMaps,
     openInAppleMaps,
 }: MapWithMultiplePinsProps) {
-    const { theme } = useTheme();
+    const { resolvedTheme } = useTheme();
     const list = Array.isArray(addresses) ? addresses : [];
     const bounds = list
         .filter(
@@ -112,7 +105,7 @@ export default function MapWithMultiplePins({
                 style={{width: "100%", height: "100%", zIndex: 1, background: "darkgrey"}}
                 scrollWheelZoom={true}
             >
-                <TileLayer url={resolveTheme(theme) === "dark" ? DARK_TILE_URL : LIGHT_TILE_URL}/>
+                <TileLayer url={resolvedTheme === "dark" ? DARK_TILE_URL : LIGHT_TILE_URL}/>
                 {
                     list.map((address, index) => {
                         if (address == null || typeof address !== "object") return null;

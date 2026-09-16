@@ -1,5 +1,5 @@
 import {useMemo} from "react";
-import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type {ResolveLanguageKey, ResolveLanguageKeyImpl} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useDynamicLanguage} from "@baseModule/helpers/hooks/useDynamicLanguage.ts";
 
 /**
@@ -18,7 +18,7 @@ export function useStudioLanguage(languagePath: string): {
     /* `useDynamicLanguage` is a hook: it must run unconditionally, path or not. */
     const dynamic = useDynamicLanguage(languagePath);
 
-    const identity = useMemo<ResolveLanguageKey>(
+    const identity = useMemo<ResolveLanguageKeyImpl>(
         () => (key: string, returnUndefinedIfNeeded = false) =>
             key ? key : returnUndefinedIfNeeded ? null : "",
         [],

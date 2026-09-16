@@ -1,6 +1,6 @@
 import { type ReactNode, createElement, useEffect, useRef } from "react";
 import { useFieldArray, useFormContext, type FieldValues } from "react-hook-form";
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { CirclePlus, Trash2 } from "lucide-react";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";

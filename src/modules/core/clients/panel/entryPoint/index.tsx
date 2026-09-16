@@ -7,8 +7,8 @@ import LanguageSwitch from "@coreModule/components/custom/languageSwitch.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {clsx} from "clsx";
 import {Link, useLocation, useSearchParams} from "react-router-dom";
-import withLanguage, {WithLanguageType, type ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {PageHeaderProvider, usePageHeader} from "@coreModule/helpers/context/pageHeaderContext.tsx";
+import withLanguage, {WithLanguageType, type ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import {PageHeaderProvider, usePageHeader} from "@baseModule/helpers/context/pageHeaderContext.tsx";
 import {renderCenterPanelContent} from "@coreModule/clients/panel/entryPoint/routeConfig.tsx";
 import NotificationBell from "@coreModule/components/custom/notificationBell";
 import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
@@ -84,7 +84,7 @@ function buildBreadcrumbs(pathname: string, resolveLanguageKey: ResolveLanguageK
  */
 function ShellBreadcrumb() {
     const pageHeader = usePageHeader();
-    const crumbs = [...(pageHeader?.routeCrumbs ?? []), ...(pageHeader?.contextCrumbs ?? [])];
+    const crumbs = pageHeader?.trail ?? [];
 
     return (
         <Breadcrumb className="min-w-0 flex-1">

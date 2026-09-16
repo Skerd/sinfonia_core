@@ -11,7 +11,7 @@ import {
 import {Kbd, KbdGroup} from "@coreModule/components/ui/kbd.tsx";
 import {getPanelNavGroups} from "@coreModule/helpers/panel/panelNavGroups.ts";
 import {flattenPanelNavLinks} from "@coreModule/helpers/panel/flattenPanelNavLinks.ts";
-import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 
 type CommandPaletteProps = WithLanguageType & {

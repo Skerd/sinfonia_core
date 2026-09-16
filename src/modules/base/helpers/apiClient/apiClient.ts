@@ -1,5 +1,5 @@
 import axios, {AxiosError, InternalAxiosRequestConfig} from "axios";
-import {getDeviceId, getToken} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
+import {getDeviceId, getToken} from "@baseModule/helpers/context/localStorage/authenticationStorage.ts";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {markSessionExpired} from "@coreModule/helpers/redux/slices/authSlice.ts";
 

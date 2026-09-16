@@ -4,7 +4,7 @@ import { SimpleSelect } from "@coreModule/components/custom/simpleSelect";
 import FilterValueInput, {enumLabel} from "./filterValueInput.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterRule, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
-import withLanguage, {ResolveLanguageKey, TranslationValue, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {ResolveLanguageKey, TranslationValue, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {findFromLanguage} from "@coreModule/helpers/general";
 import { useFilterBuilder } from "./filterBuilderContext.tsx";

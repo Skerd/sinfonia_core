@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useEffect, useImperativeHandle} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -8,8 +8,8 @@ import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {UpdateEmailPreferenceFormType} from "armonia/src/modules/core/api/user/private/data/updateEmailPreference.form.type.ts";
 import {UpdateEmailPreferenceFormResponseType} from "armonia/src/modules/core/api/user/private/data/updateEmailPreference.form.response.type.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type UpdateEmailProps = WithLanguageType & WithAxiosType<UpdateEmailPreferenceFormResponseType, UpdateEmailPreferenceFormType> & {

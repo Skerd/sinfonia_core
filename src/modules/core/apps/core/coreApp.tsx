@@ -1,16 +1,16 @@
 import {Toaster} from "@coreModule/components/ui/sonner.tsx";
 import {Provider} from "react-redux";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {ThemeProvider} from "@coreModule/helpers/context/providers/theme-provider.tsx";
-import {DensityProvider} from "@coreModule/helpers/context/providers/density-provider.tsx";
-import {LanguageProvider} from "@coreModule/helpers/context/providers/language-provider.tsx";
+import {ThemeProvider} from "@baseModule/helpers/context/providers/theme-provider.tsx";
+import {DensityProvider} from "@baseModule/helpers/context/providers/density-provider.tsx";
+import {LanguageProvider} from "@baseModule/helpers/context/providers/language-provider.tsx";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import ErrorBoundary from "@coreModule/components/custom/errorBoundary.tsx";
 import {lazy, Suspense} from "react";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {SidebarProvider} from "@coreModule/components/ui/sidebar.tsx";
-import {ensuredDeviceId} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
+import {ensureDeviceId} from "@baseModule/helpers/context/localStorage/authenticationStorage.ts";
 
 const PrivatePage = lazy(() => import("@coreModule/clients/panel/pages/private"));
 const AuthenticationPage = lazy(() => import("@coreModule/clients/panel/pages/public/auth"));
@@ -33,7 +33,7 @@ function ToasterContainer({}: {}){
 
 function CoreApp() {
 
-    ensuredDeviceId();
+    ensureDeviceId();
 
     return (
         <Provider store={store}>

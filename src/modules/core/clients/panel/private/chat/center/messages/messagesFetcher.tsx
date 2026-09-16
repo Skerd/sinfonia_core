@@ -1,13 +1,13 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {RefObject, useEffect, useImperativeHandle, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import useIsInViewport from "@baseModule/helpers/hooks/useIsInViewport.ts";
 import {addMessages, isPeekingWebsiteChannel, setMessages} from "@coreModule/helpers/redux/slices/chatSlice.ts";
-import {sendMessageReceiptBatch} from "@coreModule/helpers/chat/messageReceipts.ts";
+import {sendReceiptsNow} from "@baseModule/helpers/chat/messageReceipts.ts";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
@@ -16,7 +16,7 @@ import {
     MessageType
 } from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {MessagesFormType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.type.ts";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type MessagesFetcherProps = WithLanguageType & WithAxiosType<MessagesFormResponseType, MessagesFormType> & {
@@ -145,7 +145,7 @@ function MessagesFetcher({
                     .filter((m) => m.sender?._id && m.sender._id !== uid)
                     .map((m) => m._id);
                 if (fromOthers.length) {
-                    sendMessageReceiptBatch(chId, fromOthers, "delivered");
+                    void sendReceiptsNow(chId, fromOthers, "delivered");
                 }
             }
 

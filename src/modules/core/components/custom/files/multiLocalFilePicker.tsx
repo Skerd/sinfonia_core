@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { FormLabel } from "@coreModule/components/ui/form.tsx";
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
 
 export type MultiLocalFilePickerProps = {

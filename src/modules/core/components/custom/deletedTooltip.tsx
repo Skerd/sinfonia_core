@@ -1,4 +1,4 @@
-import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, { WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import { compose } from "redux";
 import React from "react";

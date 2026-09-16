@@ -6,7 +6,7 @@ import {AlertCircle} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Progress} from "@coreModule/components/ui/progress.tsx";
 import {Spinner} from "@coreModule/components/ui/spinner.tsx";

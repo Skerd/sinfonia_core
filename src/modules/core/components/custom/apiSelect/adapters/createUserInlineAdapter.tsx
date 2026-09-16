@@ -1,7 +1,7 @@
 import { DialogDescription, DialogHeader, DialogTitle } from "@coreModule/components/ui/dialog.tsx";
 import CreateUserForm from "@coreModule/clients/panel/private/users/createUser/createUser.form.tsx";
 import type { ApiSelectCreateAdapterProps } from "@coreModule/components/custom/apiSelect/createFromSearchTypes.ts";
-import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, { WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 type Props = ApiSelectCreateAdapterProps & WithLanguageType;
 
@@ -17,7 +17,7 @@ function CreateUserInlineAdapterInner({ resolveLanguageKey, onCreated, onCancel,
     return (
         <>
             <DialogHeader className="text-start">
-                <DialogTitle>{String(resolveLanguageKey(administration ? "administrationTitle" : "title"))}12312312</DialogTitle>
+                <DialogTitle>{String(resolveLanguageKey(administration ? "administrationTitle" : "title"))}</DialogTitle>
                 <DialogDescription>
                     {String(resolveLanguageKey(administration ? "administrationDescription" : "description"))}
                 </DialogDescription>

@@ -1,11 +1,36 @@
 import {NotificationType} from "armonia/src/modules/core/api/user/private/notifications/notifications.dto.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {notificationDateFormatter} from "@coreModule/helpers/general";
+import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 export type NotificationListItemProps = {
     notification: NotificationType;
-    resolveLanguageKey: (key: string) => string;
+    resolveLanguageKey: ResolveLanguageKey;
 };
+
+/** Relative time for notification rows (`justNow` / `Nm` / `Nh` / locale date). */
+function formatNotificationDate(dateStr: string, resolveLanguageKey: ResolveLanguageKey): string {
+    const d = new Date(dateStr);
+    const now = new Date();
+    const diff = now.getTime() - d.getTime();
+    if (diff < 60000) return resolveLanguageKey("justNow");
+    if (diff < 3600000) {
+        const mins = Math.floor(diff / 60000);
+        const template = resolveLanguageKey("minutesAgo", true);
+        const unit = resolveLanguageKey("minutesAgoUnit", true);
+        return (typeof template === "string" ? template.replace("{}", String(mins)) : null)
+            ?? (typeof unit === "string" ? `${mins}${unit}` : null)
+            ?? d.toLocaleDateString();
+    }
+    if (diff < 86400000) {
+        const hours = Math.floor(diff / 3600000);
+        const template = resolveLanguageKey("hoursAgo", true);
+        const unit = resolveLanguageKey("hoursAgoUnit", true);
+        return (typeof template === "string" ? template.replace("{}", String(hours)) : null)
+            ?? (typeof unit === "string" ? `${hours}${unit}` : null)
+            ?? d.toLocaleDateString();
+    }
+    return d.toLocaleDateString();
+}
 
 /**
  * Shared row for bell popover and notification center: compact padding, clear vertical rhythm.
@@ -27,7 +52,7 @@ export function NotificationListItem({notification, resolveLanguageKey}: Notific
                     {notification.description ?? notification.code}
                 </p>
                 <time className="pt-0.5 text-2xs tabular-nums leading-none text-muted-foreground/90">
-                    {notificationDateFormatter(notification.date, resolveLanguageKey)}
+                    {formatNotificationDate(notification.date, resolveLanguageKey)}
                 </time>
             </div>
         </article>

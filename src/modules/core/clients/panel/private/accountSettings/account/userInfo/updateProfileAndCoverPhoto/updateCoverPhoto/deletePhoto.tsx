@@ -1,12 +1,12 @@
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {LoaderCircle, Trash2} from "lucide-react";
 import {useEffect, useImperativeHandle, useState} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {DeleteProfileCoverPhotoFormResponseType} from "armonia/src/modules/core/api/user/private/data/deleteProfileCoverPhoto.form.response.type.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type DeletePhotoProps = WithLanguageType & WithAxiosType<DeleteProfileCoverPhotoFormResponseType> & {

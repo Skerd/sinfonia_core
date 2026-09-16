@@ -8,10 +8,10 @@ import { ChannelUser } from "armonia/src/modules/core/types";
 import type { DeletedData } from "armonia/src/modules/core/types/shared.types.ts";
 import { MessageSenderType } from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
-import {ResolveLanguageKey, TranslationValue} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {ResolveLanguageKey, TranslationValue} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import {PageTitle} from "@baseModule/helpers/types/pageTitle.types.ts";
 
 type ClientConfig = typeof environmentConfig;
-type DatePartKey = "day" | "month" | "year" | "hour" | "minute" | "second";
 
 /** Default Intl date format options used by {@link formatDate}. */
 const DEFAULT_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
@@ -30,43 +30,6 @@ const DEFAULT_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
  */
 export function getClientConfig(): ClientConfig {
   return environmentConfig;
-}
-
-/**
- * Formats a UTC date string into a fixed DD/MM/YYYY HH:mm:ss string in the given timezone.
- *
- * @param dateString - ISO or parseable UTC date string.
- * @param timezone - IANA timezone (e.g. `"Europe/London"`).
- * @returns Formatted string like `"09/03/2025 14:30:00"`, or invalid date string if parsing fails.
- */
-export function manipulateDate(dateString: string, timezone: string): string {
-  const date = new Date(dateString);
-  const formatter = new Intl.DateTimeFormat("en-GB", {
-    timeZone: timezone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  });
-
-  const parts = formatter.formatToParts(date);
-  const format: Record<DatePartKey, string> = {
-    day: "",
-    month: "",
-    year: "",
-    hour: "",
-    minute: "",
-    second: "",
-  };
-
-  for (const { type, value } of parts) {
-    if (type in format) (format as Record<string, string>)[type] = value;
-  }
-
-  return `${format.day}/${format.month}/${format.year} ${format.hour}:${format.minute}:${format.second}`;
 }
 
 /**
@@ -92,33 +55,6 @@ export function generateRandomString(length: number): string {
     result += charset.charAt(Math.floor(Math.random() * charset.length));
   }
   return result;
-}
-
-/**
- * Generates a UUID-like identifier.
- * Uses `crypto.randomUUID` when available, then `crypto.getRandomValues`, then `Math.random` fallback.
- *
- * @returns A RFC4122 v4-compatible UUID string when possible.
- */
-export function generateUUID(): string {
-  const cryptoApi = globalThis.crypto;
-
-  if (cryptoApi?.randomUUID) {
-    return cryptoApi.randomUUID();
-  }
-
-  if (cryptoApi?.getRandomValues) {
-    const bytes = new Uint8Array(16);
-    cryptoApi.getRandomValues(bytes);
-    // Set UUID v4 and RFC4122 variant bits.
-    bytes[6] = (bytes[6] & 0x0f) | 0x40;
-    bytes[8] = (bytes[8] & 0x3f) | 0x80;
-
-    const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0"));
-    return `${hex[0]}${hex[1]}${hex[2]}${hex[3]}-${hex[4]}${hex[5]}-${hex[6]}${hex[7]}-${hex[8]}${hex[9]}-${hex[10]}${hex[11]}${hex[12]}${hex[13]}${hex[14]}${hex[15]}`;
-  }
-
-  return `f-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
 }
 
 /**
@@ -182,6 +118,11 @@ export interface FormatNumberOptions {
   currency?: string;
   minimumFractionDigits?: number;
   maximumFractionDigits?: number;
+  /**
+   * `"min2"` groups only from five digits up, so a year stays `2026` instead of
+   * `2,026`. Use it wherever a numeric column mixes counts, years and amounts.
+   */
+  useGrouping?: Intl.NumberFormatOptions["useGrouping"];
 }
 
 /**
@@ -199,12 +140,13 @@ export function formatNumber(
 ): string {
   if (value == null || Number.isNaN(value)) return "";
 
-  const {compact, currency, minimumFractionDigits, maximumFractionDigits} = options;
+  const {compact, currency, minimumFractionDigits, maximumFractionDigits, useGrouping} = options;
 
   const intlOptions: Intl.NumberFormatOptions = {
     notation: compact ? "compact" : "standard",
     ...(compact ? {compactDisplay: "short" as const} : {}),
     ...(currency ? {style: "currency" as const, currency} : {}),
+    ...(useGrouping != null ? {useGrouping} : {}),
     ...(minimumFractionDigits != null ? {minimumFractionDigits} : {}),
     // Compact notation defaults to 0 fraction digits, which turns 1.6M into 2M.
     ...(maximumFractionDigits != null
@@ -313,21 +255,13 @@ export function formatDurationInDaysHoursOrMinutes(
  * can only be printed, and the user cannot click back up the hierarchy they
  * navigated down.
  */
-export type PageTitle = {
-  title: string;
-  context: string[];
-};
 
 /**
+ * @param title
  * @param items - Context segments, outermost first; falsy entries are omitted.
  */
 export function buildPageTitle(title: string, items: (string | undefined | null)[] = []): PageTitle {
   return {title, context: items.filter((item): item is string => Boolean(item))};
-}
-
-/** Accepts either form so pages with no entity context can pass a bare string. */
-export function toPageTitle(value: string | PageTitle): PageTitle {
-  return typeof value === "string" ? {title: value, context: []} : value;
 }
 
 export function findFromLanguage(values: TranslationValue, path: string): TranslationValue{
@@ -360,30 +294,6 @@ export function findFromObject(values: any, path: string): any{
     }
   }
   return tempValue;
-}
-
-export function notificationDateFormatter(dateStr: string, resolveLanguageKey: ResolveLanguageKey): string {
-    const d = new Date(dateStr);
-    const now = new Date();
-    const diff = now.getTime() - d.getTime();
-    if (diff < 60000) return resolveLanguageKey("justNow");
-    if (diff < 3600000) {
-      const mins = Math.floor(diff / 60000);
-      const template = resolveLanguageKey("minutesAgo", true);
-      const unit = resolveLanguageKey("minutesAgoUnit", true);
-      return (typeof template === "string" ? template.replace("{}", String(mins)) : null)
-          ?? (typeof unit === "string" ? `${mins}${unit}` : null)
-          ?? d.toLocaleDateString();
-    }
-    if (diff < 86400000) {
-      const hours = Math.floor(diff / 3600000);
-      const template = resolveLanguageKey("hoursAgo", true);
-      const unit = resolveLanguageKey("hoursAgoUnit", true);
-      return (typeof template === "string" ? template.replace("{}", String(hours)) : null)
-          ?? (typeof unit === "string" ? `${hours}${unit}` : null)
-          ?? d.toLocaleDateString();
-    }
-    return d.toLocaleDateString();
 }
 
 

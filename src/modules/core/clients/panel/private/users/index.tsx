@@ -1,9 +1,9 @@
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useEffect, useRef} from "react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import UsersInviteDialog from "@coreModule/clients/panel/private/users/inviteUser";
 import CreateUsers from "@coreModule/clients/panel/private/users/createUser";
 import {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
@@ -47,8 +47,8 @@ function Users({resolveLanguageKey, administration}: UsersProps) {
                 listApiRef={listApiRef}
                 buildEditPath={() => ""}
                 resolveLanguageKey={resolveLanguageKey}
-                headerTitle={resolveLanguageKey(administration ? "administrationTitle" : "title") as string}
-                headerDescription={resolveLanguageKey(administration ? "administrationDescription" : "description") as string}
+                headerTitle={resolveLanguageKey(administration ? "administrationTitle" : "title")}
+                headerDescription={resolveLanguageKey(administration ? "administrationDescription" : "description")}
                 helpLanguageKey={administration ? "administrationHelp" : "help"}
                 headerActions={
                     <>

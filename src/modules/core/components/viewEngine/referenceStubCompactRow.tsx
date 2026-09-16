@@ -3,7 +3,7 @@ import DisplayCard, {
     type DisplayCardLinkedSheetOuterProps,
 } from "@coreModule/components/custom/displayValue/displayCard.tsx";
 import { resolveIcon, resolveWidget } from "./widgetRegistry.ts";
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 function resolveDotPath(obj: Record<string, any>, path: string): unknown {
     return path.split(".").reduce<any>((acc, key) => acc?.[key], obj);

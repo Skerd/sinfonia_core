@@ -1,9 +1,9 @@
 import { ContentSection } from '../components/content-section.tsx'
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import UserAccountProfileUserInfo
     from "@coreModule/clients/panel/private/accountSettings/account/userInfo";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 
 type AccountProps = WithLanguageType & {
     specificUserId?: string

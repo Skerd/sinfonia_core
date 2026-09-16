@@ -1,18 +1,20 @@
 import {compose} from "redux";
-import {useAccess, useAccessHydrated} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccessHydrated} from "@baseModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {ToggleGroup, ToggleGroupItem} from "@coreModule/components/ui/toggle-group.tsx";
 import {LayoutGrid, List, SlidersVertical} from "lucide-react";
-import {JSX, type KeyboardEvent, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
-import {TableVirtuoso} from "react-virtuoso";
-import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
-import {useListUrlState, listChromeParam, LIST_PAGE_PARAM, type EntityListViewMode as UrlViewMode} from "@baseModule/helpers/useListUrlState.ts";
-import type {RowSelectionState} from "@tanstack/react-table";
+import {type CSSProperties, JSX, type KeyboardEvent, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
+import {TableVirtuoso, type FillerRowProps, type ItemProps, type TableComponents, type TableProps} from "react-virtuoso";
+// ROW SELECTION — parked until a multi-selection action exists (bulk delete/export/assign).
+// import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
+import {useListUrlState, listChromeParam, LIST_PAGE_PARAM, type EntityListViewMode as UrlViewMode} from "@baseModule/helpers/hooks/useListUrlState.ts";
+// import type {RowSelectionState} from "@tanstack/react-table";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type { FilterGroup } from "armonia/src/modules/core/database/filter";
-import { isFilterGroupEmpty, mergeAndFilterDSL } from "@coreModule/helpers/filter/mergeFilterDsl.ts";
-import { decodeFilterFromUrl, FILTER_URL_PARAM } from "@coreModule/helpers/filter/filterUrl.ts";
+import { isFilterGroupEmpty, mergeAndFilterDSL } from "@baseModule/helpers/filter/mergeFilterDsl.ts";
+import { decodeFilterFromUrl, FILTER_URL_PARAM } from "@baseModule/helpers/filter/filterUrl.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
@@ -23,14 +25,15 @@ import {entityCardSkeletonItems, EntityTableSkeleton} from "@coreModule/componen
 import {ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, type Row, useReactTable} from "@tanstack/react-table";
 import {Table, TableBody, TableCell, TableRow} from "@coreModule/components/ui/table/table.tsx";
 import {isDialogDismissGuarded} from "@coreModule/components/ui/dialog.tsx";
-import DataTableTableHeaderProps from "@coreModule/components/ui/table/table-header.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import DataTableTableHeaderProps, {DataTableHeaderRows} from "@coreModule/components/ui/table/table-header.tsx";
+import {TableColGroup, tableWidthStyle} from "@coreModule/components/ui/table/table-colgroup.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import DataTableViewOptions from "@coreModule/components/ui/table/view-options.tsx";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {useTableConfig} from "@baseModule/helpers/hooks/useTableConfig.ts";
 import {GRID_MASONRY_ITEM} from "@coreModule/components/custom/cards/entityCard.constants.ts";
-import {columnConfigToColumnDef} from "@coreModule/helpers/mappers/columnConfigToColumnDef.tsx";
+import {columnConfigToColumnDef} from "@baseModule/components/custom/table/columnConfigToColumnDef.tsx";
 import FilterBuilder from "@coreModule/components/custom/filterBuilder/filterBuilder.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -214,7 +217,7 @@ function CountryCenterView<
         paramScope: tableConfigKey,
     });
     const listPageParam = listChromeParam(LIST_PAGE_PARAM, tableConfigKey);
-    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+    // const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [rowOverlays, setRowOverlays] = useState<Record<string, Partial<T>>>({});
     const [columnFilters, onColumnFiltersChange] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState | undefined>(undefined);
@@ -382,35 +385,39 @@ function CountryCenterView<
         fields: tableConfigOptions?.filterConfig?.fields,
         renderActions: renderFunctions.action,
         timezone,
+        // Ungated until the map lands: the empty map before hydration would hide every column.
+        read: accessHydrated === false ? undefined : read,
     }) as ColumnDef<T>[];
 
     const columns = useMemo<ColumnDef<T>[]>(() => {
-        const selectCol: ColumnDef<T> = {
-            id: "select",
-            enableSorting: false,
-            enableHiding: false,
-            header: ({table: t}) => (
-                <div className="flex items-center justify-center px-2">
-                    <Checkbox
-                        checked={t.getIsAllPageRowsSelected() || (t.getIsSomePageRowsSelected() && "indeterminate")}
-                        onCheckedChange={(v) => t.toggleAllPageRowsSelected(!!v)}
-                        aria-label={String(resolveLanguageKey("selectAll") || "Select all")}
-                    />
-                </div>
-            ),
-            cell: ({row}) => (
-                <div className="flex items-center justify-center px-2" onClick={(e) => e.stopPropagation()}>
-                    <Checkbox
-                        checked={row.getIsSelected()}
-                        onCheckedChange={(v) => row.toggleSelected(!!v)}
-                        aria-label={String(resolveLanguageKey("selectRow") || "Select row")}
-                    />
-                </div>
-            ),
-            meta: { className: "sticky left-0 z-10 w-10 bg-background" },
-        };
-        return [selectCol, ...dataColumns];
-    }, [dataColumns, resolveLanguageKey]);
+        // ROW SELECTION — parked until a multi-selection action exists (bulk delete/export/assign).
+        // const selectCol: ColumnDef<T> = {
+        //     id: "select",
+        //     enableSorting: false,
+        //     enableHiding: false,
+        //     header: ({table: t}) => (
+        //         <div className="flex items-center justify-center px-2">
+        //             <Checkbox
+        //                 checked={t.getIsAllPageRowsSelected() || (t.getIsSomePageRowsSelected() && "indeterminate")}
+        //                 onCheckedChange={(v) => t.toggleAllPageRowsSelected(!!v)}
+        //                 aria-label={String(resolveLanguageKey("selectAll") || "Select all")}
+        //             />
+        //         </div>
+        //     ),
+        //     cell: ({row}) => (
+        //         <div className="flex items-center justify-center px-2" onClick={(e) => e.stopPropagation()}>
+        //             <Checkbox
+        //                 checked={row.getIsSelected()}
+        //                 onCheckedChange={(v) => row.toggleSelected(!!v)}
+        //                 aria-label={String(resolveLanguageKey("selectRow") || "Select row")}
+        //             />
+        //         </div>
+        //     ),
+        //     meta: { className: "sticky left-0 z-10 w-10 bg-background" },
+        // };
+        // return [selectCol, ...dataColumns];
+        return dataColumns;
+    }, [dataColumns]);
 
     const table = useReactTable({
         data: tableData,
@@ -419,14 +426,15 @@ function CountryCenterView<
         manualPagination: true,
         manualFiltering: true,
         manualSorting: true,
-        enableRowSelection: true,
+        // ROW SELECTION — parked until a multi-selection action exists (bulk delete/export/assign).
+        // enableRowSelection: true,
         state: {
             columnFilters,
             ...(columnVisibility && { columnVisibility }),
             sorting,
-            rowSelection,
+            // rowSelection,
         },
-        onRowSelectionChange: setRowSelection,
+        // onRowSelectionChange: setRowSelection,
         onSortingChange: setSorting,
         onColumnFiltersChange: (updater) => {
             const next = typeof updater === "function" ? updater(columnFilters) : updater;
@@ -446,6 +454,88 @@ function CountryCenterView<
         getFacetedRowModel: getFacetedRowModel(),
         getFacetedUniqueValues: getFacetedUniqueValues()
     });
+
+    /*
+     * These sit above the `canRead` early return below: a hook after a conditional
+     * return changes the hook count between renders, and React throws the moment
+     * access flips.
+     *
+     * `components` has to keep the same identity across renders — TableVirtuoso treats
+     * each slot as a component *type*, so rebuilding the object inline in JSX handed
+     * React a brand new type every render and remounted every row. The row handlers are
+     * rebuilt each render, so the slots read them through a ref rather than closing over them.
+     */
+    const rowHandlersRef = useRef<{
+        activateRow: (item: T, e?: {target: EventTarget | null}) => void;
+        handleRowKeyDown: (item: T, e: KeyboardEvent<HTMLTableRowElement>) => void;
+        onRowActivate?: (data: T) => void;
+    } | null>(null);
+    const columnCountRef = useRef(0);
+    /* The virtuoso slots are memoized once, so they read the live table through a ref. */
+    const tableRef = useRef<ReturnType<typeof useReactTable<T>> | null>(null);
+
+    const virtuosoComponents = useMemo<TableComponents<Row<T>>>(
+        () => ({
+            /*
+             * `table-fixed` + a colgroup: the columns take their widths from the config
+             * instead of from whichever rows are currently rendered, which is what made
+             * them jump on every scroll.
+             */
+            Table: ({style, children, ...props}: TableProps) => {
+                const liveTable = tableRef.current;
+                return (
+                    <table
+                        {...props}
+                        style={{...style, ...(liveTable ? tableWidthStyle(liveTable) : {})}}
+                        className="table-fixed caption-bottom text-sm"
+                    >
+                        {liveTable && <TableColGroup table={liveTable} />}
+                        {children}
+                    </table>
+                );
+            },
+            /* Virtuoso measures the header through this ref to size the scroll area. */
+            TableHead: ({style, children, ref}: {
+                style?: CSSProperties;
+                children?: ReactNode;
+                ref?: Ref<HTMLTableSectionElement>;
+            }) => (
+                <thead ref={ref} style={style} className="bg-background/95 backdrop-blur-sm">
+                    {children}
+                </thead>
+            ),
+            /*
+             * The scroll padding rows. Virtuoso's default is a `<tr>` with one `<td>` and
+             * no colSpan, which in an auto-layout table is a real cell in column 1 — it
+             * drags that column's width around as you scroll. Span the whole row instead.
+             */
+            FillerRow: ({height}: FillerRowProps) => (
+                <tr aria-hidden>
+                    <td colSpan={columnCountRef.current} style={{border: 0, height, padding: 0}} />
+                </tr>
+            ),
+            TableRow: ({item: row, ...props}: ItemProps<Row<T>>) => {
+                const handlers = rowHandlersRef.current;
+                const canActivate = handlers?.onRowActivate;
+                return (
+                    <tr
+                        {...props}
+                        className={cn(
+                            "border-b transition-colors hover:bg-muted/50 group/row",
+                            ENTITY_TABLE_ROW_MENU_OPEN,
+                            canActivate && "cursor-pointer",
+                            !!(row.original as {deletedAt?: unknown})?.deletedAt && "opacity-60 bg-muted/50",
+                        )}
+                        tabIndex={canActivate ? 0 : undefined}
+                        onClick={(e) => handlers?.activateRow(row.original, e)}
+                        onKeyDown={(e) => handlers?.handleRowKeyDown(row.original, e as unknown as KeyboardEvent<HTMLTableRowElement>)}
+                        onContextMenu={openActionMenuFromContextMenu}
+                    />
+                );
+            },
+        }),
+        [],
+    );
 
     const canRead = read === true
         || (typeof read === "object" && read !== null && Object.keys(read).length > 0);
@@ -472,7 +562,7 @@ function CountryCenterView<
     const skeletonCount = Math.min(limit || 20, 8);
     const skeletonColumnCount = table.getVisibleFlatColumns().length || 5;
     const isRefetching = !firstCall && loading;
-    const selectedCount = Object.keys(rowSelection).length;
+    // const selectedCount = Object.keys(rowSelection).length;
     const shouldVirtualize = tableData.length > 50;
     const onRowActivate = renderFunctions.onRowClick;
 
@@ -495,10 +585,17 @@ function CountryCenterView<
         }
     };
 
+    /* Plain assignments, not hooks: the refs themselves are created above the `canRead` return. */
+    rowHandlersRef.current = {activateRow, handleRowKeyDown, onRowActivate};
+    columnCountRef.current = table.getVisibleFlatColumns().length;
+    tableRef.current = table;
+
+
     const renderTableRow = (row: Row<T>) => (
         <TableRow
             key={row.id}
-            data-state={row.getIsSelected() && "selected"}
+            /* ROW SELECTION — parked until a multi-selection action exists (bulk delete/export/assign). */
+            // data-state={row.getIsSelected() && "selected"}
             tabIndex={onRowActivate ? 0 : undefined}
             className={cn(
                 "group/row transition-colors",
@@ -515,9 +612,11 @@ function CountryCenterView<
                     key={cell.id}
                     className={cn(
                         "bg-background transition-colors group-hover/row:bg-muted/50 group-data-[state=selected]/row:bg-muted",
+                        /* `table-fixed` only holds if the cell clips what will not fit. */
+                        "overflow-hidden",
                         ENTITY_TABLE_CELL_MENU_OPEN,
                         cell.column.id === "actions" && "w-[1%] text-right pr-3 sticky right-0 z-10",
-                        cell.column.id === "select" && "sticky left-0 z-10",
+                        // cell.column.id === "select" && "sticky left-0 z-10",
                         (cell.column.columnDef.meta as { className?: string } | undefined)?.className
                     )}
                     onClick={cell.column.id === "actions" ? (e) => e.stopPropagation() : undefined}
@@ -670,6 +769,7 @@ function CountryCenterView<
                                         )
                                         :
                                         <>
+                                            {/* ROW SELECTION — parked until a multi-selection action exists (bulk delete/export/assign).
                                             {selectedCount > 0 && (
                                                 <div className="mb-2 flex items-center justify-between gap-2 rounded-md border bg-muted/40 px-3 py-2 text-sm">
                                                     <span className="tabular-nums text-muted-foreground">
@@ -679,7 +779,7 @@ function CountryCenterView<
                                                         {String(resolveLanguageKey("clearSelection") || "Clear")}
                                                     </Button>
                                                 </div>
-                                            )}
+                                            )} */}
                                             {
                                                 viewMode === "card" ? (
                                                     (!data || data?.data?.length === 0) && !firstCall ? (
@@ -696,14 +796,24 @@ function CountryCenterView<
                                                         )))
                                                     )
                                                 ) : (
-                                                    <div className="min-w-0 w-full overflow-x-auto rounded-md border">
+                                                    <>
                                                         {shouldVirtualize && data?.data?.length ? (
-                                                            <div style={{height: 480}}>
+                                                            /*
+                                                             * Virtuoso owns its scrollport (its scroller is `height:100%;
+                                                             * overflow-y:auto`), so this box has to give it a definite height:
+                                                             * `flex-1` fills what the list container leaves, where a hardcoded
+                                                             * `height: 480` used to strand long lists half way down the panel.
+                                                             * The `min-h` floor keeps it usable if an embedding gives the
+                                                             * container no definite height of its own.
+                                                             */
+                                                            <div className="min-w-0 w-full flex-1 min-h-[24rem] overflow-hidden rounded-md border">
                                                                 <TableVirtuoso
                                                                     style={{height: "100%"}}
                                                                     data={table.getRowModel().rows}
+                                                                    computeItemKey={(_index, row) => row.id}
+                                                                    /* Rows only — virtuoso supplies the `<thead>` around them. */
                                                                     fixedHeaderContent={() => (
-                                                                        <DataTableTableHeaderProps table={table} />
+                                                                        <DataTableHeaderRows table={table} />
                                                                     )}
                                                                     itemContent={(_index, row) => (
                                                                         <>
@@ -711,10 +821,10 @@ function CountryCenterView<
                                                                                 <TableCell
                                                                                     key={cell.id}
                                                                                     className={cn(
-                                                                                        "bg-background transition-colors",
+                                                                                        "bg-background transition-colors overflow-hidden",
                                                                                         ENTITY_TABLE_CELL_MENU_OPEN,
                                                                                         cell.column.id === "actions" && "w-[1%] text-right pr-3 sticky right-0 z-10",
-                                                                                        cell.column.id === "select" && "sticky left-0 z-10",
+                                                                                        // cell.column.id === "select" && "sticky left-0 z-10",
                                                                                         (cell.column.columnDef.meta as { className?: string } | undefined)?.className
                                                                                     )}
                                                                                     onClick={cell.column.id === "actions" ? (e) => e.stopPropagation() : undefined}
@@ -725,32 +835,13 @@ function CountryCenterView<
                                                                             ))}
                                                                         </>
                                                                     )}
-                                                                    components={{
-                                                                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                                                        Table: ({style, ...props}: any) => (
-                                                                            <table {...props} style={style} className="w-full min-w-max caption-bottom text-sm" />
-                                                                        ),
-                                                                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                                                        TableRow: ({item: row, ...props}: any) => (
-                                                                            <tr
-                                                                                {...props}
-                                                                                data-state={row.getIsSelected() && "selected"}
-                                                                                className={cn(
-                                                                                    "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted group/row",
-                                                                                    ENTITY_TABLE_ROW_MENU_OPEN,
-                                                                                    onRowActivate && "cursor-pointer",
-                                                                                )}
-                                                                                tabIndex={onRowActivate ? 0 : undefined}
-                                                                                onClick={(e) => activateRow(row.original, e)}
-                                                                                onKeyDown={(e) => handleRowKeyDown(row.original, e as unknown as KeyboardEvent<HTMLTableRowElement>)}
-                                                                                onContextMenu={openActionMenuFromContextMenu}
-                                                                            />
-                                                                        ),
-                                                                    }}
+                                                                    components={virtuosoComponents}
                                                                 />
                                                             </div>
                                                         ) : (
-                                                        <Table>
+                                                        <div className="min-w-0 w-full overflow-x-auto rounded-md border">
+                                                        <Table className="table-fixed" style={tableWidthStyle(table)}>
+                                                            <TableColGroup table={table} />
                                                             <DataTableTableHeaderProps table={table} />
                                                             <TableBody>
                                                                 {(!data || data?.data?.length === 0) && !firstCall ? (
@@ -767,8 +858,9 @@ function CountryCenterView<
                                                                 )}
                                                             </TableBody>
                                                         </Table>
+                                                        </div>
                                                         )}
-                                                    </div>
+                                                    </>
                                                 )
                                             }
                                         </>
@@ -794,7 +886,7 @@ const ComposedCardAndTableView = compose(
         },
         true
     ),
-    withDebug(true, true)
+    withDebug(false, false)
 )(CountryCenterView);
 
 /** Consumer-facing props (HOC-injected props omitted). */

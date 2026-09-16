@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {MfaStatusFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/mfaStatus.form.response.type.ts";
 import {ShieldCheck, TriangleAlert} from "lucide-react";
 import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/alert.tsx";
@@ -9,10 +9,10 @@ import {useEffect, useState} from "react";
 import AccountSecurityDeactivateOtpForm from "@coreModule/clients/panel/private/accountSettings/security/otp/deactivateOTP/deactivateOtp.form.tsx";
 import AccountSecurityOtpEnableOTP from "@coreModule/clients/panel/private/accountSettings/security/otp/enableOTP";
 import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 function ToggleButton({otpEnabled, setOpenWhat, loading, resolveLanguageKey}:{otpEnabled: boolean, setOpenWhat: Function, loading: boolean, resolveLanguageKey: Function, specificUserId?: string}){

@@ -5,12 +5,12 @@ import {setNotificationNumber} from "@coreModule/helpers/redux/slices/notificati
 import Header from "@coreModule/components/custom/header.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {NotificationType} from "armonia/src/modules/core/api/user/private/notifications/notifications.dto.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {ListNotificationsFormType} from "armonia/src/modules/core/api/user/private/notifications/listNotifications.form.type.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import InfiniteList from "@coreModule/components/custom/infiniteList";
 import MarkAllAsReadButton from "@coreModule/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx";

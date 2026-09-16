@@ -14,7 +14,7 @@ import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import { PasswordInput } from '@coreModule/components/custom/passwordInput.tsx';
 import {HTMLAttributes, useEffect, useImperativeHandle, useState} from 'react';
 import {defaultSignInValues} from "@coreModule/helpers/defaultFormValues";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import {LoginFormType} from "armonia/src/modules/core/api/user/public/login/login.form.type.ts";
 import { loginFormSchema } from "armonia/src/modules/core/api/user/public/login/login.form.validator.ts";
@@ -22,7 +22,7 @@ import DisableOTP from "@coreModule/clients/panel/public/auth/login/disableOTP.f
 import {InputOTP, InputOTPGroup, InputOTPSlot} from "@coreModule/components/ui/input-otp.tsx";
 import {LoginFormResponseType, MFAEnabledLoginFormResponseType} from "armonia/src/modules/core/api/user/public/login/login.form.response.type.ts";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {IconKey} from "@tabler/icons-react";
 
 interface SignInFormProps extends HTMLAttributes<HTMLFormElement>, WithLanguageType, WithAxiosType {

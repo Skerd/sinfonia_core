@@ -11,7 +11,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useImperativeHandle, useState} from 'react';
 import {SiTicktick} from "@icons-pack/react-simple-icons";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@coreModule/components/ui/form.tsx';
 import {ForgotPasswordFormType} from "armonia/src/modules/core/api/user/public/forgotPassword/forgotPassword.form.type.ts";
 import {ForgotPasswordFormResponseType} from "armonia/src/modules/core/api/user/public/forgotPassword/forgotPassword.form.response.type.ts";
@@ -20,7 +20,7 @@ import {CardFooter, Card, CardContent, CardDescription, CardHeader, CardTitle} f
 import DontHaveAccountSignUp from "@coreModule/clients/panel/public/auth/shared/dontHaveAccountSignUp.tsx";
 import {forgotPasswordFormSchema} from "armonia/src/modules/core/api/user/public/forgotPassword/forgotPassword.form.validator.ts";
 import {defaultForgotPasswordValues} from "@coreModule/helpers/defaultFormValues";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 
 type ForgotPasswordProps = WithLanguageType & WithAxiosType<ForgotPasswordFormResponseType, ForgotPasswordFormType> & {
     changeView?: Function

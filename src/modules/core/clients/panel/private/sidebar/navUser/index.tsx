@@ -7,11 +7,11 @@ import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {DropdownMenuGroup} from "@coreModule/components/ui/dropdown-menu.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Bell, ChevronsUpDown, LogOut, UserCog, Wrench} from "lucide-react";
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@coreModule/components/ui/sidebar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger}from "@coreModule/components/ui/dropdown-menu.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 
 type LoggedUserProps = WithLanguageType & {}

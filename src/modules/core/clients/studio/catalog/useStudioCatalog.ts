@@ -3,9 +3,9 @@ import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/vi
 import type {
     TableColumnConfig,
 } from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type";
-import {useViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
-import {useTableConfigContext} from "@coreModule/helpers/context/tableConfigContext.tsx";
-import {useAccessMap} from "@coreModule/helpers/context/accessContext.tsx";
+import {useViewConfigContext} from "@baseModule/helpers/hooks/useViewConfigContext.ts";
+import {useTableConfigContext} from "@baseModule/helpers/hooks/useTableConfigContext.ts";
+import {useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";
 import {useStudioDrafts} from "../draft/studioDraftProvider.tsx";
 import {moduleForModel, type StudioModuleId} from "./studioModules.ts";
 import {STUDIO_PREVIEW_KEY_PREFIX} from "../studioTarget.ts";

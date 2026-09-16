@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/helpers/mappers/columnConfigToColumnDef.tsx",
   "deleted": "Fshirë",
-  "active": "Aktiv"
+  "active": "Aktiv",
+  "more": "të tjera",
+  "yes": "Po",
+  "no": "Jo"
 }

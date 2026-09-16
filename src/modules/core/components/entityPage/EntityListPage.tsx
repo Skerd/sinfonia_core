@@ -8,8 +8,9 @@ import {
     quickFilterParamKey,
     readQuickFilterLabelsFromUrl,
     readQuickFiltersFromUrl,
-} from "@baseModule/helpers/useListUrlState.ts";
-import {useAccess, type AccessObject} from "@coreModule/helpers/context/accessContext.tsx";
+} from "@baseModule/helpers/hooks/useListUrlState.ts";
+import {type AccessObject} from "@baseModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import Header from "@coreModule/components/custom/header.tsx";
 import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
@@ -21,10 +22,11 @@ import RestoreAction from "@coreModule/components/custom/actions/restoreAction.t
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
 import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import {useDynamicLanguage} from "@baseModule/helpers/hooks/useDynamicLanguage.ts";
+import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type {DeletedData, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import type {FilterGroup, FilterValue} from "armonia/src/modules/core/database/filter";
-import {generateUUID, type PageTitle} from "@coreModule/helpers/general";
-import {mergeAndFilterDSL} from "@coreModule/helpers/filter/mergeFilterDsl.ts";
+import {generateUUID} from "@baseModule/helpers/general/uuid.ts";
+import {mergeAndFilterDSL} from "@baseModule/helpers/filter/mergeFilterDsl.ts";
 import QuickFilterBar, {
     buildQuickFilterDSL,
     buildQuickFilterExtraParams,
@@ -32,6 +34,7 @@ import QuickFilterBar, {
     type QuickFilterDef,
 } from "@coreModule/components/entityPage/quickFilterBar.tsx";
 import {GRID_TRANSACTIONAL} from "@coreModule/components/custom/cards/entityCard.constants.ts";
+import {PageTitle} from "@baseModule/helpers/types/pageTitle.types.ts";
 
 export type {QuickFilterDef};
 
@@ -138,7 +141,7 @@ export type EntityListPageProps<T extends BaseEntity> = {
     /** Force-hide create affordance even when `createPath` is set. */
     hideCreate?: boolean;
     buildEditPath: (entity: T) => string;
-    resolveLanguageKey: (key: string) => unknown;
+    resolveLanguageKey: ResolveLanguageKey;
     /**
      * Overrides `resolveLanguageKey("title")`. Pass {@link buildPageTitle} when
      * the list is scoped to a parent entity, so those names reach the shell
@@ -500,7 +503,7 @@ export default function EntityListPage<T extends BaseEntity>({
         <div className="min-w-0 flex-full gap-4">
             {!hideHeader && (
             <Header
-                title={headerTitle ?? (resolveLanguageKey("title") as string)}
+                title={headerTitle ?? (resolveLanguageKey("title"))}
                 description={(headerDescription ?? resolveLanguageKey("description")) as string}
                 help={readPageHelp(resolveLanguageKey, helpLanguageKey)}
             >
@@ -511,7 +514,7 @@ export default function EntityListPage<T extends BaseEntity>({
                             !hideCreate && create && createPath &&
                             <Button type="button" onClick={(e) => {navigate(createPath); e.stopPropagation(); e.preventDefault();}}>
                                 {createIcon}
-                                <ButtonTitle>{resolveLanguageKey(createLanguageKey) as string}</ButtonTitle>
+                                <ButtonTitle>{resolveLanguageKey(createLanguageKey)}</ButtonTitle>
                             </Button>
                         }
                     </HiddenElement>
@@ -542,7 +545,7 @@ export default function EntityListPage<T extends BaseEntity>({
                     }
                     tableConfigOptions={{
                         filterConfig: {
-                            placeholder: resolveLanguageKey("searchPlaceholder") as string,
+                            placeholder: resolveLanguageKey("searchPlaceholder"),
                             fields: resolveLanguageKey("fields"),
                         },
                     }}

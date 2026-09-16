@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {useImperativeHandle, useEffect} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {EnableMfaFormType} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.type.ts";
 import {GenerateMfaQrCodeFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/generateMfaQrCode.form.response.type.ts";
 import {useForm} from "react-hook-form";
@@ -13,11 +13,11 @@ import {Input} from "@coreModule/components/ui/input.tsx";
 import {Check, X} from "lucide-react";
 import {enableMfaFormSchema} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.validator.ts";
 import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {EnableMfaFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.response.type.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type AccountSecurityEnableOtpFormProps = WithLanguageType & WithAxiosType<EnableMfaFormResponseType, EnableMfaFormType> & {
@@ -32,6 +32,7 @@ function AccountSecurityEnableOtpForm({
     onSuccess,
     onCancel,
     resolveLanguageKey,
+    resolveLanguageValue,
     innerRef,
     languageCode,
     onFilterChange,
@@ -85,7 +86,7 @@ function AccountSecurityEnableOtpForm({
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
                 <div>
                     {
-                        Object.values(resolveLanguageKey("steps") || {})?.map((step: string, index: number) => {
+                        Object.values(resolveLanguageValue("steps") ?? {}).map((step: string, index) => {
                             let showThis = step;
                             if (showThis.indexOf("!!!") > 0) {
                                 showThis = showThis.replace("!!!", "Tick")

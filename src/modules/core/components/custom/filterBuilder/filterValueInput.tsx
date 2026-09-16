@@ -8,7 +8,7 @@ import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterFieldConfig, FilterOperator, FilterValue } from "armonia/src/modules/core/database/filter";
 import { COLUMN_TYPE, isDateColumnType, isNumberColumnType } from "armonia/src/modules/core/database/filter/typeOperators";
 import { compose } from "redux";
-import withLanguage, { TranslationValue, WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, { TranslationValue, WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import { findFromLanguage } from "@coreModule/helpers/general";
 import { useFilterBuilder } from "./filterBuilderContext.tsx";
 

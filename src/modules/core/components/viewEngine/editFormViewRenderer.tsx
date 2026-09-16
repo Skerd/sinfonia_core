@@ -2,7 +2,7 @@ import { type ReactNode, useEffect, useImperativeHandle, useRef } from "react";
 import { useForm, type Resolver, type FieldValues, type UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { ViewConfig, ViewNode, FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type { WithAxiosLifecycleRef } from "@baseModule/helpers/hocs/withAxios.tsx";
 import type { RefObject } from "react";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";

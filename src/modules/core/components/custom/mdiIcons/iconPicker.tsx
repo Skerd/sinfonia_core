@@ -6,7 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@coreModule/components/
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from "@coreModule/components/ui/command.tsx";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { compose } from "redux";
-import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, { WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 import {
   mdiHome,
@@ -202,14 +202,14 @@ function IconPickerBase({
   const [searchText, setSearchText] = useState("");
 
   const placeholder =
-    (resolveLanguageKey("placeholder", true) as string | null) ??
+    (resolveLanguageKey("placeholder", true)) ??
     placeholderProp ??
     "Select an icon...";
   const searchPlaceholder =
-    (resolveLanguageKey("searchPlaceholder", true) as string | null) ??
+    (resolveLanguageKey("searchPlaceholder", true)) ??
     "Search icons...";
   const emptyMessage =
-    (resolveLanguageKey("emptyMessage", true) as string | null) ?? "No icon found.";
+    (resolveLanguageKey("emptyMessage", true)) ?? "No icon found.";
 
   const getLabel = useCallback(
     (iconName: string): string => {
@@ -246,7 +246,7 @@ function IconPickerBase({
 
   const displayLabel = selectedIcon ? getLabel(selectedIcon.name) : null;
   const ariaLabel =
-    (resolveLanguageKey("placeholder", true) as string | null) ?? placeholder;
+    (resolveLanguageKey("placeholder", true)) ?? placeholder;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

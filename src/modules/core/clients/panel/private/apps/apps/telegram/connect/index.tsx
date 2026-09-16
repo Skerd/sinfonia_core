@@ -1,14 +1,14 @@
 import {compose} from "redux";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import {
     GenerateTelegramQrCodeFormResponseType
@@ -26,6 +26,7 @@ function ConnectTelegram({
     onSuccess,
     data,
     resolveLanguageKey,
+    resolveLanguageValue,
     loading,
     error,
     onFilterChange,
@@ -68,7 +69,7 @@ function ConnectTelegram({
         <div className="flex flex-col gap-y-2">
             <div>
                 {
-                    Object.values(resolveLanguageKey("steps") || {})?.map((step: string, index: number) => {
+                    Object.values(resolveLanguageValue("steps") ?? {}).map((step: string, index) => {
                         return (
                             <div className="flex gap-x-1 text-sm text-muted-foreground">
                                 <p>{index + 1}.</p>

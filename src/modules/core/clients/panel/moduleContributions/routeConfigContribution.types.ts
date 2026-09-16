@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 /** Same inputs as {@link renderCenterPanelContent}; shared with per-module route contributions. */
 export type RouteConfigArgs = {

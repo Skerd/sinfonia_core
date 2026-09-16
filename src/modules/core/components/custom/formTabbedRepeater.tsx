@@ -1,6 +1,6 @@
 import { useFormContext, useWatch } from "react-hook-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@coreModule/components/ui/tabs.tsx";
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type { ViewNode } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import FormRepeater, { type RowCascade } from "./formRepeater.tsx";
 

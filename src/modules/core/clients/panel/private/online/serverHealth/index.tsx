@@ -3,10 +3,10 @@ import {useSelector, useDispatch} from "react-redux";
 import {compose} from "redux";
 import {CheckCircle, AlertCircle} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {clientWebSocket} from "@coreModule/helpers/context/webSocketContext.tsx";
+import {useWebSocketRoom} from "@coreModule/helpers/websocket/useWebSocketRoom.ts";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import MongoResource from "@coreModule/clients/panel/private/online/serverHealth/mongo.tsx";
 import RedisResource from "@coreModule/clients/panel/private/online/serverHealth/redis.tsx";
 import WebsocketResource from "@coreModule/clients/panel/private/online/serverHealth/websocket.tsx";
@@ -18,7 +18,7 @@ import CronResource from "@coreModule/clients/panel/private/online/serverHealth/
 import ApiResource from "@coreModule/clients/panel/private/online/serverHealth/api.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {ServerHealthFormResponseType} from "armonia/src/modules/core/api/auxiliary/private/serverHealth/serverHealth.dto.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import {updateServerHealth} from "@coreModule/helpers/redux/slices/serverResourceSlice.ts";
@@ -36,7 +36,6 @@ function ServerHealth({
 
     const dispatch = useDispatch();
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
-    const webSocketConnected = useSelector((state: RootState) => state.ui.webSocketConnected);
     const health = useSelector((state: RootState) => state.serverResources.serverHealth);
     const [forceReload, setForceReload] = useState<number>(1);
 
@@ -47,16 +46,7 @@ function ServerHealth({
         }
     }, [data]);
 
-    useEffect(() => {
-        if( !!webSocketConnected && clientWebSocket?.readyState === 1 ){
-            clientWebSocket.send(JSON.stringify({code: "JOIN_ROOM", payload: ["serverHealth"] }));
-        }
-        return () => {
-            if( !!webSocketConnected && clientWebSocket?.readyState === 1 ){
-                clientWebSocket.send(JSON.stringify({code: "LEAVE_ROOM", payload: ["serverHealth"] }));
-            }
-        }
-    }, [webSocketConnected]);
+    useWebSocketRoom("serverHealth");
 
     useEffect(() => {
         onFilterChange({});

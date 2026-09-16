@@ -6,7 +6,7 @@ import { Button } from '@coreModule/components/ui/button.tsx'
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@coreModule/components/ui/form.tsx'
 import { Input } from '@coreModule/components/ui/input.tsx'
 import { Textarea } from '@coreModule/components/ui/textarea.tsx'
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {useImperativeHandle} from "react";
 import {ApiSelect} from "@coreModule/components/custom/apiSelect";
@@ -14,8 +14,8 @@ import {defaultInviteUserValues} from "@coreModule/helpers/defaultFormValues";
 import {newUserCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
 import {useDispatch} from "react-redux";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import type {ActionMessage} from "armonia/src/modules/core/types/shared.types.ts";
 import {InviteUserFormType} from "armonia/src/modules/core/api/company/private/users/inviteUser.form.type.ts";

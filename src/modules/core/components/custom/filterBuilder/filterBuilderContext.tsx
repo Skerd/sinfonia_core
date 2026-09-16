@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { FilterFieldConfig } from "armonia/src/modules/core/database/filter";
-import type { FilterRefLabels } from "@coreModule/helpers/filter/filterUrl.ts";
+import type { FilterRefLabels } from "@baseModule/helpers/filter/filterUrl.ts";
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 type FilterBuilderContextValue = {
     fields: FilterFieldConfig[];

@@ -3,7 +3,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import { SimpleSelect } from "@coreModule/components/custom/simpleSelect";
 import type { FilterRule as FilterRuleType, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import {compose} from "redux";
-import withLanguage, {TranslationValue, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {TranslationValue, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {findFromLanguage} from "@coreModule/helpers/general";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";

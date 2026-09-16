@@ -1,7 +1,8 @@
 import {useCallback} from "react";
 import type {FilterFieldConfig} from "armonia/src/modules/core/database/filter/fieldRegistry.types.ts";
 import type {TableColumnConfig} from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type.ts";
-import {type CachedTableConfig, useTableConfigContext} from "@coreModule/helpers/context/tableConfigContext.tsx";
+import {type CachedTableConfig} from "@baseModule/helpers/context/tableConfigContext.tsx";
+import {useTableConfigContext} from "@baseModule/helpers/hooks/useTableConfigContext.ts";
 
 export type UseTableConfigResult = {
     filters: FilterFieldConfig[];

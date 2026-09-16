@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import DeletedTooltip from "@coreModule/components/custom/deletedTooltip.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";

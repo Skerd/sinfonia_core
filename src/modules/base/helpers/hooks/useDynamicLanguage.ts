@@ -1,8 +1,6 @@
 import {useCallback, useMemo} from "react";
-import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import useSelectedLanguage, {type LanguageDictionary} from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
-import {type ResolveLanguageKey, resolveTranslationKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {type ResolveLanguageKey, type ResolveLanguageValue, resolveTranslationKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 export type UseDynamicLanguageResult<TLanguage extends LanguageDictionary = LanguageDictionary> = {
     languageCode: string;
@@ -12,6 +10,8 @@ export type UseDynamicLanguageResult<TLanguage extends LanguageDictionary = Lang
     loading: boolean;
     /** Same contract as `withLanguage`'s `resolveLanguageKey`. Stable until the dictionary changes. */
     resolveLanguageKey: ResolveLanguageKey;
+    /** Same contract as `withLanguage`'s `resolveLanguageValue`, for keys holding an object or array. */
+    resolveLanguageValue: ResolveLanguageValue;
 };
 
 /**
@@ -24,16 +24,22 @@ export type UseDynamicLanguageResult<TLanguage extends LanguageDictionary = Lang
 export function useDynamicLanguage<TLanguage extends LanguageDictionary = LanguageDictionary>(
     languagePath: string,
 ): UseDynamicLanguageResult<TLanguage> {
-    const languageCode = useSelector((state: RootState) => state.language.languageCode);
-    const {currentLanguage, loading} = useSelectedLanguage<TLanguage>(languagePath.replaceAll("/", "_"), languagePath);
+    const {currentLanguage, languageCode, loading} = useSelectedLanguage<TLanguage>(languagePath);
+    const pending = loading && currentLanguage === null;
 
     const resolveLanguageKey: ResolveLanguageKey = useCallback(
-        (key, returnUndefinedIfNeeded = false) => resolveTranslationKey(currentLanguage, key, returnUndefinedIfNeeded),
+        (key: string, returnUndefinedIfNeeded: boolean = false) =>
+            resolveTranslationKey(currentLanguage, key, returnUndefinedIfNeeded, pending),
+        [currentLanguage, pending],
+    );
+
+    const resolveLanguageValue: ResolveLanguageValue = useCallback(
+        (key) => resolveTranslationKey(currentLanguage, key, true),
         [currentLanguage],
     );
 
     return useMemo(
-        () => ({languageCode, currentLanguage, loading, resolveLanguageKey}),
-        [languageCode, currentLanguage, loading, resolveLanguageKey],
+        () => ({languageCode, currentLanguage, loading, resolveLanguageKey, resolveLanguageValue}),
+        [languageCode, currentLanguage, loading, resolveLanguageKey, resolveLanguageValue],
     );
 }

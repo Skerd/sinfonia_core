@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import PasswordStrengthBar from "react-password-strength-bar";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 type PasswordStrengthProps = WithLanguageType & {
     password: string
@@ -8,7 +8,8 @@ type PasswordStrengthProps = WithLanguageType & {
 
 function PasswordStrength({
     password,
-    resolveLanguageKey
+    resolveLanguageKey,
+    resolveLanguageValue
 }: PasswordStrengthProps){
 
     return (
@@ -17,7 +18,7 @@ function PasswordStrength({
             password={password}
             minLength={8}
             shortScoreWord={resolveLanguageKey("passwordTooShort")}
-            scoreWords={resolveLanguageKey("passwordStages")}
+            scoreWords={resolveLanguageValue<string[]>("passwordStages") ?? undefined}
         />
     )
 }

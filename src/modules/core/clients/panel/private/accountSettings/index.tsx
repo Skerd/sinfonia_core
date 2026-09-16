@@ -1,13 +1,13 @@
 import { UserCog, Wrench } from 'lucide-react'
 import { SidebarNav } from './components/sidebar-nav.tsx'
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useParams} from "react-router-dom";
 import Account from "@coreModule/clients/panel/private/accountSettings/account";
 import Security from "@coreModule/clients/panel/private/accountSettings/security";
 import NotificationsForm from "@coreModule/clients/panel/private/accountSettings/notifications";
 import {useEffect, useState} from "react";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
 
 type AccountSettingsProps = WithLanguageType & {

@@ -2,7 +2,7 @@ import {useState, useEffect, useImperativeHandle} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {compose} from "redux";
-import withLanguage, {ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription} from "@coreModule/components/ui/dialog.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
@@ -10,7 +10,7 @@ import {newMessage, setActionMessage} from "@coreModule/helpers/redux/slices/cha
 import {Forward} from "lucide-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import InfiniteList from "@coreModule/components/custom/infiniteList";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
@@ -18,7 +18,7 @@ import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/
 import {AllChannelsFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannels.form.response.type.ts";
 import {AllChannelsFormType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannels.form.type.ts";
 import {ForwardMessageFormResponseType, MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {ForwardMessageFormType} from "armonia/src/modules/core/api/user/private/chats/messages/forwardMessage.form.type.ts";
 
 type ChannelsInfiniteListProps = WithAxiosType<AllChannelsFormResponseType, AllChannelsFormType> & {

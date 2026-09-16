@@ -12,13 +12,13 @@ import {
 } from "@coreModule/components/ui/alert-dialog.tsx";
 import { LoaderCircle } from "lucide-react";
 import withAxios, { WithAxiosType } from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, { WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import { RootState } from "@coreModule/helpers/redux/store/generalStore.ts";
 import { MarkNotificationsReadFormType } from "armonia/src/modules/core/api/user/private/notifications/markNotificationsRead.form.type.ts";
 import { MarkNotificationsReadFormResponseType } from "armonia/src/modules/core/api/user/private/notifications/markNotificationsRead.form.response.type.ts";
 import { compose } from "redux";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {
     markCachedNotificationsRead,
     setNotificationNumber

@@ -51,6 +51,9 @@ export type SetChannelsPayload = AllChannelsFormResponseType & {
  */
 export interface ChatState {
 
+    /** Tenant this slice is scoped to; null until first panel badge hydrate / reset. */
+    companyId: string | null,
+
     activeChannelId: string | null,
     channels: Record<string, Channel>,
     channelsOrderIds: string[],
@@ -76,6 +79,8 @@ export interface ChatState {
 }
 
 const initialState: ChatState = {
+
+    companyId: null,
 
     activeChannelId: null,
 
@@ -354,6 +359,14 @@ export const chatSlice = createSlice({
                 state.channels[id] = inboxBadgeStubChannel(id, row.unread, row.isPublicChat, row.publicChatStatus);
             }
         },
+        /**
+         * Full wipe scoped to a company.
+         * Company switch keeps tokens via `logIn` and does not run root `signOut`, so chat must be cleared explicitly.
+         */
+        resetChat: (_state, action: PayloadAction<string>) => ({
+            ...initialState,
+            companyId: action.payload,
+        }),
         setWaitingCount: (state, action: PayloadAction<number>) => {
             state.waitingCount = Math.max(0, action.payload);
         },
@@ -592,6 +605,7 @@ export const {
     deleteChannel,
     setChannels,
     hydrateInboxBadges,
+    resetChat,
     appendChannels,
     updateChannelReadOnlyState,
     setWaitingCount,

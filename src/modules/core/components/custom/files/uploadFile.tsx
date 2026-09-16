@@ -11,7 +11,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@coreModule/components/ui/form.tsx";
-import withLanguage, { type WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, { type WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import { compose } from "redux";
 import { toast } from "sonner";
 import { Avatar, AvatarImage } from "@coreModule/components/ui/avatar.tsx";

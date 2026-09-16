@@ -1,4 +1,4 @@
-import {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type {ReactNode} from "react";
 import {useEffect, useState} from "react";
 import {IconChevronDown} from "@tabler/icons-react";

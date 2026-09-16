@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {compose} from "redux";
-import {clientWebSocket} from "@coreModule/helpers/context/webSocketContext.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {useWebSocketRoom} from "@coreModule/helpers/websocket/useWebSocketRoom.ts";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import EndpointPerformance from "@coreModule/clients/panel/private/online/serverStats/endpointPerformance.tsx";
 import UserActivity from "@coreModule/clients/panel/private/online/serverStats/userActivity.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
@@ -10,9 +10,7 @@ import {ServerStatsDto} from "armonia/src/modules/core/api/auxiliary/private/ser
 import {updateServerStats} from "@coreModule/helpers/redux/slices/serverResourceSlice.ts";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
-import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 
 type ServerStatsProps = WithLanguageType & WithAxiosType<ServerStatsDto> & {}
 
@@ -24,7 +22,6 @@ function ServerStats({
     onFilterChange
 }: ServerStatsProps) {
     const dispatch = useDispatch();
-    const webSocketConnected = useSelector((state: RootState) => state.ui.webSocketConnected);
     const [forceReload, setForceReload] = useState<number>(1);
 
     // Update Redux when API data is received
@@ -34,16 +31,7 @@ function ServerStats({
         }
     }, [data]);
 
-    useEffect(() => {
-        if( !!webSocketConnected && clientWebSocket?.readyState === 1 ){
-            clientWebSocket.send(JSON.stringify({code: "JOIN_ROOM", payload: ["serverStats"] }));
-        }
-        return () => {
-            if( !!webSocketConnected && clientWebSocket?.readyState === 1 ){
-                clientWebSocket.send(JSON.stringify({code: "LEAVE_ROOM", payload: ["serverStats"] }));
-            }
-        }
-    }, [webSocketConnected]);
+    useWebSocketRoom("serverStats");
 
     useEffect(() => {
         onFilterChange({});

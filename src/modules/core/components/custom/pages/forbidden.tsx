@@ -1,7 +1,7 @@
 import { compose } from "redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@coreModule/components/ui/button.tsx";
-import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, { WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 type ForbiddenProps = WithLanguageType;
 

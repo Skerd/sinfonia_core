@@ -222,17 +222,14 @@ function stateFor(
  * Already-loaded dictionaries are returned on the first render (no placeholder flash), and a
  * language switch keeps the previous dictionary until the new one is ready.
  *
- * @param where - Component cache key (underscores for slashes, e.g. from `path.replaceAll("/", "_")`).
- * @param initiator - Preferred: `src/modules/<module>/.../*.tsx` source path; drives JSON lookup. If empty, `where` becomes the path (with `_` restored to `/`).
- * @returns Loading/error flags with the currently resolved translation dictionary.
+ * @param componentPath - `src/modules/<module>/.../*.tsx` source path that drives the JSON lookup. Empty loads nothing.
+ * @returns The active language code, loading/error flags and the currently resolved translation dictionary.
  */
 export default function useSelectedLanguage<TLanguage extends LanguageDictionary = LanguageDictionary>(
-    where: string,
-    initiator: string = ''
+    componentPath: string,
 ) {
     const languageCode = useSelector((state: RootState) => state.language.languageCode)
-    const componentPath = initiator || where.replace(/_/g, '/')
-    const requestKey = languageCode && where ? `${componentPath}|${languageCode}` : ''
+    const requestKey = languageCode && componentPath ? `${componentPath}|${languageCode}` : ''
 
     const [state, setState] = useState<SelectedLanguageState>(() => stateFor(requestKey, componentPath, languageCode))
 
@@ -262,6 +259,7 @@ export default function useSelectedLanguage<TLanguage extends LanguageDictionary
     }, [requestKey, componentPath, languageCode])
 
     return {
+        languageCode,
         loading: current.loading,
         error: current.error,
         errorDescription: current.error ? `${messages['failedToLoadComponentLanguage']}'${componentPath}'` : '',

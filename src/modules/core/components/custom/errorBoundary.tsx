@@ -20,10 +20,7 @@ function getTranslation(lang: LanguageDictionary | null, key: string): string | 
 }
 
 function ErrorBoundaryFallback({onRetry, onGoHome, title: titleOverride, description: descriptionOverride}: ErrorBoundaryFallbackProps) {
-    const {currentLanguage} = useSelectedLanguage<LanguageDictionary>(
-        LANGUAGE_PATH.replace(/\//g, "_"),
-        LANGUAGE_PATH
-    );
+    const {currentLanguage} = useSelectedLanguage<LanguageDictionary>(LANGUAGE_PATH);
 
     const title = titleOverride ?? getTranslation(currentLanguage ?? null, "title") ?? "Something went wrong";
     const description = descriptionOverride ?? getTranslation(currentLanguage ?? null, "description") ?? "An unexpected error occurred while rendering this page.";

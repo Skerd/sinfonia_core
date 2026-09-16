@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/helpers/mappers/columnConfigToColumnDef.tsx",
   "deleted": "Deleted",
-  "active": "Active"
+  "active": "Active",
+  "more": "more",
+  "yes": "Yes",
+  "no": "No"
 }

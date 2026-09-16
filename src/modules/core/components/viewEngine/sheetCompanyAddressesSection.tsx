@@ -3,7 +3,7 @@ import {
     isValidElement,
     type ComponentType,
 } from "react";
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import DisplayCard, {type DisplayCardLinkedSheetOuterProps} from "@coreModule/components/custom/displayValue/displayCard.tsx";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import SheetLocationMap from "@coreModule/components/custom/addresses/sheetLocationMap.tsx";

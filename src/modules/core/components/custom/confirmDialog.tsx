@@ -3,7 +3,7 @@ import {LoaderCircle} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Button} from '@coreModule/components/ui/button.tsx';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle} from '@coreModule/components/ui/alert-dialog.tsx';
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 
 type ConfirmDialogProps = WithLanguageType & {

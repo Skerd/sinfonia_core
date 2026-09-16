@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {formatDate, isSameDay} from "@coreModule/helpers/general";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {useEffect, useState} from "react";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 type CustomDateDisplayerProps = WithLanguageType & {
     timeZone: string,

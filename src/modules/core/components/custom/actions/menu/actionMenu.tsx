@@ -1,11 +1,11 @@
 import {compose} from "redux";
 import {ReactNode, useEffect, useLayoutEffect, useRef, useState} from "react";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {EllipsisVertical} from "lucide-react";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import DeleteDropdown from "@coreModule/components/custom/actions/dropdowns/deleteDropdown.tsx";
 import RestoreDropdown from "@coreModule/components/custom/actions/dropdowns/restoreDropdown.tsx";
 import EditDropdown from "@coreModule/components/custom/actions/dropdowns/editDropdown.tsx";

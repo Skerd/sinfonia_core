@@ -11,7 +11,7 @@ import useHttpRequest, {
     HttpRequestRuntimeProps,
     RequestPayload
 } from "@baseModule/helpers/hooks/useHttpRequest.ts";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 
 const config = getClientConfig();

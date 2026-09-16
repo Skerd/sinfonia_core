@@ -4,7 +4,7 @@ import {Countdown} from "@coreModule/components/custom/countdown.tsx";
 import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/alert.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {useState} from "react";
-import type {ResolveLanguageKey, TranslationValue} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type {ResolveLanguageKey, TranslationValue} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 export type ErrorViewProps = {
     title: TranslationValue,

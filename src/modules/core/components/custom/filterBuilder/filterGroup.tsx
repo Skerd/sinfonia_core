@@ -4,12 +4,13 @@ import FilterRuleComponent from "./filterRule.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterGroup as FilterGroupType, FilterFieldConfig, FilterRule } from "armonia/src/modules/core/database/filter";
 import {compose} from "redux";
-import withLanguage, {TranslationValue, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {TranslationValue, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 
 const MAX_DEPTH = 5;
 
-type FilterGroupProps = WithLanguageType & {
+/* Only the resolver is used here; the recursive render has no dictionary of its own to pass on. */
+type FilterGroupProps = Pick<WithLanguageType, "resolveLanguageKey"> & {
     group: FilterGroupType;
     parentId: string | null;
     depth: number;
@@ -149,8 +150,6 @@ export function FilterGroup({
                         onRemoveGroup={onRemoveGroup}
                         onUpdateGroupOperator={onUpdateGroupOperator}
                         resolveLanguageKey={resolveLanguageKey}
-                        currentLanguage={null}
-                        languageCode={""}
                         fieldsLanguage={fieldsLanguage}
                     />
                 ))}

@@ -1,8 +1,8 @@
 import {compose} from "redux";
 import {useEffect, useState} from "react";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import { manipulateDate } from "@coreModule/helpers/general";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import {formatDate} from "@coreModule/helpers/general";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import AccountProfileEmail from "@coreModule/clients/panel/private/accountSettings/account/userInfo/email";
 import AccountProfileName from "@coreModule/clients/panel/private/accountSettings/account/userInfo/name";
@@ -10,11 +10,11 @@ import AccountProfileSurname from "@coreModule/clients/panel/private/accountSett
 import AccountProfilePhoneNumber from "@coreModule/clients/panel/private/accountSettings/account/userInfo/phoneNumber";
 import AccountProfileAndCoverPhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto";
 import AccountProfileTimeZone from "@coreModule/clients/panel/private/accountSettings/account/userInfo/timezone";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import AccountCompaniesCardEditRoles from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles";
 import {RequestsSection, hasRequestsData} from "@coreModule/clients/panel/private/users/center/cardView/userProfileCard.tsx";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
@@ -115,7 +115,7 @@ function UserAccountProfileUserInfo({
                         <>
                             {
                                 !!data?.registerDate &&
-                                <Badge>{resolveLanguageKey("registeredDate")}{manipulateDate(data?.registerDate.toString(), currentTimeZone)}</Badge>
+                                <Badge>{resolveLanguageKey("registeredDate")}{formatDate(data.registerDate, {timeZone: currentTimeZone})}</Badge>
                             }
                         </>
                         :

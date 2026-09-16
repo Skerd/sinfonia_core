@@ -9,7 +9,7 @@ import {
 } from "react";
 import { format, isValid } from "date-fns";
 import type { ViewNode, FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import { Badge } from "@coreModule/components/ui/badge.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import { MdiIcon } from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
@@ -763,10 +763,28 @@ function renderSheetField(
     }
 
     if (binding.widget === "#GalleryCarousel") {
-        let mainImage = data ? resolvePath(data, binding.name) : null;
+        /*
+         * Same per-path gate as `#SheetMediaFilesStrip`: only bind media the account
+         * may read. The old `ctx.access[field]` lookup missed nested maps and still
+         * rendered every gallery field once any one key was present.
+         */
+        const imageField =
+            typeof wp.imageGalleryField === "string" && wp.imageGalleryField.length > 0
+                ? wp.imageGalleryField
+                : undefined;
+        const videoField =
+            typeof wp.videoGalleryField === "string" && wp.videoGalleryField.length > 0
+                ? wp.videoGalleryField
+                : undefined;
+        const canMain = !ctx.access || hasAccessPath(ctx.access, binding.name);
+        const canImages = !!imageField && (!ctx.access || hasAccessPath(ctx.access, imageField));
+        const canVideos = !!videoField && (!ctx.access || hasAccessPath(ctx.access, videoField));
+        if (!canMain && !canImages && !canVideos) return null;
+
+        let mainImage = canMain && data ? resolvePath(data, binding.name) : null;
         let imageGallery: unknown[] = [];
-        if (typeof wp.imageGalleryField === "string" && wp.imageGalleryField.length > 0 && data) {
-            const g = resolvePath(data, wp.imageGalleryField);
+        if (canImages && imageField && data) {
+            const g = resolvePath(data, imageField);
             imageGallery = Array.isArray(g) ? g : [];
         }
         if (Array.isArray(mainImage)) {
@@ -774,17 +792,10 @@ function renderSheetField(
             mainImage = null;
         }
         let videoGallery: unknown[] = [];
-        if (data && typeof wp.videoGalleryField === "string" && wp.videoGalleryField.length > 0) {
-            const v = resolvePath(data, wp.videoGalleryField);
+        if (canVideos && videoField && data) {
+            const v = resolvePath(data, videoField);
             videoGallery = Array.isArray(v) ? v : [];
         }
-
-        const hasAccess = !ctx.access || (
-            ctx.access[binding.name] ||
-            (wp.imageGalleryField && ctx.access[wp.imageGalleryField]) ||
-            (wp.videoGalleryField && ctx.access[wp.videoGalleryField])
-        );
-        if (!hasAccess) return null;
 
         const galleryLabel =
             typeof binding.label === "string" && binding.label.length > 0

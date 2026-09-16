@@ -1,11 +1,11 @@
 import {compose} from "redux";
 import {useEffect, useState, type ReactNode} from "react";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {toast} from "sonner";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
@@ -39,7 +39,7 @@ type GenericEditPageConfig<TDto, TForm extends FieldValues> = {
         helpers: {
             writeFields: Record<string, unknown>;
             params: URLSearchParams;
-            resolveLanguageKey: (key: string) => unknown;
+            resolveLanguageKey: ResolveLanguageKey;
         },
     ) => string | null;
     /** Runs after PATCH succeeds, before navigating back (`EditFormViewRenderer` success pipeline). */
@@ -55,7 +55,7 @@ type GenericEditPageConfig<TDto, TForm extends FieldValues> = {
         entity: TDto | null,
         helpers: {
             writeFields: Record<string, unknown>;
-            resolveLanguageKey: (key: string) => unknown;
+            resolveLanguageKey: ResolveLanguageKey;
             loading: boolean;
         },
     ) => ReactNode;

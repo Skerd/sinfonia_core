@@ -3,8 +3,8 @@ import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcu
 import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
-import {useRelogin} from "@coreModule/helpers/context/reloginContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import {useRelogin} from "@baseModule/helpers/hooks/useRelogin.ts";
 
 type SmallCompanyWithReLoginProps = {
     company: BasicCompanyInfoFormResponseType,

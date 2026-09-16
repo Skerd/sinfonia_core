@@ -3,7 +3,7 @@ import {
     getReferencesDefaultItemProp,
     resolveWidget,
 } from "@coreModule/components/viewEngine/widgetRegistry.ts";
-import {AccessAllowAllProvider} from "@coreModule/helpers/context/accessContext.tsx";
+import {AccessAllowAllProvider} from "@baseModule/helpers/context/accessContext.tsx";
 import {entityPropName, galleryCardExtraProps, galleryEntityStub} from "./galleryEntity.ts";
 
 type GalleryEntityMountProps = {

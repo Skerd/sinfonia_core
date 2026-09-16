@@ -11,7 +11,7 @@ import {
     ItemTitle,
 } from "@coreModule/components/ui/item.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {IconInfoCircle, IconLink} from "@tabler/icons-react";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";

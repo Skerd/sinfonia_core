@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -14,8 +14,8 @@ import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
 import {getName} from "@coreModule/helpers/general";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 
 type ChatMemberProps = WithLanguageType & {
     member: ChannelUser,

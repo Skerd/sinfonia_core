@@ -7,7 +7,8 @@ import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
 import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {IconPhoto} from "@tabler/icons-react";
-import {accessFieldPathExists, useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import SheetMediaFilesStrip from "@coreModule/components/viewEngine/sheetMediaFilesStrip.tsx";
 import type {Media} from "armonia/src/modules/core/types";
 import {useAccessFieldsRead} from "./accessFields.tsx";
@@ -16,9 +17,9 @@ import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 import {
     LanguageResolveContext,
-    type ResolveLanguageKey,
+    type ResolveLanguageKey, type ResolveLanguageKeyImpl,
     type TranslationValue,
-} from "@coreModule/helpers/hocs/withLanguage.tsx";
+} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 export type DisplayValueType =
     | "string"
@@ -480,13 +481,10 @@ function DisplayValue({
     className,
 }: DisplayValueProps) {
     const parentResolveLanguageKey = useContext(LanguageResolveContext);
-    const {currentLanguage} = useSelectedLanguage(
-        DISPLAY_VALUE_LANG_PATH.replaceAll("/", "_"),
-        DISPLAY_VALUE_LANG_PATH,
-    );
+    const {currentLanguage} = useSelectedLanguage(DISPLAY_VALUE_LANG_PATH);
     const keyPathCache = useRef<Map<string, string[]>>(new Map());
 
-    const resolveOwnLanguageKey: ResolveLanguageKey = useCallback((key, returnUndefinedIfNeeded = false) => {
+    const resolveOwnLanguageKey: ResolveLanguageKey = useCallback((key: string, returnUndefinedIfNeeded: boolean = false) => {
         try {
             let cached = keyPathCache.current.get(key);
             if (!cached) {
@@ -518,7 +516,7 @@ function DisplayValue({
     /**
      * Prefer the nearest card/sheet dictionary for enums; keep this file for yes/no only.
      */
-    const resolveLanguageKey: ResolveLanguageKey = useCallback((key, returnUndefinedIfNeeded = false) => {
+    const resolveLanguageKey: ResolveLanguageKeyImpl = useCallback((key: string, returnUndefinedIfNeeded: boolean = false) => {
         if (parentResolveLanguageKey) {
             const fromParent = parentResolveLanguageKey(key, true);
             if (fromParent != null && fromParent !== "") {

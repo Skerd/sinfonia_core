@@ -1,4 +1,4 @@
-import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type {ViewNode, FieldBinding} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ReactNode} from "react";
 

@@ -19,7 +19,7 @@ import apiClient from '@baseModule/helpers/apiClient/apiClient.ts';
 import {handleError, isAbortError} from '@baseModule/helpers/general/errors.ts';
 import LoadMoreSentinel from '@coreModule/components/custom/loadMoreSentinel.tsx';
 import {Spinner} from "@coreModule/components/ui/spinner.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {CheckIcon, PlusCircledIcon} from "@radix-ui/react-icons";
 import SelectOptionLabel from "@coreModule/components/custom/selectOptionLabel.tsx";
@@ -28,13 +28,13 @@ import {
     type RefSelectCreateFromSearch,
 } from "armonia/src/modules/core/database/filter/refSelectRegistry";
 import type {FilterGroup, FilterRule} from "armonia/src/modules/core/database/filter";
-import {generateUUID} from "@coreModule/helpers/general";
+import {generateUUID} from "@baseModule/helpers/general/uuid.ts";
 import {
     API_SELECT_CREATE_ADAPTERS,
     API_SELECT_CREATE_ADAPTER_BY_API_URL,
     API_SELECT_INLINE_CREATE_FALLBACK_LABEL_KEY_BY_API_URL,
 } from "@coreModule/components/custom/apiSelect/createFromSearchRegistry.ts";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 

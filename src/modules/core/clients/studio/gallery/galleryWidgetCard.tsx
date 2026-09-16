@@ -1,4 +1,4 @@
-import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Card, CardContent, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {getWidgetMeta} from "@coreModule/components/viewEngine/widgetRegistry.ts";

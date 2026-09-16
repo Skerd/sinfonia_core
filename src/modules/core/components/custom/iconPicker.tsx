@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import Icon from "@mdi/react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { compose } from "redux";
-import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, { WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 // Common MDI icons for unit types - you can expand this list
 import {
@@ -177,14 +177,14 @@ function IconPickerBase({
   const [searchText, setSearchText] = useState("");
 
   const placeholder =
-    (resolveLanguageKey("placeholder", true) as string | null) ??
+    (resolveLanguageKey("placeholder", true)) ??
     placeholderProp ??
     "Select an icon...";
   const searchPlaceholder =
-    (resolveLanguageKey("searchPlaceholder", true) as string | null) ??
+    (resolveLanguageKey("searchPlaceholder", true)) ??
     "Search icons...";
   const emptyMessage =
-    (resolveLanguageKey("emptyMessage", true) as string | null) ??
+    (resolveLanguageKey("emptyMessage", true)) ??
     "No icon found.";
 
   const getIconLabel = useCallback(

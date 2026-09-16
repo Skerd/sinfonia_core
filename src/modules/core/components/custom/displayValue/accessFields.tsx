@@ -1,5 +1,5 @@
 import {createContext, useContext, type ReactNode} from "react";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 
 type AccessFieldsContextValue = {
     read: unknown;

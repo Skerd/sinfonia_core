@@ -1,7 +1,7 @@
 import {compose} from "redux";
 import {useEffect, useState} from "react";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
@@ -9,11 +9,11 @@ import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, Form
 import {updatePhoneNumberFormSchema} from "armonia/src/modules/core/api/user/private/data/updatePhoneNumber.form.validator.ts";
 import {PhoneInput} from "@coreModule/components/ui/phone-input.tsx";
 import {PhoneNumberFormResponseType} from "armonia/src/modules/core/api/user/private/data/phoneNumber.form.response.type.ts";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import UpdatePhoneNumber from "@coreModule/clients/panel/private/accountSettings/account/userInfo/phoneNumber/updatePhoneNumber.tsx";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type AccountProfilePhoneNumberProps = WithLanguageType & WithAxiosType<PhoneNumberFormResponseType> & {

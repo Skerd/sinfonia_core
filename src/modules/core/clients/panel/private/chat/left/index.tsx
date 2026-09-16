@@ -1,12 +1,12 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import ChannelsList from "@coreModule/clients/panel/private/chat/left/channelsList.tsx";
 import {MessagesSquare, SearchIcon} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useEffect, useRef, useState} from "react";
-import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import SearchChatUsers from "@coreModule/clients/panel/private/chat/searchChatUsers";
-import {useAccess} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {PageHelp, readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 
