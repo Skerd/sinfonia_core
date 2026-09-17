@@ -8,7 +8,7 @@ import DeactivateCompany from "@coreModule/clients/panel/private/tenancy/systemS
 import ActivateCompanyDialog from "@coreModule/components/custom/company/activateCompanyDialog.tsx";
 import DeactivateCompanyDialog from "@coreModule/components/custom/company/deactivateCompanyDialog.tsx";
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
-import EntityListPage from "@baseModule/components/entityPage/EntityListPage.tsx";
+import EntityListPage from "@baseModule/components/entityPage/entityListPage.tsx";
 
 function AllCompanies({resolveLanguageKey}: WithLanguageType) {
     return (

@@ -9,7 +9,7 @@ import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/ava
 import {IconPhoto} from "@tabler/icons-react";
 import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import SheetMediaFilesStrip from "@coreModule/components/viewEngine/sheetMediaFilesStrip.tsx";
+import SheetMediaFilesStrip from "@coreModule/components/viewEngine/sheet/widgets/sheetMediaFilesStrip.tsx";
 import type {Media} from "armonia/src/modules/core/types";
 import {useAccessFieldsRead} from "./accessFields.tsx";
 import {formatDate} from "@baseModule/helpers/general/dateTime.ts";

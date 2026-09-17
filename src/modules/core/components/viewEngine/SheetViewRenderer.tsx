@@ -1,40 +1,31 @@
-import {useState, type ReactNode, useEffect, useImperativeHandle, type ComponentType, useMemo, useRef, useCallback} from "react";
-import type { ViewConfig, ViewNode, SheetHeaderConfig } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
-import type { AccessObject } from "@baseModule/helpers/context/accessContext.tsx";
-import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@coreModule/components/ui/sheet.tsx";
-import { Badge } from "@coreModule/components/ui/badge.tsx";
-import { Button } from "@coreModule/components/ui/button.tsx";
-import { X } from "lucide-react";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import {useEffect, useImperativeHandle, useMemo, useState, type ComponentType, type ReactNode} from "react";
+import {compose} from "redux";
+import {X} from "lucide-react";
+import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
+import {type DeletedData, SingleForm} from "armonia/src/modules/core/types/shared.types.ts";
+import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import type {AccessObject} from "@baseModule/helpers/context/accessContext.tsx";
+import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {Sheet, SheetClose, SheetContent, SheetHeader} from "@coreModule/components/ui/sheet.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
+import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
+import {cn} from "@coreModule/components/lib/utils.ts";
 import DeletedInfo from "@coreModule/components/custom/deletedInfo";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import Loader from "@coreModule/components/custom/loader.tsx";
+import {ErrorView} from "@coreModule/components/custom/errorView.tsx";
 import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
-import ViewRenderer, { hasAccessPath, resolvePath, type ViewRendererContext } from "./ViewRenderer.tsx";
-import { resolveIcon } from "./widgetRegistry.ts";
-import {cn} from "@coreModule/components/lib/utils.ts";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import {type DeletedData, SingleForm} from "armonia/src/modules/core/types/shared.types.ts";
-import Loader from "@coreModule/components/custom/loader.tsx";
-import {ErrorView} from "@coreModule/components/custom/errorView.tsx";
-import {compose} from "redux";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {
-    clearStaleBodyPointerEventsLock,
-    SheetMenuNavigateDismissProvider,
-} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
-import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
-import SheetAuditHistoryDrawer, {SheetAuditHistoryMenuLabel} from "@coreModule/components/viewEngine/sheetAuditHistory.tsx";
-import {
-    collectAuditFieldHintsFromViewNodes,
-    collectFieldLabelsFromViewNodes,
-} from "@coreModule/components/viewEngine/collectFieldLabelsFromViewConfig.ts";
-import {FLOATING_SHEET_CONTENT_CLASS} from "@coreModule/components/viewEngine/sheetFloatingChrome.ts";
+import ViewRenderer, {type ViewRendererContext} from "./ViewRenderer.tsx";
+import SheetAuditHistoryDrawer, {SheetAuditHistoryMenuLabel} from "./audit/sheetAuditHistory.tsx";
+import {collectAuditFieldHintsFromViewNodes, collectFieldLabelsFromViewNodes} from "./audit/auditFieldHints.ts";
+import {SheetDescriptionBlock, SheetTitleBlock} from "./sheet/shell/sheetHeaderBlocks.tsx";
+import {useSheetPresence} from "./sheet/shell/useSheetPresence.ts";
+import {useSheetRow} from "./sheet/shell/useSheetRow.ts";
+import {SheetMenuNavigateDismissProvider} from "./sheet/widgets/sheetMenuNavigateDismiss.tsx";
+import {FLOATING_SHEET_CONTENT_CLASS} from "./sheet/widgets/sheetFloatingChrome.ts";
 
-/** Keep in sync with `data-closed:duration-*` on `SheetContent`. */
-const SHEET_CLOSE_ANIMATION_MS = 280;
 export type SheetViewRendererProps = WithAxiosType<any, SingleForm> & {
     config: ViewConfig;
     data: Record<string, any>;
@@ -84,8 +75,8 @@ export type SheetViewRendererProps = WithAxiosType<any, SingleForm> & {
     /** Fired for any header ActionMenu selection (e.g. "view"); delete/restore still drive internal modals. */
     onActionMenuAction?: (action: string) => void;
     /**
-     * When true, shows the Activity menu item and lazy-loads audit history ({@link ViewConfig.model} + `data._id`).
-     * Default false until the flow is finalized.
+     * Shows the Activity menu item, which lazy-loads the record's audit history
+     * ({@link ViewConfig.model} + `data._id`). On by default; pass `false` to hide it on a sheet.
      */
     showAuditHistory?: boolean;
     /** Merged with labels extracted from `config.nodes` for audit field names. */
@@ -107,30 +98,10 @@ export type SheetViewRendererPublicProps = Omit<
 
 const DEFAULT_CONTENT_CLASS = "max-w-[98vw] min-w-[98vw] lg:max-w-[58vw] lg:min-w-[58vw] overflow-y-auto border";
 
-function setValueAtDotPath(record: Record<string, any>, dotPath: string, value: unknown): Record<string, any> {
-    const segments = dotPath.split(".").filter((s) => s.length > 0);
-    if (segments.length === 0) {
-        return record;
-    }
-    const root = { ...record };
-    let node: Record<string, any> = root;
-    for (let i = 0; i < segments.length - 1; i++) {
-        const key = segments[i]!;
-        const nested = node[key];
-        const branch =
-            nested !== null &&
-            nested !== undefined &&
-            typeof nested === "object" &&
-            !Array.isArray(nested)
-                ? { ...(nested as Record<string, any>) }
-                : {};
-        node[key] = branch;
-        node = branch;
-    }
-    node[segments[segments.length - 1]!] = value;
-    return root;
-}
-
+/**
+ * Entity side sheet driven by a view config: header (title, badges, action menu), body
+ * (`ViewRenderer` in sheet mode), delete / restore confirmations and the activity drawer.
+ */
 export function SheetViewRenderer({
     config,
     data: dataProps,
@@ -163,73 +134,33 @@ export function SheetViewRenderer({
     onActionMenuAction,
     onSheetRowPatched,
     innerRef,
-    showAuditHistory = false,
+    showAuditHistory = true,
     auditHistoryFieldLabels,
 }: SheetViewRendererProps) {
-
-    const [data, setData] = useState<Record<string, any>>(dataProps || {});
-    const [action, setAction] = useState("");
-    const [forceReload, setForceReload] = useState(0);
+    const {row: data, setRow, unlinkRefPath, unlinkListItem} = useSheetRow(dataProps, onSheetRowPatched);
+    const {present, handleOpenChange, dismissNow} = useSheetPresence(open, onOpenChange);
+    const [action, setAction] = useState<"" | "delete" | "restore">("");
+    const [reloadCount, setReloadCount] = useState(0);
     const [auditHistoryOpen, setAuditHistoryOpen] = useState(false);
-    /**
-     * Local open flag so exit animation can finish before parents that do
-     * `{action === "view" && <Sheet…/>}` unmount this tree.
-     */
-    const [present, setPresent] = useState(open);
-    const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
     const header = config.header;
     const readAccess = access.read && typeof access.read === "object" ? access.read : {};
     const deleteRestoreName = deleteRestoreConfirmLabel ?? (readAccess.name && data.name ? data.name : undefined);
 
-    const clearCloseTimer = useCallback(() => {
-        if (closeTimerRef.current != null) {
-            clearTimeout(closeTimerRef.current);
-            closeTimerRef.current = null;
-        }
-    }, []);
+    useImperativeHandle(innerRef, () => ({
+        success: (newData: any) => {
+            setRow(newData || {});
+            onDataFetched?.(newData);
+        },
+    }));
 
-    useEffect(() => () => clearCloseTimer(), [clearCloseTimer]);
-
+    // Fetch the full row on open and on retry; `onFilterChange` is recreated by the HOC each render.
     useEffect(() => {
-        if (open) {
-            clearCloseTimer();
-            setPresent(true);
+        if (fetchId && url) {
+            onFilterChange({_id: fetchId});
         }
-    }, [open, clearCloseTimer]);
-
-    const requestClose = useCallback(() => {
-        clearCloseTimer();
-        setPresent(false);
-        closeTimerRef.current = setTimeout(() => {
-            closeTimerRef.current = null;
-            onOpenChange(false);
-        }, SHEET_CLOSE_ANIMATION_MS);
-    }, [clearCloseTimer, onOpenChange]);
-
-    /**
-     * Immediate teardown for Edit / menu navigation. Animated `requestClose` leaves the
-     * overlay + RemoveScroll mounted while the route changes, which can stick
-     * `pointer-events: none` on `document.body` and block the destination form.
-     */
-    const dismissForMenuNavigate = useCallback(() => {
-        clearCloseTimer();
-        setPresent(false);
-        onOpenChange(false);
-    }, [clearCloseTimer, onOpenChange]);
-
-    const handleOpenChange = useCallback((next: boolean) => {
-        if (next) {
-            clearCloseTimer();
-            setPresent(true);
-            onOpenChange(true);
-            return;
-        }
-        requestClose();
-    }, [clearCloseTimer, onOpenChange, requestClose]);
-
-    useEffect(() => () => {
-        clearStaleBodyPointerEventsLock();
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fetchId, url, reloadCount]);
 
     const ctx: ViewRendererContext = {
         data,
@@ -238,215 +169,143 @@ export function SheetViewRenderer({
         mode: "sheet",
         sheetModel: config.model,
         referenceCardUnitContext,
-        unlinkEmbeddedRefPath: (dotPath: string) => {
-            setData((prev: Record<string, any>) => {
-                const next = setValueAtDotPath(prev, dotPath, null);
-                queueMicrotask(() => {
-                    onSheetRowPatched?.(next);
-                });
-                return next;
-            });
-        },
-        unlinkEmbeddedListRefItem: (listPath: string, itemIndex: number) => {
-            setData((prev: Record<string, any>) => {
-                const list = resolvePath(prev, listPath);
-                if (!Array.isArray(list) || itemIndex < 0 || itemIndex >= list.length) {
-                    return prev;
-                }
-                const nextList = list.filter((_, i) => i !== itemIndex);
-                const next = setValueAtDotPath(prev, listPath, nextList);
-                queueMicrotask(() => {
-                    onSheetRowPatched?.(next);
-                });
-                return next;
-            });
-        },
+        unlinkEmbeddedRefPath: unlinkRefPath,
+        unlinkEmbeddedListRefItem: unlinkListItem,
     };
-
-    const contentClassName = header?.contentClassName ?? DEFAULT_CONTENT_CLASS;
-    const sheetAppearance = sheetAppearanceProp ?? header?.sheetAppearance ?? "floating";
-    const floatingClasses = sheetAppearance === "floating" ? FLOATING_SHEET_CONTENT_CLASS : "";
 
     const auditLabels = useMemo(
         () => ({
             ...collectFieldLabelsFromViewNodes(config.nodes, config.header),
-            ...(auditHistoryFieldLabels ?? {}),
+            ...auditHistoryFieldLabels,
         }),
         [config.nodes, config.header, auditHistoryFieldLabels],
     );
-
     const auditFieldHints = useMemo(
         () => collectAuditFieldHintsFromViewNodes(config.nodes, config.header),
         [config.nodes, config.header],
     );
-
     const canSeeAuditTrail =
-        showAuditHistory &&
-        !hideActions &&
-        !!data?._id &&
-        Object.keys(readAccess).length > 0 &&
-        !!config?.model;
+        showAuditHistory && !hideActions && !!data._id && Object.keys(readAccess).length > 0 && !!config.model;
 
-    useImperativeHandle(innerRef, () => ({
-        success: (newData: any) => {
-            setData(newData || {});
-            onDataFetched?.(newData);
-        }
-    }))
+    const sheetAppearance = sheetAppearanceProp ?? header?.sheetAppearance ?? "floating";
+    const contentClassName = cn(
+        sheetAppearance === "floating" && FLOATING_SHEET_CONTENT_CLASS,
+        header?.contentClassName ?? DEFAULT_CONTENT_CLASS,
+    );
+    const ready = !loading && !error;
+    const headerProps = {header, data, readAccess, resolveLanguageKey};
 
-    useEffect(() => {
-        if( !!fetchId && !! url ){
-            onFilterChange({
-                _id: fetchId
-            })
-        }
-    }, [fetchId, url, forceReload]);
-
-    useEffect(() => {
-        if (!dataProps) return;
-        setData((prev) => {
-            const next: Record<string, any> = {...dataProps};
-            // Preserve enrichSingle-only keys (e.g. inventory.movements) when list rows re-assert.
-            for (const [key, value] of Object.entries(prev || {})) {
-                if (!(key in dataProps) || dataProps[key] === undefined) {
-                    next[key] = value;
-                }
-            }
-            return next;
-        });
-    }, [dataProps]);
+    let body: ReactNode;
+    if (loading) {
+        body = <Loader />;
+    } else if (error) {
+        body = (
+            <div className="px-2">
+                <ErrorView
+                    title={resolveLanguageKey("failedTitle")}
+                    description={resolveLanguageKey("failedDescription")}
+                    tooltipDescription={resolveLanguageKey("failedTooltipDescription")}
+                    onClick={() => setReloadCount((n) => n + 1)}
+                />
+            </div>
+        );
+    } else {
+        body = (
+            <div className="flex-full px-4 pb-6 mt-4 gap-y-4">
+                <ViewRenderer nodes={config.nodes} ctx={ctx} />
+                {children}
+            </div>
+        );
+    }
 
     return (
-        <SheetMenuNavigateDismissProvider onDismiss={dismissForMenuNavigate}>
+        <SheetMenuNavigateDismissProvider onDismiss={dismissNow}>
             <Sheet open={present} onOpenChange={handleOpenChange}>
-            <SheetContent
-                side="right"
-                showCloseButton={false}
-                className={cn(floatingClasses, contentClassName)}
-            >
-                {/*{data?._id} {forceReload} {fetchId} {data?.name}*/}
-                <div className="flex-full">
-                    <SheetHeader className="flex p-0 group hover:cursor-pointer shadow-sm">
-                        <div className="relative flex w-full items-stretch">
-                            {
-                                (readAccess.deletedBy || readAccess.deletedAt) &&
-                                <div className="h-full flex rounded-tl-full items-stretch overflow-hidden">
-                                    <DeletedInfo
-                                        deletedAt={data.deletedAt}
-                                        deletedBy={data.deletedBy}
-                                    />
-                                </div>
-                            }
-                            <div className="flex items-start justify-between gap-2 p-2 w-full">
-                                <div className="min-w-0">
-                                    {renderTitle(header, headerTitle, data, readAccess, resolveLanguageKey)}
-                                    {renderDescription(header, headerDescription, data, readAccess, resolveLanguageKey)}
-                                </div>
-                                <div className="flex items-center gap-1 shrink-0">
-                                    {
-                                        !hideActions && !loading && !error &&
-                                        <ActionMenu
-                                            accessModel={config.accessModel}
-                                            deletedData={data}
-                                            onAction={(a: string) => {
-                                                onActionMenuAction?.(a);
-                                                if (a === "delete" || a === "restore") {
-                                                    setAction(a);
+                <SheetContent side="right" showCloseButton={false} className={contentClassName}>
+                    <div className="flex-full">
+                        <SheetHeader className="flex p-0 group hover:cursor-pointer shadow-sm">
+                            <div className="relative flex w-full items-stretch">
+                                {(readAccess.deletedBy || readAccess.deletedAt) && (
+                                    <div className="h-full flex rounded-tl-full items-stretch overflow-hidden">
+                                        <DeletedInfo deletedAt={data.deletedAt} deletedBy={data.deletedBy} />
+                                    </div>
+                                )}
+                                <div className="flex items-start justify-between gap-2 p-2 w-full">
+                                    <div className="min-w-0">
+                                        <SheetTitleBlock {...headerProps} override={headerTitle} />
+                                        <SheetDescriptionBlock {...headerProps} override={headerDescription} />
+                                    </div>
+                                    <div className="flex items-center gap-1 shrink-0">
+                                        {!hideActions && ready && (
+                                            <ActionMenu
+                                                accessModel={config.accessModel}
+                                                deletedData={data}
+                                                onAction={(a: string) => {
+                                                    onActionMenuAction?.(a);
+                                                    if (a === "delete" || a === "restore") setAction(a);
+                                                }}
+                                                editPath={editPath ?? ""}
+                                                hideView={!showViewInActionMenu}
+                                                allowMenuForCustomChildren={actionMenuAllowCustomChildren}
+                                                hideEdit={hideEdit}
+                                                hideDelete={hideDelete}
+                                                hideRestore={hideRestore}
+                                                alwaysShowDropDownMenuTrigger={true}
+                                                beforeViewMenuChildren={
+                                                    canSeeAuditTrail ? (
+                                                        <DropdownMenuItem
+                                                            data-slot="sheet-audit-history-menu-item"
+                                                            onSelect={() => {
+                                                                setAuditHistoryOpen(true);
+                                                            }}
+                                                        >
+                                                            <SheetAuditHistoryMenuLabel />
+                                                        </DropdownMenuItem>
+                                                    ) : null
                                                 }
-                                            }}
-                                            editPath={editPath ?? ""}
-                                            hideView={!showViewInActionMenu}
-                                            allowMenuForCustomChildren={actionMenuAllowCustomChildren}
-                                            hideEdit={hideEdit}
-                                            hideDelete={hideDelete}
-                                            hideRestore={hideRestore}
-                                            alwaysShowDropDownMenuTrigger={true}
-                                            beforeViewMenuChildren={
-                                                canSeeAuditTrail ? (
-                                                    <DropdownMenuItem
-                                                        data-slot="sheet-audit-history-menu-item"
-                                                        onSelect={(e: {preventDefault: () => void}) => {
-                                                            e.preventDefault();
-                                                            setAuditHistoryOpen(true);
-                                                        }}
-                                                    >
-                                                        <SheetAuditHistoryMenuLabel />
-                                                    </DropdownMenuItem>
-                                                ) : null
-                                            }
-                                        >
-                                            {actionMenuChildren}
-                                        </ActionMenu>
-                                    }
-                                    {
-                                        header?.showCloseButton &&
-                                        <SheetClose asChild>
-                                            <Button variant="ghost" size="icon" className="shrink-0">
-                                                <X />
-                                            </Button>
-                                        </SheetClose>
-                                    }
+                                            >
+                                                {actionMenuChildren}
+                                            </ActionMenu>
+                                        )}
+                                        {header?.showCloseButton && (
+                                            <SheetClose asChild>
+                                                <Button variant="ghost" size="icon" className="shrink-0">
+                                                    <X />
+                                                </Button>
+                                            </SheetClose>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </SheetHeader>
-                    {
-                        (loading) ?
-                        <Loader />
-                        :
-                        <>
-                            {
-                                !!error ?
-                                <div className="px-2">
-                                    <ErrorView
-                                        title={resolveLanguageKey("failedTitle")}
-                                        description={resolveLanguageKey("failedDescription")}
-                                        tooltipDescription={resolveLanguageKey("failedTooltipDescription")}
-                                        onClick={() => setForceReload((p) => p + 1)}
-                                    />
-                                </div>
-                                :
-                                <div className="flex-full px-4 pb-6 mt-4 gap-y-4">
-                                    <ViewRenderer nodes={config.nodes} ctx={ctx} />
-                                    {children}
-                                </div>
-                            }
-                        </>
-                    }
-                </div>
-            </SheetContent>
+                        </SheetHeader>
+                        {body}
+                    </div>
+                </SheetContent>
 
-            {
-                !!action && !loading && !error &&
-                <>
-                    {
-                        action === "delete" && !hideDelete &&
-                        <DeleteAction
-                            accessModel={config.accessModel}
-                            deleteId={data._id}
-                            openAlert={action === "delete"}
-                            name={deleteRestoreName}
-                            confirmName={deleteRestoreName}
-                            onSuccess={onDelete}
-                            onCancel={() => setAction("")}
-                            url={config.apiUrl}
-                        />
-                    }
-                    {
-                        action === "restore" && !hideRestore &&
-                        <RestoreAction
-                            accessModel={config.accessModel}
-                            deleteId={data._id}
-                            openAlert={action === "restore"}
-                            name={deleteRestoreName}
-                            confirmName={deleteRestoreName}
-                            onSuccess={onRestore}
-                            onCancel={() => setAction("")}
-                            url={`${config.apiUrl}/restore`}
-                        />
-                    }
-                </>
-            }
+                {ready && action === "delete" && !hideDelete && (
+                    <DeleteAction
+                        accessModel={config.accessModel}
+                        deleteId={data._id}
+                        openAlert
+                        name={deleteRestoreName}
+                        confirmName={deleteRestoreName}
+                        onSuccess={onDelete}
+                        onCancel={() => setAction("")}
+                        url={config.apiUrl}
+                    />
+                )}
+                {ready && action === "restore" && !hideRestore && (
+                    <RestoreAction
+                        accessModel={config.accessModel}
+                        deleteId={data._id}
+                        openAlert
+                        name={deleteRestoreName}
+                        confirmName={deleteRestoreName}
+                        onSuccess={onRestore}
+                        onCancel={() => setAction("")}
+                        url={`${config.apiUrl}/restore`}
+                    />
+                )}
             </Sheet>
             {canSeeAuditTrail && (
                 <SheetAuditHistoryDrawer
@@ -477,141 +336,3 @@ const SheetViewRendererWithAxios = compose(
 )(SheetViewRenderer);
 
 export default SheetViewRendererWithAxios as unknown as ComponentType<SheetViewRendererPublicProps>;
-
-// ---------------------------------------------------------------------------
-// Header renderers
-// ---------------------------------------------------------------------------
-
-function renderTitle(
-    header: SheetHeaderConfig | undefined,
-    headerTitleProp: ReactNode | undefined,
-    data: Record<string, any>,
-    readAccess: Record<string, any>,
-    resolveLanguageKey: ResolveLanguageKey
-): ReactNode {
-    if (headerTitleProp) {
-        return (
-            <SheetTitle className="flex flex-wrap items-center gap-2 mb-0">
-                <HiddenElement>{headerTitleProp}</HiddenElement>
-            </SheetTitle>
-        );
-    }
-
-    if (header) {
-        const canReadTitle = hasAccessPath(readAccess, header.titleField);
-        const rawTitle = resolvePath(data, header.titleField);
-        const cat =
-            typeof header.titleFieldLanguageCategory === "string" &&
-            header.titleFieldLanguageCategory.length > 0
-                ? header.titleFieldLanguageCategory
-                : "";
-        const titleValue =
-            cat &&
-            rawTitle != null &&
-            rawTitle !== "" &&
-            (typeof rawTitle === "string" || typeof rawTitle === "number" || typeof rawTitle === "boolean")
-                ? resolveLanguageKey(`${cat}.${String(rawTitle)}`)
-                : rawTitle;
-        const titleCls = header.titleClassName ?? "md:text-xl";
-        const titleText = titleValue != null && titleValue !== "" ? String(titleValue) : "";
-        return (
-            <SheetTitle className="flex flex-col flex-wrap justify-center gap-1 min-w-0">
-                <HiddenElement randomLength={10}>
-                    {canReadTitle ? (
-                        <TooltipDisplayer tooltip={titleText || resolveLanguageKey(header.titleField)}>
-                            <p className={`truncate min-w-0 max-w-full ${titleCls}`}>{titleValue}</p>
-                        </TooltipDisplayer>
-                    ) : null}
-                </HiddenElement>
-                {
-                    header.subtitleKey &&
-                    <Badge variant="secondary">
-                        {resolveLanguageKey(header.subtitleKey)}
-                    </Badge>
-                }
-            </SheetTitle>
-        );
-    }
-
-    return (
-        <SheetTitle className="flex flex-wrap items-center gap-2 mb-0">
-            <HiddenElement randomLength={10}>
-                {hasAccessPath(readAccess, "name") && data.name ? (
-                    <span className="truncate min-w-0 max-w-full block">{data.name}</span>
-                ) : null}
-            </HiddenElement>
-        </SheetTitle>
-    );
-}
-
-function renderDescription(
-    header: SheetHeaderConfig | undefined,
-    headerDescriptionProp: ReactNode | undefined,
-    data: Record<string, any>,
-    readAccess: Record<string, any>,
-    resolveLanguageKey: ResolveLanguageKey
-): ReactNode {
-    if (headerDescriptionProp) {
-        return (
-            <SheetDescription className="flex flex-wrap gap-1">
-                {headerDescriptionProp}
-            </SheetDescription>
-        );
-    }
-
-    if (header?.badges && header.badges.length > 0) {
-        const rendered = header.badges
-            .map((node, i) => renderHeaderBadge(node, data, readAccess, resolveLanguageKey, i))
-            .filter(Boolean);
-
-        if (rendered.length === 0) return null;
-
-        return (
-            <SheetDescription className="flex flex-wrap gap-1">
-                {rendered}
-            </SheetDescription>
-        );
-    }
-
-    return null;
-}
-
-function renderHeaderBadge(
-    node: ViewNode,
-    data: Record<string, any>,
-    readAccess: Record<string, any>,
-    _resolveLanguageKey: ResolveLanguageKey,
-    index: number
-): ReactNode {
-    if (node.dependent) {
-        const value = resolvePath(data, node.dependent);
-        if (!value) return null;
-    }
-    if (node.permissions?.read && !hasAccessPath(readAccess, node.permissions.read)) {
-        return null;
-    }
-
-    const field = node.field;
-    if (!field) return null;
-
-    let displayValue: any = resolvePath(data, field.name);
-    const wp = field.widgetProps ?? {};
-
-    if (wp.prefix && displayValue && typeof displayValue === "string" && !displayValue.includes(wp.prefix)) {
-        displayValue = wp.prefix + displayValue;
-    }
-
-    const Icon = wp.icon ? resolveIcon(wp.icon) : null;
-    const badgeProps = node.props ?? {};
-
-    return (
-        <HiddenElement key={index}>
-            {displayValue && (
-                <Badge {...badgeProps}>
-                    {Icon && <Icon className="h-3 w-3 mr-1" />}
-                    {displayValue}
-                </Badge>
-            )}
-        </HiddenElement>
-    );
-}

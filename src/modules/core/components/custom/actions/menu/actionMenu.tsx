@@ -11,7 +11,7 @@ import RestoreDropdown from "@coreModule/components/custom/actions/dropdowns/res
 import EditDropdown from "@coreModule/components/custom/actions/dropdowns/editDropdown.tsx";
 import {useNavigate} from "react-router-dom";
 import ViewDropdown from "@coreModule/components/custom/actions/dropdowns/viewDropdown.tsx";
-import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
+import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheet/widgets/sheetMenuNavigateDismiss.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {
     ACTION_MENU_OPEN_EVENT,

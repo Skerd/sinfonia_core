@@ -1,184 +1,73 @@
-import {lazy, type ComponentType} from "react";
-import * as TablerIcons from "@tabler/icons-react";
-
-import {Input} from "@coreModule/components/ui/input.tsx";
-import {Textarea} from "@coreModule/components/ui/textarea.tsx";
-import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
-import {Switch} from "@coreModule/components/ui/switch.tsx";
-import {Badge} from "@coreModule/components/ui/badge.tsx";
-import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
-import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
-import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
-import {ApiSelect} from "@coreModule/components/custom/apiSelect";
-import {SimpleSelect} from "@coreModule/components/custom/simpleSelect";
-import {DateInput} from "@coreModule/components/custom/dateInput.tsx";
-import {StringArrayField} from "@coreModule/components/custom/stringArrayField.tsx";
-import {ListingFaqsField} from "@coreModule/components/custom/listingFaqsField.tsx";
-import {IconPicker} from "@coreModule/components/custom/iconPicker.tsx";
-import {PhoneInput} from "@coreModule/components/custom/phoneInput.tsx";
-import {GalleryCarousel} from "@coreModule/components/custom/images/galleryCarousel.tsx";
-import SheetMediaFilesStrip from "./sheetMediaFilesStrip.tsx";
-import SheetMediaAvatar from "./sheetMediaAvatar.tsx";
-import SheetEmbeddedItemsList from "./sheetEmbeddedItemsList.tsx";
-import SheetEmbeddedAddressCard from "./sheetEmbeddedAddressCard.tsx";
-import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
-import {ReferencesViewModeScope} from "./referencesViewModeContext.tsx";
-import ReferencesViewModeToggle from "./referencesViewModeToggle.tsx";
-import {MainImageField} from "@coreModule/components/custom/images/mainImageField.tsx";
-import {ImageGalleryField} from "@coreModule/components/custom/images/imageGalleryField.tsx";
-import {VideoGalleryField} from "@coreModule/components/custom/images/videoGalleryField.tsx";
-import MediaField from "@coreModule/components/custom/files/mediaField.tsx";
-import FormAddressWithMap, {SingleFormAddressWithMap} from "@coreModule/components/custom/addresses/formAddressWithMap.tsx";
-import FormMapPinPicker from "@coreModule/components/custom/addresses/formMapPinPicker.tsx";
-import FormRepeater from "@coreModule/components/custom/formRepeater.tsx";
-import FormTabbedRepeater from "@coreModule/components/custom/formTabbedRepeater.tsx";
-import FormObjectIdChips from "@coreModule/components/custom/formObjectIdChips.tsx";
-import FormEditMediaField from "@coreModule/components/custom/files/formEditMediaField.tsx";
-import FormMultiLocalFileField from "@coreModule/components/custom/files/formMultiLocalFileField.tsx";
-import SheetLocationMap from "@coreModule/components/custom/addresses/sheetLocationMap.tsx";
-import {FormWhenFieldValueIn} from "../custom/renderEngine/layout/form/whenFieldValueIn.tsx";
-import {SheetGrid} from "@coreModule/components/custom/renderEngine/layout/sheet/grid.tsx";
-import {FormAlert} from "@coreModule/components/custom/renderEngine/layout/form/alert.tsx";
-import {FormGrid} from "@coreModule/components/custom/renderEngine/layout/form/grid.tsx";
-import {SheetGroup} from "@coreModule/components/custom/renderEngine/layout/sheet/group.tsx";
-import type {AuditSinglePostHint,SheetFieldRenderer} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
+import type {ComponentType} from "react";
+import type {
+    AuditSinglePostHint,
+    CompoundFormWidgetRenderer,
+    SheetFieldRenderer,
+    WidgetContribution,
+} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
 import {getSortedWidgetContributions} from "@coreModule/clients/panel/moduleContributions/loadWidgetContributions.ts";
-import {CORE_WIDGET_META, type WidgetMeta} from "./widgetMeta.ts";
+import {getCoreWidgetContribution} from "./registry/coreContribution.ts";
+import type {WidgetMeta} from "./widgetMeta.ts";
 
-const CurrencySheetViewLazy = lazy(() =>import("@coreModule/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx"));
-const CountrySheetViewLazy = lazy(() =>import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx"));
-const StateSheetViewLazy = lazy(() =>import("@coreModule/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx"));
-const CitySheetViewLazy = lazy(() =>import("@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx"));
-
-/** Core-owned widgets only. Domain modules register via `clients/panel/widgetContribution`. */
-const WIDGET_REGISTRY: Record<string, ComponentType<any>> = {
-    "#SheetGrid": SheetGrid,
-    "#FormGrid": FormGrid,
-    "#FormAlert": FormAlert,
-    "#SheetGroup": SheetGroup,
-    "#Input": Input,
-    "#Textarea": Textarea,
-    "#Checkbox": Checkbox,
-    "#Switch": Switch,
-    "#Badge": Badge,
-    "#DisplayCard": DisplayCard,
-    "#CountryFlag": CountryFlag,
-    "#ExpandableText": ExpandableText,
-    "#ApiSelect": ApiSelect,
-    "#SimpleSelect": SimpleSelect,
-    "#Select": SimpleSelect,
-    "#DateInput": DateInput,
-    "#StringArrayField": StringArrayField,
-    "#ListingFaqsField": ListingFaqsField,
-    "#IconPicker": IconPicker,
-    "#PhoneInput": PhoneInput,
-    "#GalleryCarousel": GalleryCarousel,
-    /** Sheet read-only: `media[]` as a row of `SingleFile` tiles (no carousel). */
-    "#SheetMediaFilesStrip": SheetMediaFilesStrip,
-    /** Sheet read-only: configurable embedded `{field}[]` list; cards = full fields, compact = summary text only. Pair with `#ReferencesViewModeScope`. */
-    "#SheetEmbeddedItemsList": SheetEmbeddedItemsList,
-    /** Sheet read-only: logo-style `Avatar` for a single media id (string or populated `{ _id }`). */
-    "#SheetMediaAvatar": SheetMediaAvatar,
-    /** `#ReferencesRender` card for a single embedded address (non-compact/cards mode). */
-    "#EmbeddedAddressCard": SheetEmbeddedAddressCard,
-    "#TitleWithCollapse": TitleWithCollapse,
-    "#MainImageField": MainImageField,
-    "#ImageGalleryField": ImageGalleryField,
-    "#VideoGalleryField": VideoGalleryField,
-    "#MediaField": MediaField,
-
-    "#FormWhenFieldValueIn": FormWhenFieldValueIn,
-    "#FormAddressWithMap": FormAddressWithMap,
-    "#FormAddressRow": SingleFormAddressWithMap,
-    "#FormMapPinPicker": FormMapPinPicker,
-    "#FormRepeater": FormRepeater,
-    "#FormTabbedRepeater": FormTabbedRepeater,
-    "#FormObjectIdChips": FormObjectIdChips,
-    "#FormMultiLocalFileField": FormMultiLocalFileField,
-    "#FormEditMediaField": FormEditMediaField,
-    "#SheetLocationMap": SheetLocationMap,
-    "#ReferencesViewModeScope": ReferencesViewModeScope as ComponentType<any>,
-    "#ReferencesViewModeToggle": ReferencesViewModeToggle,
-    "#CurrencySheetView": CurrencySheetViewLazy,
-    "#CountrySheetView": CountrySheetViewLazy,
-    "#StateSheetView": StateSheetViewLazy,
-    "#CitySheetView": CitySheetViewLazy,
-};
-
-/** Default prop name for `#ReferencesRender` when `itemDataProp` is omitted. */
-const REFERENCES_DEFAULT_ITEM_PROP: Record<string, string> = {};
-
-/** Custom sheet-mode field branches contributed by modules. */
-const SHEET_FIELD_RENDERERS: Record<string, SheetFieldRenderer> = {};
-
-/** Module form tokens that own their own FormField. Core tokens live in `renderFormWidget`. */
-const COMPOUND_FORM_WIDGETS = new Set<string>();
+export {registerIcon, resolveIcon, type ViewConfigIcon} from "./registry/icons.ts";
 
 /**
- * Design-time widget descriptions. Read by developer tooling (the Studio), never by the
- * renderer — an absent entry means "undescribed", not "unsupported".
+ * Token → everything the engine knows about a widget. Filled from core's own contribution
+ * first, then each module's `widgetContribution` (sorted by `order`), so later entries win.
  */
-const WIDGET_META: Record<string, WidgetMeta> = {...CORE_WIDGET_META};
-
-/** Audit `singlePost` hints contributed by modules (+ core tenancy defaults). */
-const AUDIT_SINGLE_POST_HINTS: Record<string, AuditSinglePostHint> = {
-    "#CurrencySheetView": {url: "/api/finance/currency/single", labelFields: ["name", "abbreviation", "symbol"]},
-    "#CountrySheetView": {url: "/api/auxiliary/country/single", labelFields: ["name"]},
-    "#StateSheetView": {url: "/api/auxiliary/state/single", labelFields: ["name"]},
-    "#CitySheetView": {url: "/api/auxiliary/city/single", labelFields: ["name"]},
-    "#TenancyCountryCard": {url: "/api/auxiliary/country/single", labelFields: ["name"]},
-    "#TenancyStateCard": {url: "/api/auxiliary/state/single", labelFields: ["name"]},
-    "#TenancyCityCard": {url: "/api/auxiliary/city/single", labelFields: ["name"]},
-    "#TenancyCurrencyCard": {url: "/api/finance/currency/single", labelFields: ["name", "abbreviation", "symbol"]},
-};
+const WIDGET_REGISTRY: Record<string, ComponentType<any>> = {};
+/** Design-time descriptions (Studio only; an absent entry means "undescribed", not "unsupported"). */
+const WIDGET_META: Record<string, WidgetMeta> = {};
+/** Default prop name for `#ReferencesRender` when `itemDataProp` is omitted. */
+const REFERENCES_DEFAULT_ITEM_PROP: Record<string, string> = {};
+/** Module sheet-field renderers. Core's own live in `sheet/fields` and run after these. */
+const SHEET_FIELD_RENDERERS: Record<string, SheetFieldRenderer> = {};
+/** Form tokens that own their own FormField (default props). */
+const COMPOUND_FORM_WIDGETS = new Set<string>();
+/** Compound form tokens with their own props mapping. */
+const COMPOUND_FORM_WIDGET_RENDERERS: Record<string, CompoundFormWidgetRenderer> = {};
+/** Edit-form write gate keys for compound widgets that do not gate on their field name. */
+const FORM_WRITE_ACCESS_KEYS: Record<string, string> = {};
+/** Audit `singlePost` hints by widget / linked-sheet token. */
+const AUDIT_SINGLE_POST_HINTS: Record<string, AuditSinglePostHint> = {};
 
 let contributionsStatus: "idle" | "applying" | "done" = "idle";
 
+function applyContribution(contribution: WidgetContribution): void {
+    Object.assign(WIDGET_REGISTRY, contribution.widgets);
+    Object.assign(WIDGET_META, contribution.widgetMeta);
+    Object.assign(REFERENCES_DEFAULT_ITEM_PROP, contribution.referencesDefaultItemProps);
+    Object.assign(SHEET_FIELD_RENDERERS, contribution.sheetFieldRenderers);
+    Object.assign(AUDIT_SINGLE_POST_HINTS, contribution.auditSinglePostHints);
+    Object.assign(COMPOUND_FORM_WIDGET_RENDERERS, contribution.compoundFormWidgetRenderers);
+    Object.assign(FORM_WRITE_ACCESS_KEYS, contribution.formWriteAccessKeys);
+    for (const token of [
+        ...(contribution.compoundFormWidgets ?? []),
+        ...Object.keys(contribution.compoundFormWidgetRenderers ?? {}),
+    ]) {
+        COMPOUND_FORM_WIDGETS.add(token);
+    }
+}
+
 /**
- * Lazily apply module `widgetContribution` files.
- * Re-entrant during circular init (card → sheet → ViewRenderer → resolveWidget): uses
- * whatever has already been merged; finishes on the outermost call.
+ * Merges core and module contributions on first use. Deferred rather than done at import so
+ * the card → sheet → renderer → registry import cycle has finished evaluating by then.
  */
 function ensureContributionsApplied(): void {
-    if (contributionsStatus === "done" || contributionsStatus === "applying") {
+    if (contributionsStatus !== "idle") {
         return;
     }
     contributionsStatus = "applying";
-
+    applyContribution(getCoreWidgetContribution());
     for (const contribution of getSortedWidgetContributions()) {
-        if (contribution.widgets) {
-            for (const [token, component] of Object.entries(contribution.widgets)) {
-                WIDGET_REGISTRY[token] = component;
-            }
-        }
-        if (contribution.widgetMeta) {
-            for (const [token, meta] of Object.entries(contribution.widgetMeta)) {
-                WIDGET_META[token] = meta;
-            }
-        }
-        if (contribution.referencesDefaultItemProps) {
-            for (const [token, prop] of Object.entries(contribution.referencesDefaultItemProps)) {
-                REFERENCES_DEFAULT_ITEM_PROP[token] = prop;
-            }
-        }
-        if (contribution.sheetFieldRenderers) {
-            for (const [token, renderer] of Object.entries(contribution.sheetFieldRenderers)) {
-                SHEET_FIELD_RENDERERS[token] = renderer;
-            }
-        }
-        if (contribution.compoundFormWidgets) {
-            for (const token of contribution.compoundFormWidgets) {
-                COMPOUND_FORM_WIDGETS.add(token);
-            }
-        }
-        if (contribution.auditSinglePostHints) {
-            for (const [token, hint] of Object.entries(contribution.auditSinglePostHints)) {
-                AUDIT_SINGLE_POST_HINTS[token] = hint;
-            }
-        }
+        applyContribution(contribution);
     }
-
     contributionsStatus = "done";
+}
+
+export function resolveWidget(token: string): ComponentType<any> | null {
+    ensureContributionsApplied();
+    return WIDGET_REGISTRY[token] ?? null;
 }
 
 export function getRegisteredWidgetTokens(): string[] {
@@ -197,109 +86,9 @@ export function getAllWidgetMeta(): Record<string, WidgetMeta> {
     return WIDGET_META;
 }
 
-export function registerWidgetMeta(token: string, meta: WidgetMeta): void {
-    WIDGET_META[token] = meta;
-}
-
-/** Icons from view configs (`widgetProps.icon` / header badges). Tabler forwardRef components. */
-export type ViewConfigIcon = ComponentType<{className?: string}>;
-
-function isTablerIconExport(v: unknown): v is ViewConfigIcon {
-    return (
-        typeof v === "object" &&
-        v !== null &&
-        typeof (v as {render?: unknown}).render === "function"
-    );
-}
-
-/**
- * Lucide-style / legacy view-config names → `@tabler/icons-react` export names.
- * Tokens that already match Tabler (`#IconLabel` → `IconLabel`) or `Icon` + PascalCase (`#Tag` → `IconTag`) need no entry.
- */
-const LEGACY_TO_TABLER_EXPORT: Record<string, string> = {
-    Accessibility: "IconAccessible",
-    /** Lucide `AlarmClock`; Tabler exposes `IconAlarm` / `IconAlarmSnooze`, not `IconAlarmClock`. */
-    AlarmClock: "IconAlarm",
-    /** Lucide `Timer`; Tabler has `IconStopwatch`, not `IconTimer`. */
-    Timer: "IconStopwatch",
-    ArrowUpDown: "IconArrowsUpDown",
-    Banknote: "IconCashBanknote",
-    BedDouble: "IconBed",
-    BookMarked: "IconBookmark",
-    Building2: "IconBuildingCommunity",
-    CheckCircle: "IconCircleCheck",
-    DollarSign: "IconCurrencyDollar",
-    DoorOpen: "IconDoor",
-    Droplets: "IconDroplet",
-    /** Lucide `FolderTree`; Tabler uses hierarchy / multi-folder icons. */
-    FolderTree: "IconFolders",
-    Globe: "IconWorld",
-    Landmark: "IconBuildingMonument",
-    Layers: "IconStack",
-    ListOrdered: "IconListNumbers",
-    MessageSquare: "IconMessage",
-    Percent: "IconPercentage",
-    ShieldAlert: "IconShieldExclamation",
-    TreePine: "IconTrees",
-    Waves: "IconRipple",
-    XCircle: "IconCircleX",
-};
-
-function viewConfigIconTokenToExportName(raw: string): string {
-    const mapped = LEGACY_TO_TABLER_EXPORT[raw];
-    if (mapped) return mapped;
-    if (raw.startsWith("Icon")) return raw;
-    return `Icon${raw}`;
-}
-
-/** Runtime overrides from `registerIcon` (takes precedence over Tabler lookup). */
-const ICON_OVERRIDES: Record<string, ViewConfigIcon> = {};
-
-/**
- * Resolves `#…` strings from view configs to Tabler icon components.
- *
- * Uses a namespace import and runtime property access, so bundlers typically cannot tree-shake unused icons
- * (unlike `import { IconX } from "@tabler/icons-react"`). Prefer this for ergonomics; use explicit imports
- * only if bundle size for this chunk is critical.
- */
-export function resolveIcon(token: string): ViewConfigIcon | null {
-    const registered = ICON_OVERRIDES[token];
-    if (registered) return registered;
-
-    if (!token || typeof token !== "string") return null;
-    const raw = token.startsWith("#") ? token.slice(1) : token;
-    if (!raw) return null;
-
-    const exportName = viewConfigIconTokenToExportName(raw);
-    const candidate = TablerIcons[exportName as keyof typeof TablerIcons];
-    return isTablerIconExport(candidate) ? candidate : null;
-}
-
-export function resolveWidget(token: string): ComponentType<any> | null {
-    ensureContributionsApplied();
-    return WIDGET_REGISTRY[token] ?? null;
-}
-
-export function registerWidget(token: string, component: ComponentType<any>): void {
-    WIDGET_REGISTRY[token] = component;
-}
-
-export function registerIcon(token: string, icon: ViewConfigIcon): void {
-    ICON_OVERRIDES[token] = icon;
-}
-
-export function registerReferencesDefaultItemProp(token: string, itemDataProp: string): void {
-    REFERENCES_DEFAULT_ITEM_PROP[token] = itemDataProp;
-}
-
 export function getReferencesDefaultItemProp(token: string): string | undefined {
     ensureContributionsApplied();
     return REFERENCES_DEFAULT_ITEM_PROP[token];
-}
-
-/** Safe after `widgetRegistry` finishes evaluating. Do not call from ViewRenderer module scope. */
-export function registerSheetFieldRenderer(token: string, renderer: SheetFieldRenderer): void {
-    SHEET_FIELD_RENDERERS[token] = renderer;
 }
 
 export function getSheetFieldRenderer(token: string): SheetFieldRenderer | undefined {
@@ -307,16 +96,54 @@ export function getSheetFieldRenderer(token: string): SheetFieldRenderer | undef
     return SHEET_FIELD_RENDERERS[token];
 }
 
-export function isContributedCompoundFormWidget(token: string): boolean {
+/** Whether a form token manages its own `FormField` (must not be wrapped in another). */
+export function isCompoundFormWidget(token: string): boolean {
     ensureContributionsApplied();
     return COMPOUND_FORM_WIDGETS.has(token);
 }
 
-export function registerAuditSinglePostHint(token: string, hint: AuditSinglePostHint): void {
-    AUDIT_SINGLE_POST_HINTS[token] = hint;
+export function getCompoundFormWidgetRenderer(token: string): CompoundFormWidgetRenderer | undefined {
+    ensureContributionsApplied();
+    return COMPOUND_FORM_WIDGET_RENDERERS[token];
+}
+
+/** The write key an edit form gates a compound widget on, when it is not the field name. */
+export function getFormWriteAccessKey(token: string): string | undefined {
+    ensureContributionsApplied();
+    return FORM_WRITE_ACCESS_KEYS[token];
 }
 
 export function getAuditSinglePostHint(token: string): AuditSinglePostHint | undefined {
     ensureContributionsApplied();
     return AUDIT_SINGLE_POST_HINTS[token];
+}
+
+/*
+ * Runtime registration. Contributions are merged first, so an explicit registration always
+ * wins over a contributed entry for the same token.
+ */
+
+export function registerWidget(token: string, component: ComponentType<any>): void {
+    ensureContributionsApplied();
+    WIDGET_REGISTRY[token] = component;
+}
+
+export function registerWidgetMeta(token: string, meta: WidgetMeta): void {
+    ensureContributionsApplied();
+    WIDGET_META[token] = meta;
+}
+
+export function registerReferencesDefaultItemProp(token: string, itemDataProp: string): void {
+    ensureContributionsApplied();
+    REFERENCES_DEFAULT_ITEM_PROP[token] = itemDataProp;
+}
+
+export function registerSheetFieldRenderer(token: string, renderer: SheetFieldRenderer): void {
+    ensureContributionsApplied();
+    SHEET_FIELD_RENDERERS[token] = renderer;
+}
+
+export function registerAuditSinglePostHint(token: string, hint: AuditSinglePostHint): void {
+    ensureContributionsApplied();
+    AUDIT_SINGLE_POST_HINTS[token] = hint;
 }

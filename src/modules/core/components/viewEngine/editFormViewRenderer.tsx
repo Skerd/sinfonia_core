@@ -1,23 +1,17 @@
-import { type ReactNode, useEffect, useImperativeHandle, useRef } from "react";
-import { useForm, type Resolver, type FieldValues, type UseFormReturn } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type { ViewConfig, ViewNode, FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import type { WithAxiosLifecycleRef } from "@baseModule/helpers/hocs/withAxios.tsx";
-import type { RefObject } from "react";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";
-import { FieldGroup } from "@coreModule/components/ui/field.tsx";
-import { Button } from "@coreModule/components/ui/button.tsx";
-import { LoaderCircle, Save } from "lucide-react";
-import Header from "@coreModule/components/custom/header.tsx";
-import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
-import ViewRenderer, { type ViewRendererContext } from "./ViewRenderer.tsx";
-import { resolveWidget } from "./widgetRegistry.ts";
-import { renderFormWidget, isCompoundFormWidget, renderCompoundWidget } from "./renderFormWidget.tsx";
-import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
-import { useNavigate } from "react-router-dom";
+import {type ReactNode, type RefObject, useEffect, useImperativeHandle, useRef} from "react";
+import {useForm, type FieldValues, type Resolver, type UseFormReturn} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {useNavigate} from "react-router-dom";
+import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
+import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import ViewRenderer, {type ViewRendererContext} from "./ViewRenderer.tsx";
+import {hasAccessPath} from "./engine/access.ts";
+import {createFormFieldRenderer} from "./form/viewFormField.tsx";
+import {ViewFormShell} from "./form/viewFormShell.tsx";
+import {rendersOnEditForm} from "./form/writeGate.ts";
 
 export type EditFormViewRendererProps<T extends FieldValues = FieldValues> = {
     config: ViewConfig;
@@ -37,10 +31,17 @@ export type EditFormViewRendererProps<T extends FieldValues = FieldValues> = {
     submitIcon?: ReactNode;
     /** Breadcrumb segments after `formHeader.title` (same as {@link FormViewRenderer}). */
     extraTitles?: (string | undefined)[];
+    /**
+     * What the account may write. Fields it cannot write are left out (see `form/writeGate.ts`);
+     * without a map nothing is gated.
+     */
     writeAccess?: Record<string, any>;
     /** Static extra content rendered after config-driven fields. */
     children?: ReactNode;
-    /** Optional bag for compound widgets (e.g. `#FormObjectIdChips` label refs on edit). */
+    /**
+     * Optional bag for compound widgets (e.g. `#FormObjectIdChips` label refs on edit).
+     * `renderChildrenFirst: true` moves {@link renderChildren} above the config-driven fields.
+     */
     formExtras?: Record<string, unknown>;
     /**
      * Render prop for interactive children that need form access
@@ -54,22 +55,13 @@ export type EditFormViewRendererProps<T extends FieldValues = FieldValues> = {
     submitDisabled?: boolean;
     /** When set, hides page shell (header / heavy padding) for embedding in dialogs/sheets. */
     hideChrome?: boolean;
+    /** When set, omits cancel/submit. */
+    hideActions?: boolean;
     /** When set, used instead of the default `zodResolver(formSchema)`. */
     resolver?: Resolver<T>;
 };
 
-function resolveWriteAccess(writeAccess: Record<string, any>, key: string): boolean {
-    const parts = key.split(".");
-    let current: any = writeAccess;
-    for (let i = 0; i < parts.length; i++) {
-        if (!current || typeof current !== "object") return false;
-        current = current[parts[i]];
-        if (!current) return false;
-        if (i < parts.length - 1) current = current.keys;
-    }
-    return !!current;
-}
-
+/** Edit form for a server-driven view config: loads the entity once, then gates fields on write access. */
 export default function EditFormViewRenderer<T extends FieldValues = FieldValues>({
     config,
     resolveLanguageKey,
@@ -80,35 +72,36 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
     onSubmit,
     onCancel,
     submitIcon,
-    extraTitles = [],
+    extraTitles,
     writeAccess,
     children,
     formExtras,
     renderChildren,
     onSuccess,
-    submitDisabled = false,
-    loadingData,
+    submitDisabled,
+    loadingData = false,
     loadingDataError,
     onForceReload,
     loadingDataErrorTitle,
     loadingDataErrorDescription,
     loadingDataErrorTooltip,
-    hideChrome = false,
-    resolver: resolverProp,
+    hideChrome,
+    hideActions,
+    resolver,
 }: EditFormViewRendererProps<T>) {
-
     const navigate = useNavigate();
     const form = useForm<T>({
-        resolver: (resolverProp ?? (zodResolver(formSchema) as Resolver<T>)) as Resolver<T>,
+        resolver: resolver ?? (zodResolver(formSchema) as Resolver<T>),
     });
-    const resetEntityKeyRef = useRef<string | undefined>(undefined);
 
+    // Reset once per entity: later `initialValues` for the same `_id` must not wipe edits.
+    const resetEntityKeyRef = useRef<string | undefined>(undefined);
     useEffect(() => {
         if (!initialValues) return;
         const entityKey = String((initialValues as {_id?: string})._id ?? "");
         if (!entityKey || resetEntityKeyRef.current === entityKey) return;
         resetEntityKeyRef.current = entityKey;
-        form.reset(initialValues as any);
+        form.reset(initialValues as T);
     }, [initialValues, form]);
 
     useImperativeHandle(innerRef, () => ({
@@ -118,171 +111,55 @@ export default function EditFormViewRenderer<T extends FieldValues = FieldValues
         },
     }));
 
-    const renderField = (_node: ViewNode, binding: FieldBinding, index: number): ReactNode => {
-        const WidgetComponent = resolveWidget(binding.widget);
-        if (!WidgetComponent) return null;
-
-        if (isCompoundFormWidget(binding.widget)) {
-            if (binding.widget === "#FormFloorPolygon") {
-                if (writeAccess && !writeAccess.polygonCoordinates) {
-                    return null;
-                }
-            } else if (binding.widget === "#FormEdificePolygon") {
-                if (writeAccess && !writeAccess.polygonCoordinates) {
-                    return null;
-                }
-            } else if (binding.widget === "#FormUnitPolygon") {
-                if (writeAccess && !writeAccess.polygonCoordinates) {
-                    return null;
-                }
-            } else if (binding.widget === "#FormTabbedRepeater") {
-                const writeAccessKey = (binding.widgetProps?.writeAccessKey as string | undefined) ?? binding.name;
-                if (writeAccess && !writeAccess[writeAccessKey]) {
-                    return null;
-                }
-            } else if (binding.widget === "#FormExpenditureItemsField") {
-                if (writeAccess && !writeAccess.expenditureItems) {
-                    return null;
-                }
-            } else if (binding.widget === "#FormEditMediaField") {
-                if (writeAccess && !writeAccess.media) {
-                    return null;
-                }
-            } else if (writeAccess && binding.name !== "_id" && !binding.skipWriteAccessGate) {
-                const anyKeys =
-                    binding.renderWhenWriteAny && binding.renderWhenWriteAny.length > 0
-                        ? binding.renderWhenWriteAny
-                        : [binding.name];
-                if (!anyKeys.some((k) => resolveWriteAccess(writeAccess, k))) {
-                    return null;
-                }
-            }
-            return (
-                <div key={index}>
-                    {renderCompoundWidget(WidgetComponent, binding, resolveLanguageKey, {
-                        loading: loading || loadingData,
-                        editMode: true,
-                        writeAccess,
-                        formExtras,
-                    })}
-                </div>
-            );
-        }
-
-        if (writeAccess && binding.name !== "_id" && !binding.skipWriteAccessGate) {
-            const anyKeys =
-                binding.renderWhenWriteAny && binding.renderWhenWriteAny.length > 0
-                    ? binding.renderWhenWriteAny
-                    : [binding.name];
-            if (!anyKeys.some((k) => resolveWriteAccess(writeAccess, k))) {
-                return null;
-            }
-        }
-
-        const isDisabled = loading || loadingData || binding.disabled;
-
-        return (
-            <div key={index}>
-                <FormField
-                    control={form.control}
-                    name={binding.name as any}
-                    disabled={isDisabled}
-                    render={({ field }) => (
-                        <FormItem>
-                            {binding.label && (
-                                <FormLabel>
-                                    <span>
-                                        {resolveLanguageKey(binding.label)}
-                                        {binding.required && (
-                                            <span aria-hidden="true" className="ml-0.5 text-destructive">*</span>
-                                        )}
-                                    </span>
-                                </FormLabel>
-                            )}
-                            <FormControl aria-required={binding.required || undefined}>
-                                {renderFormWidget(WidgetComponent, binding, field, resolveLanguageKey, {
-                                    loading: loading || loadingData,
-                                    editMode: true,
-                                    formExtras,
-                                })}
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-            </div>
-        );
-    };
-
+    const busy = loading || loadingData;
     const ctx: ViewRendererContext = {
         resolveLanguageKey,
         mode: "form",
-        renderField,
+        renderField: createFormFieldRenderer({
+            control: form.control,
+            resolveLanguageKey,
+            extra: {loading: busy, editMode: true, writeAccess, formExtras},
+            canRender: writeAccess
+                ? (binding) => rendersOnEditForm(binding, (key) => hasAccessPath(writeAccess, key))
+                : undefined,
+        }),
         writeAccess,
         formLoading: loading,
         formLoadingData: loadingData,
         formExtras,
     };
 
+    const replaceForm = loadingData ? (
+        <Loader />
+    ) : loadingDataError ? (
+        <SimpleError
+            title={resolveLanguageKey(loadingDataErrorTitle)}
+            description={resolveLanguageKey(loadingDataErrorDescription)}
+            tooltipDescription={resolveLanguageKey(loadingDataErrorTooltip || loadingDataErrorDescription)}
+            onClick={() => onForceReload?.()}
+        />
+    ) : undefined;
+
+    const childrenFirst = !!formExtras?.renderChildrenFirst;
     return (
-        // Avoid nested `.flex-full` (each sets overflow-y: auto) — panel content is the sole scroll root.
-        <div className="flex flex-col gap-4">
-            {!hideChrome && (
-                <Header
-                    title={buildPageTitle(resolveLanguageKey("formHeader.title"), extraTitles?.filter(Boolean))}
-                    description={resolveLanguageKey("formHeader.description")}
-                    help={readPageHelp(resolveLanguageKey)}
-                />
-            )}
-            <div className={`flex flex-col gap-y-4 ${hideChrome ? "px-0 pb-2" : "px-2 pb-[100px]"}`}>
-                {
-                    loadingData ?
-                    <Loader />
-                    :
-                    <>
-                        {
-                            loadingDataError ?
-                            <>
-                                <SimpleError
-                                    title={resolveLanguageKey(loadingDataErrorTitle)}
-                                    description={resolveLanguageKey(loadingDataErrorDescription)}
-                                    tooltipDescription={resolveLanguageKey(loadingDataErrorTooltip || loadingDataErrorDescription)}
-                                    onClick={() => {onForceReload?.()}}
-                                />
-                            </>
-                            :
-                            <Form {...form}>
-                                <form
-                                    noValidate
-                                    onSubmit={form.handleSubmit(onSubmit as any, (errors) => {
-                                        const first = Object.keys(errors)[0];
-                                        if (first) form.setFocus(first as any);
-                                    })}
-                                    className="grid gap-4"
-                                >
-                                    <FieldGroup>
-                                        <ViewRenderer nodes={config.nodes} ctx={ctx} />
-                                        {renderChildren?.(form)}
-                                        {children}
-                                        <div className="flex grow items-center justify-end gap-2">
-                                            <Button type="button" variant="outline" onClick={onCancel} disabled={loading || loadingData}>
-                                                {resolveLanguageKey("formButtons.cancel")}
-                                            </Button>
-                                            <Button type="submit" disabled={loading || loadingData || submitDisabled}>
-                                                {loading ? <LoaderCircle className="animate-spin h-4 w-4" /> : (submitIcon ?? <Save />)}
-                                                {resolveLanguageKey("formButtons.submit")}
-                                            </Button>
-                                        </div>
-                                    </FieldGroup>
-                                </form>
-                            </Form>
-                        }
-                    </>
-                }
-                {/* <pre> */}
-                    {/* {JSON.stringify(form.getValues(), null, 2)} */}
-                {/* </pre> */}
-            </div>
-        </div>
+        <ViewFormShell
+            form={form}
+            resolveLanguageKey={resolveLanguageKey}
+            onSubmit={onSubmit}
+            onCancel={onCancel}
+            busy={busy}
+            submitting={loading}
+            submitDisabled={submitDisabled}
+            submitIcon={submitIcon}
+            extraTitles={extraTitles}
+            hideChrome={hideChrome}
+            hideActions={hideActions}
+            replaceForm={replaceForm}
+        >
+            {childrenFirst && renderChildren?.(form)}
+            <ViewRenderer nodes={config.nodes} ctx={ctx} />
+            {!childrenFirst && renderChildren?.(form)}
+            {children}
+        </ViewFormShell>
     );
 }

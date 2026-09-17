@@ -8,7 +8,7 @@ import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
 import StateCard from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/actions/viewCities.tsx";
 import StateSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx";
-import EntityListPage from "@baseModule/components/entityPage/EntityListPage.tsx";
+import EntityListPage from "@baseModule/components/entityPage/entityListPage.tsx";
 
 export function stateEditPath(countryId: string | undefined, countryName: string | undefined, state: State) {
     const params = new URLSearchParams();

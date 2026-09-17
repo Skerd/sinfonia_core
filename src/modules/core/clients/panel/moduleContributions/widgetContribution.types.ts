@@ -2,6 +2,9 @@ import type {ComponentType, ReactNode} from "react";
 import type {FieldBinding, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ViewRendererContext} from "@coreModule/components/viewEngine/viewRendererHelpers.ts";
 import type {WidgetMeta} from "@coreModule/components/viewEngine/widgetMeta.ts";
+import type {CompoundFormWidgetRenderer} from "@coreModule/components/viewEngine/form/types.ts";
+
+export type {CompoundFormWidgetArgs, CompoundFormWidgetRenderer, FormWidgetExtra} from "@coreModule/components/viewEngine/form/types.ts";
 
 /**
  * Optional attach file: `src/modules/<pkg>/clients/panel/widgetContribution.ts(x)`.
@@ -54,13 +57,22 @@ export type WidgetContribution = {
     /** Token → custom sheet field branch (replaces hard-coded ViewRenderer cases). */
     sheetFieldRenderers?: Record<string, SheetFieldRenderer>;
     /**
-     * Form tokens that own their own `FormField` (must not be wrapped again).
-     * Merged into Core’s compound set — do not list module tokens in `renderFormWidget`.
+     * Form tokens that own their own `FormField` (must not be wrapped again) and take the
+     * default compound props (`name`, `label`, `placeholder`, … then `widgetProps`).
+     * Tokens listed in {@link compoundFormWidgetRenderers} need not be repeated here.
      */
     compoundFormWidgets?: string[];
+    /** Compound form tokens with their own binding → props mapping. Each token is compound. */
+    compoundFormWidgetRenderers?: Record<string, CompoundFormWidgetRenderer>;
+    /**
+     * Edit-form write gate: token → the write-access key that decides whether the widget
+     * renders, for compound widgets whose field name is not a real schema path
+     * (e.g. `#FormFloorPolygon` → `polygonCoordinates`).
+     */
+    formWriteAccessKeys?: Record<string, string>;
     /**
      * Widget / linked-sheet tokens → audit `singlePost` hints.
-     * Merged into `collectFieldLabelsFromViewConfig` LOOKUPs.
+     * Read by the audit drawer (`viewEngine/audit/auditFieldHints.ts`).
      */
     auditSinglePostHints?: Record<string, AuditSinglePostHint>;
 };

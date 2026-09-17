@@ -14,8 +14,8 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {IconInfoCircle, IconLink} from "@tabler/icons-react";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheetMenuNavigateDismiss.tsx";
-import SheetMediaAvatar from "@coreModule/components/viewEngine/sheetMediaAvatar.tsx";
+import {useDismissSheetBeforeMenuNavigate} from "@coreModule/components/viewEngine/sheet/widgets/sheetMenuNavigateDismiss.tsx";
+import SheetMediaAvatar from "@coreModule/components/viewEngine/sheet/widgets/sheetMediaAvatar.tsx";
 import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
 import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {Dialog, DialogContent, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
@@ -81,7 +81,13 @@ type DisplayCardProps = {
     internalHref?: string;
     linkedReferenceSheet?: {
         resourceId: string;
-        LinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps>;
+        LinkedSheet: ComponentType<any>;
+        /**
+         * Extra props for {@link LinkedSheet}. Keep `LinkedSheet` a module-level component and
+         * pass per-card bindings here: a component created during render is a new type each
+         * render, which remounts the open nested sheet whenever the parent re-renders.
+         */
+        linkedSheetProps?: Record<string, unknown>;
     };
     /** When true, long values show read more / read less inside the card. */
     expandable?: boolean;
@@ -131,11 +137,13 @@ function resourceHasPositiveRead(read: unknown): boolean {
 
 function DisplayCardNestedSheets({
     LinkedSheet,
+    linkedSheetProps,
     linkedOpen,
     onClose,
     onLinkedDeleted,
 }: {
-    LinkedSheet: ComponentType<DisplayCardLinkedSheetOuterProps>;
+    LinkedSheet: ComponentType<any>;
+    linkedSheetProps?: Record<string, unknown>;
     linkedOpen: boolean;
     onClose: () => void;
     onLinkedDeleted?: () => void;
@@ -143,17 +151,18 @@ function DisplayCardNestedSheets({
     if (!linkedOpen) {
         return null;
     }
+    const outer: DisplayCardLinkedSheetOuterProps = {
+        open: true,
+        onLinkedDeleted,
+        onOpenChange: (next: boolean) => {
+            if (!next) {
+                onClose();
+            }
+        },
+    };
     return (
         <Suspense fallback={null}>
-            <LinkedSheet
-                open
-                onLinkedDeleted={onLinkedDeleted}
-                onOpenChange={(next: boolean) => {
-                    if (!next) {
-                        onClose();
-                    }
-                }}
-            />
+            <LinkedSheet {...linkedSheetProps} {...outer} />
         </Suspense>
     );
 }
@@ -492,6 +501,7 @@ export default function DisplayCard({
             {LinkedSheet != null && (
                 <DisplayCardNestedSheets
                     LinkedSheet={LinkedSheet}
+                    linkedSheetProps={linkedReferenceSheet?.linkedSheetProps}
                     linkedOpen={linkedSheetOpen}
                     onClose={() => { setLinkedSheetOpen(false); }}
                     onLinkedDeleted={() => {

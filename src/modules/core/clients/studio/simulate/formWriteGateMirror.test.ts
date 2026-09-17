@@ -1,6 +1,14 @@
-import {describe, expect, it} from "vitest";
+import {describe, expect, it, vi} from "vitest";
 import type {ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import {countHiddenByWriteGate, rendersOnEditForm} from "./formWriteGateMirror.ts";
+
+/* Module write keys come from widget contributions; stand in for property management's. */
+vi.mock("@coreModule/clients/panel/moduleContributions/loadWidgetContributions.ts", () => ({
+    getSortedWidgetContributions: () => [
+        {id: "propertyManagement", formWriteAccessKeys: {"#FormFloorPolygon": "polygonCoordinates"}},
+    ],
+}));
+
+const {countHiddenByWriteGate, rendersOnEditForm} = await import("./formWriteGateMirror.ts");
 
 const write = new Set(["name", "polygonCoordinates", "items"]);
 

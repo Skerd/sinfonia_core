@@ -25,7 +25,7 @@ import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.t
 import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import SheetMediaAvatar from "@coreModule/components/viewEngine/sheetMediaAvatar.tsx";
+import SheetMediaAvatar from "@coreModule/components/viewEngine/sheet/widgets/sheetMediaAvatar.tsx";
 import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
 import {enumLabel} from "@coreModule/components/custom/filterBuilder/filterValueInput.tsx";
 import {

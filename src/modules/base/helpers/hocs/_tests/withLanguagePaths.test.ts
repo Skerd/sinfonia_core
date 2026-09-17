@@ -11,7 +11,7 @@ import {describe, expect, it} from "vitest";
 const SHARED_DICTIONARIES: Record<string, string[]> = {
     "src/modules/core/clients/panel/private/home/PanelHomePage.tsx": ["src/modules/core/clients/panel/private/sidebar/index.tsx"],
     "src/modules/core/components/custom/commandPalette.tsx": ["src/modules/core/clients/panel/private/sidebar/index.tsx"],
-    "src/modules/core/components/viewEngine/sheetEmbeddedAddressCard.tsx": ["src/modules/core/components/custom/addresses/formAddressWithMap.tsx"],
+    "src/modules/core/components/viewEngine/sheet/widgets/addresses/sheetEmbeddedAddressCard.tsx": ["src/modules/core/components/custom/addresses/formAddressWithMap.tsx"],
     "src/modules/core/components/custom/apiSelect/adapters/createUserInlineAdapter.tsx": ["src/modules/core/clients/panel/private/users/createUser/index.tsx"],
     "src/modules/eCommerce/clients/panel/private/posConfigs/center/actions/posConfigsBulkMenu.tsx": ["src/modules/eCommerce/clients/panel/private/posConfigs/index.tsx"],
     "src/modules/propertyManagement/clients/panel/private/unitCosts/paymentCalendarTab.tsx": ["src/modules/propertyManagement/clients/panel/private/unitCosts/index.tsx"],
