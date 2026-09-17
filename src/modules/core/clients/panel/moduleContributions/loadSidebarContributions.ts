@@ -1,10 +1,10 @@
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
-import type { NavGroup } from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import type { NavGroup } from "@baseModule/helpers/types/sidebarNav.types.ts";
 import type {
     SidebarContribution,
     SidebarContributionContext,
 } from "@coreModule/clients/panel/moduleContributions/sidebarContribution.types.ts";
-import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
+import {filterGlobByEnabledModules} from "@baseModule/helpers/modules/enabledModules.ts";
 
 const raw = filterGlobByEnabledModules(
     import.meta.glob<Record<string, unknown>>(

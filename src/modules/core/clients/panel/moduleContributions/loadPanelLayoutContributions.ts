@@ -2,7 +2,7 @@ import type {
     PanelLayoutContribution,
     PanelLayoutContributionArgs,
 } from "@coreModule/clients/panel/moduleContributions/panelLayoutContribution.types.ts";
-import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
+import {filterGlobByEnabledModules} from "@baseModule/helpers/modules/enabledModules.ts";
 
 const raw = filterGlobByEnabledModules(
     import.meta.glob<Record<string, unknown>>(

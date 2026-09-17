@@ -1,7 +1,7 @@
 import {describe, expect, it} from "vitest";
 import type {AccessContextValue} from "@baseModule/helpers/context/accessContext.tsx";
-import {filterNavGroups, navItemAllowed} from "@coreModule/helpers/panel/filterNavByAccess.ts";
-import type {NavGroup, ProtectedNav} from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import {filterNavGroups, navItemAllowed} from "@baseModule/helpers/navigation/filterNavByAccess.ts";
+import type {NavGroup, ProtectedNav} from "@baseModule/helpers/types/sidebarNav.types.ts";
 
 const guard = (permissions: string[] = [], atLeastOnePermission = false): ProtectedNav => ({
     permissions,

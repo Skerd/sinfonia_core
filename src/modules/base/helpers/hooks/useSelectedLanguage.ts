@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import {RootState} from '@baseModule/helpers/redux/store/generalStore.ts'
 import {useSelector} from 'react-redux'
 import mainConfig from '@coreModule/assets/languages/mainConfig.json'
-import {filterGlobByEnabledModules} from '@coreModule/helpers/modules/enabledModules.ts'
+import {filterGlobByEnabledModules} from '@baseModule/helpers/modules/enabledModules.ts'
 import {applyModuleMenuContributions} from '@coreModule/clients/panel/moduleContributions/loadMenuLanguageContributions.ts'
 import {applyModuleRolesPermissionsContributions} from '@coreModule/clients/panel/moduleContributions/loadRolesPermissionsContributions.ts'
 

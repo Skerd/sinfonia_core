@@ -1,5 +1,5 @@
 import type {RouteConfigArgs, RouteConfigContribution} from "@coreModule/clients/panel/moduleContributions/routeConfigContribution.types.ts";
-import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
+import {filterGlobByEnabledModules} from "@baseModule/helpers/modules/enabledModules.ts";
 
 const raw = filterGlobByEnabledModules(
     import.meta.glob<Record<string, unknown>>(

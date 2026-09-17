@@ -1,6 +1,6 @@
 import type {ElementType} from "react";
 import {createPath} from "react-router-dom";
-import type {NavGroup, NavItem, NavSubItem} from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import type {NavGroup, NavItem, NavSubItem} from "@baseModule/helpers/types/sidebarNav.types.ts";
 
 export type FlatPanelNavLink = {
     title: string;

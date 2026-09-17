@@ -10,8 +10,8 @@ import {
 } from "@coreModule/components/ui/command.tsx";
 import {Kbd, KbdGroup} from "@coreModule/components/ui/kbd.tsx";
 import {getModuleSidebarNavGroups} from "@coreModule/clients/panel/moduleContributions/loadSidebarContributions.ts";
-import {flattenPanelNavLinks} from "@coreModule/helpers/panel/flattenPanelNavLinks.ts";
-import {filterNavGroups} from "@coreModule/helpers/panel/filterNavByAccess.ts";
+import {flattenPanelNavLinks} from "@baseModule/helpers/navigation/flattenPanelNavLinks.ts";
+import {filterNavGroups} from "@baseModule/helpers/navigation/filterNavByAccess.ts";
 import {useAccessHydrated, useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";
 import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";

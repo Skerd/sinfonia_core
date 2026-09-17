@@ -23,7 +23,7 @@ import {
     IconUserKey,
 } from "@tabler/icons-react";
 import type {SidebarContribution} from "@coreModule/clients/panel/moduleContributions/sidebarContribution.types.ts";
-import type {NavGroup, NavItem} from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import type {NavGroup, NavItem} from "@baseModule/helpers/types/sidebarNav.types.ts";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {getTenancySettingsSubCollapsibles} from "@coreModule/clients/panel/moduleContributions/loadTenancySettingsContributions.ts";
 

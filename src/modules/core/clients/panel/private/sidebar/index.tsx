@@ -31,7 +31,7 @@ export type {
     NavLinkItem,
     NavSubCollapsible,
     ProtectedNav,
-} from "@coreModule/helpers/panel/sidebarNav.types.ts";
+} from "@baseModule/helpers/types/sidebarNav.types.ts";
 
 type AdministrativePanelSideBarProps = WithLanguageType & {
     specificUserId?: string;

@@ -13,6 +13,7 @@ import {visualizer} from "rollup-plugin-visualizer";
 import { resolveSinfoniaApp } from "./scripts/sinfoniaApps";
 import { studioSourcePlugin } from "./scripts/studioSourcePlugin";
 import { buildViteModuleAliases, syncTsconfigModulePaths, } from "./scripts/moduleAliases";
+import { resolveEnabledModules } from "./scripts/enabledModules";
 
 const require = createRequire(import.meta.url);
 const cMapsDir = normalizePath(
@@ -92,24 +93,16 @@ function sinfoniaAppFaviconPlugin(appRoot: string): Plugin {
 }
 
 /**
- * When `VITE_ENABLED_MODULES` is set, stub files under disabled `src/modules/<name>`
+ * When a module selection is active, stub files under disabled `src/modules/<name>`
  * packages so eager contribution globs do not pull them into the graph.
- * `core` and `base` are always kept. `base` holds the shared `apiClient`; stubbing it
- * (`export default undefined`) makes `apiClient.get` throw at runtime.
+ * `enabledModules` comes from `resolveEnabledModules`, so it already includes `core`, `base`
+ * and every `dependsOn` module. (`base` holds the shared `apiClient`; stubbing it would break every request.)
  */
-function enabledModulesExcludePlugin(rawEnv: string | undefined): Plugin {
-    const raw = rawEnv?.trim();
-    if (!raw) {
+function enabledModulesExcludePlugin(enabledModules: string[] | null): Plugin {
+    if (!enabledModules) {
         return {name: "sinfonia-enabled-modules"};
     }
-    const enabled = new Set([
-        "core",
-        "base",
-        ...raw
-            .split(",")
-            .map((s) => s.trim())
-            .filter(Boolean),
-    ]);
+    const enabled = new Set(enabledModules);
     const marker = "/src/modules/";
 
     return {
@@ -139,8 +132,15 @@ function enabledModulesExcludePlugin(rawEnv: string | undefined): Plugin {
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, __dirname, "");
-    const enabledModulesRaw =
-        process.env.VITE_ENABLED_MODULES ?? env.VITE_ENABLED_MODULES;
+    const enabledModules = resolveEnabledModules(
+        process.env.VITE_ENABLED_MODULES ?? env.VITE_ENABLED_MODULES,
+        __dirname,
+    );
+    if (enabledModules) {
+        // Vite loads client env after this callback and lets process.env win over .env files,
+        // so the client's `import.meta.env.VITE_ENABLED_MODULES` sees the resolved list.
+        process.env.VITE_ENABLED_MODULES = enabledModules.join(",");
+    }
     const sinfoniaApp = resolveSinfoniaApp(
         process.env.VITE_SINFONIA_APP ?? env.VITE_SINFONIA_APP,
     );
@@ -150,7 +150,7 @@ export default defineConfig(({ mode }) => {
     return {
         base: "/",
         plugins: [
-            enabledModulesExcludePlugin(enabledModulesRaw),
+            enabledModulesExcludePlugin(enabledModules),
             sinfoniaAppHtmlPlugin(sinfoniaApp.indexHtml, sinfoniaApp.appId),
             sinfoniaAppFaviconPlugin(sinfoniaApp.appRoot),
             /* Studio only, dev server only: reads and writes maestro's `*.views.ts`. The

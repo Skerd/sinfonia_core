@@ -1,7 +1,7 @@
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import type {NavSubCollapsible} from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import type {NavSubCollapsible} from "@baseModule/helpers/types/sidebarNav.types.ts";
 import type {TenancySettingsContribution} from "@coreModule/clients/panel/moduleContributions/tenancySettingsContribution.types.ts";
-import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
+import {filterGlobByEnabledModules} from "@baseModule/helpers/modules/enabledModules.ts";
 
 const raw = filterGlobByEnabledModules(
     import.meta.glob<Record<string, unknown>>(

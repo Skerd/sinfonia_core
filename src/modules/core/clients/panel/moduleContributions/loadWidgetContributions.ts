@@ -1,5 +1,5 @@
 import type {WidgetContribution} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
-import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
+import {filterGlobByEnabledModules} from "@baseModule/helpers/modules/enabledModules.ts";
 
 const raw = filterGlobByEnabledModules(
     import.meta.glob<Record<string, unknown>>(

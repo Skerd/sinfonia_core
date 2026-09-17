@@ -1,5 +1,5 @@
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import type {NavSubCollapsible} from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import type {NavSubCollapsible} from "@baseModule/helpers/types/sidebarNav.types.ts";
 
 /**
  * Optional attach file: `src/modules/<pkg>/clients/panel/tenancySettingsContribution.ts(x)`.

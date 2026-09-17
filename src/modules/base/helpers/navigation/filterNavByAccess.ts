@@ -1,5 +1,5 @@
 import type {AccessContextValue} from "@baseModule/helpers/context/accessContext.tsx";
-import type {NavGroup, NavItem, NavSubItem, ProtectedNav} from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import type {NavGroup, NavItem, NavSubItem, ProtectedNav} from "@baseModule/helpers/types/sidebarNav.types.ts";
 
 /** `useAccessHydrated()` value: `null` outside `AccessProvider`, `false` while loading, then `true`. */
 type AccessHydrated = boolean | null;

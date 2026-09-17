@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
-import {flattenPanelNavLinks} from "@coreModule/helpers/panel/flattenPanelNavLinks.ts";
-import type {NavGroup} from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import {flattenPanelNavLinks} from "@baseModule/helpers/navigation/flattenPanelNavLinks.ts";
+import type {NavGroup} from "@baseModule/helpers/types/sidebarNav.types.ts";
 
 const open = {permissions: [], usersPermissions: [], atLeastOnePermission: false};
 

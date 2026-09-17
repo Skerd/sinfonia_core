@@ -1,5 +1,5 @@
 import type {LanguageDictionary} from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
-import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
+import {filterGlobByEnabledModules} from "@baseModule/helpers/modules/enabledModules.ts";
 
 /**
  * Module-owned roles permission labels:

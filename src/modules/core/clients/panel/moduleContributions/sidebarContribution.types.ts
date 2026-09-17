@@ -1,5 +1,5 @@
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
-import type { NavGroup } from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import type { NavGroup } from "@baseModule/helpers/types/sidebarNav.types.ts";
 
 /** Optional context passed when building sidebar / apps launcher nav. */
 export type SidebarContributionContext = {

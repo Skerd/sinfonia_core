@@ -6,8 +6,8 @@ import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/with
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {getModuleSidebarNavGroups} from "@coreModule/clients/panel/moduleContributions/loadSidebarContributions.ts";
-import {flattenPanelNavLinks, type FlatPanelNavLink} from "@coreModule/helpers/panel/flattenPanelNavLinks.ts";
-import {filterNavGroups} from "@coreModule/helpers/panel/filterNavByAccess.ts";
+import {flattenPanelNavLinks, type FlatPanelNavLink} from "@baseModule/helpers/navigation/flattenPanelNavLinks.ts";
+import {filterNavGroups} from "@baseModule/helpers/navigation/filterNavByAccess.ts";
 import {useAccessHydrated, useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
