@@ -15,7 +15,7 @@ import {ensureDeviceId} from "@baseModule/helpers/context/localStorage/authentic
 const StudioGuard = lazy(() => import("@coreModule/clients/studio/studioGuard.tsx"));
 const StudioShell = lazy(() => import("@coreModule/clients/studio/layout/studioShell.tsx"));
 const WidgetGalleryPage = lazy(() => import("@coreModule/clients/studio/gallery/widgetGalleryPage.tsx"));
-const AuthenticationPage = lazy(() => import("@coreModule/clients/panel/pages/public/auth"));
+const AuthenticationPage = lazy(() => import("@coreModule/clients/panel/public/auth"));
 
 function ToasterContainer() {
     const isMobile = useIsMobile();

@@ -6,6 +6,11 @@ import {AuthenticationProvider} from "@baseModule/helpers/context/authentication
 import {TableConfigProvider} from "@baseModule/helpers/context/tableConfigContext.tsx";
 import {ViewConfigProvider} from "@baseModule/helpers/context/viewConfigContext.tsx";
 
+/**
+ * Pathless layout route for the whole authenticated panel: mounts the provider
+ * stack every private page assumes, then renders `<Outlet/>`. Not a page — the
+ * sibling folders here are the pages.
+ */
 function PrivatePage() {
     return (
         <AuthenticationProvider setupStep={1}>

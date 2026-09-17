@@ -27,10 +27,8 @@ src/modules/core/
 ├── clients/
 │   └── panel/
 │       ├── entryPoint/     # Panel shell, route resolution
-│       ├── moduleContributions/  # Contribution loaders (glob-based)
-│       ├── pages/
-│       ├── private/        # Core panel pages (users, tenancy, chat, …)
-│       └── public/         # Login, signup, password reset
+│       ├── private/        # Core panel pages (users, tenancy, chat, …); index.tsx is the auth-gated layout route
+│       └── public/         # Login, signup, password reset; auth/index.tsx is the /authenticate/:panel page
 ├── components/
 │   ├── ui/                 # Radix/shadcn primitives
 │   ├── animate-ui/         # Motion primitives

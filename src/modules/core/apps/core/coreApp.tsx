@@ -12,8 +12,8 @@ import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {SidebarProvider} from "@coreModule/components/ui/sidebar.tsx";
 import {ensureDeviceId} from "@baseModule/helpers/context/localStorage/authenticationStorage.ts";
 
-const PrivatePage = lazy(() => import("@coreModule/clients/panel/pages/private"));
-const AuthenticationPage = lazy(() => import("@coreModule/clients/panel/pages/public/auth"));
+const PrivatePage = lazy(() => import("@coreModule/clients/panel/private"));
+const AuthenticationPage = lazy(() => import("@coreModule/clients/panel/public/auth"));
 const AdministrativePanelSideBar = lazy(() => import("@coreModule/clients/panel/private/sidebar"));
 const CenterPanel = lazy(() => import("@coreModule/clients/panel/entryPoint"));
 

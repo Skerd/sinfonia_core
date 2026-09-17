@@ -31,6 +31,11 @@ function resolvePanel(panel: string | undefined): ComponentType | undefined {
     return resolveAuthPanelComponent(panel);
 }
 
+/**
+ * The `/authenticate/:panel` page. Resolves `:panel` against
+ * {@link CORE_AUTH_PANELS} — whose entries are the sibling folders here — and
+ * then against the module auth-panel contributions.
+ */
 export default function AuthenticationPage() {
 
     const {panel} = useParams();
