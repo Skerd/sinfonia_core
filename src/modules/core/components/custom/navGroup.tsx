@@ -5,8 +5,9 @@ import {Link, useParams, useLocation} from 'react-router-dom';
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from '@coreModule/components/ui/collapsible.tsx'
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from '@coreModule/components/ui/dropdown-menu.tsx';
 import {SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar} from '@coreModule/components/ui/sidebar.tsx';
-import {NavCollapsible, NavItem, NavLink, NavLinkItem, NavSubCollapsible, type ProtectedNav} from "@coreModule/helpers/panel/sidebarNav.types.ts";
-import {useAccessHydrated, useAccessMap, type AccessContextValue} from "@baseModule/helpers/context/accessContext.tsx";
+import {NavCollapsible, NavItem, NavLink, NavLinkItem, NavSubCollapsible} from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import {useAccessHydrated, useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";
+import {filterNavItems} from "@coreModule/helpers/panel/filterNavByAccess.ts";
 import {compose} from "redux";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
@@ -26,51 +27,6 @@ export function ProtectNavigation(
         // withClearance(permissions, usersPermissions, atLeastOnePermission),
         // withPiramida(true)
     )(protectWhat)
-}
-
-function hasReadOnMap(map: AccessContextValue, resourceId: string): boolean {
-    const read = map[resourceId.toLowerCase()]?.self?.read;
-    return read === true
-        || (typeof read === "object" && read !== null && Object.keys(read).length > 0);
-}
-
-function navItemAllowed(item: ProtectedNav, map: AccessContextValue, hydrated: boolean | null): boolean {
-    if (!item.permissions.length) return true;
-    if (hydrated === false) return true;
-    if (item.atLeastOnePermission) return item.permissions.some((permission) => hasReadOnMap(map, permission));
-    return item.permissions.every((permission) => hasReadOnMap(map, permission));
-}
-
-function filterNavSubItems(
-    items: (NavLinkItem | NavSubCollapsible)[],
-    map: AccessContextValue,
-    hydrated: boolean | null,
-): (NavLinkItem | NavSubCollapsible)[] {
-    return items.flatMap((item) => {
-        if ("items" in item && item.items) {
-            const children = filterNavSubItems(item.items, map, hydrated);
-            if (children.length === 0) return [];
-            if (!navItemAllowed(item, map, hydrated)) return [];
-            return [{...item, items: children}];
-        }
-        return navItemAllowed(item, map, hydrated) ? [item] : [];
-    });
-}
-
-function filterNavItems(
-    items: NavItem[],
-    map: AccessContextValue,
-    hydrated: boolean | null,
-): NavItem[] {
-    return items.flatMap<NavItem>((item) => {
-        if (!item.items) {
-            return navItemAllowed(item, map, hydrated) ? [item] : [];
-        }
-        const children = filterNavSubItems(item.items, map, hydrated);
-        if (children.length === 0) return [];
-        if (!navItemAllowed(item, map, hydrated)) return [];
-        return [{...item, items: children}];
-    });
 }
 
 function hrefMatchesSubLink(href: string, url: string | undefined): boolean {

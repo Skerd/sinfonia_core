@@ -15,8 +15,8 @@ import {
     SpreadsheetDialogViewer,
     TextDialogViewer,
 } from "@coreModule/components/custom/files/officePreview.tsx";
-import PdfDialogViewer from "@coreModule/helpers/pdf/PdfDialogViewer.tsx";
-import PdfFirstPageThumb from "@coreModule/helpers/pdf/PdfFirstPageThumb.tsx";
+import PdfDialogViewer from "@baseModule/components/custom/pdf/PdfDialogViewer.tsx";
+import PdfFirstPageThumb from "@baseModule/components/custom/pdf/PdfFirstPageThumb.tsx";
 
 const FILE_NAME_MAX_LENGTH = 18;
 const DEFAULT_VIDEO_UNSUPPORTED = "Your browser does not support the video tag.";

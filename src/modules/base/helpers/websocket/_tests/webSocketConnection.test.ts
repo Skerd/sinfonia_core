@@ -39,7 +39,7 @@ describe("shouldReconnect", () => {
         expect(shouldReconnect(close(code))).toBe(false);
     });
 
-    it.each([1001, 1005, 1006, 1011, 4000])("reconnects after close code %i", (code) => {
+    it.each([1001, 1005, 1006, 1011, 1012, 4000])("reconnects after close code %i", (code) => {
         expect(shouldReconnect(close(code))).toBe(true);
     });
 });

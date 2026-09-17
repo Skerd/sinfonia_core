@@ -5,7 +5,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";

@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 

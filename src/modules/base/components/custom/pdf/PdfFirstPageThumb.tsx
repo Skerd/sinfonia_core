@@ -1,8 +1,8 @@
 import {useEffect, useRef, useState} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {PDF_THUMB_MAX_BYTES} from "@coreModule/components/custom/files/mediaPreviewKind.ts";
-import {fetchMediaBytes} from "@coreModule/helpers/media/fetchMediaBytes.ts";
-import {renderPdfPageToCanvas} from "@coreModule/helpers/pdf/renderPdfPage.ts";
+import {fetchMediaBytes} from "@baseModule/helpers/media/fetchMediaBytes.ts";
+import {isAbortError, renderPdfBytesToCanvas} from "@baseModule/components/custom/pdf/renderPdfPage.ts";
 
 type PdfFirstPageThumbProps = {
     src: string;
@@ -13,9 +13,13 @@ type PdfFirstPageThumbProps = {
     fit?: "cover" | "contain";
 };
 
+const RESIZE_TOLERANCE = 2;
+const RESIZE_DEBOUNCE_MS = 80;
+
 /**
- * Renders PDF page 1 into a canvas when the tile scrolls into view.
- * Caps concurrent pdf.js work so a documents grid does not spawn a worker per tile.
+ * Renders PDF page 1 into a canvas once the tile scrolls into view.
+ * Rendering goes through the shared render slots and worker in `renderPdfPage.ts`,
+ * so a documents grid does not start one worker per tile.
  */
 export default function PdfFirstPageThumb({
     src,
@@ -25,7 +29,9 @@ export default function PdfFirstPageThumb({
     fit = "cover",
 }: PdfFirstPageThumbProps) {
     const onFailRef = useRef(onFail);
-    onFailRef.current = onFail;
+    useEffect(() => {
+        onFailRef.current = onFail;
+    });
     const wrapRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [visible, setVisible] = useState(false);
@@ -33,20 +39,22 @@ export default function PdfFirstPageThumb({
     const [box, setBox] = useState({width: 0, height: 0});
     const [payload, setPayload] = useState<Uint8Array | null>(null);
 
+    // Only the first intersection matters; after that the observer is dropped.
     useEffect(() => {
         const el = wrapRef.current;
-        if (!el) return;
+        if (!el || visible) return;
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries.some((e) => e.isIntersecting)) {
                     setVisible(true);
+                    observer.disconnect();
                 }
             },
             {rootMargin: "80px"},
         );
         observer.observe(el);
         return () => observer.disconnect();
-    }, [src]);
+    }, [visible]);
 
     useEffect(() => {
         const el = wrapRef.current;
@@ -57,13 +65,13 @@ export default function PdfFirstPageThumb({
             const height = Math.round(el.clientHeight);
             window.clearTimeout(timeout);
             timeout = window.setTimeout(() => {
-                setBox((current) => {
-                    if (Math.abs(current.width - width) < 2 && Math.abs(current.height - height) < 2) {
-                        return current;
-                    }
-                    return {width, height};
-                });
-            }, 80);
+                setBox((current) =>
+                    Math.abs(current.width - width) < RESIZE_TOLERANCE &&
+                    Math.abs(current.height - height) < RESIZE_TOLERANCE
+                        ? current
+                        : {width, height},
+                );
+            }, RESIZE_DEBOUNCE_MS);
         };
         measure();
         const resizeObserver = new ResizeObserver(measure);
@@ -72,7 +80,7 @@ export default function PdfFirstPageThumb({
             window.clearTimeout(timeout);
             resizeObserver.disconnect();
         };
-    }, [src, visible]);
+    }, [visible]);
 
     useEffect(() => {
         setPayload(null);
@@ -93,47 +101,36 @@ export default function PdfFirstPageThumb({
                     return;
                 }
                 setPayload(data);
-            } catch {
-                if (controller.signal.aborted) return;
-                onFailRef.current?.();
+            } catch (err) {
+                if (!isAbortError(err, controller.signal)) onFailRef.current?.();
             }
         })();
-
         return () => controller.abort();
     }, [src, visible, fileSizeBytes]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        /* Table file tiles are `size-9` (~36px). Skipping below 40px left those
-           canvases at opacity-0 forever. Only wait for an unmeasured box. */
+        /* Table file tiles are `size-9` (~36px), so any measured size is rendered;
+           only an unmeasured box is skipped. */
         if (!canvas || !payload || box.width < 1 || box.height < 1) return;
 
         const controller = new AbortController();
-        setReady(false);
-        const cssWidth = box.width;
-        const cssMaxHeight = box.height;
-
         (async () => {
             try {
-                await renderPdfPageToCanvas({
-                    data: payload,
+                // The canvas is sized by CSS (`size-full` + object-fit); only its bitmap comes from here.
+                await renderPdfBytesToCanvas(payload, {
                     pageNumber: 1,
-                    cssWidth,
-                    cssMaxHeight,
+                    cssWidth: box.width,
+                    cssMaxHeight: box.height,
                     fit,
                     canvas,
                     signal: controller.signal,
                 });
-                canvas.style.width = "100%";
-                canvas.style.height = "100%";
-                canvas.style.objectFit = fit;
                 if (!controller.signal.aborted) setReady(true);
-            } catch {
-                if (controller.signal.aborted) return;
-                onFailRef.current?.();
+            } catch (err) {
+                if (!isAbortError(err, controller.signal)) onFailRef.current?.();
             }
         })();
-
         return () => controller.abort();
     }, [payload, box.width, box.height, fit]);
 
@@ -141,8 +138,9 @@ export default function PdfFirstPageThumb({
         <div ref={wrapRef} className={cn("relative h-full w-full min-h-0 min-w-0 bg-muted", className)}>
             <canvas
                 ref={canvasRef}
+                aria-hidden
                 className={cn(
-                    "absolute inset-0 size-full object-center",
+                    "absolute inset-0 size-full object-center transition-opacity",
                     fit === "contain" ? "object-contain" : "object-cover",
                     !ready && "opacity-0",
                 )}

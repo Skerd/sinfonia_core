@@ -7,12 +7,12 @@ import ChatMember from "@coreModule/clients/panel/private/chat/center/chatMember
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import AddMember from "@coreModule/clients/panel/private/chat/center/chatMembers/addMember";
-import {updateChannelUsers} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {updateChannelUsers} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import NoData from "@coreModule/components/custom/noData.tsx";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {ChannelUser} from "armonia/src/modules/core/types";
 import {AllChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.response.type.ts";
 import {AllChannelMembersFormType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.type.ts";

@@ -5,7 +5,7 @@ import {Bell} from "lucide-react";
 import {useNavigate} from "react-router-dom";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import MarkAllAsReadButton from "@coreModule/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx";
@@ -16,7 +16,7 @@ import {
     setNotificationItems,
     setNotificationNumber,
     setNotificationsLoading
-} from "@coreModule/helpers/redux/slices/notificationSlice.ts";
+} from "@baseModule/helpers/redux/slices/notificationSlice.ts";
 import {
     NotificationType
 } from "armonia/src/modules/core/api/user/private/notifications/notifications.dto.ts";

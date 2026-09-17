@@ -5,7 +5,7 @@ import {CircleX} from "lucide-react";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useImperativeHandle, useState} from "react";
-import {deleteChannel, openChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {deleteChannel, openChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch} from "react-redux";
 import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";

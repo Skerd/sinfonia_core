@@ -13,7 +13,7 @@ import {renderCenterPanelContent} from "@coreModule/clients/panel/entryPoint/rou
 import NotificationBell from "@coreModule/components/custom/notificationBell";
 import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {resolveCenterPanelClassName} from "@coreModule/clients/panel/moduleContributions/loadPanelLayoutContributions.ts";
 import {Fragment, useMemo, useState} from "react";
 import CommandPalette from "@coreModule/components/custom/commandPalette.tsx";

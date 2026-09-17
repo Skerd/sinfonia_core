@@ -1,7 +1,7 @@
 import {toast} from "sonner";
-import {ComponentType, RefObject, useCallback, useMemo, useRef, useState} from 'react';
+import {ComponentType, RefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import JsonView from "@uiw/react-json-view";
-import {replaceFilesWithIds} from "@coreModule/helpers/media/uploadFilesForSubmit.ts";
+import {containsFile, replaceFilesWithIds} from "@baseModule/helpers/media/uploadFilesForSubmit.ts";
 import {getClientConfig} from "@coreModule/helpers/general";
 import useHttpRequest, {
     HttpError,
@@ -197,15 +197,6 @@ type RequestState = {
     jsonData: Record<string, unknown> | null;
 }
 
-function hasNestedFile(value: unknown): boolean {
-    if (value instanceof File) return true;
-    if (Array.isArray(value)) return value.some(hasNestedFile);
-    if (typeof value === "object" && value !== null) {
-        return Object.values(value as Record<string, unknown>).some(hasNestedFile);
-    }
-    return false;
-}
-
 /**
  * Higher-order component that wires request state and request mutators into the wrapped component.
  *
@@ -238,11 +229,16 @@ const withAxios =
                 const [startedFetchCount, setStartedFetchCount] = useState<number>(0);
                 const [pendingUploads, setPendingUploads] = useState<number>(0);
                 const submissionIdRef = useRef(0);
+                /** Cancels the in-flight upload once a newer submission (or unmount) makes it moot. */
+                const uploadAbortRef = useRef<AbortController | null>(null);
+
+                useEffect(() => () => uploadAbortRef.current?.abort(), []);
 
                 const debugCallbacks = useRequestDebugToast(httpRequest.method);
 
                 const submit = useCallback((payload: RequestPayload, jsonData: Record<string, unknown> | null = null) => {
                     submissionIdRef.current += 1;
+                    uploadAbortRef.current?.abort();
                     setRequest({payload: payload instanceof FormData ? payload : {...payload}, jsonData});
                     setFetchCount((count) => count + 1);
                 }, []);
@@ -258,19 +254,26 @@ const withAxios =
                 }, [submit]);
 
                 const onPost = useCallback(async (data: PostType | FormData) => {
-                    if (data instanceof FormData || !hasNestedFile(data)) {
+                    if (data instanceof FormData || !containsFile(data)) {
                         submit(data);
                         return;
                     }
+                    uploadAbortRef.current?.abort();
+                    const controller = new AbortController();
+                    uploadAbortRef.current = controller;
                     const submissionId = ++submissionIdRef.current;
                     setPendingUploads((count) => count + 1);
                     try {
-                        const cleanData = await replaceFilesWithIds(data);
+                        const cleanData = await replaceFilesWithIds(data, {signal: controller.signal});
                         // A later submission won while files were uploading; drop this one.
                         if (submissionId === submissionIdRef.current) {
                             submit(cleanData);
                         }
+                    } catch (error) {
+                        // Superseded uploads are cancelled on purpose; only a live submission reports failure.
+                        if (submissionId === submissionIdRef.current) throw error;
                     } finally {
+                        if (uploadAbortRef.current === controller) uploadAbortRef.current = null;
                         setPendingUploads((count) => count - 1);
                     }
                 }, [submit]);

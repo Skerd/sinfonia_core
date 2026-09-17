@@ -1,7 +1,15 @@
 /** Connection policy for the panel socket (`WebSocketProvider`). */
 
-/** Close codes after which reconnecting would not help: a normal close, or the server rejecting the token. */
-export const NO_RECONNECT_CLOSE_CODES = new Set([1000, 1008]);
+/**
+ * Close codes after which reconnecting would not help:
+ * - 1000: a deliberate close.
+ * - 1008: the server rejected the token, a malformed frame, or too many connections. A new token
+ *   changes the URL, which opens a fresh connection anyway.
+ *
+ * Everything else reconnects, notably 1006 (connection lost) and 1011 (server-side failure).
+ * Keep in sync with the close codes in maestro's `websocket/webSocket.ts`.
+ */
+export const NO_RECONNECT_CLOSE_CODES: ReadonlySet<number> = new Set([1000, 1008]);
 const MAX_RECONNECT_DELAY_MS = 30_000;
 
 /** `ws(s)://<host>/ws/<token>/<languageCode>`, matching the page's protocol. */
@@ -19,6 +27,7 @@ export function reconnectDelay(attempt: number, random: () => number = Math.rand
     return Math.min(MAX_RECONNECT_DELAY_MS, 1000 * 2 ** attempt) + Math.floor(random() * 1000);
 }
 
-export function shouldReconnect(event: CloseEvent): boolean {
+/** `react-use-websocket`'s `shouldReconnect`: retry unless the close code is final. */
+export function shouldReconnect(event: Pick<CloseEvent, "code">): boolean {
     return !NO_RECONNECT_CLOSE_CODES.has(event.code);
 }

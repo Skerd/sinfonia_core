@@ -6,7 +6,7 @@ import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/co
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
 import {useImperativeHandle} from "react";
-import {updateMessagePinned} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {updateMessagePinned} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch} from "react-redux";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";

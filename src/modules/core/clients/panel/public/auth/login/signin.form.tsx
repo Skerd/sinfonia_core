@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 import { useForm } from 'react-hook-form';
 import { Input } from '@coreModule/components/ui/input.tsx';
 import { Loader2, LogIn } from 'lucide-react';
-import {logIn} from "@coreModule/helpers/redux/slices/authSlice.ts";
+import {logIn} from "@baseModule/helpers/redux/slices/authSlice.ts";
 import { Button } from '@coreModule/components/ui/button.tsx';
 import {getClientConfig} from "@coreModule/helpers/general";
 import { zodResolver } from '@hookform/resolvers/zod';

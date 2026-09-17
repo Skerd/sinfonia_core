@@ -11,7 +11,7 @@ import {compose} from "redux";
 import {useImperativeHandle} from "react";
 import {ApiSelect} from "@coreModule/components/custom/apiSelect";
 import {defaultInviteUserValues} from "@coreModule/helpers/defaultFormValues";
-import {newUserCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
+import {newUserCreated} from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import {useDispatch} from "react-redux";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";

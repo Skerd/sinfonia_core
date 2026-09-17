@@ -1,7 +1,7 @@
 import {compose} from "redux";
 import {useEffect, useMemo, useRef, useState} from "react";
 import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {ReloginProvider} from "@baseModule/helpers/context/reloginContext.tsx";
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem} from "@coreModule/components/ui/sidebar.tsx";

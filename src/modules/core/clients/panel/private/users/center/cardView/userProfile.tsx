@@ -9,7 +9,7 @@ import {CompanyUserType} from "armonia/src/modules/core/api/company/private/user
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {UserProfileCard} from "./userProfileCard.tsx";
 import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 
 type UserProfileProps = WithLanguageType & WithAxiosType<CompanyUserType> & {
     specificUserId?: string;

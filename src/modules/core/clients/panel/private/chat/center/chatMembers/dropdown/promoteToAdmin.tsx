@@ -9,7 +9,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useImperativeHandle} from "react";
 import {useDispatch} from "react-redux";
 import {ChannelUser} from "armonia/src/modules/core/types";
-import {promoteToAdmin as promoteToAdminAction} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {promoteToAdmin as promoteToAdminAction} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {MakeUserChannelAdminFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/makeUserChannelAdmin.form.response.type.ts";
 import {MakeUserChannelAdminFormType} from "armonia/src/modules/core/api/user/private/chats/channels/makeUserChannelAdmin.form.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";

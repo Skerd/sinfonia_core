@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
 import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";

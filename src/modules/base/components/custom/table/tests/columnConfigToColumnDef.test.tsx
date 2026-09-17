@@ -3,7 +3,7 @@ import {describe, expect, it} from "vitest";
 import {Provider} from "react-redux";
 import {configureStore} from "@reduxjs/toolkit";
 import type {ReactNode} from "react";
-import languageReducer from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import languageReducer from "@baseModule/helpers/redux/slices/languageSlice.ts";
 import type {TableColumnConfig} from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type.ts";
 import {columnConfigToColumnDef} from "@baseModule/components/custom/table/columnConfigToColumnDef.tsx";
 

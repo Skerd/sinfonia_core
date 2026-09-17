@@ -1,6 +1,6 @@
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import {setActionMessage} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {setActionMessage} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {Forward} from "lucide-react";
 import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/context-menu.tsx";
 import {useDispatch} from "react-redux";

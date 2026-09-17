@@ -1,7 +1,7 @@
 import {useEffect, useState, type ReactNode} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {signOut, updateToken, updateUserData} from "@coreModule/helpers/redux/slices/authSlice.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import {signOut, updateToken, updateUserData} from "@baseModule/helpers/redux/slices/authSlice.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";

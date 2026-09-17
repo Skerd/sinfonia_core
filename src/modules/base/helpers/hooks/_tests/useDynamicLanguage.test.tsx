@@ -3,7 +3,7 @@ import {beforeEach, describe, expect, it, vi} from "vitest";
 import type {ReactNode} from "react";
 import {Provider} from "react-redux";
 import {configureStore} from "@reduxjs/toolkit";
-import languageReducer, {changeLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import languageReducer, {changeLanguage} from "@baseModule/helpers/redux/slices/languageSlice.ts";
 import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 import {resolveTranslationKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useDynamicLanguage} from "@baseModule/helpers/hooks/useDynamicLanguage.ts";

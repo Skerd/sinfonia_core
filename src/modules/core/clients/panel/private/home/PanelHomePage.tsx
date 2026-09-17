@@ -3,10 +3,12 @@ import {useEffect, useMemo, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@coreModule/helpers/redux/slices/chatSlice.ts";
-import {getPanelNavGroups} from "@coreModule/helpers/panel/panelNavGroups.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@baseModule/helpers/redux/slices/chatSlice.ts";
+import {getModuleSidebarNavGroups} from "@coreModule/clients/panel/moduleContributions/loadSidebarContributions.ts";
 import {flattenPanelNavLinks, type FlatPanelNavLink} from "@coreModule/helpers/panel/flattenPanelNavLinks.ts";
+import {filterNavGroups} from "@coreModule/helpers/panel/filterNavByAccess.ts";
+import {useAccessHydrated, useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Empty, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
@@ -259,15 +261,17 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
     const chatUnreadTotal = useSelector(selectInternalChatUnread);
     const publicChatWaitingCount = useSelector((state: RootState) => state.chat.waitingCount);
     const publicChatMineUnread = useSelector(selectWebsiteChatMineUnread);
+    const accessMap = useAccessMap();
+    const accessHydrated = useAccessHydrated();
 
     const allLinks = useMemo(() => {
-        const groups = getPanelNavGroups(resolveLanguageKey, {
+        const groups = getModuleSidebarNavGroups(resolveLanguageKey, {
             chatUnreadTotal,
             publicChatWaitingCount,
             publicChatMineUnread,
         });
-        return flattenPanelNavLinks(groups);
-    }, [resolveLanguageKey, chatUnreadTotal, publicChatWaitingCount, publicChatMineUnread]);
+        return flattenPanelNavLinks(filterNavGroups(groups, accessMap, accessHydrated));
+    }, [resolveLanguageKey, chatUnreadTotal, publicChatWaitingCount, publicChatMineUnread, accessMap, accessHydrated]);
 
     const {recentLinks, trackVisit} = useRecentLinks(allLinks);
 

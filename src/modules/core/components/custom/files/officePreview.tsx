@@ -3,7 +3,7 @@ import {Download} from "lucide-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {SPREADSHEET_PREVIEW_MAX_ROWS, TEXT_PREVIEW_MAX_BYTES} from "@coreModule/components/custom/files/mediaPreviewKind.ts";
-import {fetchMediaBytes, fetchMediaText} from "@coreModule/helpers/media/fetchMediaBytes.ts";
+import {fetchMediaBytes, fetchMediaText} from "@baseModule/helpers/media/fetchMediaBytes.ts";
 
 type OfficePreviewProps = {
     src: string;

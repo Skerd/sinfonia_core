@@ -13,7 +13,7 @@ import type {AccessFormResponseType} from "armonia/src/modules/core/api/user/pri
 import type {AccessAllFormResponseType} from "armonia/src/modules/core/api/user/private/permissions/accessAll.form.response.type.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import useErrorHandler from "@baseModule/helpers/hooks/useErrorHandler.ts";
-import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import type {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import type {ReadOrWriteFields} from "armonia/src/modules/core/types";
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
 

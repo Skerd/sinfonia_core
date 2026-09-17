@@ -7,7 +7,7 @@ import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcu
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useEffect, useImperativeHandle, useState} from "react";
 import {toast} from "sonner";
-import {deleteChannel, openChannel, updateChannelReadOnlyState} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {deleteChannel, openChannel, updateChannelReadOnlyState} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch} from "react-redux";
 import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";

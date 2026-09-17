@@ -6,7 +6,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import {Pencil, X} from "lucide-react";
 import {getName} from "@coreModule/helpers/general";
-import {editMessage as editMessageAction, setActionMessage} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {editMessage as editMessageAction, setActionMessage} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import withLanguage from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";

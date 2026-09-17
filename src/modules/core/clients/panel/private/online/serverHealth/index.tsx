@@ -2,8 +2,8 @@ import {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {compose} from "redux";
 import {CheckCircle, AlertCircle} from "lucide-react";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {useWebSocketRoom} from "@coreModule/helpers/websocket/useWebSocketRoom.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import {useWebSocketRoom} from "@baseModule/helpers/hooks/useWebSocketRoom.ts";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
@@ -21,7 +21,7 @@ import {ServerHealthFormResponseType} from "armonia/src/modules/core/api/auxilia
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
-import {updateServerHealth} from "@coreModule/helpers/redux/slices/serverResourceSlice.ts";
+import {updateServerHealth} from "@baseModule/helpers/redux/slices/serverResourceSlice.ts";
 import {formatDate} from "@coreModule/helpers/general";
 
 type ServerHealthProps = WithLanguageType & WithAxiosType<ServerHealthFormResponseType> & {}

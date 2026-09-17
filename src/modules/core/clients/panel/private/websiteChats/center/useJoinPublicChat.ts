@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import {decrementWaitingCount, openChannel, upsertChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {decrementWaitingCount, openChannel, upsertChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import type {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 

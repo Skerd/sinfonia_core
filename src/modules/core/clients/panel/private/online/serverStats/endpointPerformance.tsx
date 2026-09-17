@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {compose} from "redux";
 import {Activity, TrendingUp, AlertTriangle, Clock, Zap, BarChart3} from "lucide-react";
 import {clsx} from "clsx";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@coreModule/components/ui/table/table.tsx";

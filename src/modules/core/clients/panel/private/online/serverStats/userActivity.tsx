@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {useEffect, useMemo, useState} from "react";
 import {useSelector} from "react-redux";
 import {Users, MessageSquare, Globe, Activity, ChevronDown, Search, ChevronLeft, ChevronRight} from "lucide-react";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";

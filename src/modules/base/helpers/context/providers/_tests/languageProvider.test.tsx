@@ -2,7 +2,7 @@ import {act, render, screen} from "@testing-library/react";
 import {beforeEach, describe, expect, it, vi} from "vitest";
 import {Provider, useSelector} from "react-redux";
 import {configureStore} from "@reduxjs/toolkit";
-import languageReducer, {changeLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import languageReducer, {changeLanguage} from "@baseModule/helpers/redux/slices/languageSlice.ts";
 import mainConfig from "@coreModule/assets/languages/mainConfig.json";
 import {isSupportedLanguageCode, LANGUAGE_STORAGE_KEY, LanguageProvider} from "@baseModule/helpers/context/providers/language-provider.tsx";
 import {resetLocalStorageMemoryFallback} from "@baseModule/helpers/context/localStorage/localStorageProvider.ts";

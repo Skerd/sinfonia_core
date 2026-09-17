@@ -1,12 +1,12 @@
 import {useState, useEffect, useImperativeHandle} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {compose} from "redux";
 import withLanguage, {ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription} from "@coreModule/components/ui/dialog.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
-import {newMessage, setActionMessage} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {newMessage, setActionMessage} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {Forward} from "lucide-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";

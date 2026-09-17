@@ -9,8 +9,10 @@ import {
     CommandList,
 } from "@coreModule/components/ui/command.tsx";
 import {Kbd, KbdGroup} from "@coreModule/components/ui/kbd.tsx";
-import {getPanelNavGroups} from "@coreModule/helpers/panel/panelNavGroups.ts";
+import {getModuleSidebarNavGroups} from "@coreModule/clients/panel/moduleContributions/loadSidebarContributions.ts";
 import {flattenPanelNavLinks} from "@coreModule/helpers/panel/flattenPanelNavLinks.ts";
+import {filterNavGroups} from "@coreModule/helpers/panel/filterNavByAccess.ts";
+import {useAccessHydrated, useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";
 import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 
@@ -29,11 +31,13 @@ function CommandPalette({resolveLanguageKey, open: openProp, onOpenChange}: Comm
     const open = openProp ?? internalOpen;
     const setOpen = onOpenChange ?? setInternalOpen;
     const navigate = useNavigate();
+    const accessMap = useAccessMap();
+    const accessHydrated = useAccessHydrated();
 
     const links = useMemo(() => {
-        const groups = getPanelNavGroups(resolveLanguageKey);
-        return flattenPanelNavLinks(groups);
-    }, [resolveLanguageKey]);
+        const groups = getModuleSidebarNavGroups(resolveLanguageKey);
+        return flattenPanelNavLinks(filterNavGroups(groups, accessMap, accessHydrated));
+    }, [resolveLanguageKey, accessMap, accessHydrated]);
 
     const byGroup = useMemo(() => {
         const map = new Map<string, typeof links>();

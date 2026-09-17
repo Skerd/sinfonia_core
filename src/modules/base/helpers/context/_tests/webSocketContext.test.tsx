@@ -15,7 +15,7 @@ const hook = vi.hoisted(() => ({
     sendJsonMessage: vi.fn(),
     getWebSocket: vi.fn(),
 }));
-const {handleMessageMock} = vi.hoisted(() => ({handleMessageMock: vi.fn()}));
+const {handleMessageMock, setRoomSocketMock} = vi.hoisted(() => ({handleMessageMock: vi.fn(), setRoomSocketMock: vi.fn()}));
 
 vi.mock("react-use-websocket", () => ({
     ReadyState: {UNINSTANTIATED: -1, CONNECTING: 0, OPEN: 1, CLOSING: 2, CLOSED: 3},
@@ -25,7 +25,8 @@ vi.mock("react-use-websocket", () => ({
         return {readyState: hook.readyState, sendJsonMessage: hook.sendJsonMessage, getWebSocket: hook.getWebSocket};
     },
 }));
-vi.mock("@coreModule/helpers/websocket/webSocketMessages.ts", () => ({handleWebSocketMessage: handleMessageMock}));
+vi.mock("@baseModule/helpers/websocket/webSocketMessages.ts", () => ({handleWebSocketMessage: handleMessageMock}));
+vi.mock("@baseModule/helpers/websocket/roomMemberships.ts", () => ({setRoomSocket: setRoomSocketMock}));
 vi.mock("@coreModule/components/ui/sessionSetupScreen.tsx", () => ({
     SESSION_SETUP_TOTAL_STEPS: 6,
     SessionSetupScreen: ({phase}: {phase: string}) => <div data-testid="setup">{phase}</div>,
@@ -34,9 +35,12 @@ vi.mock("@coreModule/components/ui/sessionSetupScreen.tsx", () => ({
 import * as webSocketContext from "@baseModule/helpers/context/webSocketContext.tsx";
 import {WebSocketProvider} from "@baseModule/helpers/context/webSocketContext.tsx";
 import {reconnectDelay, shouldReconnect} from "@baseModule/helpers/websocket/webSocketConnection.ts";
-import authenticationReducer, {logIn, signOut, updateUserData} from "@coreModule/helpers/redux/slices/authSlice.ts";
-import languageReducer, {changeLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
-import uiReducer from "@coreModule/helpers/redux/slices/uiSlice.ts";
+import authenticationReducer, {logIn, signOut, updateUserData} from "@baseModule/helpers/redux/slices/authSlice.ts";
+import languageReducer, {changeLanguage} from "@baseModule/helpers/redux/slices/languageSlice.ts";
+import uiReducer from "@baseModule/helpers/redux/slices/uiSlice.ts";
+
+/** The socket room memberships were last pointed at. */
+const roomSocket = () => setRoomSocketMock.mock.lastCall?.[0] ?? null;
 
 function setup({token = "token-a" as string | null, strict = false} = {}) {
     const store = configureStore({
@@ -82,6 +86,7 @@ beforeEach(() => {
     hook.getWebSocket.mockReset();
     hook.getWebSocket.mockImplementation(() => hook.socket);
     handleMessageMock.mockReset();
+    setRoomSocketMock.mockReset();
 });
 
 describe("WebSocketProvider", () => {
@@ -123,7 +128,7 @@ describe("WebSocketProvider", () => {
         it("is offline while connecting", () => {
             const {connected} = setup();
             expect(connected()).toBe(false);
-            expect(webSocketContext.clientWebSocket).toBeNull();
+            expect(roomSocket()).toBeNull();
         });
 
         it("exposes the socket and flag once open", () => {
@@ -132,7 +137,7 @@ describe("WebSocketProvider", () => {
 
             setReadyState(READY.OPEN, socket);
             expect(connected()).toBe(true);
-            expect(webSocketContext.clientWebSocket).toBe(socket);
+            expect(roomSocket()).toBe(socket);
         });
 
         it("goes offline when the socket closes", () => {
@@ -141,7 +146,7 @@ describe("WebSocketProvider", () => {
 
             setReadyState(READY.CLOSED);
             expect(connected()).toBe(false);
-            expect(webSocketContext.clientWebSocket).toBeNull();
+            expect(roomSocket()).toBeNull();
         });
 
         it("switches to the new socket after a reconnect", () => {
@@ -152,7 +157,7 @@ describe("WebSocketProvider", () => {
             setReadyState(READY.OPEN, newSocket);
 
             expect(connected()).toBe(true);
-            expect(webSocketContext.clientWebSocket).toBe(newSocket);
+            expect(roomSocket()).toBe(newSocket);
         });
 
         it("ignores the close callback: a replaced socket closing late keeps the app online", () => {
@@ -165,7 +170,7 @@ describe("WebSocketProvider", () => {
             info.mockRestore();
 
             expect(connected()).toBe(true);
-            expect(webSocketContext.clientWebSocket).toBe(socket);
+            expect(roomSocket()).toBe(socket);
         });
 
         it("logs socket errors without changing the state", () => {
@@ -185,7 +190,7 @@ describe("WebSocketProvider", () => {
 
             unmount();
             expect(connected()).toBe(false);
-            expect(webSocketContext.clientWebSocket).toBeNull();
+            expect(roomSocket()).toBeNull();
             expect(webSocketContext.sendWebsocketMessage).toBeNull();
         });
 
@@ -194,7 +199,7 @@ describe("WebSocketProvider", () => {
             const {connected, setReadyState} = setup({strict: true});
             setReadyState(READY.OPEN, socket);
             expect(connected()).toBe(true);
-            expect(webSocketContext.clientWebSocket).toBe(socket);
+            expect(roomSocket()).toBe(socket);
             expect(webSocketContext.sendWebsocketMessage).not.toBeNull();
         });
     });

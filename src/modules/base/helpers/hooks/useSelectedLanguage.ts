@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {RootState} from '@coreModule/helpers/redux/store/generalStore.ts'
+import {RootState} from '@baseModule/helpers/redux/store/generalStore.ts'
 import {useSelector} from 'react-redux'
 import mainConfig from '@coreModule/assets/languages/mainConfig.json'
 import {filterGlobByEnabledModules} from '@coreModule/helpers/modules/enabledModules.ts'

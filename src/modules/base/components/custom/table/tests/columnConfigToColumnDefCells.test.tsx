@@ -11,7 +11,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import {MemoryRouter} from "react-router-dom";
 import type {ReactNode} from "react";
 import type {ColumnDef, Row} from "@tanstack/react-table";
-import languageReducer from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import languageReducer from "@baseModule/helpers/redux/slices/languageSlice.ts";
 import type {TableColumnConfig} from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type.ts";
 import {columnConfigToColumnDef} from "@baseModule/components/custom/table/columnConfigToColumnDef.tsx";
 

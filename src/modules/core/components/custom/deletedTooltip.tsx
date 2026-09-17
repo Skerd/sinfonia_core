@@ -5,7 +5,7 @@ import React from "react";
 import { formatDate, getName } from "@coreModule/helpers/general";
 import type { DeletedData } from "armonia/src/modules/core/types/shared.types.ts";
 import { useSelector } from "react-redux";
-import { RootState } from "@coreModule/helpers/redux/store/generalStore.ts";
+import { RootState } from "@baseModule/helpers/redux/store/generalStore.ts";
 
 type DeletedTooltipProps = WithLanguageType & {
     children: React.ReactNode;

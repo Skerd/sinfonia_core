@@ -2,7 +2,7 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import {useEffect, useRef} from "react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import UsersInviteDialog from "@coreModule/clients/panel/private/users/inviteUser";
 import CreateUsers from "@coreModule/clients/panel/private/users/createUser";

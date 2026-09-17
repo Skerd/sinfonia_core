@@ -18,9 +18,9 @@ import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import AccountCompaniesCardEditRoles from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles";
 import {RequestsSection, hasRequestsData} from "@coreModule/clients/panel/private/users/center/cardView/userProfileCard.tsx";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {updateUserValue} from "@coreModule/helpers/redux/slices/authSlice.ts";
+import {updateUserValue} from "@baseModule/helpers/redux/slices/authSlice.ts";
 import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
 
 type UserAccountProfileUserInfoProps = WithLanguageType & WithAxiosType<CompanyUserType, any> & {

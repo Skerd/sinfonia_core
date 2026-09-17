@@ -5,7 +5,7 @@ import {useTheme} from "@baseModule/helpers/context/providers/theme-provider.tsx
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useImperativeHandle} from "react";
-import {updateMessageReaction} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {updateMessageReaction} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch} from "react-redux";
 import {AddReactionFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/addReaction.form.response.type.ts";
 import {AddReactionFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/addReaction.form.type.ts";

@@ -1,4 +1,4 @@
-import type {AppDispatch} from "@coreModule/helpers/redux/store/generalStore.ts";
+import type {AppDispatch} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {
     deleteChannel,
     demoteToUser,
@@ -13,13 +13,13 @@ import {
     updateDeletedMessageIds,
     updateMessagePinned,
     upsertChannel,
-} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {
     incrementUnreadNotifications,
     prependNotificationItems,
     setLatestNotification,
-} from "@coreModule/helpers/redux/slices/notificationSlice.ts";
-import {updateServerHealth, updateServerStats} from "@coreModule/helpers/redux/slices/serverResourceSlice.ts";
+} from "@baseModule/helpers/redux/slices/notificationSlice.ts";
+import {updateServerHealth, updateServerStats} from "@baseModule/helpers/redux/slices/serverResourceSlice.ts";
 import {sendReceiptsNow} from "@baseModule/helpers/chat/messageReceipts.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {handleError} from "@baseModule/helpers/general/errors.ts";
@@ -193,7 +193,14 @@ const HANDLERS: Record<string, Handler> = {
             dispatch(mergeMessageFromServer(message));
         });
     },
-    [WebSocketFEMessageCodes.SERVER_HEALTH_UPDATER]: (payload, {dispatch}) => {
+    /** Join acknowledgement: `{joined, alreadyJoined, failed}`. A refused room would otherwise stay silent. */
+    [WebSocketFEMessageCodes.JOIN_ROOM]: (payload) => {
+        const failed = stringList(payload.failed);
+        if (failed.length > 0) {
+            handleError(new Error(`Could not join rooms: ${failed.join(", ")}`), {context: LOG_CONTEXT});
+        }
+    },
+    [WebSocketFEMessageCodes.SERVER_HEALTH_UPDATER]:(payload, {dispatch}) => {
         dispatch(updateServerHealth(payload as ServerHealthFormResponseType));
     },
     [WebSocketFEMessageCodes.SERVER_STATS_UPDATER]: (payload, {dispatch}) => {

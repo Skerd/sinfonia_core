@@ -57,6 +57,7 @@ export const notificationSlice = createSlice({
             state.latestNotification = undefined;
             state.unreadNotifications = 0;
             state.items = [];
+            state.loading = false;
         },
         /** Set notification list (e.g. from API fetch). */
         setNotificationItems: (state, action: PayloadAction<NotificationType[]>) => {
@@ -64,19 +65,22 @@ export const notificationSlice = createSlice({
         },
         /** Prepend notifications (e.g. from WebSocket push). */
         prependNotificationItems: (state, action: PayloadAction<NotificationType[]>) => {
-            const existingIds = new Set(state.items.map((notification) => notification._id));
-            const newItems = action.payload.filter((notification) => !existingIds.has(notification._id));
+            const seenIds = new Set(state.items.map((notification) => notification._id));
+            const newItems = action.payload.filter((notification) => {
+                if (seenIds.has(notification._id)) return false;
+                seenIds.add(notification._id);
+                return true;
+            });
             state.items = [...newItems, ...state.items];
         },
         /** Marks currently cached notifications as read after a successful bulk update. */
         markCachedNotificationsRead: (state, action: PayloadAction<string | undefined>) => {
             const readOn = action.payload ?? new Date().toISOString();
-            state.items = state.items.map((notification) => ({
-                ...notification,
-                readOn: notification.readOn ?? readOn
-            }));
+            for (const notification of state.items) {
+                notification.readOn ??= readOn;
+            }
             if (state.latestNotification) {
-                state.latestNotification.readOn = state.latestNotification.readOn ?? readOn;
+                state.latestNotification.readOn ??= readOn;
             }
         },
         /** Set loading state. */

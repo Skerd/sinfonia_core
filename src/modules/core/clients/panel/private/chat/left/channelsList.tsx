@@ -1,8 +1,8 @@
 import { compose } from "redux";
 import {useDispatch, useSelector} from "react-redux";
-import {openChannel, selectChannelOrderIdsByKind} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {openChannel, selectChannelOrderIdsByKind} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Fragment, RefObject, useEffect, useRef} from "react";
 import {Info, Users} from "lucide-react";

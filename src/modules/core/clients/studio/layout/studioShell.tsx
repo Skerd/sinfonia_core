@@ -13,7 +13,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import ThemeSwitch from "@coreModule/components/custom/themeSwitch.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import ModelCatalogPane from "../catalog/modelCatalogPane.tsx";
 import StudioCommandPalette from "../command/studioCommandPalette.tsx";

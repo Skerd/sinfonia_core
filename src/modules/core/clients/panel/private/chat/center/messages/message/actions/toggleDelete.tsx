@@ -1,8 +1,8 @@
 import {compose} from "redux";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
-import {toggleDeleteMessageId} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {toggleDeleteMessageId} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 

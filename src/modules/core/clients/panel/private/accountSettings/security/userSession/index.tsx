@@ -6,7 +6,7 @@ import {KeyRound} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {getDeviceId} from "@baseModule/helpers/context/localStorage/authenticationStorage.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";

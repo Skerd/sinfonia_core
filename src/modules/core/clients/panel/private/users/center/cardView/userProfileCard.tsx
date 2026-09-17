@@ -41,7 +41,7 @@ import {MfaDeactivationRequestTabContent} from "@coreModule/clients/panel/privat
 import {PasswordResetRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/passwordResetRequestTabContent.tsx";
 import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import {TabsContent} from "@radix-ui/react-tabs";
 

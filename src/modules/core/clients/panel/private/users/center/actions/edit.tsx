@@ -5,7 +5,7 @@ import {UserPen} from "lucide-react";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {useDispatch} from "react-redux";
-import {editUser} from "@coreModule/helpers/redux/slices/uiSlice.ts";
+import {editUser} from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";

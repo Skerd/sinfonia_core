@@ -11,7 +11,7 @@ const {getMock, handleErrorMock, getUserMock} = vi.hoisted(() => ({
 
 vi.mock("@baseModule/helpers/apiClient/apiClient.ts", () => ({default: {get: getMock}}));
 vi.mock("@baseModule/helpers/hooks/useErrorHandler.ts", () => ({default: () => handleErrorMock}));
-vi.mock("@coreModule/helpers/context/localStorage/authenticationStorage.ts", () => ({getUser: getUserMock}));
+vi.mock("@baseModule/helpers/context/localStorage/authenticationStorage.ts", () => ({getUser: getUserMock}));
 vi.mock("armonia/src/modules/core/database/filter/pathUtils.ts", () => ({
     tableConfigToFilterConfig: (columns: TableColumnConfig[]) => columns.map((column) => ({name: column.id})),
 }));

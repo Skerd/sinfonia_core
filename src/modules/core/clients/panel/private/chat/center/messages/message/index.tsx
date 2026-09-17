@@ -1,12 +1,12 @@
 import {CSSProperties, ReactNode, useEffect, useRef, useState} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {ContextMenu, ContextMenuContent, ContextMenuTrigger} from "@coreModule/components/ui/context-menu.tsx";
 import {Forward, CircleSlash, Pin, User, Calendar, Check, CheckCheck} from "lucide-react";
-import {isPeekingWebsiteChannel, toggleDeleteMessageId, updateOpenDelete} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {isPeekingWebsiteChannel, toggleDeleteMessageId, updateOpenDelete} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
 import LongText from "@coreModule/components/custom/longText.tsx";
 import DeleteMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/deleteMessage.tsx";

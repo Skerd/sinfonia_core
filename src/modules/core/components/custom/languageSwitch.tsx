@@ -11,8 +11,8 @@ import {
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import mainConfig from "@coreModule/assets/languages/mainConfig.json";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {changeLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import {changeLanguage} from "@baseModule/helpers/redux/slices/languageSlice.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 type LanguageSwitchProps = WithLanguageType & {

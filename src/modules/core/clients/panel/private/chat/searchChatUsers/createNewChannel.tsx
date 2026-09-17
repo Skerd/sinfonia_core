@@ -4,7 +4,7 @@ import {compose} from "redux";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {useEffect, useImperativeHandle, useRef} from "react";
 import {useDispatch} from "react-redux";
-import {openChannel, upsertChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {openChannel, upsertChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {CreateChannelFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.response.type.ts";
 import {CreateChannelFormType} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.type.ts";

@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -11,7 +11,7 @@ import {formatDate, getName} from "@coreModule/helpers/general";
 import {useImperativeHandle, useState} from "react";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {updateMessageReaction} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {updateMessageReaction} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {RemoveReactionFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/removeReaction.form.response.type.ts";
 import {RemoveReactionFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/removeReaction.form.type.ts";

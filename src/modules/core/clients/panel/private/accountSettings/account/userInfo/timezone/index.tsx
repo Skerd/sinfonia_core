@@ -5,7 +5,7 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import timezones from "timezones.json";
 import {UserProfileTimezoneFormResponseType} from "armonia/src/modules/core/api/user/private/data/userProfileTimezone.form.response.type.ts";
 import {useDispatch} from "react-redux";
-import {updateTimezone} from "@coreModule/helpers/redux/slices/authSlice.ts";
+import {updateTimezone} from "@baseModule/helpers/redux/slices/authSlice.ts";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";

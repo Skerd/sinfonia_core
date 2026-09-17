@@ -12,7 +12,10 @@ vi.mock("sonner", () => ({toast: Object.assign(vi.fn(), {loading: vi.fn(), succe
 vi.mock("@coreModule/helpers/general", () => ({
     getClientConfig: () => ({debugging: {enableFormPostInfo: false, enableFormResponseSuccessInfo: false, enableFormResponseErrorInfo: false}}),
 }));
-vi.mock("@coreModule/helpers/media/uploadFilesForSubmit.ts", () => ({replaceFilesWithIds: replaceFilesWithIdsMock}));
+vi.mock("@coreModule/helpers/media/uploadFilesForSubmit.ts", async (importOriginal) => ({
+    ...await importOriginal<typeof import("@baseModule/helpers/media/uploadFilesForSubmit.ts")>(),
+    replaceFilesWithIds: replaceFilesWithIdsMock,
+}));
 vi.mock("@baseModule/helpers/hocs/withLanguage.tsx", () => ({
     default: () => (Wrapped: ComponentType<Record<string, unknown>>) =>
         (props: Record<string, unknown>) => <Wrapped {...props} resolveLanguageKey={(key: string) => key}/>,
@@ -81,5 +84,53 @@ describe("withAxios", () => {
         await act(async () => { finishUpload({file: "id-1"}); });
         await waitFor(() => expect(screen.getByTestId("loading")).toHaveTextContent("false"));
         expect(sentBodies()).toEqual([{plain: true}]);
+    });
+
+    it("cancels the upload a newer submission replaces, without reporting it", async () => {
+        const signals: AbortSignal[] = [];
+        replaceFilesWithIdsMock.mockImplementation((_data, {signal}: {signal: AbortSignal}) => {
+            signals.push(signal);
+            return new Promise((_resolve, reject) => signal.addEventListener("abort", () => reject(new Error("canceled"))));
+        });
+        apiClientMock.mockResolvedValue({data: {value: "ok"}});
+        const Wrapped = withAxios<Response>({method: "post", url: "/api/x"}, true)(View);
+        render(<Wrapped/>);
+
+        fireEvent.click(screen.getByText("post-file"));
+        fireEvent.click(screen.getByText("post-plain"));
+
+        await waitFor(() => expect(screen.getByTestId("loading")).toHaveTextContent("false"));
+        expect(signals).toHaveLength(1);
+        expect(signals[0].aborted).toBe(true);
+        expect(sentBodies()).toEqual([{plain: true}]);
+    });
+
+    it("cancels a running upload on unmount", async () => {
+        let signal: AbortSignal | undefined;
+        replaceFilesWithIdsMock.mockImplementation((_data, options: {signal: AbortSignal}) => {
+            signal = options.signal;
+            return new Promise(() => undefined);
+        });
+        const Wrapped = withAxios<Response>({method: "post", url: "/api/x"}, true)(View);
+        const {unmount} = render(<Wrapped/>);
+
+        fireEvent.click(screen.getByText("post-file"));
+        expect(signal?.aborted).toBe(false);
+        unmount();
+        expect(signal?.aborted).toBe(true);
+    });
+
+    it("reports a failed upload for the current submission", async () => {
+        replaceFilesWithIdsMock.mockRejectedValueOnce(new Error("upload failed"));
+        let posted: Promise<void> | undefined;
+        function Poster({onPost}: WithAxiosType<Response>) {
+            return <button onClick={() => { posted = onPost({file: new File(["x"], "a.txt")}) as Promise<void>; }}>post</button>;
+        }
+        const Wrapped = withAxios<Response>({method: "post", url: "/api/x"}, true)(Poster);
+        render(<Wrapped/>);
+
+        fireEvent.click(screen.getByText("post"));
+        await expect(posted).rejects.toThrow("upload failed");
+        expect(apiClientMock).not.toHaveBeenCalled();
     });
 });

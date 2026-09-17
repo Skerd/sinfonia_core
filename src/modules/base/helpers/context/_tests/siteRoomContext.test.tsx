@@ -1,21 +1,12 @@
 import {act, render, screen} from "@testing-library/react";
-import {beforeEach, describe, expect, it, vi} from "vitest";
-import {Provider} from "react-redux";
-import {configureStore, createSlice} from "@reduxjs/toolkit";
+import {beforeEach, describe, expect, it, type Mock, vi} from "vitest";
 import {MemoryRouter, useNavigate, type NavigateFunction} from "react-router-dom";
 
-type FakeSocket = {readyState: number; send: ReturnType<typeof vi.fn>};
+type FakeSocket = {readyState: number; send: Mock<(data: string) => void>};
 
 /* Socket and connection handling is covered by `useWebSocketRoom.test.tsx`; this file covers path → room. */
-const socketState = vi.hoisted(() => ({current: null as FakeSocket | null}));
-
-vi.mock("@baseModule/helpers/context/webSocketContext.tsx", () => ({
-    get clientWebSocket() {
-        return socketState.current;
-    },
-}));
 /* `/<room>/...` → `<room>`; `/` → `home`; `/noroom` → no room. */
-vi.mock("@coreModule/helpers/websocket/resolveSiteRoom.ts", () => ({
+vi.mock("@baseModule/helpers/websocket/resolveSiteRoom.ts", () => ({
     resolveSiteRoomFromPath: (pathname: string) => {
         const [first] = pathname.split("/").filter(Boolean);
         if (!first) return "home";
@@ -30,10 +21,9 @@ vi.mock("@coreModule/components/ui/sessionSetupScreen.tsx", () => ({
 }));
 
 import {SiteRoomProvider} from "@baseModule/helpers/context/siteRoomContext.tsx";
+import {resetRoomMemberships, setRoomSocket} from "@baseModule/helpers/websocket/roomMemberships.ts";
 
 const OPEN = 1;
-
-const uiSlice = createSlice({name: "ui", initialState: {webSocketConnected: true}, reducers: {}});
 
 function makeSocket(readyState = OPEN): FakeSocket {
     return {readyState, send: vi.fn()};
@@ -50,18 +40,13 @@ function CaptureNavigate() {
 }
 
 function renderProvider({path = "/sales/orders"} = {}) {
-    const store = configureStore({
-        reducer: {ui: uiSlice.reducer},
-    });
     const utils = render(
-        <Provider store={store}>
-            <MemoryRouter initialEntries={[path]}>
-                <CaptureNavigate/>
-                <SiteRoomProvider>
-                    <span>child</span>
-                </SiteRoomProvider>
-            </MemoryRouter>
-        </Provider>,
+        <MemoryRouter initialEntries={[path]}>
+            <CaptureNavigate/>
+            <SiteRoomProvider>
+                <span>child</span>
+            </SiteRoomProvider>
+        </MemoryRouter>,
     );
     return {
         ...utils,
@@ -69,8 +54,12 @@ function renderProvider({path = "/sales/orders"} = {}) {
     };
 }
 
+let socket: FakeSocket;
+
 beforeEach(() => {
-    socketState.current = makeSocket();
+    resetRoomMemberships();
+    socket = makeSocket();
+    setRoomSocket(socket);
 });
 
 describe("SiteRoomProvider", () => {
@@ -82,41 +71,41 @@ describe("SiteRoomProvider", () => {
 
     it("joins the room for the current path", () => {
         renderProvider({path: "/sales/orders"});
-        expect(sent(socketState.current!)).toEqual([join("sales")]);
+        expect(sent(socket)).toEqual([join("sales")]);
     });
 
     it("joins `home` at the root", () => {
         renderProvider({path: "/"});
-        expect(sent(socketState.current!)).toEqual([join("home")]);
+        expect(sent(socket)).toEqual([join("home")]);
     });
 
     it("sends nothing when the path has no room", () => {
         renderProvider({path: "/noroom"});
-        expect(socketState.current!.send).not.toHaveBeenCalled();
+        expect(socket.send).not.toHaveBeenCalled();
     });
 
     it("switches rooms on navigation, leaving the old one first", () => {
         const {go} = renderProvider({path: "/sales"});
         go("/stock/items");
-        expect(sent(socketState.current!)).toEqual([join("sales"), leave("sales"), join("stock")]);
+        expect(sent(socket)).toEqual([join("sales"), leave("sales"), join("stock")]);
     });
 
     it("sends nothing when navigating within the same room", () => {
         const {go} = renderProvider({path: "/sales/orders"});
         go("/sales/invoices");
         go("/sales/orders/42");
-        expect(sent(socketState.current!)).toEqual([join("sales")]);
+        expect(sent(socket)).toEqual([join("sales")]);
     });
 
     it("leaves the room when navigating to a path without one", () => {
         const {go} = renderProvider({path: "/sales"});
         go("/noroom");
-        expect(sent(socketState.current!)).toEqual([join("sales"), leave("sales")]);
+        expect(sent(socket)).toEqual([join("sales"), leave("sales")]);
     });
 
     it("leaves the room on unmount", () => {
         const {unmount} = renderProvider({path: "/sales"});
         unmount();
-        expect(sent(socketState.current!)).toEqual([join("sales"), leave("sales")]);
+        expect(sent(socket)).toEqual([join("sales"), leave("sales")]);
     });
 });

@@ -3,7 +3,7 @@ import {beforeEach, describe, expect, it, vi} from "vitest";
 const {postMock, sendReceiptsNowMock} = vi.hoisted(() => ({postMock: vi.fn(), sendReceiptsNowMock: vi.fn()}));
 
 vi.mock("@baseModule/helpers/apiClient/apiClient.ts", () => ({default: {post: postMock}}));
-vi.mock("@coreModule/helpers/chat/messageReceipts.ts", () => ({sendReceiptsNow: sendReceiptsNowMock}));
+vi.mock("@baseModule/helpers/chat/messageReceipts.ts", () => ({sendReceiptsNow: sendReceiptsNowMock}));
 
 import {
     CHAT_API,
@@ -25,13 +25,13 @@ import {
     updateDeletedMessageIds,
     updateMessagePinned,
     upsertChannel,
-} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {
     incrementUnreadNotifications,
     prependNotificationItems,
     setLatestNotification,
-} from "@coreModule/helpers/redux/slices/notificationSlice.ts";
-import {updateServerHealth, updateServerStats} from "@coreModule/helpers/redux/slices/serverResourceSlice.ts";
+} from "@baseModule/helpers/redux/slices/notificationSlice.ts";
+import {updateServerHealth, updateServerStats} from "@baseModule/helpers/redux/slices/serverResourceSlice.ts";
 
 const USER_ID = "me";
 
@@ -278,5 +278,18 @@ describe("NEW_NOTIFICATIONS", () => {
             [CHAT_API.channel, {id: "c1"}],
             [CHAT_API.channel, {id: "c2"}],
         ]);
+    });
+});
+
+describe("JOIN_ROOM acknowledgement", () => {
+    it("logs rooms the server refused", () => {
+        receive("JOIN_ROOM", {joined: ["home"], alreadyJoined: [], failed: ["secret", "other"]});
+        expect(errorLog).toHaveBeenCalledWith("[WebSocket] Could not join rooms: secret, other", expect.anything());
+        expect(dispatch).not.toHaveBeenCalled();
+    });
+
+    it("stays quiet when every room was joined", () => {
+        receive("JOIN_ROOM", {joined: ["home"], alreadyJoined: ["chats"], failed: []});
+        expect(errorLog).not.toHaveBeenCalled();
     });
 });

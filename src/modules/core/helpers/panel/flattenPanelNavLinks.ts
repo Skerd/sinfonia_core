@@ -1,5 +1,6 @@
- import type {ElementType} from "react";
-import type {NavGroup, NavItem, NavLinkItem, NavSubCollapsible} from "@coreModule/helpers/panel/sidebarNav.types.ts";
+import type {ElementType} from "react";
+import {createPath} from "react-router-dom";
+import type {NavGroup, NavItem, NavSubItem} from "@coreModule/helpers/panel/sidebarNav.types.ts";
 
 export type FlatPanelNavLink = {
     title: string;
@@ -9,54 +10,24 @@ export type FlatPanelNavLink = {
     badge?: string | number;
 };
 
-function collectFromItem(item: NavItem, groupTitle: string, out: FlatPanelNavLink[]): void {
-    if ("url" in item && item.url) {
-        out.push({
-            title: item.title,
-            url: String(item.url),
-            icon: item.icon,
-            groupTitle,
-            badge: item.badge,
-        });
-        return;
+/** Collects the leaf links under one entry, depth-first; collapsibles contribute only their children. */
+function collectLinks(item: NavItem | NavSubItem, groupTitle: string): FlatPanelNavLink[] {
+    if ("items" in item && item.items) {
+        return item.items.flatMap((child) => collectLinks(child, groupTitle));
     }
-    if (!("items" in item) || !item.items) {
-        return;
+    if (!item.url) {
+        return [];
     }
-    for (const sub of item.items) {
-        collectFromSubItem(sub, groupTitle, out);
-    }
-}
-
-function collectFromSubItem(
-    sub: NavLinkItem | NavSubCollapsible,
-    groupTitle: string,
-    out: FlatPanelNavLink[],
-): void {
-    if ("url" in sub && sub.url) {
-        out.push({
-            title: sub.title,
-            url: String(sub.url),
-            icon: sub.icon,
-            groupTitle,
-            badge: sub.badge,
-        });
-        return;
-    }
-    if ("items" in sub && sub.items) {
-        for (const child of sub.items) {
-            collectFromSubItem(child, groupTitle, out);
-        }
-    }
+    return [{
+        title: item.title,
+        url: typeof item.url === "string" ? item.url : createPath(item.url),
+        icon: item.icon,
+        groupTitle,
+        badge: item.badge,
+    }];
 }
 
 /** Leaf sidebar links only (skips collapsible parents without a URL). */
 export function flattenPanelNavLinks(groups: NavGroup[]): FlatPanelNavLink[] {
-    const out: FlatPanelNavLink[] = [];
-    for (const group of groups) {
-        for (const item of group.items) {
-            collectFromItem(item, group.title, out);
-        }
-    }
-    return out;
+    return groups.flatMap((group) => group.items.flatMap((item) => collectLinks(item, group.title)));
 }

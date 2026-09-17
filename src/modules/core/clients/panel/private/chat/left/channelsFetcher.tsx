@@ -3,7 +3,7 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {RefObject, useEffect, useRef, useState} from "react";
-import {appendChannels, setChannels} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {appendChannels, setChannels} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch} from "react-redux";
 import useIsInViewport from "@baseModule/helpers/hooks/useIsInViewport.ts";
 import Loader from "@coreModule/components/custom/loader.tsx";

@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useState, type ReactNode} from "react";
 import {useLocation} from "react-router-dom";
-import {resolveSiteRoomFromPath} from "@coreModule/helpers/websocket/resolveSiteRoom.ts";
-import {useWebSocketRoom} from "@coreModule/helpers/websocket/useWebSocketRoom.ts";
+import {resolveSiteRoomFromPath} from "@baseModule/helpers/websocket/resolveSiteRoom.ts";
+import {useWebSocketRoom} from "@baseModule/helpers/hooks/useWebSocketRoom.ts";
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
 
 type SiteRoomProviderProps = {

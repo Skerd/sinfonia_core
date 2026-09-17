@@ -36,7 +36,7 @@ import {GRID_MASONRY_ITEM} from "@coreModule/components/custom/cards/entityCard.
 import {columnConfigToColumnDef} from "@baseModule/components/custom/table/columnConfigToColumnDef.tsx";
 import FilterBuilder from "@coreModule/components/custom/filterBuilder/filterBuilder.tsx";
 import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {openActionMenuFromContextMenu} from "@coreModule/components/custom/actions/menu/openActionMenuFromContextMenu.ts";
 import {useSearchParams} from "react-router-dom";
 

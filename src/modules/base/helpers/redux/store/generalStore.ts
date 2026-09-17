@@ -1,10 +1,11 @@
-import chatReducer from "@coreModule/helpers/redux/slices/chatSlice.ts";
-import languageReducer from "@coreModule/helpers/redux/slices/languageSlice.ts";
-import authenticationReducer, {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
-import serverResourcesReducer from "@coreModule/helpers/redux/slices/serverResourceSlice.ts";
-import uiReducer from "@coreModule/helpers/redux/slices/uiSlice.ts";
+import chatReducer from "@baseModule/helpers/redux/slices/chatSlice.ts";
+import languageReducer from "@baseModule/helpers/redux/slices/languageSlice.ts";
+import authenticationReducer, {signOut} from "@baseModule/helpers/redux/slices/authSlice.ts";
+import serverResourcesReducer from "@baseModule/helpers/redux/slices/serverResourceSlice.ts";
+import uiReducer from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import {combineReducers, configureStore, type UnknownAction} from "@reduxjs/toolkit";
-import notificationReducer from "@coreModule/helpers/redux/slices/notificationSlice.ts";
+import notificationReducer from "@baseModule/helpers/redux/slices/notificationSlice.ts";
+import {authPersistence} from "@baseModule/helpers/redux/listeners/authPersistence.ts";
 
 /**
  * Root reducer map for all application domains.
@@ -43,7 +44,8 @@ const rootReducer = (state: RootState | undefined, action: UnknownAction): RootS
 };
 
 export const store = configureStore({
-    reducer: rootReducer
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(authPersistence.middleware)
 });
 
 /**

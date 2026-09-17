@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {useImperativeHandle, useState} from 'react';
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
+import {signOut} from "@baseModule/helpers/redux/slices/authSlice.ts";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/alert.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";

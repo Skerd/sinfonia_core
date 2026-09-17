@@ -15,8 +15,8 @@ import {
     SidebarRail,
 } from "@coreModule/components/ui/sidebar.tsx";
 import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {useChatInboxBadges} from "@baseModule/helpers/hooks/useChatInboxBadges.ts";
 import {IconHome} from "@tabler/icons-react";
 import type {ComponentProps, ReactNode} from "react";

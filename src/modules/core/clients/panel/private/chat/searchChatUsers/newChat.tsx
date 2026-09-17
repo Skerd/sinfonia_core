@@ -22,7 +22,7 @@ import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import InfiniteList from "@coreModule/components/custom/infiniteList";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 
 type MembersInfiniteListProps = WithAxiosType<TableResponse<SimpleUserType>, SimpleUsersFormType> & {
     resolveLanguageKey: Function;

@@ -6,7 +6,7 @@ import {Item, ItemMedia} from "@coreModule/components/ui/item.tsx";
 import {useRestrictedField} from "@coreModule/components/custom/infoRowGroup.tsx";
 import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
 import {formatDate} from "@coreModule/helpers/general";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {useAccessFieldsRead} from "./accessFields.tsx";
 import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
 import TruncatedValue from "./truncatedValue.tsx";

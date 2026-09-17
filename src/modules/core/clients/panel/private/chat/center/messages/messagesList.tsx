@@ -2,12 +2,12 @@ import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useSelector} from "react-redux";
 import Message from "@coreModule/clients/panel/private/chat/center/messages/message";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {memo, useEffect, useRef, type RefObject} from "react";
-import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {store} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {sendReceiptsNow} from "@baseModule/helpers/chat/messageReceipts.ts";
 
 const MemoizedMessage = memo(Message);

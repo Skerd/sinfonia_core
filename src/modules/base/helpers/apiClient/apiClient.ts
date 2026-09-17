@@ -1,7 +1,7 @@
 import axios, {AxiosError, InternalAxiosRequestConfig} from "axios";
 import {getDeviceId, getToken} from "@baseModule/helpers/context/localStorage/authenticationStorage.ts";
-import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {markSessionExpired} from "@coreModule/helpers/redux/slices/authSlice.ts";
+import {store} from "@baseModule/helpers/redux/store/generalStore.ts";
+import {markSessionExpired} from "@baseModule/helpers/redux/slices/authSlice.ts";
 
 const AUTH_PATH_PREFIX = "/authenticate";
 
@@ -20,7 +20,8 @@ const SESSION_EXPIRED_ERROR_CODES = new Set([
  * Shared axios instance for all API calls in the browser app.
  *
  * Header policy:
- * - Default auth and tenant context headers are injected here via request interceptor.
+ * - Default auth and tenant context headers are injected here via request interceptor, and only
+ *   for this app's own origin: an absolute URL elsewhere never receives the token.
  * - Feature-level hooks/components should only add request-specific headers.
  */
 const shouldHandleSessionExpiry = (): boolean => {
@@ -45,9 +46,25 @@ const isSessionExpiredError = (error: AxiosError): boolean => {
     return !!code && SESSION_EXPIRED_ERROR_CODES.has(code);
 };
 
+/** Whether `url` (absolute or relative to the page) points at this app's origin. */
+export function isSameOrigin(url: string): boolean {
+    if (typeof window === "undefined") return true;
+    try {
+        return new URL(url, window.location.href).origin === window.location.origin;
+    } catch {
+        return false;
+    }
+}
+
 const apiClient = axios.create();
 
+const targetsOwnOrigin = (config: InternalAxiosRequestConfig | undefined): boolean =>
+    !!config && isSameOrigin(apiClient.getUri(config));
+
 apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    if (!targetsOwnOrigin(config)) {
+        return config;
+    }
     const nextConfig = config;
     const headers = nextConfig.headers || {};
     const state = store.getState();
@@ -77,7 +94,8 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 apiClient.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
-        if (isSessionExpiredError(error) && shouldHandleSessionExpiry()) {
+        // Another origin's 401 says nothing about our session.
+        if (isSessionExpiredError(error) && targetsOwnOrigin(error.config) && shouldHandleSessionExpiry()) {
             // Do not hard-redirect: AuthenticationProvider shows the session setup screen.
             store.dispatch(markSessionExpired());
         }

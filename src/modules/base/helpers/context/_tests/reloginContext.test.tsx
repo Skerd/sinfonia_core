@@ -17,8 +17,8 @@ const {apiClientMock, toastMock} = vi.hoisted(() => ({
 vi.mock("@baseModule/helpers/apiClient/apiClient.ts", () => ({default: apiClientMock}));
 vi.mock("sonner", () => ({toast: toastMock}));
 
-import authenticationReducer, {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
-import languageReducer, {changeLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import authenticationReducer, {signOut} from "@baseModule/helpers/redux/slices/authSlice.ts";
+import languageReducer, {changeLanguage} from "@baseModule/helpers/redux/slices/languageSlice.ts";
 import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 import {ReloginProvider} from "@baseModule/helpers/context/reloginContext.tsx";
 import {useRelogin} from "@baseModule/helpers/hooks/useRelogin.ts";

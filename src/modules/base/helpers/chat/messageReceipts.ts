@@ -1,6 +1,6 @@
 import {sendWebsocketMessage} from "@baseModule/helpers/context/webSocketContext.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
-import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {store} from "@baseModule/helpers/redux/store/generalStore.ts";
 import type {MarkMessageReceiptFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/markMessageReceipt.form.type.ts";
 import type {MarkMessageReceiptFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/markMessageReceipt.form.response.type.ts";
 import {WebSocketFEMessageCodes} from "armonia/src/modules/core/websocket/types.ts";

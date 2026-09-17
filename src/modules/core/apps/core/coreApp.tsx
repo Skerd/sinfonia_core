@@ -1,6 +1,6 @@
 import {Toaster} from "@coreModule/components/ui/sonner.tsx";
 import {Provider} from "react-redux";
-import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {store} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {ThemeProvider} from "@baseModule/helpers/context/providers/theme-provider.tsx";
 import {DensityProvider} from "@baseModule/helpers/context/providers/density-provider.tsx";
 import {LanguageProvider} from "@baseModule/helpers/context/providers/language-provider.tsx";

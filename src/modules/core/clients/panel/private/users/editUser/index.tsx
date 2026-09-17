@@ -1,8 +1,8 @@
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Drawer, DrawerContent} from "@coreModule/components/ui/drawer.tsx";
-import {editUser} from "@coreModule/helpers/redux/slices/uiSlice.ts";
+import {editUser} from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import AccountSettings from "@coreModule/clients/panel/private/accountSettings";
 

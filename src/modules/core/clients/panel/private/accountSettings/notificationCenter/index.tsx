@@ -1,7 +1,7 @@
 import {useEffect, useState, useCallback} from "react";
 import {useDispatch} from "react-redux";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
-import {setNotificationNumber} from "@coreModule/helpers/redux/slices/notificationSlice.ts";
+import {setNotificationNumber} from "@baseModule/helpers/redux/slices/notificationSlice.ts";
 import Header from "@coreModule/components/custom/header.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
 import {compose} from "redux";

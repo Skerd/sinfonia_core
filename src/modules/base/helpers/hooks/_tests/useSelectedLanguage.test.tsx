@@ -3,7 +3,7 @@ import {beforeEach, describe, expect, it, vi} from "vitest";
 import type {ReactNode} from "react";
 import {Provider} from "react-redux";
 import {configureStore} from "@reduxjs/toolkit";
-import languageReducer, {changeLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import languageReducer, {changeLanguage} from "@baseModule/helpers/redux/slices/languageSlice.ts";
 import deCHErrorBoundary from "@coreModule/assets/languages/de-CH/components/custom/errorBoundary.json";
 import enUSErrorBoundary from "@coreModule/assets/languages/en-US/components/custom/errorBoundary.json";
 import useSelectedLanguage, {

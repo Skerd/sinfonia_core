@@ -1,9 +1,9 @@
 import {ReactNode, useEffect, useLayoutEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import mainConfig from "@coreModule/assets/languages/mainConfig.json";
-import {changeLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import {changeLanguage} from "@baseModule/helpers/redux/slices/languageSlice.ts";
 import {getLocalStorage, getLocalStorageValue, setLocalStorageValue} from "@baseModule/helpers/context/localStorage/localStorageProvider.ts";
-import {AppDispatch, RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {AppDispatch, RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 
 export const LANGUAGE_STORAGE_KEY = "client-ui-language";
 

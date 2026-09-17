@@ -12,7 +12,7 @@ import {z} from "zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {defaultCreateUserValues} from "@coreModule/helpers/defaultFormValues";
 import {useDispatch} from "react-redux";
-import {newUserCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
+import {newUserCreated} from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import {LoaderCircle, UserPlus} from "lucide-react";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";

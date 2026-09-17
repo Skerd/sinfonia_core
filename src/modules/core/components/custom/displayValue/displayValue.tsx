@@ -13,7 +13,7 @@ import SheetMediaFilesStrip from "@coreModule/components/viewEngine/sheetMediaFi
 import type {Media} from "armonia/src/modules/core/types";
 import {useAccessFieldsRead} from "./accessFields.tsx";
 import {formatDate} from "@coreModule/helpers/general";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 import {
     LanguageResolveContext,

@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {ArrowLeft, MoreVertical} from "lucide-react";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
@@ -15,7 +15,7 @@ import {UserProfile} from "@coreModule/clients/panel/private/users/center/cardVi
 import LeaveChannel from "@coreModule/clients/panel/private/chat/center/chatHeader/dropdown/leaveChannel.tsx";
 import ShowChannelMembers from "@coreModule/clients/panel/private/chat/center/chatHeader/dropdown/showChannelMembers.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {openChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {openChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {getName} from "@coreModule/helpers/general";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";

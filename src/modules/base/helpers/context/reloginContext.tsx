@@ -1,7 +1,7 @@
 import {createContext, useCallback, useMemo, useState, type ReactNode} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {logIn} from "@coreModule/helpers/redux/slices/authSlice.ts";
-import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {logIn} from "@baseModule/helpers/redux/slices/authSlice.ts";
+import type {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import useHttpRequest from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import type {HttpRequest, HttpRequestLifecycleFunctions} from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import useErrorHandler from "@baseModule/helpers/hooks/useErrorHandler.ts";
