@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import {type ReactNode} from "react";
+import {useMemo, type ReactNode} from "react";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
@@ -17,11 +17,12 @@ type GenericCreatePageConfig<TForm extends FieldValues> = {
     model?: string;
     apiUrl: string;
     schema: (languageCode: string, form: unknown) => any;
-    defaultValues?: TForm | ((params: URLSearchParams) => TForm | Partial<TForm>) | Partial<TForm>;
+    /** Static values, or a builder that reads the URL (e.g. `?projectId=` prefill). */
+    defaultValues?: Partial<TForm> | ((params: URLSearchParams) => Partial<TForm>);
     submitIcon?: ReactNode;
     buildExtraTitles?: (params: URLSearchParams) => string[];
 
-    // to be checked
+    /** Route (or history delta) to go to after success; defaults to `navigate(-1)`. */
     successPath?: string | number;
     buildFormExtras?: (params: URLSearchParams) => Record<string, unknown>;
     /** Normalize client form values before sending (JSON body or multipart). May be async for pre-upload patterns. */
@@ -44,73 +45,86 @@ export type GenericCreateSurfaceProps = {
 export function createGenericCreatePage<TForm extends FieldValues>(config: GenericCreatePageConfig<TForm>) {
     type CreateProps = WithLanguageType & WithAxiosType<unknown, TForm> & GenericCreateSurfaceProps;
 
+    // Config is static per page, so resolve the keys once instead of on every render.
+    const {accessKey, viewCollectionKey} = resolveEntityPageKeys(config);
+
     function GenericCreateInner({
         resolveLanguageKey,
         languageCode,
         loading,
         innerRef,
-        // onFormDataChange,
         onPost,
         onFinished,
         embedForm,
     }: CreateProps) {
-
         const [params] = useSearchParams();
         const navigate = useNavigate();
-        const {accessKey, viewCollectionKey} = resolveEntityPageKeys(config);
         const {create} = useAccess(accessKey);
         const {config: viewConfig, loading: viewConfigLoading} = useViewConfigState(viewCollectionKey, "form:create");
-        const formSchema = config.schema(languageCode, resolveLanguageKey("form"));
+
+        const formSchema = useMemo(
+            () => config.schema(languageCode, resolveLanguageKey("form")),
+            [languageCode, resolveLanguageKey],
+        );
+
+        // Keyed by the query string so URL-driven builders re-run only when the URL actually changes.
+        const paramsKey = params.toString();
+        const defaultValues = useMemo(() => {
+            const source = config.defaultValues;
+            return (typeof source === "function" ? source(params) : source) ?? {};
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [paramsKey]);
+        const formExtras = useMemo(
+            () => config.buildFormExtras?.(params),
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            [paramsKey],
+        );
+        const extraTitles = useMemo(
+            () => config.buildExtraTitles?.(params) ?? [],
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            [paramsKey],
+        );
 
         if (!create) return <Forbidden />;
         if (!viewConfig) return viewConfigLoading ? <Loader /> : <Forbidden />;
 
-        function handleSuccessNavigate() {
-            config.afterSuccess?.();
-            if (onFinished) {
-                onFinished();
-                return;
-            }
-            if (config.successPath !== undefined) {
-                navigate(config.successPath as any);
-                return;
-            }
-            navigate(-1);
-        }
+        const close = () => {
+            if (onFinished) onFinished();
+            else navigate(-1);
+        };
 
-        function handleCancel() {
-            if (onFinished) {
-                onFinished();
-                return;
-            }
-            navigate(-1);
-        }
+        const handleSuccess = () => {
+            config.afterSuccess?.();
+            // An embedding host (dialog) always owns the close; `successPath` only applies to routed pages.
+            if (onFinished || config.successPath === undefined) return close();
+            if (typeof config.successPath === "number") navigate(config.successPath);
+            else navigate(config.successPath);
+        };
+
+        const handleSubmit = async (data: TForm) => {
+            const outgoing = config.mapSubmitPayload ? await config.mapSubmitPayload(data) : data;
+            onPost(outgoing as TForm);
+        };
 
         return (
             <FormViewRenderer<TForm>
                 config={viewConfig}
                 resolveLanguageKey={resolveLanguageKey}
                 formSchema={formSchema}
-                defaultValues={ !!config.defaultValues ? (typeof config.defaultValues === "function" ? config.defaultValues(params) : config.defaultValues) : {}}
+                defaultValues={defaultValues}
                 loading={loading}
                 innerRef={innerRef}
-                onSubmit={async (data: TForm) => {
-                    const outgoing = config.mapSubmitPayload
-                        ? await config.mapSubmitPayload(data)
-                        : data;
-                    onPost(outgoing as unknown as TForm);
-                }}
-                onCancel={handleCancel}
-                onSuccess={handleSuccessNavigate}
-                formExtras={config.buildFormExtras?.(params)}
-                extraTitles={config.buildExtraTitles?.(params) ?? []}
+                onSubmit={handleSubmit}
+                onCancel={close}
+                onSuccess={handleSuccess}
+                formExtras={formExtras}
+                extraTitles={extraTitles}
                 submitIcon={config.submitIcon}
                 hideChrome={!!embedForm}
             />
         );
     }
 
-    const {accessKey, viewCollectionKey} = resolveEntityPageKeys(config);
     GenericCreateInner.displayName = `GenericCreatePage_${viewCollectionKey || "unknown"}`;
 
     return compose(

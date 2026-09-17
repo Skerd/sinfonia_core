@@ -3,5 +3,6 @@
   "yes": "Ja",
   "no": "Nein",
   "clear": "Leeren",
-  "clearFilters": "Leeren alle"
+  "clearFilters": "Leeren alle",
+  "groupLabel": "Schnellfilter"
 }

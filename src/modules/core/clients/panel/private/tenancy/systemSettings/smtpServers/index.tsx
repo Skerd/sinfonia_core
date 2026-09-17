@@ -11,7 +11,7 @@ import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/syst
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
 import SetSmtpServerActiveDialog from "@coreModule/components/custom/smtpServers/setSmtpServerActiveDialog.tsx";
 import TestSmtpConnectionDialog from "@coreModule/components/custom/smtpServers/testSmtpConnectionDialog.tsx";
-import EntityListPage from "@coreModule/components/entityPage/EntityListPage.tsx";
+import EntityListPage from "@baseModule/components/entityPage/EntityListPage.tsx";
 
 export function smtpServerEditPath(s: SmtpServer) {
     const params = new URLSearchParams();

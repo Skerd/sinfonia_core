@@ -1,5 +1,5 @@
 import {IconBuildingPlus} from "@tabler/icons-react";
-import {createGenericCreatePage} from "@coreModule/components/entityPage/createGenericCreatePage.tsx";
+import {createGenericCreatePage} from "@baseModule/components/entityPage/createGenericCreatePage.tsx";
 import {createCityFormSchema} from "armonia/src/modules/core/api/auxiliary/private/city/createCity.form.validator.ts";
 import type {CreateCityFormType} from "armonia/src/modules/core/api/auxiliary/private/city/city.schema-def.ts";
 

@@ -8,7 +8,7 @@ import {IconBuildingPlus} from "@tabler/icons-react";
 import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
 import CityCard from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx";
 import CitySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx";
-import EntityListPage from "@coreModule/components/entityPage/EntityListPage.tsx";
+import EntityListPage from "@baseModule/components/entityPage/EntityListPage.tsx";
 
 export function cityEditPath(countryId: string | undefined, countryName: string | undefined, stateId: string | undefined, stateName: string | undefined, city: City) {
     const params = new URLSearchParams();

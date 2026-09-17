@@ -3,5 +3,6 @@
   "yes": "Sì",
   "no": "No",
   "clear": "Cancella",
-  "clearFilters": "Cancella tutto"
+  "clearFilters": "Cancella tutto",
+  "groupLabel": "Filtri rapidi"
 }

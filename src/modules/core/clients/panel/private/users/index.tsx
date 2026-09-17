@@ -7,7 +7,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import UsersInviteDialog from "@coreModule/clients/panel/private/users/inviteUser";
 import CreateUsers from "@coreModule/clients/panel/private/users/createUser";
 import {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
-import EntityListPage from "@coreModule/components/entityPage/EntityListPage.tsx";
+import EntityListPage from "@baseModule/components/entityPage/EntityListPage.tsx";
 import {UserCard} from "@coreModule/clients/panel/private/users/center/cardView";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import EditUser from "@coreModule/clients/panel/private/users/editUser";

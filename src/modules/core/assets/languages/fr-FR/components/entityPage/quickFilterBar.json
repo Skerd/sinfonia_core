@@ -3,5 +3,6 @@
   "yes": "Oui",
   "no": "Non",
   "clear": "Effacer",
-  "clearFilters": "Tout effacer"
+  "clearFilters": "Tout effacer",
+  "groupLabel": "Filtres rapides"
 }

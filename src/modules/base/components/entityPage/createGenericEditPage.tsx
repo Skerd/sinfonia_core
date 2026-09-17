@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import {useEffect, useState, type ReactNode} from "react";
+import {useEffect, useMemo, useState, type ReactNode} from "react";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
@@ -75,7 +75,7 @@ export type GenericEditPageProps = {
 // Recursively maps entity data to form initial values using writeFields permissions.
 // writeFields uses `.keys` for nested objects: writeFields.address.keys.street
 // _id is always included regardless of permissions.
-function buildInitialValuesAuto(data: Record<string, unknown>, writeFields: Record<string, unknown>,): Record<string, unknown> {
+function buildInitialValuesAuto(data: Record<string, unknown>, writeFields: Record<string, unknown>): Record<string, unknown> {
     const result: Record<string, unknown> = {};
 
     if ("_id" in data) result._id = data._id;
@@ -85,7 +85,7 @@ function buildInitialValuesAuto(data: Record<string, unknown>, writeFields: Reco
 
         const value = data[key];
 
-        if (typeof fieldAccess === "object" && fieldAccess !== null && "keys" in fieldAccess) {
+        if (typeof fieldAccess === "object" && "keys" in fieldAccess) {
             const subKeys = (fieldAccess as {keys: Record<string, unknown>}).keys;
             if (Array.isArray(value)) {
                 result[key] = value.map(item =>
@@ -109,73 +109,104 @@ function buildInitialValuesAuto(data: Record<string, unknown>, writeFields: Reco
 export function createGenericEditPage<TDto, TForm extends FieldValues>(config: GenericEditPageConfig<TDto, TForm>) {
     type EditProps = WithLanguageType & WithAxiosType<TDto, TForm> & GenericEditPageProps;
 
+    // Config is static per page, so resolve the keys once instead of on every render.
+    const {accessKey, viewCollectionKey} = resolveEntityPageKeys(config);
+
+    const loadEntity = (entityId: string): Promise<TDto> =>
+        config.fetchEntity
+            ? config.fetchEntity(entityId)
+            : apiClient.post<TDto>(`${config.apiUrl}/single`, {_id: entityId}).then((res) => res.data);
+
     function GenericEditInner({
         resolveLanguageKey,
         languageCode,
         loading,
         innerRef,
-        // onFilterChange,
         onPost,
         entityId,
         entityName,
     }: EditProps) {
-
         const navigate = useNavigate();
-        const {accessKey, viewCollectionKey} = resolveEntityPageKeys(config);
         const {write, read} = useAccess(accessKey);
         const [params] = useSearchParams();
-        const writeFields = (write || {}) as Record<string, unknown>;
-        const readFields = (read || {}) as Record<string, unknown>;
+        const writeFields = useMemo(() => (write || {}) as Record<string, unknown>, [write]);
+        const readFields = useMemo(() => (read || {}) as Record<string, unknown>, [read]);
 
-        const [forceReload, setForceReload] = useState(0);
+        const [reloadCount, setReloadCount] = useState(0);
         const [entityData, setEntityData] = useState<TDto | null>(null);
         const [loadingEntity, setLoadingEntity] = useState(true);
         const [entityError, setEntityError] = useState(false);
 
         const {config: viewConfig, loading: viewConfigLoading} = useViewConfigState(viewCollectionKey, "form:edit");
-        const formSchema = config.schema(languageCode, resolveLanguageKey("form"), writeFields, readFields);
+        const formSchema = useMemo(
+            () => config.schema(languageCode, resolveLanguageKey("form"), writeFields, readFields),
+            [languageCode, resolveLanguageKey, writeFields, readFields],
+        );
 
         useEffect(() => {
             if (!entityId) {
-                setEntityError(true);
                 setLoadingEntity(false);
                 return;
             }
+            // Ignore responses that arrive after the id changed or the page unmounted.
+            let stale = false;
             setLoadingEntity(true);
             setEntityError(false);
-            const loader = config.fetchEntity
-                ? config.fetchEntity(entityId)
-                : apiClient.post<TDto>(`${config.apiUrl}/single`, {_id: entityId}).then((res) => res.data);
+            loadEntity(entityId)
+                .then((data) => { if (!stale) setEntityData(data); })
+                .catch(() => { if (!stale) setEntityError(true); })
+                .finally(() => { if (!stale) setLoadingEntity(false); });
+            return () => { stale = true; };
+        }, [entityId, reloadCount]);
 
-            loader
-                .then((data) => {
-                    setEntityData(data);
-                })
-                .catch(() => setEntityError(true))
-                .finally(() => setLoadingEntity(false));
-        }, [entityId, forceReload]);
+        // Stable references: `EditFormViewRenderer` resets the form from these, and the
+        // mapping walks the whole document, so only redo it when the inputs change.
+        const initialValues = useMemo(() => {
+            if (!entityData) return null;
+            if (config.buildInitialValues) return config.buildInitialValues(entityData, writeFields);
+            const rawData = config.mapEntityData
+                ? config.mapEntityData(entityData)
+                : (entityData as Record<string, unknown>);
+            return buildInitialValuesAuto(rawData, writeFields) as Partial<TForm>;
+        }, [entityData, writeFields]);
+        const formExtras = useMemo(
+            () => (entityId ? config.buildFormExtras?.(entityId, params, entityData) : undefined),
+            [entityId, params, entityData],
+        );
+        const extraTitles = useMemo(
+            () => config.buildExtraTitles?.(params, entityName) ?? [entityName || ""],
+            [params, entityName],
+        );
 
-        if (!write) return <Forbidden />;
-        if (!entityId) return <Forbidden />;
+        if (!write || !entityId) return <Forbidden />;
         if (!viewConfig) return viewConfigLoading ? <Loader /> : <Forbidden />;
         if (loadingEntity) return <Loader />;
-        if (entityError || !entityData) {
+        if (entityError || !entityData || !initialValues) {
             return (
                 <SimpleError
                     title={resolveLanguageKey("errorTitle")}
                     description={resolveLanguageKey("errorDescription")}
-                    onClick={() => setForceReload(Date.now())}
+                    onClick={() => setReloadCount((n) => n + 1)}
                 />
             );
         }
 
-        const rawData = config.mapEntityData
-            ? config.mapEntityData(entityData)
-            : entityData as Record<string, unknown>;
-        const initialValues = config.buildInitialValues
-            ? config.buildInitialValues(entityData, writeFields)
-            : buildInitialValuesAuto(rawData, writeFields) as Partial<TForm>;
-        const extraTitles = config.buildExtraTitles?.(params, entityName) ?? [entityName || ""];
+        const handleSubmit = async (data: TForm) => {
+            const blockKey = config.beforeSubmit?.(data, {writeFields, params, resolveLanguageKey});
+            if (blockKey) {
+                toast.error(String(resolveLanguageKey(blockKey)));
+                return;
+            }
+            const outgoing = config.mapSubmitPayload
+                ? await config.mapSubmitPayload(data, {writeFields, params})
+                : data;
+            onPost(outgoing as TForm);
+        };
+
+        const handleSuccess = () => {
+            config.afterSuccess?.();
+            navigate(-1);
+        };
 
         return (
             <EditFormViewRenderer<TForm>
@@ -188,25 +219,11 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
                 loadingDataError={false}
                 loadingDataErrorTitle="errorTitle"
                 loadingDataErrorDescription="errorDescription"
-                formExtras={config.buildFormExtras?.(entityId, params, entityData)}
+                formExtras={formExtras}
                 innerRef={innerRef}
-                onSubmit={async (data: TForm) => {
-                    const submitHelpers = {writeFields, params, resolveLanguageKey};
-                    const blockKey = config.beforeSubmit?.(data, submitHelpers);
-                    if (blockKey) {
-                        toast.error(String(resolveLanguageKey(blockKey)));
-                        return;
-                    }
-                    const outgoing = config.mapSubmitPayload
-                        ? await config.mapSubmitPayload(data, {writeFields, params})
-                        : data;
-                    onPost(outgoing as unknown as TForm);
-                }}
+                onSubmit={handleSubmit}
                 onCancel={() => navigate(-1)}
-                onSuccess={() => {
-                    config.afterSuccess?.();
-                    navigate(-1);
-                }}
+                onSuccess={handleSuccess}
                 writeAccess={writeFields as Record<string, any>}
                 extraTitles={extraTitles}
                 submitIcon={config.submitIcon}
@@ -217,7 +234,6 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
         );
     }
 
-    const {accessKey, viewCollectionKey} = resolveEntityPageKeys(config);
     GenericEditInner.displayName = `GenericEditPage_${viewCollectionKey || "unknown"}`;
 
     const patchHttp = {

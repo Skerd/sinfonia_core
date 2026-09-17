@@ -3,5 +3,6 @@
   "yes": "Po",
   "no": "Jo",
   "clear": "Pastro",
-  "clearFilters": "Pastro filtrat"
+  "clearFilters": "Pastro filtrat",
+  "groupLabel": "Filtra të shpejtë"
 }

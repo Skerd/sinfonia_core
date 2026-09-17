@@ -1,4 +1,4 @@
-import {JSX, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject} from "react";
+import {useEffect, useMemo, useRef, useState, type ReactNode, type RefObject} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {
     clearQuickFilterParams,
@@ -32,7 +32,7 @@ import QuickFilterBar, {
     buildQuickFilterExtraParams,
     collectDependentQuickFilterFields,
     type QuickFilterDef,
-} from "@coreModule/components/entityPage/quickFilterBar.tsx";
+} from "@baseModule/components/entityPage/quickFilterBar.tsx";
 import {GRID_TRANSACTIONAL} from "@coreModule/components/custom/cards/entityCard.constants.ts";
 import {PageTitle} from "@baseModule/helpers/types/pageTitle.types.ts";
 
@@ -130,6 +130,51 @@ function AutoSheetView({
 // ---------------------------------------------------------------------------
 // EntityListPage
 // ---------------------------------------------------------------------------
+
+/**
+ * Reconcile quick-filter state with values read from the URL. Returns `prev`
+ * untouched when nothing differs so React can skip the re-render.
+ */
+function syncWithUrl<V>(
+    prev: Record<string, V | null>,
+    fromUrl: Record<string, V | null>,
+    fields: string[],
+): Record<string, V | null> {
+    let changed = false;
+    const next = {...prev};
+    for (const field of fields) {
+        const urlVal = fromUrl[field] ?? null;
+        if ((prev[field] ?? null) !== urlVal) {
+            next[field] = urlVal;
+            changed = true;
+        }
+    }
+    // Drop fields no longer in defs.
+    for (const key of Object.keys(next)) {
+        if (!fields.includes(key) && next[key] != null) {
+            next[key] = null;
+            changed = true;
+        }
+    }
+    return changed ? next : prev;
+}
+
+const isBlank = (value: unknown) => value == null || value === "";
+
+/** `extraFilters` → DSL `equals` rules; undefined/null values are skipped. */
+function buildExtraFiltersDSL(extraFilters: Record<string, unknown> | undefined): FilterGroup | undefined {
+    if (!extraFilters) return undefined;
+    const rules = Object.entries(extraFilters)
+        .filter(([, v]) => v !== undefined && v !== null)
+        .map(([field, value]) => ({
+            id: generateUUID(),
+            field,
+            operator: "equals" as const,
+            value: value as FilterValue,
+        }));
+    if (rules.length === 0) return undefined;
+    return {id: generateUUID(), operator: "and", rules, groups: []};
+}
 
 export type EntityListPageProps<T extends BaseEntity> = {
     apiUrl: string;
@@ -284,22 +329,19 @@ export default function EntityListPage<T extends BaseEntity>({
     const hasSheet = !!(renderSheet || sheetLanguagePath);
     const readFields = (read && typeof read === "object" ? read : undefined) as Record<string, unknown> | undefined;
 
-    const extraFiltersDSL = useMemo<FilterGroup | undefined>(() => {
-        if (!extraFilters) return undefined;
-        const rules = Object.entries(extraFilters)
-            .filter(([, v]) => v !== undefined && v !== null)
-            .map(([field, value]) => ({
-                id: generateUUID(),
-                field,
-                operator: "equals" as const,
-                value: value as FilterValue,
-            }));
-        if (rules.length === 0) return undefined;
-        return {id: generateUUID(), operator: "and" as const, rules, groups: []};
-    }, [extraFilters]);
+    // Callers often pass `extraFilters` / `quickFilters` inline (`{projectId}`), i.e. a new
+    // object every render. The DSL built from them is a fetch dependency of CardAndTableView
+    // and carries fresh UUIDs, so key the memos by content to avoid refetching on every render.
+    const extraFiltersKey = JSON.stringify(extraFilters ?? null);
+    const quickFiltersKey = JSON.stringify(quickFilters ?? null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const extraFiltersDSL = useMemo(() => buildExtraFiltersDSL(extraFilters), [extraFiltersKey]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const stableQuickFilters = useMemo(() => quickFilters ?? [], [quickFiltersKey]);
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const quickFilterFields = useMemo(() => (quickFilters ?? []).map((d) => d.field), [quickFilters]);
+    const quickFilterFields = useMemo(() => stableQuickFilters.map((d) => d.field), [stableQuickFilters]);
+    const listPageParamKey = listChromeParam(LIST_PAGE_PARAM, tableConfigKey);
 
     // Seed from `qf_*` / `qf_*_label` on first render so toolbarFilterDSL is correct for the first fetch.
     const [quickFilterValues, setQuickFilterValues] = useState<Record<string, FilterValue | null>>(() => {
@@ -315,43 +357,8 @@ export default function EntityListPage<T extends BaseEntity>({
         if (!quickFilterFields.length) return;
         const fromUrl = readQuickFiltersFromUrl(searchParams, quickFilterFields);
         const labelsFromUrl = readQuickFilterLabelsFromUrl(searchParams, quickFilterFields);
-        setQuickFilterValues((prev) => {
-            let changed = false;
-            const next = {...prev};
-            for (const field of quickFilterFields) {
-                const urlVal = fromUrl[field];
-                if ((prev[field] ?? null) !== urlVal) {
-                    next[field] = urlVal;
-                    changed = true;
-                }
-            }
-            // Drop fields no longer in defs (or cleared in URL).
-            for (const key of Object.keys(next)) {
-                if (!quickFilterFields.includes(key) && next[key] != null) {
-                    next[key] = null;
-                    changed = true;
-                }
-            }
-            return changed ? next : prev;
-        });
-        setQuickFilterLabels((prev) => {
-            let changed = false;
-            const next = {...prev};
-            for (const field of quickFilterFields) {
-                const urlLabel = labelsFromUrl[field];
-                if ((prev[field] ?? null) !== urlLabel) {
-                    next[field] = urlLabel;
-                    changed = true;
-                }
-            }
-            for (const key of Object.keys(next)) {
-                if (!quickFilterFields.includes(key) && next[key] != null) {
-                    next[key] = null;
-                    changed = true;
-                }
-            }
-            return changed ? next : prev;
-        });
+        setQuickFilterValues((prev) => syncWithUrl(prev, fromUrl as Record<string, FilterValue | null>, quickFilterFields));
+        setQuickFilterLabels((prev) => syncWithUrl(prev, labelsFromUrl, quickFilterFields));
         // Only hydrate from the URL when the param set changes.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams.toString(), quickFilterFields.join("|")]);
@@ -383,7 +390,7 @@ export default function EntityListPage<T extends BaseEntity>({
             return;
         }
 
-        const dependents = collectDependentQuickFilterFields(quickFilters ?? [], field);
+        const dependents = collectDependentQuickFilterFields(stableQuickFilters, field);
         setQuickFilterValues((prev) => {
             const next = {...prev, [field]: value};
             for (const dep of dependents) next[dep] = null;
@@ -392,7 +399,7 @@ export default function EntityListPage<T extends BaseEntity>({
         setQuickFilterLabels((prev) => {
             const next = {
                 ...prev,
-                [field]: value == null || value === "" ? null : (label ?? null),
+                [field]: isBlank(value) ? null : (label ?? null),
             };
             for (const dep of dependents) next[dep] = null;
             return next;
@@ -403,19 +410,19 @@ export default function EntityListPage<T extends BaseEntity>({
                 const next = new URLSearchParams(prev);
                 const key = quickFilterParamKey(field);
                 const labelKey = quickFilterLabelParamKey(field);
-                if (value == null || value === "") {
+                if (isBlank(value)) {
                     next.delete(key);
                     next.delete(labelKey);
                 } else {
                     next.set(key, String(value));
-                    if (label != null && label !== "") next.set(labelKey, label);
+                    if (!isBlank(label)) next.set(labelKey, label!);
                     else next.delete(labelKey);
                 }
                 for (const dep of dependents) {
                     next.delete(quickFilterParamKey(dep));
                     next.delete(quickFilterLabelParamKey(dep));
                 }
-                next.delete(listChromeParam(LIST_PAGE_PARAM, tableConfigKey));
+                next.delete(listPageParamKey);
                 return next;
             },
             {replace: true},
@@ -425,17 +432,17 @@ export default function EntityListPage<T extends BaseEntity>({
     const clearQuickFilters = () => {
         setQuickFilterValues({});
         setQuickFilterLabels({});
-        clearQuickFilterParams(setSearchParams, quickFilterFields, listChromeParam(LIST_PAGE_PARAM, tableConfigKey));
+        clearQuickFilterParams(setSearchParams, quickFilterFields, listPageParamKey);
     };
 
     const quickFilterDSL = useMemo(
-        () => buildQuickFilterDSL(quickFilters ?? [], quickFilterValues),
-        [quickFilters, quickFilterValues],
+        () => buildQuickFilterDSL(stableQuickFilters, quickFilterValues),
+        [stableQuickFilters, quickFilterValues],
     );
 
     const quickFilterExtraParams = useMemo(
-        () => buildQuickFilterExtraParams(quickFilters ?? [], quickFilterValues),
-        [quickFilters, quickFilterValues],
+        () => buildQuickFilterExtraParams(stableQuickFilters, quickFilterValues),
+        [stableQuickFilters, quickFilterValues],
     );
 
     const mergedExtraParams = useMemo(
@@ -452,50 +459,48 @@ export default function EntityListPage<T extends BaseEntity>({
     const [action, setAction] = useState("");
 
     const internalListRef = useRef<EntityListApi<T> | null>(null);
-    const listRef = listApiRef ?? internalListRef;
+    const listRef: EntityListRefs<T> = listApiRef ?? internalListRef;
+
+    const openAction = (entity: T, actionName: string) => {
+        setAction(actionName);
+        setSheetEntity(entity);
+    };
+    const closeAction = () => {
+        setAction("");
+        setSheetEntity(null);
+    };
+
+    /** Patch a row in the list and, when it is the one open in the sheet/modal, there too. */
+    const patchRow = (id: string, patch: Partial<T>) => {
+        listRef.current?.updateRow?.(id, patch);
+        setSheetEntity((current) => (current?._id === id ? {...current, ...patch} : current));
+    };
 
     const handleDelete = (entity: T, response?: DeletedData) => {
+        // Soft delete: keep the row and show it as deleted. Hard delete: reload the page.
         if (response?.deletedAt != null || response?.deletedBy != null) {
-            listRef.current?.updateRow?.(entity._id, {
-                deletedAt: response.deletedAt,
-                deletedBy: response.deletedBy,
-            } as unknown as Partial<T>);
-            if (sheetEntity?._id === entity._id) {
-                setSheetEntity({...sheetEntity, deletedAt: response.deletedAt, deletedBy: response.deletedBy} as T);
-            }
+            patchRow(entity._id, {deletedAt: response.deletedAt, deletedBy: response.deletedBy} as unknown as Partial<T>);
             return;
         }
         listRef.current?.refetch?.();
     };
 
-    const handleRestore = (entity: T) => {
-        listRef.current?.updateRow?.(entity._id, {deletedAt: undefined, deletedBy: undefined} as unknown as Partial<T>);
-        if (sheetEntity?._id === entity._id) {
-            setSheetEntity({...sheetEntity, deletedAt: undefined, deletedBy: undefined} as T);
-        }
+    const handleRestore = (entity: T) =>
+        patchRow(entity._id, {deletedAt: undefined, deletedBy: undefined} as unknown as Partial<T>);
+
+    const replaceRow = (row: T) => {
+        listRef.current?.updateRow?.(row._id, row as Partial<T>);
+        setSheetEntity((current) => (current?._id === row._id ? row : current));
     };
 
     const sheetActionMenuChildren = renderSheetActionMenuChildren ?? renderActionMenuChildren;
-    const bindRowActionMenu = (entity: T, actionName: string) => {
-        setAction(actionName);
-        setSheetEntity(entity);
-    };
 
     const resolveDeleteLabel = (entity: T) =>
         buildDeleteConfirmLabel?.(entity, readFields) ??
         (readFields?.name && entity.name ? String(entity.name) : undefined);
 
-    const resolveHideEdit = (entity: T) =>
-        typeof rowActionMenu?.hideEdit === "function" ? rowActionMenu.hideEdit(entity) : !!rowActionMenu?.hideEdit;
-    const resolveHideDelete = (entity: T) =>
-        typeof rowActionMenu?.hideDelete === "function" ? rowActionMenu.hideDelete(entity) : !!rowActionMenu?.hideDelete;
-
-    const replaceRow = (row: T) => {
-        listRef.current?.updateRow?.(row._id, row as unknown as Partial<T>);
-        if (sheetEntity?._id === row._id) {
-            setSheetEntity(row);
-        }
-    };
+    const resolveRowFlag = (flag: boolean | ((entity: T) => boolean) | undefined, entity: T) =>
+        typeof flag === "function" ? flag(entity) : !!flag;
 
     const listHelpers = {replaceRow};
 
@@ -503,7 +508,7 @@ export default function EntityListPage<T extends BaseEntity>({
         <div className="min-w-0 flex-full gap-4">
             {!hideHeader && (
             <Header
-                title={headerTitle ?? (resolveLanguageKey("title"))}
+                title={headerTitle ?? resolveLanguageKey("title")}
                 description={(headerDescription ?? resolveLanguageKey("description")) as string}
                 help={readPageHelp(resolveLanguageKey, helpLanguageKey)}
             >
@@ -534,7 +539,7 @@ export default function EntityListPage<T extends BaseEntity>({
                     quickFilterBar={
                         quickFilters?.length ? (
                             <QuickFilterBar
-                                defs={quickFilters}
+                                defs={stableQuickFilters}
                                 values={quickFilterValues}
                                 labels={quickFilterLabels}
                                 onChange={setQuickFilterValue}
@@ -556,39 +561,32 @@ export default function EntityListPage<T extends BaseEntity>({
                     }}
                     listRef={listRef}
                     renderFunctions={{
-                        cardRender: (entity) =>
-                            typeof renderCard === "function"
-                                ? (renderCard(
+                        cardRender: (entity) => (
+                            <>
+                                {renderCard?.(
                                     entity,
                                     (row, response) => handleDelete(row ?? entity, response),
                                     (row) => handleRestore(row ?? entity),
-                                    listRef as EntityListRefs<T>,
-                                ) as JSX.Element)
-                                : (<></> as unknown as JSX.Element),
-                        onRowClick: hasSheet
-                            ? (entity) => {
-                                setAction("view");
-                                setSheetEntity(entity);
-                            }
-                            : undefined,
+                                    listRef,
+                                )}
+                            </>
+                        ),
+                        onRowClick: hasSheet ? (entity) => openAction(entity, "view") : undefined,
                         action: (entity) => (
                             <ActionMenu
                                 accessModel={accessModel}
                                 deletedData={entity}
-                                onAction={(a: string) => {
-                                    setAction(a);
-                                    setSheetEntity(entity);
-                                }}
+                                onAction={(a: string) => openAction(entity, a)}
                                 editPath={buildEditPath(entity)}
-                                hideEdit={resolveHideEdit(entity)}
+                                hideEdit={resolveRowFlag(rowActionMenu?.hideEdit, entity)}
                                 hideView={rowActionMenu?.hideView}
-                                hideDelete={resolveHideDelete(entity)}
+                                hideDelete={resolveRowFlag(rowActionMenu?.hideDelete, entity)}
                                 hideRestore={rowActionMenu?.hideRestore}
                                 allowMenuForCustomChildren={rowActionMenu?.allowMenuForCustomChildren}
                             >
                                 {renderActionMenuChildren?.(
                                     entity,
-                                    (a) => bindRowActionMenu(entity, a),
+                                    (a) => openAction(entity, a),
                                     listHelpers,
                                 )}
                             </ActionMenu>
@@ -605,10 +603,10 @@ export default function EntityListPage<T extends BaseEntity>({
                             ? renderSheet({
                                 entity: sheetEntity,
                                 open: true,
-                                onOpenChange: () => { setAction(""); setSheetEntity(null); },
+                                onOpenChange: closeAction,
                                 onDelete: (data) => handleDelete(sheetEntity, data),
                                 onRestore: () => handleRestore(sheetEntity),
-                                listRef: listRef as EntityListRefs<T>,
+                                listRef,
                             })
                             : sheetLanguagePath && (
                                 <AutoSheetView
@@ -617,20 +615,17 @@ export default function EntityListPage<T extends BaseEntity>({
                                     collectionName={collectionName}
                                     apiUrl={apiUrl}
                                     open={true}
-                                    onOpenChange={() => { setAction(""); setSheetEntity(null); }}
+                                    onOpenChange={closeAction}
                                     onDelete={(data) => handleDelete(sheetEntity, data)}
                                     onRestore={() => handleRestore(sheetEntity)}
                                     access={access}
                                     buildEditPath={buildEditPath}
-                                    hideEdit={resolveHideEdit(sheetEntity)}
+                                    hideEdit={resolveRowFlag(rowActionMenu?.hideEdit, sheetEntity)}
                                     actionMenuAllowCustomChildren={rowActionMenu?.allowMenuForCustomChildren}
                                     renderSheetActionMenuChildren={(e) =>
-                                        sheetActionMenuChildren?.(e, (a) => bindRowActionMenu(e, a), listHelpers)
+                                        sheetActionMenuChildren?.(e, (a) => openAction(e, a), listHelpers)
                                     }
-                                    onSheetRowPatched={(row) => {
-                                        listRef.current?.updateRow?.(sheetEntity._id, row as Partial<T>);
-                                        setSheetEntity({...sheetEntity, ...row} as T);
-                                    }}
+                                    onSheetRowPatched={(row) => patchRow(sheetEntity._id, row as Partial<T>)}
                                     deleteRestoreConfirmLabel={resolveDeleteLabel(sheetEntity)}
                                 />
                             )
@@ -644,10 +639,9 @@ export default function EntityListPage<T extends BaseEntity>({
                             confirmName={resolveDeleteLabel(sheetEntity)}
                             onSuccess={(data: DeletedData) => {
                                 handleDelete(sheetEntity, data);
-                                setAction("");
-                                setSheetEntity(null);
+                                closeAction();
                             }}
-                            onCancel={() => { setAction(""); setSheetEntity(null); }}
+                            onCancel={closeAction}
                             url={apiUrl}
                         />
                     )}
@@ -660,10 +654,9 @@ export default function EntityListPage<T extends BaseEntity>({
                             confirmName={resolveDeleteLabel(sheetEntity)}
                             onSuccess={() => {
                                 handleRestore(sheetEntity);
-                                setAction("");
-                                setSheetEntity(null);
+                                closeAction();
                             }}
-                            onCancel={() => { setAction(""); setSheetEntity(null); }}
+                            onCancel={closeAction}
                             url={`${apiUrl}/restore`}
                         />
                     )}
@@ -671,8 +664,8 @@ export default function EntityListPage<T extends BaseEntity>({
                         renderFloatingModals?.({
                             action,
                             entity: sheetEntity,
-                            resetAction: () => { setAction(""); setSheetEntity(null); },
-                            listRef: listRef as EntityListRefs<T>,
+                            resetAction: closeAction,
+                            listRef,
                         })}
                 </>
             }

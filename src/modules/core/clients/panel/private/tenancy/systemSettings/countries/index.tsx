@@ -7,7 +7,7 @@ import {IconFlagPlus} from "@tabler/icons-react";
 import CountryCard from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx";
 import ViewStates from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewStates.tsx";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewCities.tsx";
-import EntityListPage from "@coreModule/components/entityPage/EntityListPage.tsx";
+import EntityListPage from "@baseModule/components/entityPage/EntityListPage.tsx";
 
 function countryEditPath(country: Country) {
     const params = new URLSearchParams();

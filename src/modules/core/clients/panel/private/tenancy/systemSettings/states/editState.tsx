@@ -1,4 +1,4 @@
-import {createGenericEditPage} from "@coreModule/components/entityPage/createGenericEditPage.tsx";
+import {createGenericEditPage} from "@baseModule/components/entityPage/createGenericEditPage.tsx";
 import {editStateFormSchema} from "armonia/src/modules/core/api/auxiliary/private/state/editState.form.validator.ts";
 import type {State} from "armonia/src/modules/core/api/auxiliary/private/state/state.dto.ts";
 import type {EditStateFormType} from "armonia/src/modules/core/api/auxiliary/private/state/state.schema-def.ts";

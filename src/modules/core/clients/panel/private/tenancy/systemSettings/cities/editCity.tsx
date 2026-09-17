@@ -1,4 +1,4 @@
-import {createGenericEditPage} from "@coreModule/components/entityPage/createGenericEditPage.tsx";
+import {createGenericEditPage} from "@baseModule/components/entityPage/createGenericEditPage.tsx";
 import {editCityFormSchema} from "armonia/src/modules/core/api/auxiliary/private/city/editCity.form.validator.ts";
 import type {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
 import type {EditCityFormType} from "armonia/src/modules/core/api/auxiliary/private/city/city.schema-def.ts";

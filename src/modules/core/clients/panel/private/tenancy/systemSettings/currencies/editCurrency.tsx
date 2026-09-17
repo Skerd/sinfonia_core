@@ -1,4 +1,4 @@
-import {createGenericEditPage} from "@coreModule/components/entityPage/createGenericEditPage.tsx";
+import {createGenericEditPage} from "@baseModule/components/entityPage/createGenericEditPage.tsx";
 import {editCurrencyFormSchema} from "armonia/src/modules/core/api/finance/private/currency/editCurrency.form.validator.ts";
 import type {Currency} from "armonia/src/modules/core/api/finance/private/currency/currency.dto.ts";
 import type {EditCurrencyFormType} from "armonia/src/modules/core/api/finance/private/currency/currency.schema-def.ts";

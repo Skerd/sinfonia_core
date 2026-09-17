@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef, useState} from "react";
+import {useEffect, useId, useMemo, useRef, useState} from "react";
 import {compose} from "redux";
 import {X, CalendarIcon} from "lucide-react";
 import {format, isValid, parse} from "date-fns";
@@ -10,7 +10,7 @@ import {SimpleSelect} from "@coreModule/components/custom/simpleSelect";
 import {ApiSelect} from "@coreModule/components/custom/apiSelect";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators";
+import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators.ts";
 import type {FilterGroup, FilterOperator, FilterRule, FilterValue} from "armonia/src/modules/core/database/filter";
 import {generateUUID} from "@baseModule/helpers/general/uuid.ts";
 
@@ -119,7 +119,16 @@ export function buildQuickFilterExtraParams(
 // Individual input types
 // ---------------------------------------------------------------------------
 
+const TEXT_DEBOUNCE_MS = 300;
+const FIELD_WIDTH = "h-8 text-sm min-w-[140px] max-w-[200px] max-md:w-full max-md:max-w-none";
+/** Room for the bar's own clear button, which sits over the right edge of text/date inputs. */
+const CLEARABLE_PADDING = "pr-7";
+
+/** Types whose control already renders its own clear affordance (SimpleSelect / ApiSelect). */
+const SELF_CLEARING_TYPES = new Set<COLUMN_TYPE>([COLUMN_TYPE.ENUM, COLUMN_TYPE.BOOLEAN, COLUMN_TYPE.OBJECT_ID]);
+
 type QuickFilterInputProps = {
+    id: string;
     def: QuickFilterDef;
     value: FilterValue | null;
     label?: string | null;
@@ -129,66 +138,90 @@ type QuickFilterInputProps = {
     resolveLanguageKey: WithLanguageType["resolveLanguageKey"];
 };
 
-function TextOrNumberInput({def, value, onChange}: QuickFilterInputProps) {
+function TextOrNumberInput({id, def, value, onChange}: QuickFilterInputProps) {
     const isNumber = def.type === COLUMN_TYPE.NUMBER || def.type === COLUMN_TYPE.PERCENTAGE;
     const [local, setLocal] = useState<string>(value != null ? String(value) : "");
     const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+    const cancelPending = () => {
+        if (timer.current) clearTimeout(timer.current);
+        timer.current = null;
+    };
+
+    // An outside change (clear button, "clear filters", URL navigation) wins over a
+    // pending keystroke — otherwise the debounced value would re-apply the old filter.
     useEffect(() => {
+        cancelPending();
         setLocal(value != null ? String(value) : "");
     }, [value]);
 
+    useEffect(() => cancelPending, []);
+
     const handleChange = (raw: string) => {
         setLocal(raw);
-        if (timer.current) clearTimeout(timer.current);
+        cancelPending();
         timer.current = setTimeout(() => {
-            if (raw.trim() === "") {
-                onChange(null);
-            } else {
-                onChange(isNumber ? Number(raw) : raw);
-            }
-        }, 300);
+            timer.current = null;
+            const trimmed = raw.trim();
+            if (trimmed === "") return onChange(null);
+            if (!isNumber) return onChange(raw);
+            // Skip partial input such as "-" or "1e" instead of filtering by NaN.
+            const num = Number(trimmed);
+            if (Number.isFinite(num)) onChange(num);
+        }, TEXT_DEBOUNCE_MS);
     };
 
     return (
         <Input
+            id={id}
             type={isNumber ? "number" : "text"}
+            inputMode={isNumber ? "decimal" : undefined}
             value={local}
             onChange={(e) => handleChange(e.target.value)}
             placeholder={def.placeholder ?? def.label}
-            className="h-8 text-sm min-w-[140px] max-w-[200px] max-md:w-full max-md:max-w-none"
+            className={cn(FIELD_WIDTH, local !== "" && CLEARABLE_PADDING)}
         />
     );
 }
 
-function DateInput({def, value, onChange}: QuickFilterInputProps) {
-    const strVal = typeof value === "string" ? value : "";
-    const dateFromStr = (s: string) => (!s ? undefined : parse(s, "yyyy-MM-dd", new Date()));
-    const selectedDate = strVal ? dateFromStr(strVal) : undefined;
-    const displayText =
-        strVal && selectedDate && isValid(selectedDate) ? format(selectedDate, "PPP") : null;
+const parseIsoDate = (s: string) => {
+    const d = parse(s, "yyyy-MM-dd", new Date());
+    return isValid(d) ? d : undefined;
+};
+
+function DateInput({id, def, value, onChange}: QuickFilterInputProps) {
+    const [open, setOpen] = useState(false);
+    const selectedDate = typeof value === "string" && value ? parseIsoDate(value) : undefined;
 
     return (
-        <Popover>
+        <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
+                    id={id}
                     variant="outline"
                     size="sm"
                     type="button"
                     className={cn(
-                        "h-8 min-w-[140px] max-w-[200px] max-md:w-full max-md:max-w-none justify-start text-left font-normal text-sm",
-                        !displayText && "text-muted-foreground",
+                        FIELD_WIDTH,
+                        "justify-start text-left font-normal",
+                        selectedDate ? CLEARABLE_PADDING : "text-muted-foreground",
                     )}
                 >
                     <CalendarIcon className="mr-2 size-3.5 shrink-0" />
-                    <span className="truncate">{displayText ?? (def.placeholder ?? def.label)}</span>
+                    <span className="truncate">
+                        {selectedDate ? format(selectedDate, "PPP") : (def.placeholder ?? def.label)}
+                    </span>
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
                     mode="single"
                     selected={selectedDate}
-                    onSelect={(d) => onChange(d ? format(d, "yyyy-MM-dd") : null)}
+                    defaultMonth={selectedDate}
+                    onSelect={(d) => {
+                        onChange(d ? format(d, "yyyy-MM-dd") : null);
+                        setOpen(false);
+                    }}
                     captionLayout="dropdown"
                 />
             </PopoverContent>
@@ -203,25 +236,22 @@ function EnumInput({def, value, onChange}: QuickFilterInputProps) {
             value={typeof value === "string" ? value : ""}
             onValueChange={(v: string | string[] | undefined) => onChange((v as string) || null)}
             placeholder={def.placeholder ?? def.label}
-            className="h-8 text-sm min-w-[140px] max-w-[200px] max-md:w-full max-md:max-w-none"
+            className={FIELD_WIDTH}
         />
     );
 }
 
 function BooleanInput({def, value, onChange, resolveLanguageKey}: QuickFilterInputProps) {
-    const boolOptions = [
+    const boolOptions = useMemo(() => [
         {value: "true", label: String(resolveLanguageKey("yes"))},
         {value: "false", label: String(resolveLanguageKey("no"))},
-    ];
+    ], [resolveLanguageKey]);
     const boolVal = value === true ? "true" : value === false ? "false" : "";
     return (
         <SimpleSelect
             options={boolOptions}
             value={boolVal}
-            onValueChange={(v: string | string[] | undefined) => {
-                if (!v) return onChange(null);
-                onChange(v === "true");
-            }}
+            onValueChange={(v: string | string[] | undefined) => onChange(v ? v === "true" : null)}
             placeholder={def.placeholder ?? def.label}
             className="h-8 text-sm min-w-[120px] max-w-[160px] max-md:w-full max-md:max-w-none"
         />
@@ -294,7 +324,7 @@ function ObjectIdInput({def, value, label, onChange, values, extraParams}: Quick
                 onChange(next as FilterValue | null, resolvedLabel);
             }}
             placeholder={def.placeholder ?? def.label}
-            className="h-8 text-sm min-w-[140px] max-w-[220px] max-md:w-full max-md:max-w-none"
+            className={cn(FIELD_WIDTH, "max-w-[220px]")}
             pageSize={50}
         />
     );
@@ -333,19 +363,26 @@ function QuickFilterBar({
     extraParams,
     resolveLanguageKey,
 }: QuickFilterBarProps) {
+    const idPrefix = useId();
     const anyActive = defs.some((d) => hasActiveValue(values[d.field]));
 
     return (
-        <div className="flex flex-col items-stretch gap-2 pb-1 md:flex-row md:flex-wrap md:items-end">
+        <div
+            role="group"
+            aria-label={String(resolveLanguageKey("groupLabel"))}
+            className="flex flex-col items-stretch gap-2 pb-1 md:flex-row md:flex-wrap md:items-end"
+        >
             {defs.map((def) => {
                 const active = hasActiveValue(values[def.field]);
+                const inputId = `${idPrefix}-${def.field}`;
                 return (
                     <div key={def.field} className="flex flex-col gap-2 min-w-0 max-md:w-full">
-                        <label className="text-xs text-muted-foreground leading-none">
+                        <label htmlFor={inputId} className="text-xs text-muted-foreground leading-none">
                             {def.label}
                         </label>
                         <div className={cn("relative flex items-center max-md:w-full", active && "ring-1 ring-primary/30 rounded-md")}>
                             <QuickFilterInput
+                                id={inputId}
                                 def={def}
                                 value={values[def.field] ?? null}
                                 label={labels?.[def.field] ?? null}
@@ -354,13 +391,12 @@ function QuickFilterBar({
                                 extraParams={extraParams}
                                 resolveLanguageKey={resolveLanguageKey}
                             />
-                            {/* ApiSelect already renders its own clear control. */}
-                            {active && def.type !== COLUMN_TYPE.OBJECT_ID && (
+                            {active && !SELF_CLEARING_TYPES.has(def.type) && (
                                 <button
                                     type="button"
                                     onClick={() => onChange(def.field, null, null)}
-                                    className="absolute right-1.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                                    aria-label={String(resolveLanguageKey("clear"))}
+                                    className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring transition-colors"
+                                    aria-label={`${String(resolveLanguageKey("clear"))} ${def.label}`}
                                 >
                                     <X className="size-3.5" />
                                 </button>

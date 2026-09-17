@@ -1,6 +1,6 @@
 import {Building2} from "lucide-react";
 import {z} from "zod";
-import {createGenericCreatePage} from "@coreModule/components/entityPage/createGenericCreatePage.tsx";
+import {createGenericCreatePage} from "@baseModule/components/entityPage/createGenericCreatePage.tsx";
 import {newCompanyCreated} from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import {store} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {createCompanyFormSchema} from "armonia/src/modules/core/api/company/private/company/createCompany.form.validator.ts";
