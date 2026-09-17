@@ -1,7 +1,11 @@
 import type {To} from "react-router-dom";
 import type {ElementType} from "react";
 
-/** Permission / clearance fields used by {@link NavGroup} items (wired through ProtectNavigation). */
+/**
+ * Access requirements of a nav entry, checked by `navItemAllowed` (`filterNavByAccess.ts`).
+ * `permissions` are access-model ids (collection names, case-insensitive); empty means public.
+ * `usersPermissions` is currently unused.
+ */
 export type ProtectedNav = {
     permissions: string[];
     usersPermissions: string[];

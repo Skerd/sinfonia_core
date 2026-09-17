@@ -81,6 +81,16 @@ describe("filterNavGroups", () => {
         expect(filterNavGroups(denied, map, true)).toEqual([]);
     });
 
+    it("drops a group the user may not read", () => {
+        const denied: NavGroup[] = [{
+            ...guard(["invoices"]),
+            title: "G",
+            items: [{...guard(), title: "Public", url: "/public"}],
+        }];
+        expect(filterNavGroups(denied, map, true)).toEqual([]);
+        expect(filterNavGroups(denied, map, false)).toHaveLength(1);
+    });
+
     it("does not mutate the input", () => {
         const snapshot = structuredClone(groups);
         filterNavGroups(groups, map, true);

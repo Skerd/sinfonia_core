@@ -37,11 +37,12 @@ export function filterNavItems<T extends NavItem | NavSubItem>(items: T[], map: 
 }
 
 /**
- * Applies {@link filterNavItems} to every group and drops groups left empty.
- * Group-level permissions are not checked, matching the sidebar (`ProtectNavigation` is currently a no-op).
+ * Drops groups the user may not read, filters the rest with {@link filterNavItems},
+ * and drops groups left without visible entries.
  */
 export function filterNavGroups(groups: NavGroup[], map: AccessContextValue, hydrated: AccessHydrated): NavGroup[] {
     return groups.flatMap((group) => {
+        if (!navItemAllowed(group, map, hydrated)) return [];
         const items = filterNavItems(group.items, map, hydrated);
         return items.length ? [{...group, items}] : [];
     });

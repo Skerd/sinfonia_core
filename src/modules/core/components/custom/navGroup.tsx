@@ -6,28 +6,8 @@ import {Collapsible, CollapsibleContent, CollapsibleTrigger} from '@coreModule/c
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from '@coreModule/components/ui/dropdown-menu.tsx';
 import {SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar} from '@coreModule/components/ui/sidebar.tsx';
 import {NavCollapsible, NavItem, NavLink, NavLinkItem, NavSubCollapsible} from "@coreModule/helpers/panel/sidebarNav.types.ts";
-import {useAccessHydrated, useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";
-import {filterNavItems} from "@coreModule/helpers/panel/filterNavByAccess.ts";
-import {compose} from "redux";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
-
-/**
- * Currently an identity wrapper: both guard HOCs are disabled below, so the
- * permission arguments are accepted (and underscore-prefixed) purely to keep
- * every call site wired up for when `withClearance` is switched back on.
- */
-export function ProtectNavigation(
-    _permissions: string[] = [],
-    _usersPermissions: string[] = [],
-    _atLeastOnePermission: boolean = false,
-    protectWhat: any
-) {
-    return compose(
-        // withClearance(permissions, usersPermissions, atLeastOnePermission),
-        // withPiramida(true)
-    )(protectWhat)
-}
 
 function hrefMatchesSubLink(href: string, url: string | undefined): boolean {
     return !!url && (href === url || href.startsWith(url + '/'));
@@ -42,51 +22,30 @@ function subEntryActive(href: string, sub: NavLinkItem | NavSubCollapsible): boo
     return 'url' in sub && !!sub.url && hrefMatchesSubLink(href, String(sub.url));
 }
 
+/**
+ * One sidebar section. Expects items already filtered by access
+ * (see `filterNavGroups` in `ModuleSidebarNavGroups`).
+ */
 export function NavGroup({ title, items }: {title: string; items: NavItem[]}) {
 
     const { state, isMobile } = useSidebar()
-    const accessMap = useAccessMap();
-    const accessHydrated = useAccessHydrated();
-    const visibleItems = filterNavItems(items, accessMap, accessHydrated);
-    // const { menu, subview } = useParams();
-    // const href = `/${menu}/${subview}`
 
-    if (visibleItems.length === 0) return null;
+    if (items.length === 0) return null;
 
     return (
         <SidebarGroup>
             <SidebarGroupLabel>{title}</SidebarGroupLabel>
             <SidebarMenu>
                 {
-                    visibleItems.map((item) => {
+                    items.map((item) => {
                         const key = `${item.title}-${("url" in item ? item.url : "group") ?? 'group'}`
                         if (!item.items){
-                            const ProtectedMenuLink = ProtectNavigation(
-                                item.permissions,
-                                item.usersPermissions,
-                                item.atLeastOnePermission,
-                                SidebarMenuLink
-                            )
-                            return <ProtectedMenuLink key={key} item={item} />
+                            return <SidebarMenuLink key={key} item={item} />
                         }
                         if (state === 'collapsed' && !isMobile){
-                            const ProtectedSidebarMenuCollapsedDropdown = ProtectNavigation(
-                                item.permissions,
-                                item.usersPermissions,
-                                item.atLeastOnePermission,
-                                SidebarMenuCollapsedDropdown
-                            )
-                            return (
-                                <ProtectedSidebarMenuCollapsedDropdown key={key} item={item}/>
-                            )
+                            return <SidebarMenuCollapsedDropdown key={key} item={item}/>
                         }
-                        const ProtectedSidebarMenuCollapsible = ProtectNavigation(
-                            item.permissions,
-                            item.usersPermissions,
-                            item.atLeastOnePermission,
-                            SidebarMenuCollapsible
-                        )
-                        return <ProtectedSidebarMenuCollapsible key={key} item={item} />
+                        return <SidebarMenuCollapsible key={key} item={item} />
                     })
                 }
             </SidebarMenu>
@@ -173,11 +132,8 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                     {
                         item.items.filter((x: NavLinkItem | NavSubCollapsible) => !!x).flatMap((sub: NavLinkItem | NavSubCollapsible) => {
                             if ('url' in sub && sub.url) {
-                                const ProtectedDropDownItem = ProtectNavigation(
-                                    sub.permissions,
-                                    sub.usersPermissions,
-                                    true,
-                                    () => <DropdownMenuItem key={`${sub.title}-${sub.url}`} asChild>
+                                return [
+                                    <DropdownMenuItem key={`${sub.title}-${sub.url}`} asChild>
                                         <Link
                                             to={sub.url}
                                             className={`${checkIsActive(href, sub as NavLink) ? 'bg-secondary' : ''}`}
@@ -189,8 +145,7 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                                             )}
                                         </Link>
                                     </DropdownMenuItem>
-                                );
-                                return [<ProtectedDropDownItem key={`${sub.title}-${sub.url}`} />];
+                                ];
                             }
                             const nested = sub as NavSubCollapsible;
                             const label = (
@@ -200,11 +155,8 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                             );
                             const nestedItems = nested.items.flatMap((child) => {
                                 if ('url' in child && child.url) {
-                                    const ProtectedNestedItem = ProtectNavigation(
-                                        child.permissions,
-                                        child.usersPermissions,
-                                        true,
-                                        () => <DropdownMenuItem key={`${nested.title}-${child.title}-${child.url}`} asChild>
+                                    return [
+                                        <DropdownMenuItem key={`${nested.title}-${child.title}-${child.url}`} asChild>
                                             <Link
                                                 to={child.url}
                                                 className={`${hrefMatchesSubLink(href, String(child.url)) ? 'bg-secondary' : ''}`}
@@ -216,8 +168,7 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                                                 )}
                                             </Link>
                                         </DropdownMenuItem>
-                                    );
-                                    return [<ProtectedNestedItem key={`${child.title}-${child.url}`} />];
+                                    ];
                                 }
                                 const deeper = child as NavSubCollapsible;
                                 const deeperLabel = (
@@ -227,11 +178,8 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                                 );
                                 const deeperItems = deeper.items.map((link) => {
                                     if (!('url' in link) || !link.url) return null;
-                                    const ProtectedDeeperItem = ProtectNavigation(
-                                        link.permissions,
-                                        link.usersPermissions,
-                                        true,
-                                        () => <DropdownMenuItem key={`${deeper.title}-${link.title}-${link.url}`} asChild>
+                                    return (
+                                        <DropdownMenuItem key={`${deeper.title}-${link.title}-${link.url}`} asChild>
                                             <Link
                                                 to={link.url}
                                                 className={`${hrefMatchesSubLink(href, String(link.url)) ? 'bg-secondary' : ''}`}
@@ -244,7 +192,6 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                                             </Link>
                                         </DropdownMenuItem>
                                     );
-                                    return <ProtectedDeeperItem key={`${link.title}-${link.url}`} />;
                                 }).filter(Boolean);
                                 return [deeperLabel, ...deeperItems];
                             });
@@ -288,11 +235,8 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                         {
                             item.items.map((subItem) => {
                                 if ('url' in subItem && subItem.url) {
-                                    const ProtectedSidebarMenuSubItem = ProtectNavigation(
-                                        subItem.permissions,
-                                        subItem.usersPermissions,
-                                        true,
-                                        () => <SidebarMenuSubItem key={subItem.title}>
+                                    return (
+                                        <SidebarMenuSubItem key={`${subItem.title}-${subItem.url}`}>
                                             <SidebarMenuSubButton asChild isActive={checkIsActive(href, subItem as NavLink)}>
                                                 <Link to={subItem.url} onClick={() => setOpenMobile(false)}>
                                                     {subItem.icon && <subItem.icon />}
@@ -301,9 +245,6 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                 </Link>
                                             </SidebarMenuSubButton>
                                         </SidebarMenuSubItem>
-                                    );
-                                    return (
-                                        <ProtectedSidebarMenuSubItem key={`${subItem.title}-${subItem.url}`} />
                                     );
                                 }
                                 const nested = subItem as NavSubCollapsible;
@@ -326,12 +267,8 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                 <SidebarMenuSub>
                                                     {nested.items.map((child) => {
                                                         if ('url' in child && child.url) {
-                                                            const ProtectedNestedLink = ProtectNavigation(
-                                                                child.permissions,
-                                                                child.usersPermissions,
-                                                                true,
-                                                                () => (
-                                                                    <SidebarMenuSubItem key={`${nested.title}-${child.title}`}>
+                                                            return (
+                                                                    <SidebarMenuSubItem key={`${nested.title}-${child.title}-${child.url}`}>
                                                                         <SidebarMenuSubButton asChild isActive={hrefMatchesSubLink(href, String(child.url))}>
                                                                             <Link to={child.url} onClick={() => setOpenMobile(false)}>
                                                                                 {child.icon && <child.icon />}
@@ -340,10 +277,6 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                                             </Link>
                                                                         </SidebarMenuSubButton>
                                                                     </SidebarMenuSubItem>
-                                                                )
-                                                            );
-                                                            return (
-                                                                <ProtectedNestedLink key={`${nested.title}-${child.title}-${child.url}`} />
                                                             );
                                                         }
                                                         const deeper = child as NavSubCollapsible;
@@ -366,12 +299,8 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                                         <SidebarMenuSub>
                                                                             {deeper.items.map((link) => {
                                                                                 if (!('url' in link) || !link.url) return null;
-                                                                                const ProtectedDeeperLink = ProtectNavigation(
-                                                                                    link.permissions,
-                                                                                    link.usersPermissions,
-                                                                                    true,
-                                                                                    () => (
-                                                                                        <SidebarMenuSubItem key={`${deeper.title}-${link.title}`}>
+                                                                                return (
+                                                                                        <SidebarMenuSubItem key={`${deeper.title}-${link.title}-${link.url}`}>
                                                                                             <SidebarMenuSubButton asChild isActive={hrefMatchesSubLink(href, String(link.url))}>
                                                                                                 <Link to={link.url} onClick={() => setOpenMobile(false)}>
                                                                                                     {link.icon && <link.icon />}
@@ -380,10 +309,6 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                                                                 </Link>
                                                                                             </SidebarMenuSubButton>
                                                                                         </SidebarMenuSubItem>
-                                                                                    )
-                                                                                );
-                                                                                return (
-                                                                                    <ProtectedDeeperLink key={`${deeper.title}-${link.title}-${link.url}`} />
                                                                                 );
                                                                             })}
                                                                         </SidebarMenuSub>
