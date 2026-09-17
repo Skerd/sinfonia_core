@@ -7,7 +7,7 @@ import {getLocalStorageValue, setLocalStorageValue} from "@baseModule/helpers/co
 import {getUser} from "@baseModule/helpers/context/localStorage/authenticationStorage.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import useErrorHandler from "@baseModule/helpers/hooks/useErrorHandler.ts";
-import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/custom/sessionSetupScreen.tsx";
+import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@baseModule/components/custom/sessionSetupScreen.tsx";
 
 export type ColumnVisibility = Record<string, boolean>;
 

@@ -2,7 +2,7 @@ import {createContext, useCallback, useEffect, useMemo, useState, type ReactNode
 import type {ViewConfig, ViewConfiguration} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import useErrorHandler from "@baseModule/helpers/hooks/useErrorHandler.ts";
-import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/custom/sessionSetupScreen.tsx";
+import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@baseModule/components/custom/sessionSetupScreen.tsx";
 
 /** One collection's views, keyed by view key (`sheet`, `form:create`, …). */
 export type CachedViewConfigs = Record<string, ViewConfig>;

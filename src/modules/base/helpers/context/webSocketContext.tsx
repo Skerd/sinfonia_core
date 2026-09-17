@@ -7,7 +7,7 @@ import {handleWebSocketMessage} from "@baseModule/helpers/websocket/webSocketMes
 import {buildWebSocketUrl, reconnectDelay, shouldReconnect} from "@baseModule/helpers/websocket/webSocketConnection.ts";
 import {handleError} from "@baseModule/helpers/general/errors.ts";
 import {setRoomSocket, type RoomSocket} from "@baseModule/helpers/websocket/roomMemberships.ts";
-import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/custom/sessionSetupScreen.tsx";
+import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@baseModule/components/custom/sessionSetupScreen.tsx";
 
 /**
  * Sends a JSON message on the socket. While disconnected, messages are queued and flushed on the
