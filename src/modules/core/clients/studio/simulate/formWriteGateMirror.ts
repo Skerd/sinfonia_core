@@ -1,5 +1,5 @@
 import type {ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import {rendersOnEditForm as panelRendersOnEditForm} from "@coreModule/components/viewEngine/form/writeGate.ts";
+import {rendersOnEditForm as panelRendersOnEditForm} from "@baseModule/components/viewEngine/form/writeGate.ts";
 import {flattenTree} from "../tree/nodeTreeOps.ts";
 
 /**

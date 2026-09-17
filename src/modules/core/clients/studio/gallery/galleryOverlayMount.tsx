@@ -2,7 +2,7 @@ import {Suspense, useState} from "react";
 import {
     getReferencesDefaultItemProp,
     resolveWidget,
-} from "@coreModule/components/viewEngine/widgetRegistry.ts";
+} from "@baseModule/components/viewEngine/widgetRegistry.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {AccessAllowAllProvider} from "@baseModule/helpers/context/accessContext.tsx";
 import {entityPropName, galleryCardExtraProps, galleryEntityStub} from "./galleryEntity.ts";

@@ -13,7 +13,7 @@ vi.mock("@baseModule/helpers/websocket/resolveSiteRoom.ts", () => ({
         return first === "noroom" ? null : first;
     },
 }));
-vi.mock("@coreModule/components/ui/sessionSetupScreen.tsx", () => ({
+vi.mock("@coreModule/components/custom/sessionSetupScreen.tsx", () => ({
     SESSION_SETUP_TOTAL_STEPS: 6,
     SessionSetupScreen: ({phase, step, total}: {phase: string; step: number; total: number}) => (
         <div data-testid="setup" data-phase={phase} data-step={step} data-total={total}/>

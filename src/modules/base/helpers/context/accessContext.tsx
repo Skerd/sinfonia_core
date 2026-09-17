@@ -15,7 +15,7 @@ import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import useErrorHandler from "@baseModule/helpers/hooks/useErrorHandler.ts";
 import type {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import type {ReadOrWriteFields} from "armonia/src/modules/core/types";
-import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
+import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/custom/sessionSetupScreen.tsx";
 
 export type AccessObject = {
     read: ReadOrWriteFields | boolean | any;

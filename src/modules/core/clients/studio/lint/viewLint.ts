@@ -1,5 +1,5 @@
 import type {ViewConfig, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import type {WidgetMeta} from "@coreModule/components/viewEngine/widgetMeta.ts";
+import type {WidgetMeta} from "@baseModule/components/viewEngine/widgetMeta.ts";
 import {flattenTree} from "../tree/nodeTreeOps.ts";
 import {isEditForm, type ViewShape} from "../inspector/fieldRelevance.ts";
 

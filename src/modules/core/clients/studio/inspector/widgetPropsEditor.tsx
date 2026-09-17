@@ -4,8 +4,8 @@ import {Label} from "@coreModule/components/ui/label.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {IconAlertTriangle} from "@tabler/icons-react";
-import {resolveIcon} from "@coreModule/components/viewEngine/widgetRegistry.ts";
-import type {WidgetPropMeta} from "@coreModule/components/viewEngine/widgetMeta.ts";
+import {resolveIcon} from "@baseModule/components/viewEngine/widgetRegistry.ts";
+import type {WidgetPropMeta} from "@baseModule/components/viewEngine/widgetMeta.ts";
 import JsonPropsEditor from "./jsonPropsEditor.tsx";
 
 type WidgetPropsEditorProps = {

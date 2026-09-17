@@ -15,7 +15,7 @@ vi.mock("@baseModule/helpers/context/localStorage/authenticationStorage.ts", () 
 vi.mock("armonia/src/modules/core/database/filter/pathUtils.ts", () => ({
     tableConfigToFilterConfig: (columns: TableColumnConfig[]) => columns.map((column) => ({name: column.id})),
 }));
-vi.mock("@coreModule/components/ui/sessionSetupScreen.tsx", () => ({
+vi.mock("@coreModule/components/custom/sessionSetupScreen.tsx", () => ({
     SESSION_SETUP_TOTAL_STEPS: 3,
     SessionSetupScreen: ({error, onRetry, phase}: {error: boolean; onRetry: () => void; phase: string}) => (
         <div data-testid="setup" data-phase={phase}>

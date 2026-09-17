@@ -19,7 +19,7 @@ import CardAndTableView, {type EntityListApi} from "@coreModule/components/custo
 import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
-import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
+import SheetViewRenderer from "@baseModule/components/viewEngine/SheetViewRenderer.tsx";
 import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import {useDynamicLanguage} from "@baseModule/helpers/hooks/useDynamicLanguage.ts";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";

@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import {CORE_WIDGET_META, type WidgetMeta} from "@coreModule/components/viewEngine/widgetMeta.ts";
+import {CORE_WIDGET_META, type WidgetMeta} from "@baseModule/components/viewEngine/widgetMeta.ts";
 
 /**
  * The registry pulls in every widget component (and a Leaflet map or two), which is far

@@ -1,6 +1,6 @@
 import type {FieldValues} from "react-hook-form";
 import type {ViewConfig, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import {getWidgetMeta} from "@coreModule/components/viewEngine/widgetRegistry.ts";
+import {getWidgetMeta} from "@baseModule/components/viewEngine/widgetRegistry.ts";
 import {
     buildPaletteGroups,
     createPaletteNode,

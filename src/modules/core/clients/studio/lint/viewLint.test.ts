@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import {CORE_WIDGET_META} from "@coreModule/components/viewEngine/widgetMeta.ts";
+import {CORE_WIDGET_META} from "@baseModule/components/viewEngine/widgetMeta.ts";
 import {countBySeverity, findingsByPath, lintViewConfig, type LintContext} from "./viewLint.ts";
 
 const KNOWN_TOKENS = [

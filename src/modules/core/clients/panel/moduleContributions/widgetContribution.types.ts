@@ -1,10 +1,10 @@
 import type {ComponentType, ReactNode} from "react";
 import type {FieldBinding, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import type {ViewRendererContext} from "@coreModule/components/viewEngine/viewRendererHelpers.ts";
-import type {WidgetMeta} from "@coreModule/components/viewEngine/widgetMeta.ts";
-import type {CompoundFormWidgetRenderer} from "@coreModule/components/viewEngine/form/types.ts";
+import type {ViewRendererContext} from "@baseModule/components/viewEngine/viewRendererHelpers.ts";
+import type {WidgetMeta} from "@baseModule/components/viewEngine/widgetMeta.ts";
+import type {CompoundFormWidgetRenderer} from "@baseModule/components/viewEngine/form/types.ts";
 
-export type {CompoundFormWidgetArgs, CompoundFormWidgetRenderer, FormWidgetExtra} from "@coreModule/components/viewEngine/form/types.ts";
+export type {CompoundFormWidgetArgs, CompoundFormWidgetRenderer, FormWidgetExtra} from "@baseModule/components/viewEngine/form/types.ts";
 
 /**
  * Optional attach file: `src/modules/<pkg>/clients/panel/widgetContribution.ts(x)`.

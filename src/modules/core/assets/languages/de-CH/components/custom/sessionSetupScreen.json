@@ -1,5 +1,5 @@
 {
-  "path": "src/modules/core/components/ui/sessionSetupScreen.tsx",
+  "path": "src/modules/core/components/custom/sessionSetupScreen.tsx",
   "hello": "Hallo, {name}",
   "helloFallback": "Hallo",
   "setupProgress": "System wird eingerichtet {current}/{total}",

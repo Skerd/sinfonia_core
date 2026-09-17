@@ -4,7 +4,7 @@ import {IconArrowRight, IconPencil, IconPlus, IconRestore, IconRobot, IconTrash}
 import type {
     DocumentAuditChangeDto,
     DocumentAuditEntryDto,
-} from "armonia/src/modules/core/api/auxiliary/private/auditLog/documentAuditLog.dto";
+} from "armonia/src/modules/core/api/auxiliary/private/auditLog/documentAuditLog.dto.ts";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar, AvatarFallback} from "@coreModule/components/ui/avatar.tsx";

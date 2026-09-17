@@ -5,7 +5,7 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import FormViewRenderer from "@coreModule/components/viewEngine/FormViewRenderer.tsx";
+import FormViewRenderer from "@baseModule/components/viewEngine/FormViewRenderer.tsx";
 import {useViewConfigState} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import type {FieldValues} from "react-hook-form";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";

@@ -1,7 +1,7 @@
 import {Suspense} from "react";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import ViewRenderer, {type ViewRendererContext} from "@coreModule/components/viewEngine/ViewRenderer.tsx";
+import ViewRenderer, {type ViewRendererContext} from "@baseModule/components/viewEngine/ViewRenderer.tsx";
 import type {SampleRow} from "../preview/useSampleRows.ts";
 
 type GallerySheetMountProps = {

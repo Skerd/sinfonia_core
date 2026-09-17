@@ -4,8 +4,8 @@ import type {FieldValues, Resolver} from "react-hook-form";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
-import FormViewRenderer from "@coreModule/components/viewEngine/FormViewRenderer.tsx";
-import EditFormViewRenderer from "@coreModule/components/viewEngine/editFormViewRenderer.tsx";
+import FormViewRenderer from "@baseModule/components/viewEngine/FormViewRenderer.tsx";
+import EditFormViewRenderer from "@baseModule/components/viewEngine/editFormViewRenderer.tsx";
 import {IconInfoCircle} from "@tabler/icons-react";
 import type {SampleRow} from "./useSampleRows.ts";
 

@@ -4,7 +4,7 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {signOut, updateToken, updateUserData} from "@baseModule/helpers/redux/slices/authSlice.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
-import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/ui/sessionSetupScreen.tsx";
+import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/custom/sessionSetupScreen.tsx";
 import {useNavigate} from "react-router-dom";
 
 type AuthenticationProviderProps = {

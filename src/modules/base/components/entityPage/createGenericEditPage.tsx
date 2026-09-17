@@ -10,7 +10,7 @@ import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import type {HttpRequestHeaderBuilder} from "@baseModule/helpers/hooks/useHttpRequest.ts";
-import EditFormViewRenderer from "@coreModule/components/viewEngine/editFormViewRenderer.tsx";
+import EditFormViewRenderer from "@baseModule/components/viewEngine/editFormViewRenderer.tsx";
 import {useViewConfigState} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import type {FieldValues, UseFormReturn} from "react-hook-form";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";

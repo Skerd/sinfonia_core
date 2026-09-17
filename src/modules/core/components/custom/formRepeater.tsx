@@ -6,13 +6,13 @@ import { CirclePlus, Trash2 } from "lucide-react";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";
 import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
 import type { ViewNode, FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import { resolveWidget } from "../viewEngine/widgetRegistry.ts";
+import { resolveWidget } from "@baseModule/components/viewEngine/widgetRegistry.ts";
 import {
     type FormWidgetExtra,
     isCompoundFormWidget,
     renderCompoundWidget,
     renderFormWidget,
-} from "../viewEngine/renderFormWidget.tsx";
+} from "@baseModule/components/viewEngine/renderFormWidget.tsx";
 
 export type RowCascade = {
     /** Relative field name within the row that triggers a clear when its value changes. */

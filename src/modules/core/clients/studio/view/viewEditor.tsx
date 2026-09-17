@@ -76,7 +76,7 @@ import {
     getRegisteredWidgetTokens,
     getWidgetMeta,
     resolveIcon,
-} from "@coreModule/components/viewEngine/widgetRegistry.ts";
+} from "@baseModule/components/viewEngine/widgetRegistry.ts";
 import NodeInspector from "../inspector/nodeInspector.tsx";
 import DeviceFrame from "../preview/deviceFrame.tsx";
 import DeviceToggle from "../preview/deviceToggle.tsx";

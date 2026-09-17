@@ -13,7 +13,7 @@ import {Spinner} from "@coreModule/components/ui/spinner.tsx";
 import type {
     DocumentAuditEntryDto,
     DocumentAuditLogResponseDto,
-} from "armonia/src/modules/core/api/auxiliary/private/auditLog/documentAuditLog.dto";
+} from "armonia/src/modules/core/api/auxiliary/private/auditLog/documentAuditLog.dto.ts";
 import type {AuditFieldHint} from "./auditFieldHints.ts";
 import {AuditDayHeading, AuditEntry, AuditTimelineSkeleton, groupEntriesByDay} from "./auditTimeline.tsx";
 import {AuditReferenceLabelsProvider} from "./auditDisplayValue.tsx";

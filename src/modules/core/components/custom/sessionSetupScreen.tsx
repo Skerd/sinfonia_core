@@ -152,5 +152,5 @@ function SessionSetupScreenComponent({
 }
 
 export const SessionSetupScreen = compose(
-    withLanguage("src/modules/core/components/ui/sessionSetupScreen.tsx"),
+    withLanguage("src/modules/core/components/custom/sessionSetupScreen.tsx"),
 )(SessionSetupScreenComponent);

@@ -4,7 +4,7 @@ import type {
     TableColumnConfig,
 } from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type";
 import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators";
-import {CORE_WIDGET_META} from "@coreModule/components/viewEngine/widgetMeta.ts";
+import {CORE_WIDGET_META} from "@baseModule/components/viewEngine/widgetMeta.ts";
 import {lintViewConfig} from "../lint/viewLint.ts";
 import {computeCoverage, boundPaths, type CoveragePath} from "../coverage/viewCoverage.ts";
 import {scaffoldNode, scaffoldNodes, widgetForPath, widgetPropsForPath} from "./scaffoldView.ts";
