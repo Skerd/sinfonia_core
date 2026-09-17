@@ -1,5 +1,5 @@
 import {lazy} from "react";
-import type {WidgetContribution} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
+import type {WidgetContribution} from "@baseModule/helpers/types/widgetContribution.types.ts";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Textarea} from "@coreModule/components/ui/textarea.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";

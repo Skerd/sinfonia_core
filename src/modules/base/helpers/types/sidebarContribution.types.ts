@@ -10,10 +10,11 @@ export type SidebarContributionContext = {
 
 /**
  * Optional attach file: `src/modules/<pkg>/clients/panel/sidebarContribution.ts(x)`.
- * Discovered via {@link getSortedSidebarContributions} (import.meta.glob).
+ * Discovered via `getSortedSidebarContributions` in `loadSidebarContributions.ts` (import.meta.glob),
+ * ordered by `order`, then `id`, then file path. A throwing `getNavGroups` is logged and skipped.
  */
 export type SidebarContribution = {
-    /** Stable id for debugging / ordering tie-breaks. */
+    /** Stable id for debugging / ordering tie-breaks; should be unique (duplicates warn in dev). */
     id?: string;
     /** Lower runs earlier; default module block uses 100. */
     order?: number;

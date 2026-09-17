@@ -3,7 +3,7 @@ import type {ComponentType} from "react";
 import {act, render, screen, waitFor} from "@testing-library/react";
 import type {ViewConfig, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 
-vi.mock("@coreModule/clients/panel/moduleContributions/loadWidgetContributions.ts", () => ({
+vi.mock("@baseModule/helpers/moduleContributions/loadWidgetContributions.ts", () => ({
     getSortedWidgetContributions: () => [
         {id: "test", auditSinglePostHints: {"#ProjectSheetView": {url: "/api/project/single", labelFields: ["name"]}}},
     ],

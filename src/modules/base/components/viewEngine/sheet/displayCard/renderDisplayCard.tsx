@@ -1,5 +1,5 @@
 import {createElement} from "react";
-import type {SheetFieldRenderer} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
+import type {SheetFieldRenderer} from "@baseModule/helpers/types/widgetContribution.types.ts";
 import {hasDisplayCardValueAccess} from "../../engine/access.ts";
 import {wpNumber, wpText} from "../../engine/widgetProps.ts";
 import {iconOrUndefined} from "../../registry/icons.ts";

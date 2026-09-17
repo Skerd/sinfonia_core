@@ -8,7 +8,7 @@ const {postMock} = vi.hoisted(() => ({postMock: vi.fn()}));
 
 vi.mock("@baseModule/helpers/apiClient/apiClient.ts", () => ({default: {post: postMock}}));
 vi.mock("@baseModule/helpers/hooks/useErrorHandler.ts", () => ({default: () => () => undefined}));
-vi.mock("@coreModule/components/custom/sessionSetupScreen.tsx", () => ({
+vi.mock("@baseModule/components/custom/sessionSetupScreen.tsx", () => ({
     SessionSetupScreen: () => null,
     SESSION_SETUP_TOTAL_STEPS: 3,
 }));

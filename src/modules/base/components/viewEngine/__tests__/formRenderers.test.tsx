@@ -5,7 +5,7 @@ import {MemoryRouter} from "react-router-dom";
 import type {Resolver} from "react-hook-form";
 import type {ViewConfig, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 
-vi.mock("@coreModule/clients/panel/moduleContributions/loadWidgetContributions.ts", async () => {
+vi.mock("@baseModule/helpers/moduleContributions/loadWidgetContributions.ts", async () => {
     const pm = await import("@propertyManagementModule/clients/panel/formWidgetRenderers.tsx");
     return {
         getSortedWidgetContributions: () => [

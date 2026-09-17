@@ -2,7 +2,7 @@ import {beforeEach, describe, expect, it, vi} from "vitest";
 import {render, screen} from "@testing-library/react";
 import type {ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 
-vi.mock("@coreModule/clients/panel/moduleContributions/loadWidgetContributions.ts", () => ({
+vi.mock("@baseModule/helpers/moduleContributions/loadWidgetContributions.ts", () => ({
     getSortedWidgetContributions: () => [],
 }));
 vi.mock("@baseModule/helpers/hocs/withLanguage.tsx", async (importOriginal) => ({

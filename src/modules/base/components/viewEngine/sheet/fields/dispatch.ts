@@ -2,7 +2,7 @@ import type {ReactNode} from "react";
 import type {
     SheetFieldRenderer,
     SheetFieldRendererArgs,
-} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
+} from "@baseModule/helpers/types/widgetContribution.types.ts";
 import {getSheetFieldRenderer, resolveWidget} from "../../widgetRegistry.ts";
 import {displayCardRenderer} from "../displayCard/renderDisplayCard.tsx";
 import {addressRenderers} from "./addresses.tsx";

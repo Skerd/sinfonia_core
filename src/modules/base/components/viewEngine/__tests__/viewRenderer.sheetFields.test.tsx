@@ -2,7 +2,7 @@ import {beforeEach, describe, expect, it, vi} from "vitest";
 import {isValidElement} from "react";
 import {render, screen, within} from "@testing-library/react";
 
-vi.mock("@coreModule/clients/panel/moduleContributions/loadWidgetContributions.ts", () => ({
+vi.mock("@baseModule/helpers/moduleContributions/loadWidgetContributions.ts", () => ({
     getSortedWidgetContributions: () => [],
 }));
 vi.mock("@baseModule/helpers/hocs/withLanguage.tsx", async (importOriginal) => ({

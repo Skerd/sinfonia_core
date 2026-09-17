@@ -9,7 +9,7 @@ const {apiClientMock, replaceFilesWithIdsMock} = vi.hoisted(() => ({
 
 vi.mock("@baseModule/helpers/apiClient/apiClient.ts", () => ({default: apiClientMock}));
 vi.mock("sonner", () => ({toast: Object.assign(vi.fn(), {loading: vi.fn(), success: vi.fn(), error: vi.fn(), dismiss: vi.fn()})}));
-vi.mock("@coreModule/helpers/general/config.ts", () => ({
+vi.mock("@baseModule/helpers/general/config.ts", () => ({
     getClientConfig: () => ({debugging: {enableFormPostInfo: false, enableFormResponseSuccessInfo: false, enableFormResponseErrorInfo: false}}),
 }));
 vi.mock("@baseModule/helpers/media/uploadFilesForSubmit.ts", async (importOriginal) => ({

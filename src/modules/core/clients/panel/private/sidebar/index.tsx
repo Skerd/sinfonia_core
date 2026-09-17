@@ -20,7 +20,7 @@ import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@baseModule
 import {useChatInboxBadges} from "@baseModule/helpers/hooks/useChatInboxBadges.ts";
 import {IconHome} from "@tabler/icons-react";
 import type {ComponentProps, ReactNode} from "react";
-import {ModuleSidebarNavGroups} from "@coreModule/clients/panel/moduleContributions/ModuleSidebarNavGroups.tsx";
+import {ModuleSidebarNavGroups} from "@baseModule/helpers/moduleContributions/ModuleSidebarNavGroups.tsx";
 
 export type {
     BaseNavItem,

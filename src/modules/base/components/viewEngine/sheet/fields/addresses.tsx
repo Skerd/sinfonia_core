@@ -1,5 +1,5 @@
 import {createElement} from "react";
-import type {SheetFieldRenderer} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
+import type {SheetFieldRenderer} from "@baseModule/helpers/types/widgetContribution.types.ts";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import {resolvePath} from "../../engine/refs.ts";
 import SheetCompanyAddressesSection from "../widgets/addresses/sheetCompanyAddressesSection.tsx";

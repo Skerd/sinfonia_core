@@ -4,7 +4,7 @@ import {render, screen} from "@testing-library/react";
 import {format} from "date-fns";
 import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 
-vi.mock("@coreModule/clients/panel/moduleContributions/loadWidgetContributions.ts", () => ({
+vi.mock("@baseModule/helpers/moduleContributions/loadWidgetContributions.ts", () => ({
     getSortedWidgetContributions: () => [],
 }));
 vi.mock("@baseModule/helpers/hocs/withLanguage.tsx", async (importOriginal) => ({

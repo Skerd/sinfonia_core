@@ -17,8 +17,8 @@ import CreateCurrency from "@coreModule/clients/panel/private/tenancy/systemSett
 import EditCurrency from "@coreModule/clients/panel/private/tenancy/systemSettings/currencies/editCurrency.tsx";
 import CreateRole from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/createRole.tsx";
 import EditRole from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/editRole.tsx";
-import type {RouteConfigArgs} from "@coreModule/clients/panel/moduleContributions/routeConfigContribution.types.ts";
-import {runRouteConfigContributions} from "@coreModule/clients/panel/moduleContributions/loadRouteConfigContributions.ts";
+import type {RouteConfigArgs} from "@baseModule/helpers/types/routeConfigContribution.types.ts";
+import {runRouteConfigContributions} from "@baseModule/helpers/moduleContributions/loadRouteConfigContributions.ts";
 import Roles from "@coreModule/clients/panel/private/tenancy/systemSettings/roles";
 import AllCompanies from "@coreModule/clients/panel/private/tenancy/systemSettings/companies";
 import Chat from "@coreModule/clients/panel/private/chat";

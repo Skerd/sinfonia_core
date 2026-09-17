@@ -11,7 +11,19 @@ import {describe, expect, it} from "vitest";
 const SHARED_DICTIONARIES: Record<string, string[]> = {
     "src/modules/core/clients/panel/private/home/PanelHomePage.tsx": ["src/modules/core/clients/panel/private/sidebar/index.tsx"],
     "src/modules/core/components/custom/commandPalette.tsx": ["src/modules/core/clients/panel/private/sidebar/index.tsx"],
-    "src/modules/core/components/viewEngine/sheet/widgets/addresses/sheetEmbeddedAddressCard.tsx": ["src/modules/core/components/custom/addresses/formAddressWithMap.tsx"],
+    "src/modules/base/components/viewEngine/sheet/widgets/addresses/sheetEmbeddedAddressCard.tsx": ["src/modules/core/components/custom/addresses/formAddressWithMap.tsx"],
+
+    /*
+     * Migration-temporary: these components sit under `base/` for now but keep their dictionaries
+     * in `core/assets/languages`, where they stay once the package moves back into core. Drop the
+     * entry (not the JSON) as each component returns to `src/modules/core/…`.
+     */
+    "src/modules/base/components/custom/sessionSetupScreen.tsx": ["src/modules/core/components/custom/sessionSetupScreen.tsx"],
+    "src/modules/base/components/entityPage/quickFilterBar.tsx": ["src/modules/core/components/entityPage/quickFilterBar.tsx"],
+    "src/modules/base/components/viewEngine/audit/sheetAuditHistory.tsx": ["src/modules/core/components/viewEngine/audit/sheetAuditHistory.tsx"],
+    "src/modules/base/components/viewEngine/sheet/widgets/embeddedItems/sheetEmbeddedItemsList.tsx": ["src/modules/core/components/viewEngine/sheet/widgets/embeddedItems/sheetEmbeddedItemsList.tsx"],
+    "src/modules/base/components/viewEngine/sheet/widgets/references/referencesViewModeToggle.tsx": ["src/modules/core/components/viewEngine/sheet/widgets/references/referencesViewModeToggle.tsx"],
+    "src/modules/base/components/viewEngine/sheet/widgets/references/sheetPaginatedReferenceCardList.tsx": ["src/modules/core/components/viewEngine/sheet/widgets/references/sheetPaginatedReferenceCardList.tsx"],
     "src/modules/core/components/custom/apiSelect/adapters/createUserInlineAdapter.tsx": ["src/modules/core/clients/panel/private/users/createUser/index.tsx"],
     "src/modules/eCommerce/clients/panel/private/posConfigs/center/actions/posConfigsBulkMenu.tsx": ["src/modules/eCommerce/clients/panel/private/posConfigs/index.tsx"],
     "src/modules/propertyManagement/clients/panel/private/unitCosts/paymentCalendarTab.tsx": ["src/modules/propertyManagement/clients/panel/private/unitCosts/index.tsx"],

@@ -9,7 +9,7 @@ import {
     CommandList,
 } from "@coreModule/components/ui/command.tsx";
 import {Kbd, KbdGroup} from "@coreModule/components/ui/kbd.tsx";
-import {getModuleSidebarNavGroups} from "@coreModule/clients/panel/moduleContributions/loadSidebarContributions.ts";
+import {getModuleSidebarNavGroups} from "@baseModule/helpers/moduleContributions/loadSidebarContributions.ts";
 import {flattenPanelNavLinks} from "@baseModule/helpers/navigation/flattenPanelNavLinks.ts";
 import {filterNavGroups} from "@baseModule/helpers/navigation/filterNavByAccess.ts";
 import {useAccessHydrated, useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";

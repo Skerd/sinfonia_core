@@ -4,8 +4,8 @@ import type {
     CompoundFormWidgetRenderer,
     SheetFieldRenderer,
     WidgetContribution,
-} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
-import {getSortedWidgetContributions} from "@coreModule/clients/panel/moduleContributions/loadWidgetContributions.ts";
+} from "@baseModule/helpers/types/widgetContribution.types.ts";
+import {getSortedWidgetContributions} from "@baseModule/helpers/moduleContributions/loadWidgetContributions.ts";
 import {getCoreWidgetContribution} from "./registry/coreContribution.ts";
 import type {WidgetMeta} from "./widgetMeta.ts";
 

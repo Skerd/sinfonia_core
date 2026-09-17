@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { NavGroup } from "@coreModule/components/custom/navGroup.tsx";
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type { NavGroup as NavGroupDef } from "@baseModule/helpers/types/sidebarNav.types.ts";
-import { getModuleSidebarNavGroups } from "@coreModule/clients/panel/moduleContributions/loadSidebarContributions.ts";
+import { getModuleSidebarNavGroups } from "@baseModule/helpers/moduleContributions/loadSidebarContributions.ts";
 import { filterNavGroups } from "@baseModule/helpers/navigation/filterNavByAccess.ts";
 import { useAccessHydrated, useAccessMap } from "@baseModule/helpers/context/accessContext.tsx";
 

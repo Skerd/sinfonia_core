@@ -1,5 +1,5 @@
 import {lazy, Suspense, type ComponentType} from "react";
-import type {SheetFieldRenderer} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
+import type {SheetFieldRenderer} from "@baseModule/helpers/types/widgetContribution.types.ts";
 import {normalizeObjectIdRef, resolvePath} from "../../engine/refs.ts";
 import {omitProps, wpText} from "../../engine/widgetProps.ts";
 

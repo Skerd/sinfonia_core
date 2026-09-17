@@ -27,7 +27,7 @@ vi.mock("react-use-websocket", () => ({
 }));
 vi.mock("@baseModule/helpers/websocket/webSocketMessages.ts", () => ({handleWebSocketMessage: handleMessageMock}));
 vi.mock("@baseModule/helpers/websocket/roomMemberships.ts", () => ({setRoomSocket: setRoomSocketMock}));
-vi.mock("@coreModule/components/custom/sessionSetupScreen.tsx", () => ({
+vi.mock("@baseModule/components/custom/sessionSetupScreen.tsx", () => ({
     SESSION_SETUP_TOTAL_STEPS: 6,
     SessionSetupScreen: ({phase}: {phase: string}) => <div data-testid="setup">{phase}</div>,
 }));

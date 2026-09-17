@@ -1,6 +1,6 @@
 import {describe, expect, it, vi} from "vitest";
 
-vi.mock("@coreModule/clients/panel/moduleContributions/loadSiteRoomContributions.ts", () => ({
+vi.mock("@baseModule/helpers/moduleContributions/loadSiteRoomContributions.ts", () => ({
     getContributedSystemSettingsRooms: () => ({taxRates: "taxRates_configurations", roles: "module_roles", broken: "not a room"}),
     getContributedPathRoomOverrides: () => ({"eCommerce/bookings": "bookingsRoom", "company/users": "moduleUsers", "sales/bad": "1bad"}),
 }));

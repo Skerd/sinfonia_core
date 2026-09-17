@@ -1,6 +1,6 @@
 import {createElement, type ReactNode} from "react";
 import type {FieldBinding} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import type {SheetFieldRenderer} from "@coreModule/clients/panel/moduleContributions/widgetContribution.types.ts";
+import type {SheetFieldRenderer} from "@baseModule/helpers/types/widgetContribution.types.ts";
 import {resolvePath} from "../../engine/refs.ts";
 import type {ViewRendererContext} from "../../engine/types.ts";
 import {wpCount, wpString, wpText, wpTextList} from "../../engine/widgetProps.ts";

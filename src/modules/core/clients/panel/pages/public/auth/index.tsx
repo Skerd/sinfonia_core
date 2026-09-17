@@ -8,13 +8,33 @@ import ChangeForgottenPassword from "@coreModule/clients/panel/public/auth/passw
 import AcceptInvitation from "@coreModule/clients/panel/public/auth/acceptInvitation/acceptInvitation.form.tsx";
 import LanguageSwitch from "@coreModule/components/custom/languageSwitch.tsx";
 import ThemeSwitch from "@coreModule/components/custom/themeSwitch.tsx";
-import {resolveAuthPanelComponent} from "@coreModule/clients/panel/moduleContributions/loadAuthPanelContributions.ts";
+import {resolveAuthPanelComponent} from "@baseModule/helpers/moduleContributions/loadAuthPanelContributions.ts";
+import type {CoreAuthPanelKey} from "@baseModule/helpers/moduleContributions/coreAuthPanelKeys.ts";
 import {GalleryVerticalEnd} from "lucide-react";
+import type {ComponentType} from "react";
+
+/** Core panels by `:panel` key; the key list is shared with the module loader, which reserves it. */
+const CORE_AUTH_PANELS: Record<CoreAuthPanelKey, ComponentType> = {
+    login: Login,
+    requestResetPassword: ForgotPassword,
+    resetPassword: ChangeForgottenPassword,
+    deactivateOTP: ConfirmOTPDeactivation,
+    signUp: SignUp,
+    activateAccount: ActivateAccount,
+    acceptInvitation: AcceptInvitation,
+};
+
+function resolvePanel(panel: string | undefined): ComponentType | undefined {
+    if (panel && Object.hasOwn(CORE_AUTH_PANELS, panel)) {
+        return CORE_AUTH_PANELS[panel as CoreAuthPanelKey];
+    }
+    return resolveAuthPanelComponent(panel);
+}
 
 export default function AuthenticationPage() {
 
     const {panel} = useParams();
-    const ModuleAuthPanel = resolveAuthPanelComponent(panel);
+    const Panel = resolvePanel(panel);
 
     return (
         <div className='container grid grid-cols-1 h-svh max-w-none items-center justify-center px-2'>
@@ -23,14 +43,7 @@ export default function AuthenticationPage() {
                     <GalleryVerticalEnd className='me-2' />
                     <h1 className='text-xl font-medium'>{window.location.host}</h1>
                 </div>
-                {panel === "login" && <Login />}
-                {panel === "requestResetPassword" && <ForgotPassword />}
-                {panel === "resetPassword" && <ChangeForgottenPassword />}
-                {panel === "deactivateOTP" && <ConfirmOTPDeactivation />}
-                {panel === "signUp" && <SignUp />}
-                {panel === "activateAccount" && <ActivateAccount />}
-                {panel === "acceptInvitation" && <AcceptInvitation />}
-                {ModuleAuthPanel ? <ModuleAuthPanel /> : null}
+                {Panel ? <Panel /> : null}
                 <div className="flex justify-center">
                     <LanguageSwitch showTitles={true} />
                     <ThemeSwitch showTitles={true}/>

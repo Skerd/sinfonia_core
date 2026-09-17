@@ -1,6 +1,6 @@
 /**
  * Optional attach file: `src/modules/<pkg>/clients/panel/siteRoomContribution.ts(x)`.
- * Discovered via {@link loadSiteRoomContributions}.
+ * Discovered via `loadSiteRoomContributions.ts`; maps merge in `order` (later wins).
  */
 export type SiteRoomContribution = {
     id?: string;

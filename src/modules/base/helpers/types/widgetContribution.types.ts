@@ -8,7 +8,8 @@ export type {CompoundFormWidgetArgs, CompoundFormWidgetRenderer, FormWidgetExtra
 
 /**
  * Optional attach file: `src/modules/<pkg>/clients/panel/widgetContribution.ts(x)`.
- * Discovered via {@link applyWidgetContributions} (`import.meta.glob`).
+ * Discovered via `getSortedWidgetContributions` in `loadWidgetContributions.ts` (`import.meta.glob`)
+ * and merged by `widgetRegistry` (later `order` wins). Field shapes are validated on first read.
  *
  * Modules register their SDUI widgets / sheet field special-cases here so core’s
  * `widgetRegistry` + `ViewRenderer` stay free of cross-module imports.

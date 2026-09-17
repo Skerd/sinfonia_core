@@ -9,5 +9,6 @@ export type TenancySettingsContribution = {
     id?: string;
     /** Lower runs earlier; default 100. */
     order?: number;
-    getTenancySettingsItems: (resolveLanguageKey: ResolveLanguageKey) => NavSubCollapsible;
+    /** Return `null`/`undefined` to contribute nothing; a throwing hook is logged and skipped. */
+    getTenancySettingsItems: (resolveLanguageKey: ResolveLanguageKey) => NavSubCollapsible | null | undefined;
 };

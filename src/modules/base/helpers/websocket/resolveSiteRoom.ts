@@ -14,7 +14,7 @@
 import {
     getContributedPathRoomOverrides,
     getContributedSystemSettingsRooms,
-} from "@coreModule/clients/panel/moduleContributions/loadSiteRoomContributions.ts";
+} from "@baseModule/helpers/moduleContributions/loadSiteRoomContributions.ts";
 
 const PATH_ROOM_OVERRIDES: Record<string, string> = {
     "company/administration": "administration",

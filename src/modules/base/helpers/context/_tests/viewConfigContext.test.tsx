@@ -7,7 +7,7 @@ const {getMock, handleErrorMock} = vi.hoisted(() => ({getMock: vi.fn(), handleEr
 
 vi.mock("@baseModule/helpers/apiClient/apiClient.ts", () => ({default: {get: getMock}}));
 vi.mock("@baseModule/helpers/hooks/useErrorHandler.ts", () => ({default: () => handleErrorMock}));
-vi.mock("@coreModule/components/custom/sessionSetupScreen.tsx", () => ({
+vi.mock("@baseModule/components/custom/sessionSetupScreen.tsx", () => ({
     SESSION_SETUP_TOTAL_STEPS: 3,
     SessionSetupScreen: ({error, onRetry, phase, step}: {error: boolean; onRetry: () => void; phase: string; step: number}) => (
         <div data-testid="setup" data-phase={phase} data-step={step}>

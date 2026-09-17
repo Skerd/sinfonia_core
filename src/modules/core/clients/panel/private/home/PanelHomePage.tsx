@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@baseModule/helpers/redux/slices/chatSlice.ts";
-import {getModuleSidebarNavGroups} from "@coreModule/clients/panel/moduleContributions/loadSidebarContributions.ts";
+import {getModuleSidebarNavGroups} from "@baseModule/helpers/moduleContributions/loadSidebarContributions.ts";
 import {flattenPanelNavLinks, type FlatPanelNavLink} from "@baseModule/helpers/navigation/flattenPanelNavLinks.ts";
 import {filterNavGroups} from "@baseModule/helpers/navigation/filterNavByAccess.ts";
 import {useAccessHydrated, useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";

@@ -14,7 +14,7 @@ import NotificationBell from "@coreModule/components/custom/notificationBell";
 import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import {resolveCenterPanelClassName} from "@coreModule/clients/panel/moduleContributions/loadPanelLayoutContributions.ts";
+import {resolveCenterPanelClassName} from "@baseModule/helpers/moduleContributions/loadPanelLayoutContributions.ts";
 import {Fragment, useMemo, useState} from "react";
 import CommandPalette from "@coreModule/components/custom/commandPalette.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";

@@ -4,7 +4,7 @@ import {render} from "@testing-library/react";
 import {FormProvider, useForm} from "react-hook-form";
 import type {FieldBinding} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 
-vi.mock("@coreModule/clients/panel/moduleContributions/loadWidgetContributions.ts", async () => {
+vi.mock("@baseModule/helpers/moduleContributions/loadWidgetContributions.ts", async () => {
     const pm = await import("@propertyManagementModule/clients/panel/formWidgetRenderers.tsx");
     return {
         getSortedWidgetContributions: () => [

@@ -59,7 +59,7 @@ Feature modules register UI by exporting contribution files from `clients/panel/
 | `tenancySettingsContribution.tsx` | Company settings tabs (optional) |
 | `siteRoomContribution.tsx` | Extra tenancy system-settings rooms (optional) |
 
-Loaders live in `clients/panel/moduleContributions/`:
+Loaders live in `src/modules/base/helpers/moduleContributions/`:
 
 - `loadSidebarContributions.ts`
 - `loadRouteConfigContributions.ts`
