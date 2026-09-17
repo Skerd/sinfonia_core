@@ -5,7 +5,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconBuildingPlus} from "@tabler/icons-react";
-import {buildPageTitle} from "@coreModule/helpers/general";
+import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
 import CityCard from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx";
 import CitySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx";
 import EntityListPage from "@coreModule/components/entityPage/EntityListPage.tsx";

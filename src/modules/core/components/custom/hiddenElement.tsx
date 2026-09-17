@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { generateRandomString } from "@coreModule/helpers/general";
+import {generateRandomString} from "@baseModule/helpers/general/random.ts";
 import { LockKeyhole } from "lucide-react";
 import withLanguage, { type WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";

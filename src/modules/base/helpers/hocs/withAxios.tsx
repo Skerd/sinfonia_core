@@ -2,7 +2,7 @@ import {toast} from "sonner";
 import {ComponentType, RefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import JsonView from "@uiw/react-json-view";
 import {containsFile, replaceFilesWithIds} from "@baseModule/helpers/media/uploadFilesForSubmit.ts";
-import {getClientConfig} from "@coreModule/helpers/general";
+import {getClientConfig} from "@baseModule/helpers/general/config.ts";
 import useHttpRequest, {
     HttpError,
     HttpRequest,

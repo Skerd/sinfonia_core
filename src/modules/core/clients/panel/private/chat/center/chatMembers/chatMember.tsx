@@ -12,7 +12,7 @@ import {ChannelUser} from "armonia/src/modules/core/types";
 import DemoteToUser from "@coreModule/clients/panel/private/chat/center/chatMembers/dropdown/demoteToUser.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
-import {getName} from "@coreModule/helpers/general";
+import {getName} from "@baseModule/helpers/general/names.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";

@@ -17,7 +17,7 @@ import ShowChannelMembers from "@coreModule/clients/panel/private/chat/center/ch
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {openChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {getName} from "@coreModule/helpers/general";
+import {getName} from "@baseModule/helpers/general/names.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 
 type MessageHeaderProps = {

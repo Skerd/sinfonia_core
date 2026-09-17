@@ -14,7 +14,7 @@ import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import ViewRenderer, { type ViewRendererContext } from "./ViewRenderer.tsx";
 import { resolveWidget } from "./widgetRegistry.ts";
 import { renderFormWidget, isCompoundFormWidget, renderCompoundWidget } from "./renderFormWidget.tsx";
-import {buildPageTitle} from "@coreModule/helpers/general";
+import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
 
 export type FormViewRendererProps<T extends FieldValues = FieldValues> = {
     config: ViewConfig;

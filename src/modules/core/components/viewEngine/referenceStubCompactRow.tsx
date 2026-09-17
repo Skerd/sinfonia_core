@@ -4,10 +4,8 @@ import DisplayCard, {
 } from "@coreModule/components/custom/displayValue/displayCard.tsx";
 import { resolveIcon, resolveWidget } from "./widgetRegistry.ts";
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
+import {findFromObject} from "@baseModule/helpers/general/objectPath.ts";
 
-function resolveDotPath(obj: Record<string, any>, path: string): unknown {
-    return path.split(".").reduce<any>((acc, key) => acc?.[key], obj);
-}
 
 export type ReferenceCompactRowConfig = {
     /** Tabler icon token, e.g. `#ClipboardList`. */
@@ -58,7 +56,7 @@ export function ReferenceStubCompactRow({
     if (config.valuePath.length > 0) {
         const parts = config.valuePath
             .map((p, i) => {
-                const raw = resolveDotPath(stub, p);
+                const raw = findFromObject(stub, p);
                 if (raw == null || raw === "") return null;
                 const category = config.valueLanguageKeyCategories?.[i];
                 if (typeof category === "string" && category.length > 0 && typeof raw === "string") {

@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {Link} from "react-router-dom";
-import {getClientConfig} from "@coreModule/helpers/general";
+import {getClientConfig} from "@baseModule/helpers/general/config.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 

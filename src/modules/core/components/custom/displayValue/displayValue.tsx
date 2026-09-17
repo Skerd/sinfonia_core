@@ -12,7 +12,8 @@ import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import SheetMediaFilesStrip from "@coreModule/components/viewEngine/sheetMediaFilesStrip.tsx";
 import type {Media} from "armonia/src/modules/core/types";
 import {useAccessFieldsRead} from "./accessFields.tsx";
-import {formatDate} from "@coreModule/helpers/general";
+import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 import {
@@ -117,7 +118,7 @@ function toMediaList(value: unknown): Media[] {
 
 function formatGroupedNumber(value: number, fractionDigits?: number): string {
     if (!Number.isFinite(value)) return "";
-    return value.toLocaleString(undefined, {
+    return formatNumber(value, {
         useGrouping: true,
         ...(fractionDigits != null
             ? {minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits}
@@ -430,7 +431,7 @@ function formatByType(
         const n = toNumber(value);
         if (n == null) return String(value);
         if (Number.isInteger(n)) return formatGroupedNumber(n, 0);
-        return n.toLocaleString(undefined, {useGrouping: true, maximumFractionDigits: 4});
+        return formatNumber(n, {useGrouping: true, maximumFractionDigits: 4});
     }
     if (type === "longText") {
         return <LongText>{String(value)}</LongText>;

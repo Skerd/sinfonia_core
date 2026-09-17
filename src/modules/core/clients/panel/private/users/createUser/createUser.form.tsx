@@ -10,7 +10,6 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
-import {defaultCreateUserValues} from "@coreModule/helpers/defaultFormValues";
 import {useDispatch} from "react-redux";
 import {newUserCreated} from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import {LoaderCircle, UserPlus} from "lucide-react";
@@ -20,6 +19,15 @@ import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {CreateUserFormResponseType} from "armonia/src/modules/core/api/company/private/users/createUser.form.response.type.ts";
 import {CreateUserFormType} from "armonia/src/modules/core/api/company/private/users/createUser.form.type.ts";
 import {createCompanyUserFormSchema} from "armonia/src/modules/core/api/company/private/users/createUser.form.validator.ts";
+
+const EMPTY_FORM_VALUES: CreateUserFormType = {
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    userRole: "",
+};
 
 type CreateUserFormProps = WithAxiosType<CreateUserFormResponseType, CreateUserFormType> & WithLanguageType & {
     onClose: Function,
@@ -47,7 +55,7 @@ function CreateUserForm({
     const formSchema = createCompanyUserFormSchema(languageCode, resolveLanguageKey("form"));
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: defaultCreateUserValues()
+        defaultValues: EMPTY_FORM_VALUES
     });
     const password = form.watch("password");
 

@@ -6,7 +6,8 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
+import {formatDurationInDaysHoursOrMinutes} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 function getSize(size: number | string): string {
@@ -24,7 +25,7 @@ function getSize(size: number | string): string {
         unitIndex++;
     }
 
-    return `${bytes.toLocaleString(undefined, {
+    return `${formatNumber(bytes, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     })} ${units[unitIndex]}`;

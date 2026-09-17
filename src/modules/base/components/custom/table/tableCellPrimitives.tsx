@@ -11,7 +11,7 @@ import {Link} from "react-router-dom";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {LongText} from "@coreModule/components/custom/longText.tsx";
-import {formatDate} from "@coreModule/helpers/general";
+import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 /** Keeps a long badge from stretching the column past the rest of the table. */

@@ -9,7 +9,7 @@ import type { FilterFieldConfig, FilterOperator, FilterValue } from "armonia/src
 import { COLUMN_TYPE, isDateColumnType, isNumberColumnType } from "armonia/src/modules/core/database/filter/typeOperators";
 import { compose } from "redux";
 import withLanguage, { TranslationValue, WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
-import { findFromLanguage } from "@coreModule/helpers/general";
+import {findFromLanguage} from "@baseModule/helpers/general/objectPath.ts";
 import { useFilterBuilder } from "./filterBuilderContext.tsx";
 
 export function enumLabel(fields: TranslationValue | undefined, path: string, value: string): string {

@@ -13,7 +13,7 @@ import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {addMessages, setActionMessage, upsertChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {sendWebsocketMessage} from "@baseModule/helpers/context/webSocketContext.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {getName} from "@coreModule/helpers/general";
+import {getName} from "@baseModule/helpers/general/names.ts";
 import {toast} from "sonner";
 import EditMessage from "@coreModule/clients/panel/private/chat/center/chatInput/actions/editMessage.tsx";
 import ForwardMessageDialog from "@coreModule/clients/panel/private/chat/center/chatInput/actions/forwardMessageDialog.tsx";

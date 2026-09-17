@@ -26,7 +26,7 @@ import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
-import {buildPageTitle} from "@coreModule/helpers/general";
+import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {z} from "zod";
 

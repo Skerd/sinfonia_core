@@ -6,6 +6,7 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {MessageSenderType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {SimpleUserType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.response.type.ts";
+import {getName} from "@baseModule/helpers/general/names.ts";
 
 type CustomAvatarProps = {
     avatarClassName?: string,
@@ -33,7 +34,7 @@ function CustomAvatar({
     return (
         <TooltipDisplayer tooltip={`${user?.name ?? ""} ${user?.surname ?? ""}`.trim() || undefined}>
             <Avatar className={cn("flex items-center justify-center border hover:border-muted-foreground size-10 hover:cursor-pointer", avatarClassName)} onClick={() => {onClick?.()}}>
-                {hasPhoto && <AvatarImage src={`${mediaPath}${user.photo}`} alt={user?.name + " " + user?.surname + " profile photo"} />}
+                {hasPhoto && <AvatarImage src={`${mediaPath}${user.photo}`} alt={`${getName(user)} profile photo`} />}
                 <AvatarFallback>
                     <User size={18} />
                 </AvatarFallback>

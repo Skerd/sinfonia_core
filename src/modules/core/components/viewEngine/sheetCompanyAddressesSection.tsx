@@ -11,10 +11,8 @@ import { resolveWidget, resolveIcon } from "./widgetRegistry.ts";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import {SheetGrid} from "@coreModule/components/custom/renderEngine/layout/sheet/grid.tsx";
 import {Card, CardContent} from "@coreModule/components/ui/card.tsx";
+import {resolvePath} from "@coreModule/components/viewEngine/viewRendererHelpers.ts";
 
-function resolvePath(obj: Record<string, any>, path: string): any {
-    return path.split(".").reduce<any>((acc, key) => acc?.[key], obj);
-}
 
 function normalizeObjectIdRef<T extends { _id: string }>(
     raw: unknown,

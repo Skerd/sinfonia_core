@@ -27,7 +27,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import ProfilePhoto
     from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/profilePhoto.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {getName} from "@coreModule/helpers/general";
+import {getName} from "@baseModule/helpers/general/names.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import type {
     CompanyUserRequestsType,

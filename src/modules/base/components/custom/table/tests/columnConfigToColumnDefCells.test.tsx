@@ -72,7 +72,7 @@ function badgeFor(cell: HTMLElement, text: string): HTMLElement {
 }
 
 describe("empty and malformed values", () => {
-    it("renders an em dash rather than the findFromObject miss sentinel", () => {
+    it("renders an em dash when the dtoPath is missing", () => {
         const col = column({id: "note", cellType: "string", dtoPath: "deep.missing.note"});
         expect(renderCell(col, {}).textContent).toBe("—");
     });

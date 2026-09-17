@@ -6,7 +6,8 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
-import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
+import {formatDurationInDaysHoursOrMinutes} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 /** The AI-assistant responder runs as its own dedicated process (assistantServer). */
@@ -19,14 +20,14 @@ function AssistantJobs({title}:{title: string}){
     if( !assistant?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {assistant.answered?.toLocaleString() || 0}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(assistant.answered) || 0}</Badge>)
 }
 function AssistantFailedJobs({title}:{title: string}){
     const assistant = useAssistant();
     if( !assistant?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {assistant.failed?.toLocaleString() || 0}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(assistant.failed) || 0}</Badge>)
 }
 function AssistantAvgJobTime({title}:{title: string}){
     const assistant = useAssistant();

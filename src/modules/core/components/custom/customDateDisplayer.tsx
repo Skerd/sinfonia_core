@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import {formatDate, isSameDay} from "@coreModule/helpers/general";
+import {formatDate, isSameDay} from "@baseModule/helpers/general/dateTime.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {useEffect, useState} from "react";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";

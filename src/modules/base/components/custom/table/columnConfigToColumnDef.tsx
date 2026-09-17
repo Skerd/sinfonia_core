@@ -14,7 +14,8 @@ import type {ColumnDef, Row} from "@tanstack/react-table";
 import type {EnumTone, TableColumnConfig} from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type.ts";
 import DataTableColumnHeader from "@coreModule/components/ui/table/column-header.tsx";
 import {LongText} from "@coreModule/components/custom/longText.tsx";
-import {findFromLanguage, findFromObject, formatNumber} from "@coreModule/helpers/general";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
+import {findFromLanguage, findFromObject} from "@baseModule/helpers/general/objectPath.ts";
 import {TranslationValue} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import TableAvatar from "@coreModule/components/custom/avatar/tableAvatar.tsx";
 import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
@@ -59,34 +60,22 @@ type CellMeta = {className?: string; label?: string};
 
 /* ── value access ─────────────────────────────────────────────────────────── */
 
-/**
- * `findFromObject` reports a miss with this sentinel string rather than `undefined`,
- * which used to reach the UI verbatim: a text cell printed it, and `Boolean(sentinel)`
- * flipped a missing boolean to "on".
- */
-const NOT_FOUND_SENTINEL = /^!! \[.*] not found in object !!$/;
-
 /** The one place a cell value is read, so every cell type treats a miss the same way. */
 function readCell<T>(row: Row<T>, col: TableColumnConfig): unknown {
-    let raw: unknown;
     if (col.dtoPath) {
-        raw = findFromObject(row.original, col.dtoPath);
-    } else if (col.accessorPath) {
-        try {
-            raw = row.getValue(col.id);
-        } catch {
-            /* A column id TanStack does not know (stale config): fall back to the raw document. */
-            raw = findFromObject(row.original, col.accessorPath);
-        }
-    } else {
+        return findFromObject(row.original, col.dtoPath);
+    }
+    if (!col.accessorPath) {
         return undefined;
     }
-    return typeof raw === "string" && NOT_FOUND_SENTINEL.test(raw) ? undefined : raw;
+    try {
+        return row.getValue(col.id);
+    } catch {
+        /* A column id TanStack does not know (stale config): fall back to the raw document. */
+        return findFromObject(row.original, col.accessorPath);
+    }
 }
 
-function getByPath(obj: Record<string, unknown>, path: string): unknown {
-    return path.split(".").reduce<unknown>((acc, key) => (acc as Record<string, unknown> | null)?.[key], obj);
-}
 
 /** Non-null plain objects only: an array of ref ids never survives to the label builders. */
 function toRecords(value: unknown): Record<string, unknown>[] {
@@ -308,7 +297,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                 const hasLiteral = displayFields.some((f) => f.startsWith("!"));
                 const parts = displayFields.map((f) => {
                     if (f.startsWith("!")) return f.slice(1);
-                    const x = getByPath(item, f);
+                    const x = findFromObject(item, f);
                     return x == null || typeof x === "object" ? "" : String(x).trim();
                 });
                 return parts.filter((p) => p !== "").join(hasLiteral ? "" : " ");
@@ -316,7 +305,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
             /* A media id on the ref itself (`createdBy.photo`), populated or not. */
             const resolveMediaId = (item: Record<string, unknown>): string | null => {
                 if (!avatarPath) return null;
-                const raw = getByPath(item, avatarPath);
+                const raw = findFromObject(item, avatarPath);
                 if (typeof raw === "string" && raw !== "") return raw;
                 const id = (raw as {_id?: unknown} | null)?._id;
                 return id != null && id !== "" ? String(id) : null;
@@ -324,7 +313,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
             /* An ISO code on the ref (`country.code`), which stands in for a photo. */
             const resolveFlagCode = (item: Record<string, unknown>): string | null => {
                 if (!flagCodePath) return null;
-                const raw = getByPath(item, flagCodePath);
+                const raw = findFromObject(item, flagCodePath);
                 return typeof raw === "string" && raw.trim() !== "" ? raw.trim() : null;
             };
             const resolveHref = (item: Record<string, unknown>): string | null => {
@@ -559,7 +548,7 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
             const toDisplayLabel = (item: Record<string, unknown>): string =>
                 displayFields
                     .map((f) => {
-                        const x = getByPath(item, f);
+                        const x = findFromObject(item, f);
                         return x == null || typeof x === "object" ? "" : String(x).trim();
                     })
                     .filter(Boolean)

@@ -18,9 +18,14 @@ import GoBackToLogin from "@coreModule/clients/panel/public/auth/shared/goBackTo
 import {ChangeForgottenPasswordFormType} from "armonia/src/modules/core/api/user/public/forgotPassword/changeForgottenPassword.form.type.ts";
 import {ChangeForgottenPasswordFormResponseType} from "armonia/src/modules/core/api/user/public/forgotPassword/changeForgottenPassword.form.response.type.ts";
 import {changeForgottenPasswordFormSchema} from "armonia/src/modules/core/api/user/public/forgotPassword/changeForgottenPassword.form.validator.ts";
-import {defaultChangeForgottenPasswordValues} from "@coreModule/helpers/defaultFormValues";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+
+const EMPTY_FORM_VALUES: ChangeForgottenPasswordFormType = {
+    password: "",
+    confirmPassword: "",
+    resetPasswordCode: "",
+};
 
 type ChangeForgottenPasswordProps = WithLanguageType & WithAxiosType<ChangeForgottenPasswordFormResponseType, ChangeForgottenPasswordFormType> & {}
 
@@ -71,7 +76,7 @@ function ChangeForgottenPassword({
     const formSchema: any = changeForgottenPasswordFormSchema(languageCode, resolveLanguageKey("form"));
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: defaultChangeForgottenPasswordValues()
+        defaultValues: EMPTY_FORM_VALUES
     });
     const password = form.watch("password")
 

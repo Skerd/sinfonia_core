@@ -25,6 +25,7 @@ import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShe
 import {isDialogDismissGuarded} from "@coreModule/components/ui/dialog.tsx";
 import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
 import {useEntityCardFetch} from "@baseModule/helpers/hooks/useEntityCardFetch.ts";
+import {findFromObject} from "@baseModule/helpers/general/objectPath.ts";
 
 const CARD_CONTENT_CLASS =
     "flex w-full min-w-0 flex-col gap-(--density-pad) p-(--density-pad) [&>[data-slot=gallery-carousel]]:-mx-(--density-pad) [&>[data-slot=gallery-carousel]]:-mt-(--density-pad) [&>[data-slot=gallery-carousel]]:w-[calc(100%+2*var(--density-pad))]";
@@ -83,13 +84,6 @@ function useEntityCardContext(): EntityCardContextValue {
         throw new Error("EntityCard.Header / EntityCard.Body must be rendered inside EntityCard");
     }
     return ctx;
-}
-
-function getPathValue(source: unknown, path: string): unknown {
-    return path.split(".").reduce<unknown>((current, segment) => {
-        if (current == null || typeof current !== "object") return undefined;
-        return (current as Record<string, unknown>)[segment];
-    }, source);
 }
 
 export type EntityCardProps<T extends SoftDeletable> = {
@@ -259,7 +253,7 @@ function EntityCardRoot<T extends SoftDeletable>({
         return <HiddenElement />;
     }
 
-    const titleValue = getPathValue(entity, titlePath);
+    const titleValue = findFromObject(entity, titlePath);
     const confirmName =
         accessFieldPathExists(read, titlePath) && typeof titleValue === "string" ? titleValue : undefined;
     const showDeleted =

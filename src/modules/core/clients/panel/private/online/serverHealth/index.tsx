@@ -22,7 +22,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import {updateServerHealth} from "@baseModule/helpers/redux/slices/serverResourceSlice.ts";
-import {formatDate} from "@coreModule/helpers/general";
+import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
 
 type ServerHealthProps = WithLanguageType & WithAxiosType<ServerHealthFormResponseType> & {}
 

@@ -14,7 +14,7 @@ import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import ViewRenderer, { type ViewRendererContext } from "./ViewRenderer.tsx";
 import { resolveWidget } from "./widgetRegistry.ts";
 import { renderFormWidget, isCompoundFormWidget, renderCompoundWidget } from "./renderFormWidget.tsx";
-import { buildPageTitle } from "@coreModule/helpers/general";
+import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
 import { useNavigate } from "react-router-dom";
 import Loader from "@coreModule/components/custom/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";

@@ -6,7 +6,8 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
-import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
+import {formatDurationInDaysHoursOrMinutes} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 function useWebsocket(){
@@ -18,14 +19,14 @@ function WebsocketJobs({title}:{title: string}){
     if( !connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {messages?.toLocaleString() || 0}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(messages) || 0}</Badge>)
 }
 function WebsocketFailedJobs({title}:{title: string}){
     const {failedJobs, connected} = useWebsocket();
     if( !connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {(failedJobs || 0).toLocaleString()}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(failedJobs || 0)}</Badge>)
 }
 function WebsocketAvgJobTime({title}:{title: string}){
     const {failedJobs, messages, totalTime, connected} = useWebsocket();

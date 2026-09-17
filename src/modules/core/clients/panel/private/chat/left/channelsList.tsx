@@ -14,7 +14,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import ChannelsFetcher from "@coreModule/clients/panel/private/chat/left/channelsFetcher.tsx";
 import LongText from "@coreModule/components/custom/longText.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {getName} from "@coreModule/helpers/general";
+import {getName} from "@baseModule/helpers/general/names.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {MessageSenderType, MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
@@ -66,7 +66,7 @@ function ChannelInfo({
             }
             return resolveLanguageKey("you");
         }
-        return `${messageUser.name} ${messageUser.surname}`
+        return getName(messageUser)
     }
     function getUnreadMessages(messages: number){
         let messageCount = messages + "";

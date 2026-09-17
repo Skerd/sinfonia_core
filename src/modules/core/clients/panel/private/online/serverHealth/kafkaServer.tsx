@@ -6,7 +6,8 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
-import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
+import {formatDurationInDaysHoursOrMinutes} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {KafkaConsumerStatus} from "armonia/src/modules/core/api/auxiliary/private/serverHealth/serverHealth.dto.ts";
 
@@ -20,14 +21,14 @@ function KafkaServerJobs({title}:{title: string}){
     if( !kafkaServer?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {kafkaServer.completed?.toLocaleString() || 0}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(kafkaServer.completed) || 0}</Badge>)
 }
 function KafkaServerFailedJobs({title}:{title: string}){
     const kafkaServer = useKafkaServer();
     if( !kafkaServer?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {kafkaServer.failed?.toLocaleString() || 0}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(kafkaServer.failed) || 0}</Badge>)
 }
 function KafkaServerAvgJobTime({title}:{title: string}){
     const kafkaServer = useKafkaServer();

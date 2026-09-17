@@ -12,7 +12,6 @@ import {PasswordInput} from "@coreModule/components/custom/passwordInput.tsx";
 import {useEffect, useImperativeHandle, useState} from 'react';
 import PasswordStrength from "@coreModule/components/custom/passwordStrength.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {defaultAcceptInvitationValues} from "@coreModule/helpers/defaultFormValues";
 import {CircleCheckBig, CircleX, Loader2, LogIn, ShieldAlert, ShieldBan} from "lucide-react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
@@ -21,6 +20,11 @@ import {acceptInvitationFormSchema} from "armonia/src/modules/core/api/user/publ
 import {AcceptInvitationFormType} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.type.ts";
 import {AcceptInvitationFormResponseType} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.response.type.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+
+const EMPTY_FORM_VALUES: AcceptInvitationFormType = {
+    password: "",
+    invitationCode: "",
+};
 
 type AcceptInvitationProps =  WithLanguageType & WithAxiosType<AcceptInvitationFormResponseType, AcceptInvitationFormType> & {}
 
@@ -42,7 +46,7 @@ function AcceptInvitation({
     const formSchema: any = acceptInvitationFormSchema(languageCode, resolveLanguageKey("form"));
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: defaultAcceptInvitationValues()
+        defaultValues: EMPTY_FORM_VALUES
     });
 
     useEffect(() => {

@@ -12,11 +12,18 @@ import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import PasswordStrength from "@coreModule/components/custom/passwordStrength.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
-import {defaultSignUpValues} from "@coreModule/helpers/defaultFormValues";
 import {signupFormSchema} from "armonia/src/modules/core/api/user/public/signUp/signup.form.validator.ts";
 import {SignUpFormType} from "armonia/src/modules/core/api/user/public/signUp/signup.form.type.ts";
 import {SignupFormResponseType} from "armonia/src/modules/core/api/user/public/signUp/signup.form.response.type.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+
+const EMPTY_FORM_VALUES: SignUpFormType = {
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+};
 
 type SignUpFormProps = WithLanguageType & WithAxiosType<SignupFormResponseType, SignUpFormType> & {}
 
@@ -41,7 +48,7 @@ const SignUpForm = ({
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: defaultSignUpValues()
+        defaultValues: EMPTY_FORM_VALUES
     });
 
     const password = form.watch("password");

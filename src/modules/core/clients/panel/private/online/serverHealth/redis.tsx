@@ -6,7 +6,8 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
-import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
+import {formatDurationInDaysHoursOrMinutes} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 function RedisJobs({title}:{title: string}){
@@ -14,14 +15,14 @@ function RedisJobs({title}:{title: string}){
     if( !connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {completedJobs?.toLocaleString()}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(completedJobs)}</Badge>)
 }
 function RedisFailedJobs({title}:{title: string}){
     const {failedJobs, connected} = useSelector((state: RootState) => state.serverResources.serverHealth.services!.redis);
     if( !connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {failedJobs?.toLocaleString()}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(failedJobs)}</Badge>)
 }
 function RedisAvgJobTime({title}:{title: string}){
     const {failedJobs, completedJobs, totalTime, connected} = useSelector((state: RootState) => state.serverResources.serverHealth.services!.redis);

@@ -37,6 +37,7 @@ import {
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
+import {findFromObject} from "@baseModule/helpers/general/objectPath.ts";
 
 /** Optional: only inside `<Form>` (react-hook-form). Enables project→edifice style cascades from view `widgetProps`. */
 type ApiSelectFormDependencyProps = {
@@ -180,10 +181,6 @@ type ApiSelectInnerProps = Omit<
     | 'remountKeyFormField'
 >;
 
-function getNestedValue(obj: FieldValues | undefined, path: string): unknown {
-    if (!obj) return undefined;
-    return path.split(".").reduce((acc: unknown, key) => (acc != null && typeof acc === "object" ? (acc as Record<string, unknown>)[key] : undefined), obj);
-}
 
 function SelectOptionAvatar({photo, label}: {photo?: string; label: string}) {
     if (!photo) return null;
@@ -265,10 +262,10 @@ function ApiSelectFormDependencyBridge({
         return next;
     }, [form, watchedFieldNames, watchedSlices]);
 
-    const watchedSelf = getNestedValue(allValues, formFieldName);
-    const depWatched = depFieldKey ? getNestedValue(allValues, depFieldKey) : undefined;
+    const watchedSelf = findFromObject(allValues, formFieldName);
+    const depWatched = depFieldKey ? findFromObject(allValues, depFieldKey) : undefined;
 
-    const depValuesKey = postBodyDeps.map((d) => `${d.field}:${String(getNestedValue(allValues, d.field) ?? "")}`).join("|");
+    const depValuesKey = postBodyDeps.map((d) => `${d.field}:${String(findFromObject(allValues, d.field) ?? "")}`).join("|");
     const extraFallbackKey =
         postBodyParamFallbackFromExtras?.map((f) => `${f.formExtraKey}:${String(formExtras?.[f.formExtraKey] ?? "")}`).join("|") ??
         "";
@@ -296,7 +293,7 @@ function ApiSelectFormDependencyBridge({
         if (hasDeps) {
             const rules: FilterRule[] = [];
             for (const dep of postBodyDeps) {
-                const raw = getNestedValue(allValues, dep.field);
+                const raw = findFromObject(allValues, dep.field);
                 const v = raw != null && raw !== "" ? String(raw) : "";
                 if (v) {
                     rules.push({id: generateUUID(), field: dep.paramName, operator: "equals", value: v});
@@ -309,7 +306,7 @@ function ApiSelectFormDependencyBridge({
         for (const fb of postBodyParamFallbackFromExtras ?? []) {
             const existing = out[fb.paramName];
             if (existing != null && existing !== "") continue;
-            const raw = getNestedValue(allValues, fb.whenFieldEmpty);
+            const raw = findFromObject(allValues, fb.whenFieldEmpty);
             if (raw != null && raw !== "") continue;
             const ev = formExtras?.[fb.formExtraKey];
             if (ev != null && ev !== "") {
@@ -330,7 +327,7 @@ function ApiSelectFormDependencyBridge({
     const disabledByDependencyRequired =
         requiredFields.length > 0 &&
         requiredFields.some((f) => {
-            const v = getNestedValue(allValues, f);
+            const v = findFromObject(allValues, f);
             return v == null || v === "";
         });
 

@@ -8,12 +8,11 @@ import { Input } from '@coreModule/components/ui/input.tsx';
 import { Loader2, LogIn } from 'lucide-react';
 import {logIn} from "@baseModule/helpers/redux/slices/authSlice.ts";
 import { Button } from '@coreModule/components/ui/button.tsx';
-import {getClientConfig} from "@coreModule/helpers/general";
+import {getClientConfig} from "@baseModule/helpers/general/config.ts";
 import { zodResolver } from '@hookform/resolvers/zod';
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import { PasswordInput } from '@coreModule/components/custom/passwordInput.tsx';
 import {HTMLAttributes, useEffect, useImperativeHandle, useState} from 'react';
-import {defaultSignInValues} from "@coreModule/helpers/defaultFormValues";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import {LoginFormType} from "armonia/src/modules/core/api/user/public/login/login.form.type.ts";
@@ -24,6 +23,12 @@ import {LoginFormResponseType, MFAEnabledLoginFormResponseType} from "armonia/sr
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {IconKey} from "@tabler/icons-react";
+
+const EMPTY_FORM_VALUES: LoginFormType = {
+    username: "",
+    password: "",
+    mfaCode: undefined,
+};
 
 interface SignInFormProps extends HTMLAttributes<HTMLFormElement>, WithLanguageType, WithAxiosType {
     onMfa: Function,
@@ -99,7 +104,7 @@ function SignInForm({
     const formSchema = loginFormSchema(languageCode, resolveLanguageKey("form"));
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: defaultSignInValues(),
+        defaultValues: EMPTY_FORM_VALUES,
     });
     const mfaCode = form.watch("mfaCode");
 

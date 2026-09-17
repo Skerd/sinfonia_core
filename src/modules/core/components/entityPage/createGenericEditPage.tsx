@@ -14,7 +14,7 @@ import EditFormViewRenderer from "@coreModule/components/viewEngine/editFormView
 import {useViewConfigState} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import type {FieldValues, UseFormReturn} from "react-hook-form";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
-import {resolveEntityPageKeys} from "@coreModule/helpers/general";
+import {resolveEntityPageKeys} from "@baseModule/helpers/general/entityPage.ts";
 
 type GenericEditPageConfig<TDto, TForm extends FieldValues> = {
     languagePath: string;

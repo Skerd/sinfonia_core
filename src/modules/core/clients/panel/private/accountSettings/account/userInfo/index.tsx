@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {useEffect, useState} from "react";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {formatDate} from "@coreModule/helpers/general";
+import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import AccountProfileEmail from "@coreModule/clients/panel/private/accountSettings/account/userInfo/email";
 import AccountProfileName from "@coreModule/clients/panel/private/accountSettings/account/userInfo/name";

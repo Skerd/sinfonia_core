@@ -13,6 +13,8 @@ import type {
     WebSocketRoomStat,
     WebSocketRoomUserStat,
 } from "armonia/src/modules/core/api/auxiliary/private/serverStats/serverStats.dto.ts";
+import {DATE_FORMATS, formatDate} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 
 type UserActivityProps = WithLanguageType & {}
 
@@ -206,7 +208,7 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                     </Badge>
                 </div>
                 <CardDescription className="text-xs mt-1">
-                    {resolveLanguageKey("lastUpdated")}: {stats.timestamp ? new Date(stats.timestamp).toLocaleTimeString() : "-"}
+                    {resolveLanguageKey("lastUpdated")}: {stats.timestamp ? formatDate(stats.timestamp, {format: DATE_FORMATS.time}) : "-"}
                 </CardDescription>
             </CardHeader>
             <CardContent style={{padding: 0}}>
@@ -215,17 +217,17 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <Users className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("activeUsers")}</span>
-                            <span className="font-medium text-sm">{(wsStats.totalUsers || 0).toLocaleString()}</span>
+                            <span className="font-medium text-sm">{formatNumber(wsStats.totalUsers || 0)}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <Globe className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("connections")}</span>
-                            <span className="font-medium text-sm">{(wsStats.totalConnections || 0).toLocaleString()}</span>
+                            <span className="font-medium text-sm">{formatNumber(wsStats.totalConnections || 0)}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <MessageSquare className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("activeRooms")}</span>
-                            <span className="font-medium text-sm">{(wsStats.totalRooms || 0).toLocaleString()}</span>
+                            <span className="font-medium text-sm">{formatNumber(wsStats.totalRooms || 0)}</span>
                         </div>
                     </div>
 
@@ -283,7 +285,7 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                                                     </div>
                                                     <div className="text-right">
                                                         <p className="text-xs text-muted-foreground">{resolveLanguageKey("messages")}</p>
-                                                        <p className="text-sm font-medium">{(room.messages || 0).toLocaleString()}</p>
+                                                        <p className="text-sm font-medium">{formatNumber(room.messages || 0)}</p>
                                                     </div>
                                                 </div>
                                             </button>

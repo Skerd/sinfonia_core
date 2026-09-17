@@ -1,6 +1,7 @@
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type {ViewNode, FieldBinding} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ReactNode} from "react";
+import {findFromObject} from "@baseModule/helpers/general/objectPath.ts";
 
 export type ViewRendererContext = {
     data?: Record<string, any>;
@@ -129,7 +130,7 @@ export function filterAccessibleValuePath(
 }
 
 export function resolvePath(obj: Record<string, any>, path: string): any {
-    return path.split(".").reduce<any>((acc, key) => acc?.[key], obj);
+    return findFromObject(obj, path);
 }
 
 /**

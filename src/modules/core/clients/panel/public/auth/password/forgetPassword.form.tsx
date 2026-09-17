@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import {OctagonAlert} from "lucide-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {getClientConfig} from "@coreModule/helpers/general";
+import {getClientConfig} from "@baseModule/helpers/general/config.ts";
 import { ArrowRight, Loader2 } from 'lucide-react';
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useImperativeHandle, useState} from 'react';
@@ -19,8 +19,11 @@ import GoBackToLogin from "@coreModule/clients/panel/public/auth/shared/goBackTo
 import {CardFooter, Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import DontHaveAccountSignUp from "@coreModule/clients/panel/public/auth/shared/dontHaveAccountSignUp.tsx";
 import {forgotPasswordFormSchema} from "armonia/src/modules/core/api/user/public/forgotPassword/forgotPassword.form.validator.ts";
-import {defaultForgotPasswordValues} from "@coreModule/helpers/defaultFormValues";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+
+const EMPTY_FORM_VALUES: ForgotPasswordFormType = {
+    email: "",
+};
 
 type ForgotPasswordProps = WithLanguageType & WithAxiosType<ForgotPasswordFormResponseType, ForgotPasswordFormType> & {
     changeView?: Function
@@ -54,7 +57,7 @@ function ForgotPassword({
     const formSchema = forgotPasswordFormSchema(languageCode, resolveLanguageKey("form"));
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: defaultForgotPasswordValues(),
+        defaultValues: EMPTY_FORM_VALUES,
     });
 
     function onSubmit(data: z.infer<typeof formSchema>) {

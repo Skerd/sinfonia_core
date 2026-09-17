@@ -4,7 +4,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {State} from "armonia/src/modules/core/api/auxiliary/private/state/state.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconMapPlus} from "@tabler/icons-react";
-import {buildPageTitle} from "@coreModule/helpers/general";
+import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
 import StateCard from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/actions/viewCities.tsx";
 import StateSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx";

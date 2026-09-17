@@ -15,10 +15,8 @@ import { SheetListPaginationFooter, useSheetListPagination } from "./sheetListPa
 import { cn } from "@coreModule/components/lib/utils.ts";
 import { format, isValid } from "date-fns";
 import { resolveIcon, resolveWidget } from "./widgetRegistry.ts";
+import {resolvePath} from "@coreModule/components/viewEngine/viewRendererHelpers.ts";
 
-function resolvePath(obj: Record<string, any>, path: string): any {
-    return path.split(".").reduce<any>((acc, key) => acc?.[key], obj);
-}
 
 function formatTemporal(value: unknown, mode: "date" | "dateTime"): string | null {
     if (value == null || value === "") return null;

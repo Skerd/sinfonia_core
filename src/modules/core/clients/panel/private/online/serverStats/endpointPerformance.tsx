@@ -8,6 +8,8 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreMo
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@coreModule/components/ui/table/table.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import {DATE_FORMATS, formatDate} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 
 type EndpointPerformanceProps = WithLanguageType & {}
 type EndpointStat = {
@@ -68,7 +70,7 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
                     </Badge>
                 </div>
                 <CardDescription className="text-xs mt-1">
-                    {resolveLanguageKey("lastUpdated")}: {stats.timestamp ? new Date(stats.timestamp).toLocaleTimeString() : "-"}
+                    {resolveLanguageKey("lastUpdated")}: {stats.timestamp ? formatDate(stats.timestamp, {format: DATE_FORMATS.time}) : "-"}
                 </CardDescription>
             </CardHeader>
             <CardContent style={{padding: 0}}>
@@ -78,17 +80,17 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <BarChart3 className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("totalMetrics")}</span>
-                            <span className="font-medium text-sm">{(stats.summary.totalMetrics || 0).toLocaleString()}</span>
+                            <span className="font-medium text-sm">{formatNumber(stats.summary.totalMetrics || 0)}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <Zap className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("uniqueEndpoints")}</span>
-                            <span className="font-medium text-sm">{(stats.summary.uniqueEndpoints || 0).toLocaleString()}</span>
+                            <span className="font-medium text-sm">{formatNumber(stats.summary.uniqueEndpoints || 0)}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
                             <Activity className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("tracked")}</span>
-                            <span className="font-medium text-sm">{(stats.summary.totalEndpointsTracked || 0).toLocaleString()}</span>
+                            <span className="font-medium text-sm">{formatNumber(stats.summary.totalEndpointsTracked || 0)}</span>
                         </div>
                     </div>
 
@@ -167,7 +169,7 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
                                                 {endpoint.endpoint}
                                             </TableCell>
                                             <TableCell className="text-right">
-                                                {(endpoint.count || 0).toLocaleString()}
+                                                {formatNumber(endpoint.count || 0)}
                                             </TableCell>
                                             <TableCell className={clsx("text-right font-medium", getDurationColor(endpoint.averageDuration || 0))}>
                                                 {endpoint.averageDuration || 0}ms

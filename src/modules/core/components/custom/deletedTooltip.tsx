@@ -2,7 +2,8 @@ import withLanguage, { WithLanguageType } from "@baseModule/helpers/hocs/withLan
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import { compose } from "redux";
 import React from "react";
-import { formatDate, getName } from "@coreModule/helpers/general";
+import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
+import {getName} from "@baseModule/helpers/general/names.ts";
 import type { DeletedData } from "armonia/src/modules/core/types/shared.types.ts";
 import { useSelector } from "react-redux";
 import { RootState } from "@baseModule/helpers/redux/store/generalStore.ts";

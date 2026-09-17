@@ -10,7 +10,6 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import {compose} from "redux";
 import {useImperativeHandle} from "react";
 import {ApiSelect} from "@coreModule/components/custom/apiSelect";
-import {defaultInviteUserValues} from "@coreModule/helpers/defaultFormValues";
 import {newUserCreated} from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import {useDispatch} from "react-redux";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
@@ -20,6 +19,14 @@ import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import type {ActionMessage} from "armonia/src/modules/core/types/shared.types.ts";
 import {InviteUserFormType} from "armonia/src/modules/core/api/company/private/users/inviteUser.form.type.ts";
 import {inviteCompanyUserFormSchema} from "armonia/src/modules/core/api/company/private/users/inviteUser.form.validator.ts";
+
+const EMPTY_FORM_VALUES: InviteUserFormType = {
+    name: "",
+    surname: "",
+    email: "",
+    userRole: "",
+    welcomeMessage: "",
+};
 
 
 type InviteUserFormProps = WithLanguageType & WithAxiosType<ActionMessage, InviteUserFormType> & {
@@ -43,7 +50,7 @@ function InviteUserForm({
     const formSchema = inviteCompanyUserFormSchema(languageCode, resolveLanguageKey("form"));
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: defaultInviteUserValues()
+        defaultValues: EMPTY_FORM_VALUES
     })
 
     useImperativeHandle(innerRef, () => ({

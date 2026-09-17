@@ -6,7 +6,8 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
-import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
+import {formatDurationInDaysHoursOrMinutes} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 /** The API (Express) process runs as its own dedicated process (apiServer). */
@@ -19,14 +20,14 @@ function ApiRequests({title}:{title: string}){
     if( !api?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {api.completed?.toLocaleString() || 0}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(api.completed) || 0}</Badge>)
 }
 function ApiFailed({title}:{title: string}){
     const api = useApiServer();
     if( !api?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {api.failed?.toLocaleString() || 0}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(api.failed) || 0}</Badge>)
 }
 function ApiAvgTime({title}:{title: string}){
     const api = useApiServer();

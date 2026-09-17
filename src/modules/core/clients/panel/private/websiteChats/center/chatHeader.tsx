@@ -13,7 +13,7 @@ import {UserProfile} from "@coreModule/clients/panel/private/users/center/cardVi
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {isPeekingWebsiteChannel, openChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {getName} from "@coreModule/helpers/general";
+import {getName} from "@baseModule/helpers/general/names.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import ReleaseToBot from "@coreModule/clients/panel/private/websiteChats/center/releaseToBot.tsx";

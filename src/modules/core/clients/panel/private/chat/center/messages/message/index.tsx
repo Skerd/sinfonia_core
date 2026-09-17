@@ -17,7 +17,8 @@ import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/
 import ReactToMessage from "@coreModule/clients/panel/private/chat/center/messages/message/actions/addReaction.tsx";
 import {useOutsideClick} from "@baseModule/helpers/hooks/useOutsideClick.ts";
 import ToggleDelete from "@coreModule/clients/panel/private/chat/center/messages/message/actions/toggleDelete.tsx";
-import {formatDate, getName} from "@coreModule/helpers/general";
+import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
+import {getName} from "@baseModule/helpers/general/names.ts";
 import Reactions from "@coreModule/clients/panel/private/chat/center/messages/message/info/reactions.tsx";
 import ReplyMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/replyMessage.tsx";
 import ForwardMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/forwardMessage.tsx";
@@ -95,7 +96,7 @@ function Message({
             }
             return resolveLanguageKey("you");
         }
-        return `${messageUser.name} ${messageUser.surname}`
+        return getName(messageUser)
     }
 
     useEffect(() => {

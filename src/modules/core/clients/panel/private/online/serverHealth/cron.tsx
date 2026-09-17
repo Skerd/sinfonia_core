@@ -6,7 +6,8 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
-import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
+import {formatDurationInDaysHoursOrMinutes} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 /** The cron scheduler runs as its own dedicated process (cronServer). */
@@ -19,14 +20,14 @@ function CronJobs({title}:{title: string}){
     if( !cron?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {cron.completed?.toLocaleString() || 0}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(cron.completed) || 0}</Badge>)
 }
 function CronFailedJobs({title}:{title: string}){
     const cron = useCronScheduler();
     if( !cron?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {cron.failed?.toLocaleString() || 0}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(cron.failed) || 0}</Badge>)
 }
 function CronAvgJobTime({title}:{title: string}){
     const cron = useCronScheduler();

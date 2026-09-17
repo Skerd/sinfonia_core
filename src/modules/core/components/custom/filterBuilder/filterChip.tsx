@@ -6,7 +6,7 @@ import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterRule, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import withLanguage, {ResolveLanguageKey, TranslationValue, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import {findFromLanguage} from "@coreModule/helpers/general";
+import {findFromLanguage} from "@baseModule/helpers/general/objectPath.ts";
 import { useFilterBuilder } from "./filterBuilderContext.tsx";
 
 function formatChipValue(

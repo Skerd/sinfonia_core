@@ -5,7 +5,8 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
-import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general";
+import {formatDurationInDaysHoursOrMinutes} from "@baseModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {IconTelegram} from "@coreModule/assets/brand-icons/icon-telegram.tsx";
 
@@ -19,14 +20,14 @@ function TelegramMessages({title}:{title: string}){
     if( !telegram?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {telegram.messages?.toLocaleString() || 0}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(telegram.messages) || 0}</Badge>)
 }
 function TelegramFailed({title}:{title: string}){
     const telegram = useTelegram();
     if( !telegram?.connected ){
         return <></>
     }
-    return (<Badge variant="outline" className="text-xs font-medium">{title}: {(telegram.failed || 0).toLocaleString()}</Badge>)
+    return (<Badge variant="outline" className="text-xs font-medium">{title}: {formatNumber(telegram.failed || 0)}</Badge>)
 }
 function TelegramAvgTime({title}:{title: string}){
     const telegram = useTelegram();

@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {getClientConfig} from "@coreModule/helpers/general";
+import {getClientConfig} from "@baseModule/helpers/general/config.ts";
 import mainConfig from "@coreModule/assets/languages/mainConfig.json";
 import {SiApple, SiGoogle} from "@icons-pack/react-simple-icons";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";

@@ -43,6 +43,7 @@ import {
     resolvePath,
     type ViewRendererContext,
 } from "./viewRendererHelpers.ts";
+import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 
 export type { ViewRendererContext };
 export { hasAccessPath, hasDisplayCardValueAccess, normalizeObjectIdRef, resolvePath };
@@ -1275,7 +1276,7 @@ function renderDisplayCard(
                     }
                     if (wp.format === "locale") {
                         pathParts = pathParts.map((part: unknown) =>
-                            part != null && typeof part === "number" ? part.toLocaleString() : part
+                            part != null && typeof part === "number" ? formatNumber(part) : part
                         );
                     }
                     if (wp.pickFirstTruthyValuePath) {
@@ -1309,7 +1310,7 @@ function renderDisplayCard(
     }
 
     if (!skipPreFormat && wp.format === "locale" && displayValue != null && typeof displayValue === "number") {
-        displayValue = displayValue.toLocaleString();
+        displayValue = formatNumber(displayValue);
     }
 
     if (!skipPreFormat && displayValue != null && (wp.format === "date" || wp.format === "dateTime")) {
@@ -1382,7 +1383,7 @@ function renderDisplayCard(
                 stub.symbol?.trim() ||
                 stub.abbreviation?.trim() ||
                 "";
-            const formatted = amount.toLocaleString(undefined, {
+            const formatted = formatNumber(amount, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
             });
@@ -1709,7 +1710,7 @@ function renderCurrencyList(
                     <div className="flex items-center gap-x-0.5" key={i}>
                         {isLast && hasMultiple && <span> {resolveLanguageKey(andKey)} </span>}
                         <p>{String(currencyName)}</p>
-                        <p>{value.toLocaleString()}</p>
+                        <p>{formatNumber(value)}</p>
                     </div>
                 );
             })}

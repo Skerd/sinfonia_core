@@ -1,6 +1,7 @@
 import {NotificationType} from "armonia/src/modules/core/api/user/private/notifications/notifications.dto.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import {DATE_FORMATS, formatDate} from "@baseModule/helpers/general/dateTime.ts";
 
 export type NotificationListItemProps = {
     notification: NotificationType;
@@ -19,7 +20,7 @@ function formatNotificationDate(dateStr: string, resolveLanguageKey: ResolveLang
         const unit = resolveLanguageKey("minutesAgoUnit", true);
         return (typeof template === "string" ? template.replace("{}", String(mins)) : null)
             ?? (typeof unit === "string" ? `${mins}${unit}` : null)
-            ?? d.toLocaleDateString();
+            ?? formatDate(d, {format: DATE_FORMATS.date});
     }
     if (diff < 86400000) {
         const hours = Math.floor(diff / 3600000);
@@ -27,9 +28,9 @@ function formatNotificationDate(dateStr: string, resolveLanguageKey: ResolveLang
         const unit = resolveLanguageKey("hoursAgoUnit", true);
         return (typeof template === "string" ? template.replace("{}", String(hours)) : null)
             ?? (typeof unit === "string" ? `${hours}${unit}` : null)
-            ?? d.toLocaleDateString();
+            ?? formatDate(d, {format: DATE_FORMATS.date});
     }
-    return d.toLocaleDateString();
+    return formatDate(d, {format: DATE_FORMATS.date});
 }
 
 /**
