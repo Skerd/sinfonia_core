@@ -1,4 +1,4 @@
-import environmentConfig from "@coreModule/environment/environment.json";
+import environmentConfig from "@baseModule/environment/environment.json";
 
 export type ClientConfig = typeof environmentConfig;
 

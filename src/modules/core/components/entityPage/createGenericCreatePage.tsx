@@ -21,8 +21,6 @@ type GenericCreatePageConfig<TForm extends FieldValues> = {
     submitIcon?: ReactNode;
     buildExtraTitles?: (params: URLSearchParams) => string[];
 
-
-
     // to be checked
     successPath?: string | number;
     buildFormExtras?: (params: URLSearchParams) => Record<string, unknown>;
@@ -34,7 +32,6 @@ type GenericCreatePageConfig<TForm extends FieldValues> = {
     //deprecated
     collectionName?: string;
     accessModel?: string;
-
 };
 
 export type GenericCreateSurfaceProps = {
