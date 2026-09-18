@@ -15,10 +15,10 @@ import {Input} from "@coreModule/components/ui/input.tsx";
 import {Check, X} from "lucide-react";
 import {deactivateMfaFormSchema} from "armonia/src/modules/core/api/user/private/mfa/deactivateMfa.form.validator.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type AccountSecurityDeactivateOtpFormProps = WithAxiosType<DeactivateMfaFormResponseType, DeactivateMfaFormType> & WithLanguageType & {
     onSuccess?: Function,

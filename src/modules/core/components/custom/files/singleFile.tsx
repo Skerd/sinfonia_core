@@ -1,7 +1,6 @@
-import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {
     EllipsisVertical,
     Eye,
@@ -24,6 +23,7 @@ import {
     classifyMedia,
     isDialogPreviewable,
 } from "@coreModule/components/custom/files/mediaPreviewKind.ts";
+import {MEDIA_BASE_URL} from "@baseModule/helpers/constants/media.constants.ts";
 
 type FileToUpload = any & {}
 
@@ -53,7 +53,7 @@ function resolvePreviewSource(innerFile: File | Media, previewPath?: string): {
     }
     const media = innerFile as Media & { mimeType?: string; originalName?: string };
     return {
-        url: "/api/auxiliary/media/" + innerFile._id,
+        url: MEDIA_BASE_URL + innerFile._id,
         mime: media.mime ?? media.mimeType ?? "",
         filename,
         fileSizeBytes: typeof media.size === "number" ? media.size : undefined,
@@ -68,7 +68,6 @@ type SingleFileProps = WithLanguageType & {
     file: Omit<FileToUpload, "file"> & {file: File | Media},
     isBig?: boolean,
     table?: boolean,
-    uploadThis?: boolean,
     /** Chat bubble attachments: compact tile that inherits bubble chrome. */
     variant?: "default" | "chat",
     className?: string,
@@ -80,7 +79,6 @@ function SingleFile({
     canDownload = false,
     file,
     isBig = true,
-    uploadThis = false,
     table = false,
     variant = "default",
     className,
@@ -276,13 +274,6 @@ function SingleFile({
         </>
     );
 
-    useEffect(() => {
-        if( uploadThis ){
-            //TODO fix
-            //@ts-ignore
-            // addFiles([file])
-        }
-    }, [uploadThis]);
 
     const fileCard = (
         <div
@@ -294,6 +285,7 @@ function SingleFile({
                 !isChat && {"h-20 w-20": !isBig, "h-36 w-36": isBig, "size-9": table},
                 className,
             )}
+            role="presentation"
             onClick={(e) => {e.stopPropagation(); e.preventDefault();}}
             onContextMenu={(e) => {e.stopPropagation();}}
         >
@@ -305,7 +297,7 @@ function SingleFile({
                     </div>
                     :
                     (isBig) ?
-                    <div className="flex w-full items-center justify-between ps-1" onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
+                    <div className="flex w-full items-center justify-between ps-1" role="presentation" onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
                         <div className="flex w-[85%]">
                             {
                                 isBig && !!file &&
@@ -334,15 +326,19 @@ function SingleFile({
                     isChat ? "rounded-md bg-transparent" : "rounded-lg bg-muted",
                     {"rounded-se-none rounded-ss-none ": isBig && !isChat},
                 )}>
-                    <div
+                    <button
+                        type="button"
+                        disabled={!canPreview}
+                        aria-label={resolveLanguageKey("preview")}
                         className={cn(
-                            "relative h-full w-full overflow-hidden hover:cursor-pointer",
+                            "relative h-full w-full overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                            canPreview ? "hover:cursor-pointer" : "cursor-default",
                             isChat ? "text-current" : "text-muted-foreground",
                         )}
-                        onClick={() => {if( canPreview ){ openPreview(); }}}
+                        onClick={openPreview}
                     >
                         {!!file && renderPreviewCard("thumb")}
-                    </div>
+                    </button>
                 </div>
             </>
         </div>
@@ -388,6 +384,4 @@ function SingleFile({
     );
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/files/singleFile.tsx")
-)(SingleFile);
+export default withLanguage("src/modules/core/components/custom/files/singleFile.tsx")(SingleFile);

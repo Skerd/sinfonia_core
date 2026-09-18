@@ -10,10 +10,10 @@ import {
     ItemMedia,
     ItemTitle,
 } from "@coreModule/components/ui/item.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {IconInfoCircle, IconLink} from "@tabler/icons-react";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {useDismissSheetBeforeMenuNavigate} from "@baseModule/components/viewEngine/sheet/widgets/sheetMenuNavigateDismiss.tsx";
 import SheetMediaAvatar from "@baseModule/components/viewEngine/sheet/widgets/sheetMediaAvatar.tsx";
 import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";

@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/components/custom/preferences/themeSwitch.tsx",
+  "toggleTheme": "Ndrysho temën",
+  "light": "Drita",
+  "dark": "E errët",
+  "system": "Sistemi",
+  "appearance": "Pamja",
+  "density": "Dendësia",
+  "comfortable": "Komode",
+  "compact": "Kompakte"
+}

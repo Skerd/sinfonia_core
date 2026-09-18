@@ -1,14 +1,14 @@
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {compose} from "redux";
 import {RotateCcw} from "lucide-react";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Media} from "armonia/src/modules/core/types";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 
 type ProfilePhotoProps = WithLanguageType & WithAxiosType<Media> & {
     photoUrl: string | null;

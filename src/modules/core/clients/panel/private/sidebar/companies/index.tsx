@@ -12,10 +12,10 @@ import AllCompaniesDropDownMenuContent from "@coreModule/clients/panel/private/s
 import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import useHttpRequest from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 
 type CompaniesSwitcherProps = WithLanguageType & WithAxiosType<BasicCompanyInfoFormResponseType> & {};

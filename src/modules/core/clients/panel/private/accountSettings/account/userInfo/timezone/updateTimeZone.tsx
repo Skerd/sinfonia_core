@@ -5,10 +5,10 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Check, X} from "lucide-react";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {UpdateUserProfileTimezoneFormType} from "armonia/src/modules/core/api/user/private/data/updateUserProfileTimezone.form.type.ts";
 import {UpdateUserProfileTimezoneFormResponseType} from "armonia/src/modules/core/api/user/private/data/updateUserProfileTimezone.form.response.type.ts";
 

@@ -1,17 +1,21 @@
 import {useState} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
-import {User} from "lucide-react";
+import {MediaAvatar} from "@coreModule/components/custom/avatar/mediaAvatar.tsx";
+import {MEDIA_BASE_URL} from "@baseModule/helpers/constants/media.constants.ts";
 
+/** Table rows activate on click, so the avatar must swallow the event before it bubbles. */
 function stopRowActivate(e: {stopPropagation: () => void}) {
     e.stopPropagation();
 }
 
+/**
+ * A media thumbnail for a table cell: opens the full image in a lightbox and keeps the click
+ * from activating the row underneath. For a person's avatar use `userAvatar` instead.
+ */
 export default function TableAvatar({mediaId}: {mediaId: string}) {
     const [open, setOpen] = useState(false);
-    const mediaPath = "/api/auxiliary/media/";
-    const imageSrc = mediaId ? `${mediaPath}${mediaId}` : undefined;
+    const imageSrc = mediaId ? `${MEDIA_BASE_URL}${mediaId}` : undefined;
 
     return (
         <>
@@ -29,12 +33,7 @@ export default function TableAvatar({mediaId}: {mediaId: string}) {
                 }}
                 onPointerDown={stopRowActivate}
             >
-                <Avatar className="flex items-center border hover:border-muted-foreground size-8">
-                    {!!mediaId && <AvatarImage src={imageSrc} alt={mediaId + " media"} />}
-                    <AvatarFallback>
-                        <User size={18} />
-                    </AvatarFallback>
-                </Avatar>
+                <MediaAvatar mediaId={mediaId} alt={mediaId + " media"} className="size-8 hover:border-muted-foreground"/>
             </button>
 
             <Dialog open={open} onOpenChange={setOpen}>

@@ -7,7 +7,7 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import ToggleUserActiveState from "@coreModule/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type UserAccountSecurityEnableAccountFormProps = WithLanguageType & {specificUserId?: string, onSuccess: Function; userData: any};
 

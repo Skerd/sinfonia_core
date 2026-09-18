@@ -13,10 +13,10 @@ import {BadgeAlert, BadgeCheck} from "lucide-react";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import UpdateEmail from "@coreModule/clients/panel/private/accountSettings/account/userInfo/email/updateEmail.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type AccountProfileEmailProps = WithLanguageType & WithAxiosType<EmailPreferencesFormResponse, any> & {
     onUpdate?: Function,

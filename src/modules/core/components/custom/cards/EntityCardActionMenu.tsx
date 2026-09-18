@@ -17,7 +17,9 @@ export function EntityCardActionMenu({
 
     if (variant === "inline") {
         return (
-            <div className={cn("shrink-0 flex justify-end", className)} onClick={stopPropagation}>
+            // Presentational: it carries no behaviour of its own, it only keeps a click on the
+            // actions inside from activating the card underneath.
+            <div className={cn("shrink-0 flex justify-end", className)} onClick={stopPropagation} role="presentation">
                 {children}
             </div>
         );
@@ -29,7 +31,8 @@ export function EntityCardActionMenu({
                 "absolute top-0 right-0 flex justify-center gap-1 transition-all duration-200 ease-in-out transform z-20 p-2 rounded-es-lg",
                 className,
             )}
-            onClick={stopPropagation}
+onClick={stopPropagation}
+            role="presentation"
         >
             {children}
         </div>

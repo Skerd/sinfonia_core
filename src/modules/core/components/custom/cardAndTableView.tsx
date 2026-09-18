@@ -16,11 +16,11 @@ import type { FilterGroup } from "armonia/src/modules/core/database/filter";
 import { isFilterGroupEmpty, mergeAndFilterDSL } from "@baseModule/helpers/filter/mergeFilterDsl.ts";
 import { decodeFilterFromUrl, FILTER_URL_PARAM } from "@baseModule/helpers/filter/filterUrl.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import PageController from "@coreModule/components/custom/paginator";
-import NoData from "@coreModule/components/custom/noData.tsx";
+import NoData from "@baseModule/components/custom/noData.tsx";
 import {entityCardSkeletonItems, EntityTableSkeleton} from "@coreModule/components/custom/skeletons/entityListSkeleton.tsx";
 import {ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, type Row, useReactTable} from "@tanstack/react-table";
 import {Table, TableBody, TableCell, TableRow} from "@coreModule/components/ui/table/table.tsx";
@@ -743,7 +743,7 @@ function CountryCenterView<
                             (error || tableConfigError) ?
                             <>
                                 {
-                                    !!error ?
+                                    error ?
                                         <SimpleError
                                             title={String(requestInfo?.fail?.failTitle ?? resolveLanguageKey("failTitle"))}
                                             description={String(requestInfo?.fail?.failDescription ?? resolveLanguageKey("failDescription"))}

@@ -4,11 +4,8 @@ import L, {type LatLngBoundsExpression, type LatLngExpression} from "leaflet";
 import {ExternalLink} from "lucide-react";
 import {useTheme} from "@baseModule/helpers/context/providers/theme-provider.tsx";
 
-//@ts-ignore
 import iconUrl from "leaflet/dist/images/marker-icon.png";
-//@ts-ignore
 import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
-//@ts-ignore
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
 const DefaultIcon = L.icon({
@@ -110,7 +107,7 @@ export default function MapWithMultiplePins({
                     list.map((address, index) => {
                         if (address == null || typeof address !== "object") return null;
                         if (address.latitude == null || address.longitude == null) return null;
-                        let hasAddress = !!address.street || !!address.postalCode || address.city || address.country || address.state;
+                        const hasAddress = !!address.street || !!address.postalCode || address.city || address.country || address.state;
                         let fullAddress = "";
                         if( hasAddress ){
                             fullAddress = [

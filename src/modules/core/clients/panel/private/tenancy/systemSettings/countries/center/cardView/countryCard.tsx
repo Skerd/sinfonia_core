@@ -3,7 +3,7 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {Country} from "armonia/src/modules/core/api/auxiliary/private/country/country.dto.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {Phone, Tag} from "lucide-react";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import DisplayValue from "@coreModule/components/custom/displayValue/displayValue.tsx";
@@ -11,7 +11,7 @@ import CountrySheetView from "@coreModule/clients/panel/private/tenancy/systemSe
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import ViewStates from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewStates.tsx";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewCities.tsx";
-import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
+import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 import type {ReactNode, RefObject} from "react";
 

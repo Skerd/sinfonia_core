@@ -15,14 +15,12 @@ import {Badge} from '@coreModule/components/ui/badge.tsx';
 import {Separator} from '@coreModule/components/ui/separator.tsx';
 import {ChevronsUpDown, User, X} from 'lucide-react';
 import {cn} from '@coreModule/components/lib/utils.ts';
-import apiClient from '@baseModule/helpers/apiClient/apiClient.ts';
-import {handleError, isAbortError} from '@baseModule/helpers/general/errors.ts';
-import LoadMoreSentinel from '@coreModule/components/custom/loadMoreSentinel.tsx';
-import {Spinner} from "@coreModule/components/ui/spinner.tsx";
+import LoadMoreSentinel from '@baseModule/components/custom/loader/loadMoreSentinel.tsx';
+import {useApiSelectOptions, type SelectOption} from '@baseModule/helpers/hooks/components/useApiSelectOptions.ts';
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {compose} from "redux";
 import {CheckIcon, PlusCircledIcon} from "@radix-ui/react-icons";
-import SelectOptionLabel from "@coreModule/components/custom/selectOptionLabel.tsx";
+import SelectOptionLabel from "@baseModule/components/custom/selectOptionLabel.tsx";
 import {
     REF_SELECT_BY_API_URL,
     type RefSelectCreateFromSearch,
@@ -100,74 +98,7 @@ type ApiSelectProps = WithLanguageType &
         createFromSearch?: RefSelectCreateFromSearch;
     };
 
-const CACHE_MAX_KEYS = 20;
 const DEFAULT_SEARCH_DEBOUNCE_MS = 300;
-
-type SelectOption = {
-    label: string;
-    value: string;
-    photo?: string;
-};
-
-const EMPTY_SEARCH_KEY = '__empty__';
-
-type CacheEntry = { options: SelectOption[]; hasMore: boolean; total: number };
-
-/** Align `fetchedPages` with how many list pages are already merged into cached `options` (fixes stuck pagination after cache restore). */
-function syncFetchedPagesForCachedOptions(
-    fetchedPages: Set<number>,
-    optionsLen: number,
-    pageSize: number
-): void {
-    fetchedPages.clear();
-    if (optionsLen <= 0 || pageSize <= 0) return;
-    const pagesRepresented = Math.max(1, Math.ceil(optionsLen / pageSize));
-    for (let p = 1; p <= pagesRepresented; p++) {
-        fetchedPages.add(p);
-    }
-}
-
-function evictCacheIfNeeded(
-    cache: Map<string, CacheEntry>,
-    newKey: string
-): void {
-    if (!cache.has(newKey) && cache.size >= CACHE_MAX_KEYS) {
-        const firstKey = cache.keys().next().value;
-        if (firstKey !== undefined) {
-            cache.delete(firstKey);
-        }
-    }
-}
-
-type ApiSelectListItem = {
-    _id?: string;
-    value?: string;
-    id?: string;
-    name?: string;
-    label?: string;
-    photo?: string;
-};
-
-type ApiListResponse = {
-    data?: ApiSelectListItem[];
-    total?: number;
-};
-
-function parseListResponse(raw: unknown): { data: ApiSelectListItem[]; total: number } {
-    const r = raw as ApiListResponse | null | undefined;
-    return {
-        data: Array.isArray(r?.data) ? r.data : [],
-        total: typeof r?.total === 'number' ? r.total : 0,
-    };
-}
-
-function toSelectOption(item: ApiSelectListItem): SelectOption {
-    return {
-        value: item._id ?? item.value ?? item.id ?? '',
-        label: item.name ?? item.label ?? '',
-        photo: item.photo,
-    };
-}
 
 type ApiSelectInnerProps = Omit<
     ApiSelectProps,
@@ -432,13 +363,6 @@ function ApiSelectCore({
 
     const [open, setOpen] = useState(false);
     const [searchText, setSearchText] = useState('');
-    const [options, setOptions] = useState<SelectOption[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [loadingMore, setLoadingMore] = useState(false);
-    const [page, setPage] = useState(1);
-    const [total, setTotal] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
-    const [pendingValue, setPendingValue] = useState<string | undefined>(undefined);
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
     const [createPrefillSearch, setCreatePrefillSearch] = useState("");
 
@@ -447,35 +371,36 @@ function ApiSelectCore({
     const notifiedValueRef = useRef<string | undefined>(undefined);
     const notifiedMultiValuesKeyRef = useRef<string>("");
 
-    // Simple cache: store options by search key and whether there's more data
-    const cacheRef = useRef<Map<string, { options: SelectOption[]; hasMore: boolean; total: number }>>(new Map());
-    const fetchedPagesRef = useRef<Set<number>>(new Set());
-    const searchTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
-    const isFetchingRef = useRef(false);
-    const fetchPageRef = useRef<((pageNum: number, search: string) => Promise<void>) | null>(null);
-    const optionsRef = useRef<SelectOption[]>([]);
-    const lastForceLoadRef = useRef<number | undefined>(undefined);
-    const abortControllerRef = useRef<AbortController | null>(null);
-    const postBodyRef = useRef(postBody);
-    const openRef = useRef(open);
-    const searchTextRef = useRef(searchText);
-    const onValueChangeRef = useRef(onValueChange);
+    const {
+        options,
+        loading,
+        loadingMore,
+        page,
+        total,
+        hasMore,
+        pendingValue,
+        loadMore,
+        prependCreatedOption,
+    } = useApiSelectOptions({
+        apiUrl,
+        disabled,
+        pageSize,
+        postBody,
+        searchDebounceMs,
+        forceLoad,
+        open,
+        searchText,
+        value,
+        multiple,
+        defaultOptions,
+    });
 
+    // Latest-value ref so the notify effects below can call the newest handler without
+    // re-running every time the parent passes a fresh inline arrow.
+    const onValueChangeRef = useRef(onValueChange);
     useEffect(() => {
         onValueChangeRef.current = onValueChange;
     }, [onValueChange]);
-
-    useEffect(() => {
-        postBodyRef.current = postBody;
-    }, [postBody]);
-
-    useEffect(() => {
-        openRef.current = open;
-    }, [open]);
-
-    useEffect(() => {
-        searchTextRef.current = searchText;
-    }, [searchText]);
 
     const mergedCreateFromSearch = useMemo(
         () => createFromSearchOverride ?? REF_SELECT_BY_API_URL.get(apiUrl)?.createFromSearch,
@@ -486,243 +411,6 @@ function ApiSelectCore({
 
     const createAdapterKey = mergedCreateFromSearch ? API_SELECT_CREATE_ADAPTER_BY_API_URL[apiUrl] : undefined;
     const CreateAdapter = createAdapterKey ? API_SELECT_CREATE_ADAPTERS[createAdapterKey] : undefined;
-
-    // Fetch options from API
-    const fetchPage = useCallback(async (pageNum: number, search: string) => {
-        if (!apiUrl || disabled || fetchedPagesRef.current.has(pageNum) || isFetchingRef.current) return;
-
-        // Cancel any in-flight request before starting a new one
-        if (abortControllerRef.current) {
-            abortControllerRef.current.abort();
-        }
-        const controller = new AbortController();
-        abortControllerRef.current = controller;
-
-        isFetchingRef.current = true;
-
-        if (pageNum === 1) {
-            setLoading(true);
-        }
-        else {
-            setLoadingMore(true);
-        }
-
-        const body = { ...postBodyRef.current, name: search, page: pageNum, limit: pageSize };
-        try {
-            const response = await apiClient.post(
-                apiUrl,
-                body,
-                { signal: controller.signal }
-            );
-
-            if (controller.signal.aborted) {
-                return;
-            }
-
-            const listSearchKey = search || EMPTY_SEARCH_KEY;
-            if (
-                openRef.current &&
-                listSearchKey !== (searchTextRef.current || EMPTY_SEARCH_KEY)
-            ) {
-                return;
-            }
-
-            // Reserve this page only after we know this response matches the current list search (when open).
-            fetchedPagesRef.current.add(pageNum);
-
-            const { data: responseData, total: responseTotal } = parseListResponse(response.data);
-            const newOptions: SelectOption[] = responseData.map(toSelectOption);
-
-            if (pageNum === 1) {
-                setOptions(newOptions);
-                optionsRef.current = newOptions;
-                const effectiveTotal = responseTotal > 0 ? responseTotal : newOptions.length;
-                setTotal(effectiveTotal);
-                const hasMoreData =
-                    responseTotal > 0
-                        ? newOptions.length < responseTotal
-                        : newOptions.length === pageSize;
-                setHasMore(hasMoreData);
-                // Cache first page
-                const cacheKey = search || EMPTY_SEARCH_KEY;
-                evictCacheIfNeeded(cacheRef.current, cacheKey);
-                cacheRef.current.set(cacheKey, {
-                    options: newOptions,
-                    hasMore: hasMoreData,
-                    total: responseTotal > 0 ? responseTotal : newOptions.length,
-                });
-            }
-            else {
-                // Calculate updated options first
-                const existing = new Set(optionsRef.current.map(o => o.value));
-                const unique = newOptions.filter(o => !existing.has(o.value));
-                const updated = [...optionsRef.current, ...unique];
-
-                const serverTotal = responseTotal > 0 ? responseTotal : 0;
-                let hasMoreData: boolean;
-                let finalTotal: number;
-                if (serverTotal > 0) {
-                    hasMoreData = updated.length < serverTotal;
-                    finalTotal = serverTotal;
-                } else if (newOptions.length < pageSize) {
-                    hasMoreData = false;
-                    finalTotal = updated.length;
-                } else {
-                    hasMoreData = true;
-                    finalTotal = updated.length;
-                }
-
-                // Update all state at once
-                setOptions(updated);
-                optionsRef.current = updated;
-                setHasMore(hasMoreData);
-                setTotal(finalTotal);
-
-                // Update cache with all accumulated options
-                const cacheKey = search || EMPTY_SEARCH_KEY;
-                evictCacheIfNeeded(cacheRef.current, cacheKey);
-                cacheRef.current.set(cacheKey, { options: updated, hasMore: hasMoreData, total: finalTotal });
-            }
-
-        } catch (err: unknown) {
-            if (isAbortError(err, controller.signal)) {
-                return;
-            }
-            handleError(err, {context: 'ApiSelect'});
-            fetchedPagesRef.current.delete(pageNum);
-            if (pageNum === 1) {
-                setOptions([]);
-                setTotal(0);
-                setHasMore(false);
-            }
-        } finally {
-            if (controller.signal.aborted) {
-                fetchedPagesRef.current.delete(pageNum);
-            }
-            setLoading(false);
-            setLoadingMore(false);
-            isFetchingRef.current = false;
-            if (abortControllerRef.current === controller) {
-                abortControllerRef.current = null;
-            }
-        }
-    }, [apiUrl, disabled, pageSize]);
-
-    useEffect(() => {
-        fetchPageRef.current = fetchPage;
-    }, [fetchPage]);
-
-    // Handle forceLoad prop - refetch data when it changes
-    useEffect(() => {
-        if (forceLoad !== undefined && forceLoad !== lastForceLoadRef.current) {
-            lastForceLoadRef.current = forceLoad;
-            cacheRef.current.clear();
-            fetchedPagesRef.current.clear();
-            setPage(1);
-            setOptions([]);
-            optionsRef.current = [];
-            setHasMore(true);
-            setTotal(0);
-            setSearchText('');
-            if (open && !disabled) {
-                fetchPageRef.current?.(1, '');
-            }
-        }
-    }, [forceLoad, open, disabled]);
-
-    // Load initial data when value is provided but not found in options
-    useEffect(() => {
-        const valuesToHydrate: string[] = multiple && Array.isArray(value)
-            ? value.filter((v): v is string => v != null && v !== '')
-            : (value != null && !Array.isArray(value) && value !== '' ? [value] : []);
-
-        if (disabled || valuesToHydrate.length === 0) {
-            setPendingValue(undefined);
-            return;
-        }
-
-        const opts = optionsRef.current;
-        const isInDefault = (v: string) => defaultOptions.some((opt) => opt.value === v);
-        const hasAll = valuesToHydrate.every((v) => opts.some((opt) => opt.value === v) || isInDefault(v));
-        if (hasAll) {
-            setPendingValue(undefined);
-            return;
-        }
-
-        const cached = cacheRef.current.get(EMPTY_SEARCH_KEY);
-        if (cached) {
-            const hasAllInCache = valuesToHydrate.every((v) => cached.options.some((opt) => opt.value === v) || isInDefault(v));
-            if (hasAllInCache) {
-                setOptions(cached.options);
-                optionsRef.current = cached.options;
-                setHasMore(cached.hasMore);
-                setTotal(cached.total);
-                setPendingValue(undefined);
-                syncFetchedPagesForCachedOptions(fetchedPagesRef.current, cached.options.length, pageSize);
-                return;
-            }
-            // Restore cache so we have as many options as possible
-            setOptions(cached.options);
-            optionsRef.current = cached.options;
-            setHasMore(cached.hasMore);
-            setTotal(cached.total);
-            syncFetchedPagesForCachedOptions(fetchedPagesRef.current, cached.options.length, pageSize);
-        }
-
-        const firstMissing = valuesToHydrate.find((v) => !optionsRef.current.some((opt) => opt.value === v) && !isInDefault(v));
-        setPendingValue(multiple ? undefined : firstMissing);
-        if (!fetchedPagesRef.current.has(1) && !isFetchingRef.current) {
-            fetchPageRef.current?.(1, '');
-        }
-    }, [value, disabled, multiple, defaultOptions, pageSize]);
-
-    // Load initial data or from cache when popover opens
-    useEffect(() => {
-        if (!open || disabled) return;
-
-        const searchKey = searchText || EMPTY_SEARCH_KEY;
-
-        // Check cache - restore all cached options
-        const cached = cacheRef.current.get(searchKey);
-        if (cached && cached.options.length > 0) {
-            setOptions(cached.options);
-            optionsRef.current = cached.options;
-            setHasMore(cached.hasMore);
-            setTotal(cached.total);
-            setPage(1);
-            syncFetchedPagesForCachedOptions(fetchedPagesRef.current, cached.options.length, pageSize);
-            return;
-        }
-
-        // Reset and fetch
-        setPage(1);
-        setOptions([]);
-        optionsRef.current = [];
-        setHasMore(true);
-        fetchedPagesRef.current.clear();
-
-        // Debounce search
-        if (searchTimeoutRef.current) {
-            clearTimeout(searchTimeoutRef.current);
-        }
-
-        searchTimeoutRef.current = setTimeout(() => {
-            fetchPageRef.current?.(1, searchText);
-        }, searchText ? searchDebounceMs : 0);
-
-        return () => {
-            if (searchTimeoutRef.current) {
-                clearTimeout(searchTimeoutRef.current);
-            }
-        };
-    }, [open, searchText, disabled, searchDebounceMs, pageSize]);
-
-    // Load more when page changes
-    useEffect(() => {
-        if (!open || page === 1 || disabled || !hasMore) return;
-        if (fetchedPagesRef.current.has(page)) return;
-        fetchPageRef.current?.(page, searchText || '');
-    }, [page, open, disabled, hasMore, searchText]);
 
     const handleOpenChange = useCallback((nextOpen: boolean) => {
         if( disabled ) return;
@@ -787,22 +475,10 @@ function ApiSelectCore({
             } else {
                 onValueChange?.(id, label, undefined);
             }
-            setOptions((prev) => {
-                const merged = [opt, ...prev.filter((o) => o.value !== id)];
-                optionsRef.current = merged;
-                return merged;
-            });
-            const cacheKey = searchTextRef.current || EMPTY_SEARCH_KEY;
-            const cached = cacheRef.current.get(cacheKey);
-            if (cached) {
-                cacheRef.current.set(cacheKey, {
-                    ...cached,
-                    options: [opt, ...cached.options.filter((o) => o.value !== id)],
-                });
-            }
+            prependCreatedOption(opt);
             setSearchText("");
         },
-        [multiple, selectedValues, selectedOptions, allOptions, onValueChange]
+        [multiple, selectedValues, selectedOptions, allOptions, onValueChange, prependCreatedOption]
     );
 
     const showInlineCreateCta =
@@ -829,7 +505,6 @@ function ApiSelectCore({
         } else {
             onValueChange?.('');
         }
-        setPendingValue(undefined);
         setSearchText('');
         setOpen(false);
     }, [disabled, multiple, onValueChange]);
@@ -953,13 +628,6 @@ function ApiSelectCore({
         }
         return placeholder;
     };
-
-    // Clear pending value when option is found
-    useEffect(() => {
-        if (pendingValue && selectedOption) {
-            setPendingValue(undefined);
-        }
-    }, [pendingValue, selectedOption?.value, selectedOption?.label]);
 
     // Notify parent when value changes (single mode only; multiple is driven by item toggles)
     useEffect(() => {
@@ -1093,9 +761,7 @@ function ApiSelectCore({
                     <CommandList ref={listRef} aria-multiselectable={multiple}>
                         {
                             loading && options.length === 0 ?
-                            <div className="flex p-3 items-center justify-center w-full border rounded-lg">
-                                <Spinner className="size-5 text-muted-foreground" />
-                            </div>
+                            <Loader size="20px" className="p-3" />
                             :
                             <>
                                 {
@@ -1122,14 +788,14 @@ function ApiSelectCore({
                                             hasMore &&
                                             <LoadMoreSentinel
                                                 canLoadMore={isReady && page * pageSize < total}
-                                                onLoadMore={() => setPage((current) => current + 1)}
+                                                onLoadMore={loadMore}
                                                 scrollRoot={listRef}
                                             />
                                         }
                                         {
                                             (loadingMore) &&
                                             <div className="flex p-2 items-center justify-center">
-                                                <Spinner className="size-4 text-muted-foreground" />
+                                                <Loader inline className="size-4 text-muted-foreground" />
                                             </div>
                                         }
                                         {filteredDefaultOptions.length > 0 && (
@@ -1201,6 +867,4 @@ function ApiSelectCore({
     );
 }
 
-export const ApiSelect = compose(
-    withLanguage("src/modules/core/components/custom/apiSelect/index.tsx")
-)(ApiSelectRender);
+export const ApiSelect = withLanguage("src/modules/core/components/custom/apiSelect/index.tsx")(ApiSelectRender);

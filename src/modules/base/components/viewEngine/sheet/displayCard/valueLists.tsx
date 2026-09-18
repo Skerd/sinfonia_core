@@ -1,7 +1,7 @@
 import type {ReactNode} from "react";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
+import ValueNotSet from "@baseModule/components/custom/valueNotSet.tsx";
 import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import type {WidgetProps} from "../../engine/types.ts";
 

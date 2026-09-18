@@ -7,7 +7,7 @@ import {LanguageProvider} from "@baseModule/helpers/context/providers/language-p
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ErrorBoundary from "@coreModule/components/custom/errorBoundary.tsx";
 import {lazy, Suspense} from "react";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {StudioDraftProvider} from "@coreModule/clients/studio/draft/studioDraftProvider.tsx";
 import {ensureDeviceId} from "@baseModule/helpers/context/localStorage/authenticationStorage.ts";

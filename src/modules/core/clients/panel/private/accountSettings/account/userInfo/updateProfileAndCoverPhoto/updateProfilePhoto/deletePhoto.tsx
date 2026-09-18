@@ -7,7 +7,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {DeleteProfilePhotoFormResponseType} from "armonia/src/modules/core/api/user/private/data/deleteProfilePhoto.form.response.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type DeletePhotoProps = WithLanguageType & WithAxiosType<DeleteProfilePhotoFormResponseType> & {
     specificUserId?: string,

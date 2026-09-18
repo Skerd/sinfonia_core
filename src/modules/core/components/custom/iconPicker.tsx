@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import Icon from "@mdi/react";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { compose } from "redux";
 import withLanguage, { WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 // Common MDI icons for unit types - you can expand this list
@@ -264,15 +263,17 @@ function IconPickerBase({
                       getIconLabel(icon.name, icon.label).toLowerCase() === value.toLowerCase()
                     ) : false;
                     return (
-                      <div
+                      <button
                         key={icon.name}
+                        type="button"
+                        aria-pressed={isSelected}
                         onClick={() => {
                           onValueChange?.(icon.name);
                           setOpen(false);
                           setSearchText("");
                         }}
                         className={cn(
-                          "flex flex-col items-center justify-center gap-2 p-4 h-auto cursor-pointer rounded-md border border-transparent hover:bg-accent hover:border-border transition-colors",
+                          "flex flex-col items-center justify-center gap-2 p-4 h-auto cursor-pointer rounded-md border border-transparent hover:bg-accent hover:border-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                           isSelected && "bg-accent border-border"
                         )}
                       >
@@ -283,7 +284,7 @@ function IconPickerBase({
                           )}
                         </div>
                         <span className="text-xs text-center">{getIconLabel(icon.name, icon.label)}</span>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
@@ -296,7 +297,5 @@ function IconPickerBase({
   );
 }
 
-export const IconPicker = compose(
-  withLanguage("src/modules/core/components/custom/iconPicker.tsx")
-)(IconPickerBase);
+export const IconPicker = withLanguage("src/modules/core/components/custom/iconPicker.tsx")(IconPickerBase);
 

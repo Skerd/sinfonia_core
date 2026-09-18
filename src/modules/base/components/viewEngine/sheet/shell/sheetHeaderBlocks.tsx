@@ -3,8 +3,8 @@ import type {SheetHeaderConfig, ViewNode} from "armonia/src/modules/core/api/aux
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {SheetDescription, SheetTitle} from "@coreModule/components/ui/sheet.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {hasAccessPath} from "../../engine/access.ts";
 import {affix} from "../../engine/format.ts";
 import {resolvePath} from "../../engine/refs.ts";

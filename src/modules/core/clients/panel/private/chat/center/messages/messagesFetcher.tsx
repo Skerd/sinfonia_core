@@ -9,7 +9,7 @@ import useIsInViewport from "@baseModule/helpers/hooks/useIsInViewport.ts";
 import {addMessages, isPeekingWebsiteChannel, setMessages} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {sendReceiptsNow} from "@baseModule/helpers/chat/messageReceipts.ts";
 import {store} from "@baseModule/helpers/redux/store/generalStore.ts";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {
     MessagesFormResponseType,
@@ -17,7 +17,7 @@ import {
 } from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {MessagesFormType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type MessagesFetcherProps = WithLanguageType & WithAxiosType<MessagesFormResponseType, MessagesFormType> & {
     scrollRoot: RefObject<HTMLElement>,

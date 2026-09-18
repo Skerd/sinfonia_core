@@ -10,11 +10,11 @@ import {updatePhoneNumberFormSchema} from "armonia/src/modules/core/api/user/pri
 import {PhoneInput} from "@coreModule/components/ui/phone-input.tsx";
 import {PhoneNumberFormResponseType} from "armonia/src/modules/core/api/user/private/data/phoneNumber.form.response.type.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import UpdatePhoneNumber from "@coreModule/clients/panel/private/accountSettings/account/userInfo/phoneNumber/updatePhoneNumber.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type AccountProfilePhoneNumberProps = WithLanguageType & WithAxiosType<PhoneNumberFormResponseType> & {
     onUpdate?: Function,

@@ -9,7 +9,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import {History, X} from "lucide-react";
 import {IconAlertTriangle, IconChevronDown, IconRefresh} from "@tabler/icons-react";
 import {Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
-import {Spinner} from "@coreModule/components/ui/spinner.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import type {
     DocumentAuditEntryDto,
     DocumentAuditLogResponseDto,
@@ -193,7 +193,7 @@ function SheetAuditHistoryDrawerInner({
                         onClick={() => void fetchPage(nextCursor, true)}
                         className="self-center text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
                     >
-                        {loadingMore ? <Spinner /> : <IconChevronDown />}
+                        {loadingMore ? <Loader inline className="size-4" /> : <IconChevronDown />}
                         {loadingMore ? resolveLanguageKey("loading") : resolveLanguageKey("loadMore")}
                     </Button>
                 )}

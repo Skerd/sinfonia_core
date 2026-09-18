@@ -5,7 +5,7 @@ import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreMod
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import FormMaxLengthControl from "@coreModule/components/custom/formMaxLengthControl.tsx";
 import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
 

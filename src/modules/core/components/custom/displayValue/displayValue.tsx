@@ -1,8 +1,8 @@
 import {isValidElement, useCallback, useContext, useRef, type MouseEvent, type ReactNode} from "react";
 import {useSelector} from "react-redux";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
-import {LongText} from "@coreModule/components/custom/longText.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import ValueNotSet from "@baseModule/components/custom/valueNotSet.tsx";
+import TruncatedValue from "./truncatedValue.tsx";
 import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
 import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
@@ -21,6 +21,7 @@ import {
     type ResolveLanguageKey, type ResolveLanguageKeyImpl,
     type TranslationValue,
 } from "@baseModule/helpers/hocs/withLanguage.tsx";
+import {MEDIA_BASE_URL} from "@baseModule/helpers/constants/media.constants.ts";
 
 export type DisplayValueType =
     | "string"
@@ -78,7 +79,6 @@ const FLAG_WIDTH = 24;
 const FLAG_HEIGHT = 18;
 const ICON_SIZE = 18;
 const AVATAR_SIZE = 48;
-const MEDIA_BASE = "/api/auxiliary/media/";
 
 const DATE_FORMAT: Intl.DateTimeFormatOptions = {
     day: "numeric",
@@ -314,11 +314,11 @@ function mediaSrc(value: unknown): string | undefined {
         ) {
             return raw;
         }
-        return `${MEDIA_BASE}${raw}`;
+        return `${MEDIA_BASE_URL}${raw}`;
     }
     if (value && typeof value === "object" && "_id" in value) {
         const id = (value as {_id?: unknown})._id;
-        if (typeof id === "string" && id.trim()) return `${MEDIA_BASE}${id}`;
+        if (typeof id === "string" && id.trim()) return `${MEDIA_BASE_URL}${id}`;
     }
     return undefined;
 }
@@ -434,7 +434,7 @@ function formatByType(
         return formatNumber(n, {useGrouping: true, maximumFractionDigits: 4});
     }
     if (type === "longText") {
-        return <LongText>{String(value)}</LongText>;
+        return <TruncatedValue preview="popover">{String(value)}</TruncatedValue>;
     }
     if (type === "string") {
         return String(value);
@@ -451,7 +451,7 @@ function formatByType(
     }
     if (typeof value === "string") {
         if (isDateOnlyIso(value)) return formatTemporal(value, "date", timeZone, format);
-        if (value.length >= LONG_TEXT_THRESHOLD) return <LongText>{value}</LongText>;
+        if (value.length >= LONG_TEXT_THRESHOLD) return <TruncatedValue preview="popover">{value}</TruncatedValue>;
         return value;
     }
     return String(value);

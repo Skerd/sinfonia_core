@@ -3,7 +3,7 @@ import {compose} from "redux";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {GroupedPermissions} from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {
     ColumnDef,
     flexRender,
@@ -26,7 +26,7 @@ import {
 } from "@coreModule/components/ui/table/table.tsx";
 import {useEffect, useMemo, useState} from "react";
 import {Check} from "lucide-react";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import PageController from "@coreModule/components/custom/paginator";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 

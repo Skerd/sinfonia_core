@@ -24,7 +24,7 @@ import {
     setNotificationNumber
 } from "@baseModule/helpers/redux/slices/notificationSlice.ts";
 import {IconEyeCheck} from "@tabler/icons-react";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 
 type MarkAllAsReadButtonProps = WithLanguageType & WithAxiosType<MarkNotificationsReadFormResponseType, MarkNotificationsReadFormType> & {
     inPopover?: boolean,

@@ -1,6 +1,6 @@
 import {Clock, Globe2, Monitor, ShieldCheck} from "lucide-react";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";

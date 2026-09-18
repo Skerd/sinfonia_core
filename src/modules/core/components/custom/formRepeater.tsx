@@ -4,7 +4,7 @@ import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.t
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { CirclePlus, Trash2 } from "lucide-react";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";
-import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
+import TitleWithCollapse from "@baseModule/components/custom/titleWithCollapse.tsx";
 import type { ViewNode, FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import { resolveWidget } from "@baseModule/components/viewEngine/widgetRegistry.ts";
 import {

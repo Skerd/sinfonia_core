@@ -7,8 +7,8 @@ import {useEffect, useRef, useState} from "react";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import SearchChatUsers from "@coreModule/clients/panel/private/chat/searchChatUsers";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {PageHelp, readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {PageHelp, readPageHelp} from "@baseModule/components/custom/pageHelp.tsx";
 
 type LeftChatPanelProps = WithLanguageType & {}
 

@@ -4,7 +4,7 @@ import {signOut} from "@baseModule/helpers/redux/slices/authSlice.ts";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
+import ConfirmDialog from "@baseModule/components/custom/confirmDialog.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {DropdownMenuGroup} from "@coreModule/components/ui/dropdown-menu.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";

@@ -8,7 +8,7 @@ import {useDispatch} from "react-redux";
 import {editUser} from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type EditUserActionProps = WithLanguageType & {
     specificUserId?: string,

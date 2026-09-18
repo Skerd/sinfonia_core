@@ -13,7 +13,7 @@ import {
     ShieldQuestionMark
 } from "lucide-react";
 import {toast} from "sonner";
-import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
+import CopyTooltip from "@baseModule/components/custom/copyTooltip.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {Card} from "@coreModule/components/ui/card.tsx";
 import {Toggle} from "@coreModule/components/ui/toggle.tsx";

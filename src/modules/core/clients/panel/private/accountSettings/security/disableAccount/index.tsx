@@ -4,13 +4,13 @@ import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import UserAccountSecurityDisableAccountForm from "@coreModule/clients/panel/private/accountSettings/security/disableAccount/disableAccount.form.tsx";
 import UserAccountSecurityEnableAccountForm from "@coreModule/clients/panel/private/accountSettings/security/disableAccount/enableAccount.form.tsx";
-import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
+import TitleWithCollapse from "@baseModule/components/custom/titleWithCollapse.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {UserStatusFormResponseType} from "armonia/src/modules/core/api/user/private/status/userStatus.form.response.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type UserAccountSecurityDisableAccountProps = WithAxiosType<UserStatusFormResponseType> & WithLanguageType & {
     specificUserId?: string,

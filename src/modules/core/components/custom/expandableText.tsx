@@ -1,10 +1,9 @@
-import {compose} from "redux";
 import {useMemo, useState, isValidElement, type ReactNode} from "react";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import ValueNotSet from "@baseModule/components/custom/valueNotSet.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 function plainTextFromChildren(node: ReactNode): string {
     if (node == null || typeof node === "boolean") return "";
@@ -73,4 +72,4 @@ function ExpandableText({children, maxLength = 250, className, resolveLanguageKe
     );
 }
 
-export default compose(withLanguage("src/modules/core/components/custom/expandableText.tsx"))(ExpandableText);
+export default withLanguage("src/modules/core/components/custom/expandableText.tsx")(ExpandableText);

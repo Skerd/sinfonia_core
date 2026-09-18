@@ -7,7 +7,7 @@ import {useState} from "react";
 import InviteUserForm from "@coreModule/clients/panel/private/users/inviteUser/inviteUser.form.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type UserInviteDialogProps = WithLanguageType & {
     administration: boolean

@@ -8,12 +8,12 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {useEffect, useState} from "react";
 import AccountSecurityDeactivateOtpForm from "@coreModule/clients/panel/private/accountSettings/security/otp/deactivateOTP/deactivateOtp.form.tsx";
 import AccountSecurityOtpEnableOTP from "@coreModule/clients/panel/private/accountSettings/security/otp/enableOTP";
-import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
+import TitleWithCollapse from "@baseModule/components/custom/titleWithCollapse.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 function ToggleButton({otpEnabled, setOpenWhat, loading, resolveLanguageKey}:{otpEnabled: boolean, setOpenWhat: Function, loading: boolean, resolveLanguageKey: Function, specificUserId?: string}){
     return (

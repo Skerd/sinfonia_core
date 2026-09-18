@@ -13,7 +13,7 @@ import {demoteToUser as demoteToUserAction} from "@baseModule/helpers/redux/slic
 import {RemoveUserFromChannelAdminFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/removeUserFromChannelAdmin.form.response.type.ts";
 import {RemoveUserFromChannelAdminFormType} from "armonia/src/modules/core/api/user/private/chats/channels/removeUserFromChannelAdmin.form.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type DemoteToUserProps = WithLanguageType & WithAxiosType<RemoveUserFromChannelAdminFormResponseType, RemoveUserFromChannelAdminFormType> & {
     channel: Channel,

@@ -9,7 +9,7 @@ import {useReactToPrint} from "react-to-print";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {ImageDown, Maximize2, Minimize2} from "lucide-react";
@@ -22,7 +22,7 @@ import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
+import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {openActionMenuFromContextMenu} from "@coreModule/components/custom/actions/menu/openActionMenuFromContextMenu.ts";
 

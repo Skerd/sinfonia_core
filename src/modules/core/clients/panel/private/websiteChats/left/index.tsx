@@ -5,8 +5,8 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import {useEffect, useRef, useState} from "react";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {PageHelp, readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {PageHelp, readPageHelp} from "@baseModule/components/custom/pageHelp.tsx";
 import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";
 import WebsiteChannelsList from "@coreModule/clients/panel/private/websiteChats/left/channelsList.tsx";
 

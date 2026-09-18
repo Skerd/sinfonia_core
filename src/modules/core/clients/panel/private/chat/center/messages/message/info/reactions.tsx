@@ -5,15 +5,15 @@ import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
 import {getName} from "@baseModule/helpers/general/names.ts";
 import {useImperativeHandle, useState} from "react";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {updateMessageReaction} from "@baseModule/helpers/redux/slices/chatSlice.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {RemoveReactionFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/removeReaction.form.response.type.ts";
 import {RemoveReactionFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/removeReaction.form.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
@@ -134,7 +134,7 @@ function Reactions({
                                         <div className="flex items-center gap-x-1">
                                             {
                                                 reactionRead.user && r.user &&
-                                                <CustomAvatar avatarClassName="size-7" user={r.user} />
+                                                <UserAvatar avatarClassName="size-7" user={r.user} />
                                             }
                                             <div>
                                                 <HiddenElement>
@@ -184,7 +184,7 @@ function Reactions({
                                                     <div className="flex items-center gap-x-1">
                                                         {
                                                             reactionRead.user && r.user &&
-                                                            <CustomAvatar avatarClassName="size-7" user={r.user} />
+                                                            <UserAvatar avatarClassName="size-7" user={r.user} />
                                                         }
                                                         <div>
                                                             <HiddenElement>

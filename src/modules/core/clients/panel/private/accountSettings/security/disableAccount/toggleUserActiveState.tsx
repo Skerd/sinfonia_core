@@ -8,7 +8,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {UpdateAccountStatusFormType} from "armonia/src/modules/core/api/user/private/status/updateAccountStatus.form.type.ts";
 import {UpdateAccountStatusFormResponseType} from "armonia/src/modules/core/api/user/private/status/updateAccountStatus.form.response.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type ToggleUserActiveProps = WithLanguageType & WithAxiosType<UpdateAccountStatusFormResponseType, UpdateAccountStatusFormType> & {
     active: boolean;

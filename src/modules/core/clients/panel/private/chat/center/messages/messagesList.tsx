@@ -5,7 +5,7 @@ import Message from "@coreModule/clients/panel/private/chat/center/messages/mess
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {memo, useEffect, useRef, type RefObject} from "react";
 import {store} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {sendReceiptsNow} from "@baseModule/helpers/chat/messageReceipts.ts";

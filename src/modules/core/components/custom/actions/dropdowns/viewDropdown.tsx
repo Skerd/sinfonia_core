@@ -1,49 +1,27 @@
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
-import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Eye} from "lucide-react";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useRef} from "react";
+import ActionDropdownItem from "@coreModule/components/custom/actions/dropdowns/actionDropdownItem.tsx";
 
 type ViewDropdownProps = WithLanguageType & {
     onAction: (action: string) => void;
-    accessModel: string
-}
+    accessModel: string;
+};
 
-function ViewDropdown({
-    resolveLanguageKey,
-    onAction,
-    accessModel
-}: ViewDropdownProps) {
-
-    const actionKey = "view";
-    const ref = useRef<HTMLDivElement | null>(null);
+function ViewDropdown({resolveLanguageKey, onAction, accessModel}: ViewDropdownProps) {
     const {read} = useAccess(accessModel);
-
-    const shortCut = "U";
-    useKeyboardShortcuts(shortCut, () => {
-        if( !!ref.current ){
-            ref.current.click();
-        }
-        else{
-            onAction(actionKey);
-        }
-    });
-
-    if( !read ) {
-        return <HiddenElement />
-    }
-
     return (
-        <DropdownMenuItem ref={ref} onClick={() => {onAction(actionKey)}}>
-            <Eye size={16}/>
-            <p>{resolveLanguageKey("title")}</p>
-            <DropdownMenuShortcut>⌘{shortCut}</DropdownMenuShortcut>
-        </DropdownMenuItem>
-    )
+        <ActionDropdownItem
+            label={resolveLanguageKey("title")}
+            Icon={Eye}
+            shortcutKey="U"
+            shortcutLabel="U"
+            allowed={!!read}
+            onSelect={() => onAction("view")}
+        />
+    );
 }
 
 export default compose(

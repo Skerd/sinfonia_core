@@ -5,7 +5,7 @@ import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/co
 import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type ReactMessageProps = WithLanguageType & {
     openReactionPicker: Function

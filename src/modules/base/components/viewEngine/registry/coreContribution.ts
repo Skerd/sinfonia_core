@@ -16,7 +16,7 @@ import {ListingFaqsField} from "@coreModule/components/custom/listingFaqsField.t
 import {IconPicker} from "@coreModule/components/custom/iconPicker.tsx";
 import {PhoneInput} from "@coreModule/components/custom/phoneInput.tsx";
 import {GalleryCarousel} from "@coreModule/components/custom/images/galleryCarousel.tsx";
-import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
+import TitleWithCollapse from "@baseModule/components/custom/titleWithCollapse.tsx";
 import {MainImageField} from "@coreModule/components/custom/images/mainImageField.tsx";
 import {ImageGalleryField} from "@coreModule/components/custom/images/imageGalleryField.tsx";
 import {VideoGalleryField} from "@coreModule/components/custom/images/videoGalleryField.tsx";

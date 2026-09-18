@@ -1,7 +1,6 @@
-import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import DeletedTooltip from "@coreModule/components/custom/deletedTooltip.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import DeletedTooltip from "@baseModule/components/custom/deletedTooltip.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 
@@ -62,6 +61,4 @@ function DeletedInfo({
     )
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/deletedInfo/index.tsx")
-)(DeletedInfo);
+export default withLanguage("src/modules/core/components/custom/deletedInfo/index.tsx")(DeletedInfo);

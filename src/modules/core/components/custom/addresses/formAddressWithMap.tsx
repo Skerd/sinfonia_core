@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFieldArray, useFormContext, type FieldValues } from "react-hook-form";
-import {compose} from "redux";
 import withLanguage, {type ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import { ApiSelect } from "@coreModule/components/custom/apiSelect";
 import MapWithPins from "@coreModule/components/custom/addresses/mapWithPins.tsx";
@@ -553,6 +552,4 @@ function FormAddressWithMap(props: FormAddressWithMapProps) {
     return <SingleFormAddressWithMap {...props} />;
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/addresses/formAddressWithMap.tsx")
-)(FormAddressWithMap);
+export default withLanguage("src/modules/core/components/custom/addresses/formAddressWithMap.tsx")(FormAddressWithMap);

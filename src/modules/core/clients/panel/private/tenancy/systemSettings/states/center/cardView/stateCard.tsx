@@ -12,7 +12,7 @@ import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/actions/viewCities.tsx";
 import {IconFlag} from "@tabler/icons-react";
 import {stateEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/states";
-import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
+import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 
 type StateCardProps = WithLanguageType & {

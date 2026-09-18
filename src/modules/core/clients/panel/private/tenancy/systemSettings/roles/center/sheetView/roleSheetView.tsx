@@ -8,7 +8,7 @@ import {DeleteResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle} from "@coreModule/components/ui/sheet.tsx";
 import {OverlayPortalContainer} from "@coreModule/components/ui/drawer.tsx";
 import DeletedInfo from "@coreModule/components/custom/deletedInfo";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {useMemo, useState} from "react";
 import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";

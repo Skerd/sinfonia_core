@@ -1,5 +1,5 @@
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {EntityStatusStats, UnitsByStatusCounts} from "./entityStatus.types.ts";
 import {formatCompactCurrency, unitsByStatusToEntityStats} from "./entityStatus.types.ts";

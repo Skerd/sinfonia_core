@@ -12,7 +12,6 @@ import {
     FormMessage,
 } from "@coreModule/components/ui/form.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {compose} from "redux";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import MediaPreviewContent from "@coreModule/components/custom/files/mediaPreviewContent.tsx";
 import {
@@ -21,8 +20,8 @@ import {
     mediaIdFromSrc,
     type FieldMediaType,
 } from "@coreModule/components/custom/files/mediaPreviewKind.ts";
+import {MEDIA_BASE_URL} from "@baseModule/helpers/constants/media.constants.ts";
 
-const DEFAULT_MEDIA_BASE_URL = "/api/auxiliary/media/";
 
 const VIDEO_ALT_MAX_LENGTH = 15;
 
@@ -307,7 +306,7 @@ function MediaField({
     accept: acceptProp,
     maxCount: maxCountProp,
     editMode = false,
-    mediaBaseUrl = DEFAULT_MEDIA_BASE_URL,
+    mediaBaseUrl = MEDIA_BASE_URL,
     loading = false,
     resolveLanguageKey,
     onDialog
@@ -426,9 +425,11 @@ function MediaField({
         const slotLabel = isSingle ? uploadHint : `${slotIndex + 1}/${maxCount}`;
         return (
             <div key={`placeholder-${slotIndex}`} className="relative">
-                <div
+                <button
+                    type="button"
+                    aria-label={slotLabel}
                     className={cn(
-                        "w-full aspect-square rounded-lg border-2 border-dashed flex items-center justify-center cursor-pointer hover:border-primary transition-colors bg-muted/30",
+                        "w-full aspect-square rounded-lg border-2 border-dashed flex items-center justify-center cursor-pointer hover:border-primary transition-colors bg-muted/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                         hasError ? "border-destructive" : "border-border"
                     )}
                     onClick={() => inputRef.current?.click()}
@@ -442,7 +443,7 @@ function MediaField({
                             {slotLabel}
                         </p>
                     </div>
-                </div>
+                </button>
                 {
                     (isSingle || isFirstPlaceholder) &&
                     <input
@@ -523,6 +524,4 @@ function MediaField({
 
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/files/mediaField.tsx")
-)(MediaField)
+export default withLanguage("src/modules/core/components/custom/files/mediaField.tsx")(MediaField)

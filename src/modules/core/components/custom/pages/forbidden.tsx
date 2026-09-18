@@ -1,34 +1,16 @@
-import { compose } from "redux";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@coreModule/components/ui/button.tsx";
-import withLanguage, { WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import StatusPage from "@coreModule/components/custom/pages/statusPage.tsx";
 
-type ForbiddenProps = WithLanguageType;
-
-function Forbidden({ resolveLanguageKey }: ForbiddenProps) {
-    const navigate = useNavigate();
-
+function Forbidden({resolveLanguageKey}: WithLanguageType) {
     return (
-        <div className='h-svh'>
-            <div className='m-auto flex h-full w-full flex-col items-center justify-center gap-2'>
-                <h1 className='text-[7rem] leading-tight font-bold'>403</h1>
-                <span className='font-medium'>{resolveLanguageKey("title")}</span>
-                <p className='text-muted-foreground text-center leading-tight'>
-                    <pre>{resolveLanguageKey("description")}</pre>
-                </p>
-                <div className='mt-6 flex gap-4'>
-                    <Button variant='outline' onClick={() => history.go(-1)}>
-                        {resolveLanguageKey("backLabel")}
-                    </Button>
-                    <Button onClick={() => navigate('/')}>
-                        {resolveLanguageKey("backHome")}
-                    </Button>
-                </div>
-            </div>
-        </div>
+        <StatusPage
+            code="403"
+            title={resolveLanguageKey("title")}
+            description={resolveLanguageKey("description")}
+            backLabel={resolveLanguageKey("backLabel")}
+            backHomeLabel={resolveLanguageKey("backHome")}
+        />
     );
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/pages/forbidden.tsx"),
-)(Forbidden);
+export default withLanguage("src/modules/core/components/custom/pages/forbidden.tsx")(Forbidden);

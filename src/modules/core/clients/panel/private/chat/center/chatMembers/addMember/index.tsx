@@ -8,7 +8,7 @@ import {useState} from "react";
 import AddMembersToChannel from "@coreModule/clients/panel/private/chat/center/chatMembers/addMember/addMembersToChannel.tsx";
 import NewChatMembers from "@coreModule/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type AddMemberProps = WithLanguageType & {
     channel: Channel

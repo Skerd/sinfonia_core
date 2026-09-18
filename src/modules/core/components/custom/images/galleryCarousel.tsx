@@ -9,9 +9,10 @@ import {
 } from "@coreModule/components/ui/carousel.tsx"
 import { Dialog, DialogContent } from "@coreModule/components/ui/dialog.tsx"
 import { Media } from "armonia/src/modules/core/types"
-import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
+import ValueNotSet from "@baseModule/components/custom/valueNotSet.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
+import {MEDIA_BASE_URL} from "@baseModule/helpers/constants/media.constants.ts";
 
 function resolveMediaUrl(url: string, media: Media): string {
     return `${url}${media._id}`
@@ -162,7 +163,7 @@ function GalleryPreviewRail({
 }
 
 export function GalleryCarousel({
-    mediaUrl = "/api/auxiliary/media/",
+    mediaUrl = MEDIA_BASE_URL,
     mainImage,
     imageGallery,
     videoGallery = [],

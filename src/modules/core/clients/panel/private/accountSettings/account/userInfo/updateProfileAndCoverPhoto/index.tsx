@@ -4,7 +4,7 @@ import UpdateProfilePhoto from "@coreModule/clients/panel/private/accountSetting
 import UpdateCoverPhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type AccountProfileAndCoverPhotoProps = {
     specificUserId?: string;

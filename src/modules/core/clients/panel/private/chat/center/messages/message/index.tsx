@@ -7,8 +7,8 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import {ContextMenu, ContextMenuContent, ContextMenuTrigger} from "@coreModule/components/ui/context-menu.tsx";
 import {Forward, CircleSlash, Pin, User, Calendar, Check, CheckCheck} from "lucide-react";
 import {isPeekingWebsiteChannel, toggleDeleteMessageId, updateOpenDelete} from "@baseModule/helpers/redux/slices/chatSlice.ts";
-import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
-import LongText from "@coreModule/components/custom/longText.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
+import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
 import DeleteMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/deleteMessage.tsx";
 import PinMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/pinMessage.tsx";
 import UnpinMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/unpinMessage.tsx";
@@ -22,7 +22,7 @@ import {getName} from "@baseModule/helpers/general/names.ts";
 import Reactions from "@coreModule/clients/panel/private/chat/center/messages/message/info/reactions.tsx";
 import ReplyMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/replyMessage.tsx";
 import ForwardMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/forwardMessage.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import EditMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/editMessage.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
@@ -31,7 +31,7 @@ import {MessageSenderType, MessageType} from "armonia/src/modules/core/api/user/
 import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 
@@ -173,7 +173,7 @@ function Message({
                         {
                             !!foundMention &&
                             <div className="flex items-center gap-x-1">
-                                <CustomAvatar user={foundMention} />
+                                <UserAvatar user={foundMention} />
                                 <p>{getName(foundMention)}</p>
                             </div>
                         }
@@ -205,14 +205,14 @@ function Message({
         return (
             <div ref={ref} className={cn("flex w-full items-center justify-center", stackClassName ?? "mb-2")}>
                 <div className="bg-card text-muted-foreground border text-sm font-semibold rounded-lg px-6 py-1">
-                    <LongText className='max-w-full'>
+                    <TruncatedValue preview="popover" className='max-w-full'>
                         {
                             !!message.receiver ?
                             `${youOrOther(message.sender)} ${resolveLanguageKey(message.message)} ${youOrOther(message.receiver, true)}`
                             :
                             `${youOrOther(message.sender)} ${resolveLanguageKey(message.message)}`
                         }
-                    </LongText>
+                    </TruncatedValue>
                 </div>
             </div>
         )
@@ -362,10 +362,10 @@ function Message({
             return <div className="w-10 shrink-0" aria-hidden />;
         }
         if (!read.sender) {
-            return <CustomAvatar avatarClassName="size-10 shrink-0 self-end" />;
+            return <UserAvatar avatarClassName="size-10 shrink-0 self-end" />;
         }
         return (
-            <CustomAvatar
+            <UserAvatar
                 avatarClassName="size-10 shrink-0 self-end"
                 user={message.sender}
             />

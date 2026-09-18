@@ -2,11 +2,10 @@ import {Trash2} from "lucide-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import { SimpleSelect } from "@coreModule/components/custom/simpleSelect";
 import type { FilterRule as FilterRuleType, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
-import {compose} from "redux";
 import withLanguage, {TranslationValue, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {findFromLanguage} from "@baseModule/helpers/general/objectPath.ts";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import FilterValueInput from "@coreModule/components/custom/filterBuilder/filterValueInput.tsx";
 
 type FilterRuleProps = WithLanguageType & {
@@ -124,6 +123,4 @@ export function FilterRuleComponent({
     );
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/filterBuilder/filterRule.tsx")
-)(FilterRuleComponent)
+export default withLanguage("src/modules/core/components/custom/filterBuilder/filterRule.tsx")(FilterRuleComponent)

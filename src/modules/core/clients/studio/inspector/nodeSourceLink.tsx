@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {IconExternalLink, IconGitFork} from "@tabler/icons-react";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {
     editorLink,
     resolveNode,

@@ -6,7 +6,7 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import {useEffect, useState} from "react";
 import {Media} from "armonia/src/modules/core/types";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 
 type ProfilePhotoProps = WithLanguageType & WithAxiosType<Media> & {
     photoUrl: string | null;

@@ -8,7 +8,7 @@ import Security from "@coreModule/clients/panel/private/accountSettings/security
 import NotificationsForm from "@coreModule/clients/panel/private/accountSettings/notifications";
 import {useEffect, useState} from "react";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Header from "@coreModule/components/custom/header.tsx";
+import Header from "@baseModule/components/custom/header.tsx";
 
 type AccountSettingsProps = WithLanguageType & {
     specificUserId?: string,

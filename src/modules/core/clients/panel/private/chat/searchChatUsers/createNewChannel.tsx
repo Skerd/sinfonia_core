@@ -9,7 +9,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {CreateChannelFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.response.type.ts";
 import {CreateChannelFormType} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type CreateNewChannelProps = WithLanguageType & WithAxiosType<CreateChannelFormResponseType, CreateChannelFormType> & {
     groupName: string,

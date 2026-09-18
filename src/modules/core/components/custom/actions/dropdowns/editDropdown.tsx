@@ -1,48 +1,28 @@
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
-import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {PencilLine} from "lucide-react";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useRef} from "react";
+import ActionDropdownItem from "@coreModule/components/custom/actions/dropdowns/actionDropdownItem.tsx";
 
 type EditDropdownProps = WithLanguageType & {
+    /** Edit navigates rather than dispatching an action key, so this takes no argument. */
     onAction: () => void;
-    accessModel: string
-}
+    accessModel: string;
+};
 
-function EditDropdown({
-    resolveLanguageKey,
-    onAction,
-    accessModel
-}: EditDropdownProps) {
-
-    const ref = useRef<HTMLDivElement | null>(null);
+function EditDropdown({resolveLanguageKey, onAction, accessModel}: EditDropdownProps) {
     const {write} = useAccess(accessModel);
-
-    const shortCut = "E";
-    useKeyboardShortcuts(shortCut, () => {
-        if( !!ref.current ){
-            ref.current.click();
-        }
-        else{
-            onAction();
-        }
-    });
-
-    if( !write ) {
-        return <HiddenElement />
-    }
-
     return (
-        <DropdownMenuItem ref={ref} onClick={() => {onAction()}}>
-            <PencilLine size={16}/>
-            <p>{resolveLanguageKey("title")}</p>
-            <DropdownMenuShortcut>⌘{shortCut}</DropdownMenuShortcut>
-        </DropdownMenuItem>
-    )
+        <ActionDropdownItem
+            label={resolveLanguageKey("title")}
+            Icon={PencilLine}
+            shortcutKey="E"
+            shortcutLabel="E"
+            allowed={!!write}
+            onSelect={onAction}
+        />
+    );
 }
 
 export default compose(

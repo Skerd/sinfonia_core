@@ -4,7 +4,7 @@ import {getClientConfig} from "@baseModule/helpers/general/config.ts";
 import mainConfig from "@coreModule/assets/languages/mainConfig.json";
 import {SiApple, SiGoogle} from "@icons-pack/react-simple-icons";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 
 const images: any = {

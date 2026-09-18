@@ -14,9 +14,9 @@ import {EllipsisVertical, PowerOff} from "lucide-react";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {TelegramStatusFormResponseType} from "armonia/src/modules/core/api/user/private/telegram/telegramStatus.form.response.type.ts";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 
 type UserLinkTelegramProps = WithLanguageType & WithAxiosType<TelegramStatusFormResponseType> & {

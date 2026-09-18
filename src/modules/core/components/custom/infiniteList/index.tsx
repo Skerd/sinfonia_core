@@ -1,10 +1,10 @@
 import {Fragment, ReactNode, RefObject, useCallback, useEffect, useMemo, useRef} from "react";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
-import NoData from "@coreModule/components/custom/noData.tsx";
+import NoData from "@baseModule/components/custom/noData.tsx";
 import {PaginatedResponse, useInfiniteScroll} from "@baseModule/helpers/hooks/useInfiniteScroll.ts";
 import type {HttpError} from "@baseModule/helpers/hooks/useHttpRequest.ts";
-import LoadMoreSentinel from "@coreModule/components/custom/loadMoreSentinel.tsx";
+import LoadMoreSentinel from "@baseModule/components/custom/loader/loadMoreSentinel.tsx";
 
 export type InfiniteListRenderItem<T> = (
     item: T,

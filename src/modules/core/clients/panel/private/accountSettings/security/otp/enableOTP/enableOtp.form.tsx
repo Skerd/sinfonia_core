@@ -12,13 +12,13 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@c
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Check, X} from "lucide-react";
 import {enableMfaFormSchema} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.validator.ts";
-import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
+import CopyTooltip from "@baseModule/components/custom/copyTooltip.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {EnableMfaFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.response.type.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type AccountSecurityEnableOtpFormProps = WithLanguageType & WithAxiosType<EnableMfaFormResponseType, EnableMfaFormType> & {
     specificUserId?: string,

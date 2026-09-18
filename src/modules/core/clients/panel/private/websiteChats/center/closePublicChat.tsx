@@ -7,10 +7,10 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useImperativeHandle, useState} from "react";
 import {deleteChannel, openChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch} from "react-redux";
-import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
+import ConfirmDialog from "@baseModule/components/custom/confirmDialog.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import type {ActionMessage, SingleForm} from "armonia/src/modules/core/types/shared.types";
 
 type ClosePublicChatProps = WithLanguageType & WithAxiosType<ActionMessage, SingleForm> & {

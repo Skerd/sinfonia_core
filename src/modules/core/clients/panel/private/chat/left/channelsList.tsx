@@ -1,19 +1,19 @@
 import { compose } from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {openChannel, selectChannelOrderIdsByKind} from "@baseModule/helpers/redux/slices/chatSlice.ts";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Fragment, RefObject, useEffect, useRef} from "react";
 import {Info, Users} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
-import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import CustomDateDisplayer from "@coreModule/components/custom/customDateDisplayer.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import ChannelsFetcher from "@coreModule/clients/panel/private/chat/left/channelsFetcher.tsx";
-import LongText from "@coreModule/components/custom/longText.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {getName} from "@baseModule/helpers/general/names.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {MessageSenderType, MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
@@ -105,34 +105,34 @@ function ChannelInfo({
                             <>
                                 <Info size={14} />
                                 <div className="flex-full">
-                                    <LongText className='max-w-full'>
+                                    <TruncatedValue preview="popover" className='max-w-full'>
                                         {
                                             !!message.receiver ?
                                             `${youOrOther(message.sender)} ${resolveLanguageKey(message.message)} ${youOrOther(message.receiver, true)}`
                                             :
                                             `${youOrOther(message.sender)} ${resolveLanguageKey(message.message)}`
                                         }
-                                    </LongText>
+                                    </TruncatedValue>
                                 </div>
                             </>
                             :
                             <div className="flex-full">
-                                <LongText className='max-w-full'>
+                                <TruncatedValue preview="popover" className='max-w-full'>
                                     {
                                         (message.status === "deleted") ?
                                         resolveLanguageKey("messageDeleted")
                                         :
                                        `${youOrOther(message.sender)} ${lastMessageBodyWithMentions(message)}`
                                     }
-                                </LongText>
+                                </TruncatedValue>
                             </div>
                         }
                     </>
                     :
                     <div className="flex-full">
-                        <LongText className='max-w-full'>
+                        <TruncatedValue preview="popover" className='max-w-full'>
                             {lastMessageBodyWithMentions(message)}
-                        </LongText>
+                        </TruncatedValue>
                     </div>
                 }
             </div>
@@ -177,7 +177,7 @@ function ChannelInfo({
                                 <>
                                     {
                                         !!avatarUser &&
-                                        <CustomAvatar user={avatarUser}/>
+                                        <UserAvatar user={avatarUser}/>
                                     }
                                 </>
                             }

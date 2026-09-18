@@ -9,7 +9,7 @@ import DeletePhoto from "@coreModule/clients/panel/private/accountSettings/accou
 import {User} from "lucide-react";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 const avatarSize = "120px";
 const dialogAvatarSize = "220px";

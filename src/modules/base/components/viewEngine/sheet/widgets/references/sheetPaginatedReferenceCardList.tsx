@@ -4,7 +4,7 @@ import { useReferencesViewModeOptional } from "./referencesViewModeContext.tsx";
 import withLanguage, { WithLanguageType, type ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
-import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
+import ValueNotSet from "@baseModule/components/custom/valueNotSet.tsx";
 import { ReferenceStubCompactRow } from "./referenceStubCompactRow.tsx";
 import type { ReferenceCompactRowConfig } from "./referenceStubCompactRow.tsx";
 import { SheetListPaginationFooter, useSheetListPagination } from "../sheetListPagination.tsx";

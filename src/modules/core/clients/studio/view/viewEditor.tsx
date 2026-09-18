@@ -27,7 +27,7 @@ import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Empty, EmptyDescription, EmptyHeader, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";

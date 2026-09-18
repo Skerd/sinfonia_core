@@ -14,7 +14,6 @@ import {flattenPanelNavLinks} from "@baseModule/helpers/navigation/flattenPanelN
 import {filterNavGroups} from "@baseModule/helpers/navigation/filterNavByAccess.ts";
 import {useAccessHydrated, useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";
 import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {compose} from "redux";
 
 type CommandPaletteProps = WithLanguageType & {
     open?: boolean;
@@ -110,8 +109,6 @@ function CommandPalette({resolveLanguageKey, open: openProp, onOpenChange}: Comm
     );
 }
 
-export default compose(
-    withLanguage("src/modules/core/clients/panel/private/sidebar/index.tsx"),
-)(CommandPalette);
+export default withLanguage("src/modules/core/clients/panel/private/sidebar/index.tsx")(CommandPalette);
 
 export {CommandPalette};

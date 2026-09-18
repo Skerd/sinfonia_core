@@ -18,6 +18,7 @@ const SHARED_DICTIONARIES: Record<string, string[]> = {
      * in `core/assets/languages`, where they stay once the package moves back into core. Drop the
      * entry (not the JSON) as each component returns to `src/modules/core/…`.
      */
+    "src/modules/base/components/custom/loader/loader.tsx": ["src/modules/core/components/custom/loader/loader.tsx"],
     "src/modules/base/components/custom/sessionSetupScreen.tsx": ["src/modules/core/components/custom/sessionSetupScreen.tsx"],
     "src/modules/base/components/entityPage/quickFilterBar.tsx": ["src/modules/core/components/entityPage/quickFilterBar.tsx"],
     "src/modules/base/components/viewEngine/audit/sheetAuditHistory.tsx": ["src/modules/core/components/viewEngine/audit/sheetAuditHistory.tsx"],

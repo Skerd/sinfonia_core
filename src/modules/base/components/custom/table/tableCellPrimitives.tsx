@@ -10,7 +10,7 @@ import {Fragment, type ReactNode} from "react";
 import {Link} from "react-router-dom";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
-import {LongText} from "@coreModule/components/custom/longText.tsx";
+import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
 import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
@@ -146,11 +146,11 @@ export function TextCell({value}: {value: string}) {
     const trimmed = value.trim();
     const href = EMAIL_PATTERN.test(trimmed) ? `mailto:${trimmed}` : URL_PATTERN.test(trimmed) ? trimmed : null;
     if (!href) {
-        return <LongText className="max-w-48">{value}</LongText>;
+        return <TruncatedValue preview="popover" className="max-w-48">{value}</TruncatedValue>;
     }
     const external = href.startsWith("http");
     return (
-        <LongText className="max-w-48">
+        <TruncatedValue preview="popover" className="max-w-48">
             <a
                 href={href}
                 className="text-primary hover:underline"
@@ -160,6 +160,6 @@ export function TextCell({value}: {value: string}) {
             >
                 {value}
             </a>
-        </LongText>
+        </TruncatedValue>
     );
 }

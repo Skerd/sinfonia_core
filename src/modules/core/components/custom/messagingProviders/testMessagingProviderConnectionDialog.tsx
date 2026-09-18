@@ -3,7 +3,7 @@ import {useEffect, useImperativeHandle, useState} from "react";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
+import ConfirmDialog from "@baseModule/components/custom/confirmDialog.tsx";
 import {PhoneInput} from "@coreModule/components/ui/phone-input.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";

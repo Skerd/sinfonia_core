@@ -6,8 +6,8 @@ import ActivateAccount from "@coreModule/clients/panel/public/auth/activateAccou
 import ConfirmOTPDeactivation from "@coreModule/clients/panel/public/auth/2fa/confirm2FADeactivation.form.tsx";
 import ChangeForgottenPassword from "@coreModule/clients/panel/public/auth/password/changeForgottenPassword.form.tsx";
 import AcceptInvitation from "@coreModule/clients/panel/public/auth/acceptInvitation/acceptInvitation.form.tsx";
-import LanguageSwitch from "@coreModule/components/custom/languageSwitch.tsx";
-import ThemeSwitch from "@coreModule/components/custom/themeSwitch.tsx";
+import LanguageSwitch from "@baseModule/components/custom/preferences/languageSwitch.tsx";
+import ThemeSwitch from "@baseModule/components/custom/preferences/themeSwitch.tsx";
 import {resolveAuthPanelComponent} from "@baseModule/helpers/moduleContributions/loadAuthPanelContributions.ts";
 import type {CoreAuthPanelKey} from "@baseModule/helpers/moduleContributions/coreAuthPanelKeys.ts";
 import {GalleryVerticalEnd} from "lucide-react";

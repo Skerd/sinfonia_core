@@ -7,7 +7,6 @@ import { ApiSelect } from "@coreModule/components/custom/apiSelect";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterFieldConfig, FilterOperator, FilterValue } from "armonia/src/modules/core/database/filter";
 import { COLUMN_TYPE, isDateColumnType, isNumberColumnType } from "armonia/src/modules/core/database/filter/typeOperators";
-import { compose } from "redux";
 import withLanguage, { TranslationValue, WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {findFromLanguage} from "@baseModule/helpers/general/objectPath.ts";
 import { useFilterBuilder } from "./filterBuilderContext.tsx";
@@ -346,6 +345,4 @@ export function FilterValueInput({
     );
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/filterBuilder/filterValueInput.tsx")
-)(FilterValueInput);
+export default withLanguage("src/modules/core/components/custom/filterBuilder/filterValueInput.tsx")(FilterValueInput);

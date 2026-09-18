@@ -8,7 +8,7 @@ import {type Resolver, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import * as React from "react";
 import {InputWithIcon} from "@coreModule/components/custom/inputWithIcon.tsx";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
@@ -18,7 +18,7 @@ import {SimpleUsersFormType} from "armonia/src/modules/core/api/company/private/
 import {SimpleUserType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.response.type.ts";
 import {createChannelFormSchema} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.validator.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import InfiniteList from "@coreModule/components/custom/infiniteList";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 
@@ -54,7 +54,7 @@ function MemberRow({
             }
         >
             <div className='flex items-center gap-2'>
-                <CustomAvatar user={user} avatarClassName={"size-10"}/>
+                <UserAvatar user={user} avatarClassName={"size-10"}/>
                 <div className='flex flex-col'>
                     <p className='text-sm font-medium'>
                         {user.name} {user.surname}
@@ -167,7 +167,7 @@ function SelectedMembers({
                                             <div className="absolute p-0.5 right-0 top-0 hover:cursor-pointer rounded-full bg-muted-foreground text-background hover:bg-foreground" style={{zIndex: 1}} onClick={() => onToggleMember(user)}>
                                                 <X size={12}/>
                                             </div>
-                                            <CustomAvatar user={user} avatarClassName={"size-14"}/>
+                                            <UserAvatar user={user} avatarClassName={"size-14"}/>
                                             <p className="text-xs text-center font-semibold">{user.name}</p>
                                         </div>
                                     )

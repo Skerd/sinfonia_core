@@ -1,7 +1,7 @@
 import {createElement, type ReactNode} from "react";
 import type {FieldBinding} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {SheetFieldRenderer} from "@baseModule/helpers/types/widgetContribution.types.ts";
-import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
+import ValueNotSet from "@baseModule/components/custom/valueNotSet.tsx";
 import {hasAccessPath} from "../../engine/access.ts";
 import {normalizeObjectIdRef, resolvePath} from "../../engine/refs.ts";
 import type {AccessMap, ViewRendererContext} from "../../engine/types.ts";

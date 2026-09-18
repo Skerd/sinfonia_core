@@ -11,10 +11,10 @@ import {
 } from "@baseModule/helpers/hooks/useListUrlState.ts";
 import {type AccessObject} from "@baseModule/helpers/context/accessContext.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import Header from "@coreModule/components/custom/header.tsx";
-import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
+import Header from "@baseModule/components/custom/header.tsx";
+import {readPageHelp} from "@baseModule/components/custom/pageHelp.tsx";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
 import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";

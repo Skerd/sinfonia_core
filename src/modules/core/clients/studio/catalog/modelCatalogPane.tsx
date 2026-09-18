@@ -10,7 +10,7 @@ import {
 } from "@tabler/icons-react";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import NewViewDialog from "./newViewDialog.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";

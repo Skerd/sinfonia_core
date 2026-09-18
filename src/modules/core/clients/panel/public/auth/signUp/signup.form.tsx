@@ -9,7 +9,7 @@ import {useNavigate} from "react-router-dom";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {zodResolver} from "@hookform/resolvers/zod";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import PasswordStrength from "@coreModule/components/custom/passwordStrength.tsx";
+import PasswordStrength from "@baseModule/components/custom/passwordStrength.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {signupFormSchema} from "armonia/src/modules/core/api/user/public/signUp/signup.form.validator.ts";

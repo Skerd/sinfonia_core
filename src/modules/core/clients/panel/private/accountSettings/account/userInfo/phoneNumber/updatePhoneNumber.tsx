@@ -8,7 +8,7 @@ import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {UpdatePhoneNumberFormType} from "armonia/src/modules/core/api/user/private/data/updatePhoneNumber.form.type.ts";
 import {UpdatePhoneNumberFormResponseType} from "armonia/src/modules/core/api/user/private/data/updatePhoneNumber.form.response.type.ts";
 

@@ -9,7 +9,7 @@ import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar, AvatarFallback} from "@coreModule/components/ui/avatar.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {AuditDiffValuePresentation} from "./auditDisplayValue.tsx";
 import {auditHintOrPrimitive, type AuditFieldHint} from "./auditFieldHints.ts";
 

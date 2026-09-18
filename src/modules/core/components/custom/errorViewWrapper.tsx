@@ -1,7 +1,4 @@
 import withLanguage from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {compose} from "redux";
 import {ErrorView} from "./errorView.tsx";
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/errorViewWrapper.tsx")
-)(ErrorView)
+export default withLanguage("src/modules/core/components/custom/errorViewWrapper.tsx")(ErrorView)

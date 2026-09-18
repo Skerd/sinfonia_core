@@ -6,9 +6,9 @@ import {ArrowDownAZ, ArrowUpAZ, SlidersHorizontal} from "lucide-react";
 import {ChangeEvent, useEffect, useState} from "react";
 import Telegram from "@coreModule/clients/panel/private/apps/apps/telegram";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Header from "@coreModule/components/custom/header.tsx";
+import Header from "@baseModule/components/custom/header.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type AppType = 'all' | 'connected' | 'notConnected';
 type ApplicationType = {

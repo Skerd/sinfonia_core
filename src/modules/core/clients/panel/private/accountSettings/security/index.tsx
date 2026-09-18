@@ -8,8 +8,8 @@ import UserAccountSecurityLoginHistory from "@coreModule/clients/panel/private/a
 import UserAccountSecurityUserSession from "@coreModule/clients/panel/private/accountSettings/security/userSession";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {useTableUpdate} from "@baseModule/helpers/hooks/useTableUpdate.ts";
 type SecurityProps = WithLanguageType & { specificUserId?: string }
 
 function Security({

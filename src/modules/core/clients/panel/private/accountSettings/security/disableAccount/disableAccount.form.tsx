@@ -19,7 +19,7 @@ import ToggleUserActiveState from "@coreModule/clients/panel/private/accountSett
 import {disableAccountFormSchema} from "armonia/src/modules/core/api/user/private/status/disableAccount.form.validator.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type UserAccountSecurityDisableAccountFormProps = WithAxiosType<DisableAccountFormResponseType, DisableAccountFormType> & WithLanguageType & {
     specificUserId?: string,

@@ -5,7 +5,6 @@ import FilterValueInput, {enumLabel} from "./filterValueInput.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterRule, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import withLanguage, {ResolveLanguageKey, TranslationValue, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {compose} from "redux";
 import {findFromLanguage} from "@baseModule/helpers/general/objectPath.ts";
 import { useFilterBuilder } from "./filterBuilderContext.tsx";
 
@@ -153,6 +152,4 @@ export function FilterChip({
     );
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/filterBuilder/filterChip.tsx")
-)(FilterChip)
+export default withLanguage("src/modules/core/components/custom/filterBuilder/filterChip.tsx")(FilterChip)

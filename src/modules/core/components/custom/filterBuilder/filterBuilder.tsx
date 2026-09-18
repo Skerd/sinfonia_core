@@ -6,7 +6,7 @@ import {Search, Trash2} from "lucide-react";
 import { FilterBuilderProvider, useFilterBuilder } from "./filterBuilderContext.tsx";
 import FilterGroup from "./filterGroup.tsx";
 import FilterChip from "./filterChip.tsx";
-import { classifyUrlFilterParam, hasDraftRules, isCompleteRule, isDraftRule, searchParamAfterSet, shouldAutoCommit, useFilterState, withPreservedDrafts } from "./useFilterState.ts";
+import { classifyUrlFilterParam, hasDraftRules, isCompleteRule, isDraftRule, searchParamAfterSet, shouldAutoCommit, useFilterState, withPreservedDrafts } from "@baseModule/helpers/hooks/components/useFilterState.ts";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterDSL, FilterRule, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import {
@@ -19,9 +19,8 @@ import {
     pruneFilterLabelsToDsl,
 } from "@baseModule/helpers/filter/filterUrl.ts";
 import { LIST_PAGE_PARAM } from "@baseModule/helpers/hooks/useListUrlState.ts";
-import {compose} from "redux";
 import withLanguage, {TranslationValue, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 
 type RuleWithGroup = { groupId: string; rule: FilterRule };
 
@@ -319,7 +318,7 @@ function FilterBuilderInner({
                                 {
                                     rulesWithGroups.map(({ groupId, rule }) => {
                                         return (
-                                            <div key={rule.id} onClick={(e) => e.stopPropagation()}>
+                                            <div key={rule.id} role="presentation" onClick={(e) => e.stopPropagation()}>
                                                 <FilterChip
                                                     rule={rule}
                                                     groupId={groupId}
@@ -337,7 +336,7 @@ function FilterBuilderInner({
                             <span className="text-muted-foreground text-sm truncate">{configuration.placeholder}</span>
                         }
                     </div>
-                    <div className="flex items-center shrink-0 gap-1 ml-1 border-l border-border pl-1.5" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex items-center shrink-0 gap-1 ml-1 border-l border-border pl-1.5" role="presentation" onClick={(e) => e.stopPropagation()}>
                         {
                             activeCount > 0 &&
                             <TooltipDisplayer tooltip={resolveLanguageKey("clearFilters")}>
@@ -442,8 +441,6 @@ function FilterBuilderView({
     );
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/filterBuilder/filterBuilder.tsx")
-)(FilterBuilderView)
+export default withLanguage("src/modules/core/components/custom/filterBuilder/filterBuilder.tsx")(FilterBuilderView)
 
 

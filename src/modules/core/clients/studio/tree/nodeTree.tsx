@@ -12,7 +12,7 @@ import {
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import type {ChangeKind} from "../export/changeList.ts";
 import type {LintFinding} from "../lint/viewLint.ts";
 import type {FlatNode} from "./nodeTreeOps.ts";

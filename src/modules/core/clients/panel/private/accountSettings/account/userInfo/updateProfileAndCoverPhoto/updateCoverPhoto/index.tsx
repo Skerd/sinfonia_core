@@ -8,7 +8,7 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import NewPhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/newPhoto.tsx";
 import DeletePhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/deletePhoto.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 

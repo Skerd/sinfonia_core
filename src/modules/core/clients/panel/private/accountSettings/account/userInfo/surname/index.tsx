@@ -9,12 +9,12 @@ import {z} from "zod";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {updateUserProfileSurnameFormSchema} from "armonia/src/modules/core/api/user/private/data/updateUserProfileSurname.form.validator.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import UpdateSurname from "@coreModule/clients/panel/private/accountSettings/account/userInfo/surname/updateSurname.tsx";
 import {UserProfileSurnameFormResponse} from "armonia/src/modules/core/api/user/private/data/userProfileSurname.form.response.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type AccountProfileSurnameProps = WithLanguageType & WithAxiosType<UserProfileSurnameFormResponse> & {
     onUpdate?: Function,

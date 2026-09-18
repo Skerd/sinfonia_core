@@ -10,7 +10,7 @@ import {updateMessagePinned} from "@baseModule/helpers/redux/slices/chatSlice.ts
 import {useDispatch} from "react-redux";
 import {PinMessageFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/pinMessage.form.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {UnpinMessageFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/unpinMessage.form.response.type.ts";
 
 type UnpinMessageProps = WithLanguageType & WithAxiosType<UnpinMessageFormResponseType, PinMessageFormType> & {

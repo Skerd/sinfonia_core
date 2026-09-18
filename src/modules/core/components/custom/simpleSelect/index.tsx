@@ -17,8 +17,7 @@ import { ChevronsUpDown, X } from 'lucide-react';
 import { cn } from '@coreModule/components/lib/utils.ts';
 import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons';
 import withLanguage, { WithLanguageType } from '@baseModule/helpers/hocs/withLanguage.tsx';
-import { compose } from 'redux';
-import SelectOptionLabel from '@coreModule/components/custom/selectOptionLabel.tsx';
+import SelectOptionLabel from '@baseModule/components/custom/selectOptionLabel.tsx';
 
 export type SimpleSelectOption = {
     label: string;
@@ -375,6 +374,4 @@ function SimpleSelectRender({
     );
 }
 
-export const SimpleSelect = compose(
-    withLanguage("src/modules/core/components/custom/simpleSelect/index.tsx"),
-)(SimpleSelectRender);
+export const SimpleSelect = withLanguage("src/modules/core/components/custom/simpleSelect/index.tsx")(SimpleSelectRender);

@@ -6,13 +6,13 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
-import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import {ChannelUser} from "armonia/src/modules/core/types";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {UserProfile} from "@coreModule/clients/panel/private/users/center/cardView";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {isPeekingWebsiteChannel, openChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {getName} from "@baseModule/helpers/general/names.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
@@ -58,7 +58,7 @@ function WebsiteChatHeader({resolveLanguageKey}: WithLanguageType) {
                 </div>
                 <div className="flex min-w-0 items-center gap-2">
                     {avatarUser ? (
-                        <CustomAvatar user={avatarUser} onClick={() => {setViewChannelUserId(avatarUser._id);}} />
+                        <UserAvatar user={avatarUser} onClick={() => {setViewChannelUserId(avatarUser._id);}} />
                     ) : (
                         <Avatar className="flex size-10 items-center justify-center border">
                             <Globe size={18} />

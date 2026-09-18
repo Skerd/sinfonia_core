@@ -2,17 +2,25 @@ import {NotificationType} from "armonia/src/modules/core/api/user/private/notifi
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {DATE_FORMATS, formatDate} from "@baseModule/helpers/general/dateTime.ts";
+import {useNow} from "@baseModule/helpers/hooks/components/useNow.ts";
 
 export type NotificationListItemProps = {
     notification: NotificationType;
     resolveLanguageKey: ResolveLanguageKey;
+    className?: string;
 };
 
 /** Relative time for notification rows (`justNow` / `Nm` / `Nh` / locale date). */
-function formatNotificationDate(dateStr: string, resolveLanguageKey: ResolveLanguageKey): string {
+export function formatNotificationDate(
+    dateStr: string,
+    resolveLanguageKey: ResolveLanguageKey,
+    now: number = Date.now(),
+): string {
     const d = new Date(dateStr);
-    const now = new Date();
-    const diff = now.getTime() - d.getTime();
+    if (Number.isNaN(d.getTime())) return dateStr;
+    // Clock skew can put a notification slightly in the future; clamp so it reads "just now"
+    // rather than falling through to an absolute date.
+    const diff = Math.max(0, now - d.getTime());
     if (diff < 60000) return resolveLanguageKey("justNow");
     if (diff < 3600000) {
         const mins = Math.floor(diff / 60000);
@@ -36,13 +44,15 @@ function formatNotificationDate(dateStr: string, resolveLanguageKey: ResolveLang
 /**
  * Shared row for bell popover and notification center: compact padding, clear vertical rhythm.
  */
-export function NotificationListItem({notification, resolveLanguageKey}: NotificationListItemProps) {
+export function NotificationListItem({notification, resolveLanguageKey, className}: NotificationListItemProps) {
     const unread = !notification.readOn;
+    const now = useNow();
     return (
         <article
             className={cn(
                 "rounded-md border border-border/80 px-3 py-2 transition-colors",
-                unread && "border-primary/20 bg-accent/10"
+                unread && "border-primary/20 bg-accent/10",
+                className,
             )}
         >
             <div className="flex min-w-0 flex-col gap-0.5">
@@ -52,8 +62,11 @@ export function NotificationListItem({notification, resolveLanguageKey}: Notific
                 <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
                     {notification.description ?? notification.code}
                 </p>
-                <time className="pt-0.5 text-2xs tabular-nums leading-none text-muted-foreground/90">
-                    {formatNotificationDate(notification.date, resolveLanguageKey)}
+                <time
+                    dateTime={notification.date}
+                    className="pt-0.5 text-2xs tabular-nums leading-none text-muted-foreground/90"
+                >
+                    {formatNotificationDate(notification.date, resolveLanguageKey, now)}
                 </time>
             </div>
         </article>

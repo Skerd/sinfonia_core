@@ -13,7 +13,7 @@ import {promoteToAdmin as promoteToAdminAction} from "@baseModule/helpers/redux/
 import {MakeUserChannelAdminFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/makeUserChannelAdmin.form.response.type.ts";
 import {MakeUserChannelAdminFormType} from "armonia/src/modules/core/api/user/private/chats/channels/makeUserChannelAdmin.form.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type PromoteToAdminProps = WithLanguageType & WithAxiosType<MakeUserChannelAdminFormResponseType, MakeUserChannelAdminFormType> & {
     channel: Channel,

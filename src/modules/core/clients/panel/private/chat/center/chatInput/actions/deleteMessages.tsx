@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {useImperativeHandle} from "react";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {DeleteMessageFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/deleteMessage.form.response.type.ts";
 import {DeleteMessageFormType} from "armonia/src/modules/core/api/user/private/chats/messages/deleteMessage.form.type.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";

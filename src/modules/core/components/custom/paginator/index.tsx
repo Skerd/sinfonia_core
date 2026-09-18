@@ -1,7 +1,6 @@
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {compose} from "redux";
 import LimitUpdater from "@coreModule/components/custom/paginator/limitUpdater.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {
     Pagination,
@@ -112,6 +111,4 @@ function Paginator({
 }
 
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/paginator/index.tsx")
-)(Paginator)
+export default withLanguage("src/modules/core/components/custom/paginator/index.tsx")(Paginator)

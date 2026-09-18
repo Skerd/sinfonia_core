@@ -3,9 +3,8 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import FilterRuleComponent from "./filterRule.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterGroup as FilterGroupType, FilterFieldConfig, FilterRule } from "armonia/src/modules/core/database/filter";
-import {compose} from "redux";
 import withLanguage, {TranslationValue, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 
 const MAX_DEPTH = 5;
 
@@ -187,6 +186,4 @@ export function FilterGroup({
     );
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/filterBuilder/filterGroup.tsx")
-)(FilterGroup)
+export default withLanguage("src/modules/core/components/custom/filterBuilder/filterGroup.tsx")(FilterGroup)

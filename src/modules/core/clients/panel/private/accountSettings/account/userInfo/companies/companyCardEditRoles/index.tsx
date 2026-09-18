@@ -8,14 +8,14 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import SaveNewCompanyRoles from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/saveNewCompanyRoles.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {AccessibleRolesFormResponseType} from "armonia/src/modules/core/api/user/private/permissions/accessibleRoles.form.response.type.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {ApiSelectDatum} from "armonia/src/modules/core/types/shared.types.ts";
-import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
+import {useTableUpdate} from "@baseModule/helpers/hooks/useTableUpdate.ts";
 
 export type ToggledUserRole = ApiSelectDatum & { newValue: boolean, canEdit: boolean }
 type AccountCompaniesCardEditRolesProps = WithLanguageType & WithAxiosType<AccessibleRolesFormResponseType> & {

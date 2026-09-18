@@ -6,7 +6,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {toast} from "sonner";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import type {HttpRequestHeaderBuilder} from "@baseModule/helpers/hooks/useHttpRequest.ts";

@@ -66,6 +66,22 @@ function renderCoreCenterPanelContent({
     segments,
     searchParams,
 }: RouteConfigArgs) {
+
+    if( menu === "test" ){
+        return (
+            <div>
+
+                {/*<ConfirmDialog*/}
+                {/*    open={true}*/}
+                {/*    title={"sadfsadflskadjlka sjdlfkjalsdkjflkja sldkjfljasdklflkasdlkfjlks adkflkjsdlfjlkasdlkflsk djlsadkflkasdjfkl"}*/}
+                {/*    desc={"asdlkfjalsd jkfjasldkjflkj asld;fajsdlk;lkasjdlj lkasdlkflkas jdlfkj;lasdjjaskd fjlksdj"}*/}
+                {/*    destructive={true}*/}
+                {/*/>*/}
+
+            </div>
+        )
+    }
+
     // Company routes
     if (menu === "company") {
         if (subview === "administration") return <Users administration={true} specificUserId={"yes"}/>;

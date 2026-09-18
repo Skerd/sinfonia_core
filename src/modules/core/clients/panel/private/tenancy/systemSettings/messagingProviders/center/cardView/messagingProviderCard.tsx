@@ -13,7 +13,7 @@ import SetMessagingProviderActiveDialog from "@coreModule/components/custom/mess
 import TestMessagingProviderConnectionDialog from "@coreModule/components/custom/messagingProviders/testMessagingProviderConnectionDialog.tsx";
 import type {MessagingProvider} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
 import {messagingProviderEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders";
-import EntityCard from "@coreModule/components/custom/systemCards/entityCard.tsx";
+import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 
 type MessagingProviderCardProps = WithLanguageType & {

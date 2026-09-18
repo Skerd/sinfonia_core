@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {MapContainer, TileLayer, Marker, useMapEvents, useMap} from 'react-leaflet';
-//@ts-ignore
 import L, {LeafletMouseEvent} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useTheme} from "@baseModule/helpers/context/providers/theme-provider.tsx";

@@ -1,6 +1,6 @@
 import {useId, type ComponentType, type ReactNode} from "react";
 import {useSelector} from "react-redux";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Item, ItemMedia} from "@coreModule/components/ui/item.tsx";
 import {useRestrictedField} from "@coreModule/components/custom/infoRowGroup.tsx";

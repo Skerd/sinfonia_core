@@ -1,50 +1,28 @@
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
-import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {RotateCcw} from "lucide-react";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useRef} from "react";
+import ActionDropdownItem from "@coreModule/components/custom/actions/dropdowns/actionDropdownItem.tsx";
 
 type RestoreDropdownProps = WithLanguageType & {
     onAction: (action: string) => void;
-    accessModel: string
-}
+    accessModel: string;
+};
 
-function RestoreDropdown({
-    resolveLanguageKey,
-    onAction,
-    accessModel
-}: RestoreDropdownProps) {
-
-    const actionKey = "restore";
-    const ref = useRef<HTMLDivElement | null>(null);
+function RestoreDropdown({resolveLanguageKey, onAction, accessModel}: RestoreDropdownProps) {
     const {restore} = useAccess(accessModel);
-
-    useKeyboardShortcuts("Enter", () => {
-        if( !!ref.current ){
-            ref.current.click();
-        }
-        else{
-            onAction(actionKey);
-        }
-    });
-
-    if( !restore ) {
-        return <HiddenElement />
-    }
-
     return (
-        <DropdownMenuItem ref={ref} onClick={() => {onAction(actionKey)}}>
-            <RotateCcw className="text-success" size={16}/>
-            <p className="text-success">
-                {resolveLanguageKey("title")}
-            </p>
-            <DropdownMenuShortcut className="text-success">⌘⏎</DropdownMenuShortcut>
-        </DropdownMenuItem>
-    )
+        <ActionDropdownItem
+            label={resolveLanguageKey("title")}
+            Icon={RotateCcw}
+            shortcutKey="Enter"
+            shortcutLabel="⏎"
+            tone="success"
+            allowed={!!restore}
+            onSelect={() => onAction("restore")}
+        />
+    );
 }
 
 export default compose(

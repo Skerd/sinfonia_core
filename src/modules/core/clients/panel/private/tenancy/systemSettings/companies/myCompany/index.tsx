@@ -4,12 +4,12 @@ import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import CompanyCard from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/cardView/companyCard.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import Header from "@coreModule/components/custom/header.tsx";
-import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import Header from "@baseModule/components/custom/header.tsx";
+import {readPageHelp} from "@baseModule/components/custom/pageHelp.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 
 type MyCompanyProps = WithLanguageType & WithAxiosType<Company> & {

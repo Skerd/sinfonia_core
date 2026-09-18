@@ -1,7 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import type { FilterRefLabels } from "@baseModule/helpers/filter/filterUrl.ts";
-import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 type FilterBuilderContextValue = {
@@ -83,6 +82,4 @@ export function FilterBuilderProviderView({
     );
 }
 
-export const FilterBuilderProvider = compose(
-    withLanguage("src/modules/core/components/custom/filterBuilder/filterBuilderContext.tsx")
-)(FilterBuilderProviderView)
+export const FilterBuilderProvider = withLanguage("src/modules/core/components/custom/filterBuilder/filterBuilderContext.tsx")(FilterBuilderProviderView)

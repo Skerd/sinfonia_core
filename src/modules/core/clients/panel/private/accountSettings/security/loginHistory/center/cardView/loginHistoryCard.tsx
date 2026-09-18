@@ -1,6 +1,6 @@
 import {CheckCircle2, Clock, Globe2, MonitorSmartphone, XCircle} from "lucide-react";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -107,7 +107,7 @@ export default function LoginHistoryCard({entry, resolveLanguageKey, viewingSelf
                             <DisplayRow
                                 label={resolveLanguageKey("reason")}
                                 tooltip={resolveLanguageKey("reason")}
-                                show={can("reason") && !!entry.reason}
+                                show={can("reason")}
                                 value={entry.reason}
                             >
                                 {(formatted) => (

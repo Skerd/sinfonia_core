@@ -5,8 +5,8 @@ import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
 import {Form} from "@coreModule/components/ui/form.tsx";
 import {FieldGroup} from "@coreModule/components/ui/field.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import Header from "@coreModule/components/custom/header.tsx";
-import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
+import Header from "@baseModule/components/custom/header.tsx";
+import {readPageHelp} from "@baseModule/components/custom/pageHelp.tsx";
 import {LoaderCircle, Save} from "lucide-react";
 
 type ViewFormShellProps<T extends FieldValues> = {

@@ -2,7 +2,7 @@ import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Paperclip, Reply, RotateCw, Send, X} from "lucide-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {Mention, MentionsInput} from "react-mentions";
 import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
@@ -23,7 +23,7 @@ import {MessageTypeWithParticipants} from "armonia/src/modules/core/api/user/pri
 import type {ChannelUser} from "armonia/src/modules/core/types";
 import {ChangeEvent, KeyboardEvent} from "react";
 import {WebSocketFEMessageCodes} from "armonia/src/modules/core/websocket/types.ts";
-import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {
     mentionsMarkupToPlainDisplay,
@@ -422,7 +422,7 @@ function ChatInputAll({
                                 const user = usersById.get(String(entry.id));
                                 return (
                                     <div className={cn("flex items-center gap-2 px-2 py-1.5 text-sm text-popover-foreground", focused && "bg-muted text-foreground")}>
-                                        <CustomAvatar user={user} avatarClassName="size-7 shrink-0" />
+                                        <UserAvatar user={user} avatarClassName="size-7 shrink-0" />
                                         <span className="min-w-0 truncate">{highlightedDisplay}</span>
                                     </div>
                                 );

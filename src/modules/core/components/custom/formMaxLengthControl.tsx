@@ -10,9 +10,8 @@ import {
     type ReactElement,
     type ReactNode,
 } from "react";
-import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 const MODAL_CONTENT_SELECTOR = [
@@ -156,6 +155,4 @@ function FormMaxLengthControl({
     );
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/formMaxLengthControl.tsx"),
-)(FormMaxLengthControl);
+export default withLanguage("src/modules/core/components/custom/formMaxLengthControl.tsx")(FormMaxLengthControl);

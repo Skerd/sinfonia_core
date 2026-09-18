@@ -6,8 +6,8 @@ import {Mail} from "lucide-react";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {ResendUserEmailFormResponseType} from "armonia/src/modules/core/api/company/private/users/resendUserEmail.form.response.type.ts";
-import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
-import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
+import ConfirmDialog from "@baseModule/components/custom/confirmDialog.tsx";
+import {useTableUpdate} from "@baseModule/helpers/hooks/useTableUpdate.ts";
 import {useImperativeHandle, useState} from "react";
 import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
 

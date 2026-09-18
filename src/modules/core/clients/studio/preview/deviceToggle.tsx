@@ -1,5 +1,5 @@
 import {IconDeviceDesktop, IconDeviceMobile, IconDeviceTablet} from "@tabler/icons-react";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {PREVIEW_DEVICES, type PreviewDevice, type PreviewDeviceId} from "./previewDevice.ts";
 

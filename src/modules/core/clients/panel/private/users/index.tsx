@@ -12,9 +12,9 @@ import {UserCard} from "@coreModule/clients/panel/private/users/center/cardView"
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import EditUser from "@coreModule/clients/panel/private/users/editUser";
 import EditUserAction from "@coreModule/clients/panel/private/users/center/actions/edit.tsx";
-import {TableUpdateContext} from "@coreModule/components/custom/tableUpdateContext.tsx";
+import {TableUpdateContext} from "@baseModule/helpers/context/tableUpdateContext.tsx";
 
-export {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
+export {useTableUpdate} from "@baseModule/helpers/hooks/useTableUpdate.ts";
 
 type UsersProps = WithLanguageType & {
     administration: boolean;

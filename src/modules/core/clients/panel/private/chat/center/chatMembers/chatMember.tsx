@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {ChevronDown, Flag, Users} from "lucide-react";
@@ -10,7 +10,7 @@ import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/
 import PromoteToAdmin from "@coreModule/clients/panel/private/chat/center/chatMembers/dropdown/promoteToAdmin.tsx";
 import {ChannelUser} from "armonia/src/modules/core/types";
 import DemoteToUser from "@coreModule/clients/panel/private/chat/center/chatMembers/dropdown/demoteToUser.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
 import {getName} from "@baseModule/helpers/general/names.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -42,7 +42,7 @@ function ChatMember({
                     <HiddenElement Render={<Avatar className="flex items-center justify-center border size-10"><Users size={18} /></Avatar>}>
                         {
                             sanitizedUsers.photo &&
-                            <CustomAvatar user={member} avatarClassName="size-10"/>
+                            <UserAvatar user={member} avatarClassName="size-10"/>
                         }
                     </HiddenElement>
                     <HiddenElement>

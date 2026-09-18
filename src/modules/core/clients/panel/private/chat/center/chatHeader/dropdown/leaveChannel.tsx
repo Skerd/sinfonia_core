@@ -9,12 +9,12 @@ import {useEffect, useImperativeHandle, useState} from "react";
 import {toast} from "sonner";
 import {deleteChannel, openChannel, updateChannelReadOnlyState} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch} from "react-redux";
-import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
+import ConfirmDialog from "@baseModule/components/custom/confirmDialog.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import {DeleteChannelFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/deleteChannel.form.response.type.ts";
 import {DeleteChannelFormType} from "armonia/src/modules/core/api/user/private/chats/channels/deleteChannel.form.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type ToastPromiseHandlers = {
     resolve: (value: unknown) => void;

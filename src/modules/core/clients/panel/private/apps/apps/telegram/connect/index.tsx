@@ -6,10 +6,10 @@ import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
+import CopyTooltip from "@baseModule/components/custom/copyTooltip.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import {
     GenerateTelegramQrCodeFormResponseType
 } from "armonia/src/modules/core/api/user/private/telegram/generateTelegramQrCode.form.response.type.ts";

@@ -7,7 +7,7 @@ import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcu
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {setActionMessage} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 
 type EditMessageProps = WithLanguageType & {

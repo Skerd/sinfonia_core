@@ -1,11 +1,10 @@
 import React, {useState, useRef, useEffect, useLayoutEffect, useMemo, useCallback} from 'react';
 import {createPortal} from 'react-dom';
 import {ZoomIn, ZoomOut, RotateCcw, Maximize2, Minimize2, Eraser, Undo2} from 'lucide-react';
-import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Card} from "@coreModule/components/ui/card.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Separator} from "@coreModule/components/ui/separator.tsx";
 
@@ -663,8 +662,6 @@ function PolygonSelector({
     useEffect(() => {
         return () => {
             window.removeEventListener("pointerup", onPointerUp);
-            //@ts-expect-error
-            window.removeEventListener("pointerdown", onPointerDown);
             window.removeEventListener("pointermove", onPointerMove);
         };
     }, []);
@@ -697,14 +694,7 @@ function PolygonSelector({
         // Don't override parent's initial values with [] before sync has run
         if (points.length === 0 && initialPoints && initialPoints.length > 0 && !hasHadPointsRef.current) return;
         hasHadPointsRef.current = points.length > 0;
-        let asPercentages: PolygonPoint[] = (points || []).map((p) => ({ x: p.xCoeff, y: p.yCoeff }));
-        if (isClosed && asPercentages.length >= 3) {
-            const f = asPercentages[0];
-            const l = asPercentages[asPercentages.length - 1];
-            if (Math.abs(f.x - l.x) > 1e-6 || Math.abs(f.y - l.y) > 1e-6) {
-                // asPercentages = [...asPercentages, { x: f.x, y: f.y }];
-            }
-        }
+        const asPercentages: PolygonPoint[] = (points || []).map((p) => ({ x: p.xCoeff, y: p.yCoeff }));
         onPointsChange?.(asPercentages);
         // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally omit initialPoints to avoid loop (parent passes it back after onPointsChange)
     }, [points, isClosed]);
@@ -870,7 +860,7 @@ function PolygonSelector({
                         }}
                     >
                         <div
-                            className="pointer-events-auto overflow-hidden rounded-[5px] border border-black/10 bg-white shadow-lg"
+                            className="pointer-events-auto overflow-hidden rounded-[5px] border border-border bg-popover text-popover-foreground shadow-lg"
                             onMouseEnter={() => {
                                 if (!hoverCapable) return;
                                 if (phantomHoverHideTimeoutRef.current) {
@@ -1360,6 +1350,4 @@ function PolygonSelector({
     );
 }
 
-export default compose(
-    withLanguage("src/modules/core/components/custom/polygonSelector.tsx")
-)(PolygonSelector)
+export default withLanguage("src/modules/core/components/custom/polygonSelector.tsx")(PolygonSelector)

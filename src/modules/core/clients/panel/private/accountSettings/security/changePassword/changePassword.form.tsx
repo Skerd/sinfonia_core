@@ -13,7 +13,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {ChangePasswordFormType} from "armonia/src/modules/core/api/user/private/data/changePassword.form.type.ts";
 import {ChangePasswordFormResponseType} from "armonia/src/modules/core/api/user/private/data/changePassword.form.response.type.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type UserAccountSecurityChangePasswordFormProps = WithLanguageType & WithAxiosType<ChangePasswordFormResponseType, ChangePasswordFormType> & {
     specificUserId: string

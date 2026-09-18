@@ -10,7 +10,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {PasswordInput} from "@coreModule/components/custom/passwordInput.tsx";
 import {useEffect, useImperativeHandle, useState} from 'react';
-import PasswordStrength from "@coreModule/components/custom/passwordStrength.tsx";
+import PasswordStrength from "@baseModule/components/custom/passwordStrength.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {CircleCheckBig, CircleX, Loader2, LogIn, ShieldAlert, ShieldBan} from "lucide-react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";

@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {ChevronLeft, ChevronRight} from "lucide-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {Spinner} from "@coreModule/components/ui/spinner.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {fetchMediaBytes} from "@baseModule/helpers/media/fetchMediaBytes.ts";
 import {
@@ -150,7 +150,7 @@ export default function PdfDialogViewer({src, className}: PdfDialogViewerProps) 
                 />
                 {!ready && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <Spinner className="size-6 text-muted-foreground" />
+                        <Loader inline className="size-6 text-muted-foreground" />
                     </div>
                 )}
             </div>

@@ -5,7 +5,7 @@ import {
     CardTitle,
 } from "@coreModule/components/ui/card.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {ACTION_MENU_PIN_WHEN_GALLERY} from "./entityCard.constants.ts";
 import {EntityCardActionMenu} from "./EntityCardActionMenu.tsx";
 

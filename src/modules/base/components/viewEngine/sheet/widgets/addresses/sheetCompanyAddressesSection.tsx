@@ -1,6 +1,6 @@
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
-import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
+import ValueNotSet from "@baseModule/components/custom/valueNotSet.tsx";
 import SheetLocationMap from "@coreModule/components/custom/addresses/sheetLocationMap.tsx";
 import { resolveIcon } from "../../../widgetRegistry.ts";
 import { cn } from "@coreModule/components/lib/utils.ts";

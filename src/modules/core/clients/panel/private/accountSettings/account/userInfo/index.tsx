@@ -11,9 +11,9 @@ import AccountProfilePhoneNumber from "@coreModule/clients/panel/private/account
 import AccountProfileAndCoverPhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto";
 import AccountProfileTimeZone from "@coreModule/clients/panel/private/accountSettings/account/userInfo/timezone";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Loader from "@coreModule/components/custom/loader.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import AccountCompaniesCardEditRoles from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles";
 import {RequestsSection, hasRequestsData} from "@coreModule/clients/panel/private/users/center/cardView/userProfileCard.tsx";
@@ -21,7 +21,7 @@ import {CompanyUserType} from "armonia/src/modules/core/api/company/private/user
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {updateUserValue} from "@baseModule/helpers/redux/slices/authSlice.ts";
-import {useTableUpdate} from "@coreModule/components/custom/tableUpdateContext.tsx";
+import {useTableUpdate} from "@baseModule/helpers/hooks/useTableUpdate.ts";
 
 type UserAccountProfileUserInfoProps = WithLanguageType & WithAxiosType<CompanyUserType, any> & {
     specificUserId?: string,

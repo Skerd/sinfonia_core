@@ -6,7 +6,7 @@ import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
-import CustomAvatar from "@coreModule/components/custom/customAvatar.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import {ChannelUser} from "armonia/src/modules/core/types";
 import {Card} from "@coreModule/components/ui/card.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
@@ -16,7 +16,7 @@ import LeaveChannel from "@coreModule/clients/panel/private/chat/center/chatHead
 import ShowChannelMembers from "@coreModule/clients/panel/private/chat/center/chatHeader/dropdown/showChannelMembers.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {openChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {getName} from "@baseModule/helpers/general/names.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 
@@ -86,7 +86,7 @@ function ChatHeader({}: MessageHeaderProps ){
                                                                             channel.users.map((channelUser, index) => {
                                                                                 if( index >= howManyAvatars ){
                                                                                     return (
-                                                                                        <CustomAvatar user={channelUser} onClick={() => {setViewChannelUserId(channelUser._id)}}/>
+                                                                                        <UserAvatar user={channelUser} onClick={() => {setViewChannelUserId(channelUser._id)}}/>
                                                                                     )
                                                                                 }
                                                                                 return <></>
@@ -98,7 +98,7 @@ function ChatHeader({}: MessageHeaderProps ){
                                                         )
                                                     }
                                                     return (
-                                                        <CustomAvatar user={channelUser} avatarClassName="hover:z-1" onClick={() => {setViewChannelUserId(channelUser._id)}}/>
+                                                        <UserAvatar user={channelUser} avatarClassName="hover:z-1" onClick={() => {setViewChannelUserId(channelUser._id)}}/>
                                                     )
                                                 })
                                             }
@@ -108,7 +108,7 @@ function ChatHeader({}: MessageHeaderProps ){
                                     <>
                                         {
                                             !!avatarUser &&
-                                            <CustomAvatar user={avatarUser} onClick={() => {setViewChannelUserId(avatarUser._id)}}/>
+                                            <UserAvatar user={avatarUser} onClick={() => {setViewChannelUserId(avatarUser._id)}}/>
                                         }
                                     </>
                                 }

@@ -4,8 +4,9 @@ import { ImageWithRemove } from "@coreModule/components/custom/images/imageWithR
 import { Plus } from "lucide-react";
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import {MEDIA_BASE_URL} from "@baseModule/helpers/constants/media.constants.ts";
+import {useObjectUrls} from "@baseModule/helpers/hooks/components/useObjectUrls.ts";
 
-const DEFAULT_MEDIA_BASE_URL = "/api/auxiliary/media/";
 
 type MainImageFieldProps = {
     resolveLanguageKey: (key: string) => string;
@@ -16,11 +17,12 @@ type MainImageFieldProps = {
     mediaBaseUrl?: string;
 };
 
-export function MainImageField({ resolveLanguageKey, loading = false, editMode = false, mediaBaseUrl = DEFAULT_MEDIA_BASE_URL }: MainImageFieldProps) {
+export function MainImageField({ resolveLanguageKey, loading = false, editMode = false, mediaBaseUrl = MEDIA_BASE_URL }: MainImageFieldProps) {
     const form = useFormContext();
     const mainImageInputRef = useRef<HTMLInputElement>(null);
     const value = form.watch("mainImage");
     const isFile = value instanceof File;
+    const urlForFile = useObjectUrls(isFile ? [value] : []);
     const isExistingString = editMode && typeof value === "string" && value;
 
     return (
@@ -49,7 +51,7 @@ export function MainImageField({ resolveLanguageKey, loading = false, editMode =
                                     {
                                         isFile &&
                                         <ImageWithRemove
-                                            src={URL.createObjectURL(value)}
+                                            src={urlForFile(value)}
                                             alt={value.name}
                                             onRemove={() => form.resetField("mainImage")}
                                             disabled={loading}
@@ -59,12 +61,21 @@ export function MainImageField({ resolveLanguageKey, loading = false, editMode =
                                     {
                                         !isExistingString && !isFile &&
                                         <div className="relative">
-                                            <div className={cn("rounded-lg aspect-square border-2 border-dashed flex items-center justify-center cursor-pointer hover:border-primary transition-colors bg-muted/30", form.formState.errors.mainImage ? "border-destructive" : "border-border")} onClick={() => mainImageInputRef.current?.click()}>
+                                            <button
+                                                type="button"
+                                                disabled={loading}
+                                                aria-label={resolveLanguageKey("form.uploadNewImageHint")}
+                                                className={cn(
+                                                    "w-full rounded-lg aspect-square border-2 border-dashed flex items-center justify-center cursor-pointer hover:border-primary transition-colors bg-muted/30 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                                                    form.formState.errors.mainImage ? "border-destructive" : "border-border",
+                                                )}
+                                                onClick={() => mainImageInputRef.current?.click()}
+                                            >
                                                 <div className="text-center">
                                                     <Plus className="h-10 w-10 mx-auto text-muted-foreground mb-2" />
                                                     <p className="text-sm text-muted-foreground">{resolveLanguageKey("form.uploadNewImageHint")}</p>
                                                 </div>
-                                            </div>
+                                            </button>
                                             <input
                                                 ref={mainImageInputRef}
                                                 type="file"

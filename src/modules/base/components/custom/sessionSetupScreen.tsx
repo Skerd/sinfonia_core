@@ -9,8 +9,8 @@ import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Progress} from "@coreModule/components/ui/progress.tsx";
-import {Spinner} from "@coreModule/components/ui/spinner.tsx";
-import {Countdown} from "@coreModule/components/custom/countdown.tsx";
+import Loader from "@baseModule/components/custom/loader/loader.tsx";
+import {Countdown} from "@baseModule/components/custom/countdown.tsx";
 
 export const SESSION_SETUP_TOTAL_STEPS = 6;
 export const STUDIO_SESSION_SETUP_TOTAL_STEPS = 4;
@@ -106,7 +106,7 @@ function SessionSetupScreenComponent({
                     {error ? (
                         <AlertCircle className="mt-0.5 size-4 shrink-0 text-destructive" />
                     ) : (
-                        <Spinner className="mt-0.5 text-muted-foreground" />
+                        <Loader inline className="mt-0.5 shrink-0 text-muted-foreground" />
                     )}
                     <div className="min-w-0">
                         <p className={error ? "font-medium text-destructive" : "text-muted-foreground"}>

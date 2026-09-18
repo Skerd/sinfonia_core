@@ -13,7 +13,7 @@ import type {ReactNode} from "react";
 import type {ColumnDef, Row} from "@tanstack/react-table";
 import type {EnumTone, TableColumnConfig} from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type.ts";
 import DataTableColumnHeader from "@coreModule/components/ui/table/column-header.tsx";
-import {LongText} from "@coreModule/components/custom/longText.tsx";
+import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
 import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
 import {findFromLanguage, findFromObject} from "@baseModule/helpers/general/objectPath.ts";
 import {TranslationValue} from "@baseModule/helpers/hocs/withLanguage.tsx";
@@ -23,7 +23,7 @@ import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {IconCheck, IconFileLike, IconFileXFilled, IconX} from "@tabler/icons-react";
 import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import SheetMediaAvatar from "@baseModule/components/viewEngine/sheet/widgets/sheetMediaAvatar.tsx";
 import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
@@ -510,9 +510,9 @@ export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options
                     const value = readCell(row, col);
                     if (value == null || value === "") return <EmptyCell />;
                     return (
-                        <LongText className="max-w-48 font-mono text-xs">
+                        <TruncatedValue preview="popover" className="max-w-48 font-mono text-xs">
                             {typeof value === "string" ? value : safeStringify(value)}
-                        </LongText>
+                        </TruncatedValue>
                     );
                 },
             } as ColumnDef<T>;

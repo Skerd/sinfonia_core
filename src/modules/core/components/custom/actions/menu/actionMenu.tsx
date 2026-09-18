@@ -1,10 +1,9 @@
-import {compose} from "redux";
 import {ReactNode, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {EllipsisVertical} from "lucide-react";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import DeleteDropdown from "@coreModule/components/custom/actions/dropdowns/deleteDropdown.tsx";
 import RestoreDropdown from "@coreModule/components/custom/actions/dropdowns/restoreDropdown.tsx";
@@ -134,6 +133,7 @@ function ActionMenu({
             ref={rootRef}
             data-action-menu-root
             className="flex justify-end"
+            role="presentation"
             onClick={(e) => e.stopPropagation()}
             onPointerDown={(e) => e.stopPropagation()}
         >
@@ -221,6 +221,4 @@ function ActionMenu({
     )
 }
 
-export default compose(
-    withDebug(true, true)
-)(ActionMenu);
+export default withDebug(true, true)(ActionMenu);

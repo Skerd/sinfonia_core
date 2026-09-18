@@ -10,7 +10,7 @@ import {UpdateEmailPreferenceFormResponseType} from "armonia/src/modules/core/ap
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 
 type UpdateEmailProps = WithLanguageType & WithAxiosType<UpdateEmailPreferenceFormResponseType, UpdateEmailPreferenceFormType> & {
     updateCanEdit: Function,

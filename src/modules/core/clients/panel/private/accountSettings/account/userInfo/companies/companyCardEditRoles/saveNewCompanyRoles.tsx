@@ -5,10 +5,10 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Check, Pencil, X} from "lucide-react";
 import {useImperativeHandle} from "react";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {ToggledUserRole} from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/index.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {ChangeUserRolesFormType} from "armonia/src/modules/core/api/user/private/permissions/changeUserRoles.form.type.ts";
 import {ChangeUserRolesFormResponseType} from "armonia/src/modules/core/api/user/private/permissions/changeUserRoles.form.response.type.ts";
 

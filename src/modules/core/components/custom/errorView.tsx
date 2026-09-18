@@ -1,8 +1,8 @@
 import {AlertCircle} from "lucide-react";
 import {HttpError} from "@baseModule/helpers/hooks/useHttpRequest.ts";
-import {Countdown} from "@coreModule/components/custom/countdown.tsx";
+import {Countdown} from "@baseModule/components/custom/countdown.tsx";
 import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/alert.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {useState} from "react";
 import type {ResolveLanguageKey, TranslationValue} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
@@ -33,7 +33,7 @@ export function ErrorView({
             <>
                 {
                     !canRetry ?
-                    <Alert variant="destructive" className="cursor-pointer w-auto border-2 border-red-600" >
+                    <Alert variant="destructive" className="cursor-pointer w-auto border-2 border-destructive" >
                         <AlertCircle/>
                         <AlertTitle>{error.message}</AlertTitle>
                         <AlertDescription>
@@ -56,10 +56,14 @@ export function ErrorView({
         )
     }
 
-    const tooltipText = typeof (tooltipDescription ?? description) === "string" ? (tooltipDescription ?? description) as string : String(description);
+    // Only strings make a tooltip. The previous fallback was `String(description)`, which
+    // rendered the literal text "undefined" whenever description was unset; TooltipDisplayer
+    // renders its children bare when the tooltip is undefined, which is what we want here.
+    const tooltipSource = tooltipDescription ?? description;
+    const tooltipText = typeof tooltipSource === "string" && tooltipSource !== "" ? tooltipSource : undefined;
     return (
         <TooltipDisplayer tooltip={tooltipText}>
-            <Alert variant="destructive" className="cursor-pointer w-auto border-2 border-red-600" onClick={(e) => {e.stopPropagation(); e.preventDefault(); setCanRetry(true); onClick();}}>
+            <Alert variant="destructive" className="cursor-pointer w-auto border-2 border-destructive" onClick={(e) => {e.stopPropagation(); e.preventDefault(); setCanRetry(true); onClick();}}>
                 <AlertCircle/>
                 <AlertTitle>{title}</AlertTitle>
                 <AlertDescription>

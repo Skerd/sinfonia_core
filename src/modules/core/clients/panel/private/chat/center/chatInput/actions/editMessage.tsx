@@ -9,7 +9,7 @@ import {getName} from "@baseModule/helpers/general/names.ts";
 import {editMessage as editMessageAction, setActionMessage} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import withLanguage from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {EditMessageFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/editMessage.form.response.type.ts";
 import {EditMessageFormType} from "armonia/src/modules/core/api/user/private/chats/messages/editMessage.form.type.ts";
 import {MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";

@@ -1,7 +1,7 @@
 import {createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode} from "react";
 import {LockKeyhole} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {ItemGroup} from "@coreModule/components/ui/item.tsx";
 import {CARD_INFO_ROWS_CLASS} from "@coreModule/components/custom/cards/entityCard.constants.ts";
@@ -94,6 +94,7 @@ function RestrictedFieldsNoticeBase({labels, resolveLanguageKey}: RestrictedFiel
             <span
                 className="inline-flex w-fit items-center gap-1 text-2xs text-muted-foreground"
                 data-slot="restricted-fields"
+                style={{border: "2px solid red"}}
             >
                 <LockKeyhole size={12} aria-hidden />
                 {summary}

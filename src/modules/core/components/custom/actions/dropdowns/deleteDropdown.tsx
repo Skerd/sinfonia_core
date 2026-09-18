@@ -1,50 +1,28 @@
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
-import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Trash2} from "lucide-react";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useRef} from "react";
+import ActionDropdownItem from "@coreModule/components/custom/actions/dropdowns/actionDropdownItem.tsx";
 
 type DeleteDropdownProps = WithLanguageType & {
     onAction: (action: string) => void;
-    accessModel: string
-}
+    accessModel: string;
+};
 
-function DeleteDropdown({
-    resolveLanguageKey,
-    onAction,
-    accessModel
-}: DeleteDropdownProps) {
-
-    const actionKey = "delete";
-    const ref = useRef<HTMLDivElement | null>(null);
+function DeleteDropdown({resolveLanguageKey, onAction, accessModel}: DeleteDropdownProps) {
     const {delete: deleteModel} = useAccess(accessModel);
-
-    useKeyboardShortcuts("Backspace", () => {
-        if( !!ref.current ){
-            ref.current.click();
-        }
-        else{
-            onAction(actionKey);
-        }
-    });
-
-    if( !deleteModel ) {
-        return <HiddenElement />
-    }
-
     return (
-        <DropdownMenuItem ref={ref} onClick={() => {onAction(actionKey)}}>
-            <Trash2 className="text-destructive" size={16}/>
-            <p className="text-destructive">
-                {resolveLanguageKey("title")}
-            </p>
-            <DropdownMenuShortcut className="text-destructive">⌘⌫</DropdownMenuShortcut>
-        </DropdownMenuItem>
-    )
+        <ActionDropdownItem
+            label={resolveLanguageKey("title")}
+            Icon={Trash2}
+            shortcutKey="Backspace"
+            shortcutLabel="⌫"
+            tone="destructive"
+            allowed={!!deleteModel}
+            onSelect={() => onAction("delete")}
+        />
+    );
 }
 
 export default compose(

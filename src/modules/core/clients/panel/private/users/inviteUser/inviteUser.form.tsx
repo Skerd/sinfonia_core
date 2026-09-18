@@ -15,7 +15,7 @@ import {useDispatch} from "react-redux";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import type {ActionMessage} from "armonia/src/modules/core/types/shared.types.ts";
 import {InviteUserFormType} from "armonia/src/modules/core/api/company/private/users/inviteUser.form.type.ts";
 import {inviteCompanyUserFormSchema} from "armonia/src/modules/core/api/company/private/users/inviteUser.form.validator.ts";
