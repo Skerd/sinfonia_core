@@ -25,7 +25,7 @@ import {SimpleSelect} from "@coreModule/components/custom/simpleSelect";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import {z} from "zod";

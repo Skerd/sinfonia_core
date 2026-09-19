@@ -1,6 +1,6 @@
 import {Fragment, ReactNode, RefObject, useCallback, useEffect, useMemo, useRef} from "react";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import NoData from "@baseModule/components/custom/noData.tsx";
 import {PaginatedResponse, useInfiniteScroll} from "@baseModule/helpers/hooks/useInfiniteScroll.ts";
 import type {HttpError} from "@baseModule/helpers/hooks/useHttpRequest.ts";

@@ -172,7 +172,7 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
     "#Switch": INPUT_META,
     "#DateInput": INPUT_META,
     "#PhoneInput": INPUT_META,
-    "#IconPicker": INPUT_META,
+    "#IconPickerInput": INPUT_META,
     "#SimpleSelect": INPUT_META,
     "#Select": INPUT_META,
     "#ApiSelect": {
@@ -206,13 +206,14 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
             {name: "remountKeyFormField", type: "string", suggest: "writePath"},
         ],
     },
-    "#StringArrayField": {
+    "#StringArrayInput": {
         modes: FORM,
         bindsField: true,
         widgetProps: [
             {name: "maxItems", type: "number"},
             {name: "maxLength", type: "number"},
             {name: "removeTooltipKey", type: "string", suggest: "languageKey", default: "remove"},
+            {name: "addTooltipKey", type: "string", suggest: "languageKey"},
         ],
     },
     "#ListingFaqsField": {
@@ -246,7 +247,7 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
     "#VideoGalleryField": {modes: FORM, bindsField: true},
     "#FormEditMediaField": {modes: FORM, bindsField: true},
     "#FormMultiLocalFileField": {modes: FORM, bindsField: true},
-    "#FormObjectIdChips": {modes: FORM, bindsField: true},
+    "#ObjectIdChipsInput": {modes: FORM, bindsField: true},
     "#FormAddressWithMap": {modes: FORM, bindsField: true},
     "#FormAddressRow": {modes: FORM, bindsField: true},
     "#FormMapPinPicker": {modes: FORM, bindsField: true},

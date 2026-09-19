@@ -19,7 +19,7 @@ import {findFromLanguage, findFromObject} from "@baseModule/helpers/general/obje
 import {TranslationValue} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import TableAvatar from "@coreModule/components/custom/avatar/tableAvatar.tsx";
 import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
-import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
+import {MdiIcon} from "@baseModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {IconCheck, IconFileLike, IconFileXFilled, IconX} from "@tabler/icons-react";
 import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
 import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";

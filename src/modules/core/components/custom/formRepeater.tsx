@@ -269,7 +269,7 @@ function renderRowNode(
         if (!WidgetComponent) return null;
 
         if (isCompoundFormWidget(binding.widget)) {
-            // Name-based compounds (#MediaField, #StringArrayField, …) write via `name`.
+            // Name-based compounds (#MediaField, #StringArrayInput, …) write via `name`.
             // Prefix-based compounds (#FormAddressRow, …) use `fieldPrefix`. Set both so
             // either style resolves to `socialLinks.0.logo` / `addresses.0.*`, not a root key.
             const rowPrefix = `${arrayField}.${index}`;

@@ -11,7 +11,11 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import * as React from "react";
-import {InputWithIcon} from "@coreModule/components/custom/inputWithIcon.tsx";
+import {
+    InputGroup,
+    InputGroupAddon,
+    InputGroupInput,
+} from "@coreModule/components/ui/input-group.tsx";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import {createChannelFormSchema} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.validator.ts";
 import type {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
@@ -20,7 +24,7 @@ import {SimpleUserType} from "armonia/src/modules/core/api/company/private/users
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import InfiniteList from "@coreModule/components/custom/infiniteList";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 
@@ -253,14 +257,18 @@ function NewChat({
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(createChannel)} className="flex flex-col gap-3">
                     <div className="border rounded-lg overflow-hidden">
-                        <InputWithIcon
-                            icon={<UserRoundSearch size={16} className="text-muted-foreground" />}
-                            type="text"
-                            className="rounded-es-none rounded-ee-none border-t-0 border-r-0 border-l-0 shadow-xs"
-                            placeholder={resolveLanguageKey("searchPeople")}
-                            value={nameInput ?? ""}
-                            onInputCapture={(e) => setNameInput(e.currentTarget.value)}
-                        />
+                        <InputGroup>
+                            <InputGroupAddon align="inline-start">
+                                <UserRoundSearch size={16} className="text-muted-foreground" />
+                            </InputGroupAddon>
+                            <InputGroupInput
+                                type="text"
+                                className="rounded-es-none rounded-ee-none border-t-0 border-r-0 border-l-0 shadow-xs"
+                                placeholder={resolveLanguageKey("searchPeople")}
+                                value={nameInput ?? ""}
+                                onInputCapture={(e) => setNameInput(e.currentTarget.value)}
+                            />
+                        </InputGroup>
 
                         <MembersInfiniteListWithAxios
                             key={nameSearch}

@@ -1,5 +1,9 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx",
+  "overview": "Panoramica",
+  "name": "Nome",
+  "slug": "Lumaca",
+  "description": "Descrizione",
   "permissions": "Permessi",
   "lifecycle": "Ciclo di vita",
   "createdAt": "Creato il",

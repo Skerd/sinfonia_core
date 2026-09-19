@@ -11,7 +11,7 @@ import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {ListNotificationsFormType} from "armonia/src/modules/core/api/user/private/notifications/listNotifications.form.type.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import InfiniteList from "@coreModule/components/custom/infiniteList";
 import MarkAllAsReadButton from "@coreModule/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx";
 import {NotificationListItem} from "@coreModule/components/custom/notificationListItem.tsx";

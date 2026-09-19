@@ -19,7 +19,7 @@ import ApiResource from "@coreModule/clients/panel/private/online/serverHealth/a
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {ServerHealthFormResponseType} from "armonia/src/modules/core/api/auxiliary/private/serverHealth/serverHealth.dto.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import {updateServerHealth} from "@baseModule/helpers/redux/slices/serverResourceSlice.ts";
 import {formatDate} from "@baseModule/helpers/general/dateTime.ts";

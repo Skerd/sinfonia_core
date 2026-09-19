@@ -1,5 +1,9 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx",
+  "overview": "Vështrim i përgjithshëm",
+  "name": "Emri",
+  "slug": "Slug",
+  "description": "Përshkrimi",
   "permissions": "Lejet",
   "lifecycle": "Cikli i jetës",
   "createdAt": "Krijuar më",

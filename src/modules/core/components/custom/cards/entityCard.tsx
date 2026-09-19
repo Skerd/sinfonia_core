@@ -7,7 +7,7 @@ import {
     type ReactNode,
     type RefObject,
 } from "react";
-import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
+import {accessFieldPathExists, type AccessPerspective} from "@baseModule/helpers/context/accessContext.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {useEntityCard} from "@baseModule/helpers/hooks/useEntityCard.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
@@ -35,7 +35,7 @@ type SoftDeletable = DeletedData & {
 };
 
 /** `read === true` is allow-all. `false`, `{}`, and non-objects deny. */
-function hasCardRead(read: unknown): boolean {
+export function hasCardRead(read: unknown): boolean {
     if (read === true) return true;
     if (!read || typeof read !== "object") return false;
     return Object.keys(read).length > 0;
@@ -89,6 +89,8 @@ function useEntityCardContext(): EntityCardContextValue {
 export type EntityCardProps<T extends SoftDeletable> = {
     resource: string;
     entity: T;
+    /** `self` (default) or `others` — matches `useAccess`'s perspective for security/audit-style entities. */
+    accessPerspective?: AccessPerspective;
     fetchId?: string;
     singleUrl?: string;
     onDelete?: (entity: NoInfer<T>, data: DeletedData) => void;
@@ -120,7 +122,8 @@ export type EntityCardProps<T extends SoftDeletable> = {
 };
 
 type EntityCardHeaderProps = {
-    titlePath?: string;
+    /** A list means "readable if any of these are" (e.g. a title that falls back between fields). */
+    titlePath?: string | string[];
     title: ReactNode;
     subtitle?: ReactNode;
     subtitlePath?: string;
@@ -151,6 +154,8 @@ function EntityCardHeader({
         titlePath: hostTitlePath,
     } = useEntityCardContext();
     const titlePath = titlePathProp ?? hostTitlePath;
+    const titlePaths = Array.isArray(titlePath) ? titlePath : [titlePath];
+    const titleReadable = titlePaths.some((p) => accessFieldPathExists(read, p));
     const hasMenuChildren = children != null && children !== false;
 
     /* `show` overrides DisplayValue's own path gate, so it has to carry the ACL answer itself. */
@@ -158,7 +163,7 @@ function EntityCardHeader({
         <EntityTextCardHeader
             className="p-0"
             iconTile={icon}
-            title={<DisplayValue path={titlePath} value={title} show={accessFieldPathExists(read, titlePath)} />}
+            title={<DisplayValue path={titlePaths[0]} value={title} show={titleReadable} />}
             subtitle={
                 subtitle !== undefined ? (
                     <DisplayValue path={subtitlePath} value={subtitle} show={accessFieldPathExists(read, subtitlePath)} />
@@ -192,6 +197,7 @@ function EntityCardBody({children, className}: {children: ReactNode; className?:
 function EntityCardRoot<T extends SoftDeletable>({
     resource,
     entity: entityProp,
+    accessPerspective = "self",
     fetchId,
     singleUrl,
     onDelete: onDeleteProp,
@@ -243,7 +249,7 @@ function EntityCardRoot<T extends SoftDeletable>({
         },
     }));
 
-    const {read, restore} = useAccess(resource);
+    const {read, restore} = useAccess(resource, accessPerspective);
     const isDeleted = !!entity.deletedAt || !!entity.deletedBy;
 
     if (hideAfterDeletion || (isDeleted && !restore)) {

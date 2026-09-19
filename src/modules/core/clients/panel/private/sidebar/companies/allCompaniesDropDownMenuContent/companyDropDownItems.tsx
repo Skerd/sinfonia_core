@@ -4,7 +4,7 @@ import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/com
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import NoData from "@baseModule/components/custom/noData.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";

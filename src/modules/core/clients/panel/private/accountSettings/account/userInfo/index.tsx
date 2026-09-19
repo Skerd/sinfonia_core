@@ -12,7 +12,7 @@ import AccountProfileAndCoverPhoto from "@coreModule/clients/panel/private/accou
 import AccountProfileTimeZone from "@coreModule/clients/panel/private/accountSettings/account/userInfo/timezone";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import AccountCompaniesCardEditRoles from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles";

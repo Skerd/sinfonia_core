@@ -8,7 +8,7 @@ import {CardFooter} from "@coreModule/components/ui/card.tsx";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useNavigate, useParams} from "react-router-dom";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import {PasswordInput} from "@coreModule/components/custom/passwordInput.tsx";
+import {PasswordInput} from "@baseModule/components/custom/inputs/passwordInput.tsx";
 import {useEffect, useImperativeHandle, useState} from 'react';
 import PasswordStrength from "@baseModule/components/custom/passwordStrength.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
@@ -164,6 +164,7 @@ function AcceptInvitation({
                                         <PasswordInput
                                             disabled={loading}
                                             placeholder={resolveLanguageKey("form.passwordPlaceholder")}
+                                            autoComplete="new-password"
                                             {...field}
                                         />
                                     </FormControl>

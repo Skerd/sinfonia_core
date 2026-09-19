@@ -12,7 +12,7 @@ import useHttpRequest, {
     RequestPayload
 } from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 
 const config = getClientConfig();
 

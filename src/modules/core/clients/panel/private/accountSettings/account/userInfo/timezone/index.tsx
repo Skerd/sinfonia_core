@@ -13,7 +13,7 @@ import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, Form
 import {updateUserProfileTimezoneFormSchema} from "armonia/src/modules/core/api/user/private/data/updateUserProfileTimezone.form.validator.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import UpdateTimeZone from "@coreModule/clients/panel/private/accountSettings/account/userInfo/timezone/updateTimeZone.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";

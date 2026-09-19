@@ -1,5 +1,9 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx",
+  "overview": "Aperçu",
+  "name": "Nom",
+  "slug": "Identifiant",
+  "description": "Description",
   "permissions": "Autorisations",
   "lifecycle": "Cycle de vie",
   "createdAt": "Créé le",

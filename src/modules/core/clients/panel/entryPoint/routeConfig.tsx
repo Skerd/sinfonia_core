@@ -2,7 +2,7 @@ import EditCompany from "@coreModule/clients/panel/private/tenancy/systemSetting
 import AccountSettings from "@coreModule/clients/panel/private/accountSettings";
 import NotificationCenter from "@coreModule/clients/panel/private/accountSettings/notificationCenter";
 import Users from "@coreModule/clients/panel/private/users";
-import NotFound from "@coreModule/components/custom/pages/notFound.tsx";
+import NotFound from "@baseModule/components/custom/pages/notFound.tsx";
 import AllCountries from "@coreModule/clients/panel/private/tenancy/systemSettings/countries";
 import CreateCountry from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/createCountry.tsx";
 import EditCountry from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/editCountry.tsx";
@@ -70,14 +70,7 @@ function renderCoreCenterPanelContent({
     if( menu === "test" ){
         return (
             <div>
-
-                {/*<ConfirmDialog*/}
-                {/*    open={true}*/}
-                {/*    title={"sadfsadflskadjlka sjdlfkjalsdkjflkja sldkjfljasdklflkasdlkfjlks adkflkjsdlfjlkasdlkflsk djlsadkflkasdjfkl"}*/}
-                {/*    desc={"asdlkfjalsd jkfjasldkjflkj asld;fajsdlk;lkasjdlj lkasdlkflkas jdlfkj;lasdjjaskd fjlksdj"}*/}
-                {/*    destructive={true}*/}
-                {/*/>*/}
-
+                111
             </div>
         )
     }

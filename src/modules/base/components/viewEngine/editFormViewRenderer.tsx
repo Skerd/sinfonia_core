@@ -6,7 +6,7 @@ import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/vi
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import ViewRenderer, {type ViewRendererContext} from "./ViewRenderer.tsx";
 import {hasAccessPath} from "./engine/access.ts";
 import {createFormFieldRenderer} from "./form/viewFormField.tsx";
@@ -39,7 +39,7 @@ export type EditFormViewRendererProps<T extends FieldValues = FieldValues> = {
     /** Static extra content rendered after config-driven fields. */
     children?: ReactNode;
     /**
-     * Optional bag for compound widgets (e.g. `#FormObjectIdChips` label refs on edit).
+     * Optional bag for compound widgets (e.g. `#ObjectIdChipsInput` label refs on edit).
      * `renderChildrenFirst: true` moves {@link renderChildren} above the config-driven fields.
      */
     formExtras?: Record<string, unknown>;

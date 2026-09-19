@@ -21,7 +21,7 @@ export type FormViewRendererProps<T extends FieldValues = FieldValues> = {
     /** Static extra content rendered after config-driven fields. */
     children?: ReactNode;
     /**
-     * Optional bag for compound widgets (e.g. `#FormObjectIdChips` label refs).
+     * Optional bag for compound widgets (e.g. `#ObjectIdChipsInput` label refs).
      * `renderChildrenFirst: true` moves {@link renderChildren} above the config-driven fields.
      */
     formExtras?: Record<string, unknown>;

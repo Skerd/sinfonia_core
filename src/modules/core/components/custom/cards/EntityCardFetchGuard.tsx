@@ -1,6 +1,6 @@
 import type {ReactNode} from "react";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import {ErrorView} from "@coreModule/components/custom/errorView.tsx";
+import {ErrorView} from "@baseModule/components/custom/errors/errorView.tsx";
 
 type EntityCardFetchGuardProps = {
     fetchId?: string;

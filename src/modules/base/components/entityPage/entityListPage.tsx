@@ -246,6 +246,8 @@ export type EntityListPageProps<T extends BaseEntity> = {
      * pin back the column count that these exist to derive.
      */
     cardViewClassName?: string;
+    /** Defaults to `"flex-full"` (page fills its container). Cap it for a list embedded in a smaller area (e.g. a collapsible section). */
+    scrollRootClassName?: string;
     configurations?: {limit?: number; columnVisibility?: Record<string, boolean>};
     /** Forwarded to the list POST (e.g. parent filter `{ country }`). */
     extraParams?: Record<string, unknown>;
@@ -313,6 +315,7 @@ export default function EntityListPage<T extends BaseEntity>({
     createLanguageKey = "create",
     headerActions,
     cardViewClassName = GRID_TRANSACTIONAL,
+    scrollRootClassName = "flex-full",
     configurations,
     extraParams,
     extraFilters,
@@ -557,7 +560,7 @@ export default function EntityListPage<T extends BaseEntity>({
                     configurations={{limit: 20, ...configurations}}
                     containersClassName={{
                         cardViewClassName,
-                        scrollRootClassName: "flex-full",
+                        scrollRootClassName,
                     }}
                     listRef={listRef}
                     renderFunctions={{

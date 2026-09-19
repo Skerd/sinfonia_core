@@ -17,7 +17,7 @@ import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {useDismissSheetBeforeMenuNavigate} from "@baseModule/components/viewEngine/sheet/widgets/sheetMenuNavigateDismiss.tsx";
 import SheetMediaAvatar from "@baseModule/components/viewEngine/sheet/widgets/sheetMediaAvatar.tsx";
 import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
-import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
+import {MdiIcon} from "@baseModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {Dialog, DialogContent, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";

@@ -160,7 +160,7 @@ const dateInput: ScalarAdapter = ({Widget, field, wp, placeholder, extra}) => (
     <FormBoundDateInput Widget={Widget} field={field} wp={wp} placeholder={placeholder} extra={extra} />
 );
 
-const iconPicker: ScalarAdapter = ({Widget, field, wp, placeholder, extra}) => (
+const iconPickerInput: ScalarAdapter = ({Widget, field, wp, placeholder, extra}) => (
     <Widget
         value={field.value}
         onValueChange={(v: string | undefined) => field.onChange(orCleared(v, extra))}
@@ -268,7 +268,7 @@ const SCALAR_ADAPTERS: Record<string, ScalarAdapter> = {
     "#SimpleSelect": simpleSelect,
     "#Select": simpleSelect,
     "#DateInput": dateInput,
-    "#IconPicker": iconPicker,
+    "#IconPickerInput": iconPickerInput,
     "#PhoneInput": phoneInput,
     "#Checkbox": checkable,
     "#Switch": checkable,

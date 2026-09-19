@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/components/custom/inputs/phoneInput.tsx",
+  "searchCountry": "Rechercher un pays...",
+  "noCountryFound": "Aucun pays trouvé.",
+  "selectCountry": "Sélectionner un pays"
+}

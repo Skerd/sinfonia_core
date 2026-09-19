@@ -15,7 +15,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import {TelegramStatusFormResponseType} from "armonia/src/modules/core/api/user/private/telegram/telegramStatus.form.response.type.ts";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 

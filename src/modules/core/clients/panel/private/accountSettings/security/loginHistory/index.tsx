@@ -1,21 +1,17 @@
 import {compose} from "redux";
-import {useMemo, useRef, useState} from "react";
+import {useMemo} from "react";
 import {useSelector} from "react-redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import {hasCardRead} from "@coreModule/components/custom/cards/entityCard.tsx";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import CardAndTableView, {type EntityListApi} from "@coreModule/components/custom/cardAndTableView.tsx";
+import EntityListPage from "@baseModule/components/entityPage/entityListPage.tsx";
 import TitleWithCollapse from "@baseModule/components/custom/titleWithCollapse.tsx";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
-import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
 import LoginHistoryCard from "@coreModule/clients/panel/private/accountSettings/security/loginHistory/center/cardView/loginHistoryCard.tsx";
-import LoginHistoryActionMenu from "@coreModule/clients/panel/private/accountSettings/security/loginHistory/center/actions/loginHistoryActionMenu.tsx";
 import LoginHistorySheetView from "@coreModule/clients/panel/private/accountSettings/security/loginHistory/center/sheetView/loginHistorySheetView.tsx";
-import type {DeletedData, TableForm, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import type {LoginHistory} from "armonia/src/modules/core/api/user/private/loginHistory/loginHistory.dto.ts";
-import type {LoginHistoryFormType} from "armonia/src/modules/core/api/user/private/loginHistory/loginHistory.form.type.ts";
 
 type UserAccountSecurityLoginHistoryProps = WithLanguageType & {
     specificUserId?: string;
@@ -26,45 +22,6 @@ function UserAccountSecurityLoginHistory({specificUserId, resolveLanguageKey}: U
     const {read} = useAccess("loginHistories", !specificUserId ? "self" : "others");
     const targetUserId = specificUserId ?? currentUserId;
     const viewingSelf = !specificUserId;
-    const listRef = useRef<EntityListApi<LoginHistory> | null>(null);
-    const [rowMenuAction, setRowMenuAction] = useState("");
-    const [sheetEntry, setSheetEntry] = useState<LoginHistory | null>(null);
-
-    const rowMenu = (action: string, entry: LoginHistory) => {
-        setRowMenuAction(action);
-        setSheetEntry(entry);
-    };
-
-    const closeSheet = () => {
-        setRowMenuAction("");
-        setSheetEntry(null);
-    };
-
-    const closeAction = () => {
-        setRowMenuAction("");
-    };
-
-    const onDelete = (data: DeletedData) => {
-        if (!sheetEntry?._id) return;
-        const patch = {
-            deletedAt: data.deletedAt,
-            deletedBy: data.deletedBy,
-        };
-        listRef.current?.updateRow(sheetEntry._id, patch);
-        setSheetEntry((prev) => (prev ? {...prev, ...patch} : prev));
-        setRowMenuAction("");
-    };
-
-    const onRestore = () => {
-        if (!sheetEntry?._id) return;
-        const patch = {
-            deletedAt: undefined,
-            deletedBy: undefined,
-        };
-        listRef.current?.updateRow(sheetEntry._id, patch);
-        setSheetEntry((prev) => (prev ? {...prev, ...patch} : prev));
-        setRowMenuAction("");
-    };
 
     const extraParams = useMemo(
         () => ({
@@ -74,7 +31,7 @@ function UserAccountSecurityLoginHistory({specificUserId, resolveLanguageKey}: U
         [specificUserId, targetUserId]
     );
 
-    if (!targetUserId || !read || !Object.keys(read).length) {
+    if (!targetUserId || !hasCardRead(read)) {
         return <HiddenElement />;
     }
 
@@ -84,88 +41,41 @@ function UserAccountSecurityLoginHistory({specificUserId, resolveLanguageKey}: U
             description={resolveLanguageKey("description")}
             defaultOpen={false}
         >
-            <CardAndTableView<TableResponse<LoginHistory>, TableForm & LoginHistoryFormType>
-                url="/api/user/loginHistory"
+            <EntityListPage<LoginHistory>
+                apiUrl="/api/user/loginHistory"
+                collectionName="loginhistories"
+                accessModel="loginHistories"
                 tableConfigKey="loginhistories"
-                access="loginHistories"
-                selfAccess={!specificUserId}
-                tableConfigOptions={{
-                    filterConfig: {
-                        placeholder: resolveLanguageKey("searchPlaceholder"),
-                        fields: resolveLanguageKey("fields"),
-                    },
-                }}
-                extraParams={extraParams}
+                selfAccess={viewingSelf}
+                buildEditPath={() => ""}
+                resolveLanguageKey={resolveLanguageKey}
+                hideHeader
+                cardViewClassName="grid grid-cols-1 gap-2"
+                scrollRootClassName="max-h-[min(400px,50vh)]"
                 configurations={{limit: 8}}
-                listRef={listRef}
-                containersClassName={{
-                    cardViewClassName: "grid grid-cols-1 gap-2",
-                    scrollRootClassName: "max-h-[min(400px,50vh)]",
-                }}
-                renderFunctions={{
-                    cardRender: (row) => (
-                        <LoginHistoryCard
-                            entry={row}
-                            resolveLanguageKey={resolveLanguageKey}
-                            timezone={timezone}
-                            viewingSelf={viewingSelf}
-                            onMenuAction={(a) => {
-                                rowMenu(a, row);
-                            }}
-                        />
-                    ),
-                    onRowClick: (row) => {
-                        rowMenu("view", row);
-                    },
-                    action: (row) => (
-                        <LoginHistoryActionMenu
-                            entry={row}
-                            onAction={(a) => {
-                                rowMenu(a, row);
-                            }}
-                        />
-                    ),
-                }}
+                extraParams={extraParams}
+                rowActionMenu={{hideEdit: true}}
+                renderCard={(entry, onDelete, onRestore) => (
+                    <LoginHistoryCard
+                        entry={entry}
+                        resolveLanguageKey={resolveLanguageKey}
+                        timezone={timezone}
+                        viewingSelf={viewingSelf}
+                        onDelete={(row, response) => onDelete(row, response)}
+                        onRestore={() => onRestore(entry)}
+                    />
+                )}
+                renderSheet={({entity, open, onOpenChange, onDelete, onRestore}) => (
+                    <LoginHistorySheetView
+                        entry={entity}
+                        viewingSelf={viewingSelf}
+                        open={open}
+                        onOpenChange={onOpenChange}
+                        onDelete={onDelete}
+                        onRestore={onRestore}
+                    />
+                )}
             />
-
-            {rowMenuAction === "view" && sheetEntry && (
-                <LoginHistorySheetView
-                    open={rowMenuAction === "view"}
-                    onOpenChange={(open: boolean) => {
-                        if (!open) {
-                            closeSheet();
-                        }
-                    }}
-                    entry={sheetEntry}
-                    viewingSelf={viewingSelf}
-                    onDelete={onDelete}
-                    onRestore={onRestore}
-                />
-            )}
-            {rowMenuAction === "delete" && sheetEntry && (
-                <DeleteAction
-                    accessModel="loginHistories"
-                    deleteId={sheetEntry._id}
-                    openAlert={rowMenuAction === "delete"}
-                    name={sheetEntry.ip || sheetEntry.time}
-                    confirmName={sheetEntry.ip || sheetEntry.time}
-                    onSuccess={onDelete}
-                    onCancel={closeAction}
-                    url="/api/user/loginHistory"
-                />
-            )}
-            {rowMenuAction === "restore" && sheetEntry && (
-                <RestoreAction
-                    accessModel="loginHistories"
-                    deleteId={sheetEntry._id}
-                    openAlert={rowMenuAction === "restore"}
-                    name={sheetEntry.ip || sheetEntry.time}
-                    confirmName={sheetEntry.ip || sheetEntry.time}
-                    onSuccess={onRestore}
-                    onCancel={closeAction}
-                    url="/api/user/loginHistory/restore"
-                />
-            )}
         </TitleWithCollapse>
     );
 }

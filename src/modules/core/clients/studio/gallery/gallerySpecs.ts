@@ -174,14 +174,14 @@ function fieldNameFor(token: string): string {
             return "date";
         case "#PhoneInput":
             return "phone";
-        case "#IconPicker":
+        case "#IconPickerInput":
             return "icon";
         case "#SimpleSelect":
         case "#Select":
             return "choice";
         case "#ApiSelect":
             return "country";
-        case "#StringArrayField":
+        case "#StringArrayInput":
             return "tags";
         case "#ListingFaqsField":
             return "faqs";
@@ -189,7 +189,7 @@ function fieldNameFor(token: string): string {
             return "items";
         case "#FormTabbedRepeater":
             return "findings";
-        case "#FormObjectIdChips":
+        case "#ObjectIdChipsInput":
             return "refs";
         case "#FormAddressWithMap":
         case "#FormAddressRow":
@@ -231,7 +231,7 @@ function widgetPropsFor(token: string): Record<string, unknown> | undefined {
             return {options: SAMPLE_OPTIONS};
         case "#ApiSelect":
             return {apiUrl: `${GALLERY_API_URL}/select`, method: "POST", pageSize: 50};
-        case "#FormObjectIdChips":
+        case "#ObjectIdChipsInput":
             return {
                 apiUrl: `${GALLERY_API_URL}/select`,
                 method: "POST",
@@ -330,12 +330,12 @@ function sampleScalar(token: string): unknown {
             return "2026-09-08";
         case "#PhoneInput":
             return "+355 69 000 0000";
-        case "#IconPicker":
+        case "#IconPickerInput":
             return "#IconTag";
         case "#SimpleSelect":
         case "#Select":
             return "alpha";
-        case "#StringArrayField":
+        case "#StringArrayInput":
             return ["Alpha", "Beta"];
         case "#ListingFaqsField":
             return [{question: "Who is this for?", answer: "Anyone iterating on ViewConfig widgets."}];
@@ -352,7 +352,7 @@ function sampleScalar(token: string): unknown {
             ];
         case "#SheetModificationLineItems":
             return [{name: "Tile", amount: 12, pricePerUnit: 25}];
-        case "#FormObjectIdChips":
+        case "#ObjectIdChipsInput":
             return [];
         case "#FormTabbedRepeater":
             return undefined;

@@ -171,8 +171,8 @@ describe("renderFormWidget: #DateInput", () => {
 });
 
 describe("renderFormWidget: other scalar widgets", () => {
-    it("#IconPicker and #PhoneInput normalize empties; phone defaults to AL", () => {
-        const icon = mountScalar(bind("#IconPicker"), makeField("mdi-a"), {editMode: true});
+    it("#IconPickerInput and #PhoneInput normalize empties; phone defaults to AL", () => {
+        const icon = mountScalar(bind("#IconPickerInput"), makeField("mdi-a"), {editMode: true});
         icon.props.onValueChange("");
         expect(icon.field.onChange).toHaveBeenCalledWith(null);
 
@@ -238,8 +238,8 @@ describe("renderCompoundWidget", () => {
         expect(p).toMatchObject({multiple: true, name: "f", label: "t:photos", placeholder: "t:pick", required: true, loading: true, editMode: true});
     });
 
-    it("#StringArrayField and #ListingFaqsField get language keys, not resolved text", () => {
-        expect(mountCompound(bind("#StringArrayField", {maxItems: 3, maxLength: 20}, {label: "tags"}))).toMatchObject({
+    it("#StringArrayInput and #ListingFaqsField get language keys, not resolved text", () => {
+        expect(mountCompound(bind("#StringArrayInput", {maxItems: 3, maxLength: 20}, {label: "tags"}))).toMatchObject({
             labelKey: "tags", placeholderKey: "f", removeTooltipKey: "remove", maxItems: 3, maxLength: 20, loading: false,
         });
         expect(mountCompound(bind("#ListingFaqsField", {maxRows: 4}))).toMatchObject({
@@ -264,8 +264,8 @@ describe("renderCompoundWidget", () => {
         expect(mountCompound(bind("#FormMapPinPicker", {latField: "lat"}))).toMatchObject({fieldPrefix: "f", latField: "lat", loading: false});
     });
 
-    it("#FormObjectIdChips defaults its method", () => {
-        expect(mountCompound(bind("#FormObjectIdChips", {apiUrl: "/x"}))).toMatchObject({name: "f", apiUrl: "/x", method: "POST"});
+    it("#ObjectIdChipsInput defaults its method", () => {
+        expect(mountCompound(bind("#ObjectIdChipsInput", {apiUrl: "/x"}))).toMatchObject({name: "f", apiUrl: "/x", method: "POST"});
     });
 
     it("propertyManagement polygon and item widgets (contributed) get their keys", () => {

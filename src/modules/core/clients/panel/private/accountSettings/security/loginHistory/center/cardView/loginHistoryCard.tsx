@@ -1,17 +1,13 @@
 import {CheckCircle2, Clock, Globe2, MonitorSmartphone, XCircle} from "lucide-react";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {LoginHistory} from "armonia/src/modules/core/api/user/private/loginHistory/loginHistory.dto.ts";
-import LoginHistoryActionMenu from "@coreModule/clients/panel/private/accountSettings/security/loginHistory/center/actions/loginHistoryActionMenu.tsx";
-import DeletedInfo from "@coreModule/components/custom/deletedInfo";
+import LoginHistorySheetView from "@coreModule/clients/panel/private/accountSettings/security/loginHistory/center/sheetView/loginHistorySheetView.tsx";
 import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
-import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
-import {EntityTextCardHeader} from "@coreModule/components/custom/cards/EntityTextCardHeader.tsx";
-import {CARD_BODY_CLASS} from "@coreModule/components/custom/cards/entityCard.constants.ts";
+import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
+import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
 
 export type LoginHistoryCardProps = {
     entry: LoginHistory;
@@ -19,83 +15,90 @@ export type LoginHistoryCardProps = {
     timezone?: string;
     /** Mirrors list page: `useAccess(..., !specificUserId ? "self" : "others")`. */
     viewingSelf: boolean;
-    onMenuAction: (action: string) => void;
+    onDelete?: (entry: LoginHistory, response: DeletedData) => void;
+    onRestore?: () => void;
 };
 
 /**
- * `group` enables the row ActionMenu ⋮ to appear on card hover. List copy: `.../loginHistory/index.json`.
- * Sheet copy: `.../sheetView/loginHistorySheetView.json`.
+ * List copy: `.../loginHistory/index.json`. Sheet copy: `.../sheetView/loginHistorySheetView.json`.
  */
-export default function LoginHistoryCard({entry, resolveLanguageKey, viewingSelf, onMenuAction}: LoginHistoryCardProps) {
-    const {read} = useAccess("loginHistories", viewingSelf ? "self" : "others");
-    const isSuccess = entry.status === "success";
-    const location = [entry.geolocation?.city, entry.geolocation?.country].filter(Boolean).join(", ");
-    const deviceLine = [entry.device, entry.os, entry.browser].filter(Boolean).join(" · ");
-    const r = read as Record<string, object | undefined> | boolean | null;
-
-    if (!read || (typeof r === "object" && r !== null && !Object.keys(r).length)) {
-        return <HiddenElement />;
-    }
-
-    const can = (k: string) => typeof r === "object" && r !== null && k in r;
-
+export default function LoginHistoryCard({
+    entry,
+    resolveLanguageKey,
+    viewingSelf,
+    onDelete,
+    onRestore,
+}: LoginHistoryCardProps) {
     return (
-        <EntityCardShell
-            onClick={() => onMenuAction("view")}
-            className={cn(entry.deletedAt != null && "opacity-80")}
+        <EntityCard
+            resource="loginHistories"
+            accessPerspective={viewingSelf ? "self" : "others"}
+            entity={entry}
+            onDelete={onDelete}
+            onRestore={onRestore}
+            editPath={() => ""}
+            hideEdit
+            Sheet={LoginHistorySheetView}
+            sheetEntityProp="entry"
+            sheetProps={() => ({viewingSelf})}
+            deleteUrl="/api/user/loginHistory"
+            restoreUrl="/api/user/loginHistory/restore"
+            failedTitle=""
+            failedDescription=""
+            titlePath="ip"
+            shellClassName={(row) => (row.deletedAt != null ? "opacity-80" : undefined)}
         >
-            <div className="flex w-full items-stretch">
-                {(can("deletedBy") || can("deletedAt")) && (
-                    <DeletedInfo
-                        deletedAt={entry.deletedAt}
-                        deletedBy={entry.deletedBy}
-                    />
-                )}
-                <div className="w-full min-w-0">
-                    <EntityTextCardHeader
-                        iconTile={
-                            <div
-                                className={cn(
-                                    "flex size-7 shrink-0 items-center justify-center rounded-full",
-                                    isSuccess ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
-                                )}
-                            >
-                                {isSuccess ? <CheckCircle2 className="size-3.5" /> : <XCircle className="size-3.5" />}
-                            </div>
-                        }
-                        title={resolveLanguageKey(isSuccess ? "status.success" : "status.failure")}
-                        showTitle={can("status")}
-                        badges={
-                            <>
-                                <Badge variant={isSuccess ? "secondary" : "destructive"} className="h-5 px-1.5 text-3xs">
-                                    {resolveLanguageKey(isSuccess ? "badge.success" : "badge.failure")}
-                                </Badge>
-                                {can("mfa") && entry.mfa && (
-                                    <Badge variant="outline" className="h-5 px-1.5 text-3xs">
-                                        {resolveLanguageKey("badge.mfa")}
-                                    </Badge>
-                                )}
-                            </>
-                        }
-                        showBadges={can("status")}
-                        actionMenu={<LoginHistoryActionMenu entry={entry} onAction={onMenuAction} />}
-                    />
-                    <div className={CARD_BODY_CLASS}>
-                        <InfoRowGroup>
+            {({entity: row, read}) => {
+                const can = (k: string) => accessFieldPathExists(read, k);
+                const location = [row.geolocation?.city, row.geolocation?.country].filter(Boolean).join(", ");
+                const deviceLine = [row.device, row.os, row.browser].filter(Boolean).join(" · ");
+                const rowIsSuccess = row.status === "success";
+
+                return (
+                    <>
+                        <EntityCard.Header
+                            titlePath="status"
+                            title={resolveLanguageKey(rowIsSuccess ? "status.success" : "status.failure")}
+                            icon={
+                                <div
+                                    className={cn(
+                                        "flex size-7 shrink-0 items-center justify-center rounded-full",
+                                        rowIsSuccess ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
+                                    )}
+                                >
+                                    {rowIsSuccess ? <CheckCircle2 className="size-3.5" /> : <XCircle className="size-3.5" />}
+                                </div>
+                            }
+                            badges={
+                                can("status") && (
+                                    <>
+                                        <Badge variant={rowIsSuccess ? "secondary" : "destructive"} className="h-5 px-1.5 text-3xs">
+                                            {resolveLanguageKey(rowIsSuccess ? "badge.success" : "badge.failure")}
+                                        </Badge>
+                                        {can("mfa") && row.mfa && (
+                                            <Badge variant="outline" className="h-5 px-1.5 text-3xs">
+                                                {resolveLanguageKey("badge.mfa")}
+                                            </Badge>
+                                        )}
+                                    </>
+                                )
+                            }
+                        />
+                        <EntityCard.Body>
                             <DisplayRow
                                 icon={Clock}
                                 label={resolveLanguageKey("time")}
                                 tooltip={resolveLanguageKey("time")}
                                 show={can("time")}
                                 type="dateTime"
-                                value={entry.time}
+                                value={row.time}
                             />
                             <DisplayRow
                                 icon={Globe2}
                                 label={resolveLanguageKey("location")}
                                 tooltip={resolveLanguageKey("location")}
                                 show={can("ip") || can("geolocation")}
-                                value={location || entry.ip || resolveLanguageKey("unknownLocation")}
+                                value={location || row.ip || resolveLanguageKey("unknownLocation")}
                             />
                             <DisplayRow
                                 icon={MonitorSmartphone}
@@ -108,7 +111,7 @@ export default function LoginHistoryCard({entry, resolveLanguageKey, viewingSelf
                                 label={resolveLanguageKey("reason")}
                                 tooltip={resolveLanguageKey("reason")}
                                 show={can("reason")}
-                                value={entry.reason}
+                                value={row.reason}
                             >
                                 {(formatted) => (
                                     <span className="rounded border border-border/60 bg-muted/50 px-2 py-0.5 text-3xs leading-snug">
@@ -116,10 +119,10 @@ export default function LoginHistoryCard({entry, resolveLanguageKey, viewingSelf
                                     </span>
                                 )}
                             </DisplayRow>
-                        </InfoRowGroup>
-                    </div>
-                </div>
-            </div>
-        </EntityCardShell>
+                        </EntityCard.Body>
+                    </>
+                );
+            }}
+        </EntityCard>
     );
 }

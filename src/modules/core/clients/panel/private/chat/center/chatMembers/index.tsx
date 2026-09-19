@@ -10,7 +10,7 @@ import AddMember from "@coreModule/clients/panel/private/chat/center/chatMembers
 import {updateChannelUsers} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import NoData from "@baseModule/components/custom/noData.tsx";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {ChannelUser} from "armonia/src/modules/core/types";

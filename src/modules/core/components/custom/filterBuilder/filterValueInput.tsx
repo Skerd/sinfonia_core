@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { format, isValid, parse } from "date-fns";
 import { Input } from "@coreModule/components/ui/input.tsx";
-import { DateInput } from "@coreModule/components/custom/dateInput.tsx";
+import { DateInput } from "@baseModule/components/custom/inputs/dateInput.tsx";
 import { SimpleSelect } from "@coreModule/components/custom/simpleSelect";
 import { ApiSelect } from "@coreModule/components/custom/apiSelect";
 import { cn } from "@coreModule/components/lib/utils.ts";

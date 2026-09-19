@@ -19,7 +19,7 @@ function DeletedInfo({
     bottom
 }: DeletedInfoProps) {
 
-    if( !deletedAt && !deletedBy ){return null;}
+    // if( !deletedAt && !deletedBy ){return null;}
 
     if( badge ){
         return (

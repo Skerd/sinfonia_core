@@ -14,7 +14,7 @@ import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreMod
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import UpdateEmail from "@coreModule/clients/panel/private/accountSettings/account/userInfo/email/updateEmail.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 

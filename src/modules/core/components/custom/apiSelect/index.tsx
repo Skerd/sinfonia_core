@@ -89,7 +89,7 @@ type ApiSelectProps = WithLanguageType &
         showSelectedChips?: boolean;
         /**
          * Ids that should show a checkmark in the dropdown without binding them as this control's `value`
-         * (e.g. FormObjectIdChips already-selected items while the picker stays empty for add-another).
+         * (e.g. ObjectIdChipsInput already-selected items while the picker stays empty for add-another).
          */
         markedValues?: string[];
         /**

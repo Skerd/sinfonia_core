@@ -1,7 +1,7 @@
 import type {ReactNode} from "react";
 import type {FieldBinding} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
-import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
+import {MdiIcon} from "@baseModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {filterAccessibleValuePath} from "../../engine/access.ts";
 import {affix, currencyStubFromValuePath, currencyStubText, formatTemporal} from "../../engine/format.ts";
 import {resolvePath} from "../../engine/refs.ts";

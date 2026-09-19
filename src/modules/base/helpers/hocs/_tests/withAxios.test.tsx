@@ -20,7 +20,7 @@ vi.mock("@baseModule/helpers/hocs/withLanguage.tsx", () => ({
     default: () => (Wrapped: ComponentType<Record<string, unknown>>) =>
         (props: Record<string, unknown>) => <Wrapped {...props} resolveLanguageKey={(key: string) => key}/>,
 }));
-vi.mock("@coreModule/components/custom/errorViewWrapper.tsx", () => ({
+vi.mock("@coreModule/components/custom/errors/errorViewWrapper.tsx", () => ({
     default: ({title, onClick}: { title: string; onClick: () => void }) => <button onClick={onClick}>{title}</button>,
 }));
 

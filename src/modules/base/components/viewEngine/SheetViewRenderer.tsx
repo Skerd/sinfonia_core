@@ -13,7 +13,7 @@ import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import DeletedInfo from "@coreModule/components/custom/deletedInfo";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import {ErrorView} from "@coreModule/components/custom/errorView.tsx";
+import {ErrorView} from "@baseModule/components/custom/errors/errorView.tsx";
 import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
 import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
 import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";

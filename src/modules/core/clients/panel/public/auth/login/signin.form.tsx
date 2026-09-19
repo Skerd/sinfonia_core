@@ -11,7 +11,7 @@ import { Button } from '@coreModule/components/ui/button.tsx';
 import {getClientConfig} from "@baseModule/helpers/general/config.ts";
 import { zodResolver } from '@hookform/resolvers/zod';
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import { PasswordInput } from '@coreModule/components/custom/passwordInput.tsx';
+import { PasswordInput } from '@baseModule/components/custom/inputs/passwordInput.tsx';
 import {HTMLAttributes, useEffect, useImperativeHandle, useState} from 'react';
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
@@ -186,7 +186,11 @@ function SignInForm({
                         <FormItem>
                             <FormLabel>{resolveLanguageKey("form.emailLabel")}</FormLabel>
                             <FormControl>
-                                <Input placeholder={resolveLanguageKey("form.emailPlaceholder")} {...field} />
+                                <Input
+                                    placeholder={resolveLanguageKey("form.emailPlaceholder")}
+                                    autoComplete="username"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -200,7 +204,11 @@ function SignInForm({
                         <FormItem className='relative'>
                             <FormLabel>{resolveLanguageKey("form.passwordLabel")}</FormLabel>
                             <FormControl>
-                                <PasswordInput placeholder={resolveLanguageKey("form.passwordPlaceholder")} {...field} />
+                                <PasswordInput
+                                    placeholder={resolveLanguageKey("form.passwordPlaceholder")}
+                                    autoComplete="current-password"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                             {

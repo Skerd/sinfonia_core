@@ -17,9 +17,9 @@ import { isFilterGroupEmpty, mergeAndFilterDSL } from "@baseModule/helpers/filte
 import { decodeFilterFromUrl, FILTER_URL_PARAM } from "@baseModule/helpers/filter/filterUrl.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
-import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
-import PageController from "@coreModule/components/custom/paginator";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
+import Forbidden from "@baseModule/components/custom/pages/forbidden.tsx";
+import PageController from "@baseModule/components/custom/paginator";
 import NoData from "@baseModule/components/custom/noData.tsx";
 import {entityCardSkeletonItems, EntityTableSkeleton} from "@coreModule/components/custom/skeletons/entityListSkeleton.tsx";
 import {ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, type Row, useReactTable} from "@tanstack/react-table";

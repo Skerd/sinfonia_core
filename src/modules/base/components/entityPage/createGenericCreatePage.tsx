@@ -8,7 +8,7 @@ import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import FormViewRenderer from "@baseModule/components/viewEngine/FormViewRenderer.tsx";
 import {useViewConfigState} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import type {FieldValues} from "react-hook-form";
-import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
+import Forbidden from "@baseModule/components/custom/pages/forbidden.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import {resolveEntityPageKeys} from "@baseModule/helpers/general/entityPage.ts";
 

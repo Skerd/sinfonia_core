@@ -9,7 +9,7 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import SaveNewCompanyRoles from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/saveNewCompanyRoles.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {AccessibleRolesFormResponseType} from "armonia/src/modules/core/api/user/private/permissions/accessibleRoles.form.response.type.ts";

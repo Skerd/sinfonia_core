@@ -84,7 +84,7 @@ export const coreCompoundFormWidgetRenderers: Record<string, CompoundFormWidgetR
     ),
 
     /* These two take language keys and translate themselves. */
-    "#StringArrayField": ({Widget, binding, resolveLanguageKey, extra}) => {
+    "#StringArrayInput": ({Widget, binding, resolveLanguageKey, extra}) => {
         const wp = binding.widgetProps ?? {};
         return (
             <Widget
@@ -92,6 +92,8 @@ export const coreCompoundFormWidgetRenderers: Record<string, CompoundFormWidgetR
                 labelKey={binding.label ?? binding.name}
                 placeholderKey={binding.placeholder ?? binding.name}
                 removeTooltipKey={wp.removeTooltipKey ?? "remove"}
+                /* No default: an unset key would render as `---add---`, so the label names the button instead. */
+                addTooltipKey={typeof wp.addTooltipKey === "string" ? wp.addTooltipKey : undefined}
                 resolveLanguageKey={resolveLanguageKey}
                 loading={extra?.loading ?? false}
                 maxItems={wp.maxItems}
@@ -189,7 +191,7 @@ export const coreCompoundFormWidgetRenderers: Record<string, CompoundFormWidgetR
         );
     },
 
-    "#FormObjectIdChips": (args) => {
+    "#ObjectIdChipsInput": (args) => {
         const {Widget, binding, extra} = args;
         const wp = binding.widgetProps ?? {};
         return (

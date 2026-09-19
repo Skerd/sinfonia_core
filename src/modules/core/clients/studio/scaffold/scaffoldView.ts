@@ -35,8 +35,8 @@ const FORM_WIDGETS: Partial<Record<COLUMN_TYPE, string>> = {
     [COLUMN_TYPE.FILE]: "#MediaField",
     [COLUMN_TYPE.AVATAR]: "#MediaField",
     [COLUMN_TYPE.ADDRESS]: "#FormAddressWithMap",
-    [COLUMN_TYPE.ARRAY]: "#StringArrayField",
-    [COLUMN_TYPE.MDIICON]: "#IconPicker",
+    [COLUMN_TYPE.ARRAY]: "#StringArrayInput",
+    [COLUMN_TYPE.MDIICON]: "#IconPickerInput",
 };
 
 /**

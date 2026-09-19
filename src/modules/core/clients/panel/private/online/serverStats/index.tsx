@@ -8,7 +8,7 @@ import UserActivity from "@coreModule/clients/panel/private/online/serverStats/u
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {ServerStatsDto} from "armonia/src/modules/core/api/auxiliary/private/serverStats/serverStats.dto.ts";
 import {updateServerStats} from "@baseModule/helpers/redux/slices/serverResourceSlice.ts";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 

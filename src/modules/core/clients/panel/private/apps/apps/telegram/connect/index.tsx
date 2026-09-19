@@ -13,7 +13,7 @@ import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import {
     GenerateTelegramQrCodeFormResponseType
 } from "armonia/src/modules/core/api/user/private/telegram/generateTelegramQrCode.form.response.type.ts";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 
 type ConnectTelegramProps = WithLanguageType & WithAxiosType<GenerateTelegramQrCodeFormResponseType> & {
     onSuccess: Function,

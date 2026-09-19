@@ -4,7 +4,7 @@ import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import ValueNotSet from "@baseModule/components/custom/valueNotSet.tsx";
 import TruncatedValue from "./truncatedValue.tsx";
 import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
-import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
+import {MdiIcon} from "@baseModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {IconPhoto} from "@tabler/icons-react";
 import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";

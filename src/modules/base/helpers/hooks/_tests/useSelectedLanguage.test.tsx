@@ -4,8 +4,8 @@ import type {ReactNode} from "react";
 import {Provider} from "react-redux";
 import {configureStore} from "@reduxjs/toolkit";
 import languageReducer, {changeLanguage} from "@baseModule/helpers/redux/slices/languageSlice.ts";
-import deCHErrorBoundary from "@coreModule/assets/languages/de-CH/components/custom/errorBoundary.json";
-import enUSErrorBoundary from "@coreModule/assets/languages/en-US/components/custom/errorBoundary.json";
+import deCHErrorBoundary from "@coreModule/assets/languages/de-CH/components/custom/errors/errorBoundary.json";
+import enUSErrorBoundary from "@coreModule/assets/languages/en-US/components/custom/errors/errorBoundary.json";
 import useSelectedLanguage, {
     componentLanguageLoader,
     convertComponentPathToLanguagePath,
@@ -18,7 +18,7 @@ const ROOT = "/src/modules";
 
 describe("path helpers", () => {
     it("reduces a source path to the stem inside its package", () => {
-        expect(localeJsonStemFromSourcePath("src/modules/core/components/custom/errorBoundary.tsx")).toBe("components/custom/errorBoundary");
+        expect(localeJsonStemFromSourcePath("src/modules/core/components/custom/errors/errorBoundary.tsx")).toBe("components/custom/errors/errorBoundary");
         expect(localeJsonStemFromSourcePath("/src/modules/eCommerce/clients/cart/index.ts")).toBe("clients/cart/index");
         expect(localeJsonStemFromSourcePath("src\\modules\\core\\a\\b.jsx")).toBe("a/b");
     });
@@ -147,7 +147,7 @@ describe("createComponentLanguageLoader", () => {
 });
 
 describe("useSelectedLanguage", () => {
-    const COMPONENT = "src/modules/core/components/custom/errorBoundary.tsx";
+    const COMPONENT = "src/modules/core/components/custom/errors/errorBoundary.tsx";
     const {path: _enPath, ...enUS} = enUSErrorBoundary;
     const {path: _dePath, ...deCH} = deCHErrorBoundary;
 

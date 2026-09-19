@@ -27,7 +27,7 @@ import {
 import {useEffect, useMemo, useState} from "react";
 import {Check} from "lucide-react";
 import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import PageController from "@coreModule/components/custom/paginator";
+import PageController from "@baseModule/components/custom/paginator";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 
 export type PermissionTableRow = {

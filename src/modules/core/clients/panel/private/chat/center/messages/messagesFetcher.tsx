@@ -10,7 +10,7 @@ import {addMessages, isPeekingWebsiteChannel, setMessages} from "@baseModule/hel
 import {sendReceiptsNow} from "@baseModule/helpers/chat/messageReceipts.ts";
 import {store} from "@baseModule/helpers/redux/store/generalStore.ts";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import {
     MessagesFormResponseType,
     MessageType

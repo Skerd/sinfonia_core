@@ -10,11 +10,11 @@ import CountryFlag from "@coreModule/components/custom/countryFlag.tsx";
 import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
 import {ApiSelect} from "@coreModule/components/custom/apiSelect";
 import {SimpleSelect} from "@coreModule/components/custom/simpleSelect";
-import {DateInput} from "@coreModule/components/custom/dateInput.tsx";
-import {StringArrayField} from "@coreModule/components/custom/stringArrayField.tsx";
+import {DateInput} from "@baseModule/components/custom/inputs/dateInput.tsx";
+import {StringArrayInput} from "@baseModule/components/custom/inputs/stringArrayInput.tsx";
 import {ListingFaqsField} from "@coreModule/components/custom/listingFaqsField.tsx";
-import {IconPicker} from "@coreModule/components/custom/iconPicker.tsx";
-import {PhoneInput} from "@coreModule/components/custom/phoneInput.tsx";
+import {IconPickerInput} from "@baseModule/components/custom/inputs/iconPickerInput.tsx";
+import {PhoneInput} from "@baseModule/components/custom/inputs/phoneInput.tsx";
 import {GalleryCarousel} from "@coreModule/components/custom/images/galleryCarousel.tsx";
 import TitleWithCollapse from "@baseModule/components/custom/titleWithCollapse.tsx";
 import {MainImageField} from "@coreModule/components/custom/images/mainImageField.tsx";
@@ -25,7 +25,7 @@ import FormAddressWithMap, {SingleFormAddressWithMap} from "@coreModule/componen
 import FormMapPinPicker from "@coreModule/components/custom/addresses/formMapPinPicker.tsx";
 import FormRepeater from "@coreModule/components/custom/formRepeater.tsx";
 import FormTabbedRepeater from "@coreModule/components/custom/formTabbedRepeater.tsx";
-import FormObjectIdChips from "@coreModule/components/custom/formObjectIdChips.tsx";
+import {ObjectIdChipsInput} from "@baseModule/components/custom/inputs/objectIdChipsInput.tsx";
 import FormEditMediaField from "@coreModule/components/custom/files/formEditMediaField.tsx";
 import FormMultiLocalFileField from "@coreModule/components/custom/files/formMultiLocalFileField.tsx";
 import SheetLocationMap from "@coreModule/components/custom/addresses/sheetLocationMap.tsx";
@@ -81,9 +81,9 @@ export function getCoreWidgetContribution(): WidgetContribution {
             "#SimpleSelect": SimpleSelect,
             "#Select": SimpleSelect,
             "#DateInput": DateInput,
-            "#StringArrayField": StringArrayField,
+            "#StringArrayInput": StringArrayInput,
             "#ListingFaqsField": ListingFaqsField,
-            "#IconPicker": IconPicker,
+            "#IconPickerInput": IconPickerInput,
             "#PhoneInput": PhoneInput,
             "#GalleryCarousel": GalleryCarousel,
             /** Sheet read-only: `media[]` as a row of `SingleFile` tiles (no carousel). */
@@ -105,7 +105,7 @@ export function getCoreWidgetContribution(): WidgetContribution {
             "#FormMapPinPicker": FormMapPinPicker,
             "#FormRepeater": FormRepeater,
             "#FormTabbedRepeater": FormTabbedRepeater,
-            "#FormObjectIdChips": FormObjectIdChips,
+            "#ObjectIdChipsInput": ObjectIdChipsInput,
             "#FormMultiLocalFileField": FormMultiLocalFileField,
             "#FormEditMediaField": FormEditMediaField,
             "#SheetLocationMap": SheetLocationMap,

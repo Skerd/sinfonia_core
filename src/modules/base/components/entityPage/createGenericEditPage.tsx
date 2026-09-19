@@ -7,13 +7,13 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import {toast} from "sonner";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import type {HttpRequestHeaderBuilder} from "@baseModule/helpers/hooks/useHttpRequest.ts";
 import EditFormViewRenderer from "@baseModule/components/viewEngine/editFormViewRenderer.tsx";
 import {useViewConfigState} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import type {FieldValues, UseFormReturn} from "react-hook-form";
-import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
+import Forbidden from "@baseModule/components/custom/pages/forbidden.tsx";
 import {resolveEntityPageKeys} from "@baseModule/helpers/general/entityPage.ts";
 
 type GenericEditPageConfig<TDto, TForm extends FieldValues> = {

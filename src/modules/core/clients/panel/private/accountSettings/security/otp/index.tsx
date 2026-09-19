@@ -11,7 +11,7 @@ import AccountSecurityOtpEnableOTP from "@coreModule/clients/panel/private/accou
 import TitleWithCollapse from "@baseModule/components/custom/titleWithCollapse.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@coreModule/components/custom/errorViewWrapper.tsx";
+import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 

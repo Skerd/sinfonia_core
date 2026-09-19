@@ -5,7 +5,7 @@ import {ThemeProvider} from "@baseModule/helpers/context/providers/theme-provide
 import {DensityProvider} from "@baseModule/helpers/context/providers/density-provider.tsx";
 import {LanguageProvider} from "@baseModule/helpers/context/providers/language-provider.tsx";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import ErrorBoundary from "@coreModule/components/custom/errorBoundary.tsx";
+import ErrorBoundary from "@baseModule/components/custom/errors/errorBoundary.tsx";
 import {lazy, Suspense} from "react";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
