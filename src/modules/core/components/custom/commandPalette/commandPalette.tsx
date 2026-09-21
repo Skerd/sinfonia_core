@@ -88,12 +88,12 @@ function CommandPalette({resolveLanguageKey, open: openProp, onOpenChange}: Comm
         <CommandDialog
             open={open}
             onOpenChange={setOpen}
-            title={resolveLanguageKey("title")}
-            description={resolveLanguageKey("description")}
+            title={resolveLanguageKey("commandPalette.title")}
+            description={resolveLanguageKey("commandPalette.description")}
         >
-            <CommandInput placeholder={resolveLanguageKey("placeholder")}/>
+            <CommandInput placeholder={resolveLanguageKey("commandPalette.placeholder")}/>
             <CommandList>
-                <CommandEmpty>{resolveLanguageKey("empty")}</CommandEmpty>
+                <CommandEmpty>{resolveLanguageKey("commandPalette.empty")}</CommandEmpty>
                 {[...byGroup.entries()].map(([group, items]) => (
                     <CommandGroup key={group} heading={group}>
                         {items.map((link) => {
@@ -121,21 +121,22 @@ function CommandPalette({resolveLanguageKey, open: openProp, onOpenChange}: Comm
             <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1 border-t px-3 py-2 text-2xs text-muted-foreground">
                 <span className="inline-flex items-center gap-1">
                     <Kbd>↑</Kbd><Kbd>↓</Kbd>
-                    {resolveLanguageKey("navigate")}
+                    {resolveLanguageKey("commandPalette.navigate")}
                 </span>
                 <span className="inline-flex items-center gap-1">
                     <Kbd>↵</Kbd>
-                    {resolveLanguageKey("select")}
+                    {resolveLanguageKey("commandPalette.select")}
                 </span>
                 <span className="inline-flex items-center gap-1">
                     <Kbd>esc</Kbd>
-                    {resolveLanguageKey("close")}
+                    {resolveLanguageKey("commandPalette.close")}
                 </span>
             </div>
         </CommandDialog>
     );
 }
 
-export default withLanguage("src/modules/core/components/custom/commandPalette/commandPalette.tsx")(CommandPalette);
+/* Same dictionary as the sidebar / home launcher so `menus.*` titles resolve. */
+export default withLanguage("src/modules/core/clients/panel/private/sidebar/index.tsx")(CommandPalette);
 
 export {CommandPalette};
