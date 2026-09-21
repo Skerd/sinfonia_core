@@ -5,7 +5,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import type {Coverage, CoveragePath} from "./viewCoverage.ts";
 import {widgetForPath} from "../scaffold/scaffoldView.ts";
 

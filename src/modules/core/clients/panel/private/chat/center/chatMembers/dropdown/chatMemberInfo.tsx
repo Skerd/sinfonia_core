@@ -1,15 +1,15 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {DropdownMenuItem, DropdownMenuSeparator, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Info} from "lucide-react";
-import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useState} from "react";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {UserProfile} from "@coreModule/clients/panel/private/users/center/cardView";
 import {ChannelUser} from "armonia/src/modules/core/types";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ChatMemberInfoProps = WithLanguageType & {
     specificUserId: string,

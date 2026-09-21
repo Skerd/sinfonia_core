@@ -1,6 +1,6 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import UserAvatar from "@baseModule/components/custom/avatar/userAvatar.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {ChevronDown, Flag, Users} from "lucide-react";
@@ -10,12 +10,12 @@ import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/
 import PromoteToAdmin from "@coreModule/clients/panel/private/chat/center/chatMembers/dropdown/promoteToAdmin.tsx";
 import {ChannelUser} from "armonia/src/modules/core/types";
 import DemoteToUser from "@coreModule/clients/panel/private/chat/center/chatMembers/dropdown/demoteToUser.tsx";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
-import {getName} from "@baseModule/helpers/general/names.ts";
+import {getName} from "@coreModule/helpers/general/names.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 
 type ChatMemberProps = WithLanguageType & {
     member: ChannelUser,

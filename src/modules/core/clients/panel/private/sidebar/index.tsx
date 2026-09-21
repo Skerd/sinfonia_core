@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {Link, useLocation} from "react-router-dom";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import NavUser from "@coreModule/clients/panel/private/sidebar/navUser";
 import CompaniesSwitcher from "@coreModule/clients/panel/private/sidebar/companies";
 import {
@@ -15,12 +15,12 @@ import {
     SidebarRail,
 } from "@coreModule/components/ui/sidebar.tsx";
 import {useSelector} from "react-redux";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@baseModule/helpers/redux/slices/chatSlice.ts";
-import {useChatInboxBadges} from "@baseModule/helpers/hooks/useChatInboxBadges.ts";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {useChatInboxBadges} from "@coreModule/helpers/hooks/useChatInboxBadges.ts";
 import {IconHome} from "@tabler/icons-react";
 import type {ComponentProps, ReactNode} from "react";
-import {ModuleSidebarNavGroups} from "@baseModule/helpers/moduleContributions/ModuleSidebarNavGroups.tsx";
+import {ModuleSidebarNavGroups} from "@coreModule/helpers/moduleContributions/ModuleSidebarNavGroups.tsx";
 
 export type {
     BaseNavItem,
@@ -31,7 +31,7 @@ export type {
     NavLinkItem,
     NavSubCollapsible,
     ProtectedNav,
-} from "@baseModule/helpers/types/sidebarNav.types.ts";
+} from "@coreModule/helpers/types/sidebarNav.types.ts";
 
 type AdministrativePanelSideBarProps = WithLanguageType & {
     specificUserId?: string;

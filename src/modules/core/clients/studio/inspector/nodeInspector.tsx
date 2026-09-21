@@ -13,8 +13,8 @@ import {IconAlertTriangle, IconChevronRight, IconX} from "@tabler/icons-react";
 import {
     getRegisteredWidgetTokens,
     getWidgetMeta,
-} from "@baseModule/components/viewEngine/widgetRegistry.ts";
-import {isCompoundFormWidget} from "@baseModule/components/viewEngine/renderFormWidget.tsx";
+} from "@coreModule/components/viewEngine/widgetRegistry.ts";
+import {isCompoundFormWidget} from "@coreModule/components/viewEngine/renderFormWidget.tsx";
 import WidgetPropsEditor from "./widgetPropsEditor.tsx";
 import NodeBreadcrumb, {type Crumb} from "./nodeBreadcrumb.tsx";
 import NodeSourceLink from "./nodeSourceLink.tsx";

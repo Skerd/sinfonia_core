@@ -1,10 +1,10 @@
 import {compose} from "redux";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import EditUserAction from "@coreModule/clients/panel/private/users/center/actions/edit.tsx";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
-import ActionMenu from "@baseModule/components/viewEngine/widgets/actions/menu/actionMenu.tsx";
+import ActionMenu from "@coreModule/components/viewEngine/widgets/actions/menu/actionMenu.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 
 const emptyDeleted: DeletedData = {};

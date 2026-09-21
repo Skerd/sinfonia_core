@@ -1,10 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
+// Relative path: Node loads this while evaluating `vite.config.ts`, before Vite aliases exist.
 import {
     type ModuleManifest,
     parseModuleList,
     resolveModuleSelection,
-} from "../src/modules/base/helpers/modules/moduleSelection.ts";
+} from "../src/modules/core/helpers/modules/moduleSelection.ts";
 
 /** Same places maestro looks: deploy layout (`<deploy>/scripts`) and monorepo layout (`<repo>/scripts`). */
 function findModuleManifest(sinfoniaRoot: string): string | undefined {

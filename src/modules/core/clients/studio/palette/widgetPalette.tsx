@@ -4,7 +4,7 @@ import {IconSearch} from "@tabler/icons-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
-import {getWidgetMeta} from "@baseModule/components/viewEngine/widgetRegistry.ts";
+import {getWidgetMeta} from "@coreModule/components/viewEngine/widgetRegistry.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {PALETTE_PREFIX} from "../tree/treeProjection.ts";
 import {buildPaletteGroups, isContainerToken} from "./widgetCatalog.ts";

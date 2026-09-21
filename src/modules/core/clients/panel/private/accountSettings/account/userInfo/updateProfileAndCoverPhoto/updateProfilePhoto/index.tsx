@@ -1,4 +1,4 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@coreModule/components/ui/dialog.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -7,9 +7,9 @@ import ProfilePhoto from "@coreModule/clients/panel/private/accountSettings/acco
 import NewPhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/newPhoto.tsx";
 import DeletePhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/deletePhoto.tsx";
 import {User} from "lucide-react";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 const avatarSize = "120px";
 const dialogAvatarSize = "220px";

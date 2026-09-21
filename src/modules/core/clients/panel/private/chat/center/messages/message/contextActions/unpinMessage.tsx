@@ -1,16 +1,16 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {LoaderCircle, PinOff} from "lucide-react";
 import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/context-menu.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import {useImperativeHandle} from "react";
-import {updateMessagePinned} from "@baseModule/helpers/redux/slices/chatSlice.ts";
+import {updateMessagePinned} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch} from "react-redux";
 import {PinMessageFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/pinMessage.form.type.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {UnpinMessageFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/unpinMessage.form.response.type.ts";
 
 type UnpinMessageProps = WithLanguageType & WithAxiosType<UnpinMessageFormResponseType, PinMessageFormType> & {

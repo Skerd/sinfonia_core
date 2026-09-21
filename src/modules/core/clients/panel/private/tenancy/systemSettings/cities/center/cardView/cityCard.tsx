@@ -1,15 +1,15 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {memo, type RefObject} from "react";
 import {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
-import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
-import DisplayValue from "@baseModule/components/viewEngine/widgets/display/displayValue.tsx";
+import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
+import DisplayValue from "@coreModule/components/viewEngine/widgets/display/displayValue.tsx";
 import CitySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconFlag, IconGridDots} from "@tabler/icons-react";
-import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
-import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
+import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
+import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
 
 function cityEditPath(
     countryId: string | undefined,

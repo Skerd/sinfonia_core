@@ -1,13 +1,13 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useState} from "react";
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import CreateUserForm from "@coreModule/clients/panel/private/users/createUser/createUser.form.tsx";
 import {UserPlus} from "lucide-react";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type CreateUsersProps = WithLanguageType & {
     administration: boolean

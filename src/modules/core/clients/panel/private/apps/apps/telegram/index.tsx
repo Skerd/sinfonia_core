@@ -1,23 +1,23 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {useEffect, useState} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import UserLinkTelegramDeactivation from "@coreModule/clients/panel/private/apps/apps/telegram/disconnect";
 import {useDispatch, useSelector} from "react-redux";
-import {telegramLinked} from "@baseModule/helpers/redux/slices/uiSlice.ts";
+import {telegramLinked} from "@coreModule/helpers/redux/slices/uiSlice.ts";
 import {IconTelegram} from '@coreModule/assets/brand-icons/icon-telegram.tsx'
 import ConnectTelegram from "@coreModule/clients/panel/private/apps/apps/telegram/connect";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import {EllipsisVertical, PowerOff} from "lucide-react";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {TelegramStatusFormResponseType} from "armonia/src/modules/core/api/user/private/telegram/telegramStatus.form.response.type.ts";
-import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import Loader from "@coreModule/components/custom/loader/loader.tsx";
+import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 
 type UserLinkTelegramProps = WithLanguageType & WithAxiosType<TelegramStatusFormResponseType> & {
     specificUserId?: string;

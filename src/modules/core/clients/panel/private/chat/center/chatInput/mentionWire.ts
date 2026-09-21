@@ -1,6 +1,6 @@
 import type {ChannelUser} from "armonia/src/modules/core/types";
 import type {MessageSenderType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
-import {getName} from "@baseModule/helpers/general/names.ts";
+import {getName} from "@coreModule/helpers/general/names.ts";
 
 /** Matches Maestro `parseMentions`: @ + 24 hex ObjectId */
 export const MENTION_WIRE_REGEX = /@([a-fA-F0-9]{24})(?![a-fA-F0-9])/g;

@@ -1,10 +1,10 @@
 import {Save} from "lucide-react";
 import {z} from "zod";
 import type {ReactElement} from "react";
-import {createGenericEditPage, type GenericEditPageProps} from "@baseModule/components/entityPage/pages/createGenericEditPage.tsx";
-import {store} from "@baseModule/helpers/redux/store/generalStore.ts";
-import {newCompanyCreated} from "@baseModule/helpers/redux/slices/uiSlice.ts";
-import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+import {createGenericEditPage, type GenericEditPageProps} from "@coreModule/components/entityPage/pages/createGenericEditPage.tsx";
+import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {newCompanyCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
+import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import type {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import {editCompanyFormSchema} from "armonia/src/modules/core/api/company/private/company/editCompany.form.validator.ts";
 import {EditCompanyFormType} from "armonia/src/modules/core/api/company/private/company/company.schema-def.ts";

@@ -1,6 +1,6 @@
 import {LogOut} from "lucide-react";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
-import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type {UserSession} from "armonia/src/modules/core/api/user/private/userSession/userSession.dto.ts";
 
 export type UserSessionRevokeMenuItemProps = {

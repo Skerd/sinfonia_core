@@ -2,7 +2,7 @@ import {describe, expect, it, vi} from "vitest";
 import type {ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 
 /* Module write keys come from widget contributions; stand in for property management's. */
-vi.mock("@baseModule/helpers/moduleContributions/loadWidgetContributions.ts", () => ({
+vi.mock("@coreModule/helpers/moduleContributions/loadWidgetContributions.ts", () => ({
     getSortedWidgetContributions: () => [
         {id: "propertyManagement", formWriteAccessKeys: {"#FormFloorPolygon": "polygonCoordinates"}},
     ],

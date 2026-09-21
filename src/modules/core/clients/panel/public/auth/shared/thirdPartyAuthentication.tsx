@@ -1,11 +1,11 @@
 import {compose} from "redux";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {getClientConfig} from "@baseModule/helpers/general/config.ts";
+import {getClientConfig} from "@coreModule/helpers/general/config.ts";
 import mainConfig from "@coreModule/assets/languages/mainConfig.json";
 import {SiApple, SiGoogle} from "@icons-pack/react-simple-icons";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 
 const images: any = {
     "google": <SiGoogle />,

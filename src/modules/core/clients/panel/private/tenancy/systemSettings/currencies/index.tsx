@@ -1,12 +1,12 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {Currency} from "armonia/src/modules/core/api/finance/private/currency/currency.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconCashPlus} from "@tabler/icons-react";
 import CurrencyCard from "@coreModule/clients/panel/private/tenancy/systemSettings/currencies/center/cardView/currencyCard.tsx";
 import CurrencySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx";
-import EntityListPage from "@baseModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 export function currencyEditPath(c: Currency) {
     const params = new URLSearchParams();

@@ -6,11 +6,11 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {CardFooter} from "@coreModule/components/ui/card.tsx";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useNavigate, useParams} from "react-router-dom";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import {PasswordInput} from "@baseModule/components/custom/inputs/passwordInput.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import {PasswordInput} from "@coreModule/components/custom/inputs/passwordInput.tsx";
 import {useEffect, useImperativeHandle, useState} from 'react';
-import PasswordStrength from "@baseModule/components/custom/passwordStrength.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import PasswordStrength from "@coreModule/components/custom/passwordStrength.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {CircleCheckBig, CircleX, Loader2, LogIn, ShieldAlert, ShieldBan} from "lucide-react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
@@ -18,8 +18,8 @@ import GoBackToLogin from "@coreModule/clients/panel/public/auth/shared/goBackTo
 import {ChangeForgottenPasswordFormType} from "armonia/src/modules/core/api/user/public/forgotPassword/changeForgottenPassword.form.type.ts";
 import {ChangeForgottenPasswordFormResponseType} from "armonia/src/modules/core/api/user/public/forgotPassword/changeForgottenPassword.form.response.type.ts";
 import {changeForgottenPasswordFormSchema} from "armonia/src/modules/core/api/user/public/forgotPassword/changeForgottenPassword.form.validator.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 
 const EMPTY_FORM_VALUES: ChangeForgottenPasswordFormType = {
     password: "",

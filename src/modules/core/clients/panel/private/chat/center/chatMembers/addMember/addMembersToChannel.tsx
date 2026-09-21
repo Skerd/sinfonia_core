@@ -1,17 +1,17 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {compose} from "redux";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {useEffect, useImperativeHandle, useRef} from "react";
 import {useDispatch} from "react-redux";
-import {updateChannelUsers} from "@baseModule/helpers/redux/slices/chatSlice.ts";
+import {updateChannelUsers} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {AddChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/addChannelMembers.form.response.type.ts";
 import {AddChannelMembersFormType} from "armonia/src/modules/core/api/user/private/chats/channels/addChannelMembers.form.type.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import {AllChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.response.type.ts";
 
 type AddMembersToChannelProps = WithLanguageType & WithAxiosType<AddChannelMembersFormResponseType, AddChannelMembersFormType> & {

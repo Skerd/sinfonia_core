@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {CheckCheck, FileText, Globe, Mail, Phone} from "lucide-react";
 import "leaflet/dist/leaflet.css";
@@ -8,9 +8,9 @@ import {RefObject, useCallback, useRef, useState, lazy, memo, Suspense} from "re
 import {useReactToPrint} from "react-to-print";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {ImageDown, Maximize2, Minimize2} from "lucide-react";
 import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx";
@@ -19,14 +19,14 @@ import ActivateCompanyDialog from "../dialogs/activateCompanyDialog.tsx";
 import DeactivateCompanyDialog from "../dialogs/deactivateCompanyDialog.tsx";
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
-import ExpandableText from "@baseModule/components/viewEngine/widgets/display/expandableText.tsx";
+import ExpandableText from "@coreModule/components/viewEngine/widgets/display/expandableText.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
-import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
-import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
-import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
-import {openActionMenuFromContextMenu} from "@baseModule/components/viewEngine/widgets/actions/menu/openActionMenuFromContextMenu.ts";
+import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
+import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
+import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import {openActionMenuFromContextMenu} from "@coreModule/components/viewEngine/widgets/actions/menu/openActionMenuFromContextMenu.ts";
 
-const CompanyMap = lazy(() => import("@baseModule/components/viewEngine/widgets/addresses/mapWithMultiplePins.tsx"));
+const CompanyMap = lazy(() => import("@coreModule/components/viewEngine/widgets/addresses/mapWithMultiplePins.tsx"));
 
 function companyEditPath(c: Company) {
     const params = new URLSearchParams();

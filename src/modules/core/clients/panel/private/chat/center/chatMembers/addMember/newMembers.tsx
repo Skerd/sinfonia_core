@@ -1,14 +1,14 @@
 import {useCallback, useEffect, useState} from 'react'
 import {Check, UserRoundSearch, X} from 'lucide-react'
 import {compose} from "redux";
-import withLanguage, {ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {Form, FormLabel} from "@coreModule/components/ui/form.tsx";
 import {type Resolver, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import UserAvatar from "@baseModule/components/custom/avatar/userAvatar.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import * as React from "react";
 import {
     InputGroup,
@@ -21,10 +21,10 @@ import type {TableResponse} from "armonia/src/modules/core/types/shared.types.ts
 import {SimpleUsersFormType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.type.ts";
 import {SimpleUserType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.response.type.ts";
 import {createChannelFormSchema} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.validator.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import InfiniteList from "@baseModule/components/custom/infiniteList";
-import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import InfiniteList from "@coreModule/components/custom/infiniteList";
+import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
 
 type MemberRowProps = {
     user: SimpleUserType;

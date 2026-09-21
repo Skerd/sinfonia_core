@@ -1,8 +1,8 @@
 import {compose} from "redux";
 import {useEffect, useState} from "react";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {formatDate} from "@coreModule/helpers/general/dateTime.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import AccountProfileEmail from "@coreModule/clients/panel/private/accountSettings/account/userInfo/email";
 import AccountProfileName from "@coreModule/clients/panel/private/accountSettings/account/userInfo/name";
@@ -10,18 +10,18 @@ import AccountProfileSurname from "@coreModule/clients/panel/private/accountSett
 import AccountProfilePhoneNumber from "@coreModule/clients/panel/private/accountSettings/account/userInfo/phoneNumber";
 import AccountProfileAndCoverPhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto";
 import AccountProfileTimeZone from "@coreModule/clients/panel/private/accountSettings/account/userInfo/timezone";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import Loader from "@coreModule/components/custom/loader/loader.tsx";
+import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import AccountCompaniesCardEditRoles from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles";
 import {RequestsSection, hasRequestsData} from "@coreModule/clients/panel/private/users/center/cardView/userProfileCard.tsx";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {updateUserValue} from "@baseModule/helpers/redux/slices/authSlice.ts";
-import {useTableUpdate} from "@baseModule/helpers/hooks/useTableUpdate.ts";
+import {updateUserValue} from "@coreModule/helpers/redux/slices/authSlice.ts";
+import {useTableUpdate} from "@coreModule/helpers/hooks/useTableUpdate.ts";
 
 type UserAccountProfileUserInfoProps = WithLanguageType & WithAxiosType<CompanyUserType, any> & {
     specificUserId?: string,

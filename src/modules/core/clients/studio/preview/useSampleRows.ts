@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import type {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 
 export type SampleRow = Record<string, unknown> & {_id: string};

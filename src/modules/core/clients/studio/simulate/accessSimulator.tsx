@@ -6,7 +6,7 @@ import {Input} from "@coreModule/components/ui/input.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {SimulationState} from "./simulationState.ts";
 

@@ -1,8 +1,8 @@
 import {compose} from "redux";
 import {useImperativeHandle, useEffect} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {EnableMfaFormType} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.type.ts";
 import {GenerateMfaQrCodeFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/generateMfaQrCode.form.response.type.ts";
 import {useForm} from "react-hook-form";
@@ -12,13 +12,13 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@c
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Check, X} from "lucide-react";
 import {enableMfaFormSchema} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.validator.ts";
-import CopyTooltip from "@baseModule/components/custom/copyTooltip.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {EnableMfaFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.response.type.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type AccountSecurityEnableOtpFormProps = WithLanguageType & WithAxiosType<EnableMfaFormResponseType, EnableMfaFormType> & {
     specificUserId?: string,

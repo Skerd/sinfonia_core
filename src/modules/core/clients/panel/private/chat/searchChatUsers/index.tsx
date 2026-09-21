@@ -1,12 +1,12 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Edit} from "lucide-react";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useState} from "react";
 import NewChat from "@coreModule/clients/panel/private/chat/searchChatUsers/newChat.tsx";
 import CreateNewChannel from "@coreModule/clients/panel/private/chat/searchChatUsers/createNewChannel.tsx";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 
 type SearchChatUsersProps = WithLanguageType & {}

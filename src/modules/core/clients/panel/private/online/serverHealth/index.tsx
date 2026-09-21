@@ -2,11 +2,11 @@ import {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {compose} from "redux";
 import {CheckCircle, AlertCircle} from "lucide-react";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import {useWebSocketRoom} from "@baseModule/helpers/hooks/useWebSocketRoom.ts";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {useWebSocketRoom} from "@coreModule/helpers/hooks/useWebSocketRoom.ts";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import MongoResource from "@coreModule/clients/panel/private/online/serverHealth/mongo.tsx";
 import RedisResource from "@coreModule/clients/panel/private/online/serverHealth/redis.tsx";
 import WebsocketResource from "@coreModule/clients/panel/private/online/serverHealth/websocket.tsx";
@@ -16,13 +16,13 @@ import TelegramResource from "@coreModule/clients/panel/private/online/serverHea
 import AssistantResource from "@coreModule/clients/panel/private/online/serverHealth/assistant.tsx";
 import CronResource from "@coreModule/clients/panel/private/online/serverHealth/cron.tsx";
 import ApiResource from "@coreModule/clients/panel/private/online/serverHealth/api.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {ServerHealthFormResponseType} from "armonia/src/modules/core/api/auxiliary/private/serverHealth/serverHealth.dto.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
-import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import {updateServerHealth} from "@baseModule/helpers/redux/slices/serverResourceSlice.ts";
-import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
+import Loader from "@coreModule/components/custom/loader/loader.tsx";
+import {updateServerHealth} from "@coreModule/helpers/redux/slices/serverResourceSlice.ts";
+import {formatDate} from "@coreModule/helpers/general/dateTime.ts";
 
 type ServerHealthProps = WithLanguageType & WithAxiosType<ServerHealthFormResponseType> & {}
 

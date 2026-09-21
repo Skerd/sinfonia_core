@@ -1,5 +1,5 @@
 import {useCallback, useState} from "react";
-import {MOBILE_BREAKPOINT} from "@baseModule/helpers/hooks/useMobile.tsx";
+import {MOBILE_BREAKPOINT} from "@coreModule/helpers/hooks/useMobile.tsx";
 
 /**
  * Device widths the preview can be rendered at.

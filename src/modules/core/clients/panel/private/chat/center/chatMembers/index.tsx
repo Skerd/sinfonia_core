@@ -1,23 +1,23 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {useEffect, useState} from "react";
 import ChatMember from "@coreModule/clients/panel/private/chat/center/chatMembers/chatMember.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import AddMember from "@coreModule/clients/panel/private/chat/center/chatMembers/addMember";
-import {updateChannelUsers} from "@baseModule/helpers/redux/slices/chatSlice.ts";
+import {updateChannelUsers} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
-import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
-import NoData from "@baseModule/components/custom/noData.tsx";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import Loader from "@coreModule/components/custom/loader/loader.tsx";
+import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
+import NoData from "@coreModule/components/custom/noData.tsx";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {ChannelUser} from "armonia/src/modules/core/types";
 import {AllChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.response.type.ts";
 import {AllChannelMembersFormType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.type.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ChatMembersProps = WithLanguageType & WithAxiosType<AllChannelMembersFormResponseType, AllChannelMembersFormType> & {
     channel: Channel;

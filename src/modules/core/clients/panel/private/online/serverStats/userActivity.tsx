@@ -2,19 +2,19 @@ import {compose} from "redux";
 import {useEffect, useMemo, useState} from "react";
 import {useSelector} from "react-redux";
 import {Users, MessageSquare, Globe, Activity, ChevronDown, Search, ChevronLeft, ChevronRight} from "lucide-react";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {
     WebSocketRoomStat,
     WebSocketRoomUserStat,
 } from "armonia/src/modules/core/api/auxiliary/private/serverStats/serverStats.dto.ts";
-import {DATE_FORMATS, formatDate} from "@baseModule/helpers/general/dateTime.ts";
-import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
+import {DATE_FORMATS, formatDate} from "@coreModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
 
 type UserActivityProps = WithLanguageType & {}
 

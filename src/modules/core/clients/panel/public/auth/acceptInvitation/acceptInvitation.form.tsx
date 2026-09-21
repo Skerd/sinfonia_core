@@ -2,16 +2,16 @@ import {z} from "zod";
 import {compose} from "redux";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useForm} from "react-hook-form";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {CardFooter} from "@coreModule/components/ui/card.tsx";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useNavigate, useParams} from "react-router-dom";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import {PasswordInput} from "@baseModule/components/custom/inputs/passwordInput.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import {PasswordInput} from "@coreModule/components/custom/inputs/passwordInput.tsx";
 import {useEffect, useImperativeHandle, useState} from 'react';
-import PasswordStrength from "@baseModule/components/custom/passwordStrength.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import PasswordStrength from "@coreModule/components/custom/passwordStrength.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {CircleCheckBig, CircleX, Loader2, LogIn, ShieldAlert, ShieldBan} from "lucide-react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
@@ -19,7 +19,7 @@ import GoBackToLogin from "@coreModule/clients/panel/public/auth/shared/goBackTo
 import {acceptInvitationFormSchema} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.validator.ts";
 import {AcceptInvitationFormType} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.type.ts";
 import {AcceptInvitationFormResponseType} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.response.type.ts";
-import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 
 const EMPTY_FORM_VALUES: AcceptInvitationFormType = {
     password: "",

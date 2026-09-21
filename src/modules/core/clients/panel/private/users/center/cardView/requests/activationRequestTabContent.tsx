@@ -1,7 +1,7 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Calendar, CircleSlash, Lock, Mail} from "lucide-react";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {CompanyUserRequestsType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {
@@ -14,8 +14,8 @@ import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import ResendActivationAction from "@coreModule/clients/panel/private/users/center/actions/resendActivation.tsx";
 import UnlockActivationAction from "@coreModule/clients/panel/private/users/center/actions/unlockActivation.tsx";
-import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
-import {InfoRowGroup} from "@coreModule/components/customUnchecked/infoRowGroup.tsx";
+import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
+import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
 
 function isActivationLocked(activation: NonNullable<CompanyUserRequestsType["activation"]>): boolean {
     const lockedUntil = activation.lockedUntil;
@@ -92,7 +92,7 @@ function ActivationRequestTabContentInner({
             <div className="relative group/activation-row">
                 <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                        <InfoRowGroup className="flex-col !gap-y-1.5">
+                        <InfoRowGroup layout="stack">
                             <EntityCardRow
                                 icon={Mail}
                                 label={resolveLanguageKey("activationEmail")}

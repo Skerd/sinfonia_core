@@ -1,20 +1,20 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useEffect, useRef} from "react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import UsersInviteDialog from "@coreModule/clients/panel/private/users/inviteUser";
 import CreateUsers from "@coreModule/clients/panel/private/users/createUser";
-import {type EntityListApi} from "@baseModule/components/entityPage/list/cardAndTableView.tsx";
-import EntityListPage from "@baseModule/components/entityPage/pages/entityListPage.tsx";
+import {type EntityListApi} from "@coreModule/components/entityPage/list/cardAndTableView.tsx";
+import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 import {UserCard} from "@coreModule/clients/panel/private/users/center/cardView";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import EditUser from "@coreModule/clients/panel/private/users/editUser";
 import EditUserAction from "@coreModule/clients/panel/private/users/center/actions/edit.tsx";
-import {TableUpdateContext} from "@baseModule/helpers/context/tableUpdateContext.tsx";
+import {TableUpdateContext} from "@coreModule/helpers/context/tableUpdateContext.tsx";
 
-export {useTableUpdate} from "@baseModule/helpers/hooks/useTableUpdate.ts";
+export {useTableUpdate} from "@coreModule/helpers/hooks/useTableUpdate.ts";
 
 type UsersProps = WithLanguageType & {
     administration: boolean;

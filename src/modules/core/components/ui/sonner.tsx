@@ -1,6 +1,6 @@
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 import { IconCircleCheck, IconInfoCircle, IconAlertTriangle, IconAlertOctagon, IconLoader } from "@tabler/icons-react"
-import { useThemeOptional } from "@baseModule/helpers/context/providers/theme-provider.tsx"
+import { useThemeOptional } from "@coreModule/helpers/context/providers/theme-provider.tsx"
 
 const Toaster = ({ ...props }: ToasterProps) => {
   // Reads the app's own cookie-backed provider rather than next-themes, which is

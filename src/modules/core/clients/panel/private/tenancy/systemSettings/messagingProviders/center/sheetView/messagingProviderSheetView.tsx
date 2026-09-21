@@ -1,10 +1,10 @@
 import {compose} from "redux";
 import {useEffect, useState} from "react";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import SheetViewRenderer from "@baseModule/components/viewEngine/SheetViewRenderer.tsx";
-import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
+import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import type {MessagingProvider} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
 import {messagingProviderEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders";
@@ -13,7 +13,7 @@ import DeactivateMessagingProvider from "@coreModule/clients/panel/private/tenan
 import TestMessagingProviderConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/testMessagingProviderConnection.tsx";
 import SetMessagingProviderActiveDialog from "../dialogs/setMessagingProviderActiveDialog.tsx";
 import TestMessagingProviderConnectionDialog from "../dialogs/testMessagingProviderConnectionDialog.tsx";
-import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 
 export type MessagingProviderSheetViewOwnProps = {
     open: boolean;

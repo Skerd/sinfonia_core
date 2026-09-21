@@ -2,10 +2,10 @@ import {useCallback, useEffect, useRef, useState} from "react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Eraser} from "lucide-react";
-import {ApiSelect} from "@baseModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
-import {SimpleSelect} from "@baseModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
+import {ApiSelect} from "@coreModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
+import {SimpleSelect} from "@coreModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
 
 const DEBOUNCE_MS = 300;
 

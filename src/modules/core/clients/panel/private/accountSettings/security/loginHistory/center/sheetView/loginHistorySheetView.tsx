@@ -1,9 +1,9 @@
 import {compose} from "redux";
-import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import SheetViewRenderer from "@baseModule/components/viewEngine/SheetViewRenderer.tsx";
-import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
+import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
+import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import type {LoginHistory} from "armonia/src/modules/core/api/user/private/loginHistory/loginHistory.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 

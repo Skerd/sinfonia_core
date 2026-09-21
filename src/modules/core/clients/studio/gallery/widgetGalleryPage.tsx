@@ -1,7 +1,7 @@
 import {useMemo, useState} from "react";
 import {Link} from "react-router-dom";
 import {IconArrowLeft, IconSearch} from "@tabler/icons-react";
-import ThemeSwitch from "@baseModule/components/custom/preferences/themeSwitch.tsx";
+import ThemeSwitch from "@coreModule/components/custom/preferences/themeSwitch.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";

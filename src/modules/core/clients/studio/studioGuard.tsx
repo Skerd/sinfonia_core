@@ -1,9 +1,9 @@
 import {Outlet} from "react-router-dom";
-import {AccessProvider} from "@baseModule/helpers/context/accessContext.tsx";
-import {AuthenticationProvider} from "@baseModule/helpers/context/authenticationContext.tsx";
-import {TableConfigProvider} from "@baseModule/helpers/context/tableConfigContext.tsx";
-import {ViewConfigProvider} from "@baseModule/helpers/context/viewConfigContext.tsx";
-import {STUDIO_SESSION_SETUP_TOTAL_STEPS} from "@baseModule/components/custom/sessionSetupScreen.tsx";
+import {AccessProvider} from "@coreModule/helpers/context/accessContext.tsx";
+import {AuthenticationProvider} from "@coreModule/helpers/context/authenticationContext.tsx";
+import {TableConfigProvider} from "@coreModule/helpers/context/tableConfigContext.tsx";
+import {ViewConfigProvider} from "@coreModule/helpers/context/viewConfigContext.tsx";
+import {STUDIO_SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/custom/sessionSetupScreen.tsx";
 
 /**
  * Studio route guard. Same nest as the panel's `PrivatePage`, minus WebSocketProvider

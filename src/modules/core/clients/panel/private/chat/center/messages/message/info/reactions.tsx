@@ -1,22 +1,22 @@
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import UserAvatar from "@baseModule/components/custom/avatar/userAvatar.tsx";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
-import {getName} from "@baseModule/helpers/general/names.ts";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import {formatDate} from "@coreModule/helpers/general/dateTime.ts";
+import {getName} from "@coreModule/helpers/general/names.ts";
 import {useImperativeHandle, useState} from "react";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {updateMessageReaction} from "@baseModule/helpers/redux/slices/chatSlice.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {updateMessageReaction} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {RemoveReactionFormResponseType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/removeReaction.form.response.type.ts";
 import {RemoveReactionFormType} from "armonia/src/modules/core/api/user/private/chats/messages/actions/removeReaction.form.type.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 
 type ReactionsProps = WithLanguageType & WithAxiosType<RemoveReactionFormResponseType, RemoveReactionFormType> & {
     messageId: string,

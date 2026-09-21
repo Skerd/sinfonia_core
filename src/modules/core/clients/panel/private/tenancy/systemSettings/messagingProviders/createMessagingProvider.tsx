@@ -1,5 +1,5 @@
 import {MessageSquarePlus} from "lucide-react";
-import {createGenericCreatePage} from "@baseModule/components/entityPage/pages/createGenericCreatePage.tsx";
+import {createGenericCreatePage} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
 import {createMessagingProviderFormSchema} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/createMessagingProvider.form.validator.ts";
 import type {CreateMessagingProviderFormType} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.schema-def.ts";
 

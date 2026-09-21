@@ -1,14 +1,14 @@
 import {useMemo} from "react";
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconBuildingPlus} from "@tabler/icons-react";
-import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
+import {buildPageTitle} from "@coreModule/helpers/general/pageTitle.ts";
 import CityCard from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx";
 import CitySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx";
-import EntityListPage from "@baseModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 export function cityEditPath(countryId: string | undefined, countryName: string | undefined, stateId: string | undefined, stateName: string | undefined, city: City) {
     const params = new URLSearchParams();

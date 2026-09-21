@@ -1,7 +1,7 @@
-import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Card, CardContent, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
-import {getWidgetMeta} from "@baseModule/components/viewEngine/widgetRegistry.ts";
+import {getWidgetMeta} from "@coreModule/components/viewEngine/widgetRegistry.ts";
 import GalleryErrorBoundary from "./galleryErrorBoundary.tsx";
 import GalleryFormMount from "./galleryFormMount.tsx";
 import GallerySheetMount from "./gallerySheetMount.tsx";

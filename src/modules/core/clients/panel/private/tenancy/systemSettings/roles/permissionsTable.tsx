@@ -1,9 +1,9 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {GroupedPermissions} from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {
     ColumnDef,
     flexRender,
@@ -15,7 +15,7 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import {Input} from "@coreModule/components/ui/input.tsx";
-import {SimpleSelect} from "@baseModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
+import {SimpleSelect} from "@coreModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
 import {
     Table,
     TableBody,
@@ -26,8 +26,8 @@ import {
 } from "@coreModule/components/ui/table/table.tsx";
 import {useEffect, useMemo, useState} from "react";
 import {Check} from "lucide-react";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import PageController from "@baseModule/components/custom/paginator";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import PageController from "@coreModule/components/custom/paginator";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 
 export type PermissionTableRow = {

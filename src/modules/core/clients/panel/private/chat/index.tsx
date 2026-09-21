@@ -1,26 +1,26 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {useSearchParams} from "react-router-dom";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import {useWebSocketRoom} from "@baseModule/helpers/hooks/useWebSocketRoom.ts";
-import {openChannel, isPeekingWebsiteChannel, upsertChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {useWebSocketRoom} from "@coreModule/helpers/hooks/useWebSocketRoom.ts";
+import {openChannel, isPeekingWebsiteChannel, upsertChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import LeftChatPanel from "@coreModule/clients/panel/private/chat/left";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ChatHeader from "@coreModule/clients/panel/private/chat/center/chatHeader";
 import ChatInputAll from "@coreModule/clients/panel/private/chat/center/chatInput/input.tsx";
 import {MessageFetcherRender} from "@coreModule/clients/panel/private/chat/center/messages/messagesFetcher.tsx";
 import MessagesList from "@coreModule/clients/panel/private/chat/center/messages/messagesList.tsx";
-import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
-import {useTheme} from "@baseModule/helpers/context/providers/theme-provider.tsx";
+import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
+import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
 import TypingIndicators from "@coreModule/clients/panel/private/chat/center/typingIndicators.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";
 import LeftWebsiteChatPanel from "@coreModule/clients/panel/private/websiteChats/left/index.tsx";
 import WebsiteChatHeader from "@coreModule/clients/panel/private/websiteChats/center/chatHeader.tsx";
 import PeekComposerBar from "@coreModule/clients/panel/private/websiteChats/center/peekComposerBar.tsx";
-import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import {GetChannelSingleFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/getChannelSingle.form.response.type.ts";
 
 type ChatProps = WithLanguageType & {

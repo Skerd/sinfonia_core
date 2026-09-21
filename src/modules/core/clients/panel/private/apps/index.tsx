@@ -1,14 +1,14 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@coreModule/components/ui/select.tsx";
 import {ArrowDownAZ, ArrowUpAZ, SlidersHorizontal} from "lucide-react";
 import {ChangeEvent, useEffect, useState} from "react";
 import Telegram from "@coreModule/clients/panel/private/apps/apps/telegram";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import Header from "@baseModule/components/custom/header.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import Header from "@coreModule/components/custom/header.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type AppType = 'all' | 'connected' | 'notConnected';
 type ApplicationType = {

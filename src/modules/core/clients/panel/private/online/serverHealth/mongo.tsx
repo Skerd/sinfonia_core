@@ -2,12 +2,12 @@ import {useSelector} from "react-redux";
 import {compose} from "redux";
 import {Database} from "lucide-react";
 import {clsx} from "clsx";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import {formatDurationInDaysHoursOrMinutes} from "@baseModule/helpers/general/dateTime.ts";
-import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
+import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 function getSize(size: number | string): string {

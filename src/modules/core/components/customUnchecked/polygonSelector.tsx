@@ -1,10 +1,10 @@
 import React, {useState, useRef, useEffect, useLayoutEffect, useMemo, useCallback} from 'react';
 import {createPortal} from 'react-dom';
 import {ZoomIn, ZoomOut, RotateCcw, Maximize2, Minimize2, Eraser, Undo2} from 'lucide-react';
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Card} from "@coreModule/components/ui/card.tsx";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Separator} from "@coreModule/components/ui/separator.tsx";
 

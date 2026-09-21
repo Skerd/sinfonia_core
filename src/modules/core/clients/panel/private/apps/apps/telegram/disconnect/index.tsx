@@ -1,11 +1,11 @@
 import {compose} from "redux";
 import {useImperativeHandle} from 'react';
 import {Button} from "@coreModule/components/ui/button.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {DeactivateTelegramFormResponseType} from "armonia/src/modules/core/api/user/private/telegram/deactivateTelegram.form.response.type.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {LoaderCircle} from "lucide-react";
 
 type UserLinkTelegramDeactivationProps = WithAxiosType<DeactivateTelegramFormResponseType> & WithLanguageType & {

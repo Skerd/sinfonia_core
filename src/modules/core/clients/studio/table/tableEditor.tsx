@@ -22,13 +22,13 @@ import type {
     TableColumnConfig,
 } from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type";
 import {tableConfigToFilterConfig} from "armonia/src/modules/core/database/filter/pathUtils.ts";
-import {listChromeParam, LIST_VIEW_PARAM} from "@baseModule/helpers/hooks/useListUrlState.ts";
+import {listChromeParam, LIST_VIEW_PARAM} from "@coreModule/helpers/hooks/useListUrlState.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import CardAndTableView from "@baseModule/components/entityPage/list/cardAndTableView.tsx";
-import {useTableConfigContext} from "@baseModule/helpers/hooks/useTableConfigContext.ts";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import CardAndTableView from "@coreModule/components/entityPage/list/cardAndTableView.tsx";
+import {useTableConfigContext} from "@coreModule/helpers/hooks/useTableConfigContext.ts";
 import type {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {StudioModelEntry} from "../catalog/useStudioCatalog.ts";

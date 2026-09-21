@@ -1,10 +1,10 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import {CORE_WIDGET_META, type WidgetMeta} from "@baseModule/components/viewEngine/widgetMeta.ts";
+import {CORE_WIDGET_META, type WidgetMeta} from "@coreModule/components/viewEngine/widgetMeta.ts";
 
 const registeredTokens = vi.hoisted(() => ({current: [] as string[]}));
 const metaByToken = vi.hoisted(() => ({current: {} as Record<string, unknown>}));
 
-vi.mock("@baseModule/components/viewEngine/widgetRegistry.ts", () => ({
+vi.mock("@coreModule/components/viewEngine/widgetRegistry.ts", () => ({
     getRegisteredWidgetTokens: () => registeredTokens.current,
     getWidgetMeta: (token: string) => metaByToken.current[token],
     getReferencesDefaultItemProp: () => undefined,

@@ -1,11 +1,11 @@
 import {compose} from "redux"
 import {Button} from "@coreModule/components/ui/button.tsx"
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx"
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx"
 import {useEffect, useImperativeHandle, useState} from 'react'
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx"
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx"
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx"
 import {DisableMfaFormType} from "armonia/src/modules/core/api/user/public/mfa/disableMfa.form.type.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {IconKeyOff} from "@tabler/icons-react";
 import {Loader2} from "lucide-react";
 

@@ -1,19 +1,19 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {CornerRightDown} from "lucide-react";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import {ChannelUser} from "armonia/src/modules/core/types";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import {useImperativeHandle} from "react";
 import {useDispatch} from "react-redux";
-import {demoteToUser as demoteToUserAction} from "@baseModule/helpers/redux/slices/chatSlice.ts";
+import {demoteToUser as demoteToUserAction} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {RemoveUserFromChannelAdminFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/removeUserFromChannelAdmin.form.response.type.ts";
 import {RemoveUserFromChannelAdminFormType} from "armonia/src/modules/core/api/user/private/chats/channels/removeUserFromChannelAdmin.form.type.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type DemoteToUserProps = WithLanguageType & WithAxiosType<RemoveUserFromChannelAdminFormResponseType, RemoveUserFromChannelAdminFormType> & {
     channel: Channel,

@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState, type ReactNode} from "react";
 import {createPortal} from "react-dom";
-import {MobileOverrideContext} from "@baseModule/helpers/hooks/useMobile.tsx";
+import {MobileOverrideContext} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {isMobileViewport, scaleToFit, type PreviewDevice} from "./previewDevice.ts";
 
 /**

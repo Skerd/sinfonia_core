@@ -1,12 +1,12 @@
 import {compose} from "redux";
 import {useEffect, useState} from "react";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import SheetViewRenderer from "@baseModule/components/viewEngine/SheetViewRenderer.tsx";
-import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
+import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
+import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 
 export type CitySheetViewOwnProps = {
     open: boolean;

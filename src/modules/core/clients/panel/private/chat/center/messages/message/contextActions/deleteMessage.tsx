@@ -1,14 +1,14 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import {toggleDeleteMessageId, updateOpenDelete} from "@baseModule/helpers/redux/slices/chatSlice.ts";
+import {toggleDeleteMessageId, updateOpenDelete} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {Trash2} from "lucide-react";
 import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/context-menu.tsx";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type DeleteMessageProps = WithLanguageType & {
     messageId: string,

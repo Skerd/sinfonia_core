@@ -10,7 +10,7 @@ import {
   type ButtonProps as ButtonPrimitiveProps,
 } from '@coreModule/components/animate-ui/primitives/buttons/button.tsx';
 import { cn } from '@coreModule/components/lib/utils.ts';
-import { handleError } from '@baseModule/helpers/general/errors.ts';
+import { handleError } from '@coreModule/helpers/general/errors.ts';
 import { useControlledState } from '@coreModule/components/animate-ui/hooks/use-controlled-state.tsx';
 
 const buttonVariants = cva(

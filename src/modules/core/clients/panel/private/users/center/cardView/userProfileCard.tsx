@@ -1,6 +1,6 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {
     Ampersand,
     BadgeAlert,
@@ -18,17 +18,17 @@ import {
     ShieldQuestionMark,
     UserPlus,
 } from "lucide-react";
-import {EntityCardShell} from "@baseModule/components/entityPage/list/card/entityCardShell.tsx";
-import {InfoRowGroup} from "@coreModule/components/customUnchecked/infoRowGroup.tsx";
+import {EntityCardShell} from "@coreModule/components/entityPage/list/card/entityCardShell.tsx";
+import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
 import CoverPhoto
     from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/coverPhoto.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ProfilePhoto
     from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/profilePhoto.tsx";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import {getName} from "@baseModule/helpers/general/names.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import {getName} from "@coreModule/helpers/general/names.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import type {
     CompanyUserRequestsType,
     CompanyUserType
@@ -41,8 +41,8 @@ import {MfaDeactivationRequestTabContent} from "@coreModule/clients/panel/privat
 import {PasswordResetRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/passwordResetRequestTabContent.tsx";
 import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import {TabsContent} from "@radix-ui/react-tabs";
 
 export type UserProfileData = CompanyUserType;
@@ -384,7 +384,7 @@ function UserProfileCardInner({
                         </TabsList>
 
                         <TabsContent value="about" className="rounded-md border bg-muted/30 p-3 text-sm">
-                            <InfoRowGroup className="flex-col !gap-y-1.5">
+                            <InfoRowGroup layout="stack">
                                 <EntityCardRow
                                     iconReplacement={<div>
                                         <HiddenElement>
@@ -541,7 +541,7 @@ function UserProfileCardInner({
                             </InfoRowGroup>
                         </TabsContent>
                         <TabsContent value="info" className="rounded-md border bg-muted/30 p-3 text-sm">
-                            <InfoRowGroup className="flex-col !gap-y-1.5">
+                            <InfoRowGroup layout="stack">
                                 <EntityCardRow
                                     icon={Ampersand}
                                     label={resolveLanguageKey("registeredDate")}

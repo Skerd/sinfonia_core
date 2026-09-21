@@ -54,7 +54,7 @@ Feature modules register UI by exporting contribution files from `clients/panel/
 | `tenancySettingsContribution.tsx` | Company settings tabs (optional) |
 | `siteRoomContribution.tsx` | Extra tenancy system-settings rooms (optional) |
 
-Loaders live in `src/modules/base/helpers/moduleContributions/`:
+Loaders live in `src/modules/core/helpers/moduleContributions/`:
 
 - `loadSidebarContributions.ts`
 - `loadRouteConfigContributions.ts`
@@ -70,9 +70,9 @@ The panel entry point (`clients/panel/entryPoint/`) parses URL segments (`/menu/
 
 ## View engine
 
-The server-driven rendering stack lives in **`src/modules/base/components/`**, not in core — `base` is transitional and migrates back into core later.
+The server-driven rendering stack lives in **`src/modules/core/components/`**.
 
-`base/components/viewEngine/` renders maestro-provided `ViewConfig` definitions — dynamic forms, sheets, and field bindings without hard-coded page layouts:
+`core/components/viewEngine/` renders maestro-provided `ViewConfig` definitions — dynamic forms, sheets, and field bindings without hard-coded page layouts:
 
 | Path | Contents |
 |------|----------|
@@ -82,9 +82,9 @@ The server-driven rendering stack lives in **`src/modules/base/components/`**, n
 | `audit/` | Audit-log drawer and diff rendering |
 | `widgets/` | The token implementations the registry dispatches to — `display/`, `inputs/`, `media/`, `gallery/`, `addresses/`, `repeaters/`, `layout/`, `actions/` |
 
-`base/components/entityPage/` is the list/create/edit page scaffolding built on top of it — `pages/` (page factories), `list/` (card-and-table surface, column config, skeletons), `filters/` (quick filters, filter builder).
+`core/components/entityPage/` is the list/create/edit page scaffolding built on top of it — `pages/` (page factories), `list/` (card-and-table surface, column config, skeletons), `filters/` (quick filters, filter builder).
 
-Note on i18n: components under `base/` keep their dictionaries at their original `core/assets/languages/…` paths, because `base` has no `assets/` tree. The `SHARED_DICTIONARIES` allowlist in `base/helpers/hocs/_tests/withLanguagePaths.test.ts` records each such pair and is the guard against a moved component silently losing its translations.
+Note on i18n: `withLanguage("src/…")` paths must match the calling file (or an entry in `SHARED_DICTIONARIES` in `core/helpers/hocs/_tests/withLanguagePaths.test.ts`) so dictionaries stay colocated with their components.
 
 ## Module selection
 

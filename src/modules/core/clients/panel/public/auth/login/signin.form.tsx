@@ -6,14 +6,14 @@ import {useDispatch} from "react-redux";
 import { useForm } from 'react-hook-form';
 import { Input } from '@coreModule/components/ui/input.tsx';
 import { Loader2, LogIn } from 'lucide-react';
-import {logIn} from "@baseModule/helpers/redux/slices/authSlice.ts";
+import {logIn} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import { Button } from '@coreModule/components/ui/button.tsx';
-import {getClientConfig} from "@baseModule/helpers/general/config.ts";
+import {getClientConfig} from "@coreModule/helpers/general/config.ts";
 import { zodResolver } from '@hookform/resolvers/zod';
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import { PasswordInput } from '@baseModule/components/custom/inputs/passwordInput.tsx';
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import { PasswordInput } from '@coreModule/components/custom/inputs/passwordInput.tsx';
 import {HTMLAttributes, useEffect, useImperativeHandle, useState} from 'react';
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import {LoginFormType} from "armonia/src/modules/core/api/user/public/login/login.form.type.ts";
 import { loginFormSchema } from "armonia/src/modules/core/api/user/public/login/login.form.validator.ts";
@@ -21,7 +21,7 @@ import DisableOTP from "@coreModule/clients/panel/public/auth/login/disableOTP.f
 import {InputOTP, InputOTPGroup, InputOTPSlot} from "@coreModule/components/ui/input-otp.tsx";
 import {LoginFormResponseType, MFAEnabledLoginFormResponseType} from "armonia/src/modules/core/api/user/public/login/login.form.response.type.ts";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {IconKey} from "@tabler/icons-react";
 
 const EMPTY_FORM_VALUES: LoginFormType = {

@@ -31,7 +31,6 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@baseModule/*": ["./src/modules/base/*"],
       "@coreModule/*": ["./src/modules/core/*"],
       "@eCommerceModule/*": ["./src/modules/eCommerce/*"],
       "@eCommerceMarketplaceModule/*": ["./src/modules/eCommerceMarketplace/*"],

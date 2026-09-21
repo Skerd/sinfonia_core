@@ -2,8 +2,8 @@ import {Suspense} from "react";
 import {
     getReferencesDefaultItemProp,
     resolveWidget,
-} from "@baseModule/components/viewEngine/widgetRegistry.ts";
-import {AccessAllowAllProvider} from "@baseModule/helpers/context/accessContext.tsx";
+} from "@coreModule/components/viewEngine/widgetRegistry.ts";
+import {AccessAllowAllProvider} from "@coreModule/helpers/context/accessContext.tsx";
 import {entityPropName, galleryCardExtraProps, galleryEntityStub} from "./galleryEntity.ts";
 
 type GalleryEntityMountProps = {

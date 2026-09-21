@@ -1,6 +1,6 @@
 import {render, screen, waitFor} from "@testing-library/react";
 import {beforeAll, describe, expect, it} from "vitest";
-import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
+import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import DeviceFrame from "./deviceFrame.tsx";
 import {deviceById} from "./previewDevice.ts";
 

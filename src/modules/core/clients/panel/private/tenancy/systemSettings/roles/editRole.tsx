@@ -4,13 +4,13 @@ import {Input} from "@coreModule/components/ui/input.tsx";
 import {Textarea} from "@coreModule/components/ui/textarea.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {useCallback, useEffect, useImperativeHandle, useMemo, useState} from "react";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import Header from "@baseModule/components/custom/header.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import Header from "@coreModule/components/custom/header.tsx";
 import {Resolver, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useNavigate} from "react-router-dom";
 import {createRoleFormSchema} from "armonia/src/modules/core/api/company/private/roles/createRole.form.validator.ts";
 import {EditRoleFormType} from "armonia/src/modules/core/api/company/private/roles/editRole.form.type.ts";
@@ -21,13 +21,13 @@ import {
 } from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
 import {ActionMessage, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import PermissionsTable from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/permissionsTable.tsx";
-import {SimpleSelect} from "@baseModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import Loader from "@baseModule/components/custom/loader/loader.tsx";
-import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
-import {buildPageTitle} from "@baseModule/helpers/general/pageTitle.ts";
-import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
+import {SimpleSelect} from "@coreModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import Loader from "@coreModule/components/custom/loader/loader.tsx";
+import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
+import {buildPageTitle} from "@coreModule/helpers/general/pageTitle.ts";
+import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import {z} from "zod";
 
 type EditRoleProps = WithLanguageType & WithAxiosType<ActionMessage, EditRoleFormType> & {

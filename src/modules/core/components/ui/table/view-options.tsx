@@ -12,7 +12,7 @@ import {
     DropdownMenuTrigger,
 } from '@coreModule/components/ui/dropdown-menu.tsx'
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 
 type DataTableViewOptionsProps<TData> = {
     table: Table<TData>

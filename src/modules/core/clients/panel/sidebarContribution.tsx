@@ -22,10 +22,10 @@ import {
     IconMap,
     IconUserKey,
 } from "@tabler/icons-react";
-import type {SidebarContribution} from "@baseModule/helpers/types/sidebarContribution.types.ts";
-import type {NavGroup, NavItem} from "@baseModule/helpers/types/sidebarNav.types.ts";
-import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {getTenancySettingsSubCollapsibles} from "@baseModule/helpers/moduleContributions/loadTenancySettingsContributions.ts";
+import type {SidebarContribution} from "@coreModule/helpers/types/sidebarContribution.types.ts";
+import type {NavGroup, NavItem} from "@coreModule/helpers/types/sidebarNav.types.ts";
+import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {getTenancySettingsSubCollapsibles} from "@coreModule/helpers/moduleContributions/loadTenancySettingsContributions.ts";
 
 function buildCompanyNavGroup(
     resolveLanguageKey: ResolveLanguageKey,

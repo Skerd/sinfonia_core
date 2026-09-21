@@ -1,19 +1,19 @@
 import {compose} from "redux";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import CopyTooltip from "@baseModule/components/custom/copyTooltip.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import Loader from "@baseModule/components/custom/loader/loader.tsx";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import {
     GenerateTelegramQrCodeFormResponseType
 } from "armonia/src/modules/core/api/user/private/telegram/generateTelegramQrCode.form.response.type.ts";
-import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
+import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
 
 type ConnectTelegramProps = WithLanguageType & WithAxiosType<GenerateTelegramQrCodeFormResponseType> & {
     onSuccess: Function,

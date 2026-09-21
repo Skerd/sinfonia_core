@@ -1,5 +1,5 @@
 import {IconFlagPlus} from "@tabler/icons-react";
-import {createGenericCreatePage} from "@baseModule/components/entityPage/pages/createGenericCreatePage.tsx";
+import {createGenericCreatePage} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
 import {createCountryFormSchema} from "armonia/src/modules/core/api/auxiliary/private/country/createCountry.form.validator.ts";
 import type {CreateCountryFormType} from "armonia/src/modules/core/api/auxiliary/private/country/country.schema-def.ts";
 

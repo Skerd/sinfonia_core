@@ -1,5 +1,5 @@
 import {IconMailPlus} from "@tabler/icons-react";
-import {createGenericCreatePage} from "@baseModule/components/entityPage/pages/createGenericCreatePage.tsx";
+import {createGenericCreatePage} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
 import {createSmtpServerFormSchema} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/createSmtpServer.form.validator.ts";
 import type {CreateSmtpServerFormType} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.schema-def.ts";
 

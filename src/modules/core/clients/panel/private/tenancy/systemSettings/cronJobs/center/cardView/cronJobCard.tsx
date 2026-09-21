@@ -1,15 +1,15 @@
 import {compose} from "redux";
-import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import type {CronJob} from "armonia/src/modules/core/api/auxiliary/private/cronJob/cronJob.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {cronJobEditPath} from "../../cronJobPaths.ts";
-import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
-import DisplayValue from "@baseModule/components/viewEngine/widgets/display/displayValue.tsx";
-import CopyTooltip from "@baseModule/components/custom/copyTooltip.tsx";
+import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
+import DisplayValue from "@coreModule/components/viewEngine/widgets/display/displayValue.tsx";
+import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
 import {IconCalendarClock, IconClock, IconCode, IconHistory} from "@tabler/icons-react";
 import CronJobSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx";
-import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
+import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Separator} from "@coreModule/components/ui/separator.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -17,7 +17,7 @@ import {
     CARD_INFO_ROWS_TWO_COL_CLASS,
     STATUS_BADGE_SUCCESS,
     STATUS_BADGE_WARNING,
-} from "@baseModule/components/entityPage/list/entityCard.constants.ts";
+} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
 import RunCronJob from "../actions/run.tsx";
 import PauseCronJob from "../actions/pause.tsx";
 import ResumeCronJob from "../actions/resume.tsx";

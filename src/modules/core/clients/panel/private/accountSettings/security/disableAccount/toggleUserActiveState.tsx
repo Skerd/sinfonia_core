@@ -1,14 +1,14 @@
 import {compose} from "redux";
 import {useEffect, useImperativeHandle, useState} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {UpdateAccountStatusFormType} from "armonia/src/modules/core/api/user/private/status/updateAccountStatus.form.type.ts";
 import {UpdateAccountStatusFormResponseType} from "armonia/src/modules/core/api/user/private/status/updateAccountStatus.form.response.type.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type ToggleUserActiveProps = WithLanguageType & WithAxiosType<UpdateAccountStatusFormResponseType, UpdateAccountStatusFormType> & {
     active: boolean;

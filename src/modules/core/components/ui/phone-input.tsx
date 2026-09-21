@@ -20,8 +20,8 @@ import {
 } from "@coreModule/components/ui/popover.tsx";
 import { ScrollArea } from "@coreModule/components/ui/scroll-area.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
-import useSelectedLanguage from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
-import type { LanguageDictionary } from "@baseModule/helpers/hooks/useSelectedLanguage.ts";
+import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
+import type { LanguageDictionary } from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
 const LANGUAGE_PATH = "src/modules/core/components/ui/phone-input.tsx";
 
 type PhoneInputProps = Omit<

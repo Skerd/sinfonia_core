@@ -1,5 +1,5 @@
 import type {ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import {getRegisteredWidgetTokens, getWidgetMeta} from "@baseModule/components/viewEngine/widgetRegistry.ts";
+import {getRegisteredWidgetTokens, getWidgetMeta} from "@coreModule/components/viewEngine/widgetRegistry.ts";
 
 /**
  * The palette, derived from the live widget registry.

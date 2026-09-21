@@ -1,20 +1,20 @@
 import {useEffect, useState, useCallback} from "react";
 import {useDispatch} from "react-redux";
-import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
-import {setNotificationNumber} from "@baseModule/helpers/redux/slices/notificationSlice.ts";
-import Header from "@baseModule/components/custom/header.tsx";
+import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import {setNotificationNumber} from "@coreModule/helpers/redux/slices/notificationSlice.ts";
+import Header from "@coreModule/components/custom/header.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {NotificationType} from "armonia/src/modules/core/api/user/private/notifications/notifications.dto.ts";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {ListNotificationsFormType} from "armonia/src/modules/core/api/user/private/notifications/listNotifications.form.type.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
-import InfiniteList from "@baseModule/components/custom/infiniteList";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
+import InfiniteList from "@coreModule/components/custom/infiniteList";
 import MarkAllAsReadButton from "@coreModule/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx";
-import {NotificationRow} from "@baseModule/components/custom/notifications/notificationRow.tsx";
+import {NotificationRow} from "@coreModule/components/custom/notifications/notificationRow.tsx";
 import {
     UnreadNotificationsFormResponseType
 } from "armonia/src/modules/core/api/user/private/notifications/unreadNotifications.form.response.type.ts";

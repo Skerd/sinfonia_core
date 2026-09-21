@@ -1,14 +1,14 @@
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {UserPen} from "lucide-react";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {useDispatch} from "react-redux";
-import {editUser} from "@baseModule/helpers/redux/slices/uiSlice.ts";
+import {editUser} from "@coreModule/helpers/redux/slices/uiSlice.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
-import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
+import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 
 type EditUserActionProps = WithLanguageType & {
     specificUserId?: string,

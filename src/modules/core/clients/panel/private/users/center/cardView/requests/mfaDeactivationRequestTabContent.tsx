@@ -1,7 +1,7 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Calendar, CircleSlash, Lock} from "lucide-react";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {CompanyUserRequestsType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {
@@ -13,8 +13,8 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import UnlockMfaDeactivationAction from "@coreModule/clients/panel/private/users/center/actions/unlockMfaDeactivation.tsx";
-import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
-import {InfoRowGroup} from "@coreModule/components/customUnchecked/infoRowGroup.tsx";
+import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
+import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
 
 function isMfaDeactivationLocked(mfaDeactivation: NonNullable<CompanyUserRequestsType["mfaDeactivation"]>): boolean {
     const lockedUntil = mfaDeactivation.lockedUntil;
@@ -80,7 +80,7 @@ function MfaDeactivationRequestTabContentInner({
             <div className="relative group/mfa-deactivation-row">
                 <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                        <InfoRowGroup className="flex-col !gap-y-1.5">
+                        <InfoRowGroup layout="stack">
                             <EntityCardRow
                                 icon={CircleSlash}
                                 label={resolveLanguageKey("attempts")}

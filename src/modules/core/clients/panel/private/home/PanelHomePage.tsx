@@ -2,19 +2,19 @@ import {compose} from "redux";
 import {useEffect, useMemo, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import withLanguage, {type WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@baseModule/helpers/redux/slices/chatSlice.ts";
-import {getModuleSidebarNavGroups} from "@baseModule/helpers/moduleContributions/loadSidebarContributions.ts";
-import {flattenPanelNavLinks, type FlatPanelNavLink} from "@baseModule/helpers/navigation/flattenPanelNavLinks.ts";
-import {filterNavGroups} from "@baseModule/helpers/navigation/filterNavByAccess.ts";
-import {useAccessHydrated, useAccessMap} from "@baseModule/helpers/context/accessContext.tsx";
+import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@coreModule/helpers/redux/slices/chatSlice.ts";
+import {getModuleSidebarNavGroups} from "@coreModule/helpers/moduleContributions/loadSidebarContributions.ts";
+import {flattenPanelNavLinks, type FlatPanelNavLink} from "@coreModule/helpers/navigation/flattenPanelNavLinks.ts";
+import {filterNavGroups} from "@coreModule/helpers/navigation/filterNavByAccess.ts";
+import {useAccessHydrated, useAccessMap} from "@coreModule/helpers/context/accessContext.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Empty, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import {LayoutGrid, Search} from "lucide-react";
-import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {CommandPaletteKbd, COMMAND_PALETTE_OPEN_EVENT} from "@baseModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
+import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {CommandPaletteKbd, COMMAND_PALETTE_OPEN_EVENT} from "@coreModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
 
 const TILE_COLORS = [
     {

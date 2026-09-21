@@ -1,13 +1,13 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {Country} from "armonia/src/modules/core/api/auxiliary/private/country/country.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconFlagPlus} from "@tabler/icons-react";
 import CountryCard from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx";
 import ViewStates from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewStates.tsx";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewCities.tsx";
-import EntityListPage from "@baseModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 function countryEditPath(country: Country) {
     const params = new URLSearchParams();

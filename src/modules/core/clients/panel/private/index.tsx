@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import {AccessProvider} from "@baseModule/helpers/context/accessContext.tsx";
-import {WebSocketProvider} from "@baseModule/helpers/context/webSocketContext.tsx";
-import {SiteRoomProvider} from "@baseModule/helpers/context/siteRoomContext.tsx";
-import {AuthenticationProvider} from "@baseModule/helpers/context/authenticationContext.tsx";
-import {TableConfigProvider} from "@baseModule/helpers/context/tableConfigContext.tsx";
-import {ViewConfigProvider} from "@baseModule/helpers/context/viewConfigContext.tsx";
+import {AccessProvider} from "@coreModule/helpers/context/accessContext.tsx";
+import {WebSocketProvider} from "@coreModule/helpers/context/webSocketContext.tsx";
+import {SiteRoomProvider} from "@coreModule/helpers/context/siteRoomContext.tsx";
+import {AuthenticationProvider} from "@coreModule/helpers/context/authenticationContext.tsx";
+import {TableConfigProvider} from "@coreModule/helpers/context/tableConfigContext.tsx";
+import {ViewConfigProvider} from "@coreModule/helpers/context/viewConfigContext.tsx";
 
 /**
  * Pathless layout route for the whole authenticated panel: mounts the provider

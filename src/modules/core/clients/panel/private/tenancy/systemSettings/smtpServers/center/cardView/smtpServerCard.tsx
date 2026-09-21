@@ -1,11 +1,11 @@
 import {compose} from "redux";
 import {memo, type RefObject} from "react";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {Mail, Power, Server} from "lucide-react";
-import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
-import DisplayValue from "@baseModule/components/viewEngine/widgets/display/displayValue.tsx";
+import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
+import DisplayValue from "@coreModule/components/viewEngine/widgets/display/displayValue.tsx";
 import SmtpServerSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import ActivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/activateSmtpServer.tsx";
@@ -15,8 +15,8 @@ import SetSmtpServerActiveDialog from "../dialogs/setSmtpServerActiveDialog.tsx"
 import TestSmtpConnectionDialog from "../dialogs/testSmtpConnectionDialog.tsx";
 import type {SmtpServer, TestSmtpConnectionResponse} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
 import {smtpServerEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers";
-import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
-import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
+import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
+import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
 
 type SmtpServerCardProps = WithLanguageType & {
     smtpServer: SmtpServer;

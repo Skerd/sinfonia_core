@@ -2,9 +2,9 @@ import {useMemo, useRef} from "react";
 import {z} from "zod";
 import type {FieldValues, Resolver} from "react-hook-form";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
-import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
-import FormViewRenderer from "@baseModule/components/viewEngine/FormViewRenderer.tsx";
+import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import FormViewRenderer from "@coreModule/components/viewEngine/FormViewRenderer.tsx";
 
 type GalleryFormMountProps = {
     config: ViewConfig;

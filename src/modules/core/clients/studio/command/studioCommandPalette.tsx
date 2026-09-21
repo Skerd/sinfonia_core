@@ -25,7 +25,7 @@ type StudioCommandPaletteProps = {
  * Reaching a view is otherwise: filter the model list, scroll, click the model, click the
  * view — across 327 targets. Typing "unit sheet" is the whole interaction instead.
  *
- * Mirrors the panel's own {@link import("@baseModule/components/custom/commandPalette/commandPalette.tsx")}
+ * Mirrors the panel's own {@link import("@coreModule/components/custom/commandPalette/commandPalette.tsx")}
  * — same `CommandDialog` primitives and the same ⌘K binding — so the two behave alike.
  */
 function viewKeyLabel(viewKey: string): string {

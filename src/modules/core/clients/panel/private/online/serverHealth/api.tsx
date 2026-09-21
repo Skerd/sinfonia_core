@@ -2,12 +2,12 @@ import {compose} from "redux";
 import {useSelector} from "react-redux";
 import {clsx} from "clsx";
 import {Server} from "lucide-react";
-import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
-import {formatDurationInDaysHoursOrMinutes} from "@baseModule/helpers/general/dateTime.ts";
-import {formatNumber} from "@baseModule/helpers/general/numbers.ts";
+import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general/dateTime.ts";
+import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 /** The API (Express) process runs as its own dedicated process (apiServer). */

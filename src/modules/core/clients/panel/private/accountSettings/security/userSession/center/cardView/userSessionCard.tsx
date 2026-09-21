@@ -1,14 +1,14 @@
 import {Clock, Globe2, Monitor, ShieldCheck} from "lucide-react";
-import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
+import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {UserSession} from "armonia/src/modules/core/api/user/private/userSession/userSession.dto.ts";
 import UserSessionSheetView from "@coreModule/clients/panel/private/accountSettings/security/userSession/center/sheetView/userSessionSheetView.tsx";
 import {UserSessionRevokeMenuItem} from "@coreModule/clients/panel/private/accountSettings/security/userSession/center/actions/userSessionActionMenu.tsx";
-import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
+import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
 
 function sessionLocation(session: UserSession) {
     const latest = session.geolocation?.[session.geolocation.length - 1];

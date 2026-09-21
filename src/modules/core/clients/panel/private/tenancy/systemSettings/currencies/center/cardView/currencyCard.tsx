@@ -1,17 +1,17 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {memo, type ReactNode, type RefObject} from "react";
 import {Hash} from "lucide-react";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
-import DisplayValue from "@baseModule/components/viewEngine/widgets/display/displayValue.tsx";
+import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
+import DisplayValue from "@coreModule/components/viewEngine/widgets/display/displayValue.tsx";
 import CurrencySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {Currency} from "armonia/src/modules/core/api/finance/private/currency/currency.dto.ts";
 import {currencyEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/currencies";
-import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
-import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
+import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
+import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
 
 type CurrencyCardProps = WithLanguageType & {
     currency: Currency;

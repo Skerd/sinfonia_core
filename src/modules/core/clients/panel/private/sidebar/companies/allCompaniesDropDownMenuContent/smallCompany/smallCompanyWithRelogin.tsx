@@ -1,10 +1,10 @@
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {useKeyboardShortcuts} from "@baseModule/helpers/hooks/useKeyboardShortcut.ts";
+import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
-import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
-import {useRelogin} from "@baseModule/helpers/hooks/useRelogin.ts";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import {useRelogin} from "@coreModule/helpers/hooks/useRelogin.ts";
 
 type SmallCompanyWithReLoginProps = {
     company: BasicCompanyInfoFormResponseType,

@@ -27,9 +27,9 @@ import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Empty, EmptyDescription, EmptyHeader, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
-import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
-import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
+import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {StudioModelEntry} from "../catalog/useStudioCatalog.ts";
 import {useStudioDrafts} from "../draft/studioDraftProvider.tsx";
@@ -76,7 +76,7 @@ import {
     getRegisteredWidgetTokens,
     getWidgetMeta,
     resolveIcon,
-} from "@baseModule/components/viewEngine/widgetRegistry.ts";
+} from "@coreModule/components/viewEngine/widgetRegistry.ts";
 import NodeInspector from "../inspector/nodeInspector.tsx";
 import DeviceFrame from "../preview/deviceFrame.tsx";
 import DeviceToggle from "../preview/deviceToggle.tsx";

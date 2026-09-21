@@ -1,13 +1,13 @@
 import {CheckCircle2, Clock, Globe2, MonitorSmartphone, XCircle} from "lucide-react";
-import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
+import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {LoginHistory} from "armonia/src/modules/core/api/user/private/loginHistory/loginHistory.dto.ts";
 import LoginHistorySheetView from "@coreModule/clients/panel/private/accountSettings/security/loginHistory/center/sheetView/loginHistorySheetView.tsx";
-import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
+import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
 
 export type LoginHistoryCardProps = {
     entry: LoginHistory;

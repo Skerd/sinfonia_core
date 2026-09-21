@@ -3,8 +3,8 @@ import { Button } from '@coreModule/components/ui/button.tsx'
 import { type Column } from '@tanstack/react-table'
 import {ArrowDownIcon, ArrowUpIcon, CaretSortIcon, EyeNoneIcon} from '@radix-ui/react-icons'
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger} from '@coreModule/components/ui/dropdown-menu.tsx'
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import type {TranslationValue} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import type {TranslationValue} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {HTMLAttributes} from "react";
 

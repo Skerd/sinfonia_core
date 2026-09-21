@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import ServerHealth from "./serverHealth";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Separator} from "@coreModule/components/ui/separator.tsx";
 import ServerStats from "@coreModule/clients/panel/private/online/serverStats";
 

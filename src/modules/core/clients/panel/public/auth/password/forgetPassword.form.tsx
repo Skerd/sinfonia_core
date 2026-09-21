@@ -5,13 +5,13 @@ import {useForm} from "react-hook-form";
 import {OctagonAlert} from "lucide-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {getClientConfig} from "@baseModule/helpers/general/config.ts";
+import {getClientConfig} from "@coreModule/helpers/general/config.ts";
 import { ArrowRight, Loader2 } from 'lucide-react';
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useImperativeHandle, useState} from 'react';
 import {SiTicktick} from "@icons-pack/react-simple-icons";
-import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@coreModule/components/ui/form.tsx';
 import {ForgotPasswordFormType} from "armonia/src/modules/core/api/user/public/forgotPassword/forgotPassword.form.type.ts";
 import {ForgotPasswordFormResponseType} from "armonia/src/modules/core/api/user/public/forgotPassword/forgotPassword.form.response.type.ts";
@@ -19,7 +19,7 @@ import GoBackToLogin from "@coreModule/clients/panel/public/auth/shared/goBackTo
 import {CardFooter, Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import DontHaveAccountSignUp from "@coreModule/clients/panel/public/auth/shared/dontHaveAccountSignUp.tsx";
 import {forgotPasswordFormSchema} from "armonia/src/modules/core/api/user/public/forgotPassword/forgotPassword.form.validator.ts";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 
 const EMPTY_FORM_VALUES: ForgotPasswordFormType = {
     email: "",

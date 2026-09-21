@@ -11,7 +11,7 @@ import {
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button, buttonVariants } from "@coreModule/components/ui/button.tsx"
 import { IconChevronLeft, IconChevronRight, IconChevronDown } from "@tabler/icons-react"
-import { useOutsideClick } from "@baseModule/helpers/hooks/useOutsideClick.ts"
+import { useOutsideClick } from "@coreModule/helpers/hooks/useOutsideClick.ts"
 
 /** Year dropdown span when callers do not set explicit navigation bounds. */
 export const CALENDAR_DROPDOWN_YEARS_BACK = 100

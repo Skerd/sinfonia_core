@@ -1,6 +1,6 @@
 import {compose} from "redux";
-import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {IconMailPlus} from "@tabler/icons-react";
 import type {SmtpServer, TestSmtpConnectionResponse} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
@@ -11,7 +11,7 @@ import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/syst
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
 import SetSmtpServerActiveDialog from "./center/dialogs/setSmtpServerActiveDialog.tsx";
 import TestSmtpConnectionDialog from "./center/dialogs/testSmtpConnectionDialog.tsx";
-import EntityListPage from "@baseModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 export function smtpServerEditPath(s: SmtpServer) {
     const params = new URLSearchParams();
