@@ -192,7 +192,7 @@ export const coreCompoundFormWidgetRenderers: Record<string, CompoundFormWidgetR
     },
 
     "#ObjectIdChipsInput": (args) => {
-        const {Widget, binding, extra} = args;
+        const {Widget, binding, extra, resolveLanguageKey} = args;
         const wp = binding.widgetProps ?? {};
         return (
             <Widget
@@ -206,6 +206,7 @@ export const coreCompoundFormWidgetRenderers: Record<string, CompoundFormWidgetR
                 selectPageSizeEdit={wp.selectPageSizeEdit}
                 labelRefFormExtraKey={wp.labelRefFormExtraKey}
                 formExtras={extra?.formExtras}
+                label={labelOf(binding, resolveLanguageKey)}
             />
         );
     },

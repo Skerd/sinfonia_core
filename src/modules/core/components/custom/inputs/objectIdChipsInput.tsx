@@ -3,7 +3,7 @@ import type { MutableRefObject } from "react";
 import { useFormContext, type FieldPath, type FieldValues, type PathValue } from "react-hook-form";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import { Badge } from "@coreModule/components/ui/badge.tsx";
-import { FormField, FormItem, FormMessage } from "@coreModule/components/ui/form.tsx";
+import { FormField, FormItem, FormLabel, FormMessage } from "@coreModule/components/ui/form.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import { ApiSelect } from "@coreModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
@@ -33,6 +33,8 @@ export type ObjectIdChipsInputProps = {
      */
     labelRefFormExtraKey?: string;
     formExtras?: Record<string, unknown>;
+    /** Already-resolved field label; omitted renders no label. */
+    label?: string;
 };
 
 function seedLabelsFromOptions(
@@ -90,6 +92,7 @@ export function ObjectIdChipsInput({
     selectPageSizeEdit = 200,
     labelRefFormExtraKey,
     formExtras,
+    label,
 }: ObjectIdChipsInputProps) {
     const form = useFormContext<FieldValues>();
     const fieldName = name as FieldPath<FieldValues>;
@@ -164,6 +167,7 @@ export function ObjectIdChipsInput({
             name={fieldName}
             render={() => (
                 <FormItem className="min-w-0">
+                    {label && <FormLabel>{label}</FormLabel>}
                     <ApiSelect
                         apiUrl={apiUrl}
                         method={method}
