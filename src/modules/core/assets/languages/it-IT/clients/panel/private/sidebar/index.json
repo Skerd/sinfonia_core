@@ -122,5 +122,14 @@
         }
       }
     }
+  },
+  "commandPalette": {
+    "title": "Palette comandi",
+    "description": "Vai a qualsiasi pagina",
+    "placeholder": "Cerca pagine…",
+    "empty": "Nessuna pagina corrispondente",
+    "navigate": "per navigare",
+    "select": "per aprire",
+    "close": "per chiudere"
   }
 }

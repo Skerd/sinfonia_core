@@ -10,6 +10,7 @@ import {describe, expect, it} from "vitest";
  */
 const SHARED_DICTIONARIES: Record<string, string[]> = {
     "src/modules/core/clients/panel/private/home/PanelHomePage.tsx": ["src/modules/core/clients/panel/private/sidebar/index.tsx"],
+    "src/modules/core/components/custom/commandPalette/commandPalette.tsx": ["src/modules/core/clients/panel/private/sidebar/index.tsx"],
     "src/modules/core/components/customUnchecked/polygonSelector.tsx": ["src/modules/core/components/custom/polygonSelector.tsx"],
     "src/modules/core/components/entityPage/filters/filterBuilder/filterBuilder.tsx": ["src/modules/core/components/custom/filterBuilder/filterBuilder.tsx"],
     "src/modules/core/components/entityPage/filters/filterBuilder/filterBuilderContext.tsx": ["src/modules/core/components/custom/filterBuilder/filterBuilderContext.tsx"],

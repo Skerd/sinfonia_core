@@ -597,7 +597,14 @@ const withDebug = (
     resourceIds?: DebugResourceIds,
 ) => (WrappedComponent: any) => {
 
-    const showDebugInfo = typeof window !== "undefined" && window.location?.host?.includes("localhost") && !hideDebug;
+    /* `?hardDebug=1` forces the overlay on (and the unchecked ratio badge) even when callers pass hideDebug. */
+    const hardDebug =
+        typeof window !== "undefined" &&
+        new URLSearchParams(window.location.search).get("hardDebug") === "1";
+    const effectiveChecked = hardDebug ? false : checked;
+    const effectiveHideDebug = hardDebug ? false : hideDebug;
+
+    const showDebugInfo = typeof window !== "undefined" && window.location?.host?.includes("localhost") && !effectiveHideDebug;
 
     // In non-debug environments, skip all wrapper state/hooks entirely.
     if (!showDebugInfo) {
@@ -640,14 +647,15 @@ const withDebug = (
             <>
                 <div
                     className="flex items-center gap-x-0.5 z-10 px-0.5 py-1 border bg-muted rounded-lg text-xs"
+                    style={effectiveChecked ? {border: "2px solid red"} : {}}
                     onClick={(e) => {
                         e.stopPropagation();
                         e.preventDefault();
                     }}
                 >
-                    {normalizedResourceIds}
+                    [{normalizedResourceIds?.join(",")}]
                         {
-                            checked ?
+                            effectiveChecked ?
                                 <CircleCheckBig color="green" size={size} className="top-0"/>
                                 :
                                 <div className="text-[10px]/[8px] font-bold cursor-default opacity-100">
@@ -907,14 +915,17 @@ const withDebug = (
 
                         <AccessDebugPopover resourceIds={normalizedResourceIds} size={size}/>
                 </div>
-                <WrappedComponent
-                    {...props}
-                    {...applyDebugStateOverrides(props, {
-                        testLoading: testLoadings,
-                        testError,
-                        testEmptyData,
-                    })}
-                />
+
+                <div style={hardDebug ? {border: "1px dashed red"} : {}}>
+                    <WrappedComponent
+                        {...props}
+                        {...applyDebugStateOverrides(props, {
+                            testLoading: testLoadings,
+                            testError,
+                            testEmptyData,
+                        })}
+                    />
+                </div>
             </>
         )
     }

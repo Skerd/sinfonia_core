@@ -886,7 +886,7 @@ const ComposedCardAndTableView = compose(
         },
         true
     ),
-    withDebug(false, false)
+    withDebug(true, true)
 )(CountryCenterView);
 
 /** Consumer-facing props (HOC-injected props omitted). */

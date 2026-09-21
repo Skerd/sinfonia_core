@@ -122,5 +122,14 @@
         }
       }
     }
+  },
+  "commandPalette": {
+    "title": "Befehlspalette",
+    "description": "Zu einer Seite springen",
+    "placeholder": "Seiten suchen…",
+    "empty": "Keine passenden Seiten",
+    "navigate": "zum Navigieren",
+    "select": "zum Öffnen",
+    "close": "zum Schliessen"
   }
 }

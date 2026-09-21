@@ -24,6 +24,21 @@ describe("withDebug", () => {
         expect(withDebug(true, true, "cities")(View)).toBe(View);
     });
 
+    it("forces the debug overlay on when hardDebug=1 even if hideDebug is true", () => {
+        const url = new URL(window.location.href);
+        url.searchParams.set("hardDebug", "1");
+        window.history.replaceState({}, "", url);
+
+        const Wrapped = withDebug(true, true)(View);
+        expect(Wrapped).not.toBe(View);
+
+        render(<Wrapped data="rows"/>);
+        expect(screen.getByText("0/4")).toBeInTheDocument();
+
+        url.searchParams.delete("hardDebug");
+        window.history.replaceState({}, "", url);
+    });
+
     /* jsdom serves the suite from localhost, so `hideDebug: false` takes the debug path. */
     it("renders the debug badge above the component when shown", () => {
         const Wrapped = withDebug(false, false)(View);
