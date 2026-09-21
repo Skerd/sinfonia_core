@@ -1,5 +1,5 @@
 import {Save} from "lucide-react";
-import {createGenericEditPage} from "@baseModule/components/entityPage/createGenericEditPage.tsx";
+import {createGenericEditPage} from "@baseModule/components/entityPage/pages/createGenericEditPage.tsx";
 import {editSmtpServerFormSchema} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/editSmtpServer.form.validator.ts";
 import type {SmtpServer} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
 import type {EditSmtpServerFormType} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.schema-def.ts";

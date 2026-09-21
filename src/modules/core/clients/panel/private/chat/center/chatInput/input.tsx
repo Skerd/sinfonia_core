@@ -5,7 +5,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {Mention, MentionsInput} from "react-mentions";
-import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
+import SingleFile from "@baseModule/components/viewEngine/widgets/media/singleFile.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import DeleteMessages from "@coreModule/clients/panel/private/chat/center/chatInput/actions/deleteMessages.tsx";
@@ -23,7 +23,7 @@ import {MessageTypeWithParticipants} from "armonia/src/modules/core/api/user/pri
 import type {ChannelUser} from "armonia/src/modules/core/types";
 import {ChangeEvent, KeyboardEvent} from "react";
 import {WebSocketFEMessageCodes} from "armonia/src/modules/core/websocket/types.ts";
-import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
+import UserAvatar from "@baseModule/components/custom/avatar/userAvatar.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {
     mentionsMarkupToPlainDisplay,

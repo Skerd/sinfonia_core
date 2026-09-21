@@ -1,0 +1,30 @@
+import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
+import {compose} from "redux";
+import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
+import {Eye} from "lucide-react";
+import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import ActionDropdownItem from "@baseModule/components/viewEngine/widgets/actions/dropdowns/actionDropdownItem.tsx";
+
+type ViewDropdownProps = WithLanguageType & {
+    onAction: (action: string) => void;
+    accessModel: string;
+};
+
+function ViewDropdown({resolveLanguageKey, onAction, accessModel}: ViewDropdownProps) {
+    const {read} = useAccess(accessModel);
+    return (
+        <ActionDropdownItem
+            label={resolveLanguageKey("title")}
+            Icon={Eye}
+            shortcutKey="U"
+            shortcutLabel="U"
+            allowed={!!read}
+            onSelect={() => onAction("view")}
+        />
+    );
+}
+
+export default compose(
+    withLanguage("src/modules/core/components/custom/actions/dropdowns/viewDropdown.tsx"),
+    withDebug(true, true)
+)(ViewDropdown);

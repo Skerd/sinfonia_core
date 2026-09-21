@@ -15,7 +15,7 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import {Input} from "@coreModule/components/ui/input.tsx";
-import {SimpleSelect} from "@coreModule/components/custom/simpleSelect";
+import {SimpleSelect} from "@baseModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
 import {
     Table,
     TableBody,

@@ -7,8 +7,8 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import {ContextMenu, ContextMenuContent, ContextMenuTrigger} from "@coreModule/components/ui/context-menu.tsx";
 import {Forward, CircleSlash, Pin, User, Calendar, Check, CheckCheck} from "lucide-react";
 import {isPeekingWebsiteChannel, toggleDeleteMessageId, updateOpenDelete} from "@baseModule/helpers/redux/slices/chatSlice.ts";
-import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
-import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
+import UserAvatar from "@baseModule/components/custom/avatar/userAvatar.tsx";
+import TruncatedValue from "@baseModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import DeleteMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/deleteMessage.tsx";
 import PinMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/pinMessage.tsx";
 import UnpinMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/unpinMessage.tsx";
@@ -26,13 +26,13 @@ import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import EditMessage from "@coreModule/clients/panel/private/chat/center/messages/message/contextActions/editMessage.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
-import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
+import SingleFile from "@baseModule/components/viewEngine/widgets/media/singleFile.tsx";
 import {MessageSenderType, MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 
 const MAX_FILES = 2;
@@ -593,7 +593,7 @@ function Message({
                                     {
                                         !!message.pinned &&
                                         <>
-                                            <DisplayRow
+                                            <EntityCardRow
                                                 className="text-background"
                                                 icon={User}
                                                 label={resolveLanguageKey("pinnedBy")}
@@ -601,7 +601,7 @@ function Message({
                                                 type="user"
                                                 value={message?.pinned.user}
                                             />
-                                            <DisplayRow
+                                            <EntityCardRow
                                                 className="text-background"
                                                 icon={Calendar}
                                                 label={resolveLanguageKey("pinnedAt")}

@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/dialogs/setMessagingProviderActiveDialog.tsx",
+  "activate": {
+    "title": "Activate messaging provider",
+    "description": "This provider will be used for outbound SMS and WhatsApp messages."
+  },
+  "deactivate": {
+    "title": "Deactivate messaging provider",
+    "description": "This provider will no longer be used for outbound messages until activated again."
+  }
+}

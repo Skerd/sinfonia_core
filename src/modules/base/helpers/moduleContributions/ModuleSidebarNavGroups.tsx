@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { NavGroup } from "@coreModule/components/custom/navGroup.tsx";
+import { NavGroup } from "@baseModule/components/navigation/navGroup.tsx";
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import type { NavGroup as NavGroupDef } from "@baseModule/helpers/types/sidebarNav.types.ts";
 import { getModuleSidebarNavGroups } from "@baseModule/helpers/moduleContributions/loadSidebarContributions.ts";

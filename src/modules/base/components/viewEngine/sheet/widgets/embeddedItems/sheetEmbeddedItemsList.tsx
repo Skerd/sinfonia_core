@@ -3,7 +3,7 @@ import { compose } from "redux";
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withLanguage, { WithLanguageType } from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
+import DisplayCard from "@baseModule/components/viewEngine/widgets/display/displayCard.tsx";
 import ValueNotSet from "@baseModule/components/custom/valueNotSet.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import { resolveIcon } from "../../../widgetRegistry.ts";

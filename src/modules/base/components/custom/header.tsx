@@ -4,7 +4,7 @@ import {usePageHeader} from "@baseModule/helpers/context/pageHeaderContext.tsx";
 import {usePageContextCrumbs} from "@baseModule/helpers/hooks/usePageContextCrumbs.ts";
 import {PageHelp, type PageHelpContent} from "@baseModule/components/custom/pageHelp.tsx";
 import {PageTitle} from "@baseModule/helpers/types/pageTitle.types.ts";
-import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
+import TruncatedValue from "@baseModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 
 type SimpleHeaderProps = {
     /**

@@ -16,7 +16,7 @@ vi.mock("@baseModule/helpers/context/accessContext.tsx", () => ({
 vi.mock("@baseModule/helpers/moduleContributions/loadSidebarContributions.ts", () => ({
     getModuleSidebarNavGroups: state.getGroups,
 }));
-vi.mock("@coreModule/components/custom/navGroup.tsx", () => ({
+vi.mock("@baseModule/components/navigation/navGroup.tsx", () => ({
     NavGroup: ({title, items}: {title: string; items: unknown[]}) => <section aria-label={title}>{items.length}</section>,
 }));
 

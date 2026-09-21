@@ -3,12 +3,12 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {memo, type RefObject} from "react";
 import {City} from "armonia/src/modules/core/api/auxiliary/private/city/city.dto.ts";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import DisplayValue from "@coreModule/components/custom/displayValue/displayValue.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import DisplayValue from "@baseModule/components/viewEngine/widgets/display/displayValue.tsx";
 import CitySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconFlag, IconGridDots} from "@tabler/icons-react";
-import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
+import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 
 function cityEditPath(
@@ -94,13 +94,13 @@ const CityCard = memo(function CityCard({
                 <>
                     <EntityCard.Header titlePath="name" title={entity.name} />
                     <EntityCard.Body>
-                        <DisplayRow
+                        <EntityCardRow
                             icon={IconGridDots}
                             label={resolveLanguageKey("state")}
                             path="state"
                             value={entity.state?.name}
                         />
-                        <DisplayRow
+                        <EntityCardRow
                             icon={IconFlag}
                             label={resolveLanguageKey("country")}
                             path="country"

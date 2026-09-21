@@ -10,15 +10,15 @@ import {Link, useLocation, useSearchParams} from "react-router-dom";
 import withLanguage, {WithLanguageType, type ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {PageHeaderProvider, usePageHeader} from "@baseModule/helpers/context/pageHeaderContext.tsx";
 import {renderCenterPanelContent} from "@coreModule/clients/panel/entryPoint/routeConfig.tsx";
-import NotificationBell from "@coreModule/components/custom/notificationBell";
+import NotificationBell from "@baseModule/components/custom/notifications/notificationBell.tsx";
 import {useIsMobile} from "@baseModule/helpers/hooks/useMobile.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {resolveCenterPanelClassName} from "@baseModule/helpers/moduleContributions/loadPanelLayoutContributions.ts";
 import {Fragment, useMemo, useState} from "react";
-import CommandPalette from "@coreModule/components/custom/commandPalette.tsx";
+import CommandPalette from "@baseModule/components/custom/commandPalette/commandPalette.tsx";
+import {CommandPaletteKbd} from "@baseModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {Kbd, KbdGroup} from "@coreModule/components/ui/kbd.tsx";
 import {Search} from "lucide-react";
 
 type CenterPanelProps = WithLanguageType;
@@ -164,10 +164,7 @@ function CenterPanel({resolveLanguageKey}: CenterPanelProps){
                                 aria-label={String(resolveLanguageKey("commandPalette.title") || "Open command palette")}
                             >
                                 <Search className="size-4" aria-hidden />
-                                <KbdGroup className="pointer-events-none">
-                                    <Kbd>⌘</Kbd>
-                                    <Kbd>K</Kbd>
-                                </KbdGroup>
+                                <CommandPaletteKbd />
                             </Button>
                             <NotificationBell />
                             <Separator orientation="vertical" className="h-5 shrink-0" />

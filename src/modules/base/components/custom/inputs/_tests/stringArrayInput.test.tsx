@@ -7,7 +7,7 @@ import {FormProvider, useForm} from "react-hook-form";
 // which reaches for the redux store; the harness fake stands in for it.
 vi.mock("@baseModule/helpers/hocs/withLanguage.tsx", async (importOriginal) => ({
     ...(await importOriginal<Record<string, unknown>>()),
-    default: (await import("@baseModule/components/viewEngine/__tests__/harness.tsx")).fakeWithLanguage,
+    default: (await import("@baseModule/components/viewEngine/_tests/harness.tsx")).fakeWithLanguage,
 }));
 
 const {StringArrayInput} = await import("@baseModule/components/custom/inputs/stringArrayInput.tsx");

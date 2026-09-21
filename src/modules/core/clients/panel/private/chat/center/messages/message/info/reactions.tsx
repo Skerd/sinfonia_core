@@ -5,7 +5,7 @@ import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
+import UserAvatar from "@baseModule/components/custom/avatar/userAvatar.tsx";
 import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {formatDate} from "@baseModule/helpers/general/dateTime.ts";
 import {getName} from "@baseModule/helpers/general/names.ts";

@@ -1,4 +1,4 @@
-import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
+import DisplayCard from "@baseModule/components/viewEngine/widgets/display/displayCard.tsx";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {bootstrapLinkedSheetData, resolvePath} from "../../../engine/refs.ts";
 import {iconOrUndefined} from "../../../registry/icons.ts";

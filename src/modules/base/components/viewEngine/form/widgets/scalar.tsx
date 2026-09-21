@@ -2,7 +2,7 @@ import {forwardRef, type ChangeEvent, type ComponentType, type HTMLAttributes, t
 import {useWatch} from "react-hook-form";
 import type {FieldBinding} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import FormMaxLengthControl from "@coreModule/components/custom/formMaxLengthControl.tsx";
+import FormMaxLengthControl from "@baseModule/components/viewEngine/widgets/inputs/formMaxLengthControl.tsx";
 import {omitProps, wpText} from "../../engine/widgetProps.ts";
 import type {FormWidgetExtra} from "../types.ts";
 import {clearedValue, orCleared} from "./emptyValue.ts";

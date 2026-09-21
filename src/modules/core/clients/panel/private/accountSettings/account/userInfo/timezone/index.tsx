@@ -17,7 +17,7 @@ import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.t
 import UpdateTimeZone from "@coreModule/clients/panel/private/accountSettings/account/userInfo/timezone/updateTimeZone.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import {SimpleSelect, SimpleSelectOption} from "@coreModule/components/custom/simpleSelect";
+import {SimpleSelect, SimpleSelectOption} from "@baseModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
 
 type AccountProfileTimeZoneProps = WithLanguageType & WithAxiosType<UserProfileTimezoneFormResponseType> & {
     onTimeZoneUpdate?: Function,

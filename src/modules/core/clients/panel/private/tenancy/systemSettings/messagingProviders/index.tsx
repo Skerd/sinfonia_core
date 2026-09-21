@@ -1,7 +1,7 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import EntityListPage from "@baseModule/components/entityPage/entityListPage.tsx";
+import EntityListPage from "@baseModule/components/entityPage/pages/entityListPage.tsx";
 import {MessageSquarePlus} from "lucide-react";
 import type {MessagingProvider} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
@@ -10,8 +10,8 @@ import MessagingProviderSheetView from "@coreModule/clients/panel/private/tenanc
 import ActivateMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/activateMessagingProvider.tsx";
 import DeactivateMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/deactivateMessagingProvider.tsx";
 import TestMessagingProviderConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/testMessagingProviderConnection.tsx";
-import SetMessagingProviderActiveDialog from "@coreModule/components/custom/messagingProviders/setMessagingProviderActiveDialog.tsx";
-import TestMessagingProviderConnectionDialog from "@coreModule/components/custom/messagingProviders/testMessagingProviderConnectionDialog.tsx";
+import SetMessagingProviderActiveDialog from "./center/dialogs/setMessagingProviderActiveDialog.tsx";
+import TestMessagingProviderConnectionDialog from "./center/dialogs/testMessagingProviderConnectionDialog.tsx";
 
 export function messagingProviderEditPath(provider: MessagingProvider) {
     const params = new URLSearchParams();

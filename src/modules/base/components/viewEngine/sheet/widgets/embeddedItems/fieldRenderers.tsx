@@ -1,7 +1,7 @@
 import type { Media } from "armonia/src/modules/core/types";
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
-import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
-import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
+import ExpandableText from "@baseModule/components/viewEngine/widgets/display/expandableText.tsx";
+import DisplayCard from "@baseModule/components/viewEngine/widgets/display/displayCard.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import { resolveIcon, resolveWidget } from "../../../widgetRegistry.ts";
 import { resolvePath } from "../../../engine/refs.ts";

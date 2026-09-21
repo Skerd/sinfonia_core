@@ -21,7 +21,7 @@ import {
 } from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
 import {ActionMessage, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import PermissionsTable from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/permissionsTable.tsx";
-import {SimpleSelect} from "@coreModule/components/custom/simpleSelect";
+import {SimpleSelect} from "@baseModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";

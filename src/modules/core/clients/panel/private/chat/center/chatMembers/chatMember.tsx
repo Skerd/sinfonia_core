@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
+import UserAvatar from "@baseModule/components/custom/avatar/userAvatar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {ChevronDown, Flag, Users} from "lucide-react";

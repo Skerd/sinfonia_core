@@ -125,6 +125,7 @@ function ChartTooltipContent({
   labelFormatter,
   labelClassName,
   formatter,
+  valueFormatter,
   color,
   nameKey,
   labelKey,
@@ -135,6 +136,8 @@ function ChartTooltipContent({
     indicator?: "line" | "dot" | "dashed"
     nameKey?: string
     labelKey?: string
+    /** Formats the numeric value only; keeps default indicator / label markup. */
+    valueFormatter?: (value: number) => React.ReactNode
   } & Omit<
     RechartsPrimitive.DefaultTooltipContentProps<
       TooltipValueType,
@@ -252,9 +255,7 @@ function ChartTooltipContent({
                       </div>
                       {item.value != null && (
                         <span className="font-mono font-medium text-foreground tabular-nums">
-                          {typeof item.value === "number"
-                            ? item.value.toLocaleString()
-                            : String(item.value)}
+                          {formatChartTooltipValue(item.value, valueFormatter)}
                         </span>
                       )}
                     </div>
@@ -323,6 +324,18 @@ function ChartLegendContent({
         })}
     </div>
   )
+}
+
+function formatChartTooltipValue(
+  value: TooltipValueType,
+  valueFormatter?: (value: number) => React.ReactNode
+) {
+  if (valueFormatter) {
+    const numeric = typeof value === "number" ? value : Number(value)
+    return Number.isFinite(numeric) ? valueFormatter(numeric) : String(value)
+  }
+
+  return typeof value === "number" ? value.toLocaleString() : String(value)
 }
 
 function getPayloadConfigFromPayload(

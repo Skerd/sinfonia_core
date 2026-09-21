@@ -1,12 +1,13 @@
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {ArrowLeft, MoreVertical} from "lucide-react";
+import {ArrowLeft, MoreVertical, User} from "lucide-react";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {Avatar} from "@coreModule/components/ui/avatar.tsx";
+import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
+import {AvatarGroup, AvatarGroupTooltip} from "@coreModule/components/animate-ui/components/animate/avatar-group.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
-import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
+import UserAvatar from "@baseModule/components/custom/avatar/userAvatar.tsx";
 import {ChannelUser} from "armonia/src/modules/core/types";
 import {Card} from "@coreModule/components/ui/card.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
@@ -19,6 +20,7 @@ import {openChannel} from "@baseModule/helpers/redux/slices/chatSlice.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {getName} from "@baseModule/helpers/general/names.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
+import {MEDIA_BASE_URL} from "@baseModule/helpers/constants/media.constants.ts";
 
 type MessageHeaderProps = {
     defaultTitle: string
@@ -49,8 +51,12 @@ function ChatHeader({}: MessageHeaderProps ){
         return <HiddenElement />
     }
 
+    const groupUsers = channel.users ?? [];
+    const visibleGroupUsers = groupUsers.slice(0, howManyAvatars);
+    const overflowGroupUsers = groupUsers.slice(howManyAvatars);
+
     return (
-        <div className='bg-card mb-1 flex flex-none items-center justify-between py-1.5 md:p-2 shadow-lg sm:rounded-t-md'>
+        <div className='bg-card mb-1 flex flex-none items-center justify-between overflow-visible pt-3 pb-1.5 md:px-2 md:pb-2 shadow-lg sm:rounded-t-md'>
 
             <div className='flex'>
                 <div className="sm:hidden">
@@ -64,46 +70,64 @@ function ChatHeader({}: MessageHeaderProps ){
                             read.users &&
                             <>
                                 {
-                                    channel?.metaData?.isGroup ?
-                                    <div className="flex flex-row flex-wrap items-center gap-12">
-                                        <div className="*:data-[slot=avatar]:ring-background flex -gap-x-4 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
-                                            {
-                                                channel.users?.map((channelUser, index) => {
-                                                    if( index > howManyAvatars && howManyAvatars < channel.users.length ){
-                                                        return <></>
-                                                    }
-                                                    if( index === howManyAvatars){
-                                                        return (
-                                                            <Popover>
-                                                                <PopoverTrigger asChild>
-                                                                    <Avatar className="flex size-10 items-center justify-center border bg-muted hover:cursor-pointer">
-                                                                        +{channel.users.length - howManyAvatars}
-                                                                    </Avatar>
-                                                                </PopoverTrigger>
-                                                                <PopoverContent asChild>
-                                                                    <Card className="flex w-fit items-center gap-2 max-h-80 overflow-y-auto">
-                                                                        {
-                                                                            channel.users.map((channelUser, index) => {
-                                                                                if( index >= howManyAvatars ){
-                                                                                    return (
-                                                                                        <UserAvatar user={channelUser} onClick={() => {setViewChannelUserId(channelUser._id)}}/>
-                                                                                    )
-                                                                                }
-                                                                                return <></>
-                                                                            })
-                                                                        }
-                                                                    </Card>
-                                                                </PopoverContent>
-                                                            </Popover>
-                                                        )
-                                                    }
-                                                    return (
-                                                        <UserAvatar user={channelUser} avatarClassName="hover:z-1" onClick={() => {setViewChannelUserId(channelUser._id)}}/>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                    </div>
+                                    channel.metaData.isGroup ?
+                                    <AvatarGroup className="relative z-20 h-10 -space-x-3 overflow-visible" translate="-12px">
+                                        {[
+                                            ...visibleGroupUsers.map((channelUser) => {
+                                                const fullName = getName(channelUser);
+                                                return (
+                                                    <Avatar
+                                                        key={channelUser._id}
+                                                        className="size-10 border-2 border-background hover:cursor-pointer"
+                                                        onClick={() => {setViewChannelUserId(channelUser._id)}}
+                                                    >
+                                                        {
+                                                            channelUser.photo
+                                                            ? <AvatarImage src={`${MEDIA_BASE_URL}${channelUser.photo}`} alt={`${fullName} profile photo`} />
+                                                            : null
+                                                        }
+                                                        <AvatarFallback>
+                                                            <User size={18} />
+                                                        </AvatarFallback>
+                                                        <AvatarGroupTooltip>
+                                                            {fullName}
+                                                        </AvatarGroupTooltip>
+                                                    </Avatar>
+                                                );
+                                            }),
+                                            ...(
+                                                overflowGroupUsers.length > 0
+                                                ? [
+                                                    <Popover key="overflow">
+                                                        <PopoverTrigger asChild>
+                                                            <Avatar className="size-10 border-2 border-background bg-muted hover:cursor-pointer">
+                                                                <AvatarFallback className="bg-muted text-sm text-muted-foreground">
+                                                                    +{overflowGroupUsers.length}
+                                                                </AvatarFallback>
+                                                                <AvatarGroupTooltip>
+                                                                    +{overflowGroupUsers.length}
+                                                                </AvatarGroupTooltip>
+                                                            </Avatar>
+                                                        </PopoverTrigger>
+                                                        <PopoverContent asChild>
+                                                            <Card className="flex w-fit items-center gap-2 max-h-80 overflow-y-auto">
+                                                                {
+                                                                    overflowGroupUsers.map((channelUser) => (
+                                                                        <UserAvatar
+                                                                            key={channelUser._id}
+                                                                            user={channelUser}
+                                                                            onClick={() => {setViewChannelUserId(channelUser._id)}}
+                                                                        />
+                                                                    ))
+                                                                }
+                                                            </Card>
+                                                        </PopoverContent>
+                                                    </Popover>,
+                                                ]
+                                                : []
+                                            ),
+                                        ]}
+                                    </AvatarGroup>
                                     :
                                     <>
                                         {

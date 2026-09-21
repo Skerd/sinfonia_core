@@ -11,8 +11,8 @@ import {messagingProviderEditPath} from "@coreModule/clients/panel/private/tenan
 import ActivateMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/activateMessagingProvider.tsx";
 import DeactivateMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/deactivateMessagingProvider.tsx";
 import TestMessagingProviderConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/testMessagingProviderConnection.tsx";
-import SetMessagingProviderActiveDialog from "@coreModule/components/custom/messagingProviders/setMessagingProviderActiveDialog.tsx";
-import TestMessagingProviderConnectionDialog from "@coreModule/components/custom/messagingProviders/testMessagingProviderConnectionDialog.tsx";
+import SetMessagingProviderActiveDialog from "../dialogs/setMessagingProviderActiveDialog.tsx";
+import TestMessagingProviderConnectionDialog from "../dialogs/testMessagingProviderConnectionDialog.tsx";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 
 export type MessagingProviderSheetViewOwnProps = {

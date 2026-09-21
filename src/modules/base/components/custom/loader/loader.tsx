@@ -1,7 +1,7 @@
 import type {ComponentType} from "react";
 import {IconLoader} from "@tabler/icons-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
+import TruncatedValue from "@baseModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 
 type SpinnerIconProps = {

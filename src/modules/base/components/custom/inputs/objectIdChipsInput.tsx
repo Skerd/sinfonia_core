@@ -6,7 +6,7 @@ import { Badge } from "@coreModule/components/ui/badge.tsx";
 import { FormField, FormItem, FormMessage } from "@coreModule/components/ui/form.tsx";
 import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
-import { ApiSelect } from "@coreModule/components/custom/apiSelect";
+import { ApiSelect } from "@baseModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
 import { X } from "lucide-react";
 
 /** `formExtras` key for optional `Record<fieldName, MutableRefObject<Record<id, label>>>`. */

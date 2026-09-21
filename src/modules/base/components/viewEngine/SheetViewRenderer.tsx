@@ -11,12 +11,12 @@ import {Sheet, SheetClose, SheetContent, SheetHeader} from "@coreModule/componen
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import DeletedInfo from "@coreModule/components/custom/deletedInfo";
+import DeletedInfo from "@baseModule/components/viewEngine/widgets/display/deletedInfo.tsx";
 import Loader from "@baseModule/components/custom/loader/loader.tsx";
 import {ErrorView} from "@baseModule/components/custom/errors/errorView.tsx";
-import ActionMenu from "@coreModule/components/custom/actions/menu/actionMenu.tsx";
-import DeleteAction from "@coreModule/components/custom/actions/deleteAction.tsx";
-import RestoreAction from "@coreModule/components/custom/actions/restoreAction.tsx";
+import ActionMenu from "@baseModule/components/viewEngine/widgets/actions/menu/actionMenu.tsx";
+import DeleteAction from "@baseModule/components/viewEngine/widgets/actions/deleteAction.tsx";
+import RestoreAction from "@baseModule/components/viewEngine/widgets/actions/restoreAction.tsx";
 import ViewRenderer, {type ViewRendererContext} from "./ViewRenderer.tsx";
 import SheetAuditHistoryDrawer, {SheetAuditHistoryMenuLabel} from "./audit/sheetAuditHistory.tsx";
 import {collectAuditFieldHintsFromViewNodes, collectFieldLabelsFromViewNodes} from "./audit/auditFieldHints.ts";

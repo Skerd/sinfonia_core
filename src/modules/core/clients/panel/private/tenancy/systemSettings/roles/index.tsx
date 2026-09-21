@@ -6,7 +6,7 @@ import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconUserPlus} from "@tabler/icons-react";
 import RoleCard from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/center/cardView/roleCard.tsx";
 import RoleSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx";
-import EntityListPage from "@baseModule/components/entityPage/entityListPage.tsx";
+import EntityListPage from "@baseModule/components/entityPage/pages/entityListPage.tsx";
 
 function roleEditPath(role: CompanyRoleType) {
     const params = new URLSearchParams();

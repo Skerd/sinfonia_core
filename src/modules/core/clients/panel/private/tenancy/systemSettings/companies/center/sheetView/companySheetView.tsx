@@ -7,8 +7,8 @@ import {useViewConfig} from "@baseModule/helpers/hooks/useViewConfig.ts";
 import {useEffect, useState} from "react";
 import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx";
 import DeactivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx";
-import ActivateCompanyDialog from "@coreModule/components/custom/company/activateCompanyDialog.tsx";
-import DeactivateCompanyDialog from "@coreModule/components/custom/company/deactivateCompanyDialog.tsx";
+import ActivateCompanyDialog from "../dialogs/activateCompanyDialog.tsx";
+import DeactivateCompanyDialog from "../dialogs/deactivateCompanyDialog.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 
 export type CompanySheetViewOwnProps = {

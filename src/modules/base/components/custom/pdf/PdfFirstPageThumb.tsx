@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {PDF_THUMB_MAX_BYTES} from "@coreModule/components/custom/files/mediaPreviewKind.ts";
+import {PDF_THUMB_MAX_BYTES} from "@baseModule/components/viewEngine/widgets/media/mediaPreviewKind.ts";
 import {fetchMediaBytes} from "@baseModule/helpers/media/fetchMediaBytes.ts";
 import {isAbortError, renderPdfBytesToCanvas} from "@baseModule/components/custom/pdf/renderPdfPage.ts";
 

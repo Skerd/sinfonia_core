@@ -1,5 +1,5 @@
 import {createElement} from "react";
-import type {DisplayCardLinkedSheetOuterProps} from "@coreModule/components/custom/displayValue/displayCard.tsx";
+import type {DisplayCardLinkedSheetOuterProps} from "@baseModule/components/viewEngine/widgets/display/displayCard.tsx";
 import {resolveWidget} from "../../widgetRegistry.ts";
 
 /** What a `#DisplayCard` needs to open a nested entity sheet. */

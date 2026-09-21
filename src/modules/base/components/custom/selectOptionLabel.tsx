@@ -1,4 +1,4 @@
-import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
+import TruncatedValue from "@baseModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 type SelectOptionLabelProps = {

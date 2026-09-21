@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/components/custom/notifications/notificationBell.tsx",
+  "title": "Notifiche",
+  "markAllRead": "Segna tutto letto",
+  "loading": "Caricamento...",
+  "noNotifications": "Nessuna notifica",
+  "viewAll": "Vedi tutto",
+  "system": "Sistema"
+}

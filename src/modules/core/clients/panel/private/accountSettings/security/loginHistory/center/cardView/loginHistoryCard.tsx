@@ -5,9 +5,9 @@ import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {LoginHistory} from "armonia/src/modules/core/api/user/private/loginHistory/loginHistory.dto.ts";
 import LoginHistorySheetView from "@coreModule/clients/panel/private/accountSettings/security/loginHistory/center/sheetView/loginHistorySheetView.tsx";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
+import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
 
 export type LoginHistoryCardProps = {
     entry: LoginHistory;
@@ -85,7 +85,7 @@ export default function LoginHistoryCard({
                             }
                         />
                         <EntityCard.Body>
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Clock}
                                 label={resolveLanguageKey("time")}
                                 tooltip={resolveLanguageKey("time")}
@@ -93,21 +93,21 @@ export default function LoginHistoryCard({
                                 type="dateTime"
                                 value={row.time}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Globe2}
                                 label={resolveLanguageKey("location")}
                                 tooltip={resolveLanguageKey("location")}
                                 show={can("ip") || can("geolocation")}
                                 value={location || row.ip || resolveLanguageKey("unknownLocation")}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={MonitorSmartphone}
                                 label={resolveLanguageKey("device")}
                                 tooltip={resolveLanguageKey("device")}
                                 show={can("device") || can("os") || can("browser")}
                                 value={deviceLine || "—"}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 label={resolveLanguageKey("reason")}
                                 tooltip={resolveLanguageKey("reason")}
                                 show={can("reason")}
@@ -118,7 +118,7 @@ export default function LoginHistoryCard({
                                         {formatted}
                                     </span>
                                 )}
-                            </DisplayRow>
+                            </EntityCardRow>
                         </EntityCard.Body>
                     </>
                 );

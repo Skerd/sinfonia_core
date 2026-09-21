@@ -32,10 +32,7 @@ src/modules/core/
 ├── components/
 │   ├── ui/                 # Radix/shadcn primitives
 │   ├── animate-ui/         # Motion primitives
-│   ├── custom/             # Shared app components (filter builder, files, …)
-│   │   └── renderEngine/   # Layout widgets (grid/group/alert) used by viewEngine — not a second engine
-│   ├── entityPage/         # Generic CRUD page wrappers
-│   └── viewEngine/         # ViewConfig renderer
+│   └── custom/             # Core-owned app components (entity cards, system map, domain dialogs)
 ├── environment/            # Vite env, API base URLs
 └── helpers/
     ├── axiosClients/
@@ -73,7 +70,21 @@ The panel entry point (`clients/panel/entryPoint/`) parses URL segments (`/menu/
 
 ## View engine
 
-`components/viewEngine/` renders maestro-provided `ViewConfig` definitions — dynamic forms, tables, and field bindings without hard-coded page layouts. Used heavily by entity pages and widgets.
+The server-driven rendering stack lives in **`src/modules/base/components/`**, not in core — `base` is transitional and migrates back into core later.
+
+`base/components/viewEngine/` renders maestro-provided `ViewConfig` definitions — dynamic forms, sheets, and field bindings without hard-coded page layouts:
+
+| Path | Contents |
+|------|----------|
+| `engine/` | Pure primitives: node gates, access maps, ref resolution, formatting, prop readers |
+| `registry/` | Token → component tables (`coreContribution.ts`) and icon resolution |
+| `form/` · `sheet/` | The two render modes: dispatch tables, shells, mode-specific widgets |
+| `audit/` | Audit-log drawer and diff rendering |
+| `widgets/` | The token implementations the registry dispatches to — `display/`, `inputs/`, `media/`, `gallery/`, `addresses/`, `repeaters/`, `layout/`, `actions/` |
+
+`base/components/entityPage/` is the list/create/edit page scaffolding built on top of it — `pages/` (page factories), `list/` (card-and-table surface, column config, skeletons), `filters/` (quick filters, filter builder).
+
+Note on i18n: components under `base/` keep their dictionaries at their original `core/assets/languages/…` paths, because `base` has no `assets/` tree. The `SHARED_DICTIONARIES` allowlist in `base/helpers/hocs/_tests/withLanguagePaths.test.ts` records each such pair and is the guard against a moved component silently losing its translations.
 
 ## Module selection
 

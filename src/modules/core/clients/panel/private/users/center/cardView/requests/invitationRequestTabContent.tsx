@@ -14,8 +14,8 @@ import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import ResendInvitationAction from "@coreModule/clients/panel/private/users/center/actions/resendInvitation.tsx";
 import UnlockInvitationAction from "@coreModule/clients/panel/private/users/center/actions/unlockInvitation.tsx";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import {InfoRowGroup} from "@coreModule/components/customUnchecked/infoRowGroup.tsx";
 
 function isInvitationLocked(invitation: NonNullable<CompanyUserRequestsType["invitation"]>): boolean {
     const lockedUntil = invitation.lockedUntil;
@@ -95,7 +95,7 @@ function InvitationRequestTabContentInner({
                 <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                         <InfoRowGroup className="flex-col !gap-y-1.5">
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={UserPlus}
                                 label={resolveLanguageKey("invitedBy")}
                                 tooltip={resolveLanguageKey("invitedBy")}
@@ -103,7 +103,7 @@ function InvitationRequestTabContentInner({
                                 type="user"
                                 value={invitation.invitedBy}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Calendar}
                                 label={resolveLanguageKey("invitedAt")}
                                 tooltip={resolveLanguageKey("invitedAt")}
@@ -111,7 +111,7 @@ function InvitationRequestTabContentInner({
                                 type="dateTime"
                                 value={invitation.invitedAt}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={MessageSquareText}
                                 label={resolveLanguageKey("welcomeMessage")}
                                 tooltip={resolveLanguageKey("welcomeMessage")}
@@ -122,7 +122,7 @@ function InvitationRequestTabContentInner({
                             {
                                 !accepted &&
                                 <>
-                                    <DisplayRow
+                                    <EntityCardRow
                                         icon={Mail}
                                         label={resolveLanguageKey("opened")}
                                         tooltip={resolveLanguageKey("opened")}
@@ -130,7 +130,7 @@ function InvitationRequestTabContentInner({
                                         type="boolean"
                                         value={invitation.opened}
                                     />
-                                    <DisplayRow
+                                    <EntityCardRow
                                         icon={Calendar}
                                         label={resolveLanguageKey("attempts")}
                                         tooltip={resolveLanguageKey("attempts")}
@@ -138,7 +138,7 @@ function InvitationRequestTabContentInner({
                                         type="number"
                                         value={invitation.attempts}
                                     />
-                                    <DisplayRow
+                                    <EntityCardRow
                                         icon={Clock9}
                                         label={resolveLanguageKey("invitationExpiresAt")}
                                         tooltip={resolveLanguageKey("invitationExpiresAt")}
@@ -146,7 +146,7 @@ function InvitationRequestTabContentInner({
                                         type="dateTime"
                                         value={invitation.invitationExpiresAt}
                                     />
-                                    <DisplayRow
+                                    <EntityCardRow
                                         icon={Lock}
                                         label={resolveLanguageKey("lockedUntil")}
                                         tooltip={resolveLanguageKey("lockedUntil")}
@@ -159,7 +159,7 @@ function InvitationRequestTabContentInner({
                             {
                                 accepted &&
                                 <>
-                                    <DisplayRow
+                                    <EntityCardRow
                                         icon={BadgeCheck}
                                         label={resolveLanguageKey("accepted")}
                                         tooltip={resolveLanguageKey("accepted")}
@@ -167,7 +167,7 @@ function InvitationRequestTabContentInner({
                                         type="boolean"
                                         value={invitation.accepted}
                                     />
-                                    <DisplayRow
+                                    <EntityCardRow
                                         icon={Calendar}
                                         label={resolveLanguageKey("acceptedAt")}
                                         tooltip={resolveLanguageKey("acceptedAt")}

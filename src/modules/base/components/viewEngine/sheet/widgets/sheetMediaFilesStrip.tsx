@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
-import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
+import SingleFile from "@baseModule/components/viewEngine/widgets/media/singleFile.tsx";
 import type { Media } from "armonia/src/modules/core/types";
 import { cn } from "@coreModule/components/lib/utils.ts";
 

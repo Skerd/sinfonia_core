@@ -12,7 +12,7 @@ import {Input} from "@coreModule/components/ui/input.tsx";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import InfiniteList from "@coreModule/components/custom/infiniteList";
+import InfiniteList from "@baseModule/components/custom/infiniteList";
 import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import {AllChannelsFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannels.form.response.type.ts";

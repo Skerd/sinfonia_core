@@ -14,8 +14,8 @@ import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import ResendActivationAction from "@coreModule/clients/panel/private/users/center/actions/resendActivation.tsx";
 import UnlockActivationAction from "@coreModule/clients/panel/private/users/center/actions/unlockActivation.tsx";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import {InfoRowGroup} from "@coreModule/components/customUnchecked/infoRowGroup.tsx";
 
 function isActivationLocked(activation: NonNullable<CompanyUserRequestsType["activation"]>): boolean {
     const lockedUntil = activation.lockedUntil;
@@ -93,7 +93,7 @@ function ActivationRequestTabContentInner({
                 <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                         <InfoRowGroup className="flex-col !gap-y-1.5">
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Mail}
                                 label={resolveLanguageKey("activationEmail")}
                                 tooltip={resolveLanguageKey("activationEmail")}
@@ -101,7 +101,7 @@ function ActivationRequestTabContentInner({
                                 type="email"
                                 value={activation.email}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={CircleSlash}
                                 label={resolveLanguageKey("attempts")}
                                 tooltip={resolveLanguageKey("attempts")}
@@ -109,7 +109,7 @@ function ActivationRequestTabContentInner({
                                 type="number"
                                 value={activation.attempts}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Calendar}
                                 label={resolveLanguageKey("date")}
                                 tooltip={resolveLanguageKey("date")}
@@ -117,7 +117,7 @@ function ActivationRequestTabContentInner({
                                 type="dateTime"
                                 value={activation.date}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Lock}
                                 label={resolveLanguageKey("lockedUntil")}
                                 tooltip={resolveLanguageKey("lockedUntil")}

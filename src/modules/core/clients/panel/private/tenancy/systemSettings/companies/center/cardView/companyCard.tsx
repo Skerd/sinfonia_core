@@ -15,18 +15,18 @@ import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {ImageDown, Maximize2, Minimize2} from "lucide-react";
 import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx";
 import DeactivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx";
-import ActivateCompanyDialog from "@coreModule/components/custom/company/activateCompanyDialog.tsx";
-import DeactivateCompanyDialog from "@coreModule/components/custom/company/deactivateCompanyDialog.tsx";
+import ActivateCompanyDialog from "../dialogs/activateCompanyDialog.tsx";
+import DeactivateCompanyDialog from "../dialogs/deactivateCompanyDialog.tsx";
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
-import ExpandableText from "@coreModule/components/custom/expandableText.tsx";
+import ExpandableText from "@baseModule/components/viewEngine/widgets/display/expandableText.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
-import {openActionMenuFromContextMenu} from "@coreModule/components/custom/actions/menu/openActionMenuFromContextMenu.ts";
+import {openActionMenuFromContextMenu} from "@baseModule/components/viewEngine/widgets/actions/menu/openActionMenuFromContextMenu.ts";
 
-const CompanyMap = lazy(() => import("@coreModule/components/custom/addresses/mapWithMultiplePins.tsx"));
+const CompanyMap = lazy(() => import("@baseModule/components/viewEngine/widgets/addresses/mapWithMultiplePins.tsx"));
 
 function companyEditPath(c: Company) {
     const params = new URLSearchParams();
@@ -198,7 +198,7 @@ const CompanyCard = memo(function CompanyCard({
                             </EntityCard.Header>
                             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" ref={companyInfoRef}>
                                 <EntityCard.Body className="flex-col flex-nowrap gap-4">
-                                    <DisplayRow
+                                    <EntityCardRow
                                         icon={Mail}
                                         tooltip={resolveLanguageKey("email")}
                                         label={resolveLanguageKey("email")}
@@ -212,8 +212,8 @@ const CompanyCard = memo(function CompanyCard({
                                                 </a>
                                             ) : formatted
                                         }
-                                    </DisplayRow>
-                                    <DisplayRow
+                                    </EntityCardRow>
+                                    <EntityCardRow
                                         icon={Phone}
                                         tooltip={resolveLanguageKey("phone")}
                                         label={resolveLanguageKey("phone")}
@@ -227,15 +227,15 @@ const CompanyCard = memo(function CompanyCard({
                                                 </a>
                                             ) : formatted
                                         }
-                                    </DisplayRow>
-                                    <DisplayRow
+                                    </EntityCardRow>
+                                    <EntityCardRow
                                         icon={FileText}
                                         tooltip={resolveLanguageKey("vat")}
                                         label={resolveLanguageKey("vat")}
                                         path="vat"
                                         value={row.vat}
                                     />
-                                    <DisplayRow
+                                    <EntityCardRow
                                         icon={Globe}
                                         tooltip={resolveLanguageKey("website")}
                                         label={resolveLanguageKey("website")}
@@ -249,9 +249,9 @@ const CompanyCard = memo(function CompanyCard({
                                                 </a>
                                             ) : formatted
                                         }
-                                    </DisplayRow>
+                                    </EntityCardRow>
                                     {expanded ? (
-                                        <DisplayRow
+                                        <EntityCardRow
                                             icon={CheckCheck}
                                             tooltip={resolveLanguageKey("allowedDomains")}
                                             label={resolveLanguageKey("allowedDomains")}
@@ -327,7 +327,7 @@ const CompanyCard = memo(function CompanyCard({
                                                     <></>
                                                 )
                                             }
-                                        </DisplayRow>
+                                        </EntityCardRow>
                                     ) : null}
                                 </EntityCard.Body>
                                 <HiddenElement>

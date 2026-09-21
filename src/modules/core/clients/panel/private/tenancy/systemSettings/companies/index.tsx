@@ -5,10 +5,10 @@ import {Company} from "armonia/src/modules/core/api/company/private/company/comp
 import CompanyCard from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/cardView/companyCard.tsx";
 import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx";
 import DeactivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx";
-import ActivateCompanyDialog from "@coreModule/components/custom/company/activateCompanyDialog.tsx";
-import DeactivateCompanyDialog from "@coreModule/components/custom/company/deactivateCompanyDialog.tsx";
+import ActivateCompanyDialog from "./center/dialogs/activateCompanyDialog.tsx";
+import DeactivateCompanyDialog from "./center/dialogs/deactivateCompanyDialog.tsx";
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
-import EntityListPage from "@baseModule/components/entityPage/entityListPage.tsx";
+import EntityListPage from "@baseModule/components/entityPage/pages/entityListPage.tsx";
 
 function AllCompanies({resolveLanguageKey}: WithLanguageType) {
     return (

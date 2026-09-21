@@ -1,7 +1,7 @@
 import {Save} from "lucide-react";
 import {z} from "zod";
 import type {ReactElement} from "react";
-import {createGenericEditPage, type GenericEditPageProps} from "@baseModule/components/entityPage/createGenericEditPage.tsx";
+import {createGenericEditPage, type GenericEditPageProps} from "@baseModule/components/entityPage/pages/createGenericEditPage.tsx";
 import {store} from "@baseModule/helpers/redux/store/generalStore.ts";
 import {newCompanyCreated} from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";

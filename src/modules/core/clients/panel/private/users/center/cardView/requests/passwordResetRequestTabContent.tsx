@@ -13,8 +13,8 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import UnlockPasswordResetAction from "@coreModule/clients/panel/private/users/center/actions/unlockPasswordReset.tsx";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import {InfoRowGroup} from "@coreModule/components/customUnchecked/infoRowGroup.tsx";
 
 function isPasswordResetLocked(passwordReset: NonNullable<CompanyUserRequestsType["passwordReset"]>): boolean {
     const lockedUntil = passwordReset.lockedUntil;
@@ -81,7 +81,7 @@ function PasswordResetRequestTabContentInner({
                 <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                         <InfoRowGroup className="flex-col !gap-y-1.5">
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={BadgeCheck}
                                 label={resolveLanguageKey("opened")}
                                 tooltip={resolveLanguageKey("opened")}
@@ -89,7 +89,7 @@ function PasswordResetRequestTabContentInner({
                                 type="boolean"
                                 value={passwordReset.opened}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={CircleSlash}
                                 label={resolveLanguageKey("attempts")}
                                 tooltip={resolveLanguageKey("attempts")}
@@ -97,7 +97,7 @@ function PasswordResetRequestTabContentInner({
                                 type="number"
                                 value={passwordReset.attempts}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Calendar}
                                 label={resolveLanguageKey("date")}
                                 tooltip={resolveLanguageKey("date")}
@@ -105,7 +105,7 @@ function PasswordResetRequestTabContentInner({
                                 type="dateTime"
                                 value={passwordReset.date}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Lock}
                                 label={resolveLanguageKey("lockedUntil")}
                                 tooltip={resolveLanguageKey("lockedUntil")}

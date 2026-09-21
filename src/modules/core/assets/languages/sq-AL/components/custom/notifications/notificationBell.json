@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/components/custom/notifications/notificationBell.tsx",
+  "title": "Njoftimet",
+  "markAllRead": "Shënoni të gjitha të lexuara",
+  "loading": "Po ngarkohet...",
+  "noNotifications": "Nuk ka njoftime",
+  "viewAll": "Shiko të gjitha",
+  "system": "Sistemi"
+}

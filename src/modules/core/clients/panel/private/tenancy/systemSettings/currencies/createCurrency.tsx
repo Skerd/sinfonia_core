@@ -1,5 +1,5 @@
 import {IconCashPlus} from "@tabler/icons-react";
-import {createGenericCreatePage} from "@baseModule/components/entityPage/createGenericCreatePage.tsx";
+import {createGenericCreatePage} from "@baseModule/components/entityPage/pages/createGenericCreatePage.tsx";
 import {createCurrencyFormSchema} from "armonia/src/modules/core/api/finance/private/currency/createCurrency.form.validator.ts";
 import type {CreateCurrencyFormType} from "armonia/src/modules/core/api/finance/private/currency/currency.schema-def.ts";
 

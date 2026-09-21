@@ -4,8 +4,8 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {Eraser} from "lucide-react";
-import {ApiSelect} from "@coreModule/components/custom/apiSelect";
-import {SimpleSelect} from "@coreModule/components/custom/simpleSelect";
+import {ApiSelect} from "@baseModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
+import {SimpleSelect} from "@baseModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
 
 const DEBOUNCE_MS = 300;
 

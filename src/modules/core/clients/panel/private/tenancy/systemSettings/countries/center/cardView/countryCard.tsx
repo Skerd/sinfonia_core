@@ -5,13 +5,13 @@ import {Country} from "armonia/src/modules/core/api/auxiliary/private/country/co
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
 import {Phone, Tag} from "lucide-react";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import DisplayValue from "@coreModule/components/custom/displayValue/displayValue.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import DisplayValue from "@baseModule/components/viewEngine/widgets/display/displayValue.tsx";
 import CountrySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import ViewStates from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewStates.tsx";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewCities.tsx";
-import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
+import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 import type {ReactNode, RefObject} from "react";
 
@@ -81,7 +81,7 @@ function CountryCard({
                         <ViewCities countryId={entity._id} countryName={entity.name} />
                     </EntityCard.Header>
                     <EntityCard.Body>
-                        <DisplayRow
+                        <EntityCardRow
                             icon={Tag}
                             label={resolveLanguageKey("code")}
                             tooltip={resolveLanguageKey("code")}
@@ -89,8 +89,8 @@ function CountryCard({
                             value={entity.code}
                         >
                             {(formatted) => (<Badge variant="secondary">{formatted}</Badge>)}
-                        </DisplayRow>
-                        <DisplayRow
+                        </EntityCardRow>
+                        <EntityCardRow
                             icon={Phone}
                             label={resolveLanguageKey("phoneCode")}
                             tooltip={resolveLanguageKey("phoneCode")}

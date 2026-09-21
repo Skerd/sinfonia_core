@@ -1,5 +1,5 @@
 import {IconMapPlus} from "@tabler/icons-react";
-import {createGenericCreatePage} from "@baseModule/components/entityPage/createGenericCreatePage.tsx";
+import {createGenericCreatePage} from "@baseModule/components/entityPage/pages/createGenericCreatePage.tsx";
 import {createStateFormSchema} from "armonia/src/modules/core/api/auxiliary/private/state/createState.form.validator.ts";
 import type {CreateStateFormType} from "armonia/src/modules/core/api/auxiliary/private/state/state.schema-def.ts";
 

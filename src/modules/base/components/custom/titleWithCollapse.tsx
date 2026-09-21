@@ -1,6 +1,6 @@
 import {Collapsible, CollapsibleContent, CollapsibleTrigger,} from "@coreModule/components/ui/collapsible.tsx"
 import {CardDescription, CardTitle} from "@coreModule/components/ui/card.tsx";
-import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
+import TruncatedValue from "@baseModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import {ChevronDown} from "lucide-react";
 import {ReactNode, useState} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";

@@ -3,17 +3,17 @@ import {memo, type RefObject} from "react";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {MessageSquare, Phone, Power} from "lucide-react";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
 import MessagingProviderSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import ActivateMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/activateMessagingProvider.tsx";
 import DeactivateMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/deactivateMessagingProvider.tsx";
 import TestMessagingProviderConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/testMessagingProviderConnection.tsx";
-import SetMessagingProviderActiveDialog from "@coreModule/components/custom/messagingProviders/setMessagingProviderActiveDialog.tsx";
-import TestMessagingProviderConnectionDialog from "@coreModule/components/custom/messagingProviders/testMessagingProviderConnectionDialog.tsx";
+import SetMessagingProviderActiveDialog from "../dialogs/setMessagingProviderActiveDialog.tsx";
+import TestMessagingProviderConnectionDialog from "../dialogs/testMessagingProviderConnectionDialog.tsx";
 import type {MessagingProvider} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
 import {messagingProviderEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders";
-import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
+import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 
 type MessagingProviderCardProps = WithLanguageType & {
@@ -98,7 +98,7 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                         <DeactivateMessagingProvider messagingProvider={entity} onAction={setAction} />
                     </EntityCard.Header>
                     <EntityCard.Body>
-                        <DisplayRow
+                        <EntityCardRow
                             icon={MessageSquare}
                             label={resolveLanguageKey("providerType")}
                             tooltip={resolveLanguageKey("providerType")}
@@ -107,7 +107,7 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                             languageKeyCategory="providerTypeValues"
                             value={entity.providerType}
                         />
-                        <DisplayRow
+                        <EntityCardRow
                             icon={Power}
                             label={resolveLanguageKey("active")}
                             tooltip={resolveLanguageKey("active")}
@@ -115,7 +115,7 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                             type="boolean"
                             value={entity.active}
                         />
-                        <DisplayRow
+                        <EntityCardRow
                             icon={Phone}
                             label={resolveLanguageKey("fromPhone")}
                             tooltip={resolveLanguageKey("fromPhone")}

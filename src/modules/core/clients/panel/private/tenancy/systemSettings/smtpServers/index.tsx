@@ -9,9 +9,9 @@ import SmtpServerSheetView from "@coreModule/clients/panel/private/tenancy/syste
 import ActivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/activateSmtpServer.tsx";
 import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/deactivateSmtpServer.tsx";
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
-import SetSmtpServerActiveDialog from "@coreModule/components/custom/smtpServers/setSmtpServerActiveDialog.tsx";
-import TestSmtpConnectionDialog from "@coreModule/components/custom/smtpServers/testSmtpConnectionDialog.tsx";
-import EntityListPage from "@baseModule/components/entityPage/entityListPage.tsx";
+import SetSmtpServerActiveDialog from "./center/dialogs/setSmtpServerActiveDialog.tsx";
+import TestSmtpConnectionDialog from "./center/dialogs/testSmtpConnectionDialog.tsx";
+import EntityListPage from "@baseModule/components/entityPage/pages/entityListPage.tsx";
 
 export function smtpServerEditPath(s: SmtpServer) {
     const params = new URLSearchParams();

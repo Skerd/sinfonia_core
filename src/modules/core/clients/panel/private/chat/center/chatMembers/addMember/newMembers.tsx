@@ -8,7 +8,7 @@ import {type Resolver, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
-import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
+import UserAvatar from "@baseModule/components/custom/avatar/userAvatar.tsx";
 import * as React from "react";
 import {
     InputGroup,
@@ -23,7 +23,7 @@ import {SimpleUserType} from "armonia/src/modules/core/api/company/private/users
 import {createChannelFormSchema} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.validator.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
-import InfiniteList from "@coreModule/components/custom/infiniteList";
+import InfiniteList from "@baseModule/components/custom/infiniteList";
 import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
 
 type MemberRowProps = {

@@ -18,8 +18,8 @@ import {
     ShieldQuestionMark,
     UserPlus,
 } from "lucide-react";
-import {EntityCardShell} from "@coreModule/components/custom/cards/EntityCardShell.tsx";
-import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import {EntityCardShell} from "@baseModule/components/entityPage/list/card/entityCardShell.tsx";
+import {InfoRowGroup} from "@coreModule/components/customUnchecked/infoRowGroup.tsx";
 import CoverPhoto
     from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/coverPhoto.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -42,7 +42,7 @@ import {PasswordResetRequestTabContent} from "@coreModule/clients/panel/private/
 import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@baseModule/helpers/redux/store/generalStore.ts";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
 import {TabsContent} from "@radix-ui/react-tabs";
 
 export type UserProfileData = CompanyUserType;
@@ -385,7 +385,7 @@ function UserProfileCardInner({
 
                         <TabsContent value="about" className="rounded-md border bg-muted/30 p-3 text-sm">
                             <InfoRowGroup className="flex-col !gap-y-1.5">
-                                <DisplayRow
+                                <EntityCardRow
                                     iconReplacement={<div>
                                         <HiddenElement>
                                             {
@@ -432,7 +432,7 @@ function UserProfileCardInner({
                                     type="email"
                                     value={data.username || data.unverifiedEmail}
                                 />
-                                <DisplayRow
+                                <EntityCardRow
                                     icon={Phone}
                                     label={resolveLanguageKey("phoneNumber")}
                                     tooltip={resolveLanguageKey("phoneNumber")}
@@ -440,14 +440,14 @@ function UserProfileCardInner({
                                     type="phoneNumber"
                                     value={data.phoneNumber}
                                 />
-                                <DisplayRow
+                                <EntityCardRow
                                     icon={Clock9}
                                     label={resolveLanguageKey("timezone")}
                                     tooltip={resolveLanguageKey("timezone")}
                                     show={!!read.timezone}
                                     value={data.timezone}
                                 />
-                                <DisplayRow
+                                <EntityCardRow
                                     icon={MailCheck}
                                     label={resolveLanguageKey("emailVerifiedAt")}
                                     tooltip={resolveLanguageKey("emailVerifiedAt")}
@@ -456,7 +456,7 @@ function UserProfileCardInner({
                                     format={{dateStyle: "long", timeStyle: "short"}}
                                     value={data.emailVerifiedAt}
                                 />
-                                <DisplayRow
+                                <EntityCardRow
                                     iconReplacement={
                                         <HiddenElement>
                                             {
@@ -499,7 +499,7 @@ function UserProfileCardInner({
                                             {formatted}
                                         </span>
                                     )}
-                                </DisplayRow>
+                                </EntityCardRow>
                                 <div className="flex flex-col w-full gap-y-2">
                                     <p className="text-sm text-muted-foreground">{resolveLanguageKey("roles")}</p>
                                     <HiddenElement>
@@ -542,7 +542,7 @@ function UserProfileCardInner({
                         </TabsContent>
                         <TabsContent value="info" className="rounded-md border bg-muted/30 p-3 text-sm">
                             <InfoRowGroup className="flex-col !gap-y-1.5">
-                                <DisplayRow
+                                <EntityCardRow
                                     icon={Ampersand}
                                     label={resolveLanguageKey("registeredDate")}
                                     tooltip={resolveLanguageKey("registeredDate")}
@@ -551,7 +551,7 @@ function UserProfileCardInner({
                                     format={{dateStyle: "long", timeStyle: "short"}}
                                     value={data.registerDate}
                                 />
-                                <DisplayRow
+                                <EntityCardRow
                                     icon={UserPlus}
                                     label={resolveLanguageKey("registeredFrom")}
                                     tooltip={resolveLanguageKey("registeredFrom")}
@@ -559,7 +559,7 @@ function UserProfileCardInner({
                                     type="user"
                                     value={data.registeredFrom}
                                 />
-                                <DisplayRow
+                                <EntityCardRow
                                     icon={Calendar}
                                     label={resolveLanguageKey("birthday")}
                                     tooltip={resolveLanguageKey("birthday")}
@@ -568,7 +568,7 @@ function UserProfileCardInner({
                                     format={{dateStyle: "long"}}
                                     value={data.birthday}
                                 />
-                                <DisplayRow
+                                <EntityCardRow
                                     icon={Key}
                                     label={resolveLanguageKey("lastLoginDate")}
                                     tooltip={resolveLanguageKey("lastLoginDate")}
@@ -577,7 +577,7 @@ function UserProfileCardInner({
                                     format={{dateStyle: "long", timeStyle: "medium"}}
                                     value={data.lastLogin}
                                 />
-                                <DisplayRow
+                                <EntityCardRow
                                     icon={CircleSlash}
                                     label={resolveLanguageKey("unsuccessfulLogins")}
                                     tooltip={resolveLanguageKey("unsuccessfulLogins")}
@@ -585,7 +585,7 @@ function UserProfileCardInner({
                                     type="number"
                                     value={data.unsuccessfulLogins}
                                 />
-                                <DisplayRow
+                                <EntityCardRow
                                     icon={Lock}
                                     label={resolveLanguageKey("lockedOutUntil")}
                                     tooltip={resolveLanguageKey("lockedOutUntil")}

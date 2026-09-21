@@ -1,10 +1,10 @@
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
-import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
+import DisplayCard from "@baseModule/components/viewEngine/widgets/display/displayCard.tsx";
 import ValueNotSet from "@baseModule/components/custom/valueNotSet.tsx";
-import SheetLocationMap from "@coreModule/components/custom/addresses/sheetLocationMap.tsx";
+import SheetLocationMap from "@baseModule/components/viewEngine/widgets/addresses/sheetLocationMap.tsx";
 import { resolveIcon } from "../../../widgetRegistry.ts";
 import { cn } from "@coreModule/components/lib/utils.ts";
-import {SheetGrid} from "@coreModule/components/custom/renderEngine/layout/sheet/grid.tsx";
+import {SheetGrid} from "@baseModule/components/viewEngine/widgets/layout/sheet/grid.tsx";
 import {Card, CardContent} from "@coreModule/components/ui/card.tsx";
 import {bootstrapLinkedSheetData, normalizeObjectIdRef, resolvePath} from "../../../engine/refs.ts";
 import {linkedReferenceSheet, type LinkedReferenceSheet} from "../../linkedSheet/linkedSheetHost.tsx";

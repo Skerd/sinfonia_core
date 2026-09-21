@@ -3,7 +3,7 @@ import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {useEffect, useImperativeHandle} from "react";
 import {Input} from "@coreModule/components/ui/input.tsx";
-import {ApiSelect} from "@coreModule/components/custom/apiSelect";
+import {ApiSelect} from "@baseModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
 import PasswordStrength from "@baseModule/components/custom/passwordStrength.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {useForm} from "react-hook-form";

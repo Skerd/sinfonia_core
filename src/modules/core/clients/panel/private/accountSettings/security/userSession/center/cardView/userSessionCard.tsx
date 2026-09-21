@@ -6,9 +6,9 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import type {UserSession} from "armonia/src/modules/core/api/user/private/userSession/userSession.dto.ts";
 import UserSessionSheetView from "@coreModule/clients/panel/private/accountSettings/security/userSession/center/sheetView/userSessionSheetView.tsx";
 import {UserSessionRevokeMenuItem} from "@coreModule/clients/panel/private/accountSettings/security/userSession/center/actions/userSessionActionMenu.tsx";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
+import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
 
 function sessionLocation(session: UserSession) {
     const latest = session.geolocation?.[session.geolocation.length - 1];
@@ -110,7 +110,7 @@ export default function UserSessionCard({
                             />
                         </EntityCard.Header>
                         <EntityCard.Body>
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Clock}
                                 label={resolveLanguageKey("lastActiveAt")}
                                 tooltip={resolveLanguageKey("lastActiveAt")}
@@ -118,14 +118,14 @@ export default function UserSessionCard({
                                 type="dateTime"
                                 value={row.lastActiveAt}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Globe2}
                                 label={resolveLanguageKey("location")}
                                 tooltip={resolveLanguageKey("location")}
                                 show={can("ipAddress") || can("geolocation")}
                                 value={location || row.ipAddress || resolveLanguageKey("unknownLocation")}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Monitor}
                                 label={resolveLanguageKey("sessionId")}
                                 tooltip={resolveLanguageKey("sessionId")}
@@ -137,8 +137,8 @@ export default function UserSessionCard({
                                         {formatted}
                                     </span>
                                 )}
-                            </DisplayRow>
-                            <DisplayRow
+                            </EntityCardRow>
+                            <EntityCardRow
                                 icon={Monitor}
                                 label={resolveLanguageKey("userAgent")}
                                 tooltip={resolveLanguageKey("userAgent")}
@@ -150,8 +150,8 @@ export default function UserSessionCard({
                                         {formatted}
                                     </span>
                                 )}
-                            </DisplayRow>
-                            <DisplayRow
+                            </EntityCardRow>
+                            <EntityCardRow
                                 icon={Clock}
                                 label={resolveLanguageKey("expiresAt")}
                                 tooltip={resolveLanguageKey("expiresAt")}

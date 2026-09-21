@@ -1,5 +1,5 @@
 import type { ResolveLanguageKey } from "@baseModule/helpers/hocs/withLanguage.tsx";
-import DisplayCard from "@coreModule/components/custom/displayValue/displayCard.tsx";
+import DisplayCard from "@baseModule/components/viewEngine/widgets/display/displayCard.tsx";
 import { resolveIcon } from "../../../widgetRegistry.ts";
 import { useReferencesViewModeOptional } from "../references/referencesViewModeContext.tsx";
 import SheetCompanyAddressesSection from "./sheetCompanyAddressesSection.tsx";

@@ -12,9 +12,9 @@ import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";
 import {ListNotificationsFormType} from "armonia/src/modules/core/api/user/private/notifications/listNotifications.form.type.ts";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import SimpleError from "@baseModule/components/custom/errors/errorViewWrapper.tsx";
-import InfiniteList from "@coreModule/components/custom/infiniteList";
+import InfiniteList from "@baseModule/components/custom/infiniteList";
 import MarkAllAsReadButton from "@coreModule/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx";
-import {NotificationListItem} from "@coreModule/components/custom/notificationListItem.tsx";
+import {NotificationRow} from "@baseModule/components/custom/notifications/notificationRow.tsx";
 import {
     UnreadNotificationsFormResponseType
 } from "armonia/src/modules/core/api/user/private/notifications/unreadNotifications.form.response.type.ts";
@@ -81,7 +81,7 @@ function NotificationCenter({
                 className="flex flex-col gap-2 pb-1"
                 scrollRootClassName="flex-1 min-h-0 overflow-y-auto px-0.5 pb-3 pt-1"
                 renderItem={(notification) => (
-                    <NotificationListItem
+                    <NotificationRow
                         key={notification._id}
                         notification={notification}
                         resolveLanguageKey={resolveLanguageKey}

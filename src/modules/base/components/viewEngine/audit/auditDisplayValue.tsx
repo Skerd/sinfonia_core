@@ -1,11 +1,11 @@
 import {createContext, Fragment, useContext, useEffect, useState, type ReactElement} from "react";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import SingleFile from "@coreModule/components/custom/files/singleFile.tsx";
+import SingleFile from "@baseModule/components/viewEngine/widgets/media/singleFile.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import apiClient from "@baseModule/helpers/apiClient/apiClient.ts";
 import type {Media} from "armonia/src/modules/core/types";
 import type {AuditFieldHint} from "@baseModule/components/viewEngine/audit/auditFieldHints.ts";
-import {inferMimeFromFilename} from "@coreModule/components/custom/files/mediaPreviewKind.ts";
+import {inferMimeFromFilename} from "@baseModule/components/viewEngine/widgets/media/mediaPreviewKind.ts";
 
 const OBJECT_ID_HEX = /^[a-f0-9]{24}$/i;
 

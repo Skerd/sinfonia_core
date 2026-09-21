@@ -8,7 +8,7 @@ import {FormProvider, useForm, useFormContext} from "react-hook-form";
  * chips — while still exercising the `onValueChange(value, label)` contract it is handed.
  */
 let pick: (value: string | string[], label?: string | string[]) => void = () => {};
-vi.mock("@coreModule/components/custom/apiSelect", () => ({
+vi.mock("@baseModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx", () => ({
     ApiSelect: ({onValueChange, placeholder, disabled, markedValues}: {
         onValueChange: (value: string | string[], label?: string | string[]) => void;
         placeholder?: string;

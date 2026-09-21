@@ -27,7 +27,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import CardAndTableView from "@coreModule/components/custom/cardAndTableView.tsx";
+import CardAndTableView from "@baseModule/components/entityPage/list/cardAndTableView.tsx";
 import {useTableConfigContext} from "@baseModule/helpers/hooks/useTableConfigContext.ts";
 import type {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";

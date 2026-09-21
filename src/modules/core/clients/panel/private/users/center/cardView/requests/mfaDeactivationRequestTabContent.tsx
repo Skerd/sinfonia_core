@@ -13,8 +13,8 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import UnlockMfaDeactivationAction from "@coreModule/clients/panel/private/users/center/actions/unlockMfaDeactivation.tsx";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import {InfoRowGroup} from "@coreModule/components/customUnchecked/infoRowGroup.tsx";
 
 function isMfaDeactivationLocked(mfaDeactivation: NonNullable<CompanyUserRequestsType["mfaDeactivation"]>): boolean {
     const lockedUntil = mfaDeactivation.lockedUntil;
@@ -81,7 +81,7 @@ function MfaDeactivationRequestTabContentInner({
                 <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                         <InfoRowGroup className="flex-col !gap-y-1.5">
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={CircleSlash}
                                 label={resolveLanguageKey("attempts")}
                                 tooltip={resolveLanguageKey("attempts")}
@@ -89,7 +89,7 @@ function MfaDeactivationRequestTabContentInner({
                                 type="number"
                                 value={mfaDeactivation.attempts}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Calendar}
                                 label={resolveLanguageKey("date")}
                                 tooltip={resolveLanguageKey("date")}
@@ -97,7 +97,7 @@ function MfaDeactivationRequestTabContentInner({
                                 type="dateTime"
                                 value={mfaDeactivation.date}
                             />
-                            <DisplayRow
+                            <EntityCardRow
                                 icon={Lock}
                                 label={resolveLanguageKey("lockedUntil")}
                                 tooltip={resolveLanguageKey("lockedUntil")}

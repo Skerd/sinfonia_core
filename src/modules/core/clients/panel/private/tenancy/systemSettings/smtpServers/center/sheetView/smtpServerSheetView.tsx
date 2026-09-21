@@ -11,8 +11,8 @@ import {smtpServerEditPath} from "@coreModule/clients/panel/private/tenancy/syst
 import ActivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/activateSmtpServer.tsx";
 import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/deactivateSmtpServer.tsx";
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
-import SetSmtpServerActiveDialog from "@coreModule/components/custom/smtpServers/setSmtpServerActiveDialog.tsx";
-import TestSmtpConnectionDialog from "@coreModule/components/custom/smtpServers/testSmtpConnectionDialog.tsx";
+import SetSmtpServerActiveDialog from "../dialogs/setSmtpServerActiveDialog.tsx";
+import TestSmtpConnectionDialog from "../dialogs/testSmtpConnectionDialog.tsx";
 
 export type SmtpServerSheetViewOwnProps = {
     open: boolean;

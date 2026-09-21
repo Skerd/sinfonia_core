@@ -4,12 +4,12 @@ import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import type {CronJob} from "armonia/src/modules/core/api/auxiliary/private/cronJob/cronJob.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {cronJobEditPath} from "../../cronJobPaths.ts";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import DisplayValue from "@coreModule/components/custom/displayValue/displayValue.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import DisplayValue from "@baseModule/components/viewEngine/widgets/display/displayValue.tsx";
 import CopyTooltip from "@baseModule/components/custom/copyTooltip.tsx";
 import {IconCalendarClock, IconClock, IconCode, IconHistory} from "@tabler/icons-react";
 import CronJobSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx";
-import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
+import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Separator} from "@coreModule/components/ui/separator.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -17,7 +17,7 @@ import {
     CARD_INFO_ROWS_TWO_COL_CLASS,
     STATUS_BADGE_SUCCESS,
     STATUS_BADGE_WARNING,
-} from "@coreModule/components/custom/cards/entityCard.constants.ts";
+} from "@baseModule/components/entityPage/list/entityCard.constants.ts";
 import RunCronJob from "../actions/run.tsx";
 import PauseCronJob from "../actions/pause.tsx";
 import ResumeCronJob from "../actions/resume.tsx";
@@ -111,21 +111,21 @@ function CronJobCard({job, resolveLanguageKey, onDelete, onRestore, onModifySucc
                     </EntityCard.Header>
                     <Separator className="-mx-(--density-pad) w-auto self-stretch" />
                     <EntityCard.Body className={CARD_INFO_ROWS_TWO_COL_CLASS}>
-                        <DisplayRow
+                        <EntityCardRow
                             icon={IconCode}
                             label={resolveLanguageKey("handler")}
                             tooltip={resolveLanguageKey("handler")}
                             path="handler"
                             value={entity.handler}
                         />
-                        <DisplayRow
+                        <EntityCardRow
                             icon={IconClock}
                             label={resolveLanguageKey("cronExpression")}
                             tooltip={resolveLanguageKey("cronExpression")}
                             path="cronExpression"
                             value={entity.cronExpression}
                         />
-                        <DisplayRow
+                        <EntityCardRow
                             icon={IconCalendarClock}
                             label={resolveLanguageKey("nextRunAt")}
                             tooltip={resolveLanguageKey("nextRunAt")}
@@ -133,7 +133,7 @@ function CronJobCard({job, resolveLanguageKey, onDelete, onRestore, onModifySucc
                             type="dateTime"
                             value={entity.nextRunAt}
                         />
-                        <DisplayRow
+                        <EntityCardRow
                             icon={IconHistory}
                             label={resolveLanguageKey("lastRunAt")}
                             tooltip={resolveLanguageKey("lastRunAt")}

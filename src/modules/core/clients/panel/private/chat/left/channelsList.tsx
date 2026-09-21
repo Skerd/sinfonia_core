@@ -8,11 +8,11 @@ import {Fragment, RefObject, useEffect, useRef} from "react";
 import {Info, Users} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
-import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
-import CustomDateDisplayer from "@coreModule/components/custom/customDateDisplayer.tsx";
+import UserAvatar from "@baseModule/components/custom/avatar/userAvatar.tsx";
+import CustomDateDisplayer from "@baseModule/components/custom/customDateDisplayer.tsx";
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import ChannelsFetcher from "@coreModule/clients/panel/private/chat/left/channelsFetcher.tsx";
-import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
+import TruncatedValue from "@baseModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import HiddenElement from "@baseModule/components/custom/hiddenElement.tsx";
 import {getName} from "@baseModule/helpers/general/names.ts";
 import {useAccess} from "@baseModule/helpers/hooks/useAccess.ts";
@@ -213,9 +213,7 @@ function ChannelInfo({
                         }
                         {
                             !!channel.metaData?.lastMessage?.date &&
-                            <span className="shrink-0 text-muted-foreground text-xs">
-                                <CustomDateDisplayer timeZone={user.timezone} date={channel.metaData.lastMessage?.date} showOnlyWeekDay={true} showOnlyYesterday={true} />
-                            </span>
+                            <CustomDateDisplayer className="shrink-0 text-muted-foreground" timeZone={user.timezone} date={channel.metaData.lastMessage?.date} showOnlyWeekDay={true} showOnlyYesterday={true} />
                         }
                     </div>
                     {

@@ -9,7 +9,7 @@ import { Textarea } from '@coreModule/components/ui/textarea.tsx'
 import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {useImperativeHandle} from "react";
-import {ApiSelect} from "@coreModule/components/custom/apiSelect";
+import {ApiSelect} from "@baseModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
 import {newUserCreated} from "@baseModule/helpers/redux/slices/uiSlice.ts";
 import {useDispatch} from "react-redux";
 import withAxios, {WithAxiosType} from "@baseModule/helpers/hocs/withAxios.tsx";

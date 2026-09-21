@@ -7,8 +7,8 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@baseModule/components/custom/tooltipDisplayer.tsx";
-import FormMaxLengthControl from "@coreModule/components/custom/formMaxLengthControl.tsx";
-import TruncatedValue from "@coreModule/components/custom/displayValue/truncatedValue.tsx";
+import FormMaxLengthControl from "@baseModule/components/viewEngine/widgets/inputs/formMaxLengthControl.tsx";
+import TruncatedValue from "@baseModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 
 /** Resolve label/placeholder/tooltip: use translator if provided, otherwise the key as literal text. */
 function resolve(key: string, resolveLanguageKey?: (key: string) => string): string {

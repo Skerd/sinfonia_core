@@ -4,18 +4,18 @@ import withLanguage, {WithLanguageType} from "@baseModule/helpers/hocs/withLangu
 import withDebug from "@baseModule/helpers/hocs/withDebug.tsx";
 import {accessFieldPathExists} from "@baseModule/helpers/context/accessContext.tsx";
 import {Mail, Power, Server} from "lucide-react";
-import DisplayRow from "@coreModule/components/custom/displayValue/displayRow.tsx";
-import DisplayValue from "@coreModule/components/custom/displayValue/displayValue.tsx";
+import EntityCardRow from "@baseModule/components/entityPage/list/card/entityCardRow.tsx";
+import DisplayValue from "@baseModule/components/viewEngine/widgets/display/displayValue.tsx";
 import SmtpServerSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import ActivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/activateSmtpServer.tsx";
 import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/deactivateSmtpServer.tsx";
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
-import SetSmtpServerActiveDialog from "@coreModule/components/custom/smtpServers/setSmtpServerActiveDialog.tsx";
-import TestSmtpConnectionDialog from "@coreModule/components/custom/smtpServers/testSmtpConnectionDialog.tsx";
+import SetSmtpServerActiveDialog from "../dialogs/setSmtpServerActiveDialog.tsx";
+import TestSmtpConnectionDialog from "../dialogs/testSmtpConnectionDialog.tsx";
 import type {SmtpServer, TestSmtpConnectionResponse} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
 import {smtpServerEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers";
-import EntityCard from "@coreModule/components/custom/cards/entityCard.tsx";
+import EntityCard from "@baseModule/components/entityPage/list/card/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@baseModule/helpers/hocs/withAxios.tsx";
 
 type SmtpServerCardProps = WithLanguageType & {
@@ -98,7 +98,7 @@ const SmtpServerCard = memo(function SmtpServerCard({
                         <DeactivateSmtpServer smtpServer={entity} onAction={setAction} />
                     </EntityCard.Header>
                     <EntityCard.Body>
-                        <DisplayRow
+                        <EntityCardRow
                             icon={Server}
                             label={resolveLanguageKey("host")}
                             tooltip={resolveLanguageKey("host")}
@@ -113,7 +113,7 @@ const SmtpServerCard = memo(function SmtpServerCard({
                                 </span>
                             }
                         />
-                        <DisplayRow
+                        <EntityCardRow
                             icon={Power}
                             label={resolveLanguageKey("active")}
                             tooltip={resolveLanguageKey("active")}
@@ -121,7 +121,7 @@ const SmtpServerCard = memo(function SmtpServerCard({
                             type="boolean"
                             value={entity.active}
                         />
-                        <DisplayRow
+                        <EntityCardRow
                             icon={Mail}
                             label={resolveLanguageKey("sequence")}
                             tooltip={resolveLanguageKey("sequence")}

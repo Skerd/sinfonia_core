@@ -14,7 +14,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import {Empty, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import {LayoutGrid, Search} from "lucide-react";
 import type {ResolveLanguageKey} from "@baseModule/helpers/hocs/withLanguage.tsx";
-import {Kbd, KbdGroup} from "@coreModule/components/ui/kbd.tsx";
+import {CommandPaletteKbd, COMMAND_PALETTE_OPEN_EVENT} from "@baseModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
 
 const TILE_COLORS = [
     {
@@ -318,15 +318,12 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
                             "transition-shadow duration-200 hover:shadow-e2",
                             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                         )}
-                        onClick={() => window.dispatchEvent(new CustomEvent("panel:open-command-palette"))}
+                        onClick={() => window.dispatchEvent(new CustomEvent(COMMAND_PALETTE_OPEN_EVENT))}
                         aria-label={String(resolveLanguageKey("home.searchPlaceholder") || "Search")}
                     >
                         <Search className="pointer-events-none absolute start-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                         <span className="flex-1 truncate">{resolveLanguageKey("home.searchPlaceholder")}</span>
-                        <KbdGroup className="pointer-events-none hidden sm:inline-flex">
-                            <Kbd>⌘</Kbd>
-                            <Kbd>K</Kbd>
-                        </KbdGroup>
+                        <CommandPaletteKbd className="hidden sm:inline-flex" />
                     </button>
                 </div>
 
