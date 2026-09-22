@@ -109,6 +109,17 @@ describe("navigation URLs", () => {
         expect(buildListDrillDownUrl("/p", { filter: group({ groups: [group()] }), queryParams: { a: "", b: undefined } })).toBe("/p");
     });
 
+    it("drill-down encodes filterLabels pruned to the DSL", () => {
+        const dsl = buildFilterGroup([buildFilterRule("buyer", "equals", "b1")]);
+        const url = buildListDrillDownUrl("/sales", {
+            filter: dsl,
+            filterLabels: { buyer: { b1: "Ada Lovelace", b2: "Dropped" }, other: { z: "Z" } },
+        });
+        const params = new URL(url, "http://x").searchParams;
+        expect(decodeFilterFromUrl(params.get("filter"))).toEqual(dsl);
+        expect(decodeFilterLabelsFromUrl(params.get("filterLabels"))).toEqual({ buyer: { b1: "Ada Lovelace" } });
+    });
+
     it("strips user filter and chrome params", () => {
         const params = new URLSearchParams("filter=1&qf_a=1&qf_a=2&ep_b=1&listView=card&listView_x=t&listPage_x=2&listSort=s&keep=1");
         stripUserFilterParams(params);

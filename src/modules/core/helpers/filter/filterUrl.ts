@@ -207,14 +207,19 @@ function withQuery(path: string, params: URLSearchParams): string {
 
 type BuildListDrillDownUrlOptions = {
     filter?: FilterDSL;
+    /** ObjectId chip labels for `filter` rules (encoded as `filterLabels`). */
+    filterLabels?: FilterRefLabels;
     queryParams?: Record<string, string | undefined>;
 };
 
 /** Build a list-page URL with optional `filter` DSL and extra query params. */
-export function buildListDrillDownUrl(path: string, { filter, queryParams }: BuildListDrillDownUrlOptions = {}): string {
+export function buildListDrillDownUrl(path: string, { filter, filterLabels, queryParams }: BuildListDrillDownUrlOptions = {}): string {
     const params = new URLSearchParams();
     if (filter && !isFilterGroupEmpty(filter)) {
         params.set(FILTER_URL_PARAM, encodeFilterToUrl(filter));
+        if (filterLabels && Object.keys(filterLabels).length > 0) {
+            params.set(FILTER_LABELS_URL_PARAM, encodeFilterLabelsToUrl(pruneFilterLabelsToDsl(filterLabels, filter)));
+        }
     }
     for (const [key, value] of Object.entries(queryParams ?? {})) {
         if (value) params.set(key, value);
