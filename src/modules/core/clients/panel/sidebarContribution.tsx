@@ -14,6 +14,7 @@ import {
     Globe,
     UserCheck,
     Timer,
+    MailCheck,
 } from "lucide-react";
 import {
     IconBuilding,
@@ -127,6 +128,14 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
             title: resolveLanguageKey("menus.account.accountSettings.notificationCenter.title"),
             url: "/account/notificationCenter",
             icon: Bell,
+            permissions: [],
+            usersPermissions: [],
+            atLeastOnePermission: true,
+        },
+        {
+            title: resolveLanguageKey("menus.account.accountSettings.notifications.title"),
+            url: "/account/notifications",
+            icon: MailCheck,
             permissions: [],
             usersPermissions: [],
             atLeastOnePermission: true,

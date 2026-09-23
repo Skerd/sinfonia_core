@@ -9,7 +9,7 @@ import {getSortedWidgetContributions} from "@coreModule/helpers/moduleContributi
 import {getCoreWidgetContribution} from "./registry/coreContribution.ts";
 import type {WidgetMeta} from "./widgetMeta.ts";
 
-export {registerIcon, resolveIcon, type ViewConfigIcon} from "./registry/icons.ts";
+export {LEGACY_TO_TABLER_EXPORT, registerIcon, resolveIcon, type ViewConfigIcon} from "./registry/icons.ts";
 
 /**
  * Token → everything the engine knows about a widget. Filled from core's own contribution

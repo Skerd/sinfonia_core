@@ -1,4 +1,4 @@
-import { UserCog, Wrench } from 'lucide-react'
+import { Bell, UserCog, Wrench } from 'lucide-react'
 import { SidebarNav } from './components/sidebar-nav.tsx'
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -35,11 +35,11 @@ function AccountSettings({
             href: specificUserId ? "security" : '/account/security',
             icon: <Wrench size={18} />,
         },
-        // {
-        //     title: resolveLanguageKey("notifications"),
-        //     href: specificUserId ? "notifications" : '/account/notifications',
-        //     icon: <Bell size={18} />,
-        // }
+        {
+            title: resolveLanguageKey("notifications"),
+            href: specificUserId ? "notifications" : '/account/notifications',
+            icon: <Bell size={18} />,
+        }
     ]
 
     useEffect(() => {
@@ -74,7 +74,7 @@ function AccountSettings({
                     }
                     {
                         activeTab === "notifications" &&
-                        <NotificationsForm />
+                        <NotificationsForm specificUserId={specificUserId} />
                     }
                 </div>
             </div>

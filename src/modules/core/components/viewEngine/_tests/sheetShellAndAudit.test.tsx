@@ -23,7 +23,7 @@ const {SheetViewRenderer: RealSheetViewRenderer} = await import("../SheetViewRen
 /** Tests pass the HOC-injected props (`onFilterChange`, `loading`, …) by hand. */
 const SheetViewRenderer = RealSheetViewRenderer as unknown as ComponentType<Record<string, unknown>>;
 const helpers = await import("../viewRendererHelpers.ts");
-const {resolveIcon, registerIcon} = await import("../widgetRegistry.ts");
+const {resolveIcon, registerIcon, LEGACY_TO_TABLER_EXPORT} = await import("../widgetRegistry.ts");
 const labels = await import("../audit/auditFieldHints.ts");
 const audit = await import("../audit/auditDisplayValue.tsx");
 const {cardNode, lastProps, renderLinkedSheet, resetCalls, t} = await import("./harness.tsx");
@@ -188,6 +188,20 @@ describe("helpers", () => {
         const Mine = () => null;
         registerIcon("#Mine", Mine);
         expect(resolveIcon("#Mine")).toBe(Mine);
+    });
+
+    /*
+     * The map is hand-written against Tabler's export names, and a wrong one
+     * fails silently: `resolveIcon` returns null and the field simply renders
+     * without its icon, which nobody notices in review. Six entries were added
+     * because six view-config tokens were resolving to nothing.
+     */
+    it("resolves every legacy icon name it claims to map", () => {
+        const broken = Object.entries(LEGACY_TO_TABLER_EXPORT)
+            .filter(([token]) => resolveIcon(`#${token}`) === null)
+            .map(([token, target]) => `#${token} → ${target}`);
+
+        expect(broken).toEqual([]);
     });
 });
 

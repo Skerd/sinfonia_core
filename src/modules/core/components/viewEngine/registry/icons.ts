@@ -12,7 +12,7 @@ function isTablerIconExport(v: unknown): v is ViewConfigIcon {
  * Lucide-style / legacy view-config names → `@tabler/icons-react` export names.
  * Tokens that already match Tabler (`#IconLabel` → `IconLabel`) or `Icon` + PascalCase (`#Tag` → `IconTag`) need no entry.
  */
-const LEGACY_TO_TABLER_EXPORT: Record<string, string> = {
+export const LEGACY_TO_TABLER_EXPORT: Record<string, string> = {
     Accessibility: "IconAccessible",
     /** Lucide `AlarmClock`; Tabler exposes `IconAlarm` / `IconAlarmSnooze`, not `IconAlarmClock`. */
     AlarmClock: "IconAlarm",
@@ -24,6 +24,8 @@ const LEGACY_TO_TABLER_EXPORT: Record<string, string> = {
     BookMarked: "IconBookmark",
     Building2: "IconBuildingCommunity",
     CheckCircle: "IconCircleCheck",
+    /** Lucide `CircleSlash`; Tabler's "crossed-out circle" is `IconCircleOff`. */
+    CircleSlash: "IconCircleOff",
     DollarSign: "IconCurrencyDollar",
     DoorOpen: "IconDoor",
     Droplets: "IconDroplet",
@@ -31,12 +33,23 @@ const LEGACY_TO_TABLER_EXPORT: Record<string, string> = {
     FolderTree: "IconFolders",
     Globe: "IconWorld",
     Landmark: "IconBuildingMonument",
+    /** Lucide `Languages` (plural); Tabler's is singular. */
+    Languages: "IconLanguage",
     Layers: "IconStack",
     ListOrdered: "IconListNumbers",
+    /** Lucide `Megaphone`; Tabler calls it a speakerphone. */
+    Megaphone: "IconSpeakerphone",
     MessageSquare: "IconMessage",
     Percent: "IconPercentage",
+    /** Lucide `Play`; bare `IconPlay` does not exist — the media glyph is `IconPlayerPlay`. */
+    Play: "IconPlayerPlay",
+    /** Lucide `RefreshCw` / `RefreshCcw`; Tabler has no direction suffix. */
+    RefreshCw: "IconRefresh",
+    RefreshCcw: "IconRefresh",
     ShieldAlert: "IconShieldExclamation",
     TreePine: "IconTrees",
+    /** Lucide renamed `AlertTriangle` → `TriangleAlert`; Tabler kept the old order. */
+    TriangleAlert: "IconAlertTriangle",
     Waves: "IconRipple",
     XCircle: "IconCircleX",
 };
