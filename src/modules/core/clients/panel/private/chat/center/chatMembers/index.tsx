@@ -13,7 +13,7 @@ import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
 import NoData from "@coreModule/components/custom/noData.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {ChannelUser} from "armonia/src/modules/core/types";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
 import {AllChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.response.type.ts";
 import {AllChannelMembersFormType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.type.ts";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";

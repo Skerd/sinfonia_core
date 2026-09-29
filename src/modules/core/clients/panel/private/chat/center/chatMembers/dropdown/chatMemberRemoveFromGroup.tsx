@@ -8,7 +8,7 @@ import {useImperativeHandle} from "react";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import {useDispatch} from "react-redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {ChannelUser} from "armonia/src/modules/core/types";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
 import {removeUsersFromChannel} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {RemoveChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/removeChannelMembers.form.response.type.ts";
 import {RemoveChannelMembersFormType} from "armonia/src/modules/core/api/user/private/chats/channels/removeChannelMembers.form.type.ts";

@@ -7,7 +7,7 @@ import {PinMessageFormResponseType} from "armonia/src/modules/core/api/user/priv
 import {RemoveUserFromChannelAdminFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/removeUserFromChannelAdmin.form.response.type.ts";
 import {MakeUserChannelAdminFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/makeUserChannelAdmin.form.response.type.ts";
 import {RemoveChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/removeChannelMembers.form.response.type.ts";
-import {ChannelUser} from "armonia/src/modules/core/types";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
 import type {InboxBadgesFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/inboxBadges.form.response.type.ts";
 import type {PublicChatStatusType} from "armonia/src/modules/core/api/user/public/publicChat/publicChat.types.ts";
 

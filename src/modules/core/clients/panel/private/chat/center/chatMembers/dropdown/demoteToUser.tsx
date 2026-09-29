@@ -3,7 +3,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import {CornerRightDown} from "lucide-react";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
-import {ChannelUser} from "armonia/src/modules/core/types";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";

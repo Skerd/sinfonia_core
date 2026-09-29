@@ -8,7 +8,7 @@ import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useImperativeHandle} from "react";
 import {useDispatch} from "react-redux";
-import {ChannelUser} from "armonia/src/modules/core/types";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
 import {promoteToAdmin as promoteToAdminAction} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {MakeUserChannelAdminFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/makeUserChannelAdmin.form.response.type.ts";
 import {MakeUserChannelAdminFormType} from "armonia/src/modules/core/api/user/private/chats/channels/makeUserChannelAdmin.form.type.ts";

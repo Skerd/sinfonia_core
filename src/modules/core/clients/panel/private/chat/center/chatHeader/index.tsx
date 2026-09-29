@@ -8,7 +8,7 @@ import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/ava
 import {AvatarGroup, AvatarGroupTooltip} from "@coreModule/components/animate-ui/components/animate/avatar-group.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
-import {ChannelUser} from "armonia/src/modules/core/types";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
 import {Card} from "@coreModule/components/ui/card.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";

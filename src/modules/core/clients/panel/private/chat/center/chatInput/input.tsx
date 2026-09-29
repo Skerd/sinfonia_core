@@ -20,7 +20,7 @@ import ForwardMessageDialog from "@coreModule/clients/panel/private/chat/center/
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {NewMessageFormType} from "armonia/src/modules/core/api/user/private/chats/messages/newMessage.form.type.ts";
 import {MessageTypeWithParticipants} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
-import type {ChannelUser} from "armonia/src/modules/core/types";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
 import {ChangeEvent, KeyboardEvent} from "react";
 import {WebSocketFEMessageCodes} from "armonia/src/modules/core/websocket/types.ts";
 import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";

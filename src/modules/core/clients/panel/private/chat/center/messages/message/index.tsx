@@ -27,7 +27,8 @@ import EditMessage from "@coreModule/clients/panel/private/chat/center/messages/
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import SingleFile from "@coreModule/components/viewEngine/widgets/media/singleFile.tsx";
-import {MessageSenderType, MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
+import type {SimpleUser} from "armonia/src/modules/core/dto/user.dto";
+import {MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -89,7 +90,7 @@ function Message({
 
     useOutsideClick(pickerRef, () => setReactionPickerOpened(false), {enabled: reactionPickerOpened});
 
-    function youOrOther(messageUser: MessageSenderType, toLowerCase?: boolean): string {
+    function youOrOther(messageUser: SimpleUser, toLowerCase?: boolean): string {
         if( messageUser?._id === user.id ){
             if( toLowerCase ){
                 return resolveLanguageKey("you").toLowerCase();
@@ -535,9 +536,9 @@ function Message({
                                 read?.replyTo?.keys?.text &&
                                 <>
                                     {
-                                        message?.replyTo?.message &&
+                                        message?.replyTo?.text &&
                                         <p>
-                                            {message.replyTo.status === "deleted" ? resolveLanguageKey("messageDeleted") : `${(message.replyTo.message).substring(0, 30)}${message.replyTo.message.length > 30 ? "..." : ""}`}
+                                            {message.replyTo.status === "deleted" ? resolveLanguageKey("messageDeleted") : `${(message.replyTo.text).substring(0, 30)}${message.replyTo.text.length > 30 ? "..." : ""}`}
                                         </p>
                                     }
                                 </>

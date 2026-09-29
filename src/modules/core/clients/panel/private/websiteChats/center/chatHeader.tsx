@@ -7,7 +7,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
-import {ChannelUser} from "armonia/src/modules/core/types";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {UserProfile} from "@coreModule/clients/panel/private/users/center/cardView";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";

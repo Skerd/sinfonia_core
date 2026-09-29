@@ -1,12 +1,11 @@
-import {ChannelUser} from "armonia/src/modules/core/types";
-import {MessageSenderType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
-import {SimpleUserType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.response.type.ts";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
+import type {SimpleUser} from "armonia/src/modules/core/dto/user.dto";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {getName, NamedUser} from "@coreModule/helpers/general/names.ts";
 import {MediaAvatar} from "@coreModule/components/viewEngine/widgets/display/mediaAvatar.tsx";
 
-type AvatarUser = ChannelUser | MessageSenderType | SimpleUserType;
+type AvatarUser = ChannelUser | SimpleUser;
 
 type UserAvatarProps = {
     /** Sizing and layout for the avatar itself; it is the element callers lay out. */

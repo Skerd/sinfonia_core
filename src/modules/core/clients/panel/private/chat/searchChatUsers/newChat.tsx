@@ -20,7 +20,7 @@ import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collaps
 import {createChannelFormSchema} from "armonia/src/modules/core/api/user/private/chats/channels/createChannel.form.validator.ts";
 import type {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import {SimpleUsersFormType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.type.ts";
-import {SimpleUserType} from "armonia/src/modules/core/api/company/private/users/simpleUsers.form.response.type.ts";
+import type {SimpleUser} from "armonia/src/modules/core/dto/user.dto";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import InfiniteList from "@coreModule/components/custom/infiniteList";
@@ -28,18 +28,18 @@ import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.t
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 
-type MembersInfiniteListProps = WithAxiosType<TableResponse<SimpleUserType>, SimpleUsersFormType> & {
+type MembersInfiniteListProps = WithAxiosType<TableResponse<SimpleUser>, SimpleUsersFormType> & {
     resolveLanguageKey: Function;
     nameSearch: string;
     selectedUserIds: string[];
-    onToggleMember: (user: SimpleUserType) => void;
+    onToggleMember: (user: SimpleUser) => void;
 };
 
 function MemberRow({
     user,
     selectedUserIds,
     onToggleMember
-}: { user: SimpleUserType; selectedUserIds: string[]; onToggleMember: (user: SimpleUserType) => void }) {
+}: { user: SimpleUser; selectedUserIds: string[]; onToggleMember: (user: SimpleUser) => void }) {
     const isSelected = selectedUserIds.includes(user._id);
 
     return (
@@ -78,7 +78,7 @@ function MembersInfiniteList({
     }
 
     return (
-        <InfiniteList<SimpleUserType>
+        <InfiniteList<SimpleUser>
             data={data}
             loading={loading}
             error={error}
@@ -124,8 +124,8 @@ function SelectedMembers({
                          }: {
     resolveLanguageKey: Function;
     selectedUserIds: string[];
-    selectedUserDetails: Record<string, SimpleUserType>;
-    onToggleMember: (user: SimpleUserType) => void;
+    selectedUserDetails: Record<string, SimpleUser>;
+    onToggleMember: (user: SimpleUser) => void;
     form: any;
 }) {
     const selectedUsers = selectedUserIds.map((id) => selectedUserDetails[id]).filter(Boolean);
@@ -212,7 +212,7 @@ function NewChat({
     const [fireUpdate, setFireUpdate] = useState<number>(0);
     const [nameSearch, setNameSearch] = useState<string>("");
     const [nameInput, setNameInput] = useState<string | null>(null);
-    const [selectedUserDetails, setSelectedUserDetails] = useState<Record<string, SimpleUserType>>({});
+    const [selectedUserDetails, setSelectedUserDetails] = useState<Record<string, SimpleUser>>({});
 
     const formSchema = createChannelFormSchema(languageCode, resolveLanguageKey("form"));
 
@@ -227,7 +227,7 @@ function NewChat({
     const name = form.watch("name");
     const selectedUserIds = form.watch("userIds") ?? [];
 
-    const onToggleMember = useCallback((user: SimpleUserType) => {
+    const onToggleMember = useCallback((user: SimpleUser) => {
         const userIds = form.getValues("userIds") ?? [];
         if (userIds.includes(user._id)) {
             form.setValue("userIds", userIds.filter((id) => id !== user._id));

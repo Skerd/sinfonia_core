@@ -8,7 +8,7 @@ import ChatMemberInfo from "@coreModule/clients/panel/private/chat/center/chatMe
 import ChatMemberRemoveFromGroup from "@coreModule/clients/panel/private/chat/center/chatMembers/dropdown/chatMemberRemoveFromGroup.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import PromoteToAdmin from "@coreModule/clients/panel/private/chat/center/chatMembers/dropdown/promoteToAdmin.tsx";
-import {ChannelUser} from "armonia/src/modules/core/types";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
 import DemoteToUser from "@coreModule/clients/panel/private/chat/center/chatMembers/dropdown/demoteToUser.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";

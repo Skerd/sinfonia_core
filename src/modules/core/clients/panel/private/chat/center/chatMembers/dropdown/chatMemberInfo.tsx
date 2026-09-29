@@ -7,7 +7,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useState} from "react";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {UserProfile} from "@coreModule/clients/panel/private/users/center/cardView";
-import {ChannelUser} from "armonia/src/modules/core/types";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 

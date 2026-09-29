@@ -16,7 +16,8 @@ import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/tr
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {getName} from "@coreModule/helpers/general/names.ts";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
-import {MessageSenderType, MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
+import type {SimpleUser} from "armonia/src/modules/core/dto/user.dto";
+import {MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
 import {IconAi} from "@tabler/icons-react";
 
@@ -59,7 +60,7 @@ function ChannelInfo({
         return "";
     }
 
-    function youOrOther(messageUser: MessageSenderType, toLowerCase?: boolean): string {
+    function youOrOther(messageUser: SimpleUser, toLowerCase?: boolean): string {
         if( messageUser?._id === user.id ){
             if( toLowerCase ){
                 return resolveLanguageKey("you").toLowerCase();

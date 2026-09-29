@@ -1,5 +1,5 @@
-import type {ChannelUser} from "armonia/src/modules/core/types";
-import type {MessageSenderType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
+import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
+import type {SimpleUser} from "armonia/src/modules/core/dto/user.dto";
 import {getName} from "@coreModule/helpers/general/names.ts";
 
 /** Matches Maestro `parseMentions`: @ + 24 hex ObjectId */
@@ -25,7 +25,7 @@ export function mentionsMarkupToPlainDisplay(markupValue: string): string {
 
 function resolveLabel(
     userId: string,
-    mentionedUsers: MessageSenderType[] | undefined,
+    mentionedUsers: SimpleUser[] | undefined,
     channelUsers: ChannelUser[] | undefined
 ): string {
     const fromMention = mentionedUsers?.find((u) => u._id === userId);
@@ -44,7 +44,7 @@ function resolveLabel(
  */
 export function wireTextToMentionsMarkup(
     wire: string,
-    mentionedUsers: MessageSenderType[] | undefined,
+    mentionedUsers: SimpleUser[] | undefined,
     channelUsers: ChannelUser[] | undefined
 ): string {
     if (!wire) {
@@ -71,7 +71,7 @@ export function wireTextToMentionsMarkup(
  */
 export function wireTextWithResolvedMentions(
     wire: string,
-    mentionedUsers: MessageSenderType[] | undefined,
+    mentionedUsers: SimpleUser[] | undefined,
     channelUsers: ChannelUser[] | undefined,
     unknownLabel?: string
 ): string {
