@@ -6,7 +6,7 @@ import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "@coreModule/components/ui/collapsible.tsx";
+} from "@coreModule/components/animate-ui/primitives/radix/collapsible.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 type SheetGroupProps = {
@@ -172,7 +172,7 @@ export function SheetGroup({
     return (
         <Collapsible open={open} onOpenChange={onOpenChange} className={cn("flex flex-col gap-y-2", className)}>
             {headerRow({collapsible: true})}
-            <CollapsibleContent className="flex flex-col gap-y-2 data-[state=closed]:animate-none">
+            <CollapsibleContent className="flex flex-col gap-y-2">
                 {children}
             </CollapsibleContent>
         </Collapsible>
