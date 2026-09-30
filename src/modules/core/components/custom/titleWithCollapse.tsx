@@ -1,4 +1,4 @@
-import {Collapsible, CollapsibleContent, CollapsibleTrigger,} from "@coreModule/components/ui/collapsible.tsx"
+import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@coreModule/components/animate-ui/primitives/radix/collapsible.tsx"
 import {CardDescription, CardTitle} from "@coreModule/components/ui/card.tsx";
 import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import {ChevronDown} from "lucide-react";
@@ -56,7 +56,7 @@ export default function TitleWithCollapse({children, title, description, inBetwe
             </CollapsibleTrigger>
             <CollapsibleContent>
                 <div className="p-2">
-                    <div className="flex flex-col gap-4 border-s-2 border-dashed border-primary/15 ps-2 md:ps-4">
+                    <div className="flex flex-col gap-4 border-s-2 border-dashed border-primary/15 ps-2 md:ps-4 pt-2">
                         {children}
                     </div>
                 </div>

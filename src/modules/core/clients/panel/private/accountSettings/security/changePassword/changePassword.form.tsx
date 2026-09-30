@@ -63,7 +63,7 @@ function UserAccountSecurityChangePasswordForm({
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-4" style={{border: "0px solid red"}}>
                 <div className="grid gap-4">
                     {
                         !specificUserId &&

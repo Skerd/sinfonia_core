@@ -67,7 +67,7 @@ function UserAccountSecurityUserSession({specificUserId, resolveLanguageKey}: Us
             description={resolveLanguageKey("description")}
             defaultOpen={false}
         >
-            <div className="mb-2 flex items-start gap-1.5 rounded-lg border border-border/60 bg-muted/40 p-2 text-xs text-muted-foreground">
+            <div className="flex items-start gap-1.5 rounded-lg border border-border/60 bg-muted/40 p-2 text-xs text-muted-foreground">
                 <KeyRound className="mt-0.5 size-3.5 shrink-0" />
                 <span>{resolveLanguageKey("helperText")}</span>
             </div>
