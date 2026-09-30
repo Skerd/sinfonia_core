@@ -1,7 +1,6 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
 import {isValidElement} from "react";
 import {render, screen} from "@testing-library/react";
-import {format} from "date-fns";
 import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
 
 vi.mock("@coreModule/helpers/moduleContributions/loadWidgetContributions.ts", () => ({
@@ -85,10 +84,11 @@ describe("value pipeline", () => {
         expect(card({n: 1234.5}, "n", {format: "locale"}).value).toBe(formatNumber(1234.5));
     });
 
-    it("format date / dateTime use date-fns PP / PPp; invalid dates stay as text", () => {
+    it("format date / dateTime leave ISO for DisplayValue (UTC calendar vs profile instant)", () => {
         const iso = "2026-03-04T10:20:00.000Z";
-        expect(card({d: iso}, "d", {format: "date"}).value).toBe(format(new Date(iso), "PP"));
-        expect(card({d: iso}, "d", {format: "dateTime"}).value).toBe(format(new Date(iso), "PPp"));
+        expect(card({d: iso}, "d", {format: "date"})).toMatchObject({value: iso, type: "date"});
+        expect(card({d: iso}, "d", {format: "dateTime"})).toMatchObject({value: iso, type: "dateTime"});
+        expect(card({d: iso}, "d", {format: "datetime", type: "date"})).toMatchObject({value: iso, type: "dateTime"});
         expect(card({d: "not a date"}, "d", {format: "date"}).value).toBe("not a date");
     });
 

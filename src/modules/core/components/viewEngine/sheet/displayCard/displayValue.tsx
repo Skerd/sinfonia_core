@@ -80,6 +80,15 @@ function rawValue(
 
 const isPlain = (v: unknown): v is string | number => typeof v === "string" || typeof v === "number";
 
+function temporalTypeFromWidget(wp: WidgetProps): "date" | "dateTime" | undefined {
+    const format = wp.format;
+    if (format === "dateTime" || format === "datetime") return "dateTime";
+    const type = wpText(wp, "type");
+    if (type === "dateTime") return "dateTime";
+    if (type === "date" || format === "date") return "date";
+    return undefined;
+}
+
 /**
  * The value a `#DisplayCard` shows, in pipeline order:
  * raw value → `bodyWidget` → number/date format → language category → yes/no → prefix/suffix
@@ -94,7 +103,12 @@ export function resolveDisplayCardValue(
     renderBody: (token: string) => ReactNode | undefined,
 ): DisplayCardValue {
     const wp = binding.widgetProps ?? {};
-    const displayType = wpText(wp, "type");
+    const explicitType = wpText(wp, "type");
+    const temporalType = temporalTypeFromWidget(wp);
+    const displayType =
+        temporalType && (!explicitType || explicitType === "date" || explicitType === "dateTime")
+            ? temporalType
+            : explicitType;
     const bodyWidget = wpText(wp, "bodyWidget");
     const skipPreFormat = !!displayType || !!bodyWidget;
     const t = ctx.resolveLanguageKey;

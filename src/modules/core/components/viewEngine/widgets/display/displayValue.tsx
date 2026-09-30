@@ -152,9 +152,8 @@ function isDateOnlyIso(value: string): boolean {
 }
 
 /**
- * `YYYY-MM-DD` is a calendar date (UTC midnight). Formatting it in the user
- * timezone can shift the day; keep UTC so the printed date matches the string.
- * Instants (`Date`, ISO datetime) use the signed-in user's timezone.
+ * Calendar dates (`date`) always format in UTC so a stored UTC-midnight day does not shift.
+ * Instants (`dateTime`) use the signed-in user's timezone.
  */
 function formatTemporal(
     value: unknown,
@@ -162,11 +161,10 @@ function formatTemporal(
     timeZone: string,
     format?: Intl.DateTimeFormatOptions,
 ): string {
-    const dateOnly = typeof value === "string" && isDateOnlyIso(value);
     const d = toDate(value);
     if (!d) return String(value);
     const formatted = formatDate(d, {
-        timeZone: dateOnly && mode === "date" ? "UTC" : timeZone,
+        timeZone: mode === "date" ? "UTC" : timeZone,
         format: format ?? (mode === "dateTime" ? DATE_TIME_FORMAT : DATE_FORMAT),
     });
     return formatted || String(value);

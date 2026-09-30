@@ -18,6 +18,10 @@ vi.mock("@coreModule/helpers/hocs/withLanguage.tsx", async (importOriginal) => (
     default: (await import("./harness.tsx")).fakeWithLanguage,
 }));
 vi.mock("@coreModule/helpers/hocs/withDebug.tsx", () => ({default: () => (c: unknown) => c}));
+vi.mock("react-redux", () => ({
+    useSelector: (selector: (state: {authentication: {user?: {timezone?: string}}}) => unknown) =>
+        selector({authentication: {user: {timezone: "Europe/Berlin"}}}),
+}));
 
 const {renderFormWidget, renderCompoundWidget, isCompoundFormWidget} = await import("../renderFormWidget.tsx");
 const {lastProps, makeProbe, resetCalls, t} = await import("./harness.tsx");

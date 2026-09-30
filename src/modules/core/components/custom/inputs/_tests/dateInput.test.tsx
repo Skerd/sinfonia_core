@@ -49,6 +49,29 @@ describe("DateInput value handling", () => {
         expect(dateBox().value).toBe("2026-03-15");
     });
 
+    it("hydrates a UTC-midnight instant as that UTC calendar day", () => {
+        render(
+            <DateInput
+                valueFormat="yyyy-MM-dd"
+                displayFormat="yyyy-MM-dd"
+                value="2026-03-15T00:00:00.000Z"
+            />,
+        );
+        expect(dateBox().value).toBe("2026-03-15");
+    });
+
+    it("hydrates a datetime instant in the given timezone", () => {
+        render(
+            <DateInput
+                valueFormat="yyyy-MM-dd HH:mm"
+                displayFormat="yyyy-MM-dd HH:mm"
+                timeZone="Europe/Berlin"
+                value="2026-03-15T13:00:00.000Z"
+            />,
+        );
+        expect(dateBox().value).toBe("2026-03-15 14:00");
+    });
+
     it("renders empty rather than throwing on a malformed display pattern", () => {
         // date-fns rejects `YYYY`/`DD`; these patterns come from view JSON, so a typo must not
         // take the surrounding form down with it.
@@ -123,14 +146,19 @@ describe("DateInput time panel", () => {
     it("opens on the month of the current value and keeps the time when a day is picked", () => {
         const onChange = vi.fn();
         openPanel(
-            <DateInput valueFormat="yyyy-MM-dd HH:mm" value="2026-03-15 09:30" onChange={onChange}/>,
+            <DateInput
+                valueFormat="yyyy-MM-dd HH:mm"
+                value="2026-03-15 09:30"
+                timeZone="Europe/Berlin"
+                onChange={onChange}
+            />,
         );
 
         const day = screen
             .getAllByRole("button")
             .find((b) => b.textContent === "20" && b.closest("table") != null);
         fireEvent.click(day!);
-        expect(onChange).toHaveBeenCalledWith("2026-03-20 09:30");
+        expect(onChange).toHaveBeenCalledWith("2026-03-20T08:30:00.000Z");
     });
 
     it("omits the calendar in time-only mode", () => {

@@ -1,5 +1,13 @@
 import {describe, expect, it} from "vitest";
-import {formatDate, formatDurationInDaysHoursOrMinutes, isSameDay} from "@coreModule/helpers/general/dateTime.ts";
+import {
+    calendarDayUtc,
+    formatDate,
+    formatDurationInDaysHoursOrMinutes,
+    fromZonedWallClock,
+    isSameDay,
+    toZonedWallClockDate,
+    zonedParts,
+} from "@coreModule/helpers/general/dateTime.ts";
 import {resolveEntityPageKeys} from "@coreModule/helpers/general/entityPage.ts";
 import {getName} from "@coreModule/helpers/general/names.ts";
 import {formatCurrency, formatNumber} from "@coreModule/helpers/general/numbers.ts";
@@ -8,6 +16,45 @@ import {buildPageTitle} from "@coreModule/helpers/general/pageTitle.ts";
 import {generateRandomString} from "@coreModule/helpers/general/random.ts";
 import {buildUrlWithExistingParams} from "@coreModule/helpers/general/url.ts";
 
+describe("calendarDayUtc", () => {
+    it("keeps a date-only string as written", () => {
+        expect(calendarDayUtc("2026-03-15")).toBe("2026-03-15");
+    });
+
+    it("uses the UTC calendar day of a Z instant (not the viewer timezone)", () => {
+        expect(calendarDayUtc("2026-03-15T00:00:00.000Z")).toBe("2026-03-15");
+        expect(calendarDayUtc(new Date("2026-03-15T00:00:00.000Z"))).toBe("2026-03-15");
+    });
+
+    it("uses the date prefix of a naive ISO datetime", () => {
+        expect(calendarDayUtc("2026-03-15T09:30:00")).toBe("2026-03-15");
+    });
+});
+
+describe("zoned wall clock", () => {
+    it("round-trips Europe/Berlin winter 14:00 to UTC", () => {
+        const instant = fromZonedWallClock("Europe/Berlin", 2026, 3, 15, 14, 0, 0);
+        expect(instant?.toISOString()).toBe("2026-03-15T13:00:00.000Z");
+        expect(zonedParts(instant!, "Europe/Berlin")).toMatchObject({
+            year: 2026, month: 3, day: 15, hour: 14, minute: 0,
+        });
+    });
+
+    it("round-trips Europe/Berlin after the 2026 spring-forward", () => {
+        const instant = fromZonedWallClock("Europe/Berlin", 2026, 3, 29, 14, 0, 0);
+        expect(instant?.toISOString()).toBe("2026-03-29T12:00:00.000Z");
+    });
+
+    it("exposes zoned parts as a local Date for timezone-naive widgets", () => {
+        const instant = new Date("2026-03-15T13:00:00.000Z");
+        const wall = toZonedWallClockDate(instant, "Europe/Berlin");
+        expect(wall?.getFullYear()).toBe(2026);
+        expect(wall?.getMonth()).toBe(2);
+        expect(wall?.getDate()).toBe(15);
+        expect(wall?.getHours()).toBe(14);
+    });
+});
+
 describe("formatDate", () => {
     const date = "2026-03-05T14:07:00Z";
 
@@ -15,6 +62,13 @@ describe("formatDate", () => {
         expect(formatDate("")).toBe("");
         expect(formatDate(null)).toBe("");
         expect(formatDate("not a date")).toBe("");
+    });
+
+    it("prints a UTC-midnight instant as the 15th in UTC, not the 14th", () => {
+        const iso = "2026-03-15T00:00:00.000Z";
+        const day = {day: "numeric"} as const;
+        expect(formatDate(iso, {timeZone: "UTC", format: day})).toBe("15");
+        expect(formatDate(iso, {timeZone: "America/New_York", format: day})).toBe("14");
     });
 
     it("formats in the given timezone with a 24h clock", () => {

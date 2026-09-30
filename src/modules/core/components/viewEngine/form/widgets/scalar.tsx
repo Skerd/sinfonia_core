@@ -1,11 +1,13 @@
 import {forwardRef, type ChangeEvent, type ComponentType, type HTMLAttributes, type ReactNode} from "react";
 import {useWatch} from "react-hook-form";
+import {useSelector} from "react-redux";
 import type {FieldBinding} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import FormMaxLengthControl from "@coreModule/components/viewEngine/widgets/inputs/formMaxLengthControl.tsx";
 import {omitProps, wpText} from "../../engine/widgetProps.ts";
 import type {FormWidgetExtra} from "../types.ts";
 import {clearedValue, orCleared} from "./emptyValue.ts";
+import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 
 /** The react-hook-form `field` render prop. */
 type RhfField = {
@@ -138,6 +140,11 @@ const FormBoundDateInput = forwardRef<HTMLInputElement, Omit<ScalarArgs, "bindin
         // Hooks cannot be conditional; unused watches fall back to harmless default paths.
         const watchedMin = useWatch({name: minPath ?? "startDate"});
         const watchedMax = useWatch({name: maxPath ?? "endDate"});
+        const profileTimeZone = useSelector((state: RootState) => state.authentication.user?.timezone);
+        const timeZone =
+            (typeof rest.timeZone === "string" && rest.timeZone) ||
+            profileTimeZone ||
+            Intl.DateTimeFormat().resolvedOptions().timeZone;
         return (
             <Widget
                 {...rest}
@@ -147,6 +154,7 @@ const FormBoundDateInput = forwardRef<HTMLInputElement, Omit<ScalarArgs, "bindin
                 onChange={(v: string | undefined | null) => field.onChange(orCleared(v, extra))}
                 placeholder={placeholder}
                 disabled={field.disabled || rest.disabled}
+                timeZone={timeZone}
                 minDate={dateBound(wp.minDate, minPath, watchedMin)}
                 maxDate={dateBound(wp.maxDate, maxPath, watchedMax)}
                 minDateExclusive={wp.minDateExclusive === true}

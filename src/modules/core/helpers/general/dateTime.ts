@@ -2,8 +2,29 @@ import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx
 
 /**
  * New Sinfonia UI date formatting. Prefer this over adding another `date-fns` call site.
- * View-engine cell format (`viewEngine/engine/format.ts`) stays on `date-fns` — do not rewrite it.
  */
+
+const DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
+const HAS_EXPLICIT_OFFSET = /(?:Z|[+-]\d{2}:?\d{2})$/i;
+
+export type ZonedDateTimeParts = {
+    year: number;
+    month: number;
+    day: number;
+    hour: number;
+    minute: number;
+    second: number;
+};
+
+const ZONED_PARTS_FORMAT: Intl.DateTimeFormatOptions = {
+    hourCycle: "h23",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+};
 
 /** Format used by {@link formatDate} when the caller passes none. */
 const DEFAULT_DATE_FORMAT: Intl.DateTimeFormatOptions = {
@@ -65,6 +86,99 @@ export function formatDate(date: Date | string | number | null | undefined, opti
     const value = new Date(date);
     if (Number.isNaN(value.getTime())) return "";
     return getDateFormatter(options.timeZone || undefined, options.format ?? DEFAULT_DATE_FORMAT).format(value);
+}
+
+function pad2(n: number): string {
+    return String(n).padStart(2, "0");
+}
+
+function utcYmd(date: Date): string {
+    return `${date.getUTCFullYear()}-${pad2(date.getUTCMonth() + 1)}-${pad2(date.getUTCDate())}`;
+}
+
+/**
+ * Calendar day `YYYY-MM-DD` for a date-only field.
+ *
+ * Date-only strings stay as written. Instants with an explicit offset (`Z` / `±HH:MM`)
+ * use the UTC calendar day of that instant (API date-only values are stored as UTC midnight).
+ * Naive `YYYY-MM-DDTHH:mm` strings use the date prefix so a missing `Z` cannot shift the day.
+ */
+export function calendarDayUtc(value: Date | string | number | null | undefined): string {
+    if (value == null || value === "") return "";
+    if (typeof value === "string") {
+        const trimmed = value.trim();
+        if (DATE_ONLY.test(trimmed)) return trimmed;
+        const prefix = trimmed.slice(0, 10);
+        if (DATE_ONLY.test(prefix) && !HAS_EXPLICIT_OFFSET.test(trimmed)) return prefix;
+        const parsed = new Date(trimmed);
+        return Number.isNaN(parsed.getTime()) ? "" : utcYmd(parsed);
+    }
+    const date = value instanceof Date ? value : new Date(value);
+    return Number.isNaN(date.getTime()) ? "" : utcYmd(date);
+}
+
+function readZonedParts(date: Date, timeZone: string | undefined): ZonedDateTimeParts | null {
+    try {
+        const parts = new Intl.DateTimeFormat("en-US", {...ZONED_PARTS_FORMAT, timeZone: timeZone || undefined}).formatToParts(date);
+        const num = (type: Intl.DateTimeFormatPartTypes) => {
+            const raw = parts.find((p) => p.type === type)?.value;
+            return raw != null ? Number.parseInt(raw, 10) : Number.NaN;
+        };
+        const year = num("year");
+        const month = num("month");
+        const day = num("day");
+        let hour = num("hour");
+        const minute = num("minute");
+        const second = num("second");
+        if ([year, month, day, hour, minute, second].some((n) => Number.isNaN(n))) return null;
+        if (hour === 24) hour = 0;
+        return {year, month, day, hour, minute, second};
+    } catch {
+        return timeZone ? readZonedParts(date, undefined) : null;
+    }
+}
+
+/** Wall-clock components of `date` in `timeZone` (invalid zones fall back to the runtime zone). */
+export function zonedParts(date: Date, timeZone?: string): ZonedDateTimeParts | null {
+    if (Number.isNaN(date.getTime())) return null;
+    return readZonedParts(date, timeZone);
+}
+
+/**
+ * Instant at which clocks in `timeZone` show the given wall clock.
+ * Invalid zones fall back to the runtime zone.
+ */
+export function fromZonedWallClock(
+    timeZone: string | undefined,
+    year: number,
+    month: number,
+    day: number,
+    hour: number,
+    minute: number,
+    second = 0,
+): Date | null {
+    const desired = Date.UTC(year, month - 1, day, hour, minute, second);
+    let guess = desired;
+    for (let i = 0; i < 4; i++) {
+        const parts = readZonedParts(new Date(guess), timeZone);
+        if (!parts) return null;
+        const asUtc = Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second);
+        const delta = desired - asUtc;
+        if (delta === 0) return new Date(guess);
+        guess += delta;
+    }
+    const resolved = new Date(guess);
+    return Number.isNaN(resolved.getTime()) ? null : resolved;
+}
+
+/**
+ * A `Date` whose **local** Y-M-D H:m:s equal the wall clock of `instant` in `timeZone`.
+ * For timezone-naive widgets (calendars, `getHours`) so they show the profile zone.
+ */
+export function toZonedWallClockDate(instant: Date, timeZone?: string): Date | null {
+    const parts = zonedParts(instant, timeZone);
+    if (!parts) return null;
+    return new Date(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second);
 }
 
 /** Whether two dates fall on the same local calendar day. */

@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { format, isValid, parse } from "date-fns";
+import { useSelector } from "react-redux";
 import { Input } from "@coreModule/components/ui/input.tsx";
 import { DateInput } from "@coreModule/components/custom/inputs/dateInput.tsx";
 import { SimpleSelect } from "@coreModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
@@ -9,6 +9,8 @@ import type { FilterFieldConfig, FilterOperator, FilterValue } from "armonia/src
 import { COLUMN_TYPE, isDateColumnType, isNumberColumnType } from "armonia/src/modules/core/database/filter/typeOperators.ts";
 import withLanguage, { TranslationValue, WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {findFromLanguage} from "@coreModule/helpers/general/objectPath.ts";
+import { calendarDayUtc } from "@coreModule/helpers/general/dateTime.ts";
+import { RootState } from "@coreModule/helpers/redux/store/generalStore.ts";
 import { useFilterBuilder } from "./filterBuilderContext.tsx";
 
 export function enumLabel(fields: TranslationValue | undefined, path: string, value: string): string {
@@ -24,12 +26,11 @@ function valueFormatForColumn(type: COLUMN_TYPE) {
     return type === COLUMN_TYPE.DATETIME ? DATETIME_VALUE_FORMAT : DATE_VALUE_FORMAT;
 }
 
-function normalizeDateFilterValue(value: string, valueFormat: string) {
+function normalizeDateFilterValue(value: string, type: COLUMN_TYPE) {
     if (!value) return "";
-    const parsed = parse(value, valueFormat, new Date());
-    if (isValid(parsed)) return value;
-    const iso = new Date(value);
-    return isValid(iso) ? format(iso, valueFormat) : "";
+    if (type !== COLUMN_TYPE.DATETIME) return calendarDayUtc(value);
+    const instant = new Date(value);
+    return Number.isNaN(instant.getTime()) ? "" : instant.toISOString();
 }
 
 function DateFilterInput({
@@ -45,13 +46,16 @@ function DateFilterInput({
 }) {
     const withTime = type === COLUMN_TYPE.DATETIME;
     const valueFormat = valueFormatForColumn(type);
+    const profileTimeZone = useSelector((state: RootState) => state.authentication.user?.timezone);
+    const timeZone = profileTimeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
     return (
         <DateInput
             valueFormat={valueFormat}
             displayFormat={withTime ? "PPp" : undefined}
-            value={normalizeDateFilterValue(value, valueFormat)}
+            value={normalizeDateFilterValue(value, type)}
             onChange={onChange}
             placeholder={placeholder}
+            timeZone={timeZone}
         />
     );
 }

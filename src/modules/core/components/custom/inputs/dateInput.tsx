@@ -2,6 +2,11 @@ import * as React from "react"
 import { format, isValid, parse, parseISO, addDays } from "date-fns"
 
 import { cn } from "@coreModule/components/lib/utils.ts"
+import {
+  calendarDayUtc,
+  fromZonedWallClock,
+  toZonedWallClockDate,
+} from "@coreModule/helpers/general/dateTime.ts"
 import { Calendar } from "@coreModule/components/ui/calendar.tsx"
 import { Input } from "@coreModule/components/ui/input.tsx"
 import { useDrawerPortalContainer } from "@coreModule/components/ui/drawer.tsx"
@@ -317,6 +322,37 @@ function parseIsoDayLocal(iso?: string): Date | undefined {
   return isValid(dt) ? dt : undefined
 }
 
+function localDateFromYmd(ymd: string): Date | undefined {
+  const [y, m, d] = ymd.split("-").map((x) => Number.parseInt(x, 10))
+  if ([y, m, d].some((n) => Number.isNaN(n))) return undefined
+  const dt = new Date(y, m - 1, d)
+  return isValid(dt) ? dt : undefined
+}
+
+/** True when the string encodes an instant (`Z` or numeric offset), not a naive local datetime. */
+function hasExplicitOffset(value: string): boolean {
+  return /(?:Z|[+-]\d{2}:?\d{2})$/i.test(value.trim())
+}
+
+function wallClockFromInstant(instant: Date, timeZone: string | undefined): Date | undefined {
+  const wall = toZonedWallClockDate(instant, timeZone)
+  return wall && isValid(wall) ? wall : undefined
+}
+
+function instantFromWallClock(wall: Date, timeZone: string | undefined): Date {
+  return (
+    fromZonedWallClock(
+      timeZone,
+      wall.getFullYear(),
+      wall.getMonth() + 1,
+      wall.getDate(),
+      wall.getHours(),
+      wall.getMinutes(),
+      wall.getSeconds(),
+    ) ?? wall
+  )
+}
+
 /** First day of `date`'s month — the granularity react-day-picker navigation bounds use. */
 function startOfMonthDay(date: Date | undefined): Date | undefined {
   return date ? new Date(date.getFullYear(), date.getMonth(), 1) : undefined
@@ -337,6 +373,11 @@ type DateInputBase = Omit<
    * tokens (e.g. `"HH:mm"`). Reuses the same scroll time panel as datetime mode.
    */
   timeOnly?: boolean
+  /**
+   * IANA timezone for datetime (not date-only) values. Wall-clock pick/display use this
+   * zone; the stored value is an ISO instant. Falls back to the runtime timezone.
+   */
+  timeZone?: string
   /** Inclusive `yyyy-MM-dd` lower bound for the calendar (unless `minDateExclusive`). */
   minDate?: string
   /** Inclusive `yyyy-MM-dd` upper bound for the calendar (unless `maxDateExclusive`). */
@@ -376,6 +417,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       maxDate,
       minDateExclusive = false,
       maxDateExclusive = false,
+      timeZone,
       // View-engine field links — consumed by FormBoundDateInput; strip so they never hit the DOM.
       minDateField: _minDateField,
       maxDateField: _maxDateField,
@@ -419,32 +461,51 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       const s = typeof value === "string" ? value.trim() : ""
       if (!s) return undefined
 
+      if (!timeOnly && !hasTime) {
+        const ymd = calendarDayUtc(s)
+        return ymd ? localDateFromYmd(ymd) : undefined
+      }
+
+      if (!timeOnly && hasTime && hasExplicitOffset(s)) {
+        const instant = new Date(s)
+        if (!isValid(instant)) return undefined
+        return wallClockFromInstant(instant, timeZone) ?? instant
+      }
+
       const exact = safeParse(s, resolvedValueFormat)
-      if (exact) return exact
+      if (exact) {
+        if (timeOnly || !hasTime) return exact
+        const instant = instantFromWallClock(exact, timeZone)
+        return wallClockFromInstant(instant, timeZone) ?? exact
+      }
       // Native <input type="time"> often yields HH:mm:ss — accept that in time-only mode.
       if (timeOnly && /^\d{1,2}:\d{2}/.test(s)) {
         const time = safeParse(s.slice(0, 5), "HH:mm")
         if (time) return time
       }
-      // Stored values routinely arrive as full ISO strings even where the form declares a
-      // narrower pattern; show them rather than silently rendering an empty field.
       const iso = parseISO(s)
-      return isValid(iso) ? iso : undefined
-    }, [value, resolvedValueFormat, timeOnly])
+      if (!isValid(iso)) return undefined
+      if (!timeOnly && hasTime) return wallClockFromInstant(iso, timeZone) ?? iso
+      return iso
+    }, [value, resolvedValueFormat, timeOnly, hasTime, timeZone])
 
-    /** Emits in whichever shape this instance was configured for: formatted string, or `Date`. */
+    /** Emits in whichever shape this instance was configured for: formatted string, ISO instant, or `Date`. */
     const emitValue = React.useCallback(
       (d: Date | undefined) => {
         const next = d && isValid(d) ? d : undefined
         if (resolvedValueFormat) {
           ;(onChange as ((v: string) => void) | undefined)?.(
-            next ? safeFormat(next, resolvedValueFormat) : "",
+            next
+              ? !timeOnly && hasTime
+                ? instantFromWallClock(next, timeZone).toISOString()
+                : safeFormat(next, resolvedValueFormat)
+              : "",
           )
           return
         }
         ;(onChange as ((d: Date | undefined) => void) | undefined)?.(next)
       },
-      [onChange, resolvedValueFormat],
+      [onChange, resolvedValueFormat, timeOnly, hasTime, timeZone],
     )
 
     const handleTimePartChange = React.useCallback(

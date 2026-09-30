@@ -124,11 +124,11 @@ export function TextBadge({
  */
 export function DateCell({date, timeZone, withTime}: {date: Date; timeZone: string; withTime: boolean}) {
     const short = formatDate(date, {
-        timeZone,
+        timeZone: withTime ? timeZone : "UTC",
         format: withTime ? {dateStyle: "medium", timeStyle: "short"} : {dateStyle: "medium"},
     });
     const full = formatDate(date, {
-        timeZone,
+        timeZone: withTime ? timeZone : "UTC",
         format: withTime ? {dateStyle: "full", timeStyle: "medium"} : {dateStyle: "full"},
     });
     return (

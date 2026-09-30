@@ -1,18 +1,16 @@
-import {format, isValid} from "date-fns";
+import {formatDate, DATE_FORMATS} from "@coreModule/helpers/general/dateTime.ts";
 import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
 import {resolvePath} from "./refs.ts";
 
-/** View-engine display dates (`PP` / `PPp`). New UI code uses `helpers/general/dateTime.ts` instead. */
+/** View-engine display dates. Calendar days use UTC; instants use the runtime timezone here. */
 export function formatTemporal(value: unknown, mode: "date" | "dateTime"): string | null {
     if (value == null || value === "") return null;
-    const d =
-        value instanceof Date
-            ? value
-            : typeof value === "string" || typeof value === "number"
-              ? new Date(value)
-              : null;
-    if (!d || !isValid(d)) return String(value);
-    return format(d, mode === "dateTime" ? "PPp" : "PP");
+    const formatted = formatDate(value instanceof Date || typeof value === "string" || typeof value === "number" ? value : null, {
+        timeZone: mode === "date" ? "UTC" : undefined,
+        format: mode === "dateTime" ? DATE_FORMATS.dateTime : DATE_FORMATS.date,
+    });
+    if (formatted) return formatted;
+    return value == null ? null : String(value);
 }
 
 export type CurrencyStub = {amount: number; currency?: {symbol?: string; abbreviation?: string}};
