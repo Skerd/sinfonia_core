@@ -33,6 +33,7 @@ import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collaps
 import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useTableConfig} from "@coreModule/helpers/hooks/useTableConfig.ts";
 import {GRID_MASONRY_ITEM} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
+import {CardMosaic} from "@coreModule/components/entityPage/list/cardMosaic.tsx";
 import {columnConfigToColumnDef} from "@coreModule/components/entityPage/list/table/columnConfigToColumnDef.tsx";
 import FilterBuilder from "@coreModule/components/entityPage/filters/filterBuilder/filterBuilder.tsx";
 import {useSelector} from "react-redux";
@@ -544,8 +545,9 @@ function CountryCenterView<
     }
 
     /*
-     * Mosaic cards: GRID_* is CSS multi-column; wrappers stay `h-fit` +
-     * `break-inside-avoid` so each card keeps its height and does not split.
+     * Mosaic cards stack inside lanes so a short card does not open a hole.
+     * The first row is still left to right. Other card class names stay a
+     * plain grid.
      */
     const cardItemClassName = cn(
         GRID_MASONRY_ITEM,
@@ -554,9 +556,13 @@ function CountryCenterView<
     );
 
     /** Shared by real cards and their skeletons so both pack identically. */
-    const renderCardContainer = (items: ReactNode[]) => (
-        <div className={containersClassName?.cardViewClassName}>{items}</div>
-    );
+    const renderCardContainer = (items: ReactNode[]) => {
+        const className = containersClassName?.cardViewClassName ?? "";
+        if (className.includes("grid-hierarchy") || className.includes("grid-transactional")) {
+            return <CardMosaic className={className}>{items}</CardMosaic>;
+        }
+        return <div className={className}>{items}</div>;
+    };
 
     /* Enough to cover the fold; a full page of placeholders costs more than it communicates. */
     const skeletonCount = Math.min(limit || 20, 8);

@@ -241,9 +241,9 @@ export type EntityListPageProps<T extends BaseEntity> = {
     headerActions?: ReactNode;
     /**
      * Defaults to {@link GRID_TRANSACTIONAL}. Pass {@link GRID_HIERARCHY} for
-     * media-led cards; both are CSS multi-column mosaics driven by density
-     * min-widths, so do not add breakpoint column counts on top - they would
-     * pin back the column count that these exist to derive.
+     * media-led cards; both are column mosaics driven by density min-widths,
+     * so do not add breakpoint column counts on top - they would pin back the
+     * column count that these exist to derive.
      */
     cardViewClassName?: string;
     /** Defaults to `"flex-full"` (page fills its container). Cap it for a list embedded in a smaller area (e.g. a collapsible section). */

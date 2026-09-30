@@ -6,11 +6,10 @@
  * the raised hover `shadow-e2` use `--elevation-*` so both themes stay legible
  * (the old fixed `shadow-md` all but disappeared on dark surfaces).
  *
- * `h-fit`: cards sit in an `align-items: start` grid, so each keeps its natural
- * height instead of stretching to the tallest sibling in the row.
+ * `h-fit`: a card keeps its natural height inside its mosaic lane.
  *
- * Hover scale is transform-only (layout size unchanged) so the masonry columns
- * do not reflow; `z-10` keeps the enlarged card above neighbors.
+ * Hover scale is transform-only (layout size unchanged) so the lanes do not
+ * reflow; `z-10` keeps the enlarged card above neighbors.
  */
 export const CARD_SHELL_CLASS =
     "group relative h-fit min-w-0 gap-0 p-0 shadow-sm transition-[box-shadow,--tw-ring-color,transform] duration-200";
@@ -45,10 +44,11 @@ export const ACTION_MENU_PIN_WHEN_GALLERY =
     "group-has-[[data-slot=gallery-carousel]]/card:absolute group-has-[[data-slot=gallery-carousel]]/card:top-0 group-has-[[data-slot=gallery-carousel]]/card:right-0 group-has-[[data-slot=gallery-carousel]]/card:z-30 group-has-[[data-slot=gallery-carousel]]/card:m-0 group-has-[[data-slot=gallery-carousel]]/card:p-1.5";
 
 /*
- * Card lists use CSS multi-column mosaic (`.grid-hierarchy` / `.grid-transactional`
- * in index.css): default is 5 columns on a full panel pane, dropping to fewer
- * on narrower widths via `--grid-card-min*`. Short cards pack under taller ones
- * instead of leaving row gutters. Reading order is top-to-bottom per column.
+ * Card lists use column lanes (`.grid-hierarchy` / `.grid-transactional`
+ * in index.css, laid out by `CardMosaic`): the first row runs left to right
+ * so a sort reads across, then each next item stacks in that column. A short
+ * card does not leave a hole under it. Default ceiling is 5 columns, dropping
+ * on narrower panes via `--grid-card-min*`.
  *
  * Pair every list item with {@link GRID_MASONRY_ITEM}. Cap at 3–4 columns with
  * {@link GRID_COLS_MAX_3} / {@link GRID_COLS_MAX_4} for denser cards
