@@ -128,7 +128,7 @@ export function KpiCard({
     const drillHref = href != null && href !== "" ? href : undefined;
     const interactive = drillHref != null;
     const shellClass = cn(
-        "relative",
+        "relative overflow-visible",
         variantStyles[variant],
         interactive && "cursor-pointer transition-shadow hover:ring-2 hover:ring-primary/30",
     );

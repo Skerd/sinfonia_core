@@ -74,8 +74,13 @@ export const GRID_MASONRY_ITEM = "h-fit min-h-0 w-full break-inside-avoid";
  * replaced produced a ragged 4-then-5 rhythm and squeezed five tiles into a
  * laptop width that only fits three legible ones.
  */
+/**
+ * `p-1` is the ring's room. KPI cards use a 1px ring (2px on hover) drawn
+ * outside the border box, and these grids sit in `overflow: auto` scrollports
+ * (`.flex-full`). Without inset, that clip eats the ring on the outer edges.
+ */
 export const GRID_KPI =
-    "grid gap-(--density-gap-sm) grid-cols-[repeat(auto-fit,minmax(min(var(--grid-kpi-min),100%),1fr))]";
+    "grid gap-(--density-gap-sm) p-1 grid-cols-[repeat(auto-fit,minmax(min(var(--grid-kpi-min),100%),1fr))]";
 
 /**
  * Overview / dashboard tab layout tokens. One vertical rhythm across every tab
