@@ -77,6 +77,8 @@ function UserAccountProfileUserInfo({
         )
     }
 
+    const locked = !!data?.isBot;
+
     return (
         <div className="flex flex-col gap-y-4">
             {(read.photo || read.cover) ? (
@@ -124,7 +126,7 @@ function UserAccountProfileUserInfo({
                 </HiddenElement>
             </div>
 
-            {read.username ? (
+            {read.username && !locked ? (
             <AccountProfileEmail
                 invited={data?.status === "invited"}
                 defaultValue={data?.username}
@@ -180,7 +182,7 @@ function UserAccountProfileUserInfo({
             ) : (
                 <HiddenElement />
             )}
-            {read.phoneNumber ? (
+            {read.phoneNumber && !locked ? (
             <AccountProfilePhoneNumber
                 defaultValue={data?.phoneNumber}
                 specificUserId={specificUserId}
@@ -194,7 +196,7 @@ function UserAccountProfileUserInfo({
             ) : (
                 <HiddenElement />
             )}
-            {read.timezone ? (
+            {read.timezone && !locked ? (
             <AccountProfileTimeZone
                 defaultValue={data?.timezone}
                 specificUserId={specificUserId}
@@ -206,10 +208,12 @@ function UserAccountProfileUserInfo({
             ) : (
                 <HiddenElement />
             )}
+            {!locked && (
             <AccountCompaniesCardEditRoles
                 specificUserId={specificUserId}
                 roles={data?.roles || []}
             />
+            )}
             {
                 specificUserId && data && read?.requests && data.requests && hasRequestsData(data.requests) &&
                 <RequestsSection data={data} resolveLanguageKey={resolveLanguageKey} timezone={currentTimeZone} specificUserId={specificUserId}/>

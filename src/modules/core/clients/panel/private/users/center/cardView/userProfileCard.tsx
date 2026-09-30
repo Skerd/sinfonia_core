@@ -385,6 +385,7 @@ function UserProfileCardInner({
 
                         <TabsContent value="about" className="rounded-md border bg-muted/30 p-3 text-sm">
                             <InfoRowGroup layout="stack">
+                                {!data.isBot && <>
                                 <EntityCardRow
                                     iconReplacement={<div>
                                         <HiddenElement>
@@ -447,6 +448,7 @@ function UserProfileCardInner({
                                     show={!!read.timezone}
                                     value={data.timezone}
                                 />
+                                </>}
                                 <EntityCardRow
                                     icon={MailCheck}
                                     label={resolveLanguageKey("emailVerifiedAt")}
@@ -500,7 +502,7 @@ function UserProfileCardInner({
                                         </span>
                                     )}
                                 </EntityCardRow>
-                                <div className="flex flex-col w-full gap-y-2">
+                                {!data.isBot && <div className="flex flex-col w-full gap-y-2">
                                     <p className="text-sm text-muted-foreground">{resolveLanguageKey("roles")}</p>
                                     <HiddenElement>
                                         {
@@ -537,7 +539,7 @@ function UserProfileCardInner({
                                             </div>
                                         }
                                     </HiddenElement>
-                                </div>
+                                </div>}
                             </InfoRowGroup>
                         </TabsContent>
                         <TabsContent value="info" className="rounded-md border bg-muted/30 p-3 text-sm">
