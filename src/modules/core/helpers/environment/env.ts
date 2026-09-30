@@ -15,8 +15,6 @@ const envSchema = z.object({
     DEV: z.boolean().default(false),
     PROD: z.boolean().default(false),
     BASE_URL: z.string().default("/"),
-    VITE_API_BASE_URL: z.string().optional(),
-    VITE_WS_BASE_URL: z.string().optional(),
     VITE_DEBUG_HTTP: boolFromEnv.default(false),
     VITE_DEBUG_WS: boolFromEnv.default(false),
     VITE_DEBUG_UI: boolFromEnv.default(false),

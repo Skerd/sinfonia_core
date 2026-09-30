@@ -5,6 +5,7 @@ import type {
     RequestPayload,
     ResolveLanguageKey,
 } from "@coreModule/helpers/types/httpRequest.types.ts";
+import {SESSION_EXPIRED_ERROR_CODES} from "@coreModule/helpers/apiClient/sessionExpiredErrorCodes.ts";
 
 /**
  * Pure request/toast builders used by `useHttpRequest`. Kept free of React so they can be unit-tested.
@@ -183,11 +184,9 @@ export const formatHttpErrorMessage = (requestError: Partial<HttpError>, resolve
     return title ? `${title}: ${serverError}` : serverError;
 };
 
-const SESSION_ERROR_CODES = new Set(["token_verification_failed", "no_token", "session_not_found"]);
-
 /** Session expiry is handled by AuthenticationProvider's setup screen, so it never gets an error toast. */
 export const isSessionExpiredError = (status: number | undefined, errorCode: string | undefined): boolean =>
-    status === 401 || (!!errorCode && SESSION_ERROR_CODES.has(errorCode));
+    status === 401 || (!!errorCode && SESSION_EXPIRED_ERROR_CODES.has(errorCode));
 
 /** A bare 401/403 (no server message or code) is settled silently. */
 export const shouldToastError = (error: Partial<HttpError>, hideIfError: boolean | undefined): boolean => {

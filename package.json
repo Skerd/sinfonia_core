@@ -76,7 +76,6 @@
         "@uiw/react-json-view": "^2.0.0-alpha.41",
         "@xyflow/react": "^12.11.2",
         "armonia": "../armonia",
-        "arpeggio_armonia": "../armonia",
         "axios": "^1.13.1",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",

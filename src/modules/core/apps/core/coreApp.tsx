@@ -46,12 +46,14 @@ function CoreApp() {
                                     <Route path="/authenticate/:panel/:platform?" element={<ErrorBoundary><AuthenticationPage/></ErrorBoundary>}/>
                                     <Route element={<PrivatePage />}>
                                         <Route path="/:menu?/:subview?/:id?/*" element={
-                                            <SidebarProvider className="h-svh max-h-svh min-h-0 overflow-hidden">
-                                                <AdministrativePanelSideBar />
-                                                <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-                                                    <CenterPanel />
-                                                </div>
-                                            </SidebarProvider>
+                                            <ErrorBoundary>
+                                                <SidebarProvider className="h-svh max-h-svh min-h-0 overflow-hidden">
+                                                    <AdministrativePanelSideBar />
+                                                    <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+                                                        <CenterPanel />
+                                                    </div>
+                                                </SidebarProvider>
+                                            </ErrorBoundary>
                                         } />
                                     </Route>
                                 </Routes>

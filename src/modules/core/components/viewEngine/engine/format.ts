@@ -2,7 +2,7 @@ import {format, isValid} from "date-fns";
 import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
 import {resolvePath} from "./refs.ts";
 
-/** `PP` / `PPp` for dates and ISO strings; an unparseable value comes back as text, empty as `null`. */
+/** View-engine display dates (`PP` / `PPp`). New UI code uses `helpers/general/dateTime.ts` instead. */
 export function formatTemporal(value: unknown, mode: "date" | "dateTime"): string | null {
     if (value == null || value === "") return null;
     const d =

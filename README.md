@@ -4,6 +4,8 @@ Sinfonia is the Arpeggio client application. It renders the admin panel, connect
 
 The **core** module is always enabled and provides the UI foundation, routing shell, design system, and module contribution framework that feature modules plug into.
 
+Subdomain ownership (panel shell, view engine, chat, studio): [`src/modules/core/README.md`](src/modules/core/README.md). Chat and Studio stay in core.
+
 ## Responsibilities
 
 - **Panel shell** — sidebar, breadcrumbs, theme/language switches, notifications
@@ -91,6 +93,22 @@ Note on i18n: `withLanguage("src/…")` paths must match the calling file (or an
 Set `VITE_ENABLED_MODULES` (comma-separated) to limit which `src/modules/*` packages are included in the Vite graph and contribution globs. When unset, all present modules load. `core` is always included.
 
 Mirrors maestro's `ENABLED_MODULES`.
+
+## Dev proxy
+
+`VITE_API_BASE_URL` (default `http://localhost:81`) and `VITE_WS_BASE_URL` (default `ws://localhost:82`) set the Vite **dev server proxy** targets in `vite.config.ts`. The browser always uses same-origin `/api` and `/ws`. Production sits behind nginx (`solfeggio/clusters/nginx`).
+
+## Tooling
+
+`npm run lint` uses `eslint.config.js`. Maestro has no matching ESLint config (Node/Express vs React). `vite-plugin-checker` is a dependency but stays **commented out** in `vite.config.ts` — overlay typecheck duplicated `npm run typecheck` on every save. Re-enable locally if you want in-browser tsc.
+
+## Dates (new code)
+
+New UI uses `formatDate` in `src/modules/core/helpers/general/dateTime.ts`. View-engine `formatTemporal` (`date-fns`) is left as-is.
+
+## Token refresh
+
+See [`src/modules/core/README.md`](src/modules/core/README.md). No silent refresh; 401 → relogin.
 
 ## Path aliases
 

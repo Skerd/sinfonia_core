@@ -144,6 +144,8 @@ export default defineConfig(({ mode }) => {
     const sinfoniaApp = resolveSinfoniaApp(
         process.env.VITE_SINFONIA_APP ?? env.VITE_SINFONIA_APP,
     );
+    const apiProxyTarget = env.VITE_API_BASE_URL || "http://localhost:81";
+    const wsProxyTarget = env.VITE_WS_BASE_URL || "ws://localhost:82";
     // Scan `src/modules/*` → `@${dir}Module` aliases; keep tsconfig `paths` in sync for the IDE.
     syncTsconfigModulePaths();
 
@@ -159,6 +161,11 @@ export default defineConfig(({ mode }) => {
                 maestroRoot: path.resolve(__dirname, "../maestro"),
                 enabled: sinfoniaApp.appId === "studio",
             }),
+            /* Overlay tsc/eslint during `vite` is optional. Left off because typecheck is
+               `npm run typecheck` (aliases + tsc) and the overlay doubled that cost on every
+               save. Re-enable locally if you want in-browser errors:
+               import checker from "vite-plugin-checker";
+               checker({ typescript: true }) */
             // checker({
             //     typescript: true
             // }),
@@ -193,13 +200,13 @@ export default defineConfig(({ mode }) => {
         server: {
             proxy: {
                 "/api": {
-                    target: "http://localhost:81", // replace with your API server URL
+                    target: apiProxyTarget,
                     changeOrigin: false,
                     xfwd: true,
                     rewrite: (path) => path, // optional: if you want to remove /api from the request
                 },
                 "/ws": {
-                    target: "ws://localhost:82", // replace with your API server URL
+                    target: wsProxyTarget,
                     changeOrigin: true,
                     rewrite: (path) => path.replace("/ws", ""), // optional: if you want to remove /api from the request
                 },

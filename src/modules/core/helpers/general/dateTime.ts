@@ -1,5 +1,10 @@
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 
+/**
+ * New Sinfonia UI date formatting. Prefer this over adding another `date-fns` call site.
+ * View-engine cell format (`viewEngine/engine/format.ts`) stays on `date-fns` — do not rewrite it.
+ */
+
 /** Format used by {@link formatDate} when the caller passes none. */
 const DEFAULT_DATE_FORMAT: Intl.DateTimeFormatOptions = {
     weekday: "long",

@@ -2,19 +2,9 @@ import axios, {AxiosError, InternalAxiosRequestConfig} from "axios";
 import {getDeviceId, getToken} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {markSessionExpired} from "@coreModule/helpers/redux/slices/authSlice.ts";
+import {SESSION_EXPIRED_ERROR_CODES} from "@coreModule/helpers/apiClient/sessionExpiredErrorCodes.ts";
 
 const AUTH_PATH_PREFIX = "/authenticate";
-
-/**
- * Backend auth failures for expired/invalid sessions use these codes.
- * Note: maestro returns HTTP 403 (not 401) for `token_verification_failed` / `no_token`.
- * `session_not_found` defaults to HTTP 400.
- */
-const SESSION_EXPIRED_ERROR_CODES = new Set([
-    "token_verification_failed",
-    "no_token",
-    "session_not_found",
-]);
 
 /**
  * Shared axios instance for all API calls in the browser app.
@@ -84,7 +74,7 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
         headers["language"] = languageCode;
     }
     if (companyId) {
-        headers["company"] = companyId;
+        headers["x-company-id"] = companyId;
     }
 
     nextConfig.headers = headers;

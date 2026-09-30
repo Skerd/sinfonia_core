@@ -62,7 +62,7 @@ describe("apiClient", () => {
             "x-auth-token": "secret-token",
             "x-device-id": "device-1",
             language: "en-US",
-            company: "c1",
+            "x-company-id": "c1",
         });
     });
 
@@ -70,6 +70,7 @@ describe("apiClient", () => {
         const headers = await sentHeaders("https://cdn.example.com/booklet.pdf");
         expect(headers).not.toHaveProperty("x-auth-token");
         expect(headers).not.toHaveProperty("x-device-id");
+        expect(headers).not.toHaveProperty("x-company-id");
         expect(headers).not.toHaveProperty("company");
     });
 
@@ -78,6 +79,25 @@ describe("apiClient", () => {
         expect(dispatchMock).not.toHaveBeenCalled();
 
         await failWith401("/api/x");
+        expect(dispatchMock).toHaveBeenCalledExactlyOnceWith({type: "expired"});
+    });
+
+    it("marks the session expired on 403 token_verification_failed", async () => {
+        await apiClient
+            .get("/api/x", {
+                adapter: async (config) => Promise.reject(Object.assign(new Error("403"), {
+                    isAxiosError: true,
+                    config,
+                    response: {
+                        status: 403,
+                        data: {error_code: "token_verification_failed"},
+                        headers: {},
+                        config,
+                        statusText: "",
+                    },
+                })),
+            })
+            .catch(() => undefined);
         expect(dispatchMock).toHaveBeenCalledExactlyOnceWith({type: "expired"});
     });
 });

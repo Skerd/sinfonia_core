@@ -101,8 +101,8 @@ type ParsedFile = {
 /** maestro's tsconfig `paths`, which is how shared fragments are imported. */
 const MAESTRO_ALIASES: Record<string, string> = {
     "@coreModule/": "modules/core/",
-    "@realEstateModule/": "modules/realEstate/",
     "@propertyManagement/": "modules/propertyManagement/",
+    "@propertyDevelopmentModule/": "modules/propertyDevelopment/",
     "@musicIndustry/": "modules/musicIndustry/",
     "@eCommerceModule/": "modules/eCommerce/",
     "@eCommerceMarketplaceModule/": "modules/eCommerceMarketplace/",
