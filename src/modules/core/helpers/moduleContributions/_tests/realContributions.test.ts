@@ -46,12 +46,9 @@ describe("real module contributions", () => {
         expect(ids).toContain("propertyManagement:marketingPreferences");
     });
 
-    itIf("propertyManagement")("hide /me-backed sections when an admin inspects another user", () => {
-        // Those endpoints derive their subject from the session, so they cannot
-        // answer for the inspected user — showing the admin's own preferences
-        // under someone else's name would be worse than showing nothing.
+    itIf("propertyManagement")("keep the marketing preferences section when an admin inspects another user", () => {
         const ids = getAccountSettingsNotificationSections({specificUserId: "someone-else"}).map((s) => s.id);
-        expect(ids).not.toContain("propertyManagement:marketingPreferences");
+        expect(ids).toContain("propertyManagement:marketingPreferences");
     });
 
     it("keep the core sidebar groups around the module groups", () => {

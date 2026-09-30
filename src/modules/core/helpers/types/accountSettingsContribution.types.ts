@@ -6,9 +6,7 @@ export type AccountSettingsContext = {
      * Set when an admin is inspecting *another* user's settings from the Users
      * page, rather than their own.
      *
-     * Contributors whose backend only serves the authenticated caller (a `/me`
-     * endpoint) must return nothing in that case — rendering their own
-     * preferences under someone else's name would be actively misleading.
+     * Pass it as the `specificUser` header so the section loads that user.
      */
     specificUserId?: string;
 };
