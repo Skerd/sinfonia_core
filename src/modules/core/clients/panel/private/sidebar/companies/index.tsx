@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import {useEffect, useMemo, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
@@ -10,7 +10,6 @@ import {DropdownMenu, DropdownMenuTrigger} from "@coreModule/components/ui/dropd
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import AllCompaniesDropDownMenuContent from "@coreModule/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent";
 import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
-import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
@@ -31,45 +30,12 @@ function CompaniesSwitcher({
     const {read} = useAccess("companies");
     const newCompanyCreated = useSelector((state: RootState) => state.ui.newCompanyCreated);
     const [forceReload, setForceReload] = useState<number>(0);
-    const [companiesListFetchCount, setCompaniesListFetchCount] = useState(0);
-    const [companiesListRequested, setCompaniesListRequested] = useState(false);
-    const companiesListInitRef = useRef(false);
-    const skipListNewCompanyRef = useRef(true);
-
-    const companiesListHttp = useMemo(
-        () => ({method: "get" as const, url: "/api/companies/basicInfo", data: {}}),
-        []
-    );
-
-    const {data: companiesList, loading: companiesListLoading, error: companiesListError} = useHttpRequest<
-        BasicCompanyInfoFormResponseType[]
-    >(companiesListHttp, {}, companiesListFetchCount, true, {}, {resolveLanguageKey});
 
     useEffect(() => {
         if( !!read && Object.keys(read).length ){
             onFilterChange({});
         }
     }, [newCompanyCreated, forceReload, read]);
-
-    useEffect(() => {
-        if (!read || !Object.keys(read).length || !data || companiesListInitRef.current) {
-            return;
-        }
-        companiesListInitRef.current = true;
-        setCompaniesListRequested(true);
-        setCompaniesListFetchCount(1);
-    }, [data, read]);
-
-    useEffect(() => {
-        if (skipListNewCompanyRef.current) {
-            skipListNewCompanyRef.current = false;
-            return;
-        }
-        if (!companiesListInitRef.current) {
-            return;
-        }
-        setCompaniesListFetchCount((c) => c + 1);
-    }, [newCompanyCreated]);
 
     if( !read ){
         return <HiddenElement />
@@ -134,12 +100,7 @@ function CompaniesSwitcher({
                             </div>
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
-                    <AllCompaniesDropDownMenuContent
-                        companiesList={companiesList}
-                        companiesListLoading={!companiesListRequested || companiesListLoading}
-                        companiesListError={companiesListError}
-                        onCompaniesListRetry={() => setCompaniesListFetchCount((c) => c + 1)}
-                    />
+                    <AllCompaniesDropDownMenuContent listReloadKey={newCompanyCreated} />
                 </DropdownMenu>
                 </ReloginProvider>
             </SidebarMenuItem>

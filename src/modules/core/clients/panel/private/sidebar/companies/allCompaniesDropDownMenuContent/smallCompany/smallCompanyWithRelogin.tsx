@@ -1,5 +1,4 @@
-import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
+import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -8,18 +7,15 @@ import {useRelogin} from "@coreModule/helpers/hooks/useRelogin.ts";
 
 type SmallCompanyWithReLoginProps = {
     company: BasicCompanyInfoFormResponseType,
-    index: number
 }
 
-function SmallCompanyWithReLogin({company, index}: SmallCompanyWithReLoginProps){
+function SmallCompanyWithReLogin({company}: SmallCompanyWithReLoginProps){
     const {read} = useAccess("companies");
     const {triggerRelogin} = useRelogin();
 
     function reLoginWithDifferentCompany(){
         triggerRelogin(company._id);
     }
-
-    useKeyboardShortcuts(index + 1 + "", reLoginWithDifferentCompany);
 
     return(
         <DropdownMenuItem
@@ -56,7 +52,6 @@ function SmallCompanyWithReLogin({company, index}: SmallCompanyWithReLoginProps)
                     }
                 </HiddenElement>
             </div>
-            <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
         </DropdownMenuItem>
     )
 }

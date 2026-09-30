@@ -31,6 +31,12 @@ const CURRENT_COMPANY = "company-current";
 const OTHER_COMPANY = "company-other";
 const TOKENS = {token: "new-token", refreshToken: "new-refresh"};
 
+/** Access token whose payload company matches what the API signs. */
+function accessToken(companyId: string) {
+    const segment = btoa(JSON.stringify({company: {_id: companyId}})).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    return `header.${segment}.sig`;
+}
+
 type Deferred = {resolve: (value: unknown) => void; reject: (error: unknown) => void};
 
 function httpError(status: number, body: Record<string, unknown>) {
@@ -112,7 +118,9 @@ describe("ReloginProvider", () => {
         expect(apiClientMock).not.toHaveBeenCalled();
     });
 
-    it("posts the company id and stores the new tokens", async () => {
+    it("posts the company id and stores the company from the new access token", async () => {
+        const token = accessToken(OTHER_COMPANY);
+        apiClientMock.mockResolvedValue({data: {token, refreshToken: "new-refresh"}});
         const {hook, trigger, auth} = await setup();
 
         trigger(OTHER_COMPANY);
@@ -126,7 +134,8 @@ describe("ReloginProvider", () => {
             data: {companyId: OTHER_COMPANY},
             signal: expect.any(AbortSignal),
         }));
-        expect(auth()).toMatchObject({token: TOKENS.token, refreshToken: TOKENS.refreshToken});
+        expect(auth()).toMatchObject({token, refreshToken: "new-refresh"});
+        expect(auth().user.company?._id).toBe(OTHER_COMPANY);
         expect(toastMock.error).not.toHaveBeenCalled();
     });
 
@@ -140,7 +149,10 @@ describe("ReloginProvider", () => {
         expect(apiClientMock).not.toHaveBeenCalled();
     });
 
-    it("sends each switch, including a repeat of the same company", async () => {
+    it("sends each switch and ignores a repeat of the company just adopted", async () => {
+        apiClientMock.mockImplementation((config: {data?: {companyId?: string}}) => Promise.resolve({
+            data: {token: accessToken(config.data?.companyId ?? ""), refreshToken: "new-refresh"},
+        }));
         const {hook, trigger} = await setup();
 
         trigger(OTHER_COMPANY);
@@ -152,7 +164,6 @@ describe("ReloginProvider", () => {
 
         expect(apiClientMock.mock.calls.map(([config]) => config.data)).toEqual([
             {companyId: OTHER_COMPANY},
-            {companyId: "company-third"},
             {companyId: "company-third"},
         ]);
     });

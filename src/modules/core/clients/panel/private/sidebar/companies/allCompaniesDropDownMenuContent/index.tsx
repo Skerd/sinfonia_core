@@ -5,44 +5,37 @@ import CreateCompanyDropMenuItem from "@coreModule/clients/panel/private/sidebar
 import {useSidebar} from "@coreModule/components/ui/sidebar.tsx";
 import CompanyDropDownItems from "@coreModule/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/companyDropDownItems.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
-import {HttpError} from "@coreModule/helpers/hooks/useHttpRequest.ts";
 
 type AllCompaniesDropDownMenuContentProps = WithLanguageType & {
-    companiesList: BasicCompanyInfoFormResponseType[] | null;
-    companiesListLoading: boolean;
-    companiesListError: HttpError | null;
-    onCompaniesListRetry: () => void;
+    /** Bumped when a company is created, so the list reloads from the first page. */
+    listReloadKey: number;
 }
 
 function AllCompaniesDropDownMenuContent({
     resolveLanguageKey,
-    companiesList,
-    companiesListLoading,
-    companiesListError,
-    onCompaniesListRetry
+    listReloadKey,
 }: AllCompaniesDropDownMenuContentProps) {
 
     const { isMobile } = useSidebar();
 
     return (
         <DropdownMenuContent
-            className='w-(--radix-dropdown-menu-trigger-width) min-w-72 rounded-lg'
+            className='flex max-h-128 w-(--radix-dropdown-menu-trigger-width) min-w-72 flex-col overflow-hidden rounded-lg'
             align="start"
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
             forceMount
         >
-            <DropdownMenuLabel className='text-muted-foreground text-xs'>
+            <DropdownMenuLabel className='shrink-0 py-0 text-muted-foreground text-xs'>
                 {resolveLanguageKey("title")}
             </DropdownMenuLabel>
             <CompanyDropDownItems
-                data={companiesList}
-                loading={companiesListLoading}
-                error={companiesListError}
-                onRetry={onCompaniesListRetry}
+                key={listReloadKey}
+                forceReload={listReloadKey}
             />
-            <CreateCompanyDropMenuItem />
+            <div className="shrink-0">
+                <CreateCompanyDropMenuItem />
+            </div>
         </DropdownMenuContent>
     )
 }

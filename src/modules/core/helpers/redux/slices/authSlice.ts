@@ -58,6 +58,20 @@ const createInitialState = (): AuthenticationState => ({
     sessionExpired: false,
 });
 
+/** Company id embedded in an access token. Requests scope with this, not a second copy of the id. */
+function companyIdFromAccessToken(token: string): string | null {
+    const segment = token.split(".")[1];
+    if (!segment) return null;
+    try {
+        const base64 = segment.replace(/-/g, "+").replace(/_/g, "/");
+        const json = atob(base64 + "=".repeat((4 - (base64.length % 4)) % 4));
+        const companyId = JSON.parse(json).company?._id;
+        return typeof companyId === "string" && companyId ? companyId : null;
+    } catch {
+        return null;
+    }
+}
+
 /** Wipes credentials from state; the persistence listener clears storage to match. */
 const clearSession = (state: AuthenticationState, sessionExpired: boolean) => {
     state.token = null;
@@ -72,6 +86,7 @@ export const authenticationSlice = createSlice({
     reducers: {
         /**
          * Stores the token pair and marks the user as authenticated.
+         * The session company follows the access token, which is what later requests send as `x-company-id`.
          */
         logIn: (state, action: PayloadAction<LoginFormResponseType>) => {
             const {token, refreshToken} = action.payload;
@@ -85,6 +100,10 @@ export const authenticationSlice = createSlice({
             state.token = token;
             state.refreshToken = refreshToken;
             state.sessionExpired = false;
+            const companyId = companyIdFromAccessToken(token);
+            if (companyId) {
+                state.user.company._id = companyId;
+            }
         },
         /**
          * Replaces current user profile after token validation.
