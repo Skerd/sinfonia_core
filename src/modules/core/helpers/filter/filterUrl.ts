@@ -11,7 +11,8 @@ import { isFilterGroupEmpty } from "./mergeFilterDsl.ts";
  * - `qf_<field>_label` — ObjectId quick-filter display labels (skip select hydrate)
  * - `ep_<name>` — non-DSL list body extraParams (page-local / asExtraParam)
  * - `ep_<name>_label` — ObjectId extraParam display labels
- * - `projectId` / `edificeId` / `floorId` / `*Name` — scope/default filters (extraFilters)
+ * - `projectId` / `edificeId` / `floorId` / `*Name` — legacy scope links; list pages
+ *   promote them into `qf_*` and then drop them so the quick filter owns the scope
  * - `listView` / `listPage` / `listSort` — list chrome (useListUrlState)
  *
  * The param-key constants live here and `useListUrlState` (which owns the runtime chrome
@@ -267,6 +268,82 @@ export function buildListNavigationUrl({ path, from, scope = {}, policy }: Build
         else params.delete(key);
     }
     return withQuery(path, params);
+}
+
+function quickFilterValueKey(field: string): string {
+    return `${QUICK_FILTER_PARAM_PREFIX}${field}`;
+}
+
+function quickFilterLabelKey(field: string): string {
+    return `${QUICK_FILTER_PARAM_PREFIX}${field}_label`;
+}
+
+/** `qf_<field>` / `qf_<field>_label` entries for {@link buildListNavigationUrl} scope. */
+export function quickFilterScopeEntries(
+    field: string,
+    id: string | null | undefined,
+    label?: string | null,
+): Record<string, string> {
+    if (!id) return {};
+    const entries: Record<string, string> = {[quickFilterValueKey(field)]: id};
+    if (label) entries[quickFilterLabelKey(field)] = label;
+    return entries;
+}
+
+export type ScopeQuickFilter = {
+    /** Quick-filter field (`project`, `edifice`, `floor`). */
+    field: string;
+    /** Legacy id param (`projectId`). */
+    idParam: string;
+    /** Legacy display-name param (`projectName`). */
+    nameParam: string;
+};
+
+/**
+ * Copy legacy scope params into quick-filter params, then remove the legacy keys.
+ * Existing `qf_*` values are left in place. Returns whether `params` changed.
+ */
+export function promoteScopeParamsToQuickFilters(params: URLSearchParams, scopes: readonly ScopeQuickFilter[]): boolean {
+    let changed = false;
+    for (const scope of scopes) {
+        const valueKey = quickFilterValueKey(scope.field);
+        const labelKey = quickFilterLabelKey(scope.field);
+        const id = params.get(scope.idParam);
+        if (id && !params.get(valueKey)) {
+            params.set(valueKey, id);
+            const name = params.get(scope.nameParam);
+            if (name && !params.get(labelKey)) params.set(labelKey, name);
+            changed = true;
+        }
+        if (params.has(scope.idParam)) {
+            params.delete(scope.idParam);
+            changed = true;
+        }
+        if (params.has(scope.nameParam)) {
+            params.delete(scope.nameParam);
+            changed = true;
+        }
+    }
+    return changed;
+}
+
+/**
+ * Legacy scope id to apply until promotion writes `qf_<field>`.
+ * Absent once the quick filter owns the value, so clearing the filter stays cleared.
+ */
+export function pendingScopeFilterId(params: URLSearchParams, field: string, idParam: string): string | undefined {
+    if (params.get(quickFilterValueKey(field))) return undefined;
+    return params.get(idParam) || undefined;
+}
+
+/** Quick-filter value, otherwise the legacy scope id. Empty string when neither is set. */
+export function quickOrScopeParam(params: URLSearchParams, field: string, idParam: string): string {
+    return params.get(quickFilterValueKey(field)) || params.get(idParam) || "";
+}
+
+/** Quick-filter label, otherwise the legacy scope name. Empty string when neither is set. */
+export function quickOrScopeLabel(params: URLSearchParams, field: string, nameParam: string): string {
+    return params.get(quickFilterLabelKey(field)) || params.get(nameParam) || "";
 }
 
 // ---------------------------------------------------------------------------

@@ -10,7 +10,12 @@ import {
     encodeFilterLabelsToUrl,
     encodeFilterToUrl,
     FILTER_URL_PARAM,
+    pendingScopeFilterId,
+    promoteScopeParamsToQuickFilters,
     pruneFilterLabelsToDsl,
+    quickFilterScopeEntries,
+    quickOrScopeLabel,
+    quickOrScopeParam,
     stripListChromeParams,
     stripUserFilterParams,
 } from "@coreModule/helpers/filter/filterUrl.ts";
@@ -118,6 +123,45 @@ describe("navigation URLs", () => {
         const params = new URL(url, "http://x").searchParams;
         expect(decodeFilterFromUrl(params.get("filter"))).toEqual(dsl);
         expect(decodeFilterLabelsFromUrl(params.get("filterLabels"))).toEqual({ buyer: { b1: "Ada Lovelace" } });
+    });
+
+    it("promotes legacy scope params into quick filters and drops them", () => {
+        const params = new URLSearchParams("projectId=p1&projectName=Aria&edificeId=e1&listView=card");
+        expect(promoteScopeParamsToQuickFilters(params, [
+            {field: "project", idParam: "projectId", nameParam: "projectName"},
+            {field: "edifice", idParam: "edificeId", nameParam: "edificeName"},
+        ])).toBe(true);
+        expect(params.toString()).toBe("listView=card&qf_project=p1&qf_project_label=Aria&qf_edifice=e1");
+        expect(promoteScopeParamsToQuickFilters(params, [
+            {field: "project", idParam: "projectId", nameParam: "projectName"},
+        ])).toBe(false);
+    });
+
+    it("does not overwrite a quick filter the user already set", () => {
+        const params = new URLSearchParams("projectId=p1&projectName=Aria&qf_project=p2&qf_project_label=Kept");
+        promoteScopeParamsToQuickFilters(params, [
+            {field: "project", idParam: "projectId", nameParam: "projectName"},
+        ]);
+        expect(params.get("qf_project")).toBe("p2");
+        expect(params.get("qf_project_label")).toBe("Kept");
+        expect(params.has("projectId")).toBe(false);
+    });
+
+    it("pending scope id is only the legacy param, and quick-or-scope prefers qf", () => {
+        const legacy = new URLSearchParams("projectId=p1&projectName=Aria");
+        expect(pendingScopeFilterId(legacy, "project", "projectId")).toBe("p1");
+        expect(quickOrScopeParam(legacy, "project", "projectId")).toBe("p1");
+        expect(quickOrScopeLabel(legacy, "project", "projectName")).toBe("Aria");
+
+        const current = new URLSearchParams("projectId=p1&qf_project=p2&qf_project_label=Tower");
+        expect(pendingScopeFilterId(current, "project", "projectId")).toBeUndefined();
+        expect(quickOrScopeParam(current, "project", "projectId")).toBe("p2");
+        expect(quickOrScopeLabel(current, "project", "projectName")).toBe("Tower");
+        expect(quickFilterScopeEntries("project", "p2", "Tower")).toEqual({
+            qf_project: "p2",
+            qf_project_label: "Tower",
+        });
+        expect(quickFilterScopeEntries("project", "")).toEqual({});
     });
 
     it("strips user filter and chrome params", () => {
