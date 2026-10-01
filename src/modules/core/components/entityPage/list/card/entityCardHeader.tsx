@@ -45,16 +45,17 @@ export function EntityCardHeader({
 
     return (
         <CardHeader className={cn(
-            "gap-1.5 px-2 pt-2 pb-1 items-start",
+            "gap-1.5 px-2 pt-2 pb-1 flex items-center justify-between",
             "group-has-data-[slot=gallery-carousel]/card:grid-cols-1 rounded-none",
             className,
         )}>
             <div className={cn("flex min-w-0 gap-2", showSubtitleRow || hasBadges ? "items-start" : "items-center")}>
-                {iconTile != null && (
+                {
+                    iconTile != null &&
                     <div className="flex shrink-0 items-center justify-center self-center leading-none">
                         {iconTile}
                     </div>
-                )}
+                }
                 {/*
                   * No `HiddenElement` wrappers here. Each slot arrives already gated — `title`
                   * and `subtitle` are `DisplayValue`s that mask themselves — so the wrappers were
@@ -68,18 +69,21 @@ export function EntityCardHeader({
                             {title}
                         </CardTitle>
                     </div>
-                    {showSubtitleRow && (
+                    {
+                        showSubtitleRow &&
                         <p className="truncate text-xs leading-snug text-muted-foreground">
                             {subtitle}
                         </p>
-                    )}
-                    {hasBadges && (
+                    }
+                    {
+                        hasBadges &&
                         <div className="flex flex-wrap items-center gap-1.5">{badges}</div>
-                    )}
+                    }
                 </div>
             </div>
-            {showActions && (
-                <CardAction className={cn("-mr-1 self-start", ACTION_MENU_PIN_WHEN_GALLERY)}>
+            {
+                showActions &&
+                <CardAction className={cn("self-start", ACTION_MENU_PIN_WHEN_GALLERY)}>
                     <div
                         className={cn("shrink-0 flex justify-end", className)}
                         onClick={(e: MouseEvent) => e.stopPropagation()}
@@ -88,7 +92,7 @@ export function EntityCardHeader({
                         {actionMenu}
                     </div>
                 </CardAction>
-            )}
+            }
         </CardHeader>
     );
 }
