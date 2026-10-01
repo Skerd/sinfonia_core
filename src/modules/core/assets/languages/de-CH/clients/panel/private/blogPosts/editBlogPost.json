@@ -1,0 +1,46 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/editBlogPost.tsx",
+  "title": "Beitrag bearbeiten",
+  "description": "Inhalt und Medien des Beitrags aktualisieren",
+  "generalInfo": "Beitragsdetails",
+  "form": {
+    "categoryLabel": "Kategorie",
+    "categoryPlaceholder": "Kategorie wählen",
+    "titleLabel": "Titel",
+    "titlePlaceholder": "Beitragstitel",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "excerptLabel": "Kurztext",
+    "excerptPlaceholder": "Kurzer Teaser auf der Listenkarte",
+    "contentLabel": "Inhalt",
+    "contentPlaceholder": "Den vollständigen Beitrag schreiben",
+    "mainImageLabel": "Titelbild",
+    "imageGalleryLabel": "Bildergalerie"
+  },
+  "axios": {
+    "start": {
+      "title": "Beitrag wird gespeichert",
+      "time": 3000
+    },
+    "success": {
+      "title": "Beitrag aktualisiert",
+      "time": 3000
+    },
+    "error": {
+      "title": "Beitrag konnte nicht aktualisiert werden, bitte erneut versuchen",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Beitrag bearbeiten",
+    "description": "Inhalt und Medien des Beitrags aktualisieren"
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Speichern"
+  },
+  "errorTitle": "Beitrag konnte nicht geladen werden",
+  "errorDescription": "Bitte hier klicken, um die Beitragsdaten erneut zu laden",
+  "noId": "Kein Beitrag ausgewählt.",
+  "backToList": "Zurück zur Liste"
+}

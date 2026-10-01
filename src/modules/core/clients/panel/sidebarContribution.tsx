@@ -15,6 +15,8 @@ import {
     UserCheck,
     Timer,
     MailCheck,
+    BookOpen,
+    Tags,
 } from "lucide-react";
 import {
     IconBuilding,
@@ -87,6 +89,14 @@ function buildCompanyNavGroup(
                     badge: publicChatMineUnread || undefined,
                 },
             ],
+        },
+        {
+            title: resolveLanguageKey("menus.company.blog.title"),
+            url: "/company/blogPosts",
+            icon: BookOpen,
+            permissions: ["blogPosts"],
+            usersPermissions: [],
+            atLeastOnePermission: true,
         },
         {
             title: resolveLanguageKey("menus.company.settings.company.title"),
@@ -243,6 +253,14 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
                             url: "/tenancy/systemSettings/messagingProviders",
                             icon: MessageSquare,
                             permissions: ["messagingProviders"],
+                            usersPermissions: [],
+                            atLeastOnePermission: true,
+                        },
+                        {
+                            title: resolveLanguageKey("menus.tenancy.systemSettings.blogCategories.title"),
+                            url: "/tenancy/systemSettings/blogCategories",
+                            icon: Tags,
+                            permissions: ["blogCategories"],
                             usersPermissions: [],
                             atLeastOnePermission: true,
                         },

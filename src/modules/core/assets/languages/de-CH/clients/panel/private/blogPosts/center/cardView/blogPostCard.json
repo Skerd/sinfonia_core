@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/center/cardView/blogPostCard.tsx",
+  "published": "Veröffentlicht",
+  "unpublished": "Unveröffentlicht",
+  "fields": {
+    "category": "Kategorie",
+    "slug": "Slug",
+    "publishedAt": "Veröffentlichungsdatum"
+  },
+  "failedTitle": "Beitrag konnte nicht geladen werden",
+  "failedDescription": "Zum erneuten Versuch tippen."
+}

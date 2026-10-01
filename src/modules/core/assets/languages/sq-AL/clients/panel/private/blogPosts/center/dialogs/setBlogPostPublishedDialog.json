@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/center/dialogs/setBlogPostPublishedDialog.tsx",
+  "publish": {
+    "title": "Publiko artikullin",
+    "description": "Ky artikull do të shfaqet në faqen publike."
+  },
+  "unpublish": {
+    "title": "Fshih artikullin",
+    "description": "Ky artikull nuk do të shfaqet më në faqen publike derisa të publikohet përsëri."
+  },
+  "axios": {
+    "start": {
+      "title": "Duke përditësuar artikullin…"
+    },
+    "success": {
+      "title": "Artikulli u publikua."
+    },
+    "unpublished": {
+      "title": "Artikulli u fsheh."
+    },
+    "error": {
+      "title": "Artikulli nuk u përditësua"
+    }
+  }
+}

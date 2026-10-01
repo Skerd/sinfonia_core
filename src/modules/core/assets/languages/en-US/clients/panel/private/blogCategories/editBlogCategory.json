@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/editBlogCategory.tsx",
+  "title": "Edit blog category",
+  "description": "Update category details",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Category name",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Optional description"
+  },
+  "errorTitle": "Failed to load category",
+  "errorDescription": "Please click here to retry fetching category data",
+  "noId": "No category selected.",
+  "backToList": "Back to list",
+  "axios": {
+    "start": {
+      "title": "Saving category",
+      "time": 3000
+    },
+    "success": {
+      "title": "Category updated",
+      "time": 3000
+    },
+    "error": {
+      "title": "Category could not be updated, please try again",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Edit blog category",
+    "description": "Update category details"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Save"
+  }
+}

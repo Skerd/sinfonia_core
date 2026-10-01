@@ -1,0 +1,49 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/index.tsx",
+  "title": "Artikujt e blogut",
+  "description": "Artikuj të kompanisë për faqen publike",
+  "createBlogPost": "Krijo artikull",
+  "noData": "Nuk u gjetën artikuj blogu",
+  "failTitle": "Artikujt e blogut nuk u ngarkuan",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit të artikujve. Ju lutemi provoni përsëri.",
+  "searchPlaceholder": "Kërko ose shto filtra...",
+  "fields": {
+    "createdAt": "Krijuar më",
+    "createdBy": "Krijuar nga",
+    "deletedAt": "Fshirë më",
+    "deletedBy": "Fshirë nga",
+    "category": "Kategoria",
+    "content": "Përmbajtja",
+    "excerpt": "Përmbledhja",
+    "imageGallery": "Galeria e imazheve",
+    "mainImage": "Imazhi i kopertinës",
+    "published": "Publikuar",
+    "publishedAt": "Data e publikimit",
+    "slug": "Slug",
+    "title": "Titulli",
+    "updatedAt": "Përditësuar më"
+  },
+  "help": {
+    "ariaLabel": "Rreth artikujve të blogut",
+    "title": "Rreth artikujve të blogut",
+    "overview": "Një artikull blogu është përmbajtje e kompanisë. Artikujt e publikuar shfaqen në faqen publike. Skicat mbeten në panel.",
+    "sections": [
+      {
+        "title": "Çfarë përmban një artikull",
+        "items": [
+          "Kategoria (e detyrueshme), titulli, slug, teksti, përmbledhje opsionale.",
+          "Imazhi i kopertinës dhe galeria.",
+          "Publikoni ose fshihni nga menyja e rreshtit. Data e publikimit vendoset automatikisht në publikimin e parë."
+        ]
+      },
+      {
+        "title": "Në këtë faqe",
+        "items": [
+          "Krijoni një skicë, shtoni media, pastaj publikoni nga lista kur teksti është gati.",
+          "Artikujt e papublikuar mbeten vetëm në panel.",
+          "Filtroni sipas kategorisë."
+        ]
+      }
+    ]
+  }
+}

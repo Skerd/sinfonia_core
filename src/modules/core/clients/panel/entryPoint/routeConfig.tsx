@@ -35,6 +35,12 @@ import AllCronJobs from "@coreModule/clients/panel/private/tenancy/systemSetting
 import EditCronJob from "@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs/editCronJob.tsx";
 import Apps from "@coreModule/clients/panel/private/apps";
 import PanelHomePage from "@coreModule/clients/panel/private/home/PanelHomePage.tsx";
+import AllBlogPosts from "@coreModule/clients/panel/private/blogPosts";
+import CreateBlogPost from "@coreModule/clients/panel/private/blogPosts/createBlogPost.tsx";
+import EditBlogPost from "@coreModule/clients/panel/private/blogPosts/editBlogPost.tsx";
+import AllBlogCategories from "@coreModule/clients/panel/private/blogCategories";
+import CreateBlogCategory from "@coreModule/clients/panel/private/blogCategories/createBlogCategory.tsx";
+import EditBlogCategory from "@coreModule/clients/panel/private/blogCategories/editBlogCategory.tsx";
 
 function safeDecode(value: string | null): string | undefined {
     if (value == null || value === "") return undefined;
@@ -85,6 +91,13 @@ function renderCoreCenterPanelContent({
             return <Chat websiteChannels={websiteChannels} />;
         }
         if (subview === "info") return <MyCompany />;
+        if (subview === "blogPosts") {
+            const blogPostId = searchParams.get("blogPostId") || undefined;
+            const blogPostName = safeDecode(searchParams.get("blogPostName")) || undefined;
+            if (segments[2] === "create") return <CreateBlogPost />;
+            if (segments[2] === "edit") return <EditBlogPost entityId={blogPostId} entityName={blogPostName} />;
+            return <AllBlogPosts />;
+        }
     }
 
     // Account routes
@@ -125,6 +138,8 @@ function renderCoreCenterPanelContent({
             const smtpServerName = safeDecode(searchParams.get("smtpServerName")) || undefined;
             const messagingProviderId = searchParams.get("messagingProviderId") || undefined;
             const messagingProviderName = safeDecode(searchParams.get("messagingProviderName")) || undefined;
+            const blogCategoryId = searchParams.get("blogCategoryId") || undefined;
+            const blogCategoryName = safeDecode(searchParams.get("blogCategoryName")) || undefined;
 
             if (resource === "companies") {
                 if (action === "edit") {
@@ -173,6 +188,11 @@ function renderCoreCenterPanelContent({
                     return <EditMessagingProvider entityId={messagingProviderId} entityName={messagingProviderName} />;
                 }
                 if (action === undefined) return <AllMessagingProviders />;
+            }
+            if (resource === "blogCategories") {
+                if (action === "create") return <CreateBlogCategory />;
+                if (action === "edit") return <EditBlogCategory entityId={blogCategoryId} entityName={blogCategoryName} />;
+                if (action === undefined) return <AllBlogCategories />;
             }
             if (resource === "cronJobs") {
                 const cronJobId = searchParams.get("cronJobId") || undefined;

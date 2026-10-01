@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/center/dialogs/setBlogPostPublishedDialog.tsx",
+  "publish": {
+    "title": "Publish post",
+    "description": "This post will appear on the public site."
+  },
+  "unpublish": {
+    "title": "Hide post",
+    "description": "This post will no longer appear on the public site until it is published again."
+  },
+  "axios": {
+    "start": {
+      "title": "Updating post…"
+    },
+    "success": {
+      "title": "Post published."
+    },
+    "unpublished": {
+      "title": "Post hidden."
+    },
+    "error": {
+      "title": "Failed to update post"
+    }
+  }
+}

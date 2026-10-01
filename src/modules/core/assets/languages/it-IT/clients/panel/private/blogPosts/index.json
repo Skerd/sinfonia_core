@@ -1,0 +1,49 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/index.tsx",
+  "title": "Articoli del blog",
+  "description": "Articoli aziendali per il sito pubblico",
+  "createBlogPost": "Crea articolo",
+  "noData": "Nessun articolo del blog trovato",
+  "failTitle": "Impossibile caricare gli articoli",
+  "failDescription": "Si è verificato un errore durante il caricamento degli articoli. Riprova.",
+  "searchPlaceholder": "Cerca o aggiungi filtri...",
+  "fields": {
+    "createdAt": "Creato il",
+    "createdBy": "Creato da",
+    "deletedAt": "Eliminato il",
+    "deletedBy": "Eliminato da",
+    "category": "Categoria",
+    "content": "Contenuto",
+    "excerpt": "Estratto",
+    "imageGallery": "Galleria immagini",
+    "mainImage": "Immagine di copertina",
+    "published": "Pubblicato",
+    "publishedAt": "Data di pubblicazione",
+    "slug": "Slug",
+    "title": "Titolo",
+    "updatedAt": "Aggiornato il"
+  },
+  "help": {
+    "ariaLabel": "Informazioni sugli articoli del blog",
+    "title": "Informazioni sugli articoli del blog",
+    "overview": "Un articolo del blog è contenuto aziendale. Gli articoli pubblicati appaiono sul sito pubblico. Le bozze restano nel pannello.",
+    "sections": [
+      {
+        "title": "Cosa contiene un articolo",
+        "items": [
+          "Categoria (obbligatoria), titolo, slug, testo, estratto facoltativo.",
+          "Immagine di copertina e galleria.",
+          "Pubblica o nascondi dal menu della riga. La data di pubblicazione viene impostata automaticamente alla prima pubblicazione."
+        ]
+      },
+      {
+        "title": "In questa pagina",
+        "items": [
+          "Crea una bozza, aggiungi i media, poi pubblica dall'elenco quando il testo è pronto.",
+          "Gli articoli non pubblicati restano solo nel pannello.",
+          "Filtra per categoria."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/center/sheetView/blogCategorySheetView.tsx",
+  "overview": "Përmbledhje",
+  "lifecycle": "Cikli i jetës",
+  "blogCategory": "Kategori blogu",
+  "name": "Emri",
+  "slug": "Slug",
+  "description": "Përshkrimi",
+  "createdAt": "Krijuar më",
+  "updatedAt": "Përditësuar më",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga"
+}

@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/editBlogCategory.tsx",
+  "title": "Ndrysho kategorinë",
+  "description": "Përditëso detajet e kategorisë",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri i kategorisë",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "descriptionLabel": "Përshkrimi",
+    "descriptionPlaceholder": "Përshkrim opsional"
+  },
+  "axios": {
+    "start": {
+      "title": "Duke ruajtur kategorinë",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kategoria u përditësua",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kategoria nuk u përditësua, ju lutemi provoni përsëri",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Ndrysho kategorinë",
+    "description": "Përditëso detajet e kategorisë"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Ruaj"
+  },
+  "errorTitle": "Kategoria nuk u ngarkua",
+  "errorDescription": "Klikoni këtu për të provuar përsëri ngarkimin e kategorisë",
+  "noId": "Nuk u zgjodh asnjë kategori.",
+  "backToList": "Kthehu te lista"
+}

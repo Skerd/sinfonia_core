@@ -1,0 +1,30 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/createBlogPost.tsx",
+  "title": "Créer un article",
+  "description": "Rédiger un article de blog d'entreprise",
+  "generalInfo": "Détails de l'article",
+  "form": {
+    "categoryLabel": "Catégorie",
+    "categoryPlaceholder": "Sélectionner une catégorie",
+    "titleLabel": "Titre",
+    "titlePlaceholder": "Titre de l'article",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "excerptLabel": "Extrait",
+    "excerptPlaceholder": "Court texte affiché sur la carte de liste",
+    "contentLabel": "Contenu",
+    "contentPlaceholder": "Rédigez l'article complet",
+    "mainImageLabel": "Image de couverture",
+    "imageGalleryLabel": "Galerie d'images"
+  },
+  "axios": {
+    "start": {"title": "Création de l'article", "time": 3000},
+    "success": {"title": "Article créé", "time": 3000},
+    "error": {"title": "L'article n'a pas pu être créé, veuillez réessayer", "time": 3000}
+  },
+  "formHeader": {
+    "title": "Créer un article",
+    "description": "Rédiger un article de blog d'entreprise"
+  },
+  "formButtons": {"cancel": "Annuler", "submit": "Créer"}
+}

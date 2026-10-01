@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/editBlogCategory.tsx",
+  "title": "Modifier la catégorie",
+  "description": "Mettre à jour les détails de la catégorie",
+  "form": {
+    "nameLabel": "Nom",
+    "namePlaceholder": "Nom de la catégorie",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Description facultative"
+  },
+  "axios": {
+    "start": {
+      "title": "Enregistrement de la catégorie",
+      "time": 3000
+    },
+    "success": {
+      "title": "Catégorie mise à jour",
+      "time": 3000
+    },
+    "error": {
+      "title": "La catégorie n'a pas pu être mise à jour, veuillez réessayer",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Modifier la catégorie",
+    "description": "Mettre à jour les détails de la catégorie"
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Enregistrer"
+  },
+  "errorTitle": "Échec du chargement de la catégorie",
+  "errorDescription": "Cliquez ici pour réessayer de charger la catégorie",
+  "noId": "Aucune catégorie sélectionnée.",
+  "backToList": "Retour à la liste"
+}

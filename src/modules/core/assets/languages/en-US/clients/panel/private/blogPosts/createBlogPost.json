@@ -1,0 +1,42 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/createBlogPost.tsx",
+  "title": "Create blog post",
+  "description": "Write a company blog post",
+  "generalInfo": "Post details",
+  "form": {
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Select category",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Post title",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "excerptLabel": "Excerpt",
+    "excerptPlaceholder": "Short teaser shown on the list card",
+    "contentLabel": "Content",
+    "contentPlaceholder": "Write the full post",
+    "mainImageLabel": "Cover image",
+    "imageGalleryLabel": "Image gallery"
+  },
+  "axios": {
+    "start": {
+      "title": "Creating post",
+      "time": 3000
+    },
+    "success": {
+      "title": "Post created",
+      "time": 3000
+    },
+    "error": {
+      "title": "Post could not be created, please try again",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Create blog post",
+    "description": "Write a company blog post"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Create"
+  }
+}

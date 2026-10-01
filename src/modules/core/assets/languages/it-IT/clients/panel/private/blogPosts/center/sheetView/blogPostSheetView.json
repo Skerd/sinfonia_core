@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/center/sheetView/blogPostSheetView.tsx",
+  "overview": "Panoramica",
+  "lifecycle": "Ciclo di vita",
+  "gallery": "Galleria",
+  "blogPost": "Articolo del blog",
+  "category": "Categoria",
+  "title": "Titolo",
+  "slug": "Slug",
+  "excerpt": "Estratto",
+  "content": "Contenuto",
+  "published": "Pubblicato",
+  "publishedAt": "Data di pubblicazione",
+  "createdAt": "Creato il",
+  "updatedAt": "Aggiornato il",
+  "createdBy": "Creato da",
+  "deletedAt": "Eliminato il",
+  "deletedBy": "Eliminato da"
+}

@@ -1,0 +1,49 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/index.tsx",
+  "title": "Articles de blog",
+  "description": "Articles d'entreprise pour le site public",
+  "createBlogPost": "Créer un article",
+  "noData": "Aucun article de blog trouvé",
+  "failTitle": "Échec du chargement des articles",
+  "failDescription": "Une erreur s'est produite lors du chargement des articles. Veuillez réessayer.",
+  "searchPlaceholder": "Rechercher ou ajouter des filtres...",
+  "fields": {
+    "createdAt": "Créé le",
+    "createdBy": "Créé par",
+    "deletedAt": "Supprimé le",
+    "deletedBy": "Supprimé par",
+    "category": "Catégorie",
+    "content": "Contenu",
+    "excerpt": "Extrait",
+    "imageGallery": "Galerie d'images",
+    "mainImage": "Image de couverture",
+    "published": "Publié",
+    "publishedAt": "Date de publication",
+    "slug": "Slug",
+    "title": "Titre",
+    "updatedAt": "Mis à jour le"
+  },
+  "help": {
+    "ariaLabel": "À propos des articles de blog",
+    "title": "À propos des articles de blog",
+    "overview": "Un article de blog est un contenu d'entreprise. Les articles publiés apparaissent sur le site public. Les brouillons restent dans le panneau.",
+    "sections": [
+      {
+        "title": "Contenu d'un article",
+        "items": [
+          "Catégorie (obligatoire), titre, slug, corps, extrait facultatif.",
+          "Image de couverture et galerie d'images.",
+          "Publiez ou masquez depuis le menu de la ligne. La date de publication est définie automatiquement à la première publication."
+        ]
+      },
+      {
+        "title": "Sur cette page",
+        "items": [
+          "Créez un brouillon, ajoutez des médias, puis publiez depuis la liste lorsque le texte est prêt.",
+          "Les articles non publiés restent uniquement dans le panneau.",
+          "Filtrez par catégorie."
+        ]
+      }
+    ]
+  }
+}

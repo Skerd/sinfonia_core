@@ -1,0 +1,39 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/editBlogCategory.tsx",
+  "title": "Kategorie bearbeiten",
+  "description": "Kategoriedetails aktualisieren",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Kategoriename",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "descriptionLabel": "Beschreibung",
+    "descriptionPlaceholder": "Optionale Beschreibung"
+  },
+  "axios": {
+    "start": {
+      "title": "Kategorie wird gespeichert",
+      "time": 3000
+    },
+    "success": {
+      "title": "Kategorie aktualisiert",
+      "time": 3000
+    },
+    "error": {
+      "title": "Kategorie konnte nicht aktualisiert werden, bitte erneut versuchen",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Kategorie bearbeiten",
+    "description": "Kategoriedetails aktualisieren"
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Speichern"
+  },
+  "errorTitle": "Kategorie konnte nicht geladen werden",
+  "errorDescription": "Bitte hier klicken, um die Kategoriedaten erneut zu laden",
+  "noId": "Keine Kategorie ausgewählt.",
+  "backToList": "Zurück zur Liste"
+}

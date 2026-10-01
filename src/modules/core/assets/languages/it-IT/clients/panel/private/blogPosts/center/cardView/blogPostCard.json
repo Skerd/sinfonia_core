@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/center/cardView/blogPostCard.tsx",
+  "published": "Pubblicato",
+  "unpublished": "Non pubblicato",
+  "fields": {
+    "category": "Categoria",
+    "slug": "Slug",
+    "publishedAt": "Data di pubblicazione"
+  },
+  "failedTitle": "Impossibile caricare l'articolo",
+  "failedDescription": "Tocca per riprovare."
+}

@@ -73,6 +73,9 @@
         },
         "cronJobs": {
           "title": "Scheduled actions"
+        },
+        "blogCategories": {
+          "title": "Blog Categories"
         }
       }
     },
@@ -97,6 +100,15 @@
         },
         "mine": {
           "title": "Mine"
+        }
+      },
+      "blog": {
+        "title": "Blog",
+        "posts": {
+          "title": "Posts"
+        },
+        "categories": {
+          "title": "Categories"
         }
       },
       "info": {

@@ -1,0 +1,46 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/editBlogPost.tsx",
+  "title": "Modifica articolo",
+  "description": "Aggiorna contenuto e media dell'articolo",
+  "generalInfo": "Dettagli dell'articolo",
+  "form": {
+    "categoryLabel": "Categoria",
+    "categoryPlaceholder": "Seleziona categoria",
+    "titleLabel": "Titolo",
+    "titlePlaceholder": "Titolo dell'articolo",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "excerptLabel": "Estratto",
+    "excerptPlaceholder": "Breve testo mostrato sulla scheda elenco",
+    "contentLabel": "Contenuto",
+    "contentPlaceholder": "Scrivi l'articolo completo",
+    "mainImageLabel": "Immagine di copertina",
+    "imageGalleryLabel": "Galleria immagini"
+  },
+  "axios": {
+    "start": {
+      "title": "Salvataggio dell'articolo",
+      "time": 3000
+    },
+    "success": {
+      "title": "Articolo aggiornato",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare l'articolo, riprova",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Modifica articolo",
+    "description": "Aggiorna contenuto e media dell'articolo"
+  },
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Salva"
+  },
+  "errorTitle": "Impossibile caricare l'articolo",
+  "errorDescription": "Fai clic qui per riprovare a caricare i dati dell'articolo",
+  "noId": "Nessun articolo selezionato.",
+  "backToList": "Torna all'elenco"
+}

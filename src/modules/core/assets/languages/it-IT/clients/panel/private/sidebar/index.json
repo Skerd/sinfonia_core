@@ -86,6 +86,9 @@
         },
         "currencies": {
           "title": "Valute"
+        },
+        "blogCategories": {
+          "title": "Categorie del blog"
         }
       }
     },
@@ -110,6 +113,15 @@
         },
         "mine": {
           "title": "Mie"
+        }
+      },
+      "blog": {
+        "title": "Blog",
+        "posts": {
+          "title": "Articoli"
+        },
+        "categories": {
+          "title": "Categorie"
         }
       },
       "settings": {

@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/center/dialogs/setBlogPostPublishedDialog.tsx",
+  "publish": {
+    "title": "Pubblica articolo",
+    "description": "Questo articolo apparirà sul sito pubblico."
+  },
+  "unpublish": {
+    "title": "Nascondi articolo",
+    "description": "Questo articolo non sarà più visibile sul sito pubblico finché non viene pubblicato di nuovo."
+  },
+  "axios": {
+    "start": {
+      "title": "Aggiornamento dell'articolo…"
+    },
+    "success": {
+      "title": "Articolo pubblicato."
+    },
+    "unpublished": {
+      "title": "Articolo nascosto."
+    },
+    "error": {
+      "title": "Impossibile aggiornare l'articolo"
+    }
+  }
+}

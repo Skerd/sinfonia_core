@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/createBlogCategory.tsx",
+  "title": "Krijo kategori",
+  "description": "Shto një kategori për artikujt",
+  "form": {
+    "nameLabel": "Emri",
+    "namePlaceholder": "Emri i kategorisë",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "descriptionLabel": "Përshkrimi",
+    "descriptionPlaceholder": "Përshkrim opsional"
+  },
+  "axios": {
+    "start": {"title": "Duke krijuar kategorinë", "time": 3000},
+    "success": {"title": "Kategoria u krijua", "time": 3000},
+    "error": {"title": "Kategoria nuk u krijua, ju lutemi provoni përsëri", "time": 3000}
+  },
+  "formHeader": {
+    "title": "Krijo kategori",
+    "description": "Shto një kategori për artikujt"
+  },
+  "formButtons": {"cancel": "Anulo", "submit": "Krijo"}
+}

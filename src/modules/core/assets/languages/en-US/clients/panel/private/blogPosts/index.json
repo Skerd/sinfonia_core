@@ -1,0 +1,49 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/index.tsx",
+  "title": "Blog posts",
+  "description": "Company blog posts for the public site",
+  "createBlogPost": "Create post",
+  "noData": "No blog posts found",
+  "failTitle": "Failed to load blog posts",
+  "failDescription": "An error occurred while loading blog posts. Please try again.",
+  "searchPlaceholder": "Search or add filters...",
+  "fields": {
+    "createdAt": "Created at",
+    "createdBy": "Created by",
+    "deletedAt": "Deleted at",
+    "deletedBy": "Deleted by",
+    "category": "Category",
+    "content": "Content",
+    "excerpt": "Excerpt",
+    "imageGallery": "Image gallery",
+    "mainImage": "Cover image",
+    "published": "Published",
+    "publishedAt": "Published at",
+    "slug": "Slug",
+    "title": "Title",
+    "updatedAt": "Updated at"
+  },
+  "help": {
+    "ariaLabel": "About blog posts",
+    "title": "About blog posts",
+    "overview": "A blog post is company content. Published posts appear on the public site. Drafts stay in the panel.",
+    "sections": [
+      {
+        "title": "What a post holds",
+        "items": [
+          "Category (required), title, slug, body, optional excerpt.",
+          "Cover image and image gallery.",
+          "Publish or hide from the row menu. Published date is set automatically on first publish."
+        ]
+      },
+      {
+        "title": "On this page",
+        "items": [
+          "Create a draft, attach media, then publish from the list when the copy is ready.",
+          "Unpublished posts stay in the panel only.",
+          "Filter by category."
+        ]
+      }
+    ]
+  }
+}

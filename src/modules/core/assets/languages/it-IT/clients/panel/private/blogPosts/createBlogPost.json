@@ -1,0 +1,30 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/createBlogPost.tsx",
+  "title": "Crea articolo",
+  "description": "Scrivi un articolo del blog aziendale",
+  "generalInfo": "Dettagli dell'articolo",
+  "form": {
+    "categoryLabel": "Categoria",
+    "categoryPlaceholder": "Seleziona categoria",
+    "titleLabel": "Titolo",
+    "titlePlaceholder": "Titolo dell'articolo",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "excerptLabel": "Estratto",
+    "excerptPlaceholder": "Breve testo mostrato sulla scheda elenco",
+    "contentLabel": "Contenuto",
+    "contentPlaceholder": "Scrivi l'articolo completo",
+    "mainImageLabel": "Immagine di copertina",
+    "imageGalleryLabel": "Galleria immagini"
+  },
+  "axios": {
+    "start": {"title": "Creazione dell'articolo", "time": 3000},
+    "success": {"title": "Articolo creato", "time": 3000},
+    "error": {"title": "Impossibile creare l'articolo, riprova", "time": 3000}
+  },
+  "formHeader": {
+    "title": "Crea articolo",
+    "description": "Scrivi un articolo del blog aziendale"
+  },
+  "formButtons": {"cancel": "Annulla", "submit": "Crea"}
+}

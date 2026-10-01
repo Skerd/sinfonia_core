@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/index.tsx",
+  "title": "Blog categories",
+  "description": "Categories used to group company blog posts",
+  "createBlogCategory": "Create category",
+  "noData": "No blog categories found",
+  "failTitle": "Failed to load blog categories",
+  "failDescription": "An error occurred while loading blog categories. Please try again.",
+  "searchPlaceholder": "Search or add filters...",
+  "fields": {
+    "name": "Name",
+    "slug": "Slug",
+    "description": "Description",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "createdBy": "Created by",
+    "deletedAt": "Deleted at",
+    "deletedBy": "Deleted by"
+  },
+  "help": {
+    "ariaLabel": "About blog categories",
+    "title": "About blog categories",
+    "overview": "A blog category groups posts on the public site. Each post requires a category. A category with posts cannot be deleted until those posts are moved or removed.",
+    "sections": [
+      {
+        "title": "On this page",
+        "items": [
+          "Create a category with a unique slug.",
+          "Use the slug as the public filter for posts."
+        ]
+      }
+    ]
+  }
+}

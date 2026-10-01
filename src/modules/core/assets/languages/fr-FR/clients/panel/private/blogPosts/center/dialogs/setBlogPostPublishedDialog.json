@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/center/dialogs/setBlogPostPublishedDialog.tsx",
+  "publish": {
+    "title": "Publier l'article",
+    "description": "Cet article apparaîtra sur le site public."
+  },
+  "unpublish": {
+    "title": "Masquer l'article",
+    "description": "Cet article n'apparaîtra plus sur le site public tant qu'il n'est pas publié à nouveau."
+  },
+  "axios": {
+    "start": {
+      "title": "Mise à jour de l'article…"
+    },
+    "success": {
+      "title": "Article publié."
+    },
+    "unpublished": {
+      "title": "Article masqué."
+    },
+    "error": {
+      "title": "Impossible de mettre à jour l'article"
+    }
+  }
+}

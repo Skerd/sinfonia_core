@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/center/dialogs/setBlogPostPublishedDialog.tsx",
+  "publish": {
+    "title": "Beitrag veröffentlichen",
+    "description": "Dieser Beitrag erscheint auf der öffentlichen Website."
+  },
+  "unpublish": {
+    "title": "Beitrag ausblenden",
+    "description": "Dieser Beitrag ist auf der öffentlichen Website nicht mehr sichtbar, bis er erneut veröffentlicht wird."
+  },
+  "axios": {
+    "start": {
+      "title": "Beitrag wird aktualisiert…"
+    },
+    "success": {
+      "title": "Beitrag veröffentlicht."
+    },
+    "unpublished": {
+      "title": "Beitrag ausgeblendet."
+    },
+    "error": {
+      "title": "Beitrag konnte nicht aktualisiert werden"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/createBlogCategory.tsx",
+  "title": "Create blog category",
+  "description": "Add a category for blog posts",
+  "form": {
+    "nameLabel": "Name",
+    "namePlaceholder": "Category name",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Optional description"
+  },
+  "axios": {
+    "start": {
+      "title": "Creating category",
+      "time": 3000
+    },
+    "success": {
+      "title": "Category created",
+      "time": 3000
+    },
+    "error": {
+      "title": "Category could not be created, please try again",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Create blog category",
+    "description": "Add a category for blog posts"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Create"
+  }
+}

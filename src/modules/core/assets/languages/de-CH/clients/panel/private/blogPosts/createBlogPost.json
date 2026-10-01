@@ -1,0 +1,30 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/createBlogPost.tsx",
+  "title": "Beitrag erstellen",
+  "description": "Einen Unternehmens-Blogbeitrag schreiben",
+  "generalInfo": "Beitragsdetails",
+  "form": {
+    "categoryLabel": "Kategorie",
+    "categoryPlaceholder": "Kategorie wählen",
+    "titleLabel": "Titel",
+    "titlePlaceholder": "Beitragstitel",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "excerptLabel": "Kurztext",
+    "excerptPlaceholder": "Kurzer Teaser auf der Listenkarte",
+    "contentLabel": "Inhalt",
+    "contentPlaceholder": "Den vollständigen Beitrag schreiben",
+    "mainImageLabel": "Titelbild",
+    "imageGalleryLabel": "Bildergalerie"
+  },
+  "axios": {
+    "start": {"title": "Beitrag wird erstellt", "time": 3000},
+    "success": {"title": "Beitrag erstellt", "time": 3000},
+    "error": {"title": "Beitrag konnte nicht erstellt werden, bitte erneut versuchen", "time": 3000}
+  },
+  "formHeader": {
+    "title": "Beitrag erstellen",
+    "description": "Einen Unternehmens-Blogbeitrag schreiben"
+  },
+  "formButtons": {"cancel": "Abbrechen", "submit": "Erstellen"}
+}

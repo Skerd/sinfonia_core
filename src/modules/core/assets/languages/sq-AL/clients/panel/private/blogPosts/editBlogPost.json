@@ -1,0 +1,46 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/editBlogPost.tsx",
+  "title": "Ndrysho artikullin",
+  "description": "Përditëso përmbajtjen dhe median e artikullit",
+  "generalInfo": "Detajet e artikullit",
+  "form": {
+    "categoryLabel": "Kategoria",
+    "categoryPlaceholder": "Zgjidh kategorinë",
+    "titleLabel": "Titulli",
+    "titlePlaceholder": "Titulli i artikullit",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "excerptLabel": "Përmbledhja",
+    "excerptPlaceholder": "Tekst i shkurtër në kartën e listës",
+    "contentLabel": "Përmbajtja",
+    "contentPlaceholder": "Shkruani artikullin e plotë",
+    "mainImageLabel": "Imazhi i kopertinës",
+    "imageGalleryLabel": "Galeria e imazheve"
+  },
+  "axios": {
+    "start": {
+      "title": "Duke ruajtur artikullin",
+      "time": 3000
+    },
+    "success": {
+      "title": "Artikulli u përditësua",
+      "time": 3000
+    },
+    "error": {
+      "title": "Artikulli nuk u përditësua, ju lutemi provoni përsëri",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Ndrysho artikullin",
+    "description": "Përditëso përmbajtjen dhe median e artikullit"
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Ruaj"
+  },
+  "errorTitle": "Artikulli nuk u ngarkua",
+  "errorDescription": "Klikoni këtu për të provuar përsëri ngarkimin e artikullit",
+  "noId": "Nuk u zgjodh asnjë artikull.",
+  "backToList": "Kthehu te lista"
+}

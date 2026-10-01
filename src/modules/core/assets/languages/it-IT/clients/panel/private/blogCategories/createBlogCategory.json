@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/createBlogCategory.tsx",
+  "title": "Crea categoria",
+  "description": "Aggiungi una categoria per gli articoli",
+  "form": {
+    "nameLabel": "Nome",
+    "namePlaceholder": "Nome della categoria",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "descriptionLabel": "Descrizione",
+    "descriptionPlaceholder": "Descrizione facoltativa"
+  },
+  "axios": {
+    "start": {"title": "Creazione della categoria", "time": 3000},
+    "success": {"title": "Categoria creata", "time": 3000},
+    "error": {"title": "Impossibile creare la categoria, riprova", "time": 3000}
+  },
+  "formHeader": {
+    "title": "Crea categoria",
+    "description": "Aggiungi una categoria per gli articoli"
+  },
+  "formButtons": {"cancel": "Annulla", "submit": "Crea"}
+}

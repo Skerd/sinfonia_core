@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/center/sheetView/blogPostSheetView.tsx",
+  "overview": "Përmbledhje",
+  "lifecycle": "Cikli i jetës",
+  "gallery": "Galeria",
+  "blogPost": "Artikull blogu",
+  "category": "Kategoria",
+  "title": "Titulli",
+  "slug": "Slug",
+  "excerpt": "Përmbledhja",
+  "content": "Përmbajtja",
+  "published": "Publikuar",
+  "publishedAt": "Data e publikimit",
+  "createdAt": "Krijuar më",
+  "updatedAt": "Përditësuar më",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga"
+}

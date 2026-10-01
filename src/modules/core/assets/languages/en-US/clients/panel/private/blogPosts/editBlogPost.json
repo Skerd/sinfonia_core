@@ -1,0 +1,46 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/editBlogPost.tsx",
+  "title": "Edit blog post",
+  "description": "Update blog post content and media",
+  "generalInfo": "Post details",
+  "form": {
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Select category",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Post title",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "excerptLabel": "Excerpt",
+    "excerptPlaceholder": "Short teaser shown on the list card",
+    "contentLabel": "Content",
+    "contentPlaceholder": "Write the full post",
+    "mainImageLabel": "Cover image",
+    "imageGalleryLabel": "Image gallery"
+  },
+  "errorTitle": "Failed to load post",
+  "errorDescription": "Please click here to retry fetching post data",
+  "noId": "No post selected.",
+  "backToList": "Back to list",
+  "axios": {
+    "start": {
+      "title": "Saving post",
+      "time": 3000
+    },
+    "success": {
+      "title": "Post updated",
+      "time": 3000
+    },
+    "error": {
+      "title": "Post could not be updated, please try again",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Edit blog post",
+    "description": "Update blog post content and media"
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Save"
+  }
+}

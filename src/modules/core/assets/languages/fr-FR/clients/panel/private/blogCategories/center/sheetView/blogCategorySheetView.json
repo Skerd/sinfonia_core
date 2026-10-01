@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/center/sheetView/blogCategorySheetView.tsx",
+  "overview": "Aperçu",
+  "lifecycle": "Cycle de vie",
+  "blogCategory": "Catégorie de blog",
+  "name": "Nom",
+  "slug": "Slug",
+  "description": "Description",
+  "createdAt": "Créé le",
+  "updatedAt": "Mis à jour le",
+  "createdBy": "Créé par",
+  "deletedAt": "Supprimé le",
+  "deletedBy": "Supprimé par"
+}

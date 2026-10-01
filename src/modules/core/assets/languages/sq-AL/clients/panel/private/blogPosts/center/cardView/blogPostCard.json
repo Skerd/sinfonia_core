@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/center/cardView/blogPostCard.tsx",
+  "published": "Publikuar",
+  "unpublished": "I papublikuar",
+  "fields": {
+    "category": "Kategoria",
+    "slug": "Slug",
+    "publishedAt": "Data e publikimit"
+  },
+  "failedTitle": "Artikulli nuk u ngarkua",
+  "failedDescription": "Trokitni për të provuar përsëri."
+}

@@ -86,6 +86,9 @@
         },
         "currencies": {
           "title": "Monedhat"
+        },
+        "blogCategories": {
+          "title": "Kategoritë e blogut"
         }
       }
     },
@@ -110,6 +113,15 @@
         },
         "mine": {
           "title": "Të miat"
+        }
+      },
+      "blog": {
+        "title": "Blogu",
+        "posts": {
+          "title": "Artikujt"
+        },
+        "categories": {
+          "title": "Kategoritë"
         }
       },
       "settings": {

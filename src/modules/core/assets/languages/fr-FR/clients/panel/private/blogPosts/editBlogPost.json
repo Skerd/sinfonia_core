@@ -1,0 +1,46 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/editBlogPost.tsx",
+  "title": "Modifier l'article",
+  "description": "Mettre à jour le contenu et les médias de l'article",
+  "generalInfo": "Détails de l'article",
+  "form": {
+    "categoryLabel": "Catégorie",
+    "categoryPlaceholder": "Sélectionner une catégorie",
+    "titleLabel": "Titre",
+    "titlePlaceholder": "Titre de l'article",
+    "slugLabel": "Slug",
+    "slugPlaceholder": "url-slug",
+    "excerptLabel": "Extrait",
+    "excerptPlaceholder": "Court texte affiché sur la carte de liste",
+    "contentLabel": "Contenu",
+    "contentPlaceholder": "Rédigez l'article complet",
+    "mainImageLabel": "Image de couverture",
+    "imageGalleryLabel": "Galerie d'images"
+  },
+  "axios": {
+    "start": {
+      "title": "Enregistrement de l'article",
+      "time": 3000
+    },
+    "success": {
+      "title": "Article mis à jour",
+      "time": 3000
+    },
+    "error": {
+      "title": "L'article n'a pas pu être mis à jour, veuillez réessayer",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Modifier l'article",
+    "description": "Mettre à jour le contenu et les médias de l'article"
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Enregistrer"
+  },
+  "errorTitle": "Échec du chargement de l'article",
+  "errorDescription": "Cliquez ici pour réessayer de charger l'article",
+  "noId": "Aucun article sélectionné.",
+  "backToList": "Retour à la liste"
+}

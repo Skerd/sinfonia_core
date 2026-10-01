@@ -1,0 +1,49 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogPosts/index.tsx",
+  "title": "Blogbeiträge",
+  "description": "Unternehmensbeiträge für die öffentliche Website",
+  "createBlogPost": "Beitrag erstellen",
+  "noData": "Keine Blogbeiträge gefunden",
+  "failTitle": "Blogbeiträge konnten nicht geladen werden",
+  "failDescription": "Beim Laden der Blogbeiträge ist ein Fehler aufgetreten. Bitte erneut versuchen.",
+  "searchPlaceholder": "Suchen oder Filter hinzufügen...",
+  "fields": {
+    "createdAt": "Erstellt am",
+    "createdBy": "Erstellt von",
+    "deletedAt": "Gelöscht am",
+    "deletedBy": "Gelöscht von",
+    "category": "Kategorie",
+    "content": "Inhalt",
+    "excerpt": "Kurztext",
+    "imageGallery": "Bildergalerie",
+    "mainImage": "Titelbild",
+    "published": "Veröffentlicht",
+    "publishedAt": "Veröffentlichungsdatum",
+    "slug": "Slug",
+    "title": "Titel",
+    "updatedAt": "Aktualisiert am"
+  },
+  "help": {
+    "ariaLabel": "Über Blogbeiträge",
+    "title": "Über Blogbeiträge",
+    "overview": "Ein Blogbeitrag ist Unternehmensinhalt. Veröffentlichte Beiträge erscheinen auf der öffentlichen Website. Entwürfe bleiben im Panel.",
+    "sections": [
+      {
+        "title": "Inhalt eines Beitrags",
+        "items": [
+          "Kategorie (erforderlich), Titel, Slug, Text, optionaler Kurztext.",
+          "Titelbild und Bildergalerie.",
+          "Veröffentlichen oder ausblenden über das Zeilenmenü. Das Veröffentlichungsdatum wird bei der ersten Veröffentlichung automatisch gesetzt."
+        ]
+      },
+      {
+        "title": "Auf dieser Seite",
+        "items": [
+          "Erstellen Sie einen Entwurf, fügen Sie Medien hinzu und veröffentlichen Sie über die Liste, wenn der Text bereit ist.",
+          "Unveröffentlichte Beiträge bleiben nur im Panel.",
+          "Nach Kategorie filtern."
+        ]
+      }
+    ]
+  }
+}

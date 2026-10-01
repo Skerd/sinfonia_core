@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/index.tsx",
+  "title": "Categorie del blog",
+  "description": "Categorie usate per raggruppare gli articoli aziendali",
+  "createBlogCategory": "Crea categoria",
+  "noData": "Nessuna categoria del blog trovata",
+  "failTitle": "Impossibile caricare le categorie",
+  "failDescription": "Si è verificato un errore durante il caricamento delle categorie. Riprova.",
+  "searchPlaceholder": "Cerca o aggiungi filtri...",
+  "fields": {
+    "name": "Nome",
+    "slug": "Slug",
+    "description": "Descrizione",
+    "createdAt": "Creato il",
+    "updatedAt": "Aggiornato il",
+    "createdBy": "Creato da",
+    "deletedAt": "Eliminato il",
+    "deletedBy": "Eliminato da"
+  },
+  "help": {
+    "ariaLabel": "Informazioni sulle categorie del blog",
+    "title": "Informazioni sulle categorie del blog",
+    "overview": "Una categoria del blog raggruppa gli articoli sul sito pubblico. Ogni articolo richiede una categoria. Una categoria con articoli non può essere eliminata finché quegli articoli non vengono spostati o rimossi.",
+    "sections": [
+      {
+        "title": "In questa pagina",
+        "items": [
+          "Crea una categoria con uno slug univoco.",
+          "Usa lo slug come filtro pubblico degli articoli."
+        ]
+      }
+    ]
+  }
+}

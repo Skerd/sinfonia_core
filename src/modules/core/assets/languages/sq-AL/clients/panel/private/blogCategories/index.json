@@ -1,0 +1,34 @@
+{
+  "path": "src/modules/core/clients/panel/private/blogCategories/index.tsx",
+  "title": "Kategoritë e blogut",
+  "description": "Kategoritë që grupojnë artikujt e kompanisë",
+  "createBlogCategory": "Krijo kategori",
+  "noData": "Nuk u gjetën kategori blogu",
+  "failTitle": "Kategoritë nuk u ngarkuan",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit të kategorive. Ju lutemi provoni përsëri.",
+  "searchPlaceholder": "Kërko ose shto filtra...",
+  "fields": {
+    "name": "Emri",
+    "slug": "Slug",
+    "description": "Përshkrimi",
+    "createdAt": "Krijuar më",
+    "updatedAt": "Përditësuar më",
+    "createdBy": "Krijuar nga",
+    "deletedAt": "Fshirë më",
+    "deletedBy": "Fshirë nga"
+  },
+  "help": {
+    "ariaLabel": "Rreth kategorive të blogut",
+    "title": "Rreth kategorive të blogut",
+    "overview": "Një kategori blogu grupon artikujt në faqen publike. Çdo artikull kërkon një kategori. Një kategori me artikuj nuk mund të fshihet derisa ato artikuj të zhvendosen ose të hiqen.",
+    "sections": [
+      {
+        "title": "Në këtë faqe",
+        "items": [
+          "Krijoni një kategori me një slug unik.",
+          "Përdorni slug-un si filtër publik për artikujt."
+        ]
+      }
+    ]
+  }
+}
