@@ -63,7 +63,11 @@ interface PolygonSelectorProps {
     objectFit?: "contain" | "cover";
     /** Vertical/horizontal placement of the fitted image. Default centers. */
     objectPosition?: "center" | "top";
-    /** Keep phantom polygons faintly visible even when not hovered (marketing explorers). */
+    /**
+     * Keep phantom polygons faintly visible even when not hovered (marketing explorers).
+     * When omitted, touch / coarse pointers still auto-show outlines in dashboard mode.
+     * When set (including `false`), the caller owns visibility — e.g. an eye toggle.
+     */
     phantomsAlwaysVisible?: boolean;
 }
 
@@ -175,7 +179,7 @@ function PolygonSelector({
     hideControls = false,
     objectFit = "contain",
     objectPosition = "center",
-    phantomsAlwaysVisible = false,
+    phantomsAlwaysVisible,
 }: PolygonSelectorProps & WithLanguageType) {
 
     const imagePadding = borderless ? 0 : IMAGE_PADDING;
@@ -704,8 +708,13 @@ function PolygonSelector({
 
     const canPhantomHover = !!phantomHoverContent || dashboard;
     const forcedHighlightId = externalHoveredId || stayHovered;
-    /** Touch / stylus: keep faint outlines visible so floors can be discovered without hover. */
-    const showPhantomsAlways = phantomsAlwaysVisible || (!hoverCapable && dashboard && canPhantomHover);
+    /**
+     * Touch / stylus: when the parent does not control visibility, keep faint outlines
+     * visible so floors can be discovered without hover. Explicit `phantomsAlwaysVisible`
+     * (true or false) always wins — otherwise an eye toggle cannot hide outlines on mobile.
+     */
+    const showPhantomsAlways =
+        phantomsAlwaysVisible ?? (!hoverCapable && dashboard && canPhantomHover);
 
     const phantomPolygonsMemo = useMemo(() => {
         return (
