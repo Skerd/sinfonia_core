@@ -524,7 +524,6 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
 
 .collapsible-content {
     overflow: hidden;
-    transition: height 200ms ease, opacity 200ms ease;
 }
 
 .collapsible-content[data-state="open"] {

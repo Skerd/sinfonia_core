@@ -230,7 +230,7 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                         <NavBadge>{item.badge}</NavBadge>
                     </SidebarMenuBadge>
                 )}
-                <CollapsibleContent className='CollapsibleContent'>
+                <CollapsibleContent className="collapsible-content">
                     <SidebarMenuSub>
                         {
                             item.items.map((subItem) => {
@@ -263,7 +263,7 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                     <ChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/subcollapsible:rotate-90 rtl:rotate-180' />
                                                 </SidebarMenuSubButton>
                                             </CollapsibleTrigger>
-                                            <CollapsibleContent>
+                                            <CollapsibleContent className="collapsible-content">
                                                 <SidebarMenuSub>
                                                     {nested.items.map((child) => {
                                                         if ('url' in child && child.url) {
@@ -295,7 +295,7 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                                                             <ChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/subcollapsible2:rotate-90 rtl:rotate-180' />
                                                                         </SidebarMenuSubButton>
                                                                     </CollapsibleTrigger>
-                                                                    <CollapsibleContent>
+                                                                    <CollapsibleContent className="collapsible-content">
                                                                         <SidebarMenuSub>
                                                                             {deeper.items.map((link) => {
                                                                                 if (!('url' in link) || !link.url) return null;
