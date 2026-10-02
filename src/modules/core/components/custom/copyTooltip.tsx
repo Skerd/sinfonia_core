@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, type ReactNode } from "react"
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {CopyButton} from "@coreModule/components/animate-ui/components/buttons/copy.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
@@ -6,7 +6,7 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 type CopyTooltipProps = WithLanguageType & {
     text: string
     duration?: number
-    children?: any
+    children?: ReactNode
 }
 
 function CopyTooltip({
@@ -22,7 +22,16 @@ function CopyTooltip({
         <TooltipDisplayer tooltipRender={() => { return <p>{resolveLanguageKey( copied ? "copied" : "copy")}</p> }} open={open} onOpenChange={(v: boolean) => setOpen(v)}>
             <div className="flex items-center gap-x-1 hover:underline hover:cursor-pointer">
                 {!!children && children}
-                <CopyButton size={"xs"} variant="ghost" content={text} onClick={(e) => {e.stopPropagation();}} onCopiedChange={(value) => {setCopied(value); setOpen(value);}} />
+                <CopyButton
+                    size={"xs"}
+                    variant="ghost"
+                    content={text}
+                    onClick={(e) => {e.stopPropagation();}}
+                    onCopiedChange={(value) => {
+                        setCopied(value);
+                        if (value) setOpen(true);
+                    }}
+                />
             </div>
         </TooltipDisplayer>
     )

@@ -68,38 +68,44 @@ function CopyButton({
     value: copied,
     onChange: onCopiedChange,
   });
+  const resetTimerRef = React.useRef<number | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (resetTimerRef.current) window.clearTimeout(resetTimerRef.current);
+    };
+  }, []);
 
   const handleCopy = React.useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       onClick?.(e);
-      if (copied) return;
-      if (content) {
-        navigator.clipboard
-          .writeText(content)
-          .then(() => {
-            setIsCopied(true);
-            onCopiedChange?.(true, content);
-            setTimeout(() => {
-              setIsCopied(false);
-              onCopiedChange?.(false);
-            }, delay);
-          })
-          .catch((error) => {
-            handleError(error, { context: 'CopyButton' });
-          });
-      }
+      if (copied || !content) return;
+      navigator.clipboard
+        .writeText(content)
+        .then(() => {
+          if (resetTimerRef.current) window.clearTimeout(resetTimerRef.current);
+          setIsCopied(true, content);
+          resetTimerRef.current = window.setTimeout(() => {
+            resetTimerRef.current = null;
+            setIsCopied(false);
+          }, delay);
+        })
+        .catch((error: unknown) => {
+          handleError(error, { context: 'CopyButton' });
+        });
     },
-    [onClick, copied, content, setIsCopied, onCopiedChange, delay],
+    [onClick, copied, content, setIsCopied, delay],
   );
 
   const Icon = isCopied ? CheckIcon : CopyIcon;
 
   return (
     <ButtonPrimitive
+      {...props}
+      type="button"
       data-slot="copy-button"
       className={cn(buttonVariants({ variant, size, className }))}
       onClick={handleCopy}
-      {...props}
     >
       <AnimatePresence mode="popLayout">
         <motion.span

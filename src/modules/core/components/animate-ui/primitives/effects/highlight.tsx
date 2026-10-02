@@ -338,6 +338,15 @@ function Highlight<T extends React.ElementType = 'div'>({
   );
 }
 
+function assignRef<T>(ref: React.Ref<T> | undefined, node: T | null) {
+  if (!ref) return;
+  if (typeof ref === "function") {
+    ref(node);
+  } else {
+    (ref as React.RefObject<T | null>).current = node;
+  }
+}
+
 function getNonOverridingDataAttributes(
   element: React.ReactElement,
   dataAttributes: Record<string, unknown>,
@@ -424,10 +433,16 @@ function HighlightItem<T extends React.ElementType>({
   const itemTransition = transition ?? contextTransition;
 
   const localRef = React.useRef<HTMLDivElement>(null);
+  // asChild replaces the child's ref. Keep the latest one and call it from the
+  // stable callback so anchors (dropdown/popper triggers) still receive the node.
+  const forwardedRef = React.useRef<React.Ref<HTMLElement> | undefined>(undefined);
+  forwardedRef.current = element.props?.ref;
+
   React.useImperativeHandle(ref, () => localRef.current as HTMLDivElement);
 
   const refCallback = React.useCallback((node: HTMLElement | null) => {
     localRef.current = node as HTMLDivElement;
+    assignRef(forwardedRef.current, node);
   }, []);
 
   React.useEffect(() => {

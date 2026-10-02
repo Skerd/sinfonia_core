@@ -96,6 +96,19 @@ function initialFromSide(side: Side): Partial<Record<'x' | 'y', number>> {
   return { x: -15 };
 }
 
+function isSameOpenTooltip(active: TooltipData, next: TooltipData) {
+  return (
+    active.id === next.id &&
+    active.contentProps === next.contentProps &&
+    active.contentAsChild === next.contentAsChild &&
+    active.side === next.side &&
+    active.sideOffset === next.sideOffset &&
+    active.align === next.align &&
+    active.alignOffset === next.alignOffset &&
+    active.root === next.root
+  );
+}
+
 type TooltipProviderProps = {
   children: React.ReactNode;
   id?: string;
@@ -114,6 +127,8 @@ function TooltipProvider({
   const globalId = React.useId();
   const [currentTooltip, setCurrentTooltip] =
     React.useState<TooltipData | null>(null);
+  const currentTooltipRef = React.useRef<TooltipData | null>(currentTooltip);
+  currentTooltipRef.current = currentTooltip;
   const timeoutRef = React.useRef<number | null>(null);
   const lastCloseTimeRef = React.useRef<number>(0);
   const referenceElRef = React.useRef<HTMLElement | null>(null);
@@ -123,24 +138,29 @@ function TooltipProvider({
   const showTooltip = React.useCallback(
     (data: TooltipData) => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (currentTooltip !== null) {
+      const active = currentTooltipRef.current;
+      if (active !== null) {
+        if (isSameOpenTooltip(active, data)) return;
+        currentTooltipRef.current = data;
         setCurrentTooltip(data);
         return;
       }
       const now = Date.now();
       const delay = now - lastCloseTimeRef.current < closeDelay ? 0 : openDelay;
-      timeoutRef.current = window.setTimeout(
-        () => setCurrentTooltip(data),
-        delay,
-      );
+      timeoutRef.current = window.setTimeout(() => {
+        timeoutRef.current = null;
+        currentTooltipRef.current = data;
+        setCurrentTooltip(data);
+      }, delay);
     },
-    [openDelay, closeDelay, currentTooltip],
+    [openDelay, closeDelay],
   );
 
   const hideTooltip = React.useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = window.setTimeout(() => {
       if (contentHoverRef.current) return;
+      currentTooltipRef.current = null;
       setCurrentTooltip(null);
       lastCloseTimeRef.current = Date.now();
     }, closeDelay);
@@ -149,6 +169,7 @@ function TooltipProvider({
   const hideImmediate = React.useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     contentHoverRef.current = false;
+    currentTooltipRef.current = null;
     setCurrentTooltip(null);
     lastCloseTimeRef.current = Date.now();
   }, []);
@@ -332,15 +353,22 @@ function TooltipOverlay() {
   const Component = rendered.data?.contentAsChild ? Slot : motion.div;
   const resolvedSide = getResolvedSide(context.placement);
 
+  // React 19 calls a replaced callback ref with null. setFloating writes that
+  // into state, so an inline ref here re-renders forever.
+  const setFloatingNode = React.useCallback(
+    (node: HTMLDivElement | null) => {
+      refs.setFloating(node);
+      setFloatingEl(node);
+    },
+    [refs.setFloating, setFloatingEl],
+  );
+
   return (
     <AnimatePresence mode="wait">
       {rendered.data && ready && (
         <TooltipPortal root={rendered.data.root ?? undefined}>
           <div
-            ref={(node) => {
-              refs.setFloating(node);
-              setFloatingEl(node);
-            }}
+            ref={setFloatingNode}
             onPointerEnter={notifyContentEnter}
             onPointerLeave={notifyContentLeave}
             data-slot="tooltip-overlay"

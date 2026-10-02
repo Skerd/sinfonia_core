@@ -1,5 +1,4 @@
 import type {LanguageDictionary} from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
-import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
 import {
     createLanguageFragmentMerger,
     deepMergeDictionaries,
@@ -13,6 +12,10 @@ import {
  * Shape: `{ "groups": { "Products": "…" }, "permissions": { "Products": { "sku": "…" } } }`,
  * deep-merged into the permissions table language so core never lists feature-module model/field
  * copy. UI chrome (`read`, `write`, filters, …) stays in core's permissionsTable.json.
+ *
+ * This glob is not filtered by `VITE_ENABLED_MODULES`. The roles API returns the whole permission
+ * catalog from the database, including models from modules that are not enabled in this build.
+ * Dropping those files makes the roles screen show raw keys for permissions that are already stored.
  */
 const SECTIONS = ["groups", "permissions"] as const;
 
@@ -52,12 +55,10 @@ export function createRolesPermissionsContributions(glob: Record<string, unknown
 }
 
 const rolesPermissionsContributions = createRolesPermissionsContributions(
-    filterGlobByEnabledModules(
-        import.meta.glob("@/modules/*/assets/languages/*/rolesPermissions.json", {eager: true, import: "default"}),
-    ),
+    import.meta.glob("@/modules/*/assets/languages/*/rolesPermissions.json", {eager: true, import: "default"}),
 );
 
-/** Merged `groups` + `permissions` fragments for a locale from all enabled modules. */
+/** Merged `groups` + `permissions` fragments for a locale from every module. */
 export function getMergedModuleRolesPermissions(locale: string): LanguageDictionary {
     return rolesPermissionsContributions.getMergedModuleRolesPermissions(locale);
 }

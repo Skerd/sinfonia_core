@@ -95,6 +95,7 @@ function sinfoniaAppFaviconPlugin(appRoot: string): Plugin {
 /**
  * When a module selection is active, stub files under disabled `src/modules/<name>`
  * packages so eager contribution globs do not pull them into the graph.
+ * `rolesPermissions.json` is left intact: the roles catalog in the database is global.
  * `enabledModules` comes from `resolveEnabledModules`, so it already includes `core`, `base`
  * and every `dependsOn` module. (`base` holds the shared `apiClient`; stubbing it would break every request.)
  */
@@ -116,6 +117,11 @@ function enabledModulesExcludePlugin(enabledModules: string[] | null): Plugin {
             }
             const moduleName = normalized.slice(idx + marker.length).split("/")[0];
             if (!moduleName || enabled.has(moduleName)) {
+                return null;
+            }
+            // The roles screen lists every permission stored in the database, including models
+            // from modules that are disabled in this build. Keep their labels.
+            if (normalized.endsWith("/rolesPermissions.json")) {
                 return null;
             }
             if (/\.(?:[cm]?[jt]sx?)$/.test(normalized)) {
