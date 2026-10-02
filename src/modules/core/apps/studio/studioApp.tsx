@@ -11,6 +11,7 @@ import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {StudioDraftProvider} from "@coreModule/clients/studio/draft/studioDraftProvider.tsx";
 import {ensureDeviceId} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
+import {TooltipProvider} from "@coreModule/components/animate-ui/components/animate/tooltip.tsx";
 
 const StudioGuard = lazy(() => import("@coreModule/clients/studio/studioGuard.tsx"));
 const StudioShell = lazy(() => import("@coreModule/clients/studio/layout/studioShell.tsx"));
@@ -47,40 +48,42 @@ function StudioApp() {
                 <LanguageProvider>
                     <ThemeProvider>
                         <DensityProvider>
-                            <BrowserRouter>
-                                <Suspense fallback={<Loader />}>
-                                    <Routes>
-                                        <Route
-                                            path="/authenticate/:panel/:platform?"
-                                            element={
-                                                <ErrorBoundary>
-                                                    <AuthenticationPage />
-                                                </ErrorBoundary>
-                                            }
-                                        />
-                                        <Route element={<StudioGuard />}>
+                            <TooltipProvider>
+                                <BrowserRouter>
+                                    <Suspense fallback={<Loader />}>
+                                        <Routes>
                                             <Route
-                                                path="/gallery"
+                                                path="/authenticate/:panel/:platform?"
                                                 element={
                                                     <ErrorBoundary>
-                                                        <WidgetGalleryPage />
+                                                        <AuthenticationPage />
                                                     </ErrorBoundary>
                                                 }
                                             />
-                                            <Route
-                                                path="/*"
-                                                element={
-                                                    <ErrorBoundary>
-                                                        <StudioShell />
-                                                    </ErrorBoundary>
-                                                }
-                                            />
-                                        </Route>
-                                    </Routes>
-                                </Suspense>
-                            </BrowserRouter>
-                            {/* Inside ThemeProvider so toasts resolve the same theme as the app. */}
-                            <ToasterContainer />
+                                            <Route element={<StudioGuard />}>
+                                                <Route
+                                                    path="/gallery"
+                                                    element={
+                                                        <ErrorBoundary>
+                                                            <WidgetGalleryPage />
+                                                        </ErrorBoundary>
+                                                    }
+                                                />
+                                                <Route
+                                                    path="/*"
+                                                    element={
+                                                        <ErrorBoundary>
+                                                            <StudioShell />
+                                                        </ErrorBoundary>
+                                                    }
+                                                />
+                                            </Route>
+                                        </Routes>
+                                    </Suspense>
+                                </BrowserRouter>
+                                {/* Inside ThemeProvider so toasts resolve the same theme as the app. */}
+                                <ToasterContainer />
+                            </TooltipProvider>
                         </DensityProvider>
                     </ThemeProvider>
                 </LanguageProvider>

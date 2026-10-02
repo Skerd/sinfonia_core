@@ -41,6 +41,21 @@ function mergeProps<T extends HTMLElement>(
 ): AnyProps {
   const merged: AnyProps = { ...childProps, ...slotProps };
 
+  for (const key of Object.keys(slotProps)) {
+    const childHandler = childProps[key];
+    const slotHandler = (slotProps as AnyProps)[key];
+    if (
+      key.startsWith('on') &&
+      typeof childHandler === 'function' &&
+      typeof slotHandler === 'function'
+    ) {
+      merged[key] = (...args: unknown[]) => {
+        childHandler(...args);
+        slotHandler(...args);
+      };
+    }
+  }
+
   if (childProps.className || slotProps.className) {
     merged.className = cn(
       childProps.className as string,
