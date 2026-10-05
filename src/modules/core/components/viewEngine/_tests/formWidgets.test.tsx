@@ -134,6 +134,24 @@ describe("renderFormWidget: selects", () => {
         expect(props).toMatchObject({value: "1", className: "c", multiple: false});
     });
 
+    it("passes a multiple value through as a string array so each option can toggle", () => {
+        const {props, field} = mountScalar(
+            bind("#Select", {
+                multiple: true,
+                options: [
+                    {value: "desktop", label: "form.visibilityDevice.desktop"},
+                    {value: "mobile", label: "form.visibilityDevice.mobile"},
+                    {value: "tablet", label: "form.visibilityDevice.tablet"},
+                ],
+            }),
+            makeField(["desktop", "mobile"]),
+        );
+        expect(props.value).toEqual(["desktop", "mobile"]);
+        expect(props.multiple).toBe(true);
+        props.onValueChange(["desktop", "mobile", "tablet"]);
+        expect(field.onChange).toHaveBeenCalledWith(["desktop", "mobile", "tablet"]);
+    });
+
     it("#Select is an alias; clearing is null in edit mode; labels reach __onValueChangeFull", () => {
         const full = vi.fn();
         const {props, field} = mountScalar(

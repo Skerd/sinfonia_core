@@ -15,8 +15,30 @@ function EmptyList() {
     );
 }
 
+/**
+ * Enum token under `languageKeyCategory`, else the stored string.
+ * Missing keys stay the token, same as `formatEnum`.
+ */
+function badgeText(item: unknown, category: string | undefined, resolveLanguageKey: ResolveLanguageKey | undefined): string {
+    const token = String(item ?? "").trim();
+    if (!token || !category || !resolveLanguageKey) return token;
+    const exact = resolveLanguageKey(`${category}.${token}`, true);
+    if (typeof exact === "string" && exact.length > 0) return exact;
+    const lower = token.toLowerCase();
+    if (lower !== token) {
+        const lowered = resolveLanguageKey(`${category}.${lower}`, true);
+        if (typeof lowered === "string" && lowered.length > 0) return lowered;
+    }
+    return token;
+}
+
 /** `valueType: "stringBadgeList"` — one badge per string, `+N` past `maxItems`. */
-export function stringBadgeList(list: unknown, maxItems: unknown): ReactNode {
+export function stringBadgeList(
+    list: unknown,
+    maxItems: unknown,
+    languageKeyCategory?: string,
+    resolveLanguageKey?: ResolveLanguageKey,
+): ReactNode {
     if (!Array.isArray(list) || list.length === 0) return <EmptyList />;
     const limit = typeof maxItems === "number" && maxItems > 0 ? maxItems : list.length;
     const visible = list.slice(0, limit);
@@ -25,7 +47,7 @@ export function stringBadgeList(list: unknown, maxItems: unknown): ReactNode {
         <div className={BADGE_ROW}>
             {visible.map((item, i) => (
                 <Badge key={i} variant="outline">
-                    {String(item)}
+                    {badgeText(item, languageKeyCategory, resolveLanguageKey)}
                 </Badge>
             ))}
             {remaining > 0 && <Badge variant="secondary">+{remaining}</Badge>}

@@ -66,7 +66,7 @@ function rawValue(
         case "currencyList":
             return data ? currencyList(at(), wp, ctx.resolveLanguageKey) : null;
         case "stringBadgeList":
-            return data ? stringBadgeList(at(), wp.maxItems) : null;
+            return data ? stringBadgeList(at(), wp.maxItems, wpText(wp, "languageKeyCategory"), ctx.resolveLanguageKey) : null;
     }
     if (wp.valueType === "mdiIcon" && data && !skipPreFormat) {
         const icon = at();

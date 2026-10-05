@@ -89,8 +89,20 @@ const apiSelect: ScalarAdapter = ({Widget, binding, field, resolveLanguageKey: t
     );
 };
 
+/** Multi-select stores `string[]`. `String(["desktop", "mobile"])` is `"desktop,mobile"`, which matches no option. */
+function simpleSelectValue(value: unknown, multiple: boolean): string | string[] | undefined {
+    if (multiple) {
+        const items = Array.isArray(value) ? value : value == null || value === "" ? [] : [value];
+        const next = items.map((item) => String(item)).filter((item) => item !== "");
+        return next.length > 0 ? next : undefined;
+    }
+    if (value == null || value === "") return undefined;
+    return String(value);
+}
+
 /** `#SimpleSelect` / `#Select`. Option labels containing a dot are language keys. */
 const simpleSelect: ScalarAdapter = ({Widget, field, resolveLanguageKey: t, extra, wp, placeholder}) => {
+    const multiple = wp.multiple === true;
     const options = ((wp.options ?? []) as {value: unknown; label: unknown}[]).map((o) => {
         const raw = typeof o.label === "string" ? o.label : String(o.label ?? o.value ?? "");
         return {...o, value: String(o.value), label: raw.includes(".") ? String(t(raw)) : raw};
@@ -101,7 +113,7 @@ const simpleSelect: ScalarAdapter = ({Widget, field, resolveLanguageKey: t, extr
     return (
         <Widget
             options={options}
-            value={field.value == null || field.value === "" ? undefined : String(field.value)}
+            value={simpleSelectValue(field.value, multiple)}
             onValueChange={(v: string | string[]) => {
                 field.onChange(Array.isArray(v) ? v : orCleared(v, extra));
                 if (!onValueChangeFull) return;
@@ -109,7 +121,7 @@ const simpleSelect: ScalarAdapter = ({Widget, field, resolveLanguageKey: t, extr
                 else onValueChangeFull(v, labelFor(v));
             }}
             placeholder={placeholder}
-            multiple={wp.multiple}
+            multiple={multiple}
             disabled={field.disabled || wp.disabled}
             className={wp.className}
             forTable={wp.forTable}

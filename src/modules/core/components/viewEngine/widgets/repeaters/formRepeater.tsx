@@ -1,5 +1,5 @@
 import { type ReactNode, createElement, useEffect, useRef } from "react";
-import { useFieldArray, useFormContext, type FieldValues } from "react-hook-form";
+import { get, useFieldArray, useFormContext, useFormState, type FieldValues } from "react-hook-form";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { CirclePlus, Trash2 } from "lucide-react";
@@ -374,9 +374,16 @@ function renderRowNode(
                     render={({ field }) => (
                         <FormItem>
                             {binding.label && (
-                                <FormLabel>{resolveLanguageKey(binding.label)}</FormLabel>
+                                <FormLabel>
+                                    <span>
+                                        {resolveLanguageKey(binding.label)}
+                                        {binding.required && (
+                                            <span aria-hidden="true" className="ml-0.5 text-destructive">*</span>
+                                        )}
+                                    </span>
+                                </FormLabel>
                             )}
-                            <FormControl>
+                            <FormControl aria-required={binding.required || undefined}>
                                 {renderFormWidget(
                                     WidgetComponent,
                                     prefixedBinding,
@@ -433,6 +440,24 @@ function renderRowNode(
     return createElement(token, { key: nodeIndex, ...node.props }, children);
 }
 
+function arrayFieldErrorMessage(error: unknown): string | undefined {
+    if (!error || typeof error !== "object") return undefined;
+    if ("message" in error && typeof error.message === "string" && error.message.length > 0) {
+        return error.message;
+    }
+    if (
+        "root" in error &&
+        error.root != null &&
+        typeof error.root === "object" &&
+        "message" in error.root &&
+        typeof error.root.message === "string" &&
+        error.root.message.length > 0
+    ) {
+        return error.root.message;
+    }
+    return undefined;
+}
+
 // ---------------------------------------------------------------------------
 // FormRepeater
 // ---------------------------------------------------------------------------
@@ -461,8 +486,10 @@ function FormRepeater({
     const form = useFormContext<FieldValues>();
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: arrayField as any,
+        name: arrayField as never,
     });
+    const { errors } = useFormState({ control: form.control, name: arrayField });
+    const errorMessage = arrayFieldErrorMessage(get(errors, arrayField));
 
     const isDisabled = !!loading || !!disabled;
     const extra: FormWidgetExtra = { loading, editMode, writeAccess, formExtras };
@@ -482,6 +509,7 @@ function FormRepeater({
             }
         }
         remove(index);
+        void form.trigger(arrayField as never);
     };
 
     const addButton = (
@@ -494,6 +522,7 @@ function FormRepeater({
                 e.preventDefault();
                 e.stopPropagation();
                 append(defaultItem);
+                void form.trigger(arrayField as never);
             }}
         >
             <CirclePlus className="h-4 w-4" />
@@ -573,13 +602,25 @@ function FormRepeater({
         </div>
     );
 
+    const body = (
+        <>
+            {rowList}
+            {errorMessage ? (
+                <p role="alert" className="text-destructive text-sm">
+                    {errorMessage}
+                </p>
+            ) : null}
+        </>
+    );
+
     if (title) {
         return (
             <TitleWithCollapse
                 title={resolveLanguageKey(title)}
                 inBetween={addButton}
+                danger={!!errorMessage}
             >
-                {rowList}
+                {body}
             </TitleWithCollapse>
         );
     }
@@ -587,7 +628,7 @@ function FormRepeater({
     return (
         <div className="grid grid-cols-1 gap-4">
             <div className="flex justify-end">{addButton}</div>
-            {rowList}
+            {body}
         </div>
     );
 }

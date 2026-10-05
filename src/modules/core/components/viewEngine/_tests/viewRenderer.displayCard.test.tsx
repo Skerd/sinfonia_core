@@ -143,6 +143,16 @@ describe("value pipeline", () => {
         expect(screen.queryByText("c")).toBeNull();
     });
 
+    it("stringBadgeList translates tokens when languageKeyCategory is set and keeps a missing key as the token", () => {
+        const translated = card({devices: ["desktop"]}, "devices", {valueType: "stringBadgeList", languageKeyCategory: "visibilityDevice"});
+        render(<>{translated.value}</>);
+        expect(screen.getByText("t:visibilityDevice.desktop")).toBeInTheDocument();
+
+        const raw = card({devices: ["desktop"]}, "devices", {valueType: "stringBadgeList", languageKeyCategory: "missing"});
+        render(<>{raw.value}</>);
+        expect(screen.getByText("desktop")).toBeInTheDocument();
+    });
+
     it("currencyList renders each amount and the `and` joiner; empty renders `none`", () => {
         const p = card({budget: [{currency: {abbreviation: "EUR"}, value: 1}, {currency: {symbol: "$"}, value: 2}]}, "budget", {valueType: "currencyList"});
         render(<>{p.value}</>);
