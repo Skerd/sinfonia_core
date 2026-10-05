@@ -24,6 +24,7 @@ import {
     isDialogPreviewable,
 } from "@coreModule/components/viewEngine/widgets/media/mediaPreviewKind.ts";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
+import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 
 type FileToUpload = any & {}
 
@@ -70,6 +71,8 @@ type SingleFileProps = WithLanguageType & {
     table?: boolean,
     /** Chat bubble attachments: compact tile that inherits bubble chrome. */
     variant?: "default" | "chat",
+    /** `name` is one truncating line plus the file menu, with no thumbnail. */
+    layout?: "tile" | "name",
     className?: string,
 }
 function SingleFile({
@@ -81,6 +84,7 @@ function SingleFile({
     isBig = true,
     table = false,
     variant = "default",
+    layout = "tile",
     className,
 }: SingleFileProps) {
     const isChat = variant === "chat";
@@ -359,6 +363,27 @@ function SingleFile({
             </DialogContent>
         </Dialog>
     );
+
+    if (layout === "name") {
+        const displayName = file?.file ? getMediaDisplayName(file.file) : "";
+        return (
+            <>
+                <div
+                    className={cn("flex w-full min-w-0 items-center gap-1", className)}
+                    role="presentation"
+                    onClick={(e) => {e.stopPropagation(); e.preventDefault();}}
+                >
+                    <div className="min-w-0 flex-1">
+                        <TruncatedValue text={displayName} className="text-sm">
+                            {displayName}
+                        </TruncatedValue>
+                    </div>
+                    <div className="shrink-0">{renderDropDownMenu()}</div>
+                </div>
+                {previewDialog}
+            </>
+        );
+    }
 
     if (isChat && (canRemove || canDownload || canPreview)) {
         return (

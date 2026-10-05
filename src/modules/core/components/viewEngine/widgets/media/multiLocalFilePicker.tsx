@@ -88,7 +88,7 @@ export default function MultiLocalFilePicker({
                     type="file"
                     className="hidden"
                     accept={accept}
-                    multiple
+                    multiple={maxFiles > 1}
                     onChange={(e) => {
                         const picked = Array.from(e.target.files || []);
                         if (picked.length > 0) {

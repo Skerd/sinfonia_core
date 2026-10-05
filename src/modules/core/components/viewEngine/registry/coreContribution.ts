@@ -45,7 +45,9 @@ import {CORE_DEFAULT_COMPOUND_FORM_WIDGETS, coreCompoundFormWidgetRenderers} fro
 
 const CurrencySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx"));
 const CountrySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx"));
+const CountryCardLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx"));
 const StateSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx"));
+const StateCardLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx"));
 const CitySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx"));
 
 const COUNTRY_SINGLE = {url: "/api/auxiliary/country/single", labelFields: ["name"]};
@@ -113,17 +115,27 @@ export function getCoreWidgetContribution(): WidgetContribution {
             "#ReferencesViewModeToggle": ReferencesViewModeToggle,
             "#CurrencySheetView": CurrencySheetViewLazy,
             "#CountrySheetView": CountrySheetViewLazy,
+            /** `#ReferencesRender` card for country stubs (pairs with `#CountrySheetView`). */
+            "#CountryCard": CountryCardLazy,
             "#StateSheetView": StateSheetViewLazy,
+            /** `#ReferencesRender` card for state stubs (pairs with `#StateSheetView`). */
+            "#StateCard": StateCardLazy,
             "#CitySheetView": CitySheetViewLazy,
         },
         widgetMeta: CORE_WIDGET_META,
         compoundFormWidgets: CORE_DEFAULT_COMPOUND_FORM_WIDGETS,
         compoundFormWidgetRenderers: coreCompoundFormWidgetRenderers,
         formWriteAccessKeys: {"#FormEditMediaField": "media"},
+        referencesDefaultItemProps: {
+            "#CountryCard": "country",
+            "#StateCard": "state",
+        },
         auditSinglePostHints: {
             "#CurrencySheetView": CURRENCY_SINGLE,
             "#CountrySheetView": COUNTRY_SINGLE,
+            "#CountryCard": COUNTRY_SINGLE,
             "#StateSheetView": STATE_SINGLE,
+            "#StateCard": STATE_SINGLE,
             "#CitySheetView": CITY_SINGLE,
             "#TenancyCountryCard": COUNTRY_SINGLE,
             "#TenancyStateCard": STATE_SINGLE,

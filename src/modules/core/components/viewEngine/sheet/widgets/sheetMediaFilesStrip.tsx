@@ -10,7 +10,10 @@ export type SheetMediaFilesStripProps = {
     className?: string;
     canDownload?: boolean;
     canRemove?: boolean;
+    /** Thumbnail size when the layout is a tile. Ignored when `nameOnly` is set. */
     isBig?: boolean;
+    /** File name plus the file menu, instead of the thumbnail tile. */
+    nameOnly?: boolean;
 };
 
 export default function SheetMediaFilesStrip({
@@ -20,6 +23,7 @@ export default function SheetMediaFilesStrip({
     canDownload = true,
     canRemove = false,
     isBig = false,
+    nameOnly = false,
 }: SheetMediaFilesStripProps) {
     const mediaFiles = useMemo(
         () =>
@@ -35,7 +39,7 @@ export default function SheetMediaFilesStrip({
     if (!mediaFiles.length) return null;
 
     return (
-        <div className={cn("flex flex-wrap gap-2", className)}>
+        <div className={cn(nameOnly ? "flex w-full min-w-0 flex-col gap-1" : "flex flex-wrap gap-2", className)}>
             {mediaFiles.map((fileItem) => (
                 <SingleFile
                     key={fileItem.id}
@@ -44,6 +48,8 @@ export default function SheetMediaFilesStrip({
                     canDownload={canDownload}
                     canRemove={canRemove}
                     isBig={isBig}
+                    layout={nameOnly ? "name" : "tile"}
+                    className={nameOnly ? "w-full" : undefined}
                 />
             ))}
         </div>

@@ -38,9 +38,6 @@ export function ExternalTextLink({
     );
 }
 
-/** Grid cell class: tiles that must not share a row span the full grid in card columns. */
-const cellClass = (cardColumns: number | undefined, extra?: string) => cn("min-w-0", extra, cardColumns ? "col-span-full" : undefined);
-
 /** A `mediaStrip` field: the item's media as file tiles under an optional label. */
 export function renderMediaStripField(
     item: Record<string, any>,
@@ -54,7 +51,7 @@ export function renderMediaStripField(
     if (media.length === 0) return null;
     const label = field.labelKey ? resolveSheet(field.labelKey) : null;
     return (
-        <div key={key} className={cellClass(cardColumns, "flex flex-col gap-1")}>
+        <div key={key} className={cn("min-w-0 flex flex-col gap-1", cardColumns && "col-span-full")}>
             {label ? <span className="text-xs font-medium text-muted-foreground">{label}</span> : null}
             <SheetMediaFilesStrip
                 media={media as Media[]}
@@ -74,7 +71,7 @@ export function renderLinkedRefField(
     field: EmbeddedItemFieldConfig,
     resolveSheet: ResolveLanguageKey,
     key: string | number,
-    cardColumns: number | undefined,
+    _cardColumns: number | undefined,
 ) {
     const stub = resolveLinkedRefStub(item, field);
     if (!stub) return null;
@@ -103,7 +100,7 @@ export function renderLinkedRefField(
             : undefined;
 
     return (
-        <div key={key} className={cellClass(cardColumns)}>
+        <div key={key} className="min-w-0">
             <DisplayCard
                 show
                 title={title}

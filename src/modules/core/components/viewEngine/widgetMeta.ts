@@ -299,8 +299,9 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
                 name: "type",
                 type: "enum",
                 enum: ["media"],
-                docs: "`media` renders file tiles instead of text.",
+                docs: "`media` renders file tiles instead of text. Pair with `smallMedia` for a truncated name and the file menu.",
             },
+            {name: "smallMedia", type: "boolean", docs: "With `type: media`, a truncated file name and the file menu instead of the thumbnail tile."},
             {
                 name: "languageKeyCategory",
                 type: "string",
@@ -312,7 +313,12 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
                 type: "string[]",
                 docs: "Joined with `parent` to build the value, and to gate read access.",
             },
-            {name: "bodyWidget", type: "string", suggest: "widgetToken"},
+            {
+                name: "bodyWidget",
+                type: "string",
+                suggest: "widgetToken",
+                docs: "Contributed sheet body; stacks full-width under icon+title.",
+            },
             {
                 name: "titleActions",
                 type: "string",
@@ -335,6 +341,12 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
             {name: "cardWidget", type: "string", suggest: "widgetToken"},
             {name: "itemDataProp", type: "string", docs: "Defaults per known `cardWidget`."},
             {name: "pageSize", type: "number", default: 3},
+            {
+                name: "columns",
+                type: "number",
+                default: 3,
+                docs: "Cards mode only: max cards per row (1–4, default 3). Shrinks with sheet width via auto-fill. Compact mode ignores this.",
+            },
             {name: "cardProps", type: "json", docs: "Shallow-merged into each card."},
             {
                 name: "compactRow",
@@ -370,7 +382,17 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
     "#Badge": {modes: SHEET, bindsField: true},
     "#CurrencySheetView": {modes: SHEET, bindsField: true},
     "#CountrySheetView": {modes: SHEET, bindsField: true},
+    "#CountryCard": {
+        modes: SHEET,
+        bindsField: true,
+        docs: "`#ReferencesRender` cardWidget for country stubs (`itemDataProp`: `country`).",
+    },
     "#StateSheetView": {modes: SHEET, bindsField: true},
+    "#StateCard": {
+        modes: SHEET,
+        bindsField: true,
+        docs: "`#ReferencesRender` cardWidget for state stubs (`itemDataProp`: `state`).",
+    },
     "#CitySheetView": {modes: SHEET, bindsField: true},
 };
 

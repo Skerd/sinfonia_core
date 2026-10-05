@@ -6,7 +6,10 @@ import type {ViewRendererContext, WidgetProps} from "../../engine/types.ts";
 import {wpCount, wpRecord, wpText, wpToken} from "../../engine/widgetProps.ts";
 import {getReferencesDefaultItemProp, resolveWidget} from "../../widgetRegistry.ts";
 import {useReferencesViewModeOptional} from "../widgets/references/referencesViewModeContext.tsx";
-import SheetPaginatedReferenceCardList, {type ReferenceStub} from "../widgets/references/sheetPaginatedReferenceCardList.tsx";
+import SheetPaginatedReferenceCardList, {
+    DEFAULT_REFERENCE_CARD_COLUMNS,
+    type ReferenceStub,
+} from "../widgets/references/sheetPaginatedReferenceCardList.tsx";
 import type {ReferenceCompactRowConfig} from "../widgets/references/referenceStubCompactRow.tsx";
 
 /**
@@ -70,6 +73,7 @@ function ReferencesRenderHost({binding, ctx}: {binding: FieldBinding; ctx: ViewR
         items: referenceStubs(resolvePath(data, binding.name)),
         ...unitContext(ctx, data),
         pageSize: wpCount(wp, "pageSize"),
+        columns: wpCount(wp, "columns") ?? DEFAULT_REFERENCE_CARD_COLUMNS,
         cardProps: wpRecord(wp, "cardProps"),
         hideActions: wp.hideActions === true,
         listClassName: wpText(wp, "listClassName"),

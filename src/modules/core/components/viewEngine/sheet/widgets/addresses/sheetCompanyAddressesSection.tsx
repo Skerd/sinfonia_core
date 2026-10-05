@@ -4,7 +4,6 @@ import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import SheetLocationMap from "@coreModule/components/viewEngine/widgets/addresses/sheetLocationMap.tsx";
 import { resolveIcon } from "../../../widgetRegistry.ts";
 import { cn } from "@coreModule/components/lib/utils.ts";
-import {SheetGrid} from "@coreModule/components/viewEngine/widgets/layout/sheet/grid.tsx";
 import {Card, CardContent} from "@coreModule/components/ui/card.tsx";
 import {bootstrapLinkedSheetData, normalizeObjectIdRef, resolvePath} from "../../../engine/refs.ts";
 import {linkedReferenceSheet, type LinkedReferenceSheet} from "../../linkedSheet/linkedSheetHost.tsx";
@@ -41,6 +40,15 @@ function normalizeAddressRows(input: unknown): any[] {
     return [];
 }
 
+function toFiniteNumber(value: unknown): number | null {
+    if (typeof value === "number" && Number.isFinite(value)) return value;
+    if (typeof value === "string" && value.trim() !== "") {
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : null;
+    }
+    return null;
+}
+
 export type SheetCompanyAddressesSectionProps = {
     addresses: unknown;
     resolveLanguageKey: ResolveLanguageKey;
@@ -74,10 +82,12 @@ export default function SheetCompanyAddressesSection({
                 const cityName = resolvePath(row, "city.name");
                 const street = row.street;
                 const postalCode = row.postalCode;
-                const latitude = row.latitude;
-                const longitude = row.longitude;
-                const latNum = typeof latitude === "number" && Number.isFinite(latitude) ? latitude : null;
-                const lngNum = typeof longitude === "number" && Number.isFinite(longitude) ? longitude : null;
+                const latNum = toFiniteNumber(row.latitude);
+                const lngNum = toFiniteNumber(row.longitude);
+                const mapAddress =
+                    latNum != null && lngNum != null
+                        ? {...row, latitude: latNum, longitude: lngNum}
+                        : null;
 
                 const IconGlobe = resolveIcon("#Globe");
                 const IconMapPin = resolveIcon("#MapPin");
@@ -101,9 +111,9 @@ export default function SheetCompanyAddressesSection({
                     >
                         <Card>
                             <CardContent>
-                                <SheetGrid columns={6}>
-
-                                    <div className="lg:col-span-4 grid grid-cols-3 gap-2 h-fit">
+                                {/* Sheet panels are often < lg; keep cards+map usable from ~640px. */}
+                                <div className="grid grid-cols-1 min-[640px]:grid-cols-3 gap-3 items-stretch">
+                                    <div className="min-[640px]:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-2 h-fit">
                                         <DisplayCard
                                             show={show}
                                             title={String(resolveLanguageKey("form.countryLabel"))}
@@ -152,7 +162,7 @@ export default function SheetCompanyAddressesSection({
                                             value={lngNum != null ? String(lngNum.toFixed(4)) : null}
                                         />
 
-                                        <div className="lg:col-span-3">
+                                        <div className="col-span-2 sm:col-span-3">
                                             <DisplayCard
                                                 show={show}
                                                 title={String(resolveLanguageKey("form.streetLabel"))}
@@ -163,16 +173,15 @@ export default function SheetCompanyAddressesSection({
                                         </div>
                                     </div>
 
-                                    {latNum != null && lngNum != null ? (
-                                        <div className="relative min-h-[220px] self-stretch lg:col-span-2">
+                                    {mapAddress ? (
+                                        <div className="relative min-h-[220px] self-stretch min-[640px]:col-span-1">
                                             <SheetLocationMap
-                                                address={row}
+                                                address={mapAddress}
                                                 className="absolute inset-0 h-full w-full overflow-hidden rounded-lg"
                                             />
                                         </div>
                                     ) : null}
-
-                                </SheetGrid>
+                                </div>
                             </CardContent>
                         </Card>
                     </div>

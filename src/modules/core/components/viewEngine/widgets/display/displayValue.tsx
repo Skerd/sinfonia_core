@@ -62,6 +62,8 @@ type DisplayValueProps = {
      * Icon default 18 matches the country-flag height. Avatar default 48 matches header logos.
      */
     size?: number;
+    /** With `type="media"`, a truncated file name and the file menu instead of the tile. */
+    smallMedia?: boolean;
     /** Wins over `path`. */
     show?: boolean;
     /** If set, uses this resource instead of the nearest `AccessFields` read map. */
@@ -382,12 +384,14 @@ function formatByType(
     format?: Intl.DateTimeFormatOptions,
     size?: number,
     languageKeyCategory?: string,
+    smallMedia?: boolean,
 ): ReactNode {
     if (type === "media") {
         return (
             <SheetMediaFilesStrip
                 media={toMediaList(value)}
                 resolveLanguageKey={resolveLanguageKey}
+                nameOnly={smallMedia}
             />
         );
     }
@@ -568,6 +572,7 @@ function DisplayValue({
     show: showProp,
     resource,
     className,
+    smallMedia,
 }: DisplayValueProps) {
     const parentResolveLanguageKey = useContext(LanguageResolveContext);
     const {currentLanguage} = useSelectedLanguage(DISPLAY_VALUE_LANG_PATH);
@@ -654,7 +659,7 @@ function DisplayValue({
 
     return wrap(
         wrapFormatted(
-            formatByType(value, type, resolveLanguageKey, timeZone, format, size, languageKeyCategory),
+            formatByType(value, type, resolveLanguageKey, timeZone, format, size, languageKeyCategory, smallMedia),
             children,
         ),
         className,

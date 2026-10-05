@@ -7,6 +7,7 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreM
 import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
 import type { ViewNode, FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import { resolveWidget } from "@coreModule/components/viewEngine/widgetRegistry.ts";
+import { resolveContainerProps } from "@coreModule/components/viewEngine/engine/containerProps.ts";
 import {
     type FormWidgetExtra,
     isCompoundFormWidget,
@@ -416,7 +417,12 @@ function renderRowNode(
                   renderRowNode(child, arrayField, index, resolveLanguageKey, extra, form, i),
               )
             : undefined;
-        return createElement(Component, { key: nodeIndex, ...node.props }, children);
+        // Same prop translation as ViewRenderer (`#TitleWithCollapse` title, `#FormAlert` message).
+        const resolvedProps = resolveContainerProps(token, node.props, {
+            resolveLanguageKey,
+            mode: "form",
+        });
+        return createElement(Component, { key: nodeIndex, ...resolvedProps }, children);
     }
 
     const children = node.children

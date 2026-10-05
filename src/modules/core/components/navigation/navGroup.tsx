@@ -9,6 +9,10 @@ import {NavCollapsible, NavItem, NavLink, NavLinkItem, NavSubCollapsible} from "
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 
+/** Leaf nav links only (`<a href>`); parent collapsible triggers are also `data-active` when a child matches. */
+const ACTIVE_SIDEBAR_LINK =
+    '[data-sidebar="menu-sub-button"][data-active="true"][href], [data-sidebar="menu-button"][data-active="true"][href]';
+
 function hrefMatchesSubLink(href: string, url: string | undefined): boolean {
     return !!url && (href === url || href.startsWith(url + '/'));
 }
@@ -29,11 +33,45 @@ function subEntryActive(href: string, sub: NavLinkItem | NavSubCollapsible): boo
 export function NavGroup({ title, items }: {title: string; items: NavItem[]}) {
 
     const { state, isMobile } = useSidebar()
+    const { pathname } = useLocation()
+    const groupRef = useRef<HTMLDivElement>(null)
+    /** Only auto-scroll on the route present at first mount (refresh / deep link), never after in-app clicks. */
+    const loadPathnameRef = useRef(pathname)
+    const didLoadScrollRef = useRef(false)
+
+    useLayoutEffect(() => {
+        if (didLoadScrollRef.current) return
+        if (pathname !== loadPathnameRef.current) return
+        if (state === 'collapsed' && !isMobile) return
+        const root = groupRef.current
+        if (!root) return
+
+        const scrollActiveIntoView = () => {
+            const el = root.querySelector<HTMLElement>(ACTIVE_SIDEBAR_LINK)
+            if (!el) return false
+            el.scrollIntoView({
+                block: 'center',
+                inline: 'nearest',
+            })
+            return true
+        }
+
+        if (scrollActiveIntoView()) didLoadScrollRef.current = true
+        // Nested collapsibles animate open in 200ms; the leaf can still be clipped until then.
+        const timer = window.setTimeout(() => {
+            if (didLoadScrollRef.current) {
+                scrollActiveIntoView()
+                return
+            }
+            if (scrollActiveIntoView()) didLoadScrollRef.current = true
+        }, 220)
+        return () => window.clearTimeout(timer)
+    }, [pathname, state, isMobile, items])
 
     if (items.length === 0) return null;
 
     return (
-        <SidebarGroup>
+        <SidebarGroup ref={groupRef}>
             <SidebarGroupLabel>{title}</SidebarGroupLabel>
             <SidebarMenu>
                 {

@@ -14,6 +14,11 @@ type EntityTextCardHeaderProps = {
     title: ReactNode;
     subtitle?: ReactNode;
     badges?: ReactNode;
+    /**
+     * When true, render `badges` on the title row (beside the name).
+     * Default keeps the badge band under the title/subtitle.
+     */
+    badgesBesideTitle?: boolean;
     actionMenu?: ReactNode;
     hideActions?: boolean;
     className?: string;
@@ -34,6 +39,7 @@ export function EntityCardHeader({
     title,
     subtitle,
     badges,
+    badgesBesideTitle = false,
     actionMenu,
     hideActions = false,
     className,
@@ -41,6 +47,8 @@ export function EntityCardHeader({
 
     const showSubtitleRow = subtitle != null;
     const hasBadges = badges != null;
+    const badgesOnTitleRow = hasBadges && badgesBesideTitle;
+    const badgesBelow = hasBadges && !badgesBesideTitle;
     const showActions = !hideActions && actionMenu != null;
 
     return (
@@ -49,7 +57,7 @@ export function EntityCardHeader({
             "group-has-data-[slot=gallery-carousel]/card:grid-cols-1 rounded-none",
             className,
         )}>
-            <div className={cn("flex min-w-0 gap-2", showSubtitleRow || hasBadges ? "items-start" : "items-center")}>
+            <div className={cn("flex min-w-0 gap-2", showSubtitleRow || badgesBelow ? "items-start" : "items-center")}>
                 {
                     iconTile != null &&
                     <div className="flex shrink-0 items-center justify-center self-center leading-none">
@@ -64,10 +72,14 @@ export function EntityCardHeader({
                   * blurred placeholder for cards that simply had no badges.
                   */}
                 <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-                    <div className="flex min-w-0 items-center gap-1">
+                    <div className="flex min-w-0 items-center gap-1.5">
                         <CardTitle className="min-w-0 truncate text-lg leading-snug font-semibold">
                             {title}
                         </CardTitle>
+                        {
+                            badgesOnTitleRow &&
+                            <div className="flex shrink-0 flex-wrap items-center gap-1.5">{badges}</div>
+                        }
                     </div>
                     {
                         showSubtitleRow &&
@@ -76,7 +88,7 @@ export function EntityCardHeader({
                         </p>
                     }
                     {
-                        hasBadges &&
+                        badgesBelow &&
                         <div className="flex flex-wrap items-center gap-1.5">{badges}</div>
                     }
                 </div>

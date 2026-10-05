@@ -131,6 +131,8 @@ type EntityCardHeaderProps = {
     subtitlePath?: string;
     icon?: ReactNode;
     badges?: ReactNode;
+    /** When true, show `badges` beside the title instead of under it. */
+    badgesBesideTitle?: boolean;
     children?: ReactNode;
 };
 
@@ -141,6 +143,7 @@ function EntityCardHeader({
     subtitlePath = "code",
     icon,
     badges,
+    badgesBesideTitle = false,
     children,
 }: EntityCardHeaderProps) {
     const {
@@ -172,6 +175,7 @@ function EntityCardHeader({
                 ) : undefined
             }
             badges={badges}
+            badgesBesideTitle={badgesBesideTitle}
             hideActions={hideActions}
             actionMenu={
                 <ActionMenu

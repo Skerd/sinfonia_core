@@ -94,6 +94,14 @@ type DisplayCardProps = {
     maxLength?: number;
     /** Trailing header controls (e.g. Compact/Cards) on the same row as icon + title. */
     headerActions?: ReactNode;
+    /**
+     * Put icon+title on a full-width header and the React body below (for wide
+     * `bodyWidget` content). Compact React values (`stringBadgeList`, `currencyList`)
+     * stay in the normal title/value column next to the icon.
+     */
+    stackBody?: boolean;
+    /** With `type="media"`, a truncated file name and the file menu instead of the tile. */
+    smallMedia?: boolean;
 };
 
 const containerStyles: Record<DisplayCardVariant, string> = {
@@ -211,6 +219,8 @@ export default function DisplayCard({
     expandable = false,
     maxLength,
     headerActions,
+    stackBody = false,
+    smallMedia = false,
 }: DisplayCardProps) {
     const accessResourceId = linkedReferenceSheet?.resourceId ?? "";
     const LinkedSheet = linkedReferenceSheet?.LinkedSheet;
@@ -240,7 +250,7 @@ export default function DisplayCard({
     const [avatarOpen, setAvatarOpen] = useState(false);
     const tooltipText = tooltip != null ? String(tooltip).trim() : "";
     const hasTooltip = tooltipText.length > 0;
-    const stackedBody = type !== "media" && isValidElement(value);
+    const stackedBody = stackBody && type !== "media" && isValidElement(value);
 
     const media = avatar != null ? (
         <ItemMedia className={stackedBody ? undefined : "self-start"}>
@@ -340,7 +350,7 @@ export default function DisplayCard({
         <>
             <Item
                 variant="outline"
-                className={cn("h-fit items-start gap-2 p-2", containerStyles[variant])}
+                className={cn("h-fit items-start gap-2 p-2", smallMedia && "min-w-0", containerStyles[variant])}
             >
                 {stackedBody ? (
                     <ItemHeader className="min-w-0 flex-nowrap">
@@ -371,6 +381,7 @@ export default function DisplayCard({
                                 format={format}
                                 size={size}
                                 show={show}
+                                smallMedia={smallMedia}
                             />
                         ) : isValidElement(value) ? (
                             <div

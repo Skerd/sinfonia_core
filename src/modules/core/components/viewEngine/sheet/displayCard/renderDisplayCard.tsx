@@ -30,6 +30,7 @@ export const displayCardRenderer: SheetFieldRenderer = (args) => {
     const locked = binding.locked === true || !hasDisplayCardValueAccess(ctx.access, binding);
     const forceShow = wp.show === true;
     const {externalHref, internalHref} = cardLinks(wp, binding, ctx.data, value);
+    const bodyWidget = wpText(wp, "bodyWidget");
 
     return createElement(Card, {
         key: index,
@@ -52,5 +53,7 @@ export const displayCardRenderer: SheetFieldRenderer = (args) => {
         expandable: wp.expandable === true,
         maxLength: wpNumber(wp, "maxLength"),
         headerActions: headerActions(wp, ctx),
+        stackBody: !!bodyWidget,
+        smallMedia: wp.smallMedia === true,
     });
 };

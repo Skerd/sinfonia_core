@@ -3,7 +3,7 @@ import type { MutableRefObject } from "react";
 import { useFormContext, type FieldPath, type FieldValues, type PathValue } from "react-hook-form";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import { Badge } from "@coreModule/components/ui/badge.tsx";
-import { FormField, FormItem, FormLabel, FormMessage } from "@coreModule/components/ui/form.tsx";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@coreModule/components/ui/form.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import { ApiSelect } from "@coreModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
@@ -168,15 +168,17 @@ export function ObjectIdChipsInput({
             render={() => (
                 <FormItem className="min-w-0">
                     {label && <FormLabel>{label}</FormLabel>}
-                    <ApiSelect
-                        apiUrl={apiUrl}
-                        method={method}
-                        markedValues={ids}
-                        onValueChange={addId}
-                        placeholder={placeholder}
-                        disabled={isDisabled}
-                        pageSize={pageSize}
-                    />
+                    <FormControl>
+                        <ApiSelect
+                            apiUrl={apiUrl}
+                            method={method}
+                            markedValues={ids}
+                            onValueChange={addId}
+                            placeholder={placeholder}
+                            disabled={isDisabled}
+                            pageSize={pageSize}
+                        />
+                    </FormControl>
                     <FormMessage />
                     {ids.length > 0 && (
                         <div role="list" className="flex min-w-0 flex-wrap gap-2">
