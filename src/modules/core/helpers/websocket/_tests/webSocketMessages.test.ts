@@ -1,4 +1,6 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
+import {clearToken, setToken} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
+import {markSessionExpired} from "@coreModule/helpers/redux/slices/authSlice.ts";
 
 const {postMock, sendReceiptsNowMock} = vi.hoisted(() => ({postMock: vi.fn(), sendReceiptsNowMock: vi.fn()}));
 
@@ -278,6 +280,29 @@ describe("NEW_NOTIFICATIONS", () => {
             [CHAT_API.channel, {id: "c1"}],
             [CHAT_API.channel, {id: "c2"}],
         ]);
+    });
+});
+
+function accessToken(sessionId: string): string {
+    const payload = btoa(JSON.stringify({sessionId})).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    return `h.${payload}.s`;
+}
+
+describe("SESSION_REVOKED", () => {
+    beforeEach(() => {
+        clearToken();
+    });
+
+    it("signs out the browser whose token matches the revoked session", () => {
+        setToken(accessToken("session-a"));
+        receive("SESSION_REVOKED", {sessionId: "session-a"});
+        expect(dispatch).toHaveBeenCalledExactlyOnceWith(markSessionExpired());
+    });
+
+    it("leaves another device of the same user signed in", () => {
+        setToken(accessToken("session-b"));
+        receive("SESSION_REVOKED", {sessionId: "session-a"});
+        expect(dispatch).not.toHaveBeenCalled();
     });
 });
 

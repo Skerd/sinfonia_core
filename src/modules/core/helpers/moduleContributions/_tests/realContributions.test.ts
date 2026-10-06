@@ -7,6 +7,7 @@ import {isModuleEnabled} from "@coreModule/helpers/modules/enabledModules.ts";
 import {SITE_ROOM_ID_PATTERN} from "@coreModule/helpers/websocket/resolveSiteRoom.ts";
 import {getSortedSidebarContributions, getModuleSidebarNavGroups} from "../loadSidebarContributions.ts";
 import {getTenancySettingsSubCollapsibles} from "../loadTenancySettingsContributions.ts";
+import {getAccountNavItems} from "../loadAccountNavContributions.ts";
 import {runRouteConfigContributions} from "../loadRouteConfigContributions.ts";
 import {resolveCenterPanelClassName} from "../loadPanelLayoutContributions.ts";
 import {getAuthPanelComponents, resolveAuthPanelComponent} from "../loadAuthPanelContributions.ts";
@@ -29,6 +30,7 @@ describe("real module contributions", () => {
         expectUniqueIds(getSortedSidebarContributions());
         expectUniqueIds(getSortedWidgetContributions());
         expect(() => getTenancySettingsSubCollapsibles(resolve)).not.toThrow();
+        expect(() => getAccountNavItems(resolve)).not.toThrow();
         expect(() => getAuthPanelComponents()).not.toThrow();
         expect(() => getContributedPathRoomOverrides()).not.toThrow();
         expect(() => getAccountSettingsNotificationSections({})).not.toThrow();

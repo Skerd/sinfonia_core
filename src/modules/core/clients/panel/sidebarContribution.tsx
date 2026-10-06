@@ -29,6 +29,7 @@ import type {SidebarContribution} from "@coreModule/helpers/types/sidebarContrib
 import type {NavGroup, NavItem} from "@coreModule/helpers/types/sidebarNav.types.ts";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {getTenancySettingsSubCollapsibles} from "@coreModule/helpers/moduleContributions/loadTenancySettingsContributions.ts";
+import {getAccountNavItems} from "@coreModule/helpers/moduleContributions/loadAccountNavContributions.ts";
 
 function buildCompanyNavGroup(
     resolveLanguageKey: ResolveLanguageKey,
@@ -158,6 +159,7 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
             usersPermissions: [],
             atLeastOnePermission: true,
         },
+        ...getAccountNavItems(resolveLanguageKey),
     ];
     return {
         title: resolveLanguageKey("menus.account.title"),

@@ -8,7 +8,8 @@ import Security from "@coreModule/clients/panel/private/accountSettings/security
 import NotificationCenter from "@coreModule/clients/panel/private/accountSettings/notificationCenter";
 import NotificationsForm from "@coreModule/clients/panel/private/accountSettings/notifications";
 import ConnectedApps from "@coreModule/clients/panel/private/accountSettings/apps";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
+import {getAccountSettingsPages} from "@coreModule/helpers/moduleContributions/loadAccountSettingsContributions.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
@@ -46,6 +47,10 @@ function AccountSettings({
         {specificUserId},
     );
     const isBot = !!profile?.isBot;
+    const contributedPages = useMemo(
+        () => isBot ? [] : getAccountSettingsPages({specificUserId}),
+        [isBot, specificUserId],
+    );
 
     const sidebarNavItems = [
         {
@@ -74,6 +79,11 @@ function AccountSettings({
                 href: specificUserId ? "apps" : '/account/apps',
                 icon: <Boxes size={18} />,
             },
+            ...contributedPages.map((page) => ({
+                title: resolveLanguageKey(page.titleKey),
+                href: specificUserId ? page.id : `/account/${page.id}`,
+                icon: page.icon,
+            })),
         ] : [])
     ]
 
@@ -88,7 +98,7 @@ function AccountSettings({
             setActiveTab("account");
             return;
         }
-        if (subview === "security" || subview === "notifications" || subview === "notificationCenter" || subview === "apps") {
+        if (subview === "security" || subview === "notifications" || subview === "notificationCenter" || subview === "apps" || subview === "addresses") {
             navigate("/account/account", {replace: true});
         }
     }, [isBot, specificUserId, subview, navigate]);
@@ -129,6 +139,11 @@ function AccountSettings({
                     {
                         activeTab === "apps" && !isBot &&
                         <ConnectedApps specificUserId={specificUserId} />
+                    }
+                    {
+                        !isBot && contributedPages.map((page) => (
+                            activeTab === page.id ? <div key={page.id} className="min-h-0 flex-1">{page.render()}</div> : null
+                        ))
                     }
                 </div>
             </div>

@@ -22,6 +22,8 @@ import {
 import {updateServerHealth, updateServerStats} from "@coreModule/helpers/redux/slices/serverResourceSlice.ts";
 import {sendReceiptsNow} from "@coreModule/helpers/chat/messageReceipts.ts";
 import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import {getToken} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
+import {markSessionExpired} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import {handleError} from "@coreModule/helpers/general/errors.ts";
 import {WebSocketFEMessageCodes} from "armonia/src/modules/core/websocket/types.ts";
 import type {NotificationType} from "armonia/src/modules/core/api/user/private/notifications/notifications.dto.ts";
@@ -60,6 +62,20 @@ const LOG_CONTEXT = "WebSocket";
 
 const isPayload = (value: unknown): value is Payload =>
     typeof value === "object" && value !== null && !Array.isArray(value);
+
+function sessionIdFromAccessToken(token: string | null): string | null {
+    if (!token) return null;
+    const segment = token.split(".")[1];
+    if (!segment) return null;
+    try {
+        const base64 = segment.replace(/-/g, "+").replace(/_/g, "/");
+        const json = atob(base64 + "=".repeat((4 - (base64.length % 4)) % 4));
+        const sessionId = JSON.parse(json).sessionId;
+        return typeof sessionId === "string" && sessionId ? sessionId : null;
+    } catch {
+        return null;
+    }
+}
 
 /** Non-empty string field, or `undefined`. */
 const idOf = (payload: Payload, key: string): string | undefined => {
@@ -199,6 +215,11 @@ const HANDLERS: Record<string, Handler> = {
         if (failed.length > 0) {
             handleError(new Error(`Could not join rooms: ${failed.join(", ")}`), {context: LOG_CONTEXT});
         }
+    },
+    [WebSocketFEMessageCodes.SESSION_REVOKED]: (payload, {dispatch}) => {
+        const revokedSessionId = idOf(payload, "sessionId");
+        if (!revokedSessionId || sessionIdFromAccessToken(getToken()) !== revokedSessionId) return;
+        dispatch(markSessionExpired());
     },
     [WebSocketFEMessageCodes.SERVER_HEALTH_UPDATER]:(payload, {dispatch}) => {
         dispatch(updateServerHealth(payload as ServerHealthFormResponseType));

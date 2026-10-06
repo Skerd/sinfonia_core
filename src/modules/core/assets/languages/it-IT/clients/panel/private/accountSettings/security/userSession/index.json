@@ -23,8 +23,26 @@
   "deletedAt": "Eliminato il",
   "deletedBy": "Eliminato da",
   "revoke": "Revoca l'accesso",
-  "revokeSuccess": "Accesso alla sessione revocato.",
-  "revokeError": "Impossibile revocare questa sessione.",
+  "revokeDialog": {
+    "title": "Revoca l'accesso",
+    "description": "Questo dispositivo verrà disconnesso. Sarà necessario accedere di nuovo.",
+    "confirmText": "Revoca l'accesso",
+    "cancelText": "Annulla"
+  },
+  "axios": {
+    "start": {
+      "title": "Revoca dell'accesso in corso",
+      "time": 3000
+    },
+    "success": {
+      "title": "Accesso alla sessione revocato.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile revocare questa sessione.",
+      "time": 3000
+    }
+  },
   "badge": {
     "active": "Attivo",
     "revoked": "Revocato",

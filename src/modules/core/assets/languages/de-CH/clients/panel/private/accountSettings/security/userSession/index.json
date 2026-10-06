@@ -23,8 +23,26 @@
   "deletedAt": "Gelöscht am",
   "deletedBy": "Gelöscht von",
   "revoke": "Zugriff widerrufen",
-  "revokeSuccess": "Sitzungszugriff widerrufen.",
-  "revokeError": "Diese Sitzung konnte nicht widerrufen werden.",
+  "revokeDialog": {
+    "title": "Zugriff widerrufen",
+    "description": "Dieses Gerät wird abgemeldet. Die Anmeldung muss erneut erfolgen.",
+    "confirmText": "Zugriff widerrufen",
+    "cancelText": "Abbrechen"
+  },
+  "axios": {
+    "start": {
+      "title": "Zugriff wird widerrufen",
+      "time": 3000
+    },
+    "success": {
+      "title": "Sitzungszugriff widerrufen.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Diese Sitzung konnte nicht widerrufen werden.",
+      "time": 3000
+    }
+  },
   "badge": {
     "active": "Aktiv",
     "revoked": "Widerrufen",

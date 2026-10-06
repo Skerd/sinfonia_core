@@ -18,6 +18,17 @@ export type AccountSettingsSection = {
 };
 
 /**
+ * A tab on the account-settings page, next to Account / Security / Activity.
+ * `titleKey` is resolved by that page's dictionary.
+ */
+export type AccountSettingsPage = {
+    id: string;
+    titleKey: string;
+    icon: JSX.Element;
+    render: () => ReactNode;
+};
+
+/**
  * Optional attach file: `src/modules/<pkg>/clients/panel/accountSettingsContribution.ts(x)`.
  *
  * Sections are merged into the core account-settings "Notifications" tab. This
@@ -30,7 +41,14 @@ export type AccountSettingsContribution = {
     /** Lower runs earlier; default 100. */
     order?: number;
     /** Return `null`/`undefined` to contribute nothing; a throwing hook is logged and skipped. */
-    getNotificationSections: (
+    getNotificationSections?: (
         context: AccountSettingsContext,
     ) => AccountSettingsSection[] | null | undefined;
+    /**
+     * Extra account-settings tabs. Return `null`/`undefined` to contribute nothing.
+     * A throwing hook is logged and skipped.
+     */
+    getPages?: (
+        context: AccountSettingsContext,
+    ) => AccountSettingsPage[] | null | undefined;
 };

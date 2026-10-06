@@ -23,8 +23,26 @@
   "deletedAt": "Deleted at",
   "deletedBy": "Deleted by",
   "revoke": "Revoke access",
-  "revokeSuccess": "Session access revoked.",
-  "revokeError": "Could not revoke this session.",
+  "revokeDialog": {
+    "title": "Revoke access",
+    "description": "This signs that device out. They will need to sign in again.",
+    "confirmText": "Revoke access",
+    "cancelText": "Cancel"
+  },
+  "axios": {
+    "start": {
+      "title": "Revoking access",
+      "time": 3000
+    },
+    "success": {
+      "title": "Session access revoked.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Could not revoke this session.",
+      "time": 3000
+    }
+  },
   "badge": {
     "active": "Active",
     "revoked": "Revoked",

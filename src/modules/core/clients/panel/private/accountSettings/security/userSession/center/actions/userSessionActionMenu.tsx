@@ -27,8 +27,7 @@ export function UserSessionRevokeMenuItem({
         <DropdownMenuItem
             className="text-destructive focus:text-destructive"
             disabled={revokeDisabled}
-            onSelect={(e) => {
-                e.preventDefault();
+            onClick={() => {
                 if (!revokeDisabled) onRevoke(session);
             }}
         >

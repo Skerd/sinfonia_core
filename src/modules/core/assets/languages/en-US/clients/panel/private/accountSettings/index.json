@@ -6,5 +6,6 @@
   "security": "Security",
   "activity": "Activity",
   "notifications": "Notifications",
-  "connectedApps": "Connected apps"
+  "connectedApps": "Connected apps",
+  "addresses": "Addresses"
 }

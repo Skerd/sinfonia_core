@@ -23,8 +23,26 @@
   "deletedAt": "Fshirë më",
   "deletedBy": "Fshirë nga",
   "revoke": "Revoko aksesin",
-  "revokeSuccess": "Qasja në seancë u anulua.",
-  "revokeError": "Ky sesion nuk mund të revokohej.",
+  "revokeDialog": {
+    "title": "Revoko aksesin",
+    "description": "Kjo e çkyç atë pajisje. Do të duhet të identifikohen përsëri.",
+    "confirmText": "Revoko aksesin",
+    "cancelText": "Anulo"
+  },
+  "axios": {
+    "start": {
+      "title": "Duke revokuar aksesin",
+      "time": 3000
+    },
+    "success": {
+      "title": "Qasja në seancë u anulua.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Ky sesion nuk mund të revokohej.",
+      "time": 3000
+    }
+  },
   "badge": {
     "active": "Aktiv",
     "revoked": "Revokuar",
