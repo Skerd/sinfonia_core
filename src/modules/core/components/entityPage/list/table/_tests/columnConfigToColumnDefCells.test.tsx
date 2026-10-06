@@ -64,7 +64,7 @@ function renderCell(col: TableColumnConfig, doc: Doc, fields: Record<string, unk
     return render(<Harness />, {wrapper: Wrapper}).getByTestId("cell");
 }
 
-/** `TextBadge` puts the label in an inner truncating span, so tone classes sit on the badge. */
+/** Tone classes sit on the badge; the label is the truncated child. */
 function badgeFor(cell: HTMLElement, text: string): HTMLElement {
     const badge = within(cell).getByText(text).closest('[data-slot="badge"]');
     if (!badge) throw new Error(`no badge around "${text}"`);

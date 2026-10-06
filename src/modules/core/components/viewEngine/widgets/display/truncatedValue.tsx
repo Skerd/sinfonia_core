@@ -1,33 +1,57 @@
-import {useCallback, useRef, useState, type ReactNode} from "react";
+import {useCallback, useLayoutEffect, useRef, useState, type ReactNode} from "react";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {useCanHover} from "@coreModule/helpers/hooks/useCanHover.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
+/**
+ * Horizontal clip only, with a 1px slack — the same test as `NavTruncatedTitle`.
+ * `offsetHeight < scrollHeight` is true on every `h-5` badge (12 vs 13px of
+ * line-box rounding), so a height check would open the tooltip on every label.
+ */
 function isOverflown(node: HTMLElement) {
-    return node.offsetWidth < node.scrollWidth || node.offsetHeight < node.scrollHeight;
+    return node.scrollWidth > node.clientWidth + 1;
 }
 
 /**
  * Tracks whether `node` is currently clipping its content, live -- via
  * ResizeObserver rather than a one-time check, so a later resize (column
  * resize, sidebar collapse) is picked up too.
+ *
+ * Measured in `useLayoutEffect`, not a ref callback: a callback can run before
+ * layout (`clientWidth === 0`) and latch the tooltip on even after the text fits.
  */
 function useOverflowMeasurement<T extends HTMLElement>() {
+    const [node, setNode] = useState<T | null>(null);
     const [overflown, setOverflown] = useState(false);
     const observerRef = useRef<ResizeObserver | null>(null);
 
-    const ref = useCallback((node: T | null) => {
+    useLayoutEffect(() => {
         observerRef.current?.disconnect();
         observerRef.current = null;
-        if (!node) return;
-
-        const update = () => setOverflown(isOverflown(node));
+        if (!node) {
+            setOverflown(false);
+            return;
+        }
+        const update = () => {
+            if (node.clientWidth === 0) {
+                setOverflown(false);
+                return;
+            }
+            setOverflown(isOverflown(node));
+        };
         update();
-
         const ro = new ResizeObserver(update);
         ro.observe(node);
         observerRef.current = ro;
+        return () => {
+            ro.disconnect();
+            observerRef.current = null;
+        };
+    }, [node]);
+
+    const ref = useCallback((el: T | null) => {
+        setNode(el);
     }, []);
 
     return [overflown, ref] as const;

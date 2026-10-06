@@ -11,7 +11,13 @@ import type {AccessMap, ViewRendererContext} from "./types.ts";
 export type NodeGateResult = "render" | "hide" | "lock";
 
 /** `node.props` keys the engine reads itself; they are never forwarded to the DOM. */
-export const ENGINE_NODE_PROPS = ["skipRenderWhenFormExtraTruthy", "skipRenderWhenFormExtraNotTruthy"] as const;
+export const ENGINE_NODE_PROPS = [
+    "skipRenderWhenFormExtraTruthy",
+    "skipRenderWhenFormExtraNotTruthy",
+    "watchField",
+    "whenValues",
+    "whenNonEmpty",
+] as const;
 
 type Permissions = ViewNode["permissions"];
 
@@ -20,6 +26,22 @@ function skippedByFormExtras(node: ViewNode, formExtras: Record<string, unknown>
     if (whenTruthy && formExtras?.[whenTruthy]) return true;
     const whenNotTruthy = node.props?.skipRenderWhenFormExtraNotTruthy as string | undefined;
     return !!whenNotTruthy && !formExtras?.[whenNotTruthy];
+}
+
+/**
+ * Sheet counterpart of `#FormWhenFieldValueIn`: hide unless entity `data[watchField]` matches.
+ * Form mode must not use this — create/edit watch RHF through the widget, not entity data.
+ */
+function skippedBySheetWhenValues(node: ViewNode, ctx: ViewRendererContext): boolean {
+    if (ctx.mode !== "sheet" || !ctx.data) return false;
+    const watchField = node.props?.watchField;
+    if (typeof watchField !== "string" || watchField.length === 0) return false;
+    const watched = resolvePath(ctx.data, watchField);
+    if (node.props?.whenNonEmpty === true) {
+        return String(watched ?? "").trim().length === 0;
+    }
+    const whenValues = Array.isArray(node.props?.whenValues) ? node.props.whenValues : [];
+    return !whenValues.map(String).includes(String(watched ?? ""));
 }
 
 function readDenied(permissions: Permissions, access: AccessMap): boolean {
@@ -56,6 +78,7 @@ function dependentsMissing(node: ViewNode, data: Record<string, any>): boolean {
  */
 export function evaluateNodeGates(node: ViewNode, ctx: ViewRendererContext): NodeGateResult {
     if (skippedByFormExtras(node, ctx.formExtras)) return "hide";
+    if (skippedBySheetWhenValues(node, ctx)) return "hide";
 
     let locked = false;
     if (ctx.mode === "sheet" && ctx.access && readDenied(node.permissions, ctx.access)) {

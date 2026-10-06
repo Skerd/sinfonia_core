@@ -81,8 +81,8 @@ export function SheetListPaginationFooter({
     if (totalPages <= 1) return null;
 
     return (
-        <div className="flex items-center justify-between gap-2 pt-1">
-            <p className="text-xs text-muted-foreground tabular-nums">{rangeLabel}</p>
+        <div className="flex items-center justify-between gap-2 px-2">
+            <p className="text-xs text-muted-foreground tabular-nums" >{rangeLabel}</p>
             <div className="flex items-center gap-0.5">
                 <TooltipDisplayer tooltip={resolveLanguageKey("previousPage")}>
                     <Button

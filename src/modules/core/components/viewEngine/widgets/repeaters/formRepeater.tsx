@@ -604,7 +604,7 @@ function FormRepeater({
 
     const body = (
         <>
-            {rowList}
+            {fields.length > 0 ? rowList : null}
             {errorMessage ? (
                 <p role="alert" className="text-destructive text-sm">
                     {errorMessage}

@@ -9,10 +9,10 @@ import {
 } from "@coreModule/components/ui/carousel.tsx"
 import { Dialog, DialogContent } from "@coreModule/components/ui/dialog.tsx"
 import { Media } from "armonia/src/modules/core/types"
-import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
+import {IconPhoto} from "@tabler/icons-react";
 
 function resolveMediaUrl(url: string, media: Media): string {
     return `${url}${media._id}`
@@ -555,7 +555,20 @@ export function GalleryCarousel({
 
     const root = cn(rootClassName, className)
 
-    if (media.length === 0) return <ValueNotSet />
+    if (media.length === 0) {
+        return (
+            <div
+                data-slot="gallery-carousel"
+                className={cn(
+                    "flex min-h-(--card-media-height) w-full items-center justify-center overflow-hidden bg-linear-to-br from-muted via-muted/70 to-muted/40",
+                    className,
+                )}
+                aria-hidden
+            >
+                <IconPhoto className="size-10 text-muted-foreground/15" />
+            </div>
+        )
+    }
 
     if (!aspectRatio) {
         return (

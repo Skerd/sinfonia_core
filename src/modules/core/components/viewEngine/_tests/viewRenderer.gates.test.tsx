@@ -91,6 +91,36 @@ describe("read gate (sheet mode)", () => {
     });
 });
 
+describe("sheet watchField / whenValues", () => {
+    it("hides unless the entity field is one of whenValues", () => {
+        const node = div("n", {}, {watchField: "type", whenValues: ["dynamic"]});
+        renderSheetWith(ViewRenderer, [node], {data: {type: "manual"}});
+        expect(screen.queryByTestId("n")).toBeNull();
+        renderSheetWith(ViewRenderer, [node], {data: {type: "dynamic"}});
+        const el = screen.getByTestId("n");
+        expect(el.getAttribute("watchField")).toBeNull();
+        expect(el.getAttribute("whenValues")).toBeNull();
+        expect(el).toBeInTheDocument();
+    });
+
+    it("whenNonEmpty shows for a non-empty trimmed string and ignores whenValues", () => {
+        const node = div("n", {}, {watchField: "name", whenNonEmpty: true, whenValues: ["never"]});
+        renderSheetWith(ViewRenderer, [node], {data: {name: "  "}});
+        expect(screen.queryByTestId("n")).toBeNull();
+        renderSheetWith(ViewRenderer, [node], {data: {name: "Winter"}});
+        expect(screen.getByTestId("n")).toBeInTheDocument();
+    });
+
+    it("does not apply in form mode, and never leaks the props to the DOM", () => {
+        const node = div("n", {}, {watchField: "type", whenValues: ["dynamic"]});
+        render(<ViewRenderer nodes={[node]} ctx={{mode: "form", resolveLanguageKey: t, data: {type: "manual"}}} />);
+        const el = screen.getByTestId("n");
+        expect(el.getAttribute("watchField")).toBeNull();
+        expect(el.getAttribute("whenValues")).toBeNull();
+        expect(el.getAttribute("whenNonEmpty")).toBeNull();
+    });
+});
+
 describe("dependent / dependentAny", () => {
     const absent = [null, undefined, false, "", [], {}, {a: null, b: []}];
     const present = [0, "x", true, [1], {a: 1}, {a: null, b: [1]}];
