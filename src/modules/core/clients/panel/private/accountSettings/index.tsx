@@ -1,11 +1,13 @@
-import { Bell, UserCog, Wrench } from 'lucide-react'
+import { Bell, Boxes, MailCheck, UserCog, Wrench } from 'lucide-react'
 import { SidebarNav } from './components/sidebar-nav.tsx'
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import Account from "@coreModule/clients/panel/private/accountSettings/account";
 import Security from "@coreModule/clients/panel/private/accountSettings/security";
+import NotificationCenter from "@coreModule/clients/panel/private/accountSettings/notificationCenter";
 import NotificationsForm from "@coreModule/clients/panel/private/accountSettings/notifications";
+import ConnectedApps from "@coreModule/clients/panel/private/accountSettings/apps";
 import {useEffect, useState} from "react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
@@ -58,10 +60,20 @@ function AccountSettings({
                 icon: <Wrench size={18} />,
             },
             {
+                title: resolveLanguageKey("activity"),
+                href: specificUserId ? "notificationCenter" : '/account/notificationCenter',
+                icon: <Bell size={18} />,
+            },
+            {
                 title: resolveLanguageKey("notifications"),
                 href: specificUserId ? "notifications" : '/account/notifications',
-                icon: <Bell size={18} />,
-            }
+                icon: <MailCheck size={18} />,
+            },
+            {
+                title: resolveLanguageKey("connectedApps"),
+                href: specificUserId ? "apps" : '/account/apps',
+                icon: <Boxes size={18} />,
+            },
         ] : [])
     ]
 
@@ -76,7 +88,7 @@ function AccountSettings({
             setActiveTab("account");
             return;
         }
-        if (subview === "security" || subview === "notifications") {
+        if (subview === "security" || subview === "notifications" || subview === "notificationCenter" || subview === "apps") {
             navigate("/account/account", {replace: true});
         }
     }, [isBot, specificUserId, subview, navigate]);
@@ -88,7 +100,7 @@ function AccountSettings({
                 description={resolveLanguageKey("description")}
             />
 
-            <div className='flex flex-1 flex-col gap-y-2 overflow-hidden lg:flex-row lg:gap-y-0 lg:gap-x-6'>
+            <div className='flex min-h-0 flex-1 flex-col gap-y-2 overflow-hidden lg:flex-row lg:gap-y-0 lg:gap-x-6'>
                 <aside className='top-0 lg:sticky lg:w-1/5'>
                     <SidebarNav
                         items={sidebarNavItems}
@@ -97,7 +109,7 @@ function AccountSettings({
                         specificUserId={specificUserId}
                     />
                 </aside>
-                <div className='flex-full flex w-full overflow-y-hidden'>
+                <div className='flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden'>
                     {
                         (activeTab === "account" || isBot) &&
                         <Account specificUserId={specificUserId} />
@@ -107,8 +119,16 @@ function AccountSettings({
                         <Security specificUserId={specificUserId}/>
                     }
                     {
+                        activeTab === "notificationCenter" && !isBot &&
+                        <NotificationCenter specificUserId={specificUserId} />
+                    }
+                    {
                         activeTab === "notifications" && !isBot &&
                         <NotificationsForm specificUserId={specificUserId} />
+                    }
+                    {
+                        activeTab === "apps" && !isBot &&
+                        <ConnectedApps specificUserId={specificUserId} />
                     }
                 </div>
             </div>

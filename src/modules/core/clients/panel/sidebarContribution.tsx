@@ -151,7 +151,7 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
             atLeastOnePermission: true,
         },
         {
-            title: resolveLanguageKey("menus.account.apps.connectedApps.title"),
+            title: resolveLanguageKey("menus.account.accountSettings.connectedApps.title"),
             url: "/account/apps",
             icon: Boxes,
             permissions: [],

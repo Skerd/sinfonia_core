@@ -3,7 +3,9 @@
   "profile": "Profil",
   "security": "Sécurité",
   "account": "Compte",
+  "activity": "Activité",
   "notifications": "Notifications",
+  "connectedApps": "Applications connectées",
   "signOut": "Se déconnecter",
   "dialog": {
     "title": "Se déconnecter",

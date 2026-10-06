@@ -4,5 +4,7 @@
   "description": "Ihr konto einstellungen und set e-mail preferences. verwalten",
   "account": "Konto",
   "security": "Sicherheit",
-  "notifications": "Benachrichtigungen"
+  "activity": "Aktivität",
+  "notifications": "Benachrichtigungen",
+  "connectedApps": "Verbundene Apps"
 }

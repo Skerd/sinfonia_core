@@ -8,7 +8,7 @@ import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {DropdownMenuGroup} from "@coreModule/components/ui/dropdown-menu.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Bell, ChevronsUpDown, LogOut, UserCog, Wrench} from "lucide-react";
+import {Bell, Boxes, ChevronsUpDown, LogOut, MailCheck, UserCog, Wrench} from "lucide-react";
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@coreModule/components/ui/sidebar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger}from "@coreModule/components/ui/dropdown-menu.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -92,9 +92,21 @@ function NavUser({
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                    <Link to='/account/notifications'>
+                                    <Link to='/account/notificationCenter'>
                                         <Bell />
+                                        {resolveLanguageKey("activity")}
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link to='/account/notifications'>
+                                        <MailCheck />
                                         {resolveLanguageKey("notifications")}
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link to='/account/apps'>
+                                        <Boxes />
+                                        {resolveLanguageKey("connectedApps")}
                                     </Link>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>

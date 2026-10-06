@@ -4,5 +4,7 @@
   "description": "Gérez les paramètres de votre compte et définissez vos préférences de messagerie.",
   "account": "Compte",
   "security": "Sécurité",
-  "notifications": "Notifications"
+  "activity": "Activité",
+  "notifications": "Notifications",
+  "connectedApps": "Applications connectées"
 }

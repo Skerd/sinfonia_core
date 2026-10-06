@@ -29,10 +29,7 @@
         },
         "notificationCenter": {
           "title": "Activité"
-        }
-      },
-      "apps": {
-        "title": "Applications",
+        },
         "connectedApps": {
           "title": "Applications connectées"
         }

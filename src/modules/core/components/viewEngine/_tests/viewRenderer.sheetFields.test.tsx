@@ -151,6 +151,15 @@ describe("addresses", () => {
         expect(lastProps("#DisplayCard")).toMatchObject({title: "t:address", value: "Tirana, Albania, Main"});
     });
 
+    it("#SheetCompanyAddresses reads the entity itself when addressField is '.'", () => {
+        renderSheetWith(ViewRenderer, [fieldNode("#SheetCompanyAddresses", "street", {addressField: "."})], {
+            data: {street: "Main", country: {_id: "c1", name: "Albania"}, latitude: 41.3, longitude: 19.8, firstName: "Ada"},
+        });
+        expect(propsOf("#DisplayCard").find((p) => p.title === "t:form.streetLabel")?.value).toBe("Main");
+        expect(propsOf("#DisplayCard").find((p) => p.title === "t:form.countryLabel")?.value).toBe("Albania");
+        expect(propsOf("#SheetLocationMap")).toHaveLength(1);
+    });
+
     it("renders the empty state for no address", () => {
         renderSheetWith(ViewRenderer, [fieldNode("#SheetCompanyAddresses", "addresses")], {data: {}});
         expect(propsOf("#DisplayCard")).toHaveLength(0);

@@ -4,5 +4,7 @@
   "description": "Gestisci le impostazioni del tuo account e imposta le preferenze di posta elettronica.",
   "account": "Account",
   "security": "Sicurezza",
-  "notifications": "Notifiche"
+  "activity": "Attività",
+  "notifications": "Notifiche",
+  "connectedApps": "App collegate"
 }

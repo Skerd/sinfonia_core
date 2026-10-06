@@ -3,7 +3,9 @@
   "profile": "Profili",
   "security": "Siguria",
   "account": "Llogaria",
+  "activity": "Aktiviteti",
   "notifications": "Njoftimet",
+  "connectedApps": "Aplikacionet e lidhura",
   "signOut": "Dilni",
   "dialog": {
     "title": "Dilni",

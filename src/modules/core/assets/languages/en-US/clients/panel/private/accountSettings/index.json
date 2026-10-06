@@ -4,5 +4,7 @@
   "description": "Manage your account settings and set e-mail preferences.",
   "account": "Account",
   "security": "Security",
-  "notifications": "Notifications"
+  "activity": "Activity",
+  "notifications": "Notifications",
+  "connectedApps": "Connected apps"
 }

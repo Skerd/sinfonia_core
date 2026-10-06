@@ -1,6 +1,5 @@
 import EditCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/editCompany.tsx";
 import AccountSettings from "@coreModule/clients/panel/private/accountSettings";
-import NotificationCenter from "@coreModule/clients/panel/private/accountSettings/notificationCenter";
 import Users from "@coreModule/clients/panel/private/users";
 import NotFound from "@coreModule/components/custom/pages/notFound.tsx";
 import AllCountries from "@coreModule/clients/panel/private/tenancy/systemSettings/countries";
@@ -33,7 +32,6 @@ import CreateMessagingProvider from "@coreModule/clients/panel/private/tenancy/s
 import EditMessagingProvider from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/editMessagingProvider.tsx";
 import AllCronJobs from "@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs";
 import EditCronJob from "@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs/editCronJob.tsx";
-import Apps from "@coreModule/clients/panel/private/apps";
 import PanelHomePage from "@coreModule/clients/panel/private/home/PanelHomePage.tsx";
 import AllBlogPosts from "@coreModule/clients/panel/private/blogPosts";
 import CreateBlogPost from "@coreModule/clients/panel/private/blogPosts/createBlogPost.tsx";
@@ -102,9 +100,7 @@ function renderCoreCenterPanelContent({
 
     // Account routes
     if (menu === "account") {
-        if (["account", "security", "notifications"].includes(subview || "")) return <AccountSettings />;
-        if (subview === "notificationCenter") return <NotificationCenter />;
-        if (subview === "apps") return <Apps />;
+        if (["account", "security", "notifications", "notificationCenter", "apps"].includes(subview || "")) return <AccountSettings />;
     }
 
     // Tenancy routes

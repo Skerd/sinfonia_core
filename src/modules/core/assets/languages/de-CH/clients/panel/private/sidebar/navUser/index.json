@@ -3,7 +3,9 @@
   "profile": "Profil",
   "security": "Sicherheit",
   "account": "Konto",
+  "activity": "Aktivität",
   "notifications": "Benachrichtigungen",
+  "connectedApps": "Verbundene Apps",
   "signOut": "Abmelden",
   "dialog": {
     "title": "Abmelden",

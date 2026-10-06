@@ -2,7 +2,7 @@ import {useEffect, useState, useCallback} from "react";
 import {useDispatch} from "react-redux";
 import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import {setNotificationNumber} from "@coreModule/helpers/redux/slices/notificationSlice.ts";
-import Header from "@coreModule/components/custom/header.tsx";
+import {Separator} from "@coreModule/components/ui/separator.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -22,14 +22,17 @@ import {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 
 const PAGE_SIZE = 20;
 
-type NotificationCenterProps = WithLanguageType & WithAxiosType<TableResponse<NotificationType>, ListNotificationsFormType> & {}
+type NotificationCenterProps = WithLanguageType & WithAxiosType<TableResponse<NotificationType>, ListNotificationsFormType> & {
+    specificUserId?: string;
+}
 
 function NotificationCenter({
     resolveLanguageKey,
     loading,
     error,
     data,
-    onFilterChange
+    onFilterChange,
+    specificUserId,
 }: NotificationCenterProps) {
 
     const dispatch = useDispatch();
@@ -46,29 +49,33 @@ function NotificationCenter({
     }, [dispatch]);
 
     useEffect(() => {
+        if (specificUserId) return;
         fetchUnreadCount();
-    }, [fetchUnreadCount]);
+    }, [fetchUnreadCount, specificUserId]);
 
     return (
-        <div className="flex flex-1 flex-col gap-3 overflow-hidden">
-
-            <Header
-                title={resolveLanguageKey("title")}
-                description={resolveLanguageKey("description")}
-            >
-                <div className="flex shrink-0 items-center justify-end gap-2 sm:justify-between">
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+            <div className="flex flex-none flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="min-w-0">
+                    <h3 className="text-lg font-medium">{resolveLanguageKey("title")}</h3>
+                    <p className="text-sm text-muted-foreground">{resolveLanguageKey("description")}</p>
+                </div>
+                <div className="flex shrink-0 items-center justify-end gap-2">
                     <TooltipDisplayer tooltip={resolveLanguageKey("unreadOnly")}>
-                        <label className="flex items-center flex-col md:flex-row gap-2 cursor-pointer">
+                        <label className="flex cursor-pointer flex-col items-center gap-2 md:flex-row">
                             <Switch
                                 checked={unreadOnly}
                                 onCheckedChange={setUnreadOnly}
                             />
-                            <span className="text-sm hidden md:block">{resolveLanguageKey("unreadOnly")}</span>
+                            <span className="hidden text-sm md:block">{resolveLanguageKey("unreadOnly")}</span>
                         </label>
                     </TooltipDisplayer>
-                    <MarkAllAsReadButton onMarkedAllRead={() => setReloadKey((value) => value + 1)} />
+                    {!specificUserId && (
+                        <MarkAllAsReadButton onMarkedAllRead={() => setReloadKey((value) => value + 1)} />
+                    )}
                 </div>
-            </Header>
+            </div>
+            <Separator className="my-4 flex-none" />
 
             <InfiniteList<NotificationType>
                 data={data}
@@ -79,7 +86,7 @@ function NotificationCenter({
                 forceReload={reloadKey}
                 extraParams={{ unreadOnly }}
                 className="flex flex-col gap-2 pb-1"
-                scrollRootClassName="flex-1 min-h-0 overflow-y-auto px-0.5 pb-3 pt-1"
+                scrollRootClassName="min-h-0 flex-1 overflow-y-auto px-0.5 pb-12 pt-1"
                 renderItem={(notification) => (
                     <NotificationRow
                         key={notification._id}
@@ -110,7 +117,11 @@ export default compose(
         {
             method: "POST",
             url: "/api/user/notifications",
-            data: {}
+            data: {},
+            addToHeader: [{
+                whatToGet: "specificUserId",
+                whereToPut: "specificUser"
+            }]
         },
         true
     ),

@@ -4,5 +4,7 @@
   "description": "Menaxhoni cilësimet e llogarisë tuaj dhe vendosni preferencat e postës elektronike.",
   "account": "Llogaria",
   "security": "Siguria",
-  "notifications": "Njoftimet"
+  "activity": "Aktiviteti",
+  "notifications": "Njoftimet",
+  "connectedApps": "Aplikacionet e lidhura"
 }

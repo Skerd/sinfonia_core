@@ -16,9 +16,17 @@ type NotificationsProps = WithLanguageType & {
  * says there is nothing to configure rather than showing dead switches — which
  * is what this file used to do, with a hardcoded form whose submit handler was
  * a no-op and no backend behind it at all.
+ *
+ * Inspecting another user is a separate case: a module may contribute sections
+ * for the account holder and withhold them here. That message is only honest
+ * when the holder actually has preferences. An empty contribution list means
+ * there is nothing to configure.
  */
 function NotificationsForm({resolveLanguageKey, specificUserId}: NotificationsProps) {
     const sections = getAccountSettingsNotificationSections({specificUserId});
+    const withheldFromOtherUser = !!specificUserId
+        && sections.length === 0
+        && getAccountSettingsNotificationSections({}).length > 0;
 
     return (
         <ContentSection
@@ -27,7 +35,7 @@ function NotificationsForm({resolveLanguageKey, specificUserId}: NotificationsPr
         >
             {sections.length === 0 ? (
                 <p className="text-sm text-muted-foreground">
-                    {specificUserId
+                    {withheldFromOtherUser
                         ? resolveLanguageKey("otherUserUnavailable")
                         : resolveLanguageKey("empty")}
                 </p>

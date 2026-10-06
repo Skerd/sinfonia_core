@@ -3,7 +3,9 @@
   "profile": "Profilo",
   "security": "Sicurezza",
   "account": "Account",
+  "activity": "Attività",
   "notifications": "Notifiche",
+  "connectedApps": "App collegate",
   "signOut": "Esci",
   "dialog": {
     "title": "Esci",

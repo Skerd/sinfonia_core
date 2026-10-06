@@ -9,9 +9,13 @@ export const addressRenderers: Record<string, SheetFieldRenderer> = {
     /** Every entry of `addresses[]` (or one embedded object) with its map. */
     "#SheetCompanyAddresses": ({binding, ctx, index}) => {
         if (!ctx.data) return null;
+        const wp = binding.widgetProps ?? {};
+        /** `"."` — the sheet row itself is the address (flat fields, not a nested `address`). */
+        const addressField = typeof wp.addressField === "string" ? wp.addressField : binding.name;
+        const addresses = addressField === "." ? ctx.data : resolvePath(ctx.data, addressField);
         return createElement(SheetCompanyAddressesSection, {
             key: index,
-            addresses: resolvePath(ctx.data, binding.name),
+            addresses,
             resolveLanguageKey: ctx.resolveLanguageKey,
         });
     },
