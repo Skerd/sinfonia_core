@@ -101,8 +101,7 @@ function renderCoreCenterPanelContent({
     // Account routes
     if (menu === "account") {
         const accountTabs = ["account", "security", "notifications", "notificationCenter", "apps", "addresses"];
-        const addressForm = subview === "addresses" && (segments[2] === "create" || segments[2] === "edit");
-        if (!addressForm && accountTabs.includes(subview || "")) return <AccountSettings />;
+        if (accountTabs.includes(subview || "")) return <AccountSettings />;
     }
 
     // Tenancy routes

@@ -61,9 +61,10 @@ export function useDismissSheetBeforeMenuNavigate(): () => void {
     const dispatch = useContext(SheetMenuNavigateDismissContext);
 
     return useCallback(() => {
-        if (!dispatch) return;
-        dispatch({ all: true });
+        dispatch?.({ all: true });
         // After React flushes sheet/menu unmount (and any same-tick navigate), clear a stuck lock.
+        // A menu that is not inside a sheet still needs this: the dropdown's scroll lock can
+        // survive the route change and leave the destination page unclickable.
         window.setTimeout(clearStaleBodyPointerEventsLock, 0);
     }, [dispatch]);
 }

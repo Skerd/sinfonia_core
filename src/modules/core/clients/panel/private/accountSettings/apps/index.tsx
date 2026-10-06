@@ -68,6 +68,7 @@ function Apps({
         <ContentSection
             title={resolveLanguageKey("title")}
             desc={resolveLanguageKey("description")}
+            childrenClassName="w-full max-w-full lg:max-w-full"
         >
             <div className="flex flex-col gap-4">
                 <div className='flex items-end justify-between sm:items-center'>

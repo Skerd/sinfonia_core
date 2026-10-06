@@ -6,3 +6,7 @@ export const FLOATING_SHEET_CONTENT_CLASS =
     "!top-1 !right-1 !bottom-1 !left-auto !h-auto gap-0 sm:!top-1 sm:!right-1 sm:!bottom-1 md:!top-2 md:!right-2 md:!bottom-2 " +
     "[&_[data-slot=sheet-title]]:!text-sidebar-foreground " +
     "[&_[data-slot=sheet-description]]:!text-sidebar-foreground/90";
+
+/** Default entity-sheet width. SheetViewRenderer appends scroll/border; Vaul drawers must also beat `sm:max-w-sm`. */
+export const ENTITY_SHEET_WIDTH_CLASS =
+    "max-w-[98vw] min-w-[98vw] lg:max-w-[58vw] lg:min-w-[58vw]";

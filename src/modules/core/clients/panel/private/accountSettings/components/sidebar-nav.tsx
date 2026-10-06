@@ -69,7 +69,7 @@ export function SidebarNav({
 
         <ScrollArea
             type='always'
-            className='bg-background hidden w-full min-w-40 md:block'
+            className='hidden w-full min-w-40 md:block'
         >
             <nav className={cn('flex gap-x-2 lg:flex-col lg:gap-y-1 lg:gap-x-0', className)} {...props}>
                 {

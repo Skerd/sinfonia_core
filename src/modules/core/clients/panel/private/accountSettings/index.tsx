@@ -8,22 +8,26 @@ import Security from "@coreModule/clients/panel/private/accountSettings/security
 import NotificationCenter from "@coreModule/clients/panel/private/accountSettings/notificationCenter";
 import NotificationsForm from "@coreModule/clients/panel/private/accountSettings/notifications";
 import ConnectedApps from "@coreModule/clients/panel/private/accountSettings/apps";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useState, type ReactNode} from "react";
 import {getAccountSettingsPages} from "@coreModule/helpers/moduleContributions/loadAccountSettingsContributions.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
+import {cn} from "@coreModule/components/lib/utils.ts";
 
 type AccountSettingsProps = WithLanguageType & {
     specificUserId?: string,
-    fullName?: string
+    fullName?: string,
+    /** Trailing header control when this page is hosted in the user drawer (close). */
+    headerEnd?: ReactNode,
 }
 
 function AccountSettings({
     resolveLanguageKey,
     specificUserId,
-    fullName = ""
+    fullName = "",
+    headerEnd,
 }: AccountSettingsProps) {
 
     const [activeTab, setActiveTab] = useState<string>('account');
@@ -103,14 +107,30 @@ function AccountSettings({
         }
     }, [isBot, specificUserId, subview, navigate]);
 
-    return (
-        <div className="flex-full gap-4">
-            <Header
-                title={resolveLanguageKey("title") + `${!!fullName ? `: ${fullName}` : ""}`}
-                description={resolveLanguageKey("description")}
-            />
+    const hostedInSheet = !!specificUserId;
 
-            <div className='flex min-h-0 flex-1 flex-col gap-y-2 overflow-hidden lg:flex-row lg:gap-y-0 lg:gap-x-6'>
+    return (
+        <div className={hostedInSheet ? "flex min-h-0 flex-1 flex-col overflow-hidden" : "flex-full gap-4"}>
+            {hostedInSheet ? (
+                <div className="flex items-start justify-between gap-2 p-2 shadow-sm">
+                    <Header
+                        className="min-w-0 flex-1"
+                        title={resolveLanguageKey("title") + `${!!fullName ? `: ${fullName}` : ""}`}
+                        description={resolveLanguageKey("description")}
+                    />
+                    {headerEnd}
+                </div>
+            ) : (
+                <Header
+                    title={resolveLanguageKey("title") + `${!!fullName ? `: ${fullName}` : ""}`}
+                    description={resolveLanguageKey("description")}
+                />
+            )}
+
+            <div className={cn(
+                "flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row",
+                hostedInSheet ? "mt-4 gap-y-4 px-4 pb-6 lg:gap-x-6" : "gap-y-2 lg:gap-y-0 lg:gap-x-6",
+            )}>
                 <aside className='top-0 lg:sticky lg:w-1/5'>
                     <SidebarNav
                         items={sidebarNavItems}

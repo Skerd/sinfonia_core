@@ -305,7 +305,7 @@ function FilterBuilderInner({
                         }
                     }}
                     className={cn(
-                        "flex items-center w-full min-w-[280px] max-w-[560px] min-h-9 rounded-md border border-input bg-background pl-3 pr-1.5 py-1",
+                        "flex items-center w-full min-w-[280px] max-w-[560px] min-h-9 rounded-md border border-input bg-transparent pl-3 pr-1.5 py-1",
                         "hover:border-input/80 focus:outline-none focus:ring-1 focus:ring-ring focus:ring-offset-0 transition-colors text-left text-sm cursor-pointer",
                         activeCount > 0 && "border-primary/40 ring-1 ring-primary/10"
                     )}

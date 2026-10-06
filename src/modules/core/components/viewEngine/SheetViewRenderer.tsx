@@ -24,7 +24,7 @@ import {SheetDescriptionBlock, SheetTitleBlock} from "./sheet/shell/sheetHeaderB
 import {useSheetPresence} from "./sheet/shell/useSheetPresence.ts";
 import {useSheetRow} from "./sheet/shell/useSheetRow.ts";
 import {SheetMenuNavigateDismissProvider} from "./sheet/widgets/sheetMenuNavigateDismiss.tsx";
-import {FLOATING_SHEET_CONTENT_CLASS} from "./sheet/widgets/sheetFloatingChrome.ts";
+import {ENTITY_SHEET_WIDTH_CLASS, FLOATING_SHEET_CONTENT_CLASS} from "./sheet/widgets/sheetFloatingChrome.ts";
 
 export type SheetViewRendererProps = WithAxiosType<any, SingleForm> & {
     config: ViewConfig;
@@ -96,7 +96,7 @@ export type SheetViewRendererPublicProps = Omit<
     data: Record<string, any>;
 };
 
-const DEFAULT_CONTENT_CLASS = "max-w-[98vw] min-w-[98vw] lg:max-w-[58vw] lg:min-w-[58vw] overflow-y-auto border";
+const DEFAULT_CONTENT_CLASS = cn(ENTITY_SHEET_WIDTH_CLASS, "overflow-y-auto border");
 
 /**
  * Entity side sheet driven by a view config: header (title, badges, action menu), body
