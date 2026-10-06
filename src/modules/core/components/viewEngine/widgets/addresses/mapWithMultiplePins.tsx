@@ -1,8 +1,8 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
 import L, {type LatLngBoundsExpression, type LatLngExpression} from "leaflet";
 import {ExternalLink} from "lucide-react";
-import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
+import {CloseMapControl, ExpandMapControl, MapDialog, SyncMapSize} from "@coreModule/components/viewEngine/widgets/addresses/mapChrome.tsx";
 
 import iconUrl from "leaflet/dist/images/marker-icon.png";
 import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
@@ -21,8 +21,10 @@ const DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const LIGHT_TILE_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const DARK_TILE_URL = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+const OSM_TILE_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+/** Carto dark tiles require an API key. Invert OSM tiles under `.dark` instead. */
+const DARK_TILE_FILTER = "dark:[&_.leaflet-tile-pane]:[filter:invert(1)_hue-rotate(180deg)_contrast(1.12)_saturate(1.2)_brightness(1.05)]";
 
 export type MapAddress = {
     _id: string
@@ -54,33 +56,19 @@ function FitBounds({ bounds }: { bounds: [number, number][] }) {
     return null;
 }
 
-function InvalidateSizeOnResize() {
-    const map = useMap();
-    useEffect(() => {
-        const container = map.getContainer();
-        const sync = () => {
-            map.invalidateSize();
-        };
-        sync();
-        const observer = new ResizeObserver(sync);
-        observer.observe(container);
-        return () => observer.disconnect();
-    }, [map]);
-    return null;
-}
-
 type MapWithMultiplePinsProps = {
     addresses: MapAddress[];
     openInGoogleMaps?: string;
     openInAppleMaps?: string;
 }
 
-export default function MapWithMultiplePins({
+function MapCanvas({
     addresses,
     openInGoogleMaps,
     openInAppleMaps,
-}: MapWithMultiplePinsProps) {
-    const { resolvedTheme } = useTheme();
+    onExpand,
+    onClose,
+}: MapWithMultiplePinsProps & { onExpand?: () => void; onClose?: () => void }) {
     const list = Array.isArray(addresses) ? addresses : [];
     const bounds = list
         .filter(
@@ -94,7 +82,7 @@ export default function MapWithMultiplePins({
     const mapCenter: LatLngExpression = bounds.length > 0 ? bounds[0]! : [0, 0];
 
     return (
-        <div className="w-full rounded-md overflow-hidden shadow-lg relative h-full self-stretch border-dashed">
+        <div className={`w-full rounded-md overflow-hidden shadow-lg relative h-full self-stretch border-dashed ${DARK_TILE_FILTER}`}>
             <MapContainer
                 center={mapCenter}
                 zoom={10000}
@@ -102,7 +90,7 @@ export default function MapWithMultiplePins({
                 style={{width: "100%", height: "100%", zIndex: 1, background: "darkgrey"}}
                 scrollWheelZoom={true}
             >
-                <TileLayer url={resolvedTheme === "dark" ? DARK_TILE_URL : LIGHT_TILE_URL}/>
+                <TileLayer url={OSM_TILE_URL} attribution={OSM_ATTRIBUTION}/>
                 {
                     list.map((address, index) => {
                         if (address == null || typeof address !== "object") return null;
@@ -145,8 +133,22 @@ export default function MapWithMultiplePins({
                     })
                 }
                 <FitBounds bounds={bounds} />
-                <InvalidateSizeOnResize />
+                <SyncMapSize />
+                {onExpand ? <ExpandMapControl onExpand={onExpand} /> : null}
+                {onClose ? <CloseMapControl onClose={onClose} /> : null}
             </MapContainer>
         </div>
+    );
+}
+
+export default function MapWithMultiplePins(props: MapWithMultiplePinsProps) {
+    const [open, setOpen] = useState(false);
+    return (
+        <>
+            <MapCanvas {...props} onExpand={() => setOpen(true)} />
+            <MapDialog open={open} onOpenChange={setOpen}>
+                <MapCanvas {...props} onClose={() => setOpen(false)} />
+            </MapDialog>
+        </>
     );
 }

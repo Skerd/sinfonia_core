@@ -2,10 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {MapContainer, TileLayer, Marker, useMapEvents, useMap} from 'react-leaflet';
 import L, {LeafletMouseEvent} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {useTheme} from "@coreModule/helpers/context/providers/theme-provider.tsx";
+import {CloseMapControl, ExpandMapControl, MapDialog, SyncMapSize} from '@coreModule/components/viewEngine/widgets/addresses/mapChrome.tsx';
 
-const LIGHT_TILE_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const DARK_TILE_URL = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+const OSM_TILE_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+/** Carto dark tiles require an API key. Invert OSM tiles under `.dark` instead. */
+const DARK_TILE_FILTER = "dark:[&_.leaflet-tile-pane]:[filter:invert(1)_hue-rotate(180deg)_contrast(1.12)_saturate(1.2)_brightness(1.05)]";
 
 // Fix default icon issues in Leaflet (for React)
 const iconDefaultPrototype = L.Icon.Default.prototype as L.Icon.Default & { _getIconUrl?: unknown };
@@ -21,6 +23,8 @@ interface SinglePinMapProps {
     latitude: number,
     longitude: number
     readOnly?: boolean
+    onExpand?: () => void
+    onClose?: () => void
 }
 
 function MapClickHandler({onPinSet, latitude, longitude}: {onPinSet: (latitude: number, longitude: number) => void, latitude: number, longitude: number}) {
@@ -38,9 +42,7 @@ function MapClickHandler({onPinSet, latitude, longitude}: {onPinSet: (latitude: 
     return null;
 }
 
-const SinglePinMap: React.FC<SinglePinMapProps> = ({ onPinChange, latitude, longitude, readOnly }) => {
-
-    const { resolvedTheme } = useTheme()
+function PinMapCanvas({ onPinChange, latitude, longitude, readOnly, onExpand, onClose }: SinglePinMapProps) {
 
     const [lat, setLat] = useState<number>(latitude); // Default: Tirana, Albania
     const [lng, setLng] = useState<number>(longitude); // Default: Tirana, Albania
@@ -57,7 +59,7 @@ const SinglePinMap: React.FC<SinglePinMapProps> = ({ onPinChange, latitude, long
     }, [longitude]);
 
     return (
-        <div className="w-full h-full border rounded-xl overflow-hidden relative border-dashed">
+        <div className={`w-full h-full border rounded-xl overflow-hidden relative border-dashed ${DARK_TILE_FILTER}`}>
             <style>{`
                 .leaflet-container {
                     z-index: 1 !important;
@@ -79,7 +81,7 @@ const SinglePinMap: React.FC<SinglePinMapProps> = ({ onPinChange, latitude, long
                 }
             `}</style>
             <MapContainer center={[lat, lng]} zoom={13} className="w-full h-full min-h-[200px]" style={{ zIndex: 1, background: "darkgrey"}}>
-                <TileLayer url={resolvedTheme === "dark" ? DARK_TILE_URL : LIGHT_TILE_URL}/>
+                <TileLayer url={OSM_TILE_URL} attribution={OSM_ATTRIBUTION}/>
                 <MapClickHandler
                     latitude={latitude}
                     longitude={longitude}
@@ -91,8 +93,29 @@ const SinglePinMap: React.FC<SinglePinMapProps> = ({ onPinChange, latitude, long
                     }}
                 />
                 {(lat && lng) && <Marker position={[lat, lng]} />}
+                <SyncMapSize />
+                {onExpand ? <ExpandMapControl onExpand={onExpand} /> : null}
+                {onClose ? <CloseMapControl onClose={onClose} /> : null}
             </MapContainer>
         </div>
+    );
+}
+
+const SinglePinMap: React.FC<SinglePinMapProps> = (props) => {
+    const [open, setOpen] = useState(false);
+    return (
+        <>
+            <PinMapCanvas {...props} onExpand={() => setOpen(true)} />
+            <MapDialog open={open} onOpenChange={setOpen}>
+                <PinMapCanvas
+                    latitude={props.latitude}
+                    longitude={props.longitude}
+                    readOnly={props.readOnly}
+                    onPinChange={props.onPinChange}
+                    onClose={() => setOpen(false)}
+                />
+            </MapDialog>
+        </>
     );
 };
 
