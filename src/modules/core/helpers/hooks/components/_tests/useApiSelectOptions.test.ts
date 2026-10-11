@@ -104,6 +104,31 @@ describe("useApiSelectOptions", () => {
         expect(post.mock.calls.length).toBe(callsAfterSearch);
     });
 
+    /**
+     * Regression: with a selected value, hydrate used to restore the empty-search cache after
+     * typing (marking page 1 fetched). The debounced search then no-op'd and the list looked
+     * unfiltered.
+     */
+    it("still searches after a value is already selected", async () => {
+        post.mockImplementation((_url, body) => {
+            const name = (body as {name?: string})?.name ?? "";
+            return Promise.resolve(name === "ma" ? page(["match"], 1) : page(["alpha", "beta"], 2));
+        });
+
+        const {result, rerender} = renderHook((p: UseApiSelectOptionsArgs) => useApiSelectOptions(p), {
+            initialProps: args({value: "alpha"}),
+        });
+        await waitFor(() => expect(result.current.options.map((o) => o.value)).toEqual(["alpha", "beta"]));
+
+        // Fresh defaultOptions array each render mimics parents that pass `defaultOptions={[]}` /
+        // inline arrays — that used to re-fire hydrate and stomp the in-flight search.
+        rerender(args({value: "alpha", searchText: "ma", defaultOptions: []}));
+        await waitFor(() => expect(result.current.options.map((o) => o.value)).toEqual(["match"]));
+
+        const searchCall = post.mock.calls.find((call) => (call[1] as {name?: string})?.name === "ma");
+        expect(searchCall).toBeTruthy();
+    });
+
     it("stays idle while disabled", async () => {
         post.mockResolvedValue(page(["a"], 1));
         renderHook(() => useApiSelectOptions(args({disabled: true})));

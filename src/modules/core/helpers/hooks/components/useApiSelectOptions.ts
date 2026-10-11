@@ -10,6 +10,8 @@ export type SelectOption = {
 
 const EMPTY_SEARCH_KEY = "__empty__";
 const CACHE_MAX_KEYS = 20;
+/** Stable fallback so `defaultOptions = []` at the call site does not re-trigger hydrate every render. */
+const EMPTY_DEFAULT_OPTIONS: SelectOption[] = [];
 
 type CacheEntry = {options: SelectOption[]; hasMore: boolean; total: number};
 
@@ -89,8 +91,9 @@ export function useApiSelectOptions({
     searchText,
     value,
     multiple,
-    defaultOptions,
+    defaultOptions: defaultOptionsProp,
 }: UseApiSelectOptionsArgs) {
+    const defaultOptions = defaultOptionsProp.length > 0 ? defaultOptionsProp : EMPTY_DEFAULT_OPTIONS;
     const [options, setOptions] = useState<SelectOption[]>([]);
     const [loading, setLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
@@ -238,8 +241,11 @@ export function useApiSelectOptions({
     );
 
     // A value may arrive before the page holding its label: restore the cache, else fetch page 1.
+    // Never do this while the user is typing a search — restoring the empty-search cache marks
+    // page 1 as fetched, so the debounced search for the query no-ops and the list looks unfiltered.
     useEffect(() => {
         if (disabled || valuesToHydrate.length === 0) return;
+        if (searchText.trim()) return;
 
         const isKnown = (v: string) =>
             optionsRef.current.some((opt) => opt.value === v) || defaultOptions.some((opt) => opt.value === v);
@@ -251,7 +257,7 @@ export function useApiSelectOptions({
             if (valuesToHydrate.every(isKnown)) return;
         }
         if (!fetchedPagesRef.current.has(1)) fetchPageRef.current?.(1, "");
-    }, [valuesToHydrate, disabled, defaultOptions, restoreFromCache]);
+    }, [valuesToHydrate, disabled, defaultOptions, restoreFromCache, searchText]);
 
     /**
      * The single selected value whose label has not been loaded yet, so the trigger can show the
@@ -283,10 +289,12 @@ export function useApiSelectOptions({
         fetchedPagesRef.current.clear();
 
         if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
-        searchTimeoutRef.current = setTimeout(
-            () => fetchPageRef.current?.(1, searchText),
-            searchText ? searchDebounceMs : 0,
-        );
+        searchTimeoutRef.current = setTimeout(() => {
+            // Hydrate can restore the empty-search cache between schedule and fire; drop its
+            // page markers so this search is not treated as already fetched.
+            fetchedPagesRef.current.clear();
+            fetchPageRef.current?.(1, searchText);
+        }, searchText ? searchDebounceMs : 0);
         return () => {
             if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
         };

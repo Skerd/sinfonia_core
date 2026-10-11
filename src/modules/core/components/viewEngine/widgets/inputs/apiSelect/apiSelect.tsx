@@ -43,9 +43,13 @@ type ApiSelectFormDependencyProps = {
     formFieldName?: string;
     /** When this field’s value changes from one non-empty id to another, clear these sibling paths. */
     cascadeClearFormFields?: string[];
-    /** Merge `{ [paramName]: values[field] }` into the select POST body (default paramName `projectId`). */
+    /**
+     * Copy the live value of `field` onto POST body `paramName` (default `projectId`) and add an
+     * equals filter rule on that same name. The body key is for select params that are not columns
+     * (`productOrderId`). The rule filters collections that actually have that field (`project`).
+     */
     postBodyFromFormField?: { field: string; paramName?: string };
-    /** Merge multiple `{ [paramName]: values[field] }` entries (e.g. unit select needs projectId + edificeId + floorId). */
+    /** Same as `postBodyFromFormField` for several params (e.g. unit select needs project + edifice + floor). */
     postBodyFromFormFields?: { field: string; paramName: string }[];
     /**
      * When `paramName` is still unset after merging `postBodyFromFormFields`, and `whenFieldEmpty` is empty,
@@ -99,6 +103,7 @@ type ApiSelectProps = WithLanguageType &
     };
 
 const DEFAULT_SEARCH_DEBOUNCE_MS = 300;
+const EMPTY_DEFAULT_OPTIONS: SelectOption[] = [];
 
 type ApiSelectInnerProps = Omit<
     ApiSelectProps,
@@ -228,6 +233,9 @@ function ApiSelectFormDependencyBridge({
                 const v = raw != null && raw !== "" ? String(raw) : "";
                 if (v) {
                     rules.push({id: generateUUID(), field: dep.paramName, operator: "equals", value: v});
+                    if (out[dep.paramName] == null || out[dep.paramName] === "") {
+                        out[dep.paramName] = v;
+                    }
                 }
             }
             if (rules.length > 0) {
@@ -339,7 +347,7 @@ function ApiSelectCore({
     'aria-invalid': ariaInvalid,
     resolveLanguageKey,
     forTable = false,
-    defaultOptions = [],
+    defaultOptions = EMPTY_DEFAULT_OPTIONS,
     searchDebounceMs = DEFAULT_SEARCH_DEBOUNCE_MS,
     showSelectedChips = false,
     markedValues = [],
@@ -557,6 +565,7 @@ function ApiSelectCore({
                 onValueChange?.(nextValues, nextLabels);
             } else {
                 onValueChange?.(option.value, option.label, option.photo);
+                setSearchText('');
                 setOpen(false);
             }
         },
