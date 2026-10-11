@@ -41,6 +41,8 @@ export const LEGACY_TO_TABLER_EXPORT: Record<string, string> = {
     Megaphone: "IconSpeakerphone",
     MessageSquare: "IconMessage",
     Percent: "IconPercentage",
+    /** Tabler export is `IconPercentage`; bare `IconPercent` does not exist. */
+    IconPercent: "IconPercentage",
     /** Lucide `Play`; bare `IconPlay` does not exist — the media glyph is `IconPlayerPlay`. */
     Play: "IconPlayerPlay",
     /** Lucide `RefreshCw` / `RefreshCcw`; Tabler has no direction suffix. */

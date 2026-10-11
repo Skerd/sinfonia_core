@@ -174,7 +174,7 @@ export default function SheetCompanyAddressesSection({
                                     </div>
 
                                     {mapAddress ? (
-                                        <div className="relative min-h-[220px] self-stretch min-[640px]:col-span-1">
+                                        <div className="relative self-stretch min-h-[220px] min-[640px]:min-h-0 min-[640px]:col-span-1">
                                             <SheetLocationMap
                                                 address={mapAddress}
                                                 className="absolute inset-0 h-full w-full overflow-hidden rounded-lg"

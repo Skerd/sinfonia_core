@@ -4,6 +4,7 @@ import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import DisplayCard from "@coreModule/components/viewEngine/widgets/display/displayCard.tsx";
+import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import {EntityCardShell} from "@coreModule/components/entityPage/list/card/entityCardShell.tsx";
 import {EntityCardHeader} from "@coreModule/components/entityPage/list/card/entityCardHeader.tsx";
@@ -23,6 +24,7 @@ import {
 } from "./fieldText.ts";
 import {
     ExternalTextLink,
+    renderEntityCardLinkedRefField,
     renderLinkedRefField,
     renderMediaStripField,
     renderScalarEmbeddedField,
@@ -76,14 +78,16 @@ function EmbeddedItemCardRow({
                 </ItemMedia>
             ) : null}
             <span className="shrink-0 text-sm font-medium">{label}:</span>
-            <div className="min-w-0 text-sm text-foreground">
-                {href ? (
-                    <ExternalTextLink href={href} className="text-primary">
-                        {value}
-                    </ExternalTextLink>
-                ) : (
-                    value
-                )}
+            <div className="min-w-0 hover:cursor-default text-sm text-foreground">
+                <TruncatedValue text={value}>
+                    {href ? (
+                        <ExternalTextLink href={href} className="text-primary">
+                            {value}
+                        </ExternalTextLink>
+                    ) : (
+                        value
+                    )}
+                </TruncatedValue>
             </div>
         </Item>
     );
@@ -99,7 +103,7 @@ function renderEntityCardBodyField(
         return renderMediaStripField(item, field, resolveSheet, key, undefined);
     }
     if (field.type === "linkedRef") {
-        return renderLinkedRefField(item, field, resolveSheet, key, undefined);
+        return renderEntityCardLinkedRefField(item, field, resolveSheet, key);
     }
 
     const text = resolveEmbeddedFieldText(item, field, resolveSheet);
