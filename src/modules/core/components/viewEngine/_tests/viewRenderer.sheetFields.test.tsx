@@ -243,6 +243,19 @@ describe("#SheetEmbeddedItemsList", () => {
         expect(screen.queryByText("#3")).toBeNull();
     });
 
+    it("entityCards opt-in uses the summary field as the title and omits it from the body", () => {
+        renderSheetWith(ViewRenderer, [fieldNode("#SheetEmbeddedItemsList", "notes", {
+            entityCards: true,
+            fields: [{name: "text", type: "text"}, {name: "at", type: "text", labelKey: "when"}],
+            sortField: "at",
+        })], {
+            data: {notes: [{text: "old", at: "2020-01-01"}, {text: "new", at: "2024-01-01"}]},
+        });
+        expect(screen.getAllByText(/^(old|new)$/).map((el) => el.textContent)).toEqual(["new", "old"]);
+        expect(screen.getByText("2024-01-01")).toBeInTheDocument();
+        expect(screen.getByText("2020-01-01")).toBeInTheDocument();
+    });
+
     it("compact mode joins the summary fields", () => {
         render(
             <ReferencesViewModeScope storageKey="test-embedded" defaultMode="compact">

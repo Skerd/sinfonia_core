@@ -14,6 +14,7 @@ function SheetEmbeddedItemsListHost({binding, ctx}: {binding: FieldBinding; ctx:
     const wp = binding.widgetProps ?? {};
     const raw = resolvePath(ctx.data, binding.name);
     const cardColumns = wpCount(wp, "cardColumns", 2);
+    const columns = wpCount(wp, "columns", 1);
 
     return createElement(SheetEmbeddedItemsList, {
         items: Array.isArray(raw) ? raw : [],
@@ -23,6 +24,8 @@ function SheetEmbeddedItemsListHost({binding, ctx}: {binding: FieldBinding; ctx:
         compactSummaryJoinSeparator: wpString(wp, "compactSummaryJoinSeparator"),
         displayMode,
         cardColumns: cardColumns === undefined ? undefined : Math.min(4, cardColumns),
+        entityCards: wp.entityCards === true,
+        columns: columns === undefined ? undefined : Math.min(4, columns),
         pageSize: wpCount(wp, "pageSize"),
         listClassName: wpText(wp, "listClassName"),
         className: wpText(wp, "className"),
