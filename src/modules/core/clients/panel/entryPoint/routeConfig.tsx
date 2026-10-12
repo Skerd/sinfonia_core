@@ -100,7 +100,7 @@ function renderCoreCenterPanelContent({
 
     // Account routes
     if (menu === "account") {
-        const accountTabs = ["account", "security", "notifications", "notificationCenter", "apps", "addresses"];
+        const accountTabs = ["account", "security", "notifications", "notificationCenter", "apps", "addresses", "savedsearches"];
         if (accountTabs.includes(subview || "")) return <AccountSettings />;
     }
 

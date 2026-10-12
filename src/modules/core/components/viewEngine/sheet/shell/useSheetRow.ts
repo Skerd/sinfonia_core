@@ -15,7 +15,7 @@ export function useSheetRow(rowProp: Row | undefined, onRowPatched?: (row: Row) 
         if (!rowProp) return;
         setRow((prev) => {
             const next: Row = {...rowProp};
-            // Keep keys only the single fetch provides (e.g. `inventory.movements`) when the list row re-asserts.
+            // Keep keys only the single fetch provides when the list row re-asserts.
             for (const [key, value] of Object.entries(prev || {})) {
                 if (!(key in rowProp) || rowProp[key] === undefined) {
                     next[key] = value;

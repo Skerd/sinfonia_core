@@ -92,7 +92,7 @@ function AutoSheetView({
     useEffect(() => {
         setSheetData((prev) => {
             const next: Record<string, unknown> = {...entity};
-            // Keep enrichSingle-only fields (e.g. movements) when list rows re-assert.
+            // Keep enrichSingle-only fields when list rows re-assert.
             for (const [key, value] of Object.entries(prev)) {
                 if (!(key in entity) || (entity as Record<string, unknown>)[key] === undefined) {
                     next[key] = value;

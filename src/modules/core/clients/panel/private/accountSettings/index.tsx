@@ -102,7 +102,7 @@ function AccountSettings({
             setActiveTab("account");
             return;
         }
-        if (subview === "security" || subview === "notifications" || subview === "notificationCenter" || subview === "apps" || subview === "addresses") {
+        if (subview === "security" || subview === "notifications" || subview === "notificationCenter" || subview === "apps" || subview === "addresses" || subview === "savedsearches") {
             navigate("/account/account", {replace: true});
         }
     }, [isBot, specificUserId, subview, navigate]);
