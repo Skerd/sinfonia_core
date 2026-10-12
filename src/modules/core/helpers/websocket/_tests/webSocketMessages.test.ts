@@ -11,6 +11,7 @@ import {
     CHAT_API,
     handleWebSocketMessage,
     PUBLIC_CHAT_HANDOFF_CODE,
+    registerWebSocketMessageHandler,
     type WebSocketMessageContext,
 } from "@coreModule/helpers/websocket/webSocketMessages.ts";
 import {
@@ -280,6 +281,20 @@ describe("NEW_NOTIFICATIONS", () => {
             [CHAT_API.channel, {id: "c1"}],
             [CHAT_API.channel, {id: "c2"}],
         ]);
+    });
+});
+
+describe("module frame handlers", () => {
+    it("delivers a registered code and stops after unsubscribe", () => {
+        const seen: unknown[] = [];
+        const unbind = registerWebSocketMessageHandler("POS_CONFIG_PAUSED", (payload) => {
+            seen.push(payload);
+        });
+        receive("POS_CONFIG_PAUSED", {configIds: ["c1"], companyWide: false});
+        expect(seen).toEqual([{configIds: ["c1"], companyWide: false}]);
+        unbind();
+        receive("POS_CONFIG_PAUSED", {configIds: ["c2"]});
+        expect(seen).toHaveLength(1);
     });
 });
 

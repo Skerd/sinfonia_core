@@ -121,6 +121,24 @@ function handleNotifications(payload: unknown, context: WebSocketMessageContext)
     channelIds.forEach((channelId) => refreshChannel(channelId, context));
 }
 
+const extraHandlers = new Map<string, Set<Handler>>();
+
+/** Module frames (POS kill switch and similar) that are not part of the chat handler map. */
+export function registerWebSocketMessageHandler(code: string, handler: Handler): () => void {
+    let set = extraHandlers.get(code);
+    if (!set) {
+        set = new Set();
+        extraHandlers.set(code, set);
+    }
+    set.add(handler);
+    return () => {
+        const current = extraHandlers.get(code);
+        if (!current) return;
+        current.delete(handler);
+        if (current.size === 0) extraHandlers.delete(code);
+    };
+}
+
 const HANDLERS: Record<string, Handler> = {
     [WebSocketFEMessageCodes.CHANNEL_USER_DEMOTED_FROM_ADMIN]: (payload, {dispatch}) => {
         dispatch(demoteToUser(payload as RemoveUserFromChannelAdminFormResponseType));
@@ -249,8 +267,12 @@ export function handleWebSocketMessage(data: unknown, context: WebSocketMessageC
             handleNotifications(payload, context);
             return;
         }
+        if (!isPayload(payload)) return;
         const handler = Object.hasOwn(HANDLERS, code) ? HANDLERS[code] : undefined;
-        if (handler && isPayload(payload)) handler(payload, context);
+        if (handler) handler(payload, context);
+        const extras = extraHandlers.get(code);
+        if (!extras) return;
+        for (const extra of extras) extra(payload, context);
     } catch (error) {
         handleError(error, {context: LOG_CONTEXT, details: {code}});
     }
