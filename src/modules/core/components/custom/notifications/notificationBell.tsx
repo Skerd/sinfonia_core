@@ -22,6 +22,7 @@ import {
     UnreadNotificationsFormResponseType,
 } from "armonia/src/modules/core/api/user/private/notifications/unreadNotifications.form.response.type.ts";
 import {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 
 const PREVIEW_LIMIT = 10;
 
@@ -29,6 +30,7 @@ function NotificationBell({resolveLanguageKey}: WithLanguageType) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
+    const {read} = useAccess("notifications");
     const {unreadNotifications, items, loading} = useSelector((state: RootState) => state.notifications);
 
     const refreshNotifications = useCallback(async () => {
@@ -52,8 +54,9 @@ function NotificationBell({resolveLanguageKey}: WithLanguageType) {
 
     // Badge count on mount; list refresh again when the popover opens.
     useEffect(() => {
+        if (!read) return;
         void refreshNotifications();
-    }, [refreshNotifications]);
+    }, [refreshNotifications, read]);
 
     const badge = unreadNotifications > 99 ? "99+" : String(unreadNotifications);
     const triggerLabel =
@@ -63,7 +66,7 @@ function NotificationBell({resolveLanguageKey}: WithLanguageType) {
 
     const handleOpenChange = (next: boolean) => {
         setOpen(next);
-        if (next) void refreshNotifications();
+        if (next && read) void refreshNotifications();
     };
 
     return (

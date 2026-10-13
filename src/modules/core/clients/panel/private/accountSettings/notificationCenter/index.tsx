@@ -19,6 +19,8 @@ import {
     UnreadNotificationsFormResponseType
 } from "armonia/src/modules/core/api/user/private/notifications/unreadNotifications.form.response.type.ts";
 import {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 
 const PAGE_SIZE = 20;
 
@@ -111,7 +113,7 @@ function NotificationCenter({
     );
 }
 
-export default compose(
+const NotificationCenterList = compose(
     withLanguage("src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx"),
     withAxios(
         {
@@ -127,3 +129,12 @@ export default compose(
     ),
     withDebug(true, true, "users")
 )(NotificationCenter);
+
+function NotificationCenterPage({specificUserId}: {specificUserId?: string}) {
+    const {read} = useAccess("notifications", specificUserId ? "others" : "self");
+    if (read === null) return null;
+    if (!read) return <Forbidden />;
+    return <NotificationCenterList specificUserId={specificUserId} />;
+}
+
+export default NotificationCenterPage;

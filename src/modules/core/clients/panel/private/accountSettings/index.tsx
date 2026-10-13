@@ -13,8 +13,10 @@ import {getAccountSettingsPages} from "@coreModule/helpers/moduleContributions/l
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 
 type AccountSettingsProps = WithLanguageType & {
     specificUserId?: string,
@@ -34,6 +36,18 @@ function AccountSettings({
     const navigate = useNavigate();
 
     const { subview } = useParams();
+    const perspective = specificUserId ? "others" : "self";
+    const {read: readProfile} = useAccess("users", perspective);
+    const {read: readSessions} = useAccess("userSessions", perspective);
+    const {read: readHistory} = useAccess("loginHistories", perspective);
+    const {read: readNotifications} = useAccess("notifications", perspective);
+    const {read: readAddresses} = useAccess("customerAddresses", perspective);
+    const {read: readSavedSearches} = useAccess("savedsearches", perspective);
+    const readSecurity = readSessions || readHistory
+        ? true
+        : readSessions === null || readHistory === null
+            ? null
+            : false;
     const {data: profile} = useHttpRequest<CompanyUserType>(
         {
             method: "get",
@@ -45,7 +59,7 @@ function AccountSettings({
             }]
         },
         {},
-        1,
+        readProfile ? 1 : 0,
         true,
         {},
         {specificUserId},
@@ -56,34 +70,40 @@ function AccountSettings({
         [isBot, specificUserId],
     );
 
+    const visiblePages = contributedPages.filter((page) => {
+        if (page.id === "addresses") return readAddresses !== false;
+        if (page.id === "savedsearches") return readSavedSearches !== false;
+        return true;
+    });
+
     const sidebarNavItems = [
-        {
+        ...(readProfile !== false ? [{
             title: resolveLanguageKey("account"),
             href: specificUserId ? "account" : '/account/account',
             icon: <UserCog size={18} />
-        },
+        }] : []),
         ...(!isBot ? [
-            {
+            ...(readSecurity !== false ? [{
                 title: resolveLanguageKey("security"),
                 href: specificUserId ? "security" : '/account/security',
                 icon: <Wrench size={18} />,
-            },
-            {
+            }] : []),
+            ...(readNotifications !== false ? [{
                 title: resolveLanguageKey("activity"),
                 href: specificUserId ? "notificationCenter" : '/account/notificationCenter',
                 icon: <Bell size={18} />,
-            },
-            {
+            }] : []),
+            ...(readNotifications !== false ? [{
                 title: resolveLanguageKey("notifications"),
                 href: specificUserId ? "notifications" : '/account/notifications',
                 icon: <MailCheck size={18} />,
-            },
-            {
+            }] : []),
+            ...(readProfile !== false ? [{
                 title: resolveLanguageKey("connectedApps"),
                 href: specificUserId ? "apps" : '/account/apps',
                 icon: <Boxes size={18} />,
-            },
-            ...contributedPages.map((page) => ({
+            }] : []),
+            ...visiblePages.map((page) => ({
                 title: resolveLanguageKey(page.titleKey),
                 href: specificUserId ? page.id : `/account/${page.id}`,
                 icon: page.icon,
@@ -108,6 +128,13 @@ function AccountSettings({
     }, [isBot, specificUserId, subview, navigate]);
 
     const hostedInSheet = !!specificUserId;
+    const activeRead = isBot || activeTab === "account" ? readProfile
+        : activeTab === "security" ? readSecurity
+        : activeTab === "notificationCenter" || activeTab === "notifications" ? readNotifications
+        : activeTab === "apps" ? readProfile
+        : activeTab === "addresses" ? readAddresses
+        : activeTab === "savedsearches" ? readSavedSearches
+        : true;
 
     return (
         <div className={hostedInSheet ? "flex min-h-0 flex-1 flex-col overflow-hidden" : "flex-full gap-4"}>
@@ -141,29 +168,17 @@ function AccountSettings({
                 </aside>
                 <div className='flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden'>
                     {
-                        (activeTab === "account" || isBot) &&
-                        <Account specificUserId={specificUserId} />
-                    }
-                    {
-                        activeTab === "security" && !isBot &&
-                        <Security specificUserId={specificUserId}/>
-                    }
-                    {
-                        activeTab === "notificationCenter" && !isBot &&
-                        <NotificationCenter specificUserId={specificUserId} />
-                    }
-                    {
-                        activeTab === "notifications" && !isBot &&
-                        <NotificationsForm specificUserId={specificUserId} />
-                    }
-                    {
-                        activeTab === "apps" && !isBot &&
-                        <ConnectedApps specificUserId={specificUserId} />
-                    }
-                    {
-                        !isBot && contributedPages.map((page) => (
+                        activeRead === null ? null
+                        : !activeRead ? <Forbidden />
+                        : isBot || activeTab === "account" ? <Account specificUserId={specificUserId} />
+                        : activeTab === "security" ? <Security specificUserId={specificUserId}/>
+                        : activeTab === "notificationCenter" ? <NotificationCenter specificUserId={specificUserId} />
+                        : activeTab === "notifications" ? <NotificationsForm specificUserId={specificUserId} />
+                        : activeTab === "apps" ? <ConnectedApps specificUserId={specificUserId} />
+                        : visiblePages.some((page) => page.id === activeTab) ? visiblePages.map((page) => (
                             activeTab === page.id ? <div key={page.id} className="min-h-0 flex-1">{page.render()}</div> : null
                         ))
+                        : <Forbidden />
                     }
                 </div>
             </div>

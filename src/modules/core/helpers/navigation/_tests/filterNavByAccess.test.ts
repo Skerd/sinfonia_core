@@ -37,6 +37,25 @@ describe("navItemAllowed", () => {
     it("denies protected entries outside the provider", () => {
         expect(navItemAllowed(guard(["users"]), {}, null)).toBe(false);
     });
+
+    it("requires others-read when the entry lists other people's records", () => {
+        const selfOnly = {
+            users: {self: {read: true}, others: {read: false}},
+        } as unknown as AccessContextValue;
+        const othersRead = {
+            users: {self: {read: true}, others: {read: {name: {}}}},
+        } as unknown as AccessContextValue;
+        const administration = {...guard(["users"], true), accessPerspective: "others" as const};
+
+        expect(navItemAllowed(administration, selfOnly, true)).toBe(false);
+        expect(navItemAllowed(administration, othersRead, true)).toBe(true);
+        expect(navItemAllowed(guard(["users"], true), selfOnly, true)).toBe(true);
+    });
+
+    it("falls back to self when a loose schema omitted others", () => {
+        const loose = {users: {self: {read: true}}} as unknown as AccessContextValue;
+        expect(navItemAllowed({...guard(["users"], true), accessPerspective: "others"}, loose, true)).toBe(true);
+    });
 });
 
 describe("filterNavGroups", () => {

@@ -9,9 +9,10 @@ import {
     readQuickFilterLabelsFromUrl,
     readQuickFiltersFromUrl,
 } from "@coreModule/helpers/hooks/useListUrlState.ts";
-import {type AccessObject} from "@coreModule/helpers/context/accessContext.tsx";
+import type {AccessObject} from "@coreModule/helpers/context/accessContext.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import Header from "@coreModule/components/custom/header.tsx";
+import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -506,6 +507,9 @@ export default function EntityListPage<T extends BaseEntity>({
         typeof flag === "function" ? flag(entity) : !!flag;
 
     const listHelpers = {replaceRow};
+    if (read === false) {
+        return <Forbidden />;
+    }
 
     return (
         <div className="min-w-0 flex-full gap-4">

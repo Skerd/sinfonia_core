@@ -1,5 +1,4 @@
 import {compose} from "redux";
-import {useAccessHydrated} from "@coreModule/helpers/context/accessContext.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {ToggleGroup, ToggleGroupItem} from "@coreModule/components/ui/toggle-group.tsx";
@@ -194,7 +193,6 @@ function CountryCenterView<
 }: CountryCenterViewProps<ResponseType, PostType, T>) {
 
     const {read} = useAccess(access, selfAccess ? "self" : "others");
-    const accessHydrated = useAccessHydrated();
     const isMobile = useIsMobile();
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
 
@@ -338,6 +336,7 @@ function CountryCenterView<
         setColumnVisibility(tableColumnVisibility);
     }, [tableColumnVisibility]);
     useEffect(() => {
+        if (!read) return;
         if ( !loadingTableConfig && !tableConfigError ) {
             const { filter: fbFilterUnknown, ...filtersRest } = filters as Record<string, unknown> & {
                 filter?: FilterGroup;
@@ -358,7 +357,7 @@ function CountryCenterView<
                 ...filterOut,
             } as unknown as PostType);
         }
-    }, [offset, limit, forceReload, sorting, filters, extraParameters, loadingTableConfig, tableConfigError, toolbarFilterDSL]);
+    }, [offset, limit, forceReload, sorting, filters, extraParameters, loadingTableConfig, tableConfigError, toolbarFilterDSL, read]);
     const effectiveRef = listRefFromParent ?? refFromParent;
     useImperativeHandle(effectiveRef, () => listApi, [listApi]);
     useImperativeHandle(innerRef, () => ({
@@ -387,7 +386,7 @@ function CountryCenterView<
         renderActions: renderFunctions.action,
         timezone,
         // Ungated until the map lands: the empty map before hydration would hide every column.
-        read: accessHydrated === false ? undefined : read,
+        read: read == null ? undefined : read,
     }) as ColumnDef<T>[];
 
     const columns = useMemo<ColumnDef<T>[]>(() => {
@@ -457,7 +456,7 @@ function CountryCenterView<
     });
 
     /*
-     * These sit above the `canRead` early return below: a hook after a conditional
+     * These sit above the `read === false` early return below: a hook after a conditional
      * return changes the hook count between renders, and React throws the moment
      * access flips.
      *
@@ -538,9 +537,7 @@ function CountryCenterView<
         [],
     );
 
-    const canRead = read === true
-        || (typeof read === "object" && read !== null && Object.keys(read).length > 0);
-    if (accessHydrated !== false && !canRead) {
+    if (read === false) {
         return <Forbidden />;
     }
 
@@ -591,7 +588,7 @@ function CountryCenterView<
         }
     };
 
-    /* Plain assignments, not hooks: the refs themselves are created above the `canRead` return. */
+    /* Plain assignments, not hooks: the refs themselves are created above the `read === false` return. */
     rowHandlersRef.current = {activateRow, handleRowKeyDown, onRowActivate};
     columnCountRef.current = table.getVisibleFlatColumns().length;
     tableRef.current = table;
@@ -767,7 +764,7 @@ function CountryCenterView<
                             :
                             <>
                                 {
-                                    (loadingTableConfig) || (firstCall && loading) || accessHydrated === false ?
+                                    (loadingTableConfig) || (firstCall && loading) || read == null ?
                                         (
                                             viewMode === "card"
                                                 ? renderCardContainer(entityCardSkeletonItems(skeletonCount, cardItemClassName))

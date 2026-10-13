@@ -4,12 +4,15 @@ import type {ElementType} from "react";
 /**
  * Access requirements of a nav entry, checked by `navItemAllowed` (`filterNavByAccess.ts`).
  * `permissions` are access-model ids (collection names, case-insensitive); empty means public.
+ * `accessPerspective` selects which read grant is required: `self` (default) or `others`.
+ * When the schema is loose the server omits `others`, and the check falls back to `self`.
  * `usersPermissions` is currently unused.
  */
 export type ProtectedNav = {
     permissions: string[];
     usersPermissions: string[];
     atLeastOnePermission: boolean;
+    accessPerspective?: "self" | "others";
 };
 
 export type BaseNavItem = ProtectedNav & {

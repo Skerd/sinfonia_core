@@ -183,7 +183,7 @@ describe("accessAllResponseToContext", () => {
 describe("useAccess outside a provider", () => {
     it("returns an empty, denied object", () => {
         const {result} = renderHook(() => useAccess("Cities"));
-        expect(result.current).toMatchObject({read: {}, write: {}, create: false, resourceId: "cities"});
+        expect(result.current).toMatchObject({read: false, write: {}, create: false, resourceId: "cities"});
         expect(renderHook(() => useAccess("")).result.current.resourceId).toBe("");
         expect(renderHook(() => useAccessHydrated()).result.current).toBeNull();
         expect(renderHook(() => useAccessDebugOverrides()).result.current).toBeNull();

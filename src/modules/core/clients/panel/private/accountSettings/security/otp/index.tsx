@@ -47,11 +47,11 @@ function UserAccountSecurityOTP({
     const [otpEnabled, setOtpEnabled] = useState<boolean>(data?.enabled);
 
     const [forceReload, setForceReload] = useState<number>(1);
+    const canReadMfa = read === true || (typeof read === "object" && read !== null && "mfaStatus" in read && !!read.mfaStatus);
     useEffect(() => {
-        if( !!forceReload ){
-            onFilterChange({});
-        }
-    }, [forceReload]);
+        if (!canReadMfa) return;
+        onFilterChange({});
+    }, [forceReload, canReadMfa]);
     useEffect(() => {
         if( !!data && read.mfaStatus ){
             setOtpEnabled(data.enabled);
