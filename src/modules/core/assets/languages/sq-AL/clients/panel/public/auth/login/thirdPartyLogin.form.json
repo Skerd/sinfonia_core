@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/login/thirdPartyLogin.form.tsx",
+  "axios": {
+    "start": {
+      "title": "Po identifikohesh, ju lutemi prisni",
+      "time": 3000
+    },
+    "error": {
+      "title": "Identifikimi dështoi",
+      "time": 3000
+    },
+    "success": {
+      "title": "U kyçët me sukses",
+      "time": 3000
+    }
+  }
+}

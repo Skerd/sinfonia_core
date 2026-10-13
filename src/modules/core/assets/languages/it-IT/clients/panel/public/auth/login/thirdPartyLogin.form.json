@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/login/thirdPartyLogin.form.tsx",
+  "axios": {
+    "start": {
+      "title": "Accesso, attendere",
+      "time": 3000
+    },
+    "error": {
+      "title": "Accesso non riuscito",
+      "time": 3000
+    },
+    "success": {
+      "title": "Accesso effettuato con successo",
+      "time": 3000
+    }
+  }
+}

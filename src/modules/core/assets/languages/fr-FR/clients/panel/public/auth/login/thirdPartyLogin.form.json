@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/login/thirdPartyLogin.form.tsx",
+  "axios": {
+    "start": {
+      "title": "Connexion, veuillez patienter",
+      "time": 3000
+    },
+    "error": {
+      "title": "Échec de la connexion",
+      "time": 3000
+    },
+    "success": {
+      "title": "Connecté avec succès",
+      "time": 3000
+    }
+  }
+}

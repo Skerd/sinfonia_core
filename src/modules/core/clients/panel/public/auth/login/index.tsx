@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import SignInForm from "@coreModule/clients/panel/public/auth/login/signin.form.tsx";
+import ThirdPartyLoginForm from "@coreModule/clients/panel/public/auth/login/thirdPartyLogin.form.tsx";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import TermsAndConditions from "@coreModule/clients/panel/public/auth/shared/termsAndConditions.tsx";
 import DontHaveAccountSignUp from "@coreModule/clients/panel/public/auth/shared/dontHaveAccountSignUp.tsx";
@@ -20,6 +21,7 @@ function Login({
     const [header, setHeader] = useState<"signInHeader" | "mfaHeader">("signInHeader");
     const [disableOTP, setDisableOTP] = useState<number>(0);
     const [goLogin, setGoLogin] = useState<number>(1);
+    const [oauthBusy, setOauthBusy] = useState(false);
 
     useEffect(() => {
         if( !!getToken() ){
@@ -43,6 +45,7 @@ function Login({
                 </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
+                <ThirdPartyLoginForm onBusy={setOauthBusy} />
                 <SignInForm
                     onMfa={(value: boolean) => {
                         if(value){
@@ -54,12 +57,13 @@ function Login({
                     }}
                     openDisable={disableOTP}
                     goLogin={goLogin}
+                    oauthLoading={oauthBusy}
                 />
                 {
                     header === "signInHeader" &&
                     <>
                         <DontHaveAccountSignUp />
-                        <ThirdPartyAuthentication />
+                        <ThirdPartyAuthentication loading={oauthBusy} />
                     </>
                 }
             </CardContent>

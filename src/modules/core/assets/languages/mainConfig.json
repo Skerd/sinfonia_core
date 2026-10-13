@@ -271,11 +271,11 @@
   "thirdPartyAuthenticators": [
     {
       "name": "google",
-      "url": "https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id=597111669266-7b82722bh49ubm1pb48aogsbl4mlvo6a.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fauthenticate%2Flogin%2Fgoogle&response_type=code&scope=openid%20profile%20email&service=lso&o2v=1&ddm=0&flowName=GeneralOAuthFlow"
+      "url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=407415676244-j2ka9douamfd7mpv1mtr1qnp86jo7t9r.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fauthenticate%2Flogin%2Fgoogle&response_type=code&scope=openid%20profile%20email&access_type=offline&prompt=consent"
     },
     {
       "name": "apple",
-      "url": "https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id=597111669266-7b82722bh49ubm1pb48aogsbl4mlvo6a.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fauthenticate%2Flogin%2Fgoogle&response_type=code&scope=openid%20profile%20email&service=lso&o2v=1&ddm=0&flowName=GeneralOAuthFlow"
+      "url": "https://appleid.apple.com/auth/authorize?client_id=com.defaultapplethirdpartylogin.com&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fauthenticate%2Flogin%2Fapple&response_type=code&response_mode=query&scope=name%20email"
     }
   ]
 }

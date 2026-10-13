@@ -1,7 +1,6 @@
 import { z } from 'zod'
 import {compose} from "redux";
 import { cn } from '@coreModule/components/lib/utils.ts'
-import queryString from "query-string";
 import {useDispatch} from "react-redux";
 import { useForm } from 'react-hook-form';
 import { Input } from '@coreModule/components/ui/input.tsx';
@@ -14,7 +13,7 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import { PasswordInput } from '@coreModule/components/custom/inputs/passwordInput.tsx';
 import {HTMLAttributes, useEffect, useImperativeHandle, useState} from 'react';
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {LoginFormType} from "armonia/src/modules/core/api/user/public/login/login.form.type.ts";
 import { loginFormSchema } from "armonia/src/modules/core/api/user/public/login/login.form.validator.ts";
 import DisableOTP from "@coreModule/clients/panel/public/auth/login/disableOTP.form.tsx";
@@ -30,10 +29,11 @@ const EMPTY_FORM_VALUES: LoginFormType = {
     mfaCode: undefined,
 };
 
-interface SignInFormProps extends HTMLAttributes<HTMLFormElement>, WithLanguageType, WithAxiosType {
+interface SignInFormProps extends HTMLAttributes<HTMLFormElement>, WithLanguageType, WithAxiosType<LoginFormResponseType & MFAEnabledLoginFormResponseType, LoginFormType> {
     onMfa: Function,
     openDisable: number,
-    goLogin: number
+    goLogin: number,
+    oauthLoading?: boolean
 }
 
 function SignInForm({
@@ -46,14 +46,14 @@ function SignInForm({
     onMfa,
     openDisable,
     goLogin,
+    oauthLoading = false,
     ...props
 }: SignInFormProps) {
 
     const config = getClientConfig();
-    const location = useLocation();
     const navigate = useNavigate();
-    const params = useParams();
     const dispatch = useDispatch();
+    const formBusy = loading || oauthLoading;
 
     const [inputMfa, setInputMfa] = useState<boolean>(false);
     const [disableOTP, setDisableOTP] = useState<number>(0);
@@ -78,19 +78,6 @@ function SignInForm({
         }
     }));
 
-    useEffect(() => {
-        if( !!location ){
-            const queryParams = queryString.parse(location.search);
-            if( !!queryParams.code ){
-                onFilterChange({
-                    thirdPartyAuthentication: {
-                        platform: params.platform,
-                        code: queryParams.code
-                    }
-                });
-            }
-        }
-    }, [location]);
     useEffect(() => {
         onMfa(inputMfa);
     }, [inputMfa]);
@@ -144,7 +131,7 @@ function SignInForm({
                                         <InputOTP
                                             maxLength={6}
                                             {...field}
-                                            disabled={loading}
+                                            disabled={formBusy}
                                             containerClassName='justify-center sm:[&>[data-slot="input-otp-group"]>div]:w-12'
                                         >
                                             <InputOTPGroup>
@@ -181,7 +168,7 @@ function SignInForm({
                 <FormField
                     control={form.control}
                     name='username'
-                    disabled={loading}
+                    disabled={formBusy}
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>{resolveLanguageKey("form.emailLabel")}</FormLabel>
@@ -199,7 +186,7 @@ function SignInForm({
                 <FormField
                     control={form.control}
                     name='password'
-                    disabled={loading}
+                    disabled={formBusy}
                     render={({ field }) => (
                         <FormItem className='relative'>
                             <FormLabel>{resolveLanguageKey("form.passwordLabel")}</FormLabel>
@@ -220,8 +207,8 @@ function SignInForm({
                         </FormItem>
                     )}
                 />
-                <Button className='mt-2' disabled={loading}>
-                    {(loading) ? <Loader2 className='animate-spin' /> : <LogIn />}
+                <Button className='mt-2' disabled={formBusy}>
+                    {(formBusy) ? <Loader2 className='animate-spin' /> : <LogIn />}
                     {resolveLanguageKey("signInButtonLabel")}
                 </Button>
             </form>
@@ -231,7 +218,7 @@ function SignInForm({
 
 export default compose(
     withLanguage("src/modules/core/clients/panel/public/auth/login/signin.form.tsx"),
-    withAxios(
+    withAxios<LoginFormResponseType & MFAEnabledLoginFormResponseType, LoginFormType>(
         {
             method: "post",
             url: `/api/user/login`,

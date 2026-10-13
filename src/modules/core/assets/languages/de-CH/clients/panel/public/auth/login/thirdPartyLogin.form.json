@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/public/auth/login/thirdPartyLogin.form.tsx",
+  "axios": {
+    "start": {
+      "title": "Signing in, bitte wait",
+      "time": 3000
+    },
+    "error": {
+      "title": "Sign in fehlgeschlagen",
+      "time": 3000
+    },
+    "success": {
+      "title": "Signed in erfolgreich",
+      "time": 3000
+    }
+  }
+}
