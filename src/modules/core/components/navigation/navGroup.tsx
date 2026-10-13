@@ -1,17 +1,20 @@
-import {type ReactNode, useLayoutEffect, useRef, useState} from 'react';
+import {type ReactNode, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import { ChevronRight } from 'lucide-react';
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Link, useParams, useLocation} from 'react-router-dom';
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from '@coreModule/components/ui/collapsible.tsx'
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from '@coreModule/components/ui/dropdown-menu.tsx';
 import {SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar} from '@coreModule/components/ui/sidebar.tsx';
-import {NavCollapsible, NavItem, NavLink, NavLinkItem, NavSubCollapsible} from "@coreModule/helpers/types/sidebarNav.types.ts";
+import {NavCollapsible, NavItem, NavLink, NavLinkItem, NavSubCollapsible, NavSubItem} from "@coreModule/helpers/types/sidebarNav.types.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
+import {getLocalStorageValue, setLocalStorageValue} from "@coreModule/helpers/context/localStorage/localStorageProvider.ts";
 
 /** Leaf nav links only (`<a href>`); parent collapsible triggers are also `data-active` when a child matches. */
 const ACTIVE_SIDEBAR_LINK =
     '[data-sidebar="menu-sub-button"][data-active="true"][href], [data-sidebar="menu-button"][data-active="true"][href]';
+
+const NAV_COLLAPSE_STORAGE_PREFIX = "sidebarNavCollapse:";
 
 function hrefMatchesSubLink(href: string, url: string | undefined): boolean {
     return !!url && (href === url || href.startsWith(url + '/'));
@@ -24,6 +27,58 @@ function subEntryActive(href: string, sub: NavLinkItem | NavSubCollapsible): boo
         return sub.items.some((child) => subEntryActive(href, child));
     }
     return 'url' in sub && !!sub.url && hrefMatchesSubLink(href, String(sub.url));
+}
+
+function collectLeafUrls(entries: NavSubItem[]): string[] {
+    const urls: string[] = [];
+    for (const entry of entries) {
+        if ('items' in entry && entry.items) {
+            urls.push(...collectLeafUrls(entry.items));
+        } else if ('url' in entry && entry.url) {
+            urls.push(String(entry.url));
+        }
+    }
+    return urls;
+}
+
+/** Stable across language switches: keyed by sorted leaf URLs under the section. */
+function navCollapsibleStorageKey(item: NavCollapsible): string {
+    const urls = collectLeafUrls(item.items).sort();
+    return `${NAV_COLLAPSE_STORAGE_PREFIX}${urls.join("|") || item.title}`;
+}
+
+function readStoredNavOpen(storageKey: string): boolean | null {
+    const v = getLocalStorageValue(storageKey);
+    if (v === "1" || v === "true") return true;
+    if (v === "0" || v === "false") return false;
+    return null;
+}
+
+/**
+ * Closed by default; remembers user toggles in localStorage.
+ * Opens when the current route lives under the section (deep link / in-app nav)
+ * so the active leaf stays visible after refresh.
+ */
+function usePersistedNavCollapsibleOpen(storageKey: string, routeActive: boolean) {
+    const [open, setOpen] = useState(() => {
+        if (routeActive) return true;
+        return readStoredNavOpen(storageKey) ?? false;
+    });
+    const wasRouteActiveRef = useRef(routeActive);
+
+    useEffect(() => {
+        if (routeActive && !wasRouteActiveRef.current) {
+            setOpen(true);
+        }
+        wasRouteActiveRef.current = routeActive;
+    }, [routeActive]);
+
+    const onOpenChange = (next: boolean) => {
+        setOpen(next);
+        setLocalStorageValue(storageKey, next ? "1" : "0");
+    };
+
+    return [open, onOpenChange] as const;
 }
 
 /**
@@ -249,12 +304,78 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
 
 
 
+function NestedNavCollapsible({
+    item,
+    href,
+    depth,
+    setOpenMobile,
+}: {
+    item: NavSubCollapsible;
+    href: string;
+    depth: 1 | 2;
+    setOpenMobile: (open: boolean) => void;
+}) {
+    const routeActive = item.items.some((child) => subEntryActive(href, child));
+    const [open, onOpenChange] = usePersistedNavCollapsibleOpen(navCollapsibleStorageKey(item), routeActive);
+    const groupClass = depth === 1 ? 'group/subcollapsible' : 'group/subcollapsible2';
+    const chevronClass =
+        depth === 1
+            ? 'ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/subcollapsible:rotate-90 rtl:rotate-180'
+            : 'ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/subcollapsible2:rotate-90 rtl:rotate-180';
+
+    return (
+        <Collapsible open={open} onOpenChange={onOpenChange} className={groupClass}>
+            <SidebarMenuSubItem>
+                <CollapsibleTrigger asChild>
+                    <SidebarMenuSubButton isActive={routeActive}>
+                        {item.icon && <item.icon />}
+                        <NavTruncatedTitle title={item.title} className='flex-1' />
+                        <ChevronRight className={chevronClass} />
+                    </SidebarMenuSubButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="collapsible-content">
+                    <SidebarMenuSub>
+                        {item.items.map((child) => {
+                            if ('url' in child && child.url) {
+                                return (
+                                    <SidebarMenuSubItem key={`${item.title}-${child.title}-${child.url}`}>
+                                        <SidebarMenuSubButton asChild isActive={hrefMatchesSubLink(href, String(child.url))}>
+                                            <Link to={child.url} onClick={() => setOpenMobile(false)}>
+                                                {child.icon && <child.icon />}
+                                                <NavTruncatedTitle title={child.title} />
+                                                {child.badge && <NavBadge>{child.badge}</NavBadge>}
+                                            </Link>
+                                        </SidebarMenuSubButton>
+                                    </SidebarMenuSubItem>
+                                );
+                            }
+                            const deeper = child as NavSubCollapsible;
+                            return (
+                                <NestedNavCollapsible
+                                    key={`${item.title}-${deeper.title}`}
+                                    item={deeper}
+                                    href={href}
+                                    depth={2}
+                                    setOpenMobile={setOpenMobile}
+                                />
+                            );
+                        })}
+                    </SidebarMenuSub>
+                </CollapsibleContent>
+            </SidebarMenuSubItem>
+        </Collapsible>
+    );
+}
+
 function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
     const { setOpenMobile } = useSidebar();
     const { pathname } = useLocation();
     const href = pathname || '';
+    const routeActive = checkIsActive(href, item);
+    const [open, onOpenChange] = usePersistedNavCollapsibleOpen(navCollapsibleStorageKey(item), routeActive);
+
     return (
-        <Collapsible asChild defaultOpen className='group/collapsible'>
+        <Collapsible asChild open={open} onOpenChange={onOpenChange} className='group/collapsible'>
             <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                     <SidebarMenuButton tooltip={item.title}>
@@ -286,79 +407,14 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                     );
                                 }
                                 const nested = subItem as NavSubCollapsible;
-                                const nestedOpen = nested.items.some((child) => subEntryActive(href, child));
                                 return (
-                                    <Collapsible
+                                    <NestedNavCollapsible
                                         key={nested.title}
-                                        defaultOpen
-                                        className='group/subcollapsible'
-                                    >
-                                        <SidebarMenuSubItem>
-                                            <CollapsibleTrigger asChild>
-                                                <SidebarMenuSubButton isActive={nestedOpen}>
-                                                    {nested.icon && <nested.icon />}
-                                                    <NavTruncatedTitle title={nested.title} className='flex-1' />
-                                                    <ChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/subcollapsible:rotate-90 rtl:rotate-180' />
-                                                </SidebarMenuSubButton>
-                                            </CollapsibleTrigger>
-                                            <CollapsibleContent className="collapsible-content">
-                                                <SidebarMenuSub>
-                                                    {nested.items.map((child) => {
-                                                        if ('url' in child && child.url) {
-                                                            return (
-                                                                    <SidebarMenuSubItem key={`${nested.title}-${child.title}-${child.url}`}>
-                                                                        <SidebarMenuSubButton asChild isActive={hrefMatchesSubLink(href, String(child.url))}>
-                                                                            <Link to={child.url} onClick={() => setOpenMobile(false)}>
-                                                                                {child.icon && <child.icon />}
-                                                                                <NavTruncatedTitle title={child.title} />
-                                                                                {child.badge && <NavBadge>{child.badge}</NavBadge>}
-                                                                            </Link>
-                                                                        </SidebarMenuSubButton>
-                                                                    </SidebarMenuSubItem>
-                                                            );
-                                                        }
-                                                        const deeper = child as NavSubCollapsible;
-                                                        const deeperOpen = deeper.items.some((link) => subEntryActive(href, link));
-                                                        return (
-                                                            <Collapsible
-                                                                key={`${nested.title}-${deeper.title}`}
-                                                                defaultOpen
-                                                                className='group/subcollapsible2'
-                                                            >
-                                                                <SidebarMenuSubItem>
-                                                                    <CollapsibleTrigger asChild>
-                                                                        <SidebarMenuSubButton isActive={deeperOpen}>
-                                                                            {deeper.icon && <deeper.icon />}
-                                                                            <NavTruncatedTitle title={deeper.title} className='flex-1' />
-                                                                            <ChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/subcollapsible2:rotate-90 rtl:rotate-180' />
-                                                                        </SidebarMenuSubButton>
-                                                                    </CollapsibleTrigger>
-                                                                    <CollapsibleContent className="collapsible-content">
-                                                                        <SidebarMenuSub>
-                                                                            {deeper.items.map((link) => {
-                                                                                if (!('url' in link) || !link.url) return null;
-                                                                                return (
-                                                                                        <SidebarMenuSubItem key={`${deeper.title}-${link.title}-${link.url}`}>
-                                                                                            <SidebarMenuSubButton asChild isActive={hrefMatchesSubLink(href, String(link.url))}>
-                                                                                                <Link to={link.url} onClick={() => setOpenMobile(false)}>
-                                                                                                    {link.icon && <link.icon />}
-                                                                                                    <NavTruncatedTitle title={link.title} />
-                                                                                                    {link.badge && <NavBadge>{link.badge}</NavBadge>}
-                                                                                                </Link>
-                                                                                            </SidebarMenuSubButton>
-                                                                                        </SidebarMenuSubItem>
-                                                                                );
-                                                                            })}
-                                                                        </SidebarMenuSub>
-                                                                    </CollapsibleContent>
-                                                                </SidebarMenuSubItem>
-                                                            </Collapsible>
-                                                        );
-                                                    })}
-                                                </SidebarMenuSub>
-                                            </CollapsibleContent>
-                                        </SidebarMenuSubItem>
-                                    </Collapsible>
+                                        item={nested}
+                                        href={href}
+                                        depth={1}
+                                        setOpenMobile={setOpenMobile}
+                                    />
                                 );
                             })
                         }
