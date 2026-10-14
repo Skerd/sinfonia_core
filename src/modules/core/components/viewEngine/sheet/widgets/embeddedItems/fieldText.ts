@@ -4,7 +4,7 @@ import { formatTemporal } from "../../../engine/format.ts";
 
 /*
  * Text and value logic for `#SheetEmbeddedItemsList` fields: what each configured field
- * shows for one item, which items have anything to show, and the compact summary line.
+ * shows for one item, and the compact summary line. Empty array entries still render.
  */
 
 export type EmbeddedItemFieldConfig = {
@@ -117,33 +117,6 @@ export function resolveLinkedRefStub(item: Record<string, any>, field: EmbeddedI
         if (typeof id === "string" && id.length > 0) return raw as Record<string, any>;
     }
     return null;
-}
-
-function fieldHasValue(item: Record<string, any>, field: EmbeddedItemFieldConfig): boolean {
-    if (field.type === "mediaStrip") {
-        const v = resolvePath(item, field.name);
-        if (Array.isArray(v)) return v.length > 0;
-        return v != null && typeof v === "object";
-    }
-    if (field.type === "linkedRef") {
-        return resolveLinkedRefStub(item, field) != null;
-    }
-    return resolveEmbeddedFieldText(item, field, (k) => k).length > 0;
-}
-
-export function itemHasVisibleContent(
-    item: Record<string, any>,
-    fields: EmbeddedItemFieldConfig[],
-    summaryFieldNames: string[],
-): boolean {
-    if (summaryFieldNames.length > 0) {
-        return summaryFieldNames.some((name) => {
-            const field = fields.find((f) => f.name === name);
-            if (field) return fieldHasValue(item, field);
-            return String(item[name] ?? "").trim().length > 0;
-        });
-    }
-    return fields.some((f) => fieldHasValue(item, f));
 }
 
 export function buildCompactSummaryParts(

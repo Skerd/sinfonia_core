@@ -236,11 +236,11 @@ describe("#SheetEmbeddedItemsList", () => {
         })], {
             data: {notes: [{text: "old", at: "2020-01-01"}, {text: "new", at: "2024-01-01"}, {text: "", at: ""}]},
         });
-        // Each item shows its summary (first field) as a header and then its fields; empty items are dropped.
+        // Each item shows its summary as a header and then its fields. A blank entry still renders.
         const texts = screen.getAllByText(/^(old|new)$/).map((el) => el.textContent);
         expect(texts).toEqual(["new", "new", "old", "old"]);
         expect(screen.getByText("#1")).toBeInTheDocument();
-        expect(screen.queryByText("#3")).toBeNull();
+        expect(screen.getByText("#3")).toBeInTheDocument();
     });
 
     it("entityCards opt-in uses the summary field as the title and omits it from the body", () => {
@@ -254,6 +254,81 @@ describe("#SheetEmbeddedItemsList", () => {
         expect(screen.getAllByText(/^(old|new)$/).map((el) => el.textContent)).toEqual(["new", "old"]);
         expect(screen.getByText("2024-01-01")).toBeInTheDocument();
         expect(screen.getByText("2020-01-01")).toBeInTheDocument();
+    });
+
+    it("keeps the title field in the entity card body when that field is blank", () => {
+        renderSheetWith(ViewRenderer, [fieldNode("#SheetEmbeddedItemsList", "geolocation", {
+            entityCards: true,
+            compactSummaryFields: ["city"],
+            fields: [{name: "city", type: "text", labelKey: "geoCity"}, {name: "ip", type: "text", labelKey: "geoIp"}],
+        })], {
+            data: {geolocation: [{city: "", ip: "203.0.113.4"}]},
+        });
+        expect(screen.getByText("#1")).toBeInTheDocument();
+        expect(screen.getByText(/t:geoCity/)).toBeInTheDocument();
+        expect(screen.getByText("203.0.113.4")).toBeInTheDocument();
+    });
+
+    it("keeps an item when the summary field is blank and another field has a value", () => {
+        renderSheetWith(ViewRenderer, [fieldNode("#SheetEmbeddedItemsList", "geolocation", {
+            fields: [
+                {name: "city", type: "text"},
+                {name: "ip", type: "text"},
+            ],
+            compactSummaryFields: ["city", "country", "time"],
+        })], {
+            data: {geolocation: [{city: "", ip: "203.0.113.4"}, {city: "", ip: ""}]},
+        });
+        expect(screen.getAllByText("203.0.113.4")).toHaveLength(1);
+    });
+
+    it("renders every object in the array, including {}", () => {
+        renderSheetWith(ViewRenderer, [fieldNode("#SheetEmbeddedItemsList", "geolocation", {
+            fields: [{name: "city", type: "text"}, {name: "ip", type: "text"}],
+            compactSummaryFields: ["city"],
+        })], {
+            data: {geolocation: [{city: "", ip: ""}, {city: ""}, {}]},
+        });
+        expect(screen.getByText("#1")).toBeInTheDocument();
+        expect(screen.getByText("#2")).toBeInTheDocument();
+        expect(screen.getByText("#3")).toBeInTheDocument();
+        expect(document.querySelectorAll(".tabler-icon-exclamation-mark")).toHaveLength(6);
+    });
+
+    it("locks a field the access map does not grant and shows value-not-set for an empty granted field", () => {
+        renderSheetWith(ViewRenderer, [fieldNode("#SheetEmbeddedItemsList", "geolocation", {
+            cardColumns: 2,
+            fields: [
+                {name: "city", type: "text", labelKey: "geoCity"},
+                {name: "ip", type: "text", labelKey: "geoIp"},
+            ],
+            compactSummaryFields: ["city"],
+        })], {
+            data: {geolocation: [{city: "Paris", ip: ""}]},
+            access: {geolocation: {keys: {ip: {}}}},
+        });
+        const cards = propsOf("#DisplayCard");
+        const city = cards.find((c) => c.title === "t:geoCity");
+        const ip = cards.find((c) => c.title === "t:geoIp");
+        expect(city).toMatchObject({locked: true, show: false, value: ""});
+        expect(ip).toMatchObject({locked: false, show: true, value: ""});
+        expect(screen.queryByText("Paris")).toBeNull();
+        expect(screen.getByText("#1")).toBeInTheDocument();
+    });
+
+    it("treats a parent grant with no keys as readable children", () => {
+        renderSheetWith(ViewRenderer, [fieldNode("#SheetEmbeddedItemsList", "geolocation", {
+            cardColumns: 2,
+            fields: [{name: "city", type: "text", labelKey: "geoCity"}],
+        })], {
+            data: {geolocation: [{}]},
+            access: {geolocation: {}},
+        });
+        expect(propsOf("#DisplayCard").find((c) => c.title === "t:geoCity")).toMatchObject({
+            locked: false,
+            show: true,
+            value: "",
+        });
     });
 
     it("compact mode joins the summary fields", () => {

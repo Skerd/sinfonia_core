@@ -29,6 +29,51 @@ export function hasAnyAccessPath(access: AccessMap | undefined, paths: readonly 
     return paths.some((p) => hasAccessPath(access, p));
 }
 
+function accessNode(access: AccessMap, path: string): unknown {
+    if (access[path] !== undefined) return access[path];
+    const parts = path.split(".");
+    let cursor: unknown = access;
+    for (let i = 0; i < parts.length; i++) {
+        if (!cursor || typeof cursor !== "object") return undefined;
+        const next = (cursor as Record<string, unknown>)[parts[i]];
+        if (i === parts.length - 1) return next;
+        const nested = next as {keys?: unknown} | undefined;
+        cursor = nested && typeof nested === "object" && "keys" in nested ? nested.keys : next;
+    }
+    return undefined;
+}
+
+/**
+ * A parent granted as a whole (`true` or `{}` with no `keys`) covers its children.
+ * `{keys: {...}}` does not: each child is its own grant.
+ */
+function parentCoversChildren(node: unknown): boolean {
+    if (node === true) return true;
+    if (!node || typeof node !== "object") return false;
+    return !("keys" in node);
+}
+
+/**
+ * Whether one field of an embedded array item is readable.
+ * `listPath` is the array (`geolocation`); `fieldName` is the item key (`city`).
+ *
+ * No map, or an empty map, means the sheet is not gating these values. `SheetViewRenderer`
+ * turns both `read: true` and `read: false` into `{}`; a real field denial is a map that
+ * names other keys and omits this one. A parent granted as a whole (`true` or `{}` with
+ * no `keys`) covers its children. `{keys: {...}}` grants only the keys it lists.
+ */
+export function embeddedFieldReadable(
+    access: AccessMap | undefined,
+    listPath: string | undefined,
+    fieldName: string,
+): boolean {
+    if (!access || Object.keys(access).length === 0) return true;
+    const path = listPath ? `${listPath}.${fieldName}` : fieldName;
+    if (hasAccessPath(access, path)) return true;
+    if (!listPath || !hasAccessPath(access, listPath)) return false;
+    return parentCoversChildren(accessNode(access, listPath));
+}
+
 export type DisplayCardAccessSpec = {
     /** Access paths for the *value* being rendered (not card chrome). */
     paths: string[];

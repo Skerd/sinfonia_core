@@ -333,7 +333,10 @@ function UserProfileCardInner({
                             <div className="flex flex-wrap items-center gap-2">
                                 {
                                     (read.name || read.surname) &&
-                                    <h3 className="text-xl font-bold capitalize">{getName(data)}</h3>
+                                    <h3 className="text-xl font-bold capitalize">{getName({
+                                        name: read.name ? data.name : "",
+                                        surname: read.surname ? data.surname : "",
+                                    })}</h3>
                                 }
                                 {
                                     (read.online || read.mfaStatus) &&
@@ -431,7 +434,7 @@ function UserProfileCardInner({
                                     }
                                     show={!!read?.username}
                                     type="email"
-                                    value={data.username || data.unverifiedEmail}
+                                    value={data.username || (read?.requests?.keys?.activation?.keys?.email ? data.unverifiedEmail : "")}
                                 />
                                 <EntityCardRow
                                     icon={Phone}

@@ -31,6 +31,8 @@ function SheetEmbeddedItemsListHost({binding, ctx}: {binding: FieldBinding; ctx:
         className: wpText(wp, "className"),
         sortField: wpText(wp, "sortField"),
         sortDescending: wp.sortDescending !== false,
+        access: ctx.access,
+        listPath: binding.name,
         sheetLanguageKey: ctx.resolveLanguageKey,
     });
 }

@@ -4,12 +4,16 @@ import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx
 import ExpandableText from "@coreModule/components/viewEngine/widgets/display/expandableText.tsx";
 import DisplayCard, {type DisplayCardLinkedSheetOuterProps} from "@coreModule/components/viewEngine/widgets/display/displayCard.tsx";
 import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
+import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {Item, ItemActions, ItemMedia} from "@coreModule/components/ui/item.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {IconLink} from "@tabler/icons-react";
 import {resolveIcon, resolveWidget} from "../../../widgetRegistry.ts";
+import {embeddedFieldReadable} from "../../../engine/access.ts";
+import type {AccessMap} from "../../../engine/types.ts";
 import {resolvePath} from "../../../engine/refs.ts";
 import {linkedReferenceSheet, type LinkedReferenceSheet} from "../../linkedSheet/linkedSheetHost.tsx";
 import SheetMediaFilesStrip from "../sheetMediaFilesStrip.tsx";
@@ -66,6 +70,15 @@ function buildLinkedReferenceSheet(
     };
 }
 
+/** Readable empty value → `ValueNotSet`. Unreadable field → locked placeholder. */
+function FieldGap({allowed}: {allowed: boolean}) {
+    return allowed ? <ValueNotSet /> : <HiddenElement showLock />;
+}
+
+function fieldAllowed(access: AccessMap | undefined, listPath: string | undefined, field: EmbeddedItemFieldConfig): boolean {
+    return embeddedFieldReadable(access, listPath, field.name);
+}
+
 /* One configured field of an embedded item, as a tile, text line or linked card. */
 
 export function ExternalTextLink({
@@ -97,11 +110,21 @@ export function renderMediaStripField(
     resolveSheet: ResolveLanguageKey,
     key: string | number,
     cardColumns: number | undefined,
+    access?: AccessMap,
+    listPath?: string,
 ) {
-    const value = resolvePath(item, field.name);
+    const allowed = fieldAllowed(access, listPath, field);
+    const value = allowed ? resolvePath(item, field.name) : undefined;
     const media = Array.isArray(value) ? value : value != null && typeof value === "object" ? [value] : [];
-    if (media.length === 0) return null;
     const label = field.labelKey ? resolveSheet(field.labelKey) : null;
+    if (!allowed || media.length === 0) {
+        return (
+            <div key={key} className={cn("min-w-0 flex flex-col gap-1", cardColumns && "col-span-full")}>
+                {label ? <span className="text-xs font-medium text-muted-foreground">{label}</span> : null}
+                <FieldGap allowed={allowed} />
+            </div>
+        );
+    }
     return (
         <div key={key} className={cn("min-w-0 flex flex-col gap-1", cardColumns && "col-span-full")}>
             {label ? <span className="text-xs font-medium text-muted-foreground">{label}</span> : null}
@@ -124,24 +147,26 @@ export function renderLinkedRefField(
     resolveSheet: ResolveLanguageKey,
     key: string | number,
     _cardColumns: number | undefined,
+    access?: AccessMap,
+    listPath?: string,
 ) {
-    const built = buildLinkedReferenceSheet(item, field, resolveSheet);
-    const stub = resolveLinkedRefStub(item, field);
-    if (!stub && !built) return null;
+    const allowed = fieldAllowed(access, listPath, field);
+    const built = allowed ? buildLinkedReferenceSheet(item, field, resolveSheet) : null;
+    const stub = allowed ? resolveLinkedRefStub(item, field) : null;
     const display = built?.display
         ?? (stub ? linkedRefDisplay(item, field, stub, resolveSheet) : "");
-    if (!display && !built) return null;
-    const title = field.labelKey ? String(resolveSheet(field.labelKey)) : display;
+    const title = field.labelKey ? String(resolveSheet(field.labelKey)) : (display || field.name);
 
     return (
         <div key={key} className="min-w-0">
             <DisplayCard
-                show
+                show={allowed}
+                locked={!allowed}
                 title={title}
                 tooltip={title}
                 Icon={field.icon ? (resolveIcon(field.icon) ?? undefined) : undefined}
                 value={field.labelKey ? display : null}
-                dontRenderValue={!field.labelKey}
+                dontRenderValue={!field.labelKey && !!display}
                 linkedReferenceSheet={built?.sheet}
             />
         </div>
@@ -157,13 +182,14 @@ export function renderEntityCardLinkedRefField(
     field: EmbeddedItemFieldConfig,
     resolveSheet: ResolveLanguageKey,
     key: string | number,
+    access?: AccessMap,
+    listPath?: string,
 ): ReactNode {
-    const built = buildLinkedReferenceSheet(item, field, resolveSheet);
-    const stub = resolveLinkedRefStub(item, field);
-    if (!stub && !built) return null;
+    const allowed = fieldAllowed(access, listPath, field);
+    const built = allowed ? buildLinkedReferenceSheet(item, field, resolveSheet) : null;
+    const stub = allowed ? resolveLinkedRefStub(item, field) : null;
     const display = built?.display
         ?? (stub ? linkedRefDisplay(item, field, stub, resolveSheet) : "");
-    if (!display) return null;
     const label =
         typeof field.labelKey === "string" && field.labelKey.length > 0
             ? String(resolveSheet(field.labelKey))
@@ -175,6 +201,7 @@ export function renderEntityCardLinkedRefField(
             key={key}
             label={label}
             value={display}
+            gap={display ? undefined : <FieldGap allowed={allowed} />}
             Icon={Icon}
             linkedReferenceSheet={built?.sheet}
         />
@@ -184,11 +211,13 @@ export function renderEntityCardLinkedRefField(
 function EmbeddedEntityCardLinkedRefRow({
     label,
     value,
+    gap,
     Icon,
     linkedReferenceSheet,
 }: {
     label: string | null;
     value: string;
+    gap?: ReactNode;
     Icon?: ComponentType<{size?: number | string; className?: string}>;
     linkedReferenceSheet?: LinkedReferenceSheet;
 }) {
@@ -217,7 +246,7 @@ function EmbeddedEntityCardLinkedRefRow({
                 ) : null}
                 {label ? <span className="shrink-0 text-sm font-medium">{label}:</span> : null}
                 <div className="min-w-0 hover:cursor-default text-sm text-foreground">
-                    <TruncatedValue text={value}>{value}</TruncatedValue>
+                    {gap ?? <TruncatedValue text={value}>{value}</TruncatedValue>}
                 </div>
                 {showLinkedBadge && LinkedSheet != null ? (
                     <ItemActions className="shrink-0">
@@ -268,9 +297,11 @@ export function renderScalarEmbeddedField(
     resolveSheet: ResolveLanguageKey,
     key: string | number,
     cardColumns: number | undefined,
+    access?: AccessMap,
+    listPath?: string,
 ) {
-    const text = resolveEmbeddedFieldText(item, field, resolveSheet);
-    if (!text) return null;
+    const allowed = fieldAllowed(access, listPath, field);
+    const text = allowed ? resolveEmbeddedFieldText(item, field, resolveSheet) : "";
     const label =
         typeof field.labelKey === "string" && field.labelKey.length > 0
             ? resolveSheet(field.labelKey)
@@ -285,14 +316,23 @@ export function renderScalarEmbeddedField(
             return (
                 <div key={key} className={wrapClass}>
                     <DisplayCard
-                        show
-                        title={label ? String(label) : text}
-                        tooltip={label ? String(label) : text}
+                        show={allowed}
+                        locked={!allowed}
+                        title={label ? String(label) : (text || field.name)}
+                        tooltip={label ? String(label) : (text || field.name)}
                         Icon={Icon}
                         value={text}
-                        expandable
+                        expandable={!!text}
                         maxLength={250}
                     />
+                </div>
+            );
+        }
+        if (!allowed || !text) {
+            return (
+                <div key={key} className={wrapClass}>
+                    {label ? <span className="text-sm">{label}: </span> : null}
+                    <FieldGap allowed={allowed} />
                 </div>
             );
         }
@@ -318,14 +358,24 @@ export function renderScalarEmbeddedField(
         return (
             <div key={key} className="min-w-0">
                 <DisplayCard
-                    show
-                    title={label ? String(label) : text}
-                    tooltip={label ? String(label) : text}
+                    show={allowed}
+                    locked={!allowed}
+                    title={label ? String(label) : (text || field.name)}
+                    tooltip={label ? String(label) : (text || field.name)}
                     Icon={flagCode ? undefined : Icon}
                     flagCode={flagCode}
                     value={text}
                     externalHref={href ?? undefined}
                 />
+            </div>
+        );
+    }
+
+    if (!allowed || !text) {
+        return (
+            <div key={key} className={cn(field.className ?? "text-sm", "min-w-0")}>
+                {label ? <span>{label}: </span> : null}
+                <FieldGap allowed={allowed} />
             </div>
         );
     }

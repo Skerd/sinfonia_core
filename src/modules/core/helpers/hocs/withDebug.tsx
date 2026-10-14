@@ -597,6 +597,9 @@ const withDebug = (
     resourceIds?: DebugResourceIds,
 ) => (WrappedComponent: any) => {
 
+    // checked = false;
+    // hideDebug = false;
+
     /* `?hardDebug=1` forces the overlay on (and the unchecked ratio badge) even when callers pass hideDebug. */
     const hardDebug =
         typeof window !== "undefined" &&

@@ -23,6 +23,7 @@ import PauseCronJob from "../actions/pause.tsx";
 import ResumeCronJob from "../actions/resume.tsx";
 import CronJobActionDialogs from "../actions/cronJobActionDialogs.tsx";
 import type {ReactNode} from "react";
+import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 
 type Props = WithLanguageType & {
     job: CronJob;
@@ -31,18 +32,16 @@ type Props = WithLanguageType & {
     onModifySuccess?: (updated?: CronJob) => void;
 };
 
-function isPaused(job: CronJob): boolean {
-    return !job.active || job.pausedAt != null;
-}
-
 function CronJobCardBadges({
     entity,
+    read,
     resolveLanguageKey,
 }: {
     entity: CronJob;
+    read: unknown;
     resolveLanguageKey: ResolveLanguageKey;
 }): ReactNode {
-    const paused = isPaused(entity);
+    const paused = !entity.active || (accessFieldPathExists(read, "pausedAt") && entity.pausedAt != null);
     return (
         <DisplayValue path="active" value={entity.active}>
             {() => (
@@ -93,7 +92,7 @@ function CronJobCard({job, resolveLanguageKey, onDelete, onRestore, onModifySucc
                 />
             )}
         >
-            {({entity, setAction}) => (
+            {({entity, read, setAction}) => (
                 <>
                     <EntityCard.Header
                         titlePath="name"
@@ -103,7 +102,7 @@ function CronJobCard({job, resolveLanguageKey, onDelete, onRestore, onModifySucc
                                 <CopyTooltip text={entity.name} />
                             </span>
                         }
-                        badges={<CronJobCardBadges entity={entity} resolveLanguageKey={resolveLanguageKey} />}
+                        badges={<CronJobCardBadges entity={entity} read={read} resolveLanguageKey={resolveLanguageKey} />}
                     >
                         <RunCronJob job={entity} onAction={setAction} />
                         <PauseCronJob job={entity} onAction={setAction} />

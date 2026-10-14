@@ -1,6 +1,7 @@
 import {Clock, Globe2, Monitor, ShieldCheck} from "lucide-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {UserSession} from "armonia/src/modules/core/api/user/private/userSession/userSession.dto.ts";
@@ -38,7 +39,9 @@ export default function UserSessionCard({
     onDelete,
     onRestore,
 }: UserSessionCardProps) {
+    const {read: shellRead, write} = useAccess("userSessions", viewingSelf ? "self" : "others");
     const isCurrentDevice = (row: UserSession) => !!currentDeviceId && row.deviceId === currentDeviceId;
+    const canRevoke = accessFieldPathExists(write, "isActive");
 
     return (
         <EntityCard
@@ -58,20 +61,23 @@ export default function UserSessionCard({
             failedTitle=""
             failedDescription=""
             titlePath="deviceId"
-            shellClassName={(row) => (!row.isActive ? "opacity-70" : undefined)}
+            shellClassName={(row) =>
+                accessFieldPathExists(shellRead, "isActive") && !row.isActive ? "opacity-70" : undefined
+            }
         >
             {({entity: row, read}) => {
-                const can = (k: string) => accessFieldPathExists(read, k);
-                const isActive = row.isActive;
-                const location = sessionLocation(row);
-                const rowIsCurrentDevice = isCurrentDevice(row);
-
-                const title =
-                    can("deviceId")
-                        ? (row.deviceId || resolveLanguageKey("unknownDevice"))
-                        : can("sessionId")
-                            ? row.sessionId
-                            : resolveLanguageKey("unknownDevice");
+                const canReadActive = accessFieldPathExists(read, "isActive");
+                const canReadDeviceId = accessFieldPathExists(read, "deviceId");
+                const canReadSessionId = accessFieldPathExists(read, "sessionId");
+                const canReadGeolocation = accessFieldPathExists(read, "geolocation");
+                const canReadIp = accessFieldPathExists(read, "ipAddress");
+                const location = canReadGeolocation ? sessionLocation(row) : "";
+                const ip = canReadIp ? row.ipAddress : "";
+                const title = canReadDeviceId
+                    ? (row.deviceId || resolveLanguageKey("unknownDevice"))
+                    : canReadSessionId
+                        ? row.sessionId
+                        : resolveLanguageKey("unknownDevice");
 
                 return (
                     <>
@@ -79,21 +85,21 @@ export default function UserSessionCard({
                             titlePath={["deviceId", "sessionId"]}
                             title={title}
                             icon={
-                                <div
-                                    className={cn(
-                                        "flex size-7 shrink-0 items-center justify-center rounded-full",
-                                        isActive ? "bg-success/10 text-success" : "bg-muted text-muted-foreground",
-                                    )}
-                                >
+                                <div className={cn(
+                                    "flex size-7 shrink-0 items-center justify-center rounded-full",
+                                    canReadActive && row.isActive ? "bg-success/10 text-success" : "bg-muted text-muted-foreground",
+                                )}>
                                     <ShieldCheck className="size-3.5 shrink-0" />
                                 </div>
                             }
                             badges={
                                 <>
-                                    <Badge variant={isActive ? "secondary" : "outline"} className="h-5 px-1.5 text-3xs">
-                                        {resolveLanguageKey(isActive ? "badge.active" : "badge.revoked")}
-                                    </Badge>
-                                    {rowIsCurrentDevice && (
+                                    {canReadActive && (
+                                        <Badge variant={row.isActive ? "secondary" : "outline"} className="h-5 px-1.5 text-3xs">
+                                            {resolveLanguageKey(row.isActive ? "badge.active" : "badge.revoked")}
+                                        </Badge>
+                                    )}
+                                    {canReadDeviceId && isCurrentDevice(row) && (
                                         <Badge variant="default" className="h-5 px-1.5 text-3xs">
                                             {resolveLanguageKey("badge.current")}
                                         </Badge>
@@ -101,20 +107,22 @@ export default function UserSessionCard({
                                 </>
                             }
                         >
-                            <UserSessionRevokeMenuItem
-                                session={row}
-                                currentDeviceId={currentDeviceId}
-                                revoking={revoking}
-                                onRevoke={onRevoke}
-                                resolveLanguageKey={resolveLanguageKey}
-                            />
+                            {canRevoke && (
+                                <UserSessionRevokeMenuItem
+                                    session={row}
+                                    currentDeviceId={currentDeviceId}
+                                    revoking={revoking}
+                                    onRevoke={onRevoke}
+                                    resolveLanguageKey={resolveLanguageKey}
+                                />
+                            )}
                         </EntityCard.Header>
                         <EntityCard.Body>
                             <EntityCardRow
                                 icon={Clock}
                                 label={resolveLanguageKey("lastActiveAt")}
                                 tooltip={resolveLanguageKey("lastActiveAt")}
-                                show={can("lastActiveAt")}
+                                path={"lastActiveAt"}
                                 type="dateTime"
                                 value={row.lastActiveAt}
                             />
@@ -122,14 +130,14 @@ export default function UserSessionCard({
                                 icon={Globe2}
                                 label={resolveLanguageKey("location")}
                                 tooltip={resolveLanguageKey("location")}
-                                show={can("ipAddress") || can("geolocation")}
-                                value={location || row.ipAddress || resolveLanguageKey("unknownLocation")}
+                                show={canReadIp || canReadGeolocation}
+                                value={location || ip || resolveLanguageKey("unknownLocation")}
                             />
                             <EntityCardRow
                                 icon={Monitor}
                                 label={resolveLanguageKey("sessionId")}
                                 tooltip={resolveLanguageKey("sessionId")}
-                                show={can("sessionId")}
+                                path={"sessionId"}
                                 value={row.sessionId}
                             >
                                 {(formatted) => (
@@ -142,7 +150,7 @@ export default function UserSessionCard({
                                 icon={Monitor}
                                 label={resolveLanguageKey("userAgent")}
                                 tooltip={resolveLanguageKey("userAgent")}
-                                show={can("userAgent")}
+                                path={"userAgent"}
                                 value={row.userAgent || resolveLanguageKey("unknown")}
                             >
                                 {(formatted) => (
@@ -155,7 +163,7 @@ export default function UserSessionCard({
                                 icon={Clock}
                                 label={resolveLanguageKey("expiresAt")}
                                 tooltip={resolveLanguageKey("expiresAt")}
-                                show={can("expiresAt")}
+                                path={"expiresAt"}
                                 type="dateTime"
                                 value={row.expiresAt}
                             />

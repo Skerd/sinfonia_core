@@ -1,6 +1,7 @@
 import {CheckCircle2, Clock, Globe2, MonitorSmartphone, XCircle} from "lucide-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {LoginHistory} from "armonia/src/modules/core/api/user/private/loginHistory/loginHistory.dto.ts";
@@ -29,6 +30,8 @@ export default function LoginHistoryCard({
     onDelete,
     onRestore,
 }: LoginHistoryCardProps) {
+    const {read: shellRead} = useAccess("loginHistories", viewingSelf ? "self" : "others");
+
     return (
         <EntityCard
             resource="loginHistories"
@@ -46,42 +49,65 @@ export default function LoginHistoryCard({
             failedTitle=""
             failedDescription=""
             titlePath="ip"
-            shellClassName={(row) => (row.deletedAt != null ? "opacity-80" : undefined)}
+            shellClassName={(row) =>
+                (accessFieldPathExists(shellRead, "deletedAt") || accessFieldPathExists(shellRead, "deletedBy")) && row.deletedAt != null
+                    ? "opacity-80"
+                    : undefined
+            }
         >
             {({entity: row, read}) => {
-                const can = (k: string) => accessFieldPathExists(read, k);
-                const location = [row.geolocation?.city, row.geolocation?.country].filter(Boolean).join(", ");
-                const deviceLine = [row.device, row.os, row.browser].filter(Boolean).join(" · ");
+                const canReadStatus = accessFieldPathExists(read, "status");
+                const canReadMfa = accessFieldPathExists(read, "mfa");
+                const canReadGeo = accessFieldPathExists(read, "geolocation");
+                const canReadIp = accessFieldPathExists(read, "ip");
+                const canReadDevice = accessFieldPathExists(read, "device");
+                const canReadOs = accessFieldPathExists(read, "os");
+                const canReadBrowser = accessFieldPathExists(read, "browser");
                 const rowIsSuccess = row.status === "success";
+                const location = canReadGeo ? [row.geolocation?.city, row.geolocation?.country].filter(Boolean).join(", ") : "";
+                const ip = canReadIp ? row.ip : "";
+                const deviceLine = [
+                    canReadDevice ? row.device : "",
+                    canReadOs ? row.os : "",
+                    canReadBrowser ? row.browser : "",
+                ].filter(Boolean).join(" · ");
 
                 return (
                     <>
                         <EntityCard.Header
                             titlePath="status"
-                            title={resolveLanguageKey(rowIsSuccess ? "status.success" : "status.failure")}
+                            title={canReadStatus ? resolveLanguageKey(rowIsSuccess ? "status.success" : "status.failure") : ""}
                             icon={
                                 <div
                                     className={cn(
                                         "flex size-7 shrink-0 items-center justify-center rounded-full",
-                                        rowIsSuccess ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
+                                        canReadStatus && rowIsSuccess
+                                            ? "bg-success/10 text-success"
+                                            : canReadStatus
+                                                ? "bg-destructive/10 text-destructive"
+                                                : "bg-muted text-muted-foreground",
                                     )}
                                 >
-                                    {rowIsSuccess ? <CheckCircle2 className="size-3.5" /> : <XCircle className="size-3.5" />}
+                                    {canReadStatus && !rowIsSuccess
+                                        ? <XCircle className="size-3.5" />
+                                        : canReadStatus
+                                            ? <CheckCircle2 className="size-3.5" />
+                                            : <MonitorSmartphone className="size-3.5" />}
                                 </div>
                             }
                             badges={
-                                can("status") && (
-                                    <>
+                                <>
+                                    {canReadStatus && (
                                         <Badge variant={rowIsSuccess ? "secondary" : "destructive"} className="h-5 px-1.5 text-3xs">
                                             {resolveLanguageKey(rowIsSuccess ? "badge.success" : "badge.failure")}
                                         </Badge>
-                                        {can("mfa") && row.mfa && (
-                                            <Badge variant="outline" className="h-5 px-1.5 text-3xs">
-                                                {resolveLanguageKey("badge.mfa")}
-                                            </Badge>
-                                        )}
-                                    </>
-                                )
+                                    )}
+                                    {canReadMfa && row.mfa && (
+                                        <Badge variant="outline" className="h-5 px-1.5 text-3xs">
+                                            {resolveLanguageKey("badge.mfa")}
+                                        </Badge>
+                                    )}
+                                </>
                             }
                         />
                         <EntityCard.Body>
@@ -89,7 +115,7 @@ export default function LoginHistoryCard({
                                 icon={Clock}
                                 label={resolveLanguageKey("time")}
                                 tooltip={resolveLanguageKey("time")}
-                                show={can("time")}
+                                path="time"
                                 type="dateTime"
                                 value={row.time}
                             />
@@ -97,20 +123,20 @@ export default function LoginHistoryCard({
                                 icon={Globe2}
                                 label={resolveLanguageKey("location")}
                                 tooltip={resolveLanguageKey("location")}
-                                show={can("ip") || can("geolocation")}
-                                value={location || row.ip || resolveLanguageKey("unknownLocation")}
+                                show={canReadIp || canReadGeo}
+                                value={location || ip || resolveLanguageKey("unknownLocation")}
                             />
                             <EntityCardRow
                                 icon={MonitorSmartphone}
                                 label={resolveLanguageKey("device")}
                                 tooltip={resolveLanguageKey("device")}
-                                show={can("device") || can("os") || can("browser")}
+                                show={canReadDevice || canReadOs || canReadBrowser}
                                 value={deviceLine || "—"}
                             />
                             <EntityCardRow
                                 label={resolveLanguageKey("reason")}
                                 tooltip={resolveLanguageKey("reason")}
-                                show={can("reason")}
+                                path="reason"
                                 value={row.reason}
                             >
                                 {(formatted) => (

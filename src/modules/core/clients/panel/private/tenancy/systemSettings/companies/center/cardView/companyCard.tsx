@@ -157,13 +157,14 @@ const CompanyCard = memo(function CompanyCard({
                 )}
             >
                 {({entity: row, read, setAction}) => {
+                    const canReadName = accessFieldPathExists(read, "name");
                     const logoTile = accessFieldPathExists(read, "logo") ? (
                         <Avatar className="h-12 w-12 shrink-0 border-2 border-background shadow-md">
                             {row.logo ? (
-                                <AvatarImage src={`/api/auxiliary/media/${row.logo}`} alt={row.name} />
+                                <AvatarImage src={`/api/auxiliary/media/${row.logo}`} alt={canReadName ? row.name : ""} />
                             ) : null}
                             <AvatarFallback className="bg-primary text-primary-foreground">
-                                {row.name.substring(0, 2)}
+                                {canReadName ? (row.name ?? "").substring(0, 2) : ""}
                             </AvatarFallback>
                         </Avatar>
                     ) : undefined;
