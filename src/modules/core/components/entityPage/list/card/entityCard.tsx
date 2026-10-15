@@ -75,7 +75,8 @@ type EntityCardContextValue = {
     hideEdit?: boolean;
     setAction: (action: string) => void;
     editPath: (entity: SoftDeletable) => string;
-    titlePath: string;
+    /** A list means the title falls back across these fields. */
+    titlePath: string | string[];
 };
 
 const EntityCardContext = createContext<EntityCardContextValue | null>(null);
@@ -106,7 +107,8 @@ export type EntityCardProps<T extends SoftDeletable> = {
     restoreUrl: string;
     failedTitle: string;
     failedDescription: string;
-    titlePath?: string;
+    /** A list means the delete/restore confirmation name falls back across these fields. */
+    titlePath?: string | string[];
     innerRef?: RefObject<WithAxiosLifecycleRef<NoInfer<T>> | null>;
     hideDelete?: boolean | ((entity: NoInfer<T>) => boolean);
     hideRestore?: boolean | ((entity: NoInfer<T>) => boolean);
@@ -310,9 +312,15 @@ function EntityCardRoot<T extends SoftDeletable>({
         return <HiddenElement />;
     }
 
-    const titleValue = findFromObject(entity, titlePath);
-    const confirmName =
-        accessFieldPathExists(read, titlePath) && typeof titleValue === "string" ? titleValue : undefined;
+    const titlePaths = Array.isArray(titlePath) ? titlePath : [titlePath];
+    let confirmName: string | undefined;
+    for (const path of titlePaths) {
+        const value = findFromObject(entity, path);
+        if (accessFieldPathExists(read, path) && typeof value === "string" && value.trim()) {
+            confirmName = value;
+            break;
+        }
+    }
     const showDeleted =
         isDeleted &&
         (accessFieldPathExists(read, "deletedAt") || accessFieldPathExists(read, "deletedBy"));
