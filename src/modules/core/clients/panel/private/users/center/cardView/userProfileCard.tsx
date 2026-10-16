@@ -34,7 +34,7 @@ import type {
     CompanyUserType
 } from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {Tabs, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
 import {ActivationRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/activationRequestTabContent.tsx";
 import {InvitationRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/invitationRequestTabContent.tsx";
 import {MfaDeactivationRequestTabContent} from "@coreModule/clients/panel/private/users/center/cardView/requests/mfaDeactivationRequestTabContent.tsx";
@@ -43,7 +43,6 @@ import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
-import {TabsContent} from "@radix-ui/react-tabs";
 
 export type UserProfileData = CompanyUserType;
 
