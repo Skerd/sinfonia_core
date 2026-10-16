@@ -38,8 +38,8 @@ function normalize(value: string | undefined) {
  *    the accessibility tree so the document outline and screen-reader page
  *    announcement are unchanged; only the duplicated pixels go.
  *
- * Title/description and toolbar stack on narrow widths so the period control
- * cannot squeeze the heading into an unreadable ellipsis.
+ * The toolbar stays on the title row. The heading keeps a readable minimum
+ * and truncates; only a toolbar that cannot fit beside that minimum wraps.
  */
 export default function Header({
     title,
@@ -65,11 +65,11 @@ export default function Header({
     return (
         <div
             className={cn(
-                "flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3",
+                "flex flex-wrap items-start justify-between gap-x-3 gap-y-2",
                 className,
             )}
         >
-            <div className="min-w-0 flex-1">
+            <div className="min-w-[10rem] max-w-full flex-1">
                 <div className="flex min-w-0 items-center gap-1.5">
                     <TruncatedValue
                         as="h1"
@@ -90,7 +90,9 @@ export default function Header({
                     </TruncatedValue>
                 ) : null}
             </div>
-            {children ? <div className="flex shrink-0 items-center gap-2">{children}</div> : null}
+            {children ? (
+                <div className="ms-auto flex shrink-0 items-center justify-end gap-2">{children}</div>
+            ) : null}
         </div>
     );
 }
