@@ -12,6 +12,15 @@
   "facebook": "Facebook",
   "logo": "Logo",
   "vat": "IVA",
+  "shopSlug": "Slug shop",
+  "shopHost": "Host shop",
+  "shopStatus": "Stato shop",
+  "shopHostLastError": "Ultimo errore",
+  "shopHostStatus": {
+    "pending": "In attesa",
+    "online": "Online",
+    "failed": "Fallito"
+  },
   "parentCompany": "Società madre",
   "allowedDomains": "Domini consentiti",
   "howToReach": "Come raggiungerci",

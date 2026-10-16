@@ -12,6 +12,15 @@
   "facebook": "Facebook",
   "logo": "Logo",
   "vat": "TVSH",
+  "shopSlug": "Slug i dyqanit",
+  "shopHost": "Host i dyqanit",
+  "shopStatus": "Statusi i dyqanit",
+  "shopHostLastError": "Gabimi i fundit",
+  "shopHostStatus": {
+    "pending": "Në pritje",
+    "online": "Online",
+    "failed": "Dështoi"
+  },
   "parentCompany": "Kompania mëmë",
   "allowedDomains": "Domenet e lejuara",
   "howToReach": "Si të arrini tek ne",

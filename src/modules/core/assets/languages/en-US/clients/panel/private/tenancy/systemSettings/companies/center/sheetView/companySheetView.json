@@ -12,6 +12,15 @@
   "facebook": "Facebook",
   "logo": "Logo",
   "vat": "VAT",
+  "shopSlug": "Shop slug",
+  "shopHost": "Shop host",
+  "shopStatus": "Shop status",
+  "shopHostLastError": "Last error",
+  "shopHostStatus": {
+    "pending": "Pending",
+    "online": "Online",
+    "failed": "Failed"
+  },
   "parentCompany": "Parent company",
   "allowedDomains": "Allowed domains",
   "howToReach": "How to reach us",

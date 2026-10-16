@@ -7,7 +7,7 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import FormViewRenderer from "@coreModule/components/viewEngine/FormViewRenderer.tsx";
 import {useViewConfigState} from "@coreModule/helpers/hooks/useViewConfig.ts";
-import type {FieldValues} from "react-hook-form";
+import type {FieldValues, UseFormReturn} from "react-hook-form";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import {resolveEntityPageKeys} from "@coreModule/helpers/general/entityPage.ts";
@@ -29,6 +29,8 @@ type GenericCreatePageConfig<TForm extends FieldValues> = {
     mapSubmitPayload?: (data: TForm) => TForm | FormData | Promise<TForm | FormData>;
     /** Side effects once the PUT succeeds (`FormViewRenderer` / axios success pipeline). */
     afterSuccess?: () => void;
+    /** Render prop for interactive children that need form access (slug prefill, cascading selects). */
+    renderChildren?: (form: UseFormReturn<TForm>) => ReactNode;
 
     //deprecated
     collectionName?: string;
@@ -121,6 +123,7 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
                 extraTitles={extraTitles}
                 submitIcon={config.submitIcon}
                 hideChrome={!!embedForm}
+                renderChildren={config.renderChildren}
             />
         );
     }

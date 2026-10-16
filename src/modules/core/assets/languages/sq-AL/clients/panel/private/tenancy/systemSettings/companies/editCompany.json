@@ -16,6 +16,8 @@
   "form": {
     "nameLabel": "Emri",
     "namePlaceholder": "Emri",
+    "shopSlugLabel": "Slug i dyqanit",
+    "shopSlugPlaceholder": "my-shop",
     "emailLabel": "Email",
     "emailPlaceholder": "Email",
     "phoneNumberNumberLabel": "Numri i telefonit",
