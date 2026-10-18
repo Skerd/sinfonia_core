@@ -105,7 +105,6 @@ const MAESTRO_ALIASES: Record<string, string> = {
     "@propertyDevelopmentModule/": "modules/propertyDevelopment/",
     "@musicIndustry/": "modules/musicIndustry/",
     "@eCommerceModule/": "modules/eCommerce/",
-    "@eCommerceMarketplaceModule/": "modules/eCommerceMarketplace/",
     "@financeModule/": "modules/finance/",
     "@swissOutreachModule/": "modules/swissOutreach/",
 };

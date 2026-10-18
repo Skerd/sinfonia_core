@@ -21,8 +21,8 @@ import {buildSourceIndex, findProperty, type SourceIndex, type StudioTargetKey} 
  *     becoming `widgetProps: {...}` would silently detach the config from its constant.
  *
  * And it always takes a backup first. That is not belt-and-braces: maestro's git repository
- * tracks only 10 of the 124 `*.views.ts` files — `modules/eCommerce/` and
- * `modules/eCommerceMarketplace/` are untracked in their entirety — so for most of the corpus
+ * tracks only 10 of the 124 `*.views.ts` files — `modules/eCommerce/` is
+ * untracked in its entirety — so for most of the corpus
  * `git checkout` is not an undo. {@link ApplyResult.backupFile} is the undo.
  *
  * Edits are expressed against node paths (`"1.0.2"`), the same coordinates the Studio's tree

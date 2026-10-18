@@ -33,7 +33,6 @@
     "paths": {
       "@coreModule/*": ["./src/modules/core/*"],
       "@eCommerceModule/*": ["./src/modules/eCommerce/*"],
-      "@eCommerceMarketplaceModule/*": ["./src/modules/eCommerceMarketplace/*"],
       "@financeModule/*": ["./src/modules/finance/*"],
       "@musicIndustryModule/*": ["./src/modules/musicIndustry/*"],
       "@propertyDevelopmentModule/*": ["./src/modules/propertyDevelopment/*"],

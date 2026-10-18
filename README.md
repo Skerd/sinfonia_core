@@ -116,7 +116,6 @@ See [`src/modules/core/README.md`](src/modules/core/README.md). No silent refres
 |-------|------|
 | `@coreModule/*` | `src/modules/core/*` |
 | `@eCommerceModule/*` | `src/modules/eCommerce/*` |
-| `@eCommerceMarketplaceModule/*` | `src/modules/eCommerceMarketplace/*` |
 | `@propertyManagementModule/*` | `src/modules/propertyManagement/*` |
 | `@propertyDevelopmentModule/*` | `src/modules/propertyDevelopment/*` |
 | `armonia/*` | `../armonia/*` |
@@ -129,7 +128,6 @@ Run `npm run sync:module-aliases` after adding modules to regenerate aliases in 
 Feature modules extend core and are documented separately:
 
 - [`src/modules/eCommerce`](src/modules/eCommerce/README.md)
-- [`src/modules/eCommerceMarketplace`](src/modules/eCommerceMarketplace/README.md)
 - [`src/modules/propertyManagement`](src/modules/propertyManagement/README.md)
 - [`src/modules/propertyDevelopment`](src/modules/propertyDevelopment/README.md)
 
