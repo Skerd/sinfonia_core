@@ -43,6 +43,7 @@ function AccountSettings({
     const {read: readNotifications} = useAccess("notifications", perspective);
     const {read: readAddresses} = useAccess("customerAddresses", perspective);
     const {read: readSavedSearches} = useAccess("savedsearches", perspective);
+    const {read: readProviderProfiles} = useAccess("providerProfiles", perspective);
     const readSecurity = readSessions || readHistory
         ? true
         : readSessions === null || readHistory === null
@@ -73,6 +74,7 @@ function AccountSettings({
     const visiblePages = contributedPages.filter((page) => {
         if (page.id === "addresses") return readAddresses !== false;
         if (page.id === "savedsearches") return readSavedSearches !== false;
+        if (page.id === "providerprofile") return readProviderProfiles !== false;
         return true;
     });
 
@@ -122,7 +124,7 @@ function AccountSettings({
             setActiveTab("account");
             return;
         }
-        if (subview === "security" || subview === "notifications" || subview === "notificationCenter" || subview === "apps" || subview === "addresses" || subview === "savedsearches") {
+        if (subview === "security" || subview === "notifications" || subview === "notificationCenter" || subview === "apps" || subview === "addresses" || subview === "savedsearches" || subview === "providerprofile") {
             navigate("/account/account", {replace: true});
         }
     }, [isBot, specificUserId, subview, navigate]);
@@ -134,6 +136,7 @@ function AccountSettings({
         : activeTab === "apps" ? readProfile
         : activeTab === "addresses" ? readAddresses
         : activeTab === "savedsearches" ? readSavedSearches
+        : activeTab === "providerprofile" ? readProviderProfiles
         : true;
 
     return (

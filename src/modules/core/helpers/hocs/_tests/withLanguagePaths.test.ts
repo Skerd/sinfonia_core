@@ -37,6 +37,7 @@ const SHARED_DICTIONARIES: Record<string, string[]> = {
     "src/modules/core/components/viewEngine/widgets/media/mediaField.tsx": ["src/modules/core/components/custom/files/mediaField.tsx"],
     "src/modules/core/components/viewEngine/widgets/media/singleFile.tsx": ["src/modules/core/components/custom/files/singleFile.tsx"],
     "src/modules/eCommerce/clients/panel/private/posConfigs/center/actions/posConfigsBulkMenu.tsx": ["src/modules/eCommerce/clients/panel/private/posConfigs/index.tsx"],
+    "src/modules/eCommerce/clients/panel/private/providerProfile/providerProfileSection.tsx": ["src/modules/eCommerce/clients/panel/private/providerProfile/editProviderProfile.tsx"],
     "src/modules/propertyManagement/clients/panel/private/unitCosts/paymentCalendarTab.tsx": ["src/modules/propertyManagement/clients/panel/private/unitCosts/index.tsx"],
     "src/modules/propertyManagement/clients/client/public/shared/sections/contactLeadColumn.tsx": ["src/modules/propertyManagement/clients/client/public/contact/index.tsx"],
     "src/modules/propertyManagement/clients/client/public/shared/favorites/publicFavoritesPanelHost.tsx": ["src/modules/propertyManagement/clients/client/public/projects/index.tsx"],
