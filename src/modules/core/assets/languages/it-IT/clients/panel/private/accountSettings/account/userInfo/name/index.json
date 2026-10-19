@@ -5,5 +5,7 @@
     "nameDescription": "Questo è il nome che verrà visualizzato nel sistema."
   },
   "failTitle": "Impossibile caricare il nome",
-  "failTitleTooltip": "Fare clic per riprovare a caricare il nome"
+  "failTitleTooltip": "Fare clic per riprovare a caricare il nome",
+  "edit": "Modifica",
+  "empty": "Ancora nulla di aggiunto."
 }

@@ -5,5 +5,7 @@
     "phoneNumberNumberPlaceholder": "Numri i telefonit"
   },
   "failTitle": "Ngarkimi i numrit të telefonit dështoi",
-  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e numrit të telefonit"
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e numrit të telefonit",
+  "edit": "Modifiko",
+  "empty": "Ende asgjë e shtuar."
 }

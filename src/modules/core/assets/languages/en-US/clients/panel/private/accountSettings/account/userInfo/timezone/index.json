@@ -5,5 +5,7 @@
     "newTimeZoneDescription": "This is the time zone that will be used to display time in the system."
   },
   "failTitle": "Failed to load timezone",
-  "failTitleTooltip": "Click to retry loading timezone"
+  "failTitleTooltip": "Click to retry loading timezone",
+  "edit": "Edit",
+  "empty": "Nothing added yet."
 }

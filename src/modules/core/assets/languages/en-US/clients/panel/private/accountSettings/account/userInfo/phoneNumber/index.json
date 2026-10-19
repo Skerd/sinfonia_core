@@ -5,5 +5,7 @@
     "phoneNumberNumberPlaceholder": "Phone number"
   },
   "failTitle": "Failed to load phone number",
-  "failTitleTooltip": "Click to retry loading phone number"
+  "failTitleTooltip": "Click to retry loading phone number",
+  "edit": "Edit",
+  "empty": "Nothing added yet."
 }

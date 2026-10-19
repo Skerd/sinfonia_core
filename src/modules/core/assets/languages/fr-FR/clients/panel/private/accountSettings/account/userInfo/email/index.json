@@ -9,5 +9,7 @@
   "emailVerified": "Adresse e-mail vérifiée actuelle",
   "invitedUser": "Veuillez vérifier l'e-mail en acceptant la demande d'invitation",
   "emailNotVerified": "Veuillez vérifier votre nouvel e-mail en cliquant sur le lien envoyé dans votre boîte de réception",
-  "emailNotVerifiedSmall": "Veuillez vérifier votre nouvel e-mail"
+  "emailNotVerifiedSmall": "Veuillez vérifier votre nouvel e-mail",
+  "edit": "Modifier",
+  "empty": "Rien n'a encore été ajouté."
 }

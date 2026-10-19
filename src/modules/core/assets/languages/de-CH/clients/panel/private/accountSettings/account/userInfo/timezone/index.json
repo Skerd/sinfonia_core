@@ -5,5 +5,7 @@
     "newTimeZoneDescription": "Diese ist die time zone that will werden used bis display time in die system."
   },
   "failTitle": "Zeitzone konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis retry laden zeitzone"
+  "failTitleTooltip": "Click bis retry laden zeitzone",
+  "edit": "Bearbeiten",
+  "empty": "Noch nichts erfasst."
 }

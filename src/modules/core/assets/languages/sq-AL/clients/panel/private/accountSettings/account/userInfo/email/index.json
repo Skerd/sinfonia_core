@@ -9,5 +9,7 @@
   "emailVerified": "Email aktual i verifikuar",
   "invitedUser": "Ju lutemi verifikoni emailin duke pranuar kërkesën për ftesë",
   "emailNotVerified": "Ju lutemi verifikoni emailin tuaj të ri duke klikuar në lidhjen e dërguar në kutinë tuaj hyrëse",
-  "emailNotVerifiedSmall": "Ju lutemi verifikoni emailin tuaj të ri"
+  "emailNotVerifiedSmall": "Ju lutemi verifikoni emailin tuaj të ri",
+  "edit": "Modifiko",
+  "empty": "Ende asgjë e shtuar."
 }

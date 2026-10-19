@@ -35,9 +35,6 @@ function UpdatePhoneNumber({
     const {write = {}} = useAccess("users", !specificUserId ? "self" : "others");
 
     useEffect(() => {
-        updateCanEdit?.(!!write.phoneNumber);
-    }, [write]);
-    useEffect(() => {
         if( !!fireUpdate ){
             const postBody = {
                 phoneNumber: fieldValue
@@ -55,9 +52,6 @@ function UpdatePhoneNumber({
     if( !write.phoneNumber ){
         return <HiddenElement />
     }
-    if( !fieldValue ){
-        return <></>
-    }
 
     return (
         <div className="flex items-center grow gap-x-1 transition-all ease-in" style={{border: "0px solid red"}}>
@@ -69,7 +63,7 @@ function UpdatePhoneNumber({
                             variant="outline"
                             size="icon"
                             className={cn("h-full px-2 text-success", {"hover:border-success/50 hover:dark:border-success/50": !!fieldValue})}
-                            disabled={loading}
+                            disabled={loading || !fieldValue}
                         >
                             <Check className={cn("h-4 w-4")} />
                         </Button>

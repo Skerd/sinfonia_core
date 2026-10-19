@@ -179,7 +179,7 @@ function AccountSettings({
                         : activeTab === "notifications" ? <NotificationsForm specificUserId={specificUserId} />
                         : activeTab === "apps" ? <ConnectedApps specificUserId={specificUserId} />
                         : visiblePages.some((page) => page.id === activeTab) ? visiblePages.map((page) => (
-                            activeTab === page.id ? <div key={page.id} className="min-h-0 flex-1">{page.render()}</div> : null
+                            activeTab === page.id ? <div key={page.id} className="flex min-h-0 flex-1 flex-col overflow-hidden">{page.render()}</div> : null
                         ))
                         : <Forbidden />
                     }

@@ -5,5 +5,7 @@
     "phoneNumberNumberPlaceholder": "Telefon nummer"
   },
   "failTitle": "Telefon nummer konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis retry laden telefon nummer"
+  "failTitleTooltip": "Click bis retry laden telefon nummer",
+  "edit": "Bearbeiten",
+  "empty": "Noch nichts erfasst."
 }

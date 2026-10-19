@@ -5,5 +5,7 @@
     "surnameDescription": "This is the surname that will be displayed in the system."
   },
   "failTitle": "Failed to load surname",
-  "failTitleTooltip": "Click to retry loading surname"
+  "failTitleTooltip": "Click to retry loading surname",
+  "edit": "Edit",
+  "empty": "Nothing added yet."
 }

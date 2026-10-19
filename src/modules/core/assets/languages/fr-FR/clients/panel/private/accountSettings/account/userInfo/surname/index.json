@@ -5,5 +5,7 @@
     "surnameDescription": "C'est le nom de famille qui sera affiché dans le système."
   },
   "failTitle": "Échec du chargement du nom de famille",
-  "failTitleTooltip": "Cliquez pour réessayer de charger le nom de famille"
+  "failTitleTooltip": "Cliquez pour réessayer de charger le nom de famille",
+  "edit": "Modifier",
+  "empty": "Rien n'a encore été ajouté."
 }

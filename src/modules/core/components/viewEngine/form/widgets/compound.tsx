@@ -89,7 +89,9 @@ export const coreCompoundFormWidgetRenderers: Record<string, CompoundFormWidgetR
         return (
             <Widget
                 name={binding.name}
-                labelKey={binding.label ?? binding.name}
+                /* Omit when the host section already shows the title — do not fall back to
+                   `binding.name` or resolveLanguageKey renders `---skills---` / similar. */
+                labelKey={binding.label}
                 placeholderKey={binding.placeholder ?? binding.name}
                 removeTooltipKey={wp.removeTooltipKey ?? "remove"}
                 /* No default: an unset key would render as `---add---`, so the label names the button instead. */

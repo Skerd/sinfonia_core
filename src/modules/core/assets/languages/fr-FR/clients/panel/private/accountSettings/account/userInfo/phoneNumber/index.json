@@ -5,5 +5,7 @@
     "phoneNumberNumberPlaceholder": "Numéro de téléphone"
   },
   "failTitle": "Échec du chargement du numéro de téléphone",
-  "failTitleTooltip": "Cliquez pour réessayer de charger le numéro de téléphone"
+  "failTitleTooltip": "Cliquez pour réessayer de charger le numéro de téléphone",
+  "edit": "Modifier",
+  "empty": "Rien n'a encore été ajouté."
 }

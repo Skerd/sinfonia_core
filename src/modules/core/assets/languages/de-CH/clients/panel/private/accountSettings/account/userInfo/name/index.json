@@ -5,5 +5,7 @@
     "nameDescription": "Diese ist die name that will werden displayed in die system."
   },
   "failTitle": "Name konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis retry laden name"
+  "failTitleTooltip": "Click bis retry laden name",
+  "edit": "Bearbeiten",
+  "empty": "Noch nichts erfasst."
 }

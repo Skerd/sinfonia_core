@@ -5,5 +5,7 @@
     "newTimeZoneDescription": "Il s'agit du fuseau horaire qui sera utilisé pour afficher l'heure dans le système."
   },
   "failTitle": "Échec du chargement du fuseau horaire",
-  "failTitleTooltip": "Cliquez pour réessayer de charger le fuseau horaire"
+  "failTitleTooltip": "Cliquez pour réessayer de charger le fuseau horaire",
+  "edit": "Modifier",
+  "empty": "Rien n'a encore été ajouté."
 }

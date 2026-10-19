@@ -9,5 +9,7 @@
   "emailVerified": "Current verifiziert e-Mail",
   "invitedUser": "Bitte verifizieren die e-Mail von accepting die einladung antrag",
   "emailNotVerified": "Bitte verifizieren ihr neu e-Mail von clicking on die link sent bis ihr posteingang",
-  "emailNotVerifiedSmall": "Bitte verifizieren ihr neu e-Mail"
+  "emailNotVerifiedSmall": "Bitte verifizieren ihr neu e-Mail",
+  "edit": "Bearbeiten",
+  "empty": "Noch nichts erfasst."
 }

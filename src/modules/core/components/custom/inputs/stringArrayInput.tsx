@@ -30,8 +30,8 @@ const DUPLICATE_FLASH_MS = 1400;
 export type StringArrayInputProps<TFieldValues extends FieldValues = FieldValues> = {
     /** Form field name for the string[] value (type-safe: must be a key of TFieldValues whose value is string[]). */
     name: FieldPath<TFieldValues>;
-    /** Label text or translation key. */
-    labelKey: string;
+    /** Label text or translation key. Omit when a parent section already shows the title. */
+    labelKey?: string;
     /** Placeholder text or translation key. */
     placeholderKey: string;
     /** Remove-button tooltip text or translation key. */
@@ -114,10 +114,12 @@ export function StringArrayInput<TFieldValues extends FieldValues = FieldValues>
     const atMaxItems = maxItems != null && items.length >= maxItems;
     const canAdd = !loading && !atMaxItems && draft.trim().length > 0;
 
-    const label = resolve(labelKey, resolveLanguageKey);
+    const label = labelKey ? resolve(labelKey, resolveLanguageKey) : undefined;
     const placeholder = resolve(placeholderKey, resolveLanguageKey);
     const removeTooltip = resolve(removeTooltipKey, resolveLanguageKey);
-    const addTooltip = addTooltipKey ? resolve(addTooltipKey, resolveLanguageKey) : label;
+    const addTooltip = addTooltipKey
+        ? resolve(addTooltipKey, resolveLanguageKey)
+        : (label ?? placeholder);
 
     const draftInput = (
         <Input
@@ -144,8 +146,8 @@ export function StringArrayInput<TFieldValues extends FieldValues = FieldValues>
                 name={name}
                 render={() => (
                     <FormItem className="min-w-0">
-                    <FormLabel>{label}</FormLabel>
-                    <div className="mt-2 flex min-w-0 gap-2">
+                    {label ? <FormLabel>{label}</FormLabel> : null}
+                    <div className={cn("flex min-w-0 gap-2", label && "mt-2")}>
                         <FormControl className="min-w-0 flex-1">
                             {maxLength != null && maxLength > 0 ? (
                                 <FormMaxLengthControl maxLength={maxLength} value={draft}>
@@ -171,7 +173,7 @@ export function StringArrayInput<TFieldValues extends FieldValues = FieldValues>
                     </div>
                     <FormMessage />
                     {items.length > 0 && (
-                        <div role="list" aria-label={label} className="mt-2 flex min-w-0 flex-wrap gap-2">
+                        <div role="list" aria-label={label ?? placeholder} className="mt-2 flex min-w-0 flex-wrap gap-2">
                             {items.map((item, index) => (
                                 <Badge
                                     key={index}

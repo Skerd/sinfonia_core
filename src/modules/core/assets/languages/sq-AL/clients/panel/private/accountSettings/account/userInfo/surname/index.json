@@ -5,5 +5,7 @@
     "surnameDescription": "Ky është mbiemri që do të shfaqet në sistem."
   },
   "failTitle": "Ngarkimi i mbiemrit dështoi",
-  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e mbiemrit"
+  "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e mbiemrit",
+  "edit": "Modifiko",
+  "empty": "Ende asgjë e shtuar."
 }

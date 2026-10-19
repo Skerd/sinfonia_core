@@ -35,9 +35,6 @@ function UpdateTimezone({
     const {write = {}} = useAccess("users", !specificUserId ? "self" : "others");
 
     useEffect(() => {
-        updateCanEdit?.(!!write.timezone);
-    }, [write]);
-    useEffect(() => {
         if( !!fireUpdate ){
             const postBody = {
                 newTimezone: fieldValue
@@ -55,9 +52,6 @@ function UpdateTimezone({
     if( !write.timezone ){
         return <HiddenElement />
     }
-    if( !fieldValue ){
-        return <></>
-    }
 
     return (
         <div className="flex grow items-center gap-x-1 transition-all ease-in" style={{border: "0px solid red"}}>
@@ -67,7 +61,7 @@ function UpdateTimezone({
                     variant="outline"
                     size="icon"
                     className={cn("h-full px-2 text-success", {"hover:border-success/50 hover:dark:border-success/50": !!fieldValue})}
-                    disabled={loading}
+                    disabled={loading || !fieldValue}
                 >
                     <Check className={cn("h-4 w-4")} />
                 </Button>
