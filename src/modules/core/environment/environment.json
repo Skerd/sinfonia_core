@@ -7,7 +7,7 @@
     "enableFormResponseErrorInfo": false
   },
   "layout": {
-    "activateThirdPartyAuthentication": true,
+    "activateThirdPartyAuthentication": false,
     "activateSignup": true,
     "activateForgetPassword": true
   },
