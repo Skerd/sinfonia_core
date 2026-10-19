@@ -1,6 +1,5 @@
 import {useEffect} from "react";
 import {Building2} from "lucide-react";
-import {z} from "zod";
 import type {UseFormReturn} from "react-hook-form";
 import {createGenericCreatePage} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
 import {newCompanyCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
@@ -9,19 +8,12 @@ import {createCompanyFormSchema} from "armonia/src/modules/core/api/company/priv
 import type {CreateCompanyFormType} from "armonia/src/modules/core/api/company/private/company/company.schema-def.ts";
 import {slugifyShopSlug} from "armonia/src/modules/core/api/company/private/company/shopSlug.ts";
 
-type CreateCompanyFormPayload = Omit<CreateCompanyFormType, "logo"> & {
-    logo?: File;
-};
-
-const createCompanySchema = (languageCode: string, form: unknown) =>
-    createCompanyFormSchema(languageCode, form).extend({logo: z.instanceof(File).optional()});
-
-export default createGenericCreatePage<CreateCompanyFormPayload>({
+export default createGenericCreatePage<CreateCompanyFormType>({
     languagePath: "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/createCompany.tsx",
     collectionName: "companies",
     accessModel: "companies",
     apiUrl: "/api/company",
-    schema: createCompanySchema,
+    schema: createCompanyFormSchema,
     defaultValues: {name: "", vat: "", shopSlug: ""},
     submitIcon: <Building2 />,
     afterSuccess: () => store.dispatch(newCompanyCreated()),
@@ -53,7 +45,7 @@ export default createGenericCreatePage<CreateCompanyFormPayload>({
     },
 });
 
-function PrefillShopSlug({form}: {form: UseFormReturn<CreateCompanyFormPayload>}) {
+function PrefillShopSlug({form}: {form: UseFormReturn<CreateCompanyFormType>}) {
     const name = form.watch("name");
     const shopSlugDirty = form.formState.dirtyFields.shopSlug;
 

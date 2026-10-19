@@ -1,5 +1,4 @@
 import {Save} from "lucide-react";
-import {z} from "zod";
 import type {ReactElement} from "react";
 import {createGenericEditPage, type GenericEditPageProps} from "@coreModule/components/entityPage/pages/createGenericEditPage.tsx";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -9,18 +8,7 @@ import type {Company} from "armonia/src/modules/core/api/company/private/company
 import {editCompanyFormSchema} from "armonia/src/modules/core/api/company/private/company/editCompany.form.validator.ts";
 import {EditCompanyFormType} from "armonia/src/modules/core/api/company/private/company/company.schema-def.ts";
 
-const editCompanyClientFormSchema = (
-    languageCode: string,
-    form: Record<string, unknown> | undefined,
-    permissions: Record<string, unknown>,
-    readPermissions: Record<string, unknown>,
-) => editCompanyFormSchema(languageCode, form, permissions, readPermissions).extend({logo: z.union([z.instanceof(File), z.string()]).optional(),});
-
-export type EditCompanyFormData = Omit<EditCompanyFormType, "logo"> & {
-    logo?: File | string;
-};
-
-const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormData>({
+const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormType>({
     languagePath: "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/editCompany.tsx",
     collectionName: "companies",
     accessModel: "companies",
@@ -28,8 +16,8 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormData>({
     /** Same company scope as GET — `authMW` resolves `req.company` from `x-company-id`. */
     patchAddToHeader: [{whatToGet: "entityId", whereToPut: "x-company-id"}],
     fetchEntity: (entityId: string) => apiClient.get<Company>("/api/company", {headers: {"x-company-id": entityId}}).then((r) => r.data),
-    schema: editCompanyClientFormSchema as any,
-    buildInitialValues: (companyData, writeFields): EditCompanyFormData => ({
+    schema: editCompanyFormSchema,
+    buildInitialValues: (companyData, writeFields): EditCompanyFormType => ({
         _id:            companyData._id,
         name:           writeFields.name           ? companyData.name           : undefined,
         email:          writeFields.email          ? companyData.email          : undefined,
@@ -69,7 +57,7 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormData>({
     submitIcon: <Save />,
     afterSuccess: () => store.dispatch(newCompanyCreated()),
     mapSubmitPayload: (data, {writeFields}) => {
-        const postBody: EditCompanyFormType = {
+        const postBody: EditCompanyFormType & {logo?: string | null} = {
             _id:            data._id!,
             name:           data.name,
             email:          data.email,
@@ -97,8 +85,13 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormData>({
         };
 
         const formData = new FormData();
-        if (writeFields.logo && data.logo instanceof File) {
-            formData.append("files", data.logo);
+        // File → upload; null → clear sentinel (MediaField edit remove); string id → leave unchanged (omit).
+        if (writeFields.logo) {
+            if (data.logo instanceof File) {
+                formData.append("files", data.logo);
+            } else if (data.logo === null) {
+                postBody.logo = null;
+            }
         }
         formData.append("data", JSON.stringify(postBody));
         return formData;
