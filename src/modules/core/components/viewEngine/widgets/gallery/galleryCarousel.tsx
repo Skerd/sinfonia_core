@@ -18,6 +18,9 @@ function resolveMediaUrl(url: string, media: Media): string {
     return `${url}${media._id}`
 }
 
+/** Stable fallback so `imageGallery={x || []}` / ACL denials do not remount media every render. */
+const EMPTY_MEDIA: Media[] = []
+
 export type GalleryCarouselPreviewLocation = "top" | "bottom" | "left" | "right"
 
 interface GalleryCarouselProps {
@@ -166,7 +169,7 @@ export function GalleryCarousel({
     mediaUrl = MEDIA_BASE_URL,
     mainImage,
     imageGallery,
-    videoGallery = [],
+    videoGallery,
     showThumbnails = true,
     allowFullScreen = true,
     coverAfterFirst = false,
@@ -176,10 +179,14 @@ export function GalleryCarousel({
     forcedAspectRatio,
     className,
 }: GalleryCarouselProps) {
+    const images = imageGallery?.length ? imageGallery : EMPTY_MEDIA
+    const videos = videoGallery?.length ? videoGallery : EMPTY_MEDIA
     const media = React.useMemo<Media[]>(
-        () => [...(mainImage ? [mainImage] : []), ...videoGallery, ...imageGallery],
-        [mainImage, imageGallery, videoGallery]
+        () => [...(mainImage ? [mainImage] : []), ...videos, ...images],
+        [mainImage, images, videos]
     )
+    const leadMedia = media[0]
+    const leadUrl = leadMedia ? resolveMediaUrl(mediaUrl, leadMedia) : null
 
     const [open, setOpen] = React.useState(false)
     const [index, setIndex] = React.useState(-1)
@@ -192,6 +199,8 @@ export function GalleryCarousel({
     const aspectRatio = forcedRatio ?? detectedAspectRatio
     const [fullscreenIndex, setFullscreenIndex] = React.useState(0)
     const [fullscreenApi, setFullscreenApi] = React.useState<CarouselApi | null>(null)
+    /** Keep showing the last ratio while the same lead URL reloads — avoids empty-frame twitch on parent re-render. */
+    const measuredLeadUrlRef = React.useRef<string | null>(null)
 
     // Refs for video elements in main carousel
     const videoRefs = React.useRef<Map<number, HTMLVideoElement>>(new Map())
@@ -209,22 +218,27 @@ export function GalleryCarousel({
     /* ---------------- Resolve main image aspect ratio ---------------- */
     React.useEffect(() => {
         if (forcedRatio != null) {
+            measuredLeadUrlRef.current = null
             setDetectedAspectRatio(null)
             return
         }
-        if (!media?.length) {
+        if (!leadMedia || !leadUrl) {
+            measuredLeadUrlRef.current = null
             setDetectedAspectRatio(null)
             return
         }
+
+        // Same lead media already measured: keep current ratio. Callers often pass fresh `[]`
+        // for empty galleries on each render (menu open, dialog mount), which must not blank the image.
+        if (measuredLeadUrlRef.current === leadUrl) return
 
         setDetectedAspectRatio(null)
-        const mainMedia = media[0]
-        const url = resolveMediaUrl(mediaUrl, mainMedia)
 
-        if (mainMedia.mime?.includes("image")) {
+        if (leadMedia.mime?.includes("image")) {
             const img = new Image()
-            img.src = url
+            img.src = leadUrl
             img.onload = () => {
+                measuredLeadUrlRef.current = leadUrl
                 setDetectedAspectRatio(img.naturalWidth / img.naturalHeight)
             }
             return () => {
@@ -232,18 +246,19 @@ export function GalleryCarousel({
             }
         }
 
-        if (mainMedia.mime?.includes("video")) {
+        if (leadMedia.mime?.includes("video")) {
             const video = document.createElement("video")
-            video.src = url
+            video.src = leadUrl
             video.preload = "metadata"
             video.onloadedmetadata = () => {
+                measuredLeadUrlRef.current = leadUrl
                 setDetectedAspectRatio(video.videoWidth / video.videoHeight)
             }
             return () => {
                 video.onloadedmetadata = null
             }
         }
-    }, [media, mediaUrl, forcedRatio])
+    }, [leadMedia, leadUrl, forcedRatio])
 
     /* ---------------- Sync main carousel index → state ---------------- */
     React.useEffect(() => {
@@ -711,8 +726,8 @@ export function AccessGatedGalleryCarousel({
         <GalleryCarousel
             {...rest}
             mainImage={canMain ? mainImage : undefined}
-            imageGallery={canImages ? imageGallery : []}
-            videoGallery={canVideos ? videoGallery : []}
+            imageGallery={canImages ? imageGallery : EMPTY_MEDIA}
+            videoGallery={canVideos ? videoGallery : EMPTY_MEDIA}
         />
     );
 }
