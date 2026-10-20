@@ -38,6 +38,8 @@ export const STUDIO_MODULES: StudioModule[] = [
     {id: "eCommerce", label: "eCommerce"},
     {id: "swissOutreach", label: "Swiss outreach"},
     {id: "musicIndustry", label: "Music industry"},
+    {id: "carRental", label: "Car rental"},
+    {id: "dentalClinic", label: "Dental clinic"},
     {id: OTHER_MODULE_ID, label: "Other"},
 ];
 
@@ -58,6 +60,8 @@ const MODULE_BY_API_NAMESPACE: Record<string, StudioModuleId> = {
     eCommerceMarketplace: "eCommerce",
     swissOutreach: "swissOutreach",
     musicIndustry: "musicIndustry",
+    carRental: "carRental",
+    dentalClinic: "dentalClinic",
 };
 
 /**

@@ -20,6 +20,8 @@
         "coreDev": "export NODE_ENV=development && vite --host",
         "publicDev": "export NODE_ENV=development VITE_SINFONIA_APP=public && vite --host",
         "shop": "export NODE_ENV=development VITE_SINFONIA_APP=shop && vite --host",
+        "rental": "export NODE_ENV=development VITE_SINFONIA_APP=rental && vite --host",
+        "clinic": "export NODE_ENV=development VITE_SINFONIA_APP=clinic && vite --host",
         "dyeus": "export NODE_ENV=development VITE_SINFONIA_APP=dyeus && vite --host",
         "studio": "export NODE_ENV=development VITE_SINFONIA_APP=studio && vite --host",
         "runXAndY": "export NODE_ENV=development VITE_ENABLED_MODULES=x,y && vite --host",

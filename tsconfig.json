@@ -31,7 +31,9 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      "@carRentalModule/*": ["./src/modules/carRental/*"],
       "@coreModule/*": ["./src/modules/core/*"],
+      "@dentalClinicModule/*": ["./src/modules/dentalClinic/*"],
       "@eCommerceModule/*": ["./src/modules/eCommerce/*"],
       "@financeModule/*": ["./src/modules/finance/*"],
       "@musicIndustryModule/*": ["./src/modules/musicIndustry/*"],
