@@ -81,18 +81,18 @@ function KafkaServerConsumers({title, resolveLanguageKey}:{title: string, resolv
                         {title}: {running}/{expected}
                     </Badge>
                 </TooltipTrigger>
-                <TooltipContent>
-                    <div className="flex w-max flex-col gap-y-1 text-xs">
+                <TooltipContent className="max-w-md">
+                    <div className="flex max-h-64 flex-col gap-y-1 overflow-y-auto text-xs">
                         {list.length === 0 ? (
                             <p>{resolveLanguageKey("noConsumersRegistered")}</p>
                         ) : (
                             list.map((c: KafkaConsumerStatus) => (
-                                <div key={c.name} className="flex items-center justify-between gap-2">
-                                    <div className="flex items-center gap-x-1 text-nowrap">
-                                        <p className={clsx("h-2 w-2 rounded-full", c.alive ? "bg-success" : "bg-destructive")} />
-                                        <p className="font-medium">{c.displayName || c.name}</p>
+                                <div key={c.name} className="flex items-baseline justify-between gap-x-3">
+                                    <div className="flex min-w-0 items-center gap-x-1">
+                                        <span className={clsx("h-2 w-2 shrink-0 rounded-full", c.alive ? "bg-success" : "bg-destructive")} />
+                                        <span className="font-medium break-words">{c.displayName || c.name}</span>
                                     </div>
-                                    <p className="opacity-70 text-nowrap">({c.groupId})</p>
+                                    <span className="shrink-0 opacity-70">({c.groupId})</span>
                                 </div>
                             ))
                         )}
