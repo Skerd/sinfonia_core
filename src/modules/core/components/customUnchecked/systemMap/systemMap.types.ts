@@ -4,6 +4,7 @@ export type SystemMapCluster =
     | "payments"
     | "marketplace"
     | "escrow"
+    | "pos"
     | "portfolio"
     | "sales"
     | "leasing"

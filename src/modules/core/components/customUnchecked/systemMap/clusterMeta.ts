@@ -1,7 +1,7 @@
 import type {SystemMapCluster} from "./systemMap.types.ts";
 
 /**
- * Categorical hues for the architecture diagram. Twelve clusters need more
+ * Categorical hues for the architecture diagram. Thirteen clusters need more
  * distinct colors than the five --chart-* tokens provide, so they are defined
  * here rather than pulled from the theme.
  *
@@ -16,6 +16,7 @@ const CLUSTER_COLORS = {
     payments: "oklch(0.488 0.217 264)",
     marketplace: "oklch(0.508 0.105 166)",
     escrow: "oklch(0.514 0.198 17)",
+    pos: "oklch(0.520 0.180 335)",
     portfolio: "oklch(0.500 0.119 243)",
     sales: "oklch(0.555 0.146 49)",
     leasing: "oklch(0.511 0.086 186)",
@@ -31,6 +32,7 @@ const CLUSTER_LABELS = {
     payments: "Payments & Ops",
     marketplace: "Marketplace",
     escrow: "Escrow",
+    pos: "Point of Sale",
     portfolio: "Portfolio",
     sales: "Sales",
     leasing: "Leasing",
