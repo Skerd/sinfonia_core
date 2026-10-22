@@ -157,6 +157,8 @@ export default defineConfig(({ mode }) => {
 
     return {
         base: "/",
+        // Set per client by scripts/dev/arpeggio.mjs: dev servers sharing one deps cache corrupt each other.
+        cacheDir: process.env.VITE_CACHE_DIR || undefined,
         plugins: [
             enabledModulesExcludePlugin(enabledModules),
             sinfoniaAppHtmlPlugin(sinfoniaApp.indexHtml, sinfoniaApp.appId),

@@ -30,7 +30,11 @@
         "typecheck": "node --experimental-strip-types scripts/moduleAliases.ts && tsc --noEmit",
         "test": "vitest run",
         "test:watch": "vitest",
-        "test:coverage": "vitest run --coverage"
+        "test:coverage": "vitest run --coverage",
+        "dev:ecommerce": "node ../scripts/dev/arpeggio.mjs up ecommerce --only panel,public",
+        "dev:carRental": "node ../scripts/dev/arpeggio.mjs up carRental --only panel,public",
+        "dev:dentalClinic": "node ../scripts/dev/arpeggio.mjs up dentalClinic --only panel,public",
+        "dev:propertyManagement": "node ../scripts/dev/arpeggio.mjs up propertyManagement --only panel,public"
     },
     "dependencies": {
         "@dnd-kit/core": "^6.3.1",

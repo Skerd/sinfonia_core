@@ -25,7 +25,7 @@ export interface ServerResourceState {
 /**
  * Produces a fresh default circuit breaker snapshot.
  */
-type CircuitBreakerStats = NonNullable<ServerHealthFormResponseType["services"]>["mongoDb"]["circuitBreaker"];
+type CircuitBreakerStats = NonNullable<ServerHealthFormResponseType["services"]>["redis"]["circuitBreaker"];
 const createDefaultCircuitBreaker = (): CircuitBreakerStats => ({
     state: "CLOSED",
     failures: 0,
@@ -62,8 +62,7 @@ const createInitialServerHealth = (): ServerHealthFormResponseType => ({
                     availableConnections: 0,
                     utilizationPercent: 0,
                     waitingRequests: 0
-                },
-                circuitBreaker: createDefaultCircuitBreaker()
+                }
             },
             redis: {
                 lastStart: 0,
