@@ -1,8 +1,8 @@
 {
   "backToList": "Zurück zu liste",
   "description": "Aktualisieren terminplan, umfang, und execution einstellungen.",
-  "errorDescription": "Bitte click here bis retry fetching job daten.",
-  "errorTitle": "Scheduled aktion konnten nicht geladen werden",
+  "errorDescription": "Klicken Sie hier, um die Jobdaten erneut zu laden.",
+  "errorTitle": "Geplante Aktion konnte nicht geladen werden",
   "form": {
     "activeLabel": "Aktiv",
     "codeLabel": "Code",
@@ -31,9 +31,13 @@
   },
   "formHeader": {
     "description": "Aktualisieren terminplan, umfang, und execution einstellungen.",
-    "title": "Scheduled aktion bearbeiten"
+    "title": "Geplante Aktion bearbeiten"
   },
-  "noId": "Keine scheduled aktion selected.",
+  "noId": "Keine geplante Aktion ausgewählt.",
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/editCronJob.tsx",
-  "title": "Scheduled aktion bearbeiten"
+  "title": "Geplante Aktion bearbeiten",
+  "preview": {
+    "title": "Nächste Ausführungen mit diesem Ausdruck",
+    "never": "Dieser Ausdruck wird nie ausgeführt. Prüfen Sie ihn vor dem Speichern."
+  }
 }

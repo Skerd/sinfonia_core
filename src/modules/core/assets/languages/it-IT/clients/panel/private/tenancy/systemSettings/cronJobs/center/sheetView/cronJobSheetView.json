@@ -10,8 +10,8 @@
   "name": "Nome",
   "handler": "Gestore",
   "active": "Attivo",
-  "nextRunAt": "Prossima corsa",
-  "lastRunAt": "Ultima corsa",
+  "nextRunAt": "Prossima esecuzione",
+  "lastRunAt": "Ultima esecuzione",
   "code": "Codice",
   "pausedAt": "In pausa dal",
   "cronExpression": "Espressione cron",
@@ -32,5 +32,22 @@
   "deletedAt": "Eliminato il",
   "deletedBy": "Eliminato da",
   "yes": "Sì",
-  "no": "No"
+  "no": "No",
+  "nextRuns": "Prossime esecuzioni",
+  "executions": {
+    "title": "Storico esecuzioni",
+    "refresh": "Aggiorna lo storico esecuzioni",
+    "loading": "Caricamento delle esecuzioni...",
+    "empty": "Questa attività non è ancora stata eseguita.",
+    "loadMore": "Mostra esecuzioni precedenti",
+    "attempt": "Tentativo {attempt}",
+    "nextRetryAt": "Nuovo tentativo previsto per {at}",
+    "statuses": {
+      "running": "In esecuzione",
+      "success": "Riuscita",
+      "failed": "Non riuscita",
+      "timeout": "Tempo scaduto",
+      "cancelled": "Annullata"
+    }
+  }
 }

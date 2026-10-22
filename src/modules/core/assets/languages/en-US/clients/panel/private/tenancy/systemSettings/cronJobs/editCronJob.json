@@ -35,5 +35,9 @@
   },
   "noId": "No scheduled action selected.",
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/editCronJob.tsx",
-  "title": "Edit scheduled action"
+  "title": "Edit scheduled action",
+  "preview": {
+    "title": "Next runs with this expression",
+    "never": "This expression never runs. Check it before saving."
+  }
 }

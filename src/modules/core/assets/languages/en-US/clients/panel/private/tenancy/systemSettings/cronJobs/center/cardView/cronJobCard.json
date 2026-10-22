@@ -19,5 +19,12 @@
   "paused": "Paused",
   "deleted": "Deleted",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "lastExecution": {
+    "running": "Running",
+    "success": "Last run succeeded",
+    "failed": "Last run failed",
+    "timeout": "Last run timed out",
+    "cancelled": "Last run cancelled"
+  }
 }

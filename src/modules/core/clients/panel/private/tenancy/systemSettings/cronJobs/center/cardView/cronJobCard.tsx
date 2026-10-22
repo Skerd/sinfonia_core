@@ -24,6 +24,8 @@ import ResumeCronJob from "../actions/resume.tsx";
 import CronJobActionDialogs from "../actions/cronJobActionDialogs.tsx";
 import type {ReactNode} from "react";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import {EXECUTION_STATUS_BADGE} from "../cronExecutionDisplay.ts";
 
 type Props = WithLanguageType & {
     job: CronJob;
@@ -41,18 +43,27 @@ function CronJobCardBadges({
     read: unknown;
     resolveLanguageKey: ResolveLanguageKey;
 }): ReactNode {
+    const executionRead = useAccess("cronexecutions").read;
     const paused = !entity.active || (accessFieldPathExists(read, "pausedAt") && entity.pausedAt != null);
+    const lastStatus = accessFieldPathExists(executionRead, "status") ? entity.lastExecution?.status : undefined;
     return (
-        <DisplayValue path="active" value={entity.active}>
-            {() => (
-                <Badge
-                    variant="outline"
-                    className={cn("text-xs", paused ? STATUS_BADGE_WARNING : STATUS_BADGE_SUCCESS)}
-                >
-                    {String(resolveLanguageKey(paused ? "paused" : "active"))}
+        <>
+            <DisplayValue path="active" value={entity.active}>
+                {() => (
+                    <Badge
+                        variant="outline"
+                        className={cn("text-xs", paused ? STATUS_BADGE_WARNING : STATUS_BADGE_SUCCESS)}
+                    >
+                        {String(resolveLanguageKey(paused ? "paused" : "active"))}
+                    </Badge>
+                )}
+            </DisplayValue>
+            {lastStatus ? (
+                <Badge variant="outline" className={cn("text-xs", EXECUTION_STATUS_BADGE[lastStatus])}>
+                    {String(resolveLanguageKey(`lastExecution.${lastStatus}`))}
                 </Badge>
-            )}
-        </DisplayValue>
+            ) : null}
+        </>
     );
 }
 

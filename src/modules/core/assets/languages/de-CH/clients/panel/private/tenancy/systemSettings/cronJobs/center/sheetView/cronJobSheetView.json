@@ -1,8 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx",
-  "failedTitle": "Scheduled aktion konnten nicht geladen werden",
-  "failedDescription": "Something went wrong während laden diese job. Click bis retry.",
-  "failedTooltipDescription": "Click bis retry fetching daten.",
+  "failedTitle": "Geplante Aktion konnte nicht geladen werden",
+  "failedDescription": "Beim Laden dieses Jobs ist ein Fehler aufgetreten. Klicken Sie, um es erneut zu versuchen.",
+  "failedTooltipDescription": "Klicken, um die Daten erneut zu laden.",
   "overview": "Übersicht",
   "schedule": "Zeitplan",
   "execution": "Ausführung",
@@ -10,8 +10,8 @@
   "name": "Name",
   "handler": "Handler",
   "active": "Aktiv",
-  "nextRunAt": "Nächste run",
-  "lastRunAt": "Nach run",
+  "nextRunAt": "Nächste Ausführung",
+  "lastRunAt": "Letzte Ausführung",
   "code": "Code",
   "pausedAt": "Pausiert um",
   "cronExpression": "Cron expression",
@@ -32,5 +32,22 @@
   "deletedAt": "Gelöscht am",
   "deletedBy": "Gelöscht von",
   "yes": "Ja",
-  "no": "Nein"
+  "no": "Nein",
+  "nextRuns": "Nächste Ausführungen",
+  "executions": {
+    "title": "Ausführungsverlauf",
+    "refresh": "Ausführungsverlauf aktualisieren",
+    "loading": "Ausführungen werden geladen...",
+    "empty": "Dieser Job wurde noch nicht ausgeführt.",
+    "loadMore": "Ältere Ausführungen anzeigen",
+    "attempt": "Versuch {attempt}",
+    "nextRetryAt": "Neuer Versuch geplant für {at}",
+    "statuses": {
+      "running": "Läuft",
+      "success": "Erfolgreich",
+      "failed": "Fehlgeschlagen",
+      "timeout": "Zeitüberschreitung",
+      "cancelled": "Abgebrochen"
+    }
+  }
 }

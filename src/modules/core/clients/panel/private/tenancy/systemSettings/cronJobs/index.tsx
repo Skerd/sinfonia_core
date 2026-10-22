@@ -10,6 +10,7 @@ import RunCronJob from "./center/actions/run.tsx";
 import PauseCronJob from "./center/actions/pause.tsx";
 import ResumeCronJob from "./center/actions/resume.tsx";
 import CronJobActionDialogs from "./center/actions/cronJobActionDialogs.tsx";
+import CronJobMetrics from "./center/cronJobMetrics.tsx";
 import {cronJobEditPath} from "./cronJobPaths.ts";
 
 function AllCronJobs({resolveLanguageKey}: WithLanguageType) {
@@ -22,6 +23,7 @@ function AllCronJobs({resolveLanguageKey}: WithLanguageType) {
             hideCreate
             buildEditPath={cronJobEditPath}
             resolveLanguageKey={resolveLanguageKey}
+            aboveToolbar={<CronJobMetrics resolveLanguageKey={resolveLanguageKey} />}
             renderSheet={({entity, open, onOpenChange, onDelete, onRestore, listRef}) => (
                 <CronJobSheetView
                     open={open}

@@ -9,8 +9,8 @@
   "description": "Descrizione",
   "priority": "Priorità",
   "pausedAt": "In pausa dal",
-  "nextRunAt": "Prossima corsa",
-  "lastRunAt": "Ultima corsa",
+  "nextRunAt": "Prossima esecuzione",
+  "lastRunAt": "Ultima esecuzione",
   "maxRetries": "Numero massimo di tentativi",
   "retryDelaySeconds": "Ritardo di nuovo tentativo (secondi)",
   "timeoutSeconds": "Timeout (secondi)",
@@ -19,5 +19,12 @@
   "paused": "In pausa",
   "deleted": "Eliminato",
   "yes": "Sì",
-  "no": "No"
+  "no": "No",
+  "lastExecution": {
+    "running": "In esecuzione",
+    "success": "Ultima esecuzione riuscita",
+    "failed": "Ultima esecuzione non riuscita",
+    "timeout": "Ultima esecuzione scaduta",
+    "cancelled": "Ultima esecuzione annullata"
+  }
 }

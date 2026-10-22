@@ -32,5 +32,22 @@
   "deletedAt": "Fshirë më",
   "deletedBy": "Fshirë nga",
   "yes": "Po",
-  "no": "Jo"
+  "no": "Jo",
+  "nextRuns": "Ekzekutimet e radhës",
+  "executions": {
+    "title": "Historiku i ekzekutimeve",
+    "refresh": "Rifresko historikun e ekzekutimeve",
+    "loading": "Po ngarkohen ekzekutimet...",
+    "empty": "Kjo punë nuk është ekzekutuar ende.",
+    "loadMore": "Shfaq ekzekutimet e mëparshme",
+    "attempt": "Përpjekja {attempt}",
+    "nextRetryAt": "Riprovimi është planifikuar për {at}",
+    "statuses": {
+      "running": "Në ekzekutim",
+      "success": "I suksesshëm",
+      "failed": "I dështuar",
+      "timeout": "Koha mbaroi",
+      "cancelled": "I anuluar"
+    }
+  }
 }

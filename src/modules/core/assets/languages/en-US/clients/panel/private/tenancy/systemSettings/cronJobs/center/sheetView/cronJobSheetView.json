@@ -32,5 +32,22 @@
   "deletedAt": "Deleted at",
   "deletedBy": "Deleted by",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "nextRuns": "Next runs",
+  "executions": {
+    "title": "Run history",
+    "refresh": "Refresh run history",
+    "loading": "Loading runs...",
+    "empty": "This job has not run yet.",
+    "loadMore": "Show older runs",
+    "attempt": "Attempt {attempt}",
+    "nextRetryAt": "Retry scheduled for {at}",
+    "statuses": {
+      "running": "Running",
+      "success": "Succeeded",
+      "failed": "Failed",
+      "timeout": "Timed out",
+      "cancelled": "Cancelled"
+    }
+  }
 }

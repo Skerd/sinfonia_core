@@ -19,5 +19,12 @@
   "paused": "Ndaluar",
   "deleted": "Fshirë",
   "yes": "Po",
-  "no": "Jo"
+  "no": "Jo",
+  "lastExecution": {
+    "running": "Në ekzekutim",
+    "success": "Ekzekutimi i fundit pati sukses",
+    "failed": "Ekzekutimi i fundit dështoi",
+    "timeout": "Ekzekutimit të fundit i mbaroi koha",
+    "cancelled": "Ekzekutimi i fundit u anulua"
+  }
 }

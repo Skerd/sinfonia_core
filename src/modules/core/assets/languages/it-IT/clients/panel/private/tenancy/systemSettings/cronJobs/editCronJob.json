@@ -35,5 +35,9 @@
   },
   "noId": "Nessuna azione pianificata selezionata.",
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/editCronJob.tsx",
-  "title": "Modifica l'azione pianificata"
+  "title": "Modifica l'azione pianificata",
+  "preview": {
+    "title": "Prossime esecuzioni con questa espressione",
+    "never": "Questa espressione non viene mai eseguita. Controllatela prima di salvare."
+  }
 }

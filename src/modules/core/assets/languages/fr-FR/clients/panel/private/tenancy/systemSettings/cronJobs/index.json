@@ -12,7 +12,8 @@
         "items": [
           "Exécutez une tâche maintenant, mettez-la en pause ou reprenez-la.",
           "Modifiez son nom, sa description, son expression cron, ses tentatives, le délai entre tentatives, le délai maximal et la priorité.",
-          "Pour les exécutions manquées, ignorez le retard, exécutez une fois ou rattrapez les exécutions."
+          "Pour les exécutions manquées, ignorez le retard, exécutez une fois ou rattrapez les exécutions.",
+          "Ouvrez une tâche pour voir ses prochaines exécutions et son historique ; une exécution échouée affiche son erreur et ses lignes de journal."
         ]
       },
       {
@@ -47,7 +48,7 @@
     "cronExpression": "Expression Cron",
     "priority": "Priorité",
     "nextRunAt": "Prochaine exécution",
-    "lastRunAt": "Dernière course",
+    "lastRunAt": "Dernière exécution",
     "maxRetries": "Nombre maximal de tentatives",
     "retryDelaySeconds": "Délai de nouvelle tentative (secondes)",
     "timeoutSeconds": "Délai d'expiration (secondes)",
@@ -58,5 +59,13 @@
     "company": "Entreprise",
     "deletedAt": "Supprimé le",
     "deletedBy": "Supprimé par"
+  },
+  "metrics": {
+    "active": "Tâches actives",
+    "pausedCount": "{count} en pause",
+    "running": "En cours",
+    "succeeded24h": "Réussies (24 h)",
+    "failed24h": "Échouées (24 h)",
+    "avgDuration24h": "Durée moyenne (24 h)"
   }
 }

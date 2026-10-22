@@ -19,5 +19,12 @@
   "paused": "En pause",
   "deleted": "Supprimé",
   "yes": "Oui",
-  "no": "Non"
+  "no": "Non",
+  "lastExecution": {
+    "running": "En cours",
+    "success": "Dernière exécution réussie",
+    "failed": "Dernière exécution échouée",
+    "timeout": "Dernière exécution hors délai",
+    "cancelled": "Dernière exécution annulée"
+  }
 }

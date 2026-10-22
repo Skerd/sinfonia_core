@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
-  "title": "Scheduled massnahmen",
-  "description": "Cron jobs und scheduled tasks verwalten",
+  "title": "Geplante Aktionen",
+  "description": "Geplante Jobs ausführen, pausieren oder ihren Zeitplan bearbeiten",
   "help": {
-    "ariaLabel": "Über Scheduled massnahmen",
-    "title": "Über Scheduled massnahmen",
+    "ariaLabel": "Über geplante Aktionen",
+    "title": "Über geplante Aktionen",
     "overview": "Geplante Aktionen sind vom Server angelegte Jobs. Hier steuern und konfigurieren Sie bestehende Jobs; neue Jobs oder Handler werden auf dieser Seite nicht erstellt.",
     "sections": [
       {
@@ -12,7 +12,8 @@
         "items": [
           "Führen Sie einen Job sofort aus, pausieren Sie ihn oder setzen Sie ihn fort.",
           "Bearbeiten Sie Name, Beschreibung, Cron-Ausdruck, Wiederholungen, Verzögerung, Timeout und Priorität.",
-          "Bestimmen Sie bei verpassten Ausführungen: Rückstand überspringen, einmal ausführen oder nachholen."
+          "Bestimmen Sie bei verpassten Ausführungen: Rückstand überspringen, einmal ausführen oder nachholen.",
+          "Öffnen Sie einen Job, um seine nächsten Ausführungen und seinen Verlauf zu sehen; eine fehlgeschlagene Ausführung zeigt ihren Fehler und ihre Protokollzeilen."
         ]
       },
       {
@@ -24,12 +25,12 @@
       }
     ]
   },
-  "createCronJob": "Scheduled aktion erstellen",
+  "createCronJob": "Geplante Aktion erstellen",
   "searchPlaceholder": "Suchen von name, code, oder handler...",
-  "noData": "Keine scheduled massnahmen gefunden",
-  "failTitle": "Scheduled massnahmen konnten nicht geladen werden",
-  "failDescription": "Beim Laden von scheduled massnahmen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
-  "tooltipDescription": "Click bis retry fetching scheduled massnahmen.",
+  "noData": "Keine geplanten Aktionen gefunden",
+  "failTitle": "Geplante Aktionen konnten nicht geladen werden",
+  "failDescription": "Beim Laden der geplanten Aktionen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+  "tooltipDescription": "Klicken, um die geplanten Aktionen erneut zu laden.",
   "fields": {
     "!enums": {
       "missedRunPolicy": {
@@ -46,8 +47,8 @@
     "pausedAt": "Pausiert um",
     "cronExpression": "Cron-Ausdruck",
     "priority": "Priority",
-    "nextRunAt": "Nächste run",
-    "lastRunAt": "Nach run",
+    "nextRunAt": "Nächste Ausführung",
+    "lastRunAt": "Letzte Ausführung",
     "maxRetries": "Max. Wiederholungen",
     "retryDelaySeconds": "Wiederholungsverzögerung (Sekunden)",
     "timeoutSeconds": "Timeout (Sekunden)",
@@ -58,5 +59,13 @@
     "company": "Firma",
     "deletedAt": "Gelöscht am",
     "deletedBy": "Gelöscht von"
+  },
+  "metrics": {
+    "active": "Aktive Jobs",
+    "pausedCount": "{count} pausiert",
+    "running": "Laufen gerade",
+    "succeeded24h": "Erfolgreich (24 Std.)",
+    "failed24h": "Fehlgeschlagen (24 Std.)",
+    "avgDuration24h": "Durchschnittliche Dauer (24 Std.)"
   }
 }

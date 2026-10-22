@@ -12,7 +12,8 @@
         "items": [
           "Eseguite subito un’attività, mettetela in pausa o riprendetela.",
           "Modificate nome, descrizione, espressione cron, tentativi, ritardo tra tentativi, timeout e priorità.",
-          "Per le esecuzioni mancate scegliete se saltare l’arretrato, eseguire una volta o recuperare."
+          "Per le esecuzioni mancate scegliete se saltare l’arretrato, eseguire una volta o recuperare.",
+          "Aprite un’attività per vederne le prossime esecuzioni e lo storico; un’esecuzione non riuscita mostra il suo errore e le righe di log."
         ]
       },
       {
@@ -46,8 +47,8 @@
     "pausedAt": "In pausa dal",
     "cronExpression": "Espressione cron",
     "priority": "Priorità",
-    "nextRunAt": "Prossima corsa",
-    "lastRunAt": "Ultima corsa",
+    "nextRunAt": "Prossima esecuzione",
+    "lastRunAt": "Ultima esecuzione",
     "maxRetries": "Numero massimo di tentativi",
     "retryDelaySeconds": "Ritardo di nuovo tentativo (secondi)",
     "timeoutSeconds": "Timeout (secondi)",
@@ -58,5 +59,13 @@
     "company": "Azienda",
     "deletedAt": "Eliminato il",
     "deletedBy": "Eliminato da"
+  },
+  "metrics": {
+    "active": "Attività attive",
+    "pausedCount": "{count} in pausa",
+    "running": "In esecuzione",
+    "succeeded24h": "Riuscite (24 h)",
+    "failed24h": "Non riuscite (24 h)",
+    "avgDuration24h": "Durata media (24 h)"
   }
 }

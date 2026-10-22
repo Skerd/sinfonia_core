@@ -12,7 +12,8 @@
         "items": [
           "Run a job now, pause it, or resume it.",
           "Edit its name, description, cron expression, retry count, retry delay, timeout, and priority.",
-          "Choose how missed runs are handled: skip the backlog, run once, or catch up."
+          "Choose how missed runs are handled: skip the backlog, run once, or catch up.",
+          "Open a job to see its next runs and its run history; a failed run opens to its error and log lines."
         ]
       },
       {
@@ -57,5 +58,13 @@
     "company": "Company",
     "deletedAt": "Deleted at",
     "deletedBy": "Deleted by"
+  },
+  "metrics": {
+    "active": "Active jobs",
+    "pausedCount": "{count} paused",
+    "running": "Running now",
+    "succeeded24h": "Succeeded (24h)",
+    "failed24h": "Failed (24h)",
+    "avgDuration24h": "Average duration (24h)"
   }
 }

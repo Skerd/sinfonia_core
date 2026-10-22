@@ -12,7 +12,8 @@
         "items": [
           "Ekzekutoni një punë tani, ndalojeni përkohësisht ose rifillojeni.",
           "Ndryshoni emrin, përshkrimin, shprehjen cron, riprovimet, vonesën e riprovimit, afatin dhe përparësinë.",
-          "Për ekzekutimet e humbura zgjidhni: kapërceni radhën, ekzekutoni një herë ose plotësoni prapambetjen."
+          "Për ekzekutimet e humbura zgjidhni: kapërceni radhën, ekzekutoni një herë ose plotësoni prapambetjen.",
+          "Hapni një punë për të parë ekzekutimet e radhës dhe historikun e saj; një ekzekutim i dështuar tregon gabimin dhe rreshtat e regjistrit."
         ]
       },
       {
@@ -58,5 +59,13 @@
     "company": "Kompania",
     "deletedAt": "Fshirë më",
     "deletedBy": "Fshirë nga"
+  },
+  "metrics": {
+    "active": "Punë aktive",
+    "pausedCount": "{count} të ndaluara",
+    "running": "Në ekzekutim tani",
+    "succeeded24h": "Të suksesshme (24 orë)",
+    "failed24h": "Të dështuara (24 orë)",
+    "avgDuration24h": "Kohëzgjatja mesatare (24 orë)"
   }
 }

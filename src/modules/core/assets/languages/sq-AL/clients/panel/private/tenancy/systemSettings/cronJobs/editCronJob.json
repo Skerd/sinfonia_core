@@ -35,5 +35,9 @@
   },
   "noId": "Nuk është zgjedhur asnjë veprim i planifikuar.",
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/editCronJob.tsx",
-  "title": "Ndrysho veprimin e planifikuar"
+  "title": "Ndrysho veprimin e planifikuar",
+  "preview": {
+    "title": "Ekzekutimet e radhës me këtë shprehje",
+    "never": "Kjo shprehje nuk ekzekutohet kurrë. Kontrollojeni para se ta ruani."
+  }
 }

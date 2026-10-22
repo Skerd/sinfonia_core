@@ -11,7 +11,7 @@
   "handler": "Gestionnaire",
   "active": "Actif",
   "nextRunAt": "Prochaine exécution",
-  "lastRunAt": "Dernière course",
+  "lastRunAt": "Dernière exécution",
   "code": "Code",
   "pausedAt": "En pause depuis",
   "cronExpression": "Expression Cron",
@@ -32,5 +32,22 @@
   "deletedAt": "Supprimé le",
   "deletedBy": "Supprimé par",
   "yes": "Oui",
-  "no": "Non"
+  "no": "Non",
+  "nextRuns": "Prochaines exécutions",
+  "executions": {
+    "title": "Historique des exécutions",
+    "refresh": "Actualiser l’historique des exécutions",
+    "loading": "Chargement des exécutions...",
+    "empty": "Cette tâche ne s’est pas encore exécutée.",
+    "loadMore": "Afficher les exécutions plus anciennes",
+    "attempt": "Tentative {attempt}",
+    "nextRetryAt": "Nouvelle tentative prévue le {at}",
+    "statuses": {
+      "running": "En cours",
+      "success": "Réussie",
+      "failed": "Échouée",
+      "timeout": "Délai dépassé",
+      "cancelled": "Annulée"
+    }
+  }
 }
