@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/replayDeadLettersDialog.tsx",
+  "confirmTitle": "Të ridërgohen letrat e vdekura?",
+  "confirmDescription": "{count} mesazh(e) dështuan pas të gjitha përpjekjeve. Ato do të publikohen sërish në temat e tyre origjinale dhe do të përpunohen nga të gjithë konsumatorët e këtyre temave, prandaj ridërgojini vetëm pasi të jetë rregulluar shkaku (p.sh. serveri i postës).",
+  "cancel": "Anulo",
+  "confirm": "Ridërgoji të gjitha",
+  "resent": "{count} letër/letra të vdekura u ridërguan",
+  "axios": {
+    "error": {
+      "title": "Letrat e vdekura nuk mund të ridërgoheshin",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/replayDeadLettersDialog.tsx",
+  "confirmTitle": "Dead Letters erneut senden?",
+  "confirmDescription": "{count} Nachricht(en) sind auch nach allen Wiederholungen fehlgeschlagen. Sie werden erneut in ihren ursprünglichen Topics veröffentlicht und von allen Consumern dieser Topics verarbeitet. Senden Sie sie deshalb erst erneut, wenn die Ursache (z. B. der Mailserver) behoben ist.",
+  "cancel": "Abbrechen",
+  "confirm": "Alle erneut senden",
+  "resent": "{count} Dead Letter(s) erneut gesendet",
+  "axios": {
+    "error": {
+      "title": "Dead Letters konnten nicht erneut gesendet werden",
+      "time": 3000
+    }
+  }
+}

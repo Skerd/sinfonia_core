@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/replayDeadLettersDialog.tsx",
+  "confirmTitle": "Inviare di nuovo le lettere morte?",
+  "confirmDescription": "{count} messaggio/i non sono riusciti dopo tutti i tentativi. Verranno ripubblicati sui loro topic originali ed elaborati da tutti i consumer di quei topic: inviali di nuovo solo dopo aver risolto la causa (ad es. il server di posta).",
+  "cancel": "Annulla",
+  "confirm": "Invia di nuovo tutto",
+  "resent": "{count} lettera/e morta/e inviata/e di nuovo",
+  "axios": {
+    "error": {
+      "title": "Impossibile inviare di nuovo le lettere morte",
+      "time": 3000
+    }
+  }
+}

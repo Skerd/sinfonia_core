@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/replayDeadLettersDialog.tsx",
+  "confirmTitle": "Renvoyer les lettres mortes ?",
+  "confirmDescription": "{count} message(s) ont échoué après toutes les tentatives. Ils seront republiés sur leurs topics d'origine et traités par tous les consommateurs de ces topics : renvoyez-les seulement une fois la cause (par ex. le serveur de messagerie) corrigée.",
+  "cancel": "Annuler",
+  "confirm": "Tout renvoyer",
+  "resent": "{count} lettre(s) morte(s) renvoyée(s)",
+  "axios": {
+    "error": {
+      "title": "Impossible de renvoyer les lettres mortes",
+      "time": 3000
+    }
+  }
+}

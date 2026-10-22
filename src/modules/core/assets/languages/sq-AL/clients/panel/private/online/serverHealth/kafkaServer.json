@@ -9,6 +9,8 @@
   "avgTime": "Mesatar Koha",
   "consumers": "Konsumatorët",
   "noConsumersRegistered": "Nuk ka konsumatorë të regjistruar",
+  "deadLetters": "Letra të vdekura",
+  "deadLettersHint": "Mesazhe që dështuan edhe pas të gjitha përpjekjeve. Klikoni për t'i ridërguar.",
   "day": "ditë",
   "days": "ditë",
   "hour": "orë",

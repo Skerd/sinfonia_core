@@ -1,6 +1,7 @@
+import {useState} from "react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {Layers, AlertTriangle} from "lucide-react";
+import {Layers, AlertTriangle, MailWarning} from "lucide-react";
 import {clsx} from "clsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -10,6 +11,7 @@ import {formatDurationInDaysHoursOrMinutes} from "@coreModule/helpers/general/da
 import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import type {KafkaConsumerStatus} from "armonia/src/modules/core/api/auxiliary/private/serverHealth/serverHealth.dto.ts";
+import ReplayDeadLettersDialog from "@coreModule/clients/panel/private/online/serverHealth/replayDeadLettersDialog.tsx";
 
 /** Dedicated Maestro kafkaServer process (consumers + pipeline work). */
 function useKafkaServer(){
@@ -103,6 +105,48 @@ function KafkaServerConsumers({title, resolveLanguageKey}:{title: string, resolv
     );
 }
 
+/** Shown only while dead letters wait; clicking it offers to resend them all. */
+function KafkaServerDeadLetters({title, resolveLanguageKey}:{title: string, resolveLanguageKey: ResolveLanguageKey}){
+    const kafkaServer = useKafkaServer();
+    const [confirming, setConfirming] = useState(false);
+    const deadLetters = kafkaServer?.deadLetters || [];
+    const total = deadLetters.reduce((sum, entry) => sum + entry.pending, 0);
+    if (!kafkaServer?.connected || total === 0) return <></>;
+
+    return (
+        <>
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Badge
+                            variant="destructive"
+                            className="text-xs font-medium hover:cursor-pointer flex items-center gap-1"
+                            onClick={() => setConfirming(true)}
+                        >
+                            <MailWarning className="h-3 w-3" />
+                            {title}: {formatNumber(total)}
+                        </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-md">
+                        <div className="flex max-h-64 flex-col gap-y-1 overflow-y-auto text-xs">
+                            {deadLetters.map((entry) => (
+                                <div key={entry.topic} className="flex items-baseline justify-between gap-x-3">
+                                    <span className="font-medium break-words">{entry.topic}</span>
+                                    <span className="shrink-0">{formatNumber(entry.pending)}</span>
+                                </div>
+                            ))}
+                            <p className="mt-1 opacity-70">{resolveLanguageKey("deadLettersHint")}</p>
+                        </div>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
+            {confirming && (
+                <ReplayDeadLettersDialog open onClose={() => setConfirming(false)} deadLetters={deadLetters} />
+            )}
+        </>
+    );
+}
+
 function KafkaServerOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}){
     const connected = !!useKafkaServer()?.connected;
     return (
@@ -150,6 +194,7 @@ function KafkaServerResource({resolveLanguageKey}: KafkaServerResourceProps){
             </div>
             <div className="flex gap-1 flex-wrap max-w-full">
                 <KafkaServerConsumers title={resolveLanguageKey("consumers")} resolveLanguageKey={resolveLanguageKey} />
+                <KafkaServerDeadLetters title={resolveLanguageKey("deadLetters")} resolveLanguageKey={resolveLanguageKey} />
                 <KafkaServerJobs title={resolveLanguageKey("jobs")} />
                 <KafkaServerFailedJobs title={resolveLanguageKey("failed")} />
                 <KafkaServerAvgJobTime title={resolveLanguageKey("avgTime")} />

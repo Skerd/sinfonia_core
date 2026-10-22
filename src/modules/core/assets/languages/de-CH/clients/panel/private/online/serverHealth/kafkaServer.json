@@ -9,6 +9,8 @@
   "avgTime": "Avg. Time",
   "consumers": "Consumers",
   "noConsumersRegistered": "Keine consumers registered",
+  "deadLetters": "Dead Letters",
+  "deadLettersHint": "Nachrichten, die auch nach allen Wiederholungen fehlgeschlagen sind. Klicken, um sie erneut zu senden.",
   "day": "day",
   "days": "tage",
   "hour": "stunde",

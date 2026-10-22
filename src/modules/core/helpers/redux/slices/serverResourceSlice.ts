@@ -127,7 +127,8 @@ const createInitialServerHealth = (): ServerHealthFormResponseType => ({
                     expected: 0,
                     running: 0,
                     list: []
-                }
+                },
+                deadLetters: []
             }
         }
 });

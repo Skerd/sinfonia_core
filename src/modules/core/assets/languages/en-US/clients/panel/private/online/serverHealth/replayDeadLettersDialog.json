@@ -1,0 +1,14 @@
+{
+  "path": "src/modules/core/clients/panel/private/online/serverHealth/replayDeadLettersDialog.tsx",
+  "confirmTitle": "Resend dead letters?",
+  "confirmDescription": "{count} message(s) failed after every retry. They will be published again to their original topics and processed by every consumer of those topics, so resend them only once the cause (e.g. the mail server) is fixed.",
+  "cancel": "Cancel",
+  "confirm": "Resend all",
+  "resent": "{count} dead letter(s) resent",
+  "axios": {
+    "error": {
+      "title": "Could not resend dead letters",
+      "time": 3000
+    }
+  }
+}

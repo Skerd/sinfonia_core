@@ -9,6 +9,8 @@
   "avgTime": "Media Tempo",
   "consumers": "Consumatori",
   "noConsumersRegistered": "Nessun consumatore registrato",
+  "deadLetters": "Lettere morte",
+  "deadLettersHint": "Messaggi ancora non riusciti dopo tutti i tentativi. Clicca per inviarli di nuovo.",
   "day": "giorno",
   "days": "giorni",
   "hour": "ora",
