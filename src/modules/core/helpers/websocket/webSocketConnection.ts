@@ -3,8 +3,8 @@
 /**
  * Close codes after which reconnecting would not help:
  * - 1000: a deliberate close.
- * - 1008: the server rejected the token, a malformed frame, or too many connections. A new token
- *   changes the URL, which opens a fresh connection anyway.
+ * - 1008: the server rejected the token, a malformed frame, or too many connections, or the
+ *   session expired or was revoked. A new token changes the URL, which opens a fresh connection anyway.
  *
  * Everything else reconnects, notably 1006 (connection lost) and 1011 (server-side failure).
  * Keep in sync with the close codes in maestro's `websocket/webSocket.ts`.

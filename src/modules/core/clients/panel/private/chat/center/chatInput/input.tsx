@@ -55,7 +55,6 @@ function ChatInputAll({
     const openDelete = useSelector((state: RootState) => state.chat.openDelete);
     const activeChannelId = useSelector((state: RootState) => state.chat.activeChannelId);
     const openedChannel = useSelector((state: RootState) => state.chat.channels[activeChannelId ?? ""]);
-    const user = useSelector((state: RootState) => state.authentication.user);
 
     const actionMessage = useSelector((state: RootState) => state.chat.actionMessage);
 
@@ -127,10 +126,8 @@ function ChatInputAll({
         if (!isTypingRef.current) {
             sendWebsocketMessage?.({
                 code: WebSocketFEMessageCodes.TYPING_START,
-                payload: {
-                    channelId: openedChannel._id,
-                    userId: specificUserId || user.id
-                }
+                // The server attributes typing to the socket's own user.
+                payload: {channelId: openedChannel._id}
             });
             isTypingRef.current = true;
         }
@@ -153,10 +150,8 @@ function ChatInputAll({
         if (isTypingRef.current) {
             sendWebsocketMessage?.({
                 code: WebSocketFEMessageCodes.TYPING_STOP,
-                payload: {
-                    channelId: openedChannel._id,
-                    userId: specificUserId || user.id
-                }
+                // The server attributes typing to the socket's own user.
+                payload: {channelId: openedChannel._id}
             });
             isTypingRef.current = false;
         }
