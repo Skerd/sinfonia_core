@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalLayout.tsx",
+  "brand": "Portail",
+  "sectionsNav": "Rubriques",
+  "signIn": "Se connecter",
+  "account": "Mes réservations",
+  "signOut": "Se déconnecter",
+  "footer": "Chaque entreprise gère ses propres réservations et commandes ; le portail les réunit."
+}

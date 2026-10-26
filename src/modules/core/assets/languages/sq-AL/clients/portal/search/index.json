@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/portal/search/index.tsx",
+  "failed": "Kërkimi dështoi. Provoni përsëri.",
+  "noResults": "Asnjë rezultat. Provoni fjalë të tjera ose një qytet tjetër.",
+  "kinds": {
+    "company": "Kompani",
+    "product": "Produkt",
+    "vehicleCategory": "Lloj makine",
+    "service": "Trajtim",
+    "practitioner": "Dentist",
+    "project": "Projekt"
+  }
+}

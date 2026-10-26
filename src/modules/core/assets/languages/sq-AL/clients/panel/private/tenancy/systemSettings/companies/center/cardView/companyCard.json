@@ -27,5 +27,18 @@
   "website": "Faqja e internetit",
   "vat": "TVSH",
   "allowedDomains": "Domenet e lejuara",
-  "edit": "Redakto"
+  "edit": "Redakto",
+  "modules": "Modulet",
+  "moduleNames": {
+    "core": "Bërthama",
+    "finance": "Financa",
+    "eCommerce": "E-commerce",
+    "propertyManagement": "Menaxhimi i pronave",
+    "propertyDevelopment": "Zhvillimi i pronave",
+    "swissOutreach": "Kontaktimi zviceran",
+    "musicIndustry": "Industria muzikore",
+    "carRental": "Qiraja e makinave",
+    "dentalClinic": "Klinika dentare"
+  },
+  "hiddenFromPortal": "E fshehur nga portali"
 }

@@ -33,6 +33,8 @@ export function createWidgetContributions(glob: ContributionGlob) {
             kind: "widgetContribution",
             glob,
             isValid: isValidWidgetContribution,
+            // Widgets render shared records (e.g. a reference into another module); keep them all.
+            companyScoped: false,
         }),
     };
 }

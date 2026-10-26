@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/portal/auth/login.tsx",
+  "title": "Anmelden",
+  "subtitle": "Ein Konto für alle Firmen im Portal.",
+  "mfaTitle": "Zweistufige Bestätigung",
+  "mfaSubtitle": "Geben Sie den Code aus Ihrer Authenticator-App ein.",
+  "submit": "Anmelden",
+  "forgotPassword": "Passwort vergessen?",
+  "noAccount": "Noch kein Konto?",
+  "signUpLink": "Konto erstellen",
+  "form": {
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "sie@beispiel.ch",
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "Passwort",
+    "mfaCodeLabel": "Bestätigungscode",
+    "mfaCodePlaceholder": "6-stelliger Code",
+    "nameLabel": "Vorname",
+    "surnameLabel": "Nachname",
+    "confirmPasswordLabel": "Passwort wiederholen",
+    "resetPasswordCodeLabel": "Rücksetzcode"
+  },
+  "axios": {
+    "start": {
+      "title": "Anmeldung…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Angemeldet",
+      "time": 2500
+    },
+    "error": {
+      "title": "Anmeldung fehlgeschlagen",
+      "time": 3000
+    }
+  }
+}

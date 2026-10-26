@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/portal/auth/activate.tsx",
+  "loading": {
+    "title": "Konto wird aktiviert…"
+  },
+  "success": {
+    "title": "Konto aktiviert",
+    "subtitle": "Sie können sich jetzt anmelden."
+  },
+  "error": {
+    "title": "Dieser Link funktioniert nicht",
+    "subtitle": "Er ist vielleicht abgelaufen oder wurde schon verwendet."
+  },
+  "signIn": "Zur Anmeldung",
+  "axios": {
+    "start": {
+      "title": "Aktivierung…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Konto aktiviert",
+      "time": 2500
+    },
+    "error": {
+      "title": "Aktivierung fehlgeschlagen",
+      "time": 3000
+    }
+  }
+}

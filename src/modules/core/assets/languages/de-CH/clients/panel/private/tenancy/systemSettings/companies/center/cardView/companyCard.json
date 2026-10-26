@@ -27,5 +27,18 @@
   "website": "Website",
   "vat": "VAT",
   "allowedDomains": "Allowed domains",
-  "edit": "Bearbeiten"
+  "edit": "Bearbeiten",
+  "modules": "Module",
+  "moduleNames": {
+    "core": "Kern",
+    "finance": "Finanzen",
+    "eCommerce": "E-Commerce",
+    "propertyManagement": "Immobilienverwaltung",
+    "propertyDevelopment": "Bauadministration",
+    "swissOutreach": "Schweizer Akquise",
+    "musicIndustry": "Musikindustrie",
+    "carRental": "Autovermietung",
+    "dentalClinic": "Zahnarztpraxis"
+  },
+  "hiddenFromPortal": "Im Portal ausgeblendet"
 }

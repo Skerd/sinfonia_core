@@ -7,6 +7,8 @@
  * - `core` and `base` are always included.
  * - The Vite config (`scripts/enabledModules.ts`) validates the list and rewrites it to include
  *   `dependsOn` modules before the build, so the value read here is already complete.
+ * - That build list is a ceiling: once signed in, only the company's own modules (granted by the
+ *   platform owner, from validateToken) are active — see `isModuleActive`.
  */
 import {ALWAYS_ENABLED_MODULES, parseModuleList} from "@coreModule/helpers/modules/moduleSelection.ts";
 
@@ -18,6 +20,25 @@ const enabledModules: ReadonlySet<string> | null = (() => {
 
 export function isModuleEnabled(moduleName: string): boolean {
     return enabledModules === null || enabledModules.has(moduleName);
+}
+
+/** The signed-in company's modules; `null` before sign-in (every built module is active). */
+let companyModules: ReadonlySet<string> | null = null;
+let companyModulesVersion = 0;
+
+export function setCompanyModules(modules: readonly string[] | null): void {
+    companyModules = modules ? new Set([...ALWAYS_ENABLED_MODULES, ...modules]) : null;
+    companyModulesVersion += 1;
+}
+
+/** Bumped on every `setCompanyModules`, so memoized module-filtered values can tell they are stale. */
+export function getCompanyModulesVersion(): number {
+    return companyModulesVersion;
+}
+
+/** Built into this bundle and enabled for the signed-in company. */
+export function isModuleActive(moduleName: string): boolean {
+    return isModuleEnabled(moduleName) && (companyModules === null || companyModules.has(moduleName));
 }
 
 /** First segment after `…/modules/` in a Vite glob key or absolute path. */

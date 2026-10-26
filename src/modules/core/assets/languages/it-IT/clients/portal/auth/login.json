@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/portal/auth/login.tsx",
+  "title": "Accedi",
+  "subtitle": "Un solo account per tutte le aziende del portale.",
+  "mfaTitle": "Verifica in due passaggi",
+  "mfaSubtitle": "Inserisci il codice della tua app di autenticazione.",
+  "submit": "Accedi",
+  "forgotPassword": "Password dimenticata?",
+  "noAccount": "Non hai un account?",
+  "signUpLink": "Creane uno",
+  "form": {
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "tu@esempio.it",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "mfaCodeLabel": "Codice di verifica",
+    "mfaCodePlaceholder": "Codice a 6 cifre",
+    "nameLabel": "Nome",
+    "surnameLabel": "Cognome",
+    "confirmPasswordLabel": "Ripeti la password",
+    "resetPasswordCodeLabel": "Codice di ripristino"
+  },
+  "axios": {
+    "start": {
+      "title": "Accesso…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Accesso effettuato",
+      "time": 2500
+    },
+    "error": {
+      "title": "Accesso non riuscito",
+      "time": 3000
+    }
+  }
+}

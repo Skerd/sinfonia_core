@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/manageModulesDialog.tsx",
+  "title": "Moduli",
+  "description": "scegli i moduli che questa azienda può usare. Un modulo disattivato viene nascosto; i suoi dati restano.",
+  "required": "Sempre attivo",
+  "notInstalled": "Non installato su questo server",
+  "requiredBy": "Richiesto da",
+  "cancel": "Annulla",
+  "confirm": "Salva moduli",
+  "moduleNames": {
+    "core": "Nucleo",
+    "finance": "Finanza",
+    "eCommerce": "E-commerce",
+    "propertyManagement": "Gestione immobiliare",
+    "propertyDevelopment": "Sviluppo immobiliare",
+    "swissOutreach": "Prospezione svizzera",
+    "musicIndustry": "Industria musicale",
+    "carRental": "Noleggio auto",
+    "dentalClinic": "Studio dentistico"
+  },
+  "axios": {
+    "start": {
+      "title": "Salvataggio dei moduli",
+      "time": 3000
+    },
+    "success": {
+      "title": "Moduli aggiornati. Gli utenti vedranno la modifica al prossimo accesso.",
+      "time": 5000
+    },
+    "error": {
+      "title": "Impossibile aggiornare i moduli",
+      "time": 3000
+    }
+  }
+}

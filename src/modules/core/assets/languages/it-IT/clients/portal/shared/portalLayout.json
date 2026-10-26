@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalLayout.tsx",
+  "brand": "Portale",
+  "sectionsNav": "Sezioni",
+  "signIn": "Accedi",
+  "account": "Le mie prenotazioni",
+  "signOut": "Esci",
+  "footer": "Ogni azienda gestisce le proprie prenotazioni e ordini; il portale li riunisce."
+}

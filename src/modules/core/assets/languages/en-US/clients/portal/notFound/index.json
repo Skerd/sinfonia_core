@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/portal/notFound/index.tsx",
+  "title": "Page not found",
+  "description": "This page does not exist or is no longer listed.",
+  "home": "Back to the portal"
+}

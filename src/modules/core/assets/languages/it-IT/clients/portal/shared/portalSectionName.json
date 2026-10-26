@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalSectionName.tsx",
+  "shop": {
+    "title": "Negozio",
+    "description": "I prodotti di tutti i negozi, un solo carrello e un solo pagamento."
+  },
+  "carRental": {
+    "title": "Noleggio auto",
+    "description": "Confronta i noleggiatori e prenota un'auto per le tue date."
+  },
+  "dentalClinic": {
+    "title": "Dentisti",
+    "description": "Trova uno studio e prenota un appuntamento online."
+  },
+  "properties": {
+    "title": "Immobili",
+    "description": "Nuovi progetti e immobili in vendita. Chiedi direttamente al costruttore."
+  }
+}

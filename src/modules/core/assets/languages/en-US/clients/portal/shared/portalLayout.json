@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalLayout.tsx",
+  "brand": "Portal",
+  "sectionsNav": "Sections",
+  "signIn": "Sign in",
+  "account": "My bookings",
+  "signOut": "Sign out",
+  "footer": "Every company here takes its own bookings and orders; the portal brings them together."
+}

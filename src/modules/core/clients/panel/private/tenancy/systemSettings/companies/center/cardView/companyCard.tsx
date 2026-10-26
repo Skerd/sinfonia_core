@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
-import {CheckCheck, FileText, Globe, Mail, Phone} from "lucide-react";
+import {Blocks, CheckCheck, FileText, Globe, Mail, Phone} from "lucide-react";
 import "leaflet/dist/leaflet.css";
 import {RefObject, useCallback, useRef, useState, lazy, memo, Suspense} from "react";
 import {useReactToPrint} from "react-to-print";
@@ -17,6 +17,10 @@ import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSet
 import DeactivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx";
 import ActivateCompanyDialog from "../dialogs/activateCompanyDialog.tsx";
 import DeactivateCompanyDialog from "../dialogs/deactivateCompanyDialog.tsx";
+import ManageModules from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/manageModules.tsx";
+import ManageModulesDialog from "../dialogs/manageModulesDialog.tsx";
+import SetPortalVisibility from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/setPortalVisibility.tsx";
+import SetPortalVisibilityDialog from "../dialogs/setPortalVisibilityDialog.tsx";
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import ExpandableText from "@coreModule/components/viewEngine/widgets/display/expandableText.tsx";
@@ -153,6 +157,32 @@ const CompanyCard = memo(function CompanyCard({
                                 }}
                             />
                         )}
+                        {action === "manageModules" && (
+                            <ManageModulesDialog
+                                open
+                                onOpenChange={(next: boolean) => {
+                                    if (!next) setAction("");
+                                }}
+                                company={row}
+                                onSuccess={(modules) => {
+                                    setEntity({...row, modules});
+                                    listRef?.current?.updateRow?.(row._id, {modules});
+                                }}
+                            />
+                        )}
+                        {action === "setPortalVisibility" && (
+                            <SetPortalVisibilityDialog
+                                open
+                                onOpenChange={(next: boolean) => {
+                                    if (!next) setAction("");
+                                }}
+                                company={row}
+                                onSuccess={(hiddenFromPortal) => {
+                                    setEntity({...row, hiddenFromPortal});
+                                    listRef?.current?.updateRow?.(row._id, {hiddenFromPortal});
+                                }}
+                            />
+                        )}
                     </>
                 )}
             >
@@ -196,6 +226,8 @@ const CompanyCard = memo(function CompanyCard({
                                 )}
                                 <ActivateCompany company={row} onAction={setAction} />
                                 <DeactivateCompany company={row} onAction={setAction} />
+                                <ManageModules company={row} onAction={setAction} />
+                                <SetPortalVisibility company={row} onAction={setAction} />
                             </EntityCard.Header>
                             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" ref={companyInfoRef}>
                                 <EntityCard.Body className="flex-col flex-nowrap gap-4">
@@ -251,6 +283,30 @@ const CompanyCard = memo(function CompanyCard({
                                             ) : formatted
                                         }
                                     </EntityCardRow>
+                                    {/* Platform-managed, not a permission-gated field (so not rendered hidden, which
+                                        would count as restricted); My company lists them on its own. */}
+                                    {!single && row.modules ? (
+                                        <EntityCardRow
+                                            icon={Blocks}
+                                            tooltip={resolveLanguageKey("modules")}
+                                            label={resolveLanguageKey("modules")}
+                                            show
+                                            value={row.modules}
+                                        >
+                                            {() => (
+                                                <div className="flex flex-wrap items-center gap-1">
+                                                    {row.hiddenFromPortal ? (
+                                                        <Badge variant="destructive">{resolveLanguageKey("hiddenFromPortal")}</Badge>
+                                                    ) : null}
+                                                    {row.modules.map((name) => (
+                                                        <Badge key={"company_module_" + name} variant="outline" className="text-muted-foreground">
+                                                            {resolveLanguageKey(`moduleNames.${name}`, true) ?? name}
+                                                        </Badge>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </EntityCardRow>
+                                    ) : null}
                                     {expanded ? (
                                         <EntityCardRow
                                             icon={CheckCheck}

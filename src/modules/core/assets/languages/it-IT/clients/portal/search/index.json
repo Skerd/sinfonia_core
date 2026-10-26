@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/portal/search/index.tsx",
+  "failed": "La ricerca non è riuscita. Riprova.",
+  "noResults": "Nessun risultato. Prova altre parole o un'altra città.",
+  "kinds": {
+    "company": "Azienda",
+    "product": "Prodotto",
+    "vehicleCategory": "Categoria auto",
+    "service": "Trattamento",
+    "practitioner": "Dentista",
+    "project": "Progetto"
+  }
+}

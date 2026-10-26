@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalSectionName.tsx",
+  "shop": {
+    "title": "Shop",
+    "description": "Produkte aus allen Shops, ein Warenkorb, ein Checkout."
+  },
+  "carRental": {
+    "title": "Autovermietung",
+    "description": "Vergleichen Sie Vermieter und buchen Sie ein Auto für Ihre Daten."
+  },
+  "dentalClinic": {
+    "title": "Zahnärzte",
+    "description": "Finden Sie eine Praxis und buchen Sie online einen Termin."
+  },
+  "properties": {
+    "title": "Immobilien",
+    "description": "Neubauprojekte und Immobilien zum Kauf. Fragen Sie direkt beim Bauträger an."
+  }
+}

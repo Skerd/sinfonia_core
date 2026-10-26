@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalSectionName.tsx",
+  "shop": {
+    "title": "Dyqani",
+    "description": "Produktet e të gjitha dyqaneve, një shportë dhe një pagesë."
+  },
+  "carRental": {
+    "title": "Qiraja e makinave",
+    "description": "Krahasoni kompanitë e qirasë dhe rezervoni një makinë për datat tuaja."
+  },
+  "dentalClinic": {
+    "title": "Dentistët",
+    "description": "Gjeni një klinikë dhe rezervoni një takim online."
+  },
+  "properties": {
+    "title": "Pronat",
+    "description": "Projekte të reja dhe prona në shitje. Pyesni drejtpërdrejt zhvilluesin."
+  }
+}

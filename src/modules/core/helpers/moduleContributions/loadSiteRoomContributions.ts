@@ -5,6 +5,7 @@ import {
     createContributionList,
     isOptionalRecordOf,
     isString,
+    memoizeOnList,
     mergeRecords,
 } from "@coreModule/helpers/moduleContributions/contributionRegistry.ts";
 
@@ -20,15 +21,13 @@ export function createSiteRoomContributions(glob: ContributionGlob) {
     });
 
     const merge = (field: "systemSettingsRooms" | "pathRoomOverrides") =>
-        mergeRecords(KIND, list().map((contribution) => ({source: contribution, record: contribution[field]})));
-
-    let systemSettingsRooms: Readonly<Record<string, string>> | undefined;
-    let pathRoomOverrides: Readonly<Record<string, string>> | undefined;
+        memoizeOnList(list, (entries) =>
+            mergeRecords(KIND, entries.map((contribution) => ({source: contribution, record: contribution[field]}))));
 
     return {
         list,
-        getSystemSettingsRooms: () => (systemSettingsRooms ??= merge("systemSettingsRooms")),
-        getPathRoomOverrides: () => (pathRoomOverrides ??= merge("pathRoomOverrides")),
+        getSystemSettingsRooms: merge("systemSettingsRooms"),
+        getPathRoomOverrides: merge("pathRoomOverrides"),
     };
 }
 

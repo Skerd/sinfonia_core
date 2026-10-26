@@ -11,6 +11,7 @@
  * (display name). Joins still succeed for unregistered valid ids, but the
  * performance UI will show the raw id.
  */
+import {getCompanyModulesVersion} from "@coreModule/helpers/modules/enabledModules.ts";
 import {
     getContributedPathRoomOverrides,
     getContributedSystemSettingsRooms,
@@ -47,14 +48,18 @@ export const SITE_ROOM_ID_PATTERN = /^[a-zA-Z][a-zA-Z0-9_]{0,63}$/;
 
 type RoomTables = {systemSettings: Map<string, string>; paths: Map<string, string>};
 
-let tables: RoomTables | undefined;
+let tables: (RoomTables & {version: number}) | undefined;
 
-/** Core entries merged with module contributions (which win). Contributions are static, so built once. */
+/** Core entries merged with module contributions (which win). Rebuilt when the company's modules change. */
 function roomTables(): RoomTables {
-    tables ??= {
-        systemSettings: new Map(Object.entries({...CORE_SYSTEM_SETTINGS_ROOMS, ...getContributedSystemSettingsRooms()})),
-        paths: new Map(Object.entries({...PATH_ROOM_OVERRIDES, ...getContributedPathRoomOverrides()})),
-    };
+    const version = getCompanyModulesVersion();
+    if (tables?.version !== version) {
+        tables = {
+            version,
+            systemSettings: new Map(Object.entries({...CORE_SYSTEM_SETTINGS_ROOMS, ...getContributedSystemSettingsRooms()})),
+            paths: new Map(Object.entries({...PATH_ROOM_OVERRIDES, ...getContributedPathRoomOverrides()})),
+        };
+    }
     return tables;
 }
 

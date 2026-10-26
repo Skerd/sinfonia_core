@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/setPortalVisibilityDialog.tsx",
+  "hide": {
+    "title": "Im Portal ausblenden",
+    "description": "die Firma verschwindet aus dem Portal und dem Shop-Hauptauftritt, unabhängig von ihren eigenen Einstellungen. Ihre eigenen Websites funktionieren weiter."
+  },
+  "show": {
+    "title": "Im Portal anzeigen",
+    "description": "die Firma kann wieder im Portal und im Shop-Hauptauftritt erscheinen, wo ihre eigenen Einstellungen es vorsehen."
+  },
+  "axios": {
+    "start": {
+      "title": "Portal-Sichtbarkeit wird gespeichert",
+      "time": 3000
+    },
+    "success": {
+      "title": "Portal-Sichtbarkeit aktualisiert.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Portal-Sichtbarkeit konnte nicht aktualisiert werden",
+      "time": 3000
+    }
+  }
+}

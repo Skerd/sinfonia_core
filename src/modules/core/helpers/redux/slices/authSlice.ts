@@ -41,9 +41,11 @@ const createEmptyUser = (): AuthUser => ({
     timezone: "",
     permissions: [],
     maxClearance: 1,
+    isPlatformAdmin: false,
     company: {
         _id: "",
-        name: ""
+        name: "",
+        modules: []
     }
 });
 

@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/companyModulesList.tsx",
+  "title": "Modulet",
+  "managedByPlatform": "Modulet menaxhohen nga pronari i platformës. Kontaktoni atë për të shtuar ose hequr një modul.",
+  "moduleNames": {
+    "core": "Bërthama",
+    "finance": "Financa",
+    "eCommerce": "E-commerce",
+    "propertyManagement": "Menaxhimi i pronave",
+    "propertyDevelopment": "Zhvillimi i pronave",
+    "swissOutreach": "Kontaktimi zviceran",
+    "musicIndustry": "Industria muzikore",
+    "carRental": "Qiraja e makinave",
+    "dentalClinic": "Klinika dentare"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalLayout.tsx",
+  "brand": "Portali",
+  "sectionsNav": "Seksionet",
+  "signIn": "Hyr",
+  "account": "Rezervimet e mia",
+  "signOut": "Dil",
+  "footer": "Çdo kompani menaxhon vetë rezervimet dhe porositë e saj; portali i bashkon."
+}

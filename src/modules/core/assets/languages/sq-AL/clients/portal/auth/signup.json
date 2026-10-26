@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/portal/auth/signup.tsx",
+  "title": "Krijoni llogarinë tuaj",
+  "subtitle": "Rezervoni dhe porositni te të gjitha kompanitë e portalit me një llogari.",
+  "submitted": "Kontrolloni postën: ju dërguam një lidhje për të aktivizuar llogarinë.",
+  "submit": "Krijo llogarinë",
+  "haveAccount": "Keni tashmë llogari?",
+  "signInLink": "Hyr",
+  "form": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "ju@shembull.al",
+    "passwordLabel": "Fjalëkalimi",
+    "passwordPlaceholder": "Fjalëkalimi",
+    "mfaCodeLabel": "Kodi i verifikimit",
+    "mfaCodePlaceholder": "Kod me 6 shifra",
+    "nameLabel": "Emri",
+    "surnameLabel": "Mbiemri",
+    "confirmPasswordLabel": "Përsërit fjalëkalimin",
+    "resetPasswordCodeLabel": "Kodi i rivendosjes"
+  },
+  "axios": {
+    "start": {
+      "title": "Po krijohet llogaria…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Llogaria u krijua",
+      "time": 2500
+    },
+    "error": {
+      "title": "Llogaria nuk u krijua",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/portal/section/index.tsx",
+  "city": "Ort",
+  "cityPlaceholder": "Nach Ort filtern",
+  "companiesTitle": "Firmen",
+  "noCompanies": "Hier noch keine Firma."
+}

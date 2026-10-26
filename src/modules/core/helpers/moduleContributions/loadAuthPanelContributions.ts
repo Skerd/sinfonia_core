@@ -21,6 +21,8 @@ export function createAuthPanelContributions(
         kind: KIND,
         glob,
         isValid: (entry) => isPlainObject(entry.panels) && Object.values(entry.panels).every(isComponentLike),
+        // Shown before sign-in, when no company's modules are known.
+        companyScoped: false,
     });
 
     let panels: Readonly<Record<string, ComponentType>> | undefined;

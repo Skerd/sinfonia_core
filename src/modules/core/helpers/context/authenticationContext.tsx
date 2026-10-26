@@ -6,6 +6,7 @@ import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/custom/sessionSetupScreen.tsx";
 import {useNavigate} from "react-router-dom";
+import {setCompanyModules} from "@coreModule/helpers/modules/enabledModules.ts";
 
 type AuthenticationProviderProps = {
     children: ReactNode;
@@ -31,6 +32,7 @@ export function AuthenticationProvider({
     const sessionExpired = useSelector((state: RootState) => state.authentication.sessionExpired);
 
     function goToLogin() {
+        setCompanyModules(null);
         dispatch(signOut());
         navigate("/authenticate/login");
     }
@@ -55,6 +57,8 @@ export function AuthenticationProvider({
             .get<ValidateTokenFormResponseType>("/api/user/validateToken", {signal: abortController.signal})
             .then(({data}) => {
                 if (abortController.signal.aborted) return;
+                // Before hydrating: menus, routes and settings read the company's modules on first render.
+                setCompanyModules(data.company.modules);
                 dispatch(updateUserData(data));
                 dispatch(updateToken(loginToken));
                 setIsHydrated(true);

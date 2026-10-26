@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/manageModulesDialog.tsx",
+  "title": "Modulet",
+  "description": "zgjidhni modulet që mund të përdorë kjo kompani. Një modul i çaktivizuar fshihet; të dhënat e tij ruhen.",
+  "required": "Gjithmonë aktiv",
+  "notInstalled": "Nuk është instaluar në këtë server",
+  "requiredBy": "I nevojshëm për",
+  "cancel": "Anulo",
+  "confirm": "Ruaj modulet",
+  "moduleNames": {
+    "core": "Bërthama",
+    "finance": "Financa",
+    "eCommerce": "E-commerce",
+    "propertyManagement": "Menaxhimi i pronave",
+    "propertyDevelopment": "Zhvillimi i pronave",
+    "swissOutreach": "Kontaktimi zviceran",
+    "musicIndustry": "Industria muzikore",
+    "carRental": "Qiraja e makinave",
+    "dentalClinic": "Klinika dentare"
+  },
+  "axios": {
+    "start": {
+      "title": "Po ruhen modulet",
+      "time": 3000
+    },
+    "success": {
+      "title": "Modulet u përditësuan. Përdoruesit e shohin ndryshimin pasi të hyjnë sërish.",
+      "time": 5000
+    },
+    "error": {
+      "title": "Modulet nuk u përditësuan",
+      "time": 3000
+    }
+  }
+}

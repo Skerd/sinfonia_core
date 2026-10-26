@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/portal/auth/activate.tsx",
+  "loading": {
+    "title": "Activating your account…"
+  },
+  "success": {
+    "title": "Account activated",
+    "subtitle": "You can sign in now."
+  },
+  "error": {
+    "title": "This link does not work",
+    "subtitle": "It may have expired or been used already."
+  },
+  "signIn": "Go to sign in",
+  "axios": {
+    "start": {
+      "title": "Activating…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Account activated",
+      "time": 2500
+    },
+    "error": {
+      "title": "Activation failed",
+      "time": 3000
+    }
+  }
+}

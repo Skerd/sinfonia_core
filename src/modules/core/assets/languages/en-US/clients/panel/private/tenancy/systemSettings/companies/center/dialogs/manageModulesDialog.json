@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/manageModulesDialog.tsx",
+  "title": "Modules",
+  "description": "choose the modules this company can use. Turning one off hides it; its data is kept.",
+  "required": "Always on",
+  "notInstalled": "Not installed on this server",
+  "requiredBy": "Needed by",
+  "cancel": "Cancel",
+  "confirm": "Save modules",
+  "moduleNames": {
+    "core": "Core",
+    "finance": "Finance",
+    "eCommerce": "eCommerce",
+    "propertyManagement": "Property management",
+    "propertyDevelopment": "Property development",
+    "swissOutreach": "Swiss outreach",
+    "musicIndustry": "Music industry",
+    "carRental": "Car rental",
+    "dentalClinic": "Dental clinic"
+  },
+  "axios": {
+    "start": {
+      "title": "Saving modules",
+      "time": 3000
+    },
+    "success": {
+      "title": "Modules updated. Users see the change after signing in again.",
+      "time": 5000
+    },
+    "error": {
+      "title": "Modules could not be updated",
+      "time": 3000
+    }
+  }
+}

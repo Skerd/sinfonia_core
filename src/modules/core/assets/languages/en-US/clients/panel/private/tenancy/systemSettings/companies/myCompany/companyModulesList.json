@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/companyModulesList.tsx",
+  "title": "Modules",
+  "managedByPlatform": "Modules are managed by the platform owner. Contact them to add or remove one.",
+  "moduleNames": {
+    "core": "Core",
+    "finance": "Finance",
+    "eCommerce": "eCommerce",
+    "propertyManagement": "Property management",
+    "propertyDevelopment": "Property development",
+    "swissOutreach": "Swiss outreach",
+    "musicIndustry": "Music industry",
+    "carRental": "Car rental",
+    "dentalClinic": "Dental clinic"
+  }
+}

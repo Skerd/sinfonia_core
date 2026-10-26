@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/home/index.tsx",
+  "title": "Tout ce qui est local, au même endroit",
+  "subtitle": "Faites vos achats, louez une voiture, consultez un dentiste ou trouvez votre prochain logement auprès des entreprises près de chez vous.",
+  "sectionsTitle": "Parcourir",
+  "noSections": "Rien n'est encore référencé.",
+  "company": "entreprise",
+  "companies": "entreprises"
+}

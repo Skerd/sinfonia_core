@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/portal/auth/signup.tsx",
+  "title": "Crea il tuo account",
+  "subtitle": "Prenota e ordina presso tutte le aziende del portale con un solo account.",
+  "submitted": "Controlla la posta: ti abbiamo inviato un link di attivazione.",
+  "submit": "Crea account",
+  "haveAccount": "Hai già un account?",
+  "signInLink": "Accedi",
+  "form": {
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "tu@esempio.it",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "mfaCodeLabel": "Codice di verifica",
+    "mfaCodePlaceholder": "Codice a 6 cifre",
+    "nameLabel": "Nome",
+    "surnameLabel": "Cognome",
+    "confirmPasswordLabel": "Ripeti la password",
+    "resetPasswordCodeLabel": "Codice di ripristino"
+  },
+  "axios": {
+    "start": {
+      "title": "Creazione dell'account…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Account creato",
+      "time": 2500
+    },
+    "error": {
+      "title": "Impossibile creare l'account",
+      "time": 3000
+    }
+  }
+}

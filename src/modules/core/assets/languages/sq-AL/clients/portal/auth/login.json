@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/portal/auth/login.tsx",
+  "title": "Hyr",
+  "subtitle": "Një llogari për të gjitha kompanitë në portal.",
+  "mfaTitle": "Verifikim me dy hapa",
+  "mfaSubtitle": "Vendosni kodin nga aplikacioni juaj i vërtetimit.",
+  "submit": "Hyr",
+  "forgotPassword": "Keni harruar fjalëkalimin?",
+  "noAccount": "Nuk keni llogari?",
+  "signUpLink": "Krijoni një",
+  "form": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "ju@shembull.al",
+    "passwordLabel": "Fjalëkalimi",
+    "passwordPlaceholder": "Fjalëkalimi",
+    "mfaCodeLabel": "Kodi i verifikimit",
+    "mfaCodePlaceholder": "Kod me 6 shifra",
+    "nameLabel": "Emri",
+    "surnameLabel": "Mbiemri",
+    "confirmPasswordLabel": "Përsërit fjalëkalimin",
+    "resetPasswordCodeLabel": "Kodi i rivendosjes"
+  },
+  "axios": {
+    "start": {
+      "title": "Duke hyrë…",
+      "time": 3000
+    },
+    "success": {
+      "title": "U futët",
+      "time": 2500
+    },
+    "error": {
+      "title": "Hyrja dështoi",
+      "time": 3000
+    }
+  }
+}

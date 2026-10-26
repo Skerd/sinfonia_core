@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalSearchForm.tsx",
+  "what": "Was",
+  "where": "Wo",
+  "whatPlaceholder": "Produkt, Behandlung, Auto, Projekt…",
+  "wherePlaceholder": "Ort",
+  "search": "Suchen"
+}

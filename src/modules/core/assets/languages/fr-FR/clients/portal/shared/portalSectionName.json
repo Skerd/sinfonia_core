@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalSectionName.tsx",
+  "shop": {
+    "title": "Boutique",
+    "description": "Les produits de toutes les boutiques, un seul panier et un seul paiement."
+  },
+  "carRental": {
+    "title": "Location de voitures",
+    "description": "Comparez les loueurs et réservez une voiture pour vos dates."
+  },
+  "dentalClinic": {
+    "title": "Dentistes",
+    "description": "Trouvez un cabinet et prenez rendez-vous en ligne."
+  },
+  "properties": {
+    "title": "Biens immobiliers",
+    "description": "Programmes neufs et biens à vendre. Contactez directement le promoteur."
+  }
+}

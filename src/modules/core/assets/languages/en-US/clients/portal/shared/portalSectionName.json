@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalSectionName.tsx",
+  "shop": {
+    "title": "Shop",
+    "description": "Products from every shop, one cart and one checkout."
+  },
+  "carRental": {
+    "title": "Car rental",
+    "description": "Compare rental companies and book a car for your dates."
+  },
+  "dentalClinic": {
+    "title": "Dentists",
+    "description": "Find a clinic and book an appointment online."
+  },
+  "properties": {
+    "title": "Properties",
+    "description": "New developments and homes for sale. Ask the developer directly."
+  }
+}

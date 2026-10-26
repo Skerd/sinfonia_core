@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/setPortalVisibilityDialog.tsx",
+  "hide": {
+    "title": "Fshihe nga portali",
+    "description": "kompania zhduket nga portali dhe dyqani kryesor, pavarësisht cilësimeve të saj. Faqet e saj vazhdojnë të funksionojnë."
+  },
+  "show": {
+    "title": "Shfaqe në portal",
+    "description": "kompania mund të shfaqet sërish në portal dhe në dyqanin kryesor, aty ku e lejojnë cilësimet e saj."
+  },
+  "axios": {
+    "start": {
+      "title": "Po ruhet dukshmëria",
+      "time": 3000
+    },
+    "success": {
+      "title": "Dukshmëria në portal u përditësua.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Dukshmëria nuk u përditësua",
+      "time": 3000
+    }
+  }
+}

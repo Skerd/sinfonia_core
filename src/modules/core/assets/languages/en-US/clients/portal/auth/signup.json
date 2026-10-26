@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/portal/auth/signup.tsx",
+  "title": "Create your account",
+  "subtitle": "Book and order from every company on the portal with one account.",
+  "submitted": "Check your inbox: we sent you a link to activate your account.",
+  "submit": "Create account",
+  "haveAccount": "Already have an account?",
+  "signInLink": "Sign in",
+  "form": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "mfaCodeLabel": "Verification code",
+    "mfaCodePlaceholder": "6-digit code",
+    "nameLabel": "First name",
+    "surnameLabel": "Last name",
+    "confirmPasswordLabel": "Repeat password",
+    "resetPasswordCodeLabel": "Reset code"
+  },
+  "axios": {
+    "start": {
+      "title": "Creating your account…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Account created",
+      "time": 2500
+    },
+    "error": {
+      "title": "The account could not be created",
+      "time": 3000
+    }
+  }
+}

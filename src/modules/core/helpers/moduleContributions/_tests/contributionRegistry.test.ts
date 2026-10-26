@@ -6,11 +6,13 @@ import {
     isComponentLike,
     isOptionalRecordOf,
     isPlainObject,
+    memoizeOnList,
     mergeRecords,
     resetContributionWarnings,
     safeInvoke,
     type ContributionBase,
 } from "@coreModule/helpers/moduleContributions/contributionRegistry.ts";
+import {setCompanyModules} from "@coreModule/helpers/modules/enabledModules.ts";
 
 type Entry = ContributionBase & {name?: string};
 
@@ -244,5 +246,51 @@ describe("guards", () => {
     it("getOwn ignores inherited properties", () => {
         expect(getOwn({a: 1}, "a")).toBe(1);
         expect(getOwn({a: 1}, "constructor")).toBeUndefined();
+    });
+});
+
+describe("createContributionList: company modules", () => {
+    const glob = () => ({
+        [path("core")]: {default: {name: "core"}},
+        [path("carRental")]: {default: {name: "rental"}},
+        [path("dentalClinic")]: {default: {name: "clinic"}},
+    });
+
+    afterEach(() => {
+        setCompanyModules(null);
+    });
+
+    // Entries sort by file path: carRental, core, dentalClinic.
+    it("keeps every built module before sign-in", () => {
+        expect(names(listOf(glob())())).toEqual(["rental", "core", "clinic"]);
+    });
+
+    it("drops entries of modules the signed-in company does not have, and follows changes", () => {
+        const list = listOf(glob());
+        setCompanyModules(["finance", "dentalClinic"]);
+        const clinicOnly = list();
+        expect(names(clinicOnly)).toEqual(["core", "clinic"]);
+        expect(list()).toBe(clinicOnly);
+
+        setCompanyModules(["carRental"]);
+        expect(names(list())).toEqual(["rental", "core"]);
+    });
+
+    it("keeps everything for kinds that opt out", () => {
+        const list = createContributionList<Entry>({kind: "testContribution", glob: glob(), isValid: () => true, companyScoped: false});
+        setCompanyModules([]);
+        expect(names(list())).toEqual(["rental", "core", "clinic"]);
+    });
+
+    it("memoizes derived values until the company's modules change", () => {
+        const list = listOf(glob());
+        const compute = vi.fn((entries: readonly Entry[]) => names(entries).join(","));
+        const derived = memoizeOnList(list, compute);
+        setCompanyModules(["carRental"]);
+        expect(derived()).toBe("rental,core");
+        expect(derived()).toBe("rental,core");
+        expect(compute).toHaveBeenCalledTimes(1);
+        setCompanyModules(["dentalClinic"]);
+        expect(derived()).toBe("core,clinic");
     });
 });

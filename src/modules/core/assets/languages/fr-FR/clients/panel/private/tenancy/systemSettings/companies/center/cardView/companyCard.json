@@ -27,5 +27,18 @@
   "website": "Site web",
   "vat": "TVA",
   "allowedDomains": "Domaines autorisés",
-  "edit": "Modifier"
+  "edit": "Modifier",
+  "modules": "Modules",
+  "moduleNames": {
+    "core": "Noyau",
+    "finance": "Finance",
+    "eCommerce": "E-commerce",
+    "propertyManagement": "Gestion immobilière",
+    "propertyDevelopment": "Promotion immobilière",
+    "swissOutreach": "Prospection suisse",
+    "musicIndustry": "Industrie musicale",
+    "carRental": "Location de voitures",
+    "dentalClinic": "Cabinet dentaire"
+  },
+  "hiddenFromPortal": "Masquée du portail"
 }

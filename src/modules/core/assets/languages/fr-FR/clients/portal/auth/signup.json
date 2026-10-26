@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/portal/auth/signup.tsx",
+  "title": "Créer votre compte",
+  "subtitle": "Réservez et commandez auprès de toutes les entreprises du portail avec un seul compte.",
+  "submitted": "Consultez votre boîte de réception : nous vous avons envoyé un lien d'activation.",
+  "submit": "Créer le compte",
+  "haveAccount": "Déjà un compte ?",
+  "signInLink": "Se connecter",
+  "form": {
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "vous@exemple.fr",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Mot de passe",
+    "mfaCodeLabel": "Code de vérification",
+    "mfaCodePlaceholder": "Code à 6 chiffres",
+    "nameLabel": "Prénom",
+    "surnameLabel": "Nom",
+    "confirmPasswordLabel": "Répéter le mot de passe",
+    "resetPasswordCodeLabel": "Code de réinitialisation"
+  },
+  "axios": {
+    "start": {
+      "title": "Création du compte…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Compte créé",
+      "time": 2500
+    },
+    "error": {
+      "title": "Le compte n'a pas pu être créé",
+      "time": 3000
+    }
+  }
+}

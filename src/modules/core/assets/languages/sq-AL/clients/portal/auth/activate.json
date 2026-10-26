@@ -1,0 +1,29 @@
+{
+  "path": "src/modules/core/clients/portal/auth/activate.tsx",
+  "loading": {
+    "title": "Po aktivizohet llogaria…"
+  },
+  "success": {
+    "title": "Llogaria u aktivizua",
+    "subtitle": "Tani mund të hyni."
+  },
+  "error": {
+    "title": "Kjo lidhje nuk funksionon",
+    "subtitle": "Mund të ketë skaduar ose të jetë përdorur tashmë."
+  },
+  "signIn": "Shko te hyrja",
+  "axios": {
+    "start": {
+      "title": "Po aktivizohet…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Llogaria u aktivizua",
+      "time": 2500
+    },
+    "error": {
+      "title": "Aktivizimi dështoi",
+      "time": 3000
+    }
+  }
+}

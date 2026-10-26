@@ -6,7 +6,15 @@
  * - Entries are validated when first read; a malformed file fails loudly with its path.
  * - Entries are ordered by `order` (default {@link DEFAULT_CONTRIBUTION_ORDER}), then `id`, then
  *   file path, so the result never depends on glob iteration order.
+ * - Entries of modules the signed-in company does not have are left out (unless the kind opts
+ *   out with `companyScoped: false`), so menus, routes and settings follow the company's modules.
  */
+
+import {
+    getCompanyModulesVersion,
+    isModuleActive,
+    moduleNameFromModulePath,
+} from "@coreModule/helpers/modules/enabledModules.ts";
 
 export const DEFAULT_CONTRIBUTION_ORDER = 100;
 
@@ -83,18 +91,24 @@ export type ContributionListOptions = {
     glob: ContributionGlob;
     /** Kind-specific shape check; `id` / `order` are already validated. */
     isValid: (entry: Record<string, unknown>) => boolean;
+    /** `false` keeps every built module's entries (kinds used before sign-in or by shared rendering). */
+    companyScoped?: boolean;
 };
 
 /**
  * Returns a lazy, memoized reader of the sorted, validated contributions in `glob`.
  * Parsing is deferred to the first call so eager-glob import cycles have settled by then.
+ * The reader returns a new array only when the company's modules change, so callers can
+ * memoize derived values on its identity.
  */
 export function createContributionList<T extends ContributionBase>({
     kind,
     glob,
     isValid,
+    companyScoped = true,
 }: ContributionListOptions): () => readonly T[] {
     let cached: readonly T[] | undefined;
+    let active: {version: number; entries: readonly T[]} | undefined;
 
     const build = (): readonly T[] => {
         const entries: {entry: T; path: string; index: number}[] = [];
@@ -141,7 +155,37 @@ export function createContributionList<T extends ContributionBase>({
         return Object.freeze(entries.map(({entry}) => entry));
     };
 
-    return () => (cached ??= build());
+    return () => {
+        const all = (cached ??= build());
+        if (!companyScoped) {
+            return all;
+        }
+        const version = getCompanyModulesVersion();
+        if (active?.version !== version) {
+            active = {
+                version,
+                entries: Object.freeze(all.filter((entry) => {
+                    const moduleName = moduleNameFromModulePath(sourcePaths.get(entry) ?? "");
+                    return moduleName === undefined || isModuleActive(moduleName);
+                })),
+            };
+        }
+        return active.entries;
+    };
+}
+
+/** Memoizes `compute` on the identity of `list()`'s result (see `createContributionList`). */
+export function memoizeOnList<T, R>(list: () => readonly T[], compute: (entries: readonly T[]) => R): () => R {
+    let key: readonly T[] | undefined;
+    let value: R;
+    return () => {
+        const entries = list();
+        if (entries !== key) {
+            key = entries;
+            value = compute(entries);
+        }
+        return value;
+    };
 }
 
 /**

@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/setPortalVisibilityDialog.tsx",
+  "hide": {
+    "title": "Masquer du portail",
+    "description": "l'entreprise disparaît du portail et de la boutique principale, quels que soient ses propres réglages. Ses propres sites continuent de fonctionner."
+  },
+  "show": {
+    "title": "Afficher sur le portail",
+    "description": "l'entreprise peut de nouveau apparaître sur le portail et la boutique principale, là où ses réglages le prévoient."
+  },
+  "axios": {
+    "start": {
+      "title": "Enregistrement de la visibilité",
+      "time": 3000
+    },
+    "success": {
+      "title": "Visibilité sur le portail mise à jour.",
+      "time": 3000
+    },
+    "error": {
+      "title": "La visibilité n'a pas pu être mise à jour",
+      "time": 3000
+    }
+  }
+}

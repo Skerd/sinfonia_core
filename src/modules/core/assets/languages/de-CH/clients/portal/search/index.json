@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/portal/search/index.tsx",
+  "failed": "Die Suche ist fehlgeschlagen. Bitte erneut versuchen.",
+  "noResults": "Keine Treffer. Versuchen Sie andere Begriffe oder einen anderen Ort.",
+  "kinds": {
+    "company": "Firma",
+    "product": "Produkt",
+    "vehicleCategory": "Fahrzeugklasse",
+    "service": "Behandlung",
+    "practitioner": "Zahnarzt",
+    "project": "Projekt"
+  }
+}

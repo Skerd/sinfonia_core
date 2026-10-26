@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/setPortalVisibilityDialog.tsx",
+  "hide": {
+    "title": "Nascondi dal portale",
+    "description": "l'azienda scompare dal portale e dal negozio principale, qualunque siano le sue impostazioni. I suoi siti continuano a funzionare."
+  },
+  "show": {
+    "title": "Mostra sul portale",
+    "description": "l'azienda può di nuovo comparire sul portale e nel negozio principale, dove le sue impostazioni lo prevedono."
+  },
+  "axios": {
+    "start": {
+      "title": "Salvataggio della visibilità",
+      "time": 3000
+    },
+    "success": {
+      "title": "Visibilità sul portale aggiornata.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare la visibilità",
+      "time": 3000
+    }
+  }
+}

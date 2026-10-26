@@ -3,6 +3,7 @@ import {getDeviceId, getToken} from "@coreModule/helpers/context/localStorage/au
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {markSessionExpired} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import {SESSION_EXPIRED_ERROR_CODES} from "@coreModule/helpers/apiClient/sessionExpiredErrorCodes.ts";
+import {getSiteCompany} from "@coreModule/helpers/apiClient/siteCompany.ts";
 
 const AUTH_PATH_PREFIX = "/authenticate";
 
@@ -75,6 +76,10 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     }
     if (companyId) {
         headers["x-company-id"] = companyId;
+    }
+    const siteCompany = getSiteCompany();
+    if (siteCompany) {
+        headers["x-site-company"] = siteCompany;
     }
 
     nextConfig.headers = headers;

@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/portal/auth/login.tsx",
+  "title": "Sign in",
+  "subtitle": "One account for every company on the portal.",
+  "mfaTitle": "Two-step verification",
+  "mfaSubtitle": "Enter the code from your authenticator app.",
+  "submit": "Sign in",
+  "forgotPassword": "Forgot your password?",
+  "noAccount": "No account yet?",
+  "signUpLink": "Create one",
+  "form": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "mfaCodeLabel": "Verification code",
+    "mfaCodePlaceholder": "6-digit code",
+    "nameLabel": "First name",
+    "surnameLabel": "Last name",
+    "confirmPasswordLabel": "Repeat password",
+    "resetPasswordCodeLabel": "Reset code"
+  },
+  "axios": {
+    "start": {
+      "title": "Signing in…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Signed in",
+      "time": 2500
+    },
+    "error": {
+      "title": "Sign in failed",
+      "time": 3000
+    }
+  }
+}

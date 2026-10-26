@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/portal/auth/login.tsx",
+  "title": "Connexion",
+  "subtitle": "Un seul compte pour toutes les entreprises du portail.",
+  "mfaTitle": "Vérification en deux étapes",
+  "mfaSubtitle": "Saisissez le code de votre application d'authentification.",
+  "submit": "Se connecter",
+  "forgotPassword": "Mot de passe oublié ?",
+  "noAccount": "Pas encore de compte ?",
+  "signUpLink": "Créer un compte",
+  "form": {
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "vous@exemple.fr",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Mot de passe",
+    "mfaCodeLabel": "Code de vérification",
+    "mfaCodePlaceholder": "Code à 6 chiffres",
+    "nameLabel": "Prénom",
+    "surnameLabel": "Nom",
+    "confirmPasswordLabel": "Répéter le mot de passe",
+    "resetPasswordCodeLabel": "Code de réinitialisation"
+  },
+  "axios": {
+    "start": {
+      "title": "Connexion…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Connecté",
+      "time": 2500
+    },
+    "error": {
+      "title": "Échec de la connexion",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/setPortalVisibilityDialog.tsx",
+  "hide": {
+    "title": "Hide from portal",
+    "description": "the company disappears from the portal and the shop apex, whatever its own settings. Its own websites keep working."
+  },
+  "show": {
+    "title": "Show on portal",
+    "description": "the company can appear on the portal and the shop apex again, where its own settings list it."
+  },
+  "axios": {
+    "start": {
+      "title": "Saving portal visibility",
+      "time": 3000
+    },
+    "success": {
+      "title": "Portal visibility updated.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Portal visibility could not be updated",
+      "time": 3000
+    }
+  }
+}

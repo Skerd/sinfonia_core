@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/companyModulesList.tsx",
+  "title": "Modules",
+  "managedByPlatform": "Les modules sont gérés par l'exploitant de la plateforme. Contactez-le pour en ajouter ou en retirer un.",
+  "moduleNames": {
+    "core": "Noyau",
+    "finance": "Finance",
+    "eCommerce": "E-commerce",
+    "propertyManagement": "Gestion immobilière",
+    "propertyDevelopment": "Promotion immobilière",
+    "swissOutreach": "Prospection suisse",
+    "musicIndustry": "Industrie musicale",
+    "carRental": "Location de voitures",
+    "dentalClinic": "Cabinet dentaire"
+  }
+}

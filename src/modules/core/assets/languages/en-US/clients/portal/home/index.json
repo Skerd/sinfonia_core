@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/home/index.tsx",
+  "title": "Everything local, in one place",
+  "subtitle": "Shop, rent a car, see a dentist or find your next home, from the companies near you.",
+  "sectionsTitle": "Browse",
+  "noSections": "Nothing is listed yet.",
+  "company": "company",
+  "companies": "companies"
+}

@@ -29,7 +29,8 @@ const USER: ValidateTokenFormResponseType = {
     timezone: "Europe/Zurich",
     permissions: [],
     maxClearance: 1,
-    company: {_id: "c1", name: "Company"},
+    isPlatformAdmin: false,
+    company: {_id: "c1", name: "Company", modules: ["core"]},
 };
 
 const createStore = () => configureStore({

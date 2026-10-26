@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/portal/auth/signup.tsx",
+  "title": "Konto erstellen",
+  "subtitle": "Buchen und bestellen Sie mit einem Konto bei allen Firmen im Portal.",
+  "submitted": "Prüfen Sie Ihr Postfach: Wir haben Ihnen einen Aktivierungslink gesendet.",
+  "submit": "Konto erstellen",
+  "haveAccount": "Bereits ein Konto?",
+  "signInLink": "Anmelden",
+  "form": {
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "sie@beispiel.ch",
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "Passwort",
+    "mfaCodeLabel": "Bestätigungscode",
+    "mfaCodePlaceholder": "6-stelliger Code",
+    "nameLabel": "Vorname",
+    "surnameLabel": "Nachname",
+    "confirmPasswordLabel": "Passwort wiederholen",
+    "resetPasswordCodeLabel": "Rücksetzcode"
+  },
+  "axios": {
+    "start": {
+      "title": "Konto wird erstellt…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Konto erstellt",
+      "time": 2500
+    },
+    "error": {
+      "title": "Das Konto konnte nicht erstellt werden",
+      "time": 3000
+    }
+  }
+}
