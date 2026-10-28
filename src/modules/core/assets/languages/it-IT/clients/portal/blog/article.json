@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/portal/blog/article.tsx",
+  "loading": "Caricamento dell'articolo",
+  "breadcrumb": "Percorso",
+  "blog": "Blog",
+  "readingTime": "{minutes} min di lettura",
+  "publishedBy": "Pubblicato da",
+  "visitSite": "Visita il sito",
+  "visitSiteNamed": "Visita {name}",
+  "copyLink": "Copia link",
+  "linkCopied": "Link copiato",
+  "linkCopyFailed": "Impossibile copiare il link",
+  "backToBlog": "Torna al blog",
+  "moreStories": "Altri articoli",
+  "notFound": "Articolo non trovato",
+  "notFoundMessage": "Questo articolo potrebbe essere stato spostato o rimosso."
+}

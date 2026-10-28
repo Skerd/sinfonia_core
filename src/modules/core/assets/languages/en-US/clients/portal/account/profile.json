@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/portal/account/profile.tsx",
+  "title": "Profile",
+  "subtitle": "Update the details we use on your orders.",
+  "form": {
+    "nameLabel": "Name",
+    "surnameLabel": "Surname",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "newEmailLabel": "New email"
+  },
+  "saveProfile": "Save profile",
+  "saving": "Saving…",
+  "profileSaved": "Profile updated",
+  "profileSaveError": "Could not save your profile",
+  "loadError": "Could not load your profile",
+  "emailHeading": "Email",
+  "currentEmail": "Current email",
+  "unverified": "unverified",
+  "pendingEmail": "A confirmation was sent to {email}. Your login email changes after you use that link.",
+  "saveEmail": "Send confirmation",
+  "emailSaved": "Check your inbox to confirm the new email",
+  "emailSaveError": "Could not start the email change"
+}

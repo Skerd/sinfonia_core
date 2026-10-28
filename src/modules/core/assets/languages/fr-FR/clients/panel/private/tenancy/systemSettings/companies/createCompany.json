@@ -11,8 +11,8 @@
   "form": {
     "nameLabel": "Nom",
     "namePlaceholder": "Nom",
-    "shopSlugLabel": "Slug boutique",
-    "shopSlugPlaceholder": "my-shop",
+    "siteSlugLabel": "Slug du site",
+    "siteSlugPlaceholder": "my-company",
     "emailLabel": "E-mail",
     "emailPlaceholder": "E-mail",
     "phoneNumberNumberLabel": "Numéro de téléphone",

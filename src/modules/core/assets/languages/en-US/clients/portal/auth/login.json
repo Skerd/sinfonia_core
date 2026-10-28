@@ -33,5 +33,6 @@
       "title": "Sign in failed",
       "time": 3000
     }
-  }
+  },
+  "orContinueWith": "Or continue with"
 }

@@ -33,5 +33,6 @@
       "title": "Échec de la connexion",
       "time": 3000
     }
-  }
+  },
+  "orContinueWith": "Ou continuez avec"
 }

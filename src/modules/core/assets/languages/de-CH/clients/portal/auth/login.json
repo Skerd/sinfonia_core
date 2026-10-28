@@ -33,5 +33,6 @@
       "title": "Anmeldung fehlgeschlagen",
       "time": 3000
     }
-  }
+  },
+  "orContinueWith": "Oder weiter mit"
 }

@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/portal/home/catalog.tsx",
+  "label": "Catalog",
+  "all": "All",
+  "priceMin": "Min price",
+  "priceMax": "Max price",
+  "sort": "Sort by",
+  "sorts": {
+    "newest": "Newest",
+    "priceAsc": "Price: low to high",
+    "priceDesc": "Price: high to low"
+  },
+  "results": "{count} results",
+  "seeAll": "See all {count}",
+  "noResults": "Nothing matches",
+  "noResultsHint": "Try other words, another city or fewer filters.",
+  "failed": "The catalog could not be loaded. Try again.",
+  "previous": "Previous",
+  "next": "Next"
+}

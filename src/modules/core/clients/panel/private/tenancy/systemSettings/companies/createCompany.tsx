@@ -6,7 +6,7 @@ import {newCompanyCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {createCompanyFormSchema} from "armonia/src/modules/core/api/company/private/company/createCompany.form.validator.ts";
 import type {CreateCompanyFormType} from "armonia/src/modules/core/api/company/private/company/company.schema-def.ts";
-import {slugifyShopSlug} from "armonia/src/modules/core/api/company/private/company/shopSlug.ts";
+import {slugifySiteSlug} from "armonia/src/modules/core/api/company/private/company/siteSlug.ts";
 
 export default createGenericCreatePage<CreateCompanyFormType>({
     languagePath: "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/createCompany.tsx",
@@ -14,14 +14,14 @@ export default createGenericCreatePage<CreateCompanyFormType>({
     accessModel: "companies",
     apiUrl: "/api/company",
     schema: createCompanyFormSchema,
-    defaultValues: {name: "", vat: "", shopSlug: ""},
+    defaultValues: {name: "", vat: "", siteSlug: ""},
     submitIcon: <Building2 />,
     afterSuccess: () => store.dispatch(newCompanyCreated()),
-    renderChildren: (form) => <PrefillShopSlug form={form} />,
+    renderChildren: (form) => <PrefillSiteSlug form={form} />,
     mapSubmitPayload: (data) => {
         const postBody: CreateCompanyFormType = {
             name:           data.name,
-            shopSlug:       data.shopSlug,
+            siteSlug:       data.siteSlug,
             email:          data.email,
             phoneNumber:    data.phoneNumber,
             addresses:      (data.addresses || []).map((address) => ({
@@ -45,16 +45,16 @@ export default createGenericCreatePage<CreateCompanyFormType>({
     },
 });
 
-function PrefillShopSlug({form}: {form: UseFormReturn<CreateCompanyFormType>}) {
+function PrefillSiteSlug({form}: {form: UseFormReturn<CreateCompanyFormType>}) {
     const name = form.watch("name");
-    const shopSlugDirty = form.formState.dirtyFields.shopSlug;
+    const siteSlugDirty = form.formState.dirtyFields.siteSlug;
 
     useEffect(() => {
-        if (shopSlugDirty) {
+        if (siteSlugDirty) {
             return;
         }
-        form.setValue("shopSlug", slugifyShopSlug(name ?? ""), {shouldDirty: false, shouldValidate: false});
-    }, [form, name, shopSlugDirty]);
+        form.setValue("siteSlug", slugifySiteSlug(name ?? ""), {shouldDirty: false, shouldValidate: false});
+    }, [form, name, siteSlugDirty]);
 
     return null;
 }

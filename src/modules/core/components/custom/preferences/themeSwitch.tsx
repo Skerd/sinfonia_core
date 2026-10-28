@@ -4,7 +4,7 @@ import {
     DENSITIES,
     Density,
     isDensity,
-    useDensity,
+    useDensityOptional,
 } from '@coreModule/helpers/context/providers/density-provider.tsx'
 import {
     isTheme,
@@ -96,7 +96,7 @@ function PreferenceGroup<TValue extends string>({
 
 function ThemeSwitch({resolveLanguageKey, showTitles}: ThemeSwitchProps) {
     const { theme, setTheme } = useTheme()
-    const { density, setDensity } = useDensity()
+    const densityContext = useDensityOptional()
 
     return (
         <DropdownMenu modal={false}>
@@ -135,16 +135,20 @@ function ThemeSwitch({resolveLanguageKey, showTitles}: ThemeSwitchProps) {
                   * app look to me", and neither is worth its own entry point in a
                   * header that is already carrying four controls.
                   */}
-                <DropdownMenuSeparator />
-                <PreferenceGroup
-                    labelKey="density"
-                    options={DENSITIES}
-                    icons={DENSITY_ICONS}
-                    value={density}
-                    isValue={isDensity}
-                    onChange={setDensity}
-                    resolveLanguageKey={resolveLanguageKey}
-                />
+                {densityContext && (
+                    <>
+                        <DropdownMenuSeparator />
+                        <PreferenceGroup
+                            labelKey="density"
+                            options={DENSITIES}
+                            icons={DENSITY_ICONS}
+                            value={densityContext.density}
+                            isValue={isDensity}
+                            onChange={densityContext.setDensity}
+                            resolveLanguageKey={resolveLanguageKey}
+                        />
+                    </>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     )

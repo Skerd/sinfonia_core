@@ -12,11 +12,11 @@
   "facebook": "Facebook",
   "logo": "Logo",
   "vat": "IVA",
-  "shopSlug": "Slug shop",
-  "shopHost": "Host shop",
-  "shopStatus": "Stato shop",
-  "shopHostLastError": "Ultimo errore",
-  "shopHostStatus": {
+  "siteSlug": "Slug del sito",
+  "siteHost": "Host del sito",
+  "siteStatus": "Stato del sito",
+  "siteHostLastError": "Ultimo errore",
+  "siteHostStatus": {
     "pending": "In attesa",
     "online": "Online",
     "failed": "Fallito"

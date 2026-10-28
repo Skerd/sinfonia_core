@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/portal/blog/article.tsx",
+  "loading": "Po ngarkohet artikulli",
+  "breadcrumb": "Navigimi",
+  "blog": "Blogu",
+  "readingTime": "{minutes} min lexim",
+  "publishedBy": "Publikuar nga",
+  "visitSite": "Vizito faqen",
+  "visitSiteNamed": "Hap {name}",
+  "copyLink": "Kopjo lidhjen",
+  "linkCopied": "Lidhja u kopjua",
+  "linkCopyFailed": "Lidhja nuk u kopjua",
+  "backToBlog": "Kthehu te blogu",
+  "moreStories": "Më shumë artikuj",
+  "notFound": "Artikulli nuk u gjet",
+  "notFoundMessage": "Ky artikull mund të jetë zhvendosur ose çpublikuar."
+}

@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/portal/account/profile.tsx",
+  "title": "Profilo",
+  "subtitle": "Aggiorna i dati usati nei tuoi ordini.",
+  "form": {
+    "nameLabel": "Nome",
+    "surnameLabel": "Cognome",
+    "phoneLabel": "Telefono",
+    "emailLabel": "Email",
+    "newEmailLabel": "Nuova email"
+  },
+  "saveProfile": "Salva profilo",
+  "saving": "Salvataggio…",
+  "profileSaved": "Profilo aggiornato",
+  "profileSaveError": "Impossibile salvare il profilo",
+  "loadError": "Impossibile caricare il profilo",
+  "emailHeading": "Email",
+  "currentEmail": "Email attuale",
+  "unverified": "non verificata",
+  "pendingEmail": "Conferma inviata a {email}. L'email di accesso cambia dopo quel link.",
+  "saveEmail": "Invia conferma",
+  "emailSaved": "Controlla la casella per confermare la nuova email",
+  "emailSaveError": "Impossibile avviare il cambio email"
+}

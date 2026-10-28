@@ -1,9 +1,6 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import "./shadcnTheme.css";
 @import "@fontsource-variable/roboto";
-
-@custom-variant dark (&:is(.dark *));
 
 input[type="password"],
 input[type="text"],
@@ -420,36 +417,8 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     --grid-kpi-min: 11rem;
 }
 
+/* Panel-only tokens; the shared shadcn mapping lives in shadcnTheme.css. */
 @theme inline {
-    --radius-sm: calc(var(--radius) - 4px);
-    --radius-md: calc(var(--radius) - 2px);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) + 4px);
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --color-card: var(--card);
-    --color-card-foreground: var(--card-foreground);
-    --color-popover: var(--popover);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-primary: var(--primary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-secondary: var(--secondary);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-muted: var(--muted);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-accent: var(--accent);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-destructive: var(--destructive);
-    --color-destructive-foreground: var(--destructive-foreground);
-    --color-success: var(--success);
-    --color-success-foreground: var(--success-foreground);
-    --color-warning: var(--warning);
-    --color-warning-foreground: var(--warning-foreground);
-    --color-info: var(--info);
-    --color-info-foreground: var(--info-foreground);
-    --color-border: var(--border);
-    --color-input: var(--input);
-    --color-ring: var(--ring);
     --color-chart-1: var(--chart-1);
     --color-chart-2: var(--chart-2);
     --color-chart-3: var(--chart-3);
@@ -469,26 +438,10 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
     --color-status-blocked: var(--status-blocked);
     --color-status-leased: var(--status-leased);
     --color-status-foreground: var(--status-foreground);
-    --color-overlay: var(--overlay);
-    --color-overlay-foreground: var(--overlay-foreground);
     --font-sans: 'Roboto Variable', sans-serif;
     /* Alias, not a second family: swapping in a display face later is a change
        here rather than at every `font-display` call site. */
     --font-display: var(--font-sans);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
-
-    /*
-     * Micro type. Dense cards, table meta and badge counters had been reaching
-     * for arbitrary 9-11px values because the scale stopped at 12px. Two steps
-     * below `text-xs`; nothing smaller, since 8px and 9px were below legibility
-     * and were folded up into 3xs.
-     */
-    --text-2xs: 0.6875rem;
-    --text-2xs--line-height: 1rem;
-    --text-3xs: 0.625rem;
-    --text-3xs--line-height: 0.875rem;
 
     /* `shadow-e1` .. `shadow-e3`. See the --elevation-* comment in :root. */
     --shadow-e0: var(--elevation-0);
@@ -498,18 +451,6 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
 
     /* Utility form of the card media box: `h-card-media`, `min-h-card-media`. */
     --spacing-card-media: var(--card-media-height);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
-    }
 }
 
 .flex-full {

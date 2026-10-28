@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalKindName.tsx",
+  "product": {
+    "tab": "Produkte",
+    "item": "Produkt"
+  },
+  "service": {
+    "tab": "Shërbime",
+    "item": "Shërbim"
+  },
+  "vehicleCategory": {
+    "tab": "Makina",
+    "item": "Makinë"
+  },
+  "treatment": {
+    "tab": "Dentare",
+    "item": "Trajtim"
+  },
+  "project": {
+    "tab": "Prona",
+    "item": "Pronë"
+  }
+}

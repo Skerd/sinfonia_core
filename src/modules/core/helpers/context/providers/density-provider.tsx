@@ -54,3 +54,9 @@ export const useDensity = () => {
     if (context === undefined) throw new Error('useDensity must be used within a DensityProvider')
     return context
 }
+
+/**
+ * Non-throwing variant for shared controls that also render in the portal, which has
+ * no density (its tokens are the panel's). Prefer `useDensity` in panel code.
+ */
+export const useDensityOptional = () => useContext(DensityContext)

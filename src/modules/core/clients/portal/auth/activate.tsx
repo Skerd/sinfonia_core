@@ -7,15 +7,15 @@ import type {ActivateAccountFormType} from "armonia/src/modules/core/api/user/pu
 import type {ActivateAccountFormResponseType} from "armonia/src/modules/core/api/user/public/activateAccount/activateAccount.form.response.type.ts";
 import {usePublicActivateAccount} from "@coreModule/helpers/publicAuth/usePublicActivateAccount.ts";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 import PortalAuthShell from "./portalAuthShell.tsx";
-import {PORTAL_LINK} from "../shared/portalStyles.ts";
 
 /** Opened from the activation email (`/activate/:code`). */
 function PortalActivatePage({resolveLanguageKey, onFilterChange, innerRef}: WithLanguageType & WithAxiosType<ActivateAccountFormResponseType, ActivateAccountFormType>) {
     const {phase} = usePublicActivateAccount({onFilterChange, innerRef});
     return (
         <PortalAuthShell title={resolveLanguageKey(`${phase}.title`)} subtitle={phase === "loading" ? undefined : resolveLanguageKey(`${phase}.subtitle`)}>
-            {phase === "loading" ? <Loader /> : <Link to="/login" className={PORTAL_LINK}>{resolveLanguageKey("signIn")}</Link>}
+            {phase === "loading" ? <Loader /> : <Button asChild size="lg"><Link to="/login">{resolveLanguageKey("signIn")}</Link></Button>}
         </PortalAuthShell>
     );
 }

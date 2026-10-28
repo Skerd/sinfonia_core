@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/portal/account/security.tsx",
+  "title": "Siguria",
+  "subtitle": "Ndryshoni fjalëkalimin dhe menaxhoni autentifikimin me dy hapa.",
+  "passwordHeading": "Fjalëkalimi",
+  "form": {
+    "currentPasswordLabel": "Fjalëkalimi aktual",
+    "newPasswordLabel": "Fjalëkalimi i ri",
+    "confirmPasswordLabel": "Konfirmo fjalëkalimin",
+    "mfaCodeLabel": "Kodi i autentifikimit",
+    "secretLabel": "Sekreti"
+  },
+  "savePassword": "Përditëso fjalëkalimin",
+  "saving": "Duke ruajtur…",
+  "passwordSaved": "Fjalëkalimi u përditësua",
+  "passwordSaveError": "Fjalëkalimi nuk u përditësua",
+  "mfaHeading": "Autentifikim me dy hapa",
+  "mfaLoadError": "Statusi MFA nuk u ngarkua",
+  "mfaOn": "Autentifikimi me dy hapa është aktiv. Vendosni një kod nga aplikacioni për ta fikur.",
+  "mfaOff": "Shtoni një hap shtesë në hyrje me një aplikacion autentifikimi.",
+  "mfaScan": "Skanoni këtë kod QR në aplikacion, pastaj vendosni kodin që shfaqet.",
+  "mfaQrAlt": "Kodi QR MFA",
+  "startMfa": "Konfiguro autentifikimin me dy hapa",
+  "enableMfa": "Aktivizo",
+  "disableMfa": "Çaktivizo",
+  "mfaEnabled": "Autentifikimi me dy hapa është aktiv",
+  "mfaDisabled": "Autentifikimi me dy hapa është i fikur",
+  "mfaSetupError": "Konfigurimi MFA nuk nisi",
+  "mfaEnableError": "MFA nuk u aktivizua",
+  "mfaDisableError": "MFA nuk u çaktivizua"
+}

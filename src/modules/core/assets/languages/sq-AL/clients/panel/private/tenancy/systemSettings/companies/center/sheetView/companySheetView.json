@@ -12,11 +12,11 @@
   "facebook": "Facebook",
   "logo": "Logo",
   "vat": "TVSH",
-  "shopSlug": "Slug i dyqanit",
-  "shopHost": "Host i dyqanit",
-  "shopStatus": "Statusi i dyqanit",
-  "shopHostLastError": "Gabimi i fundit",
-  "shopHostStatus": {
+  "siteSlug": "Slug i faqes",
+  "siteHost": "Host i faqes",
+  "siteStatus": "Statusi i faqes",
+  "siteHostLastError": "Gabimi i fundit",
+  "siteHostStatus": {
     "pending": "Në pritje",
     "online": "Online",
     "failed": "Dështoi"

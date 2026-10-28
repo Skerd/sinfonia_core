@@ -320,7 +320,7 @@ function Calendar({
         )),
       Dropdown: components?.Dropdown ?? CompactDropdown,
     }),
-    [components, locale],
+    [components, locale?.code],
   )
 
   const { components: _ignoredComponents, ...dayPickerProps } = props as typeof props & {

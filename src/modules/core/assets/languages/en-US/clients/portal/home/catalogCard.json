@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/portal/home/catalogCard.tsx",
+  "priceFrom": "from {price}",
+  "pricePerDay": "{price} / day"
+}

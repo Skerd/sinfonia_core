@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/portal/blog/index.tsx",
+  "eyebrow": "Revista",
+  "title": "Histori dhe ide",
+  "lead": "Lajme dhe shënime nga kompanitë këtu.",
+  "leadCompany": "Lajme dhe shënime nga kjo kompani.",
+  "categoriesLabel": "Kategoritë e blogut",
+  "allStories": "Të gjitha",
+  "loading": "Po ngarkohen artikujt",
+  "emptyTitle": "Ende pa artikuj",
+  "emptyMessage": "Artikujt e rinj do të shfaqen këtu sapo të publikohen.",
+  "emptyCategory": "Nuk ka ende artikuj në këtë kategori.",
+  "loadMore": "Ngarko më shumë",
+  "loadingMore": "Po ngarkohet…",
+  "shownOf": "Po shfaqen {shown} nga {total}"
+}

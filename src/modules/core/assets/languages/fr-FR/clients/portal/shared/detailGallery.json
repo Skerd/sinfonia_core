@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/portal/shared/detailGallery.tsx",
+  "noImage": "Pas encore de photos",
+  "imageOf": "Afficher la photo {number} sur {total}",
+  "videoOf": "Lire la vidéo {number} sur {total}"
+}

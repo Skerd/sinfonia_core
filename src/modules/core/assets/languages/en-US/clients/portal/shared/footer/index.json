@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/portal/shared/footer/index.tsx",
+  "footer": "Every company here takes its own bookings and orders; the portal brings them together.",
+  "home": "Home",
+  "blog": "Blog",
+  "exploreHeading": "Explore",
+  "vatLabel": "VAT",
+  "socialWebsite": "Website",
+  "poweredBy": "Powered by Arpeggio"
+}

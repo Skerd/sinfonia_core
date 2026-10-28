@@ -1,0 +1,6 @@
+{
+  "path": "src/modules/core/clients/portal/shared/detailGallery.tsx",
+  "noImage": "Ende pa foto",
+  "imageOf": "Shfaq foton {number} nga {total}",
+  "videoOf": "Luaj videon {number} nga {total}"
+}

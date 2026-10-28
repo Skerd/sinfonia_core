@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/portal/shared/navigation/index.tsx",
+  "signIn": "Sign in",
+  "account": "My bookings",
+  "signOut": "Sign out",
+  "navLabel": "Main navigation",
+  "openMenu": "Open menu",
+  "home": "Home",
+  "blog": "Blog",
+  "accountMenu": "Account",
+  "searchPlaceholder": "Search products, treatments, cars, homes…"
+}

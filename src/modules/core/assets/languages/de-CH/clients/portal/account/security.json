@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/portal/account/security.tsx",
+  "title": "Sicherheit",
+  "subtitle": "Ändern Sie Ihr Passwort und verwalten Sie die Zwei-Faktor-Authentifizierung.",
+  "passwordHeading": "Passwort",
+  "form": {
+    "currentPasswordLabel": "Aktuelles Passwort",
+    "newPasswordLabel": "Neues Passwort",
+    "confirmPasswordLabel": "Passwort bestätigen",
+    "mfaCodeLabel": "Authentifizierungscode",
+    "secretLabel": "Geheimnis"
+  },
+  "savePassword": "Passwort aktualisieren",
+  "saving": "Speichern…",
+  "passwordSaved": "Passwort aktualisiert",
+  "passwordSaveError": "Passwort konnte nicht aktualisiert werden",
+  "mfaHeading": "Zwei-Faktor-Authentifizierung",
+  "mfaLoadError": "MFA-Status konnte nicht geladen werden",
+  "mfaOn": "Zwei-Faktor-Authentifizierung ist aktiv. Geben Sie einen Code aus der App ein, um sie zu deaktivieren.",
+  "mfaOff": "Fügen Sie beim Login einen zusätzlichen Schritt mit einer Authenticator-App hinzu.",
+  "mfaScan": "Scannen Sie diesen QR-Code in Ihrer App und geben Sie den angezeigten Code ein.",
+  "mfaQrAlt": "MFA-QR-Code",
+  "startMfa": "Zwei-Faktor-Authentifizierung einrichten",
+  "enableMfa": "Aktivieren",
+  "disableMfa": "Deaktivieren",
+  "mfaEnabled": "Zwei-Faktor-Authentifizierung ist aktiv",
+  "mfaDisabled": "Zwei-Faktor-Authentifizierung ist aus",
+  "mfaSetupError": "MFA-Einrichtung konnte nicht gestartet werden",
+  "mfaEnableError": "MFA konnte nicht aktiviert werden",
+  "mfaDisableError": "MFA konnte nicht deaktiviert werden"
+}

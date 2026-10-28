@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/portal/blog/blogCard.tsx",
+  "noImage": "Pa imazh",
+  "readingTime": "{minutes} min lexim",
+  "byAuthor": "Nga {author}",
+  "fromCompany": "Nga {company}"
+}

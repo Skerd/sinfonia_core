@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/portal/account/security.tsx",
+  "title": "Sécurité",
+  "subtitle": "Changez votre mot de passe et gérez l'authentification à deux facteurs.",
+  "passwordHeading": "Mot de passe",
+  "form": {
+    "currentPasswordLabel": "Mot de passe actuel",
+    "newPasswordLabel": "Nouveau mot de passe",
+    "confirmPasswordLabel": "Confirmer le mot de passe",
+    "mfaCodeLabel": "Code d'authentification",
+    "secretLabel": "Secret"
+  },
+  "savePassword": "Mettre à jour le mot de passe",
+  "saving": "Enregistrement…",
+  "passwordSaved": "Mot de passe mis à jour",
+  "passwordSaveError": "Impossible de mettre à jour le mot de passe",
+  "mfaHeading": "Authentification à deux facteurs",
+  "mfaLoadError": "Impossible de charger le statut MFA",
+  "mfaOn": "L'authentification à deux facteurs est activée. Saisissez un code de l'application pour la désactiver.",
+  "mfaOff": "Ajoutez une étape à la connexion avec une application d'authentification.",
+  "mfaScan": "Scannez ce QR dans votre application, puis saisissez le code affiché.",
+  "mfaQrAlt": "QR code MFA",
+  "startMfa": "Configurer l'authentification à deux facteurs",
+  "enableMfa": "Activer",
+  "disableMfa": "Désactiver",
+  "mfaEnabled": "Authentification à deux facteurs activée",
+  "mfaDisabled": "Authentification à deux facteurs désactivée",
+  "mfaSetupError": "Impossible de démarrer la configuration MFA",
+  "mfaEnableError": "Impossible d'activer MFA",
+  "mfaDisableError": "Impossible de désactiver MFA"
+}

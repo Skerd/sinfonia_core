@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/portal/account/profile.tsx",
+  "title": "Profil",
+  "subtitle": "Aktualisieren Sie die Angaben, die wir für Bestellungen nutzen.",
+  "form": {
+    "nameLabel": "Vorname",
+    "surnameLabel": "Nachname",
+    "phoneLabel": "Telefon",
+    "emailLabel": "E-Mail",
+    "newEmailLabel": "Neue E-Mail"
+  },
+  "saveProfile": "Profil speichern",
+  "saving": "Speichern…",
+  "profileSaved": "Profil aktualisiert",
+  "profileSaveError": "Profil konnte nicht gespeichert werden",
+  "loadError": "Profil konnte nicht geladen werden",
+  "emailHeading": "E-Mail",
+  "currentEmail": "Aktuelle E-Mail",
+  "unverified": "unbestätigt",
+  "pendingEmail": "Eine Bestätigung wurde an {email} gesendet. Die Login-E-Mail ändert sich nach diesem Link.",
+  "saveEmail": "Bestätigung senden",
+  "emailSaved": "Prüfen Sie den Posteingang, um die neue E-Mail zu bestätigen",
+  "emailSaveError": "E-Mail-Änderung konnte nicht gestartet werden"
+}

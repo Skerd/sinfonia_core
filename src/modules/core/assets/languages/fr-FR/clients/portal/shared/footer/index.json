@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/portal/shared/footer/index.tsx",
+  "footer": "Chaque entreprise gère ses propres réservations et commandes ; le portail les réunit.",
+  "home": "Accueil",
+  "blog": "Blog",
+  "exploreHeading": "Explorer",
+  "vatLabel": "TVA",
+  "socialWebsite": "Site web",
+  "poweredBy": "Powered by Arpeggio"
+}

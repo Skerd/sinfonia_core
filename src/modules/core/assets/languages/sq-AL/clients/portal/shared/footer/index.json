@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/portal/shared/footer/index.tsx",
+  "footer": "Çdo kompani menaxhon vetë rezervimet dhe porositë e saj; portali i bashkon.",
+  "home": "Ballina",
+  "blog": "Blogu",
+  "exploreHeading": "Eksploro",
+  "vatLabel": "NIPT",
+  "socialWebsite": "Faqja e internetit",
+  "poweredBy": "Powered by Arpeggio"
+}

@@ -2,8 +2,14 @@
   "path": "src/modules/core/clients/portal/home/index.tsx",
   "title": "Alles aus der Nähe, an einem Ort",
   "subtitle": "Einkaufen, ein Auto mieten, zum Zahnarzt oder ein neues Zuhause finden, bei Firmen in Ihrer Nähe.",
-  "sectionsTitle": "Entdecken",
-  "noSections": "Noch nichts gelistet.",
-  "company": "Firma",
-  "companies": "Firmen"
+  "what": "Was",
+  "where": "Wo",
+  "whatPlaceholder": "Produkt, Behandlung, Auto, Projekt…",
+  "wherePlaceholder": "Ort",
+  "anywhere": "Überall",
+  "noCities": "Keine Orte",
+  "search": "Suchen",
+  "call": "Anrufen",
+  "email": "E-Mail",
+  "website": "Website"
 }

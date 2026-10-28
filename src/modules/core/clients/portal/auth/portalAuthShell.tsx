@@ -1,18 +1,17 @@
 import type {ReactNode} from "react";
-import {cn} from "@coreModule/components/lib/utils.ts";
-import {PORTAL_CARD, PORTAL_HEADING} from "../shared/portalStyles.ts";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 
-/** Centred card the portal's account pages share. */
+/** Card the portal's account screens share. */
 export default function PortalAuthShell({title, subtitle, children}: {title: ReactNode; subtitle?: ReactNode; children: ReactNode}) {
     return (
-        <div className="flex justify-center px-4 py-12 sm:py-20">
-            <div className={cn(PORTAL_CARD, "flex w-full max-w-md flex-col gap-6 p-6 sm:p-8")}>
-                <div>
-                    <h1 className={cn(PORTAL_HEADING, "text-2xl")}>{title}</h1>
-                    {subtitle ? <p className="mt-2 text-portal-ink-muted">{subtitle}</p> : null}
-                </div>
-                {children}
-            </div>
+        <div className="site-container flex justify-center py-10 sm:py-16">
+            <Card className="w-full max-w-md">
+                <CardHeader>
+                    <CardTitle className="font-display text-2xl font-bold tracking-tight">{title}</CardTitle>
+                    {subtitle ? <CardDescription className="leading-relaxed">{subtitle}</CardDescription> : null}
+                </CardHeader>
+                <CardContent className="flex flex-col gap-6">{children}</CardContent>
+            </Card>
         </div>
     );
 }

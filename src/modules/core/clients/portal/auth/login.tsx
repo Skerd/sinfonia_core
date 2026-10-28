@@ -1,3 +1,4 @@
+import {useState} from "react";
 import {compose} from "redux";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
@@ -6,19 +7,24 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import type {LoginFormType} from "armonia/src/modules/core/api/user/public/login/login.form.type.ts";
 import {type PublicLoginResponse, usePublicLoginForm} from "@coreModule/helpers/publicAuth/usePublicLoginForm.ts";
 import {safeNextPath} from "@coreModule/helpers/publicAuth/safeNextPath.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 import PortalAuthShell from "./portalAuthShell.tsx";
-import {PORTAL_BUTTON, PORTAL_FIELD_ERROR, PORTAL_INPUT, PORTAL_LINK} from "../shared/portalStyles.ts";
+import FormField from "../shared/formField.tsx";
+import PortalThirdPartyAuthentication from "./portalThirdPartyAuthentication.tsx";
+import PortalThirdPartyLoginForm from "./portalThirdPartyLogin.form.tsx";
 
 /** Sign in to a portal account (it belongs to the platform owner, so it works on every section). */
 function PortalLoginPage({resolveLanguageKey, languageCode, onFilterChange, innerRef, loading}: WithLanguageType & WithAxiosType<PublicLoginResponse, LoginFormType>) {
     const navigate = useNavigate();
     const location = useLocation();
+    const [oauthBusy, setOauthBusy] = useState(false);
+    const busy = loading || oauthBusy;
     const form = usePublicLoginForm({
         resolveLanguageKey,
         languageCode,
         onFilterChange,
         innerRef,
-        busy: loading,
+        busy,
         onLoggedIn: () => navigate(safeNextPath(location.search, "/account")),
     });
 
@@ -27,36 +33,29 @@ function PortalLoginPage({resolveLanguageKey, languageCode, onFilterChange, inne
             title={resolveLanguageKey(form.needsMfa ? "mfaTitle" : "title")}
             subtitle={resolveLanguageKey(form.needsMfa ? "mfaSubtitle" : "subtitle")}
         >
+            <PortalThirdPartyLoginForm onBusy={setOauthBusy} />
             <form className="flex flex-col gap-4" onSubmit={form.handleSubmit} noValidate>
                 {!form.needsMfa ? (
                     <>
-                        <div>
-                            <input type="email" autoComplete="email" className={PORTAL_INPUT} disabled={loading}
-                                placeholder={resolveLanguageKey("form.emailPlaceholder")} aria-label={resolveLanguageKey("form.emailLabel")}
-                                value={form.username} onChange={(e) => { form.setUsername(e.target.value); form.clearFieldError("username"); }} />
-                            {form.fieldErrors.username ? <p className={PORTAL_FIELD_ERROR}>{form.fieldErrors.username}</p> : null}
-                        </div>
-                        <div>
-                            <input type="password" autoComplete="current-password" className={PORTAL_INPUT} disabled={loading}
-                                placeholder={resolveLanguageKey("form.passwordPlaceholder")} aria-label={resolveLanguageKey("form.passwordLabel")}
-                                value={form.password} onChange={(e) => { form.setPassword(e.target.value); form.clearFieldError("password"); }} />
-                            {form.fieldErrors.password ? <p className={PORTAL_FIELD_ERROR}>{form.fieldErrors.password}</p> : null}
-                        </div>
+                        <FormField type="email" autoComplete="email" disabled={busy}
+                            label={resolveLanguageKey("form.emailLabel")} placeholder={resolveLanguageKey("form.emailPlaceholder")} error={form.fieldErrors.username}
+                            value={form.username} onChange={(e) => { form.setUsername(e.target.value); form.clearFieldError("username"); }} />
+                        <FormField type="password" autoComplete="current-password" disabled={busy}
+                            label={resolveLanguageKey("form.passwordLabel")} placeholder={resolveLanguageKey("form.passwordPlaceholder")} error={form.fieldErrors.password}
+                            value={form.password} onChange={(e) => { form.setPassword(e.target.value); form.clearFieldError("password"); }} />
                     </>
                 ) : (
-                    <div>
-                        <input inputMode="numeric" autoComplete="one-time-code" className={PORTAL_INPUT} disabled={loading}
-                            placeholder={resolveLanguageKey("form.mfaCodePlaceholder")} aria-label={resolveLanguageKey("form.mfaCodeLabel")}
-                            value={form.mfaCode} onChange={(e) => { form.setMfaCode(e.target.value); form.clearFieldError("mfaCode"); }} />
-                        {form.fieldErrors.mfaCode ? <p className={PORTAL_FIELD_ERROR}>{form.fieldErrors.mfaCode}</p> : null}
-                    </div>
+                    <FormField inputMode="numeric" autoComplete="one-time-code" disabled={busy}
+                        label={resolveLanguageKey("form.mfaCodeLabel")} placeholder={resolveLanguageKey("form.mfaCodePlaceholder")} error={form.fieldErrors.mfaCode}
+                        value={form.mfaCode} onChange={(e) => { form.setMfaCode(e.target.value); form.clearFieldError("mfaCode"); }} />
                 )}
-                <button type="submit" className={PORTAL_BUTTON} disabled={loading}>{resolveLanguageKey("submit")}</button>
+                <Button type="submit" size="lg" disabled={busy}>{resolveLanguageKey("submit")}</Button>
             </form>
-            <div className="flex flex-col gap-2 text-sm">
-                <Link to="/forgot-password" className={PORTAL_LINK}>{resolveLanguageKey("forgotPassword")}</Link>
-                <p className="text-portal-ink-muted">
-                    {resolveLanguageKey("noAccount")} <Link to={`/signup${location.search}`} className={PORTAL_LINK}>{resolveLanguageKey("signUpLink")}</Link>
+            {!form.needsMfa ? <PortalThirdPartyAuthentication resolveLanguageKey={resolveLanguageKey} loading={busy} /> : null}
+            <div className="flex flex-col items-start gap-2 text-sm">
+                <Button asChild variant="link" className="h-auto p-0"><Link to="/forgot-password">{resolveLanguageKey("forgotPassword")}</Link></Button>
+                <p className="text-muted-foreground">
+                    {resolveLanguageKey("noAccount")} <Button asChild variant="link" className="h-auto p-0"><Link to={`/signup${location.search}`}>{resolveLanguageKey("signUpLink")}</Link></Button>
                 </p>
             </div>
         </PortalAuthShell>

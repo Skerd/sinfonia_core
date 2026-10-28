@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/portal/home/catalog.tsx",
+  "label": "Katalogu",
+  "all": "Të gjitha",
+  "priceMin": "Çmimi min.",
+  "priceMax": "Çmimi maks.",
+  "sort": "Rendit sipas",
+  "sorts": {
+    "newest": "Më të rejat",
+    "priceAsc": "Çmimi: nga më i ulëti",
+    "priceDesc": "Çmimi: nga më i larti"
+  },
+  "results": "{count} rezultate",
+  "seeAll": "Shiko të gjitha ({count})",
+  "noResults": "Asnjë rezultat",
+  "noResultsHint": "Provo fjalë të tjera, një qytet tjetër ose më pak filtra.",
+  "failed": "Katalogu nuk u ngarkua. Provo përsëri.",
+  "previous": "Mbrapa",
+  "next": "Para"
+}

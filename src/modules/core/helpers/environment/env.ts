@@ -18,6 +18,8 @@ const envSchema = z.object({
     VITE_DEBUG_HTTP: boolFromEnv.default(false),
     VITE_DEBUG_WS: boolFromEnv.default(false),
     VITE_DEBUG_UI: boolFromEnv.default(false),
+    /** Portal build only: the zone apex (`arpeggio.al`) whose apex and company sites share one session. */
+    VITE_PORTAL_ROOT_DOMAIN: z.string().default(""),
 });
 
 export type AppEnv = z.infer<typeof envSchema>;

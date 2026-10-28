@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/portal/home/catalog.tsx",
+  "label": "Katalog",
+  "all": "Alle",
+  "priceMin": "Preis ab",
+  "priceMax": "Preis bis",
+  "sort": "Sortieren nach",
+  "sorts": {
+    "newest": "Neueste",
+    "priceAsc": "Preis: aufsteigend",
+    "priceDesc": "Preis: absteigend"
+  },
+  "results": "{count} Ergebnisse",
+  "seeAll": "Alle {count} ansehen",
+  "noResults": "Keine Treffer",
+  "noResultsHint": "Versuchen Sie andere Begriffe, eine andere Stadt oder weniger Filter.",
+  "failed": "Der Katalog konnte nicht geladen werden. Bitte erneut versuchen.",
+  "previous": "Zurück",
+  "next": "Weiter"
+}

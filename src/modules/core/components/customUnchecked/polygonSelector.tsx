@@ -33,7 +33,13 @@ interface PolygonSelectorProps {
         _id: string;
         name: string;
         polygonCoordinates: PolygonPoint[];
-        /** Optional override fill (e.g. unit status). Prefer rgba/hsla so muted alpha rewrite works. */
+        /**
+         * Unit status. When set, and fill/stroke are not, the polygon uses the
+         * status color (available green, reserved amber, sold red, rented blue,
+         * unavailable gray or the panel blocked tone).
+         */
+        status?: string;
+        /** Optional override fill. Prefer rgba/hsla or color-mix so the muted alpha rewrite works. */
         fill?: string;
         /** Optional override stroke; defaults to fill when only fill is set. */
         stroke?: string;
@@ -56,6 +62,8 @@ interface PolygonSelectorProps {
     borderless?: boolean;
     /** Hide zoom / edit toolbar (marketing viewers). */
     hideControls?: boolean;
+    /** Zoom with the wheel alone (no ctrl/meta). Magnified viewers; default keeps page scroll. */
+    wheelZooms?: boolean;
     /**
      * How the image fills the stage. `cover` fills the container (crops overflow);
      * polygon math stays aligned. Marketing full-bleed viewers typically want `cover`.
@@ -139,6 +147,28 @@ function getRenderedImageSize(
     };
 }
 
+/**
+ * Plain rgba, because these strings are SVG presentation attributes.
+ * `var()` and `color-mix()` are invalid there and the path paints black.
+ */
+const UNIT_STATUS_POLYGON_COLORS: Record<string, {fill: string; stroke: string}> = {
+    available_unit: {fill: "rgba(31, 190, 106, 0.22)", stroke: "rgba(31, 190, 106, 0.4)"},
+    available: {fill: "rgba(31, 190, 106, 0.22)", stroke: "rgba(31, 190, 106, 0.4)"},
+    reserved_unit: {fill: "rgba(234, 179, 8, 0.22)", stroke: "rgba(234, 179, 8, 0.4)"},
+    reserved: {fill: "rgba(234, 179, 8, 0.22)", stroke: "rgba(234, 179, 8, 0.4)"},
+    sold_unit: {fill: "rgba(220, 38, 38, 0.22)", stroke: "rgba(220, 38, 38, 0.4)"},
+    sold: {fill: "rgba(220, 38, 38, 0.22)", stroke: "rgba(220, 38, 38, 0.4)"},
+    rented_unit: {fill: "rgba(37, 99, 235, 0.22)", stroke: "rgba(37, 99, 235, 0.4)"},
+    rented: {fill: "rgba(37, 99, 235, 0.22)", stroke: "rgba(37, 99, 235, 0.4)"},
+    unavailable_unit: {fill: "rgba(147, 51, 196, 0.22)", stroke: "rgba(147, 51, 196, 0.4)"},
+    unavailable: {fill: "rgba(107, 114, 128, 0.22)", stroke: "rgba(107, 114, 128, 0.4)"},
+};
+
+/** Resting polygons stay faint; hover and selection use the full fill. */
+function mutePolygonFill(fill: string): string {
+    return fill.replace(/,\s*[\d.]+\)$/, ", 0.07)");
+}
+
 /** Generates distinct colors for phantom polygons. Uses golden-angle hue distribution so colors never repeat predictably. */
 function getPhantomColor(index: number): { fill: string; stroke: string } {
     const hue = (index * 137.5) % 360; // golden angle gives good spread
@@ -149,13 +179,15 @@ function getPhantomColor(index: number): { fill: string; stroke: string } {
 }
 
 function resolvePhantomColor(
-    item: {_id: string; fill?: string; stroke?: string},
+    item: {_id: string; fill?: string; stroke?: string; status?: string},
     index: number,
 ): { fill: string; stroke: string } {
     if (item.fill || item.stroke) {
         const color = item.fill ?? item.stroke!;
         return {fill: item.fill ?? color, stroke: item.stroke ?? color};
     }
+    const statusColor = item.status ? UNIT_STATUS_POLYGON_COLORS[item.status] : undefined;
+    if (statusColor) return statusColor;
     return getPhantomColor(index);
 }
 
@@ -177,6 +209,7 @@ function PolygonSelector({
     fillHeight = false,
     borderless = false,
     hideControls = false,
+    wheelZooms = false,
     objectFit = "contain",
     objectPosition = "center",
     phantomsAlwaysVisible,
@@ -266,6 +299,8 @@ function PolygonSelector({
 
     // Keep zoomRef in sync so the native wheel handler always sees the current zoom value.
     useEffect(() => { zoomRef.current = zoom; }, [zoom]);
+    const wheelZoomsRef = useRef(wheelZooms);
+    useEffect(() => { wheelZoomsRef.current = wheelZooms; }, [wheelZooms]);
 
     /**
      * Non-passive wheel listener for ctrl/meta image-zoom and for panning when
@@ -283,7 +318,7 @@ function PolygonSelector({
                 e.clientY < containerRect.top  || e.clientY > containerRect.bottom
             ) return;
 
-            if (e.metaKey || e.ctrlKey) {
+            if (e.metaKey || e.ctrlKey || wheelZoomsRef.current) {
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -725,7 +760,7 @@ function PolygonSelector({
                         const isForced = forcedHighlightId === phantomPoints[index]._id;
                         const isHovered = hoveredPhantomIndex === index;
                         const isActive = isForced || isHovered;
-                        const mutedFill = fill.replace(/,\s*[\d.]+\)$/, ", 0.16)");
+                        const mutedFill = mutePolygonFill(fill);
                         if( floorCoordinates.polygonCoordinates?.length > 0 ){
                             return (
                                 <React.Fragment key={floorCoordinates._id + "_" + index}>

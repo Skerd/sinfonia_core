@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/portal/account/security.tsx",
+  "title": "Sicurezza",
+  "subtitle": "Cambia la password e gestisci l'autenticazione a due fattori.",
+  "passwordHeading": "Password",
+  "form": {
+    "currentPasswordLabel": "Password attuale",
+    "newPasswordLabel": "Nuova password",
+    "confirmPasswordLabel": "Conferma password",
+    "mfaCodeLabel": "Codice di autenticazione",
+    "secretLabel": "Segreto"
+  },
+  "savePassword": "Aggiorna password",
+  "saving": "Salvataggio…",
+  "passwordSaved": "Password aggiornata",
+  "passwordSaveError": "Impossibile aggiornare la password",
+  "mfaHeading": "Autenticazione a due fattori",
+  "mfaLoadError": "Impossibile caricare lo stato MFA",
+  "mfaOn": "L'autenticazione a due fattori è attiva. Inserisci un codice dall'app per disattivarla.",
+  "mfaOff": "Aggiungi un passaggio in più all'accesso con un'app di autenticazione.",
+  "mfaScan": "Scansiona questo QR nell'app di autenticazione, poi inserisci il codice.",
+  "mfaQrAlt": "Codice QR MFA",
+  "startMfa": "Configura autenticazione a due fattori",
+  "enableMfa": "Attiva",
+  "disableMfa": "Disattiva",
+  "mfaEnabled": "Autenticazione a due fattori attiva",
+  "mfaDisabled": "Autenticazione a due fattori disattivata",
+  "mfaSetupError": "Impossibile avviare la configurazione MFA",
+  "mfaEnableError": "Impossibile attivare MFA",
+  "mfaDisableError": "Impossibile disattivare MFA"
+}

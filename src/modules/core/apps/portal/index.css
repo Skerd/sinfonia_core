@@ -1,37 +1,97 @@
 @import "tailwindcss";
-/* The sites the portal hosts keep their own look. */
-@import "../../../carRental/apps/rental/theme.css";
-@import "../../../dentalClinic/apps/clinic/theme.css";
-@import "../../../eCommerce/apps/shop/theme.css";
-@import "../../../propertyManagement/apps/public/theme.css";
+@import "../core/shadcnTheme.css";
 
-@theme {
-    --color-portal-ink: #15171c;
-    --color-portal-ink-muted: rgba(21, 23, 28, 0.68);
-    --color-portal-ink-faded: rgba(21, 23, 28, 0.45);
-    --color-portal-accent: #3a3fd6;
-    --color-portal-accent-strong: #2c30b0;
-    --color-portal-accent-soft: #eceefe;
-    --color-portal-surface: #f6f6f3;
-    --color-portal-card: #ffffff;
-    --color-portal-border: rgba(21, 23, 28, 0.12);
-    --color-portal-danger: #b42318;
-    --font-portal-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-    --font-portal-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+/* One public look for every site: ink on white, the blue accent, cream and sand surfaces. */
+:root {
+    --radius: 1rem;
+
+    --background: #ffffff;
+    --foreground: #181818;
+    --card: #ffffff;
+    --card-foreground: #181818;
+    --popover: #ffffff;
+    --popover-foreground: #181818;
+
+    --primary: #0247fe;
+    --primary-foreground: #ffffff;
+    --secondary: #f7f4ef;
+    --secondary-foreground: #181818;
+    --muted: #f7f4ef;
+    --muted-foreground: #5d5d5d;
+    --accent: #ede7dc;
+    --accent-foreground: #181818;
+    --destructive: #b42318;
+    --destructive-foreground: #ffffff;
+
+    --success: #1d6b45;
+    --success-foreground: #ffffff;
+    --warning: #b54708;
+    --warning-foreground: #ffffff;
+    --info: #0247fe;
+    --info-foreground: #ffffff;
+
+    --border: rgba(24, 24, 24, 0.12);
+    --input: rgba(24, 24, 24, 0.16);
+    --ring: #0247fe;
+
+    /* Content on a photograph: the same in both themes. */
+    --overlay: rgba(0, 0, 0, 0.6);
+    --overlay-foreground: #ffffff;
 }
 
-html,
+.dark {
+    --background: #121212;
+    --foreground: #f7f4ef;
+    --card: #1a1a1a;
+    --card-foreground: #f7f4ef;
+    --popover: #1a1a1a;
+    --popover-foreground: #f7f4ef;
+
+    --primary: #4d7dff;
+    --primary-foreground: #ffffff;
+    --secondary: #222120;
+    --secondary-foreground: #f7f4ef;
+    --muted: #1f1e1c;
+    --muted-foreground: #a9a49b;
+    --accent: #2a2722;
+    --accent-foreground: #f7f4ef;
+    --destructive: #f97066;
+    --destructive-foreground: #121212;
+
+    --success: #47b881;
+    --success-foreground: #121212;
+    --warning: #f5a524;
+    --warning-foreground: #121212;
+    --info: #4d7dff;
+    --info-foreground: #ffffff;
+
+    --border: rgba(247, 244, 239, 0.12);
+    --input: rgba(247, 244, 239, 0.18);
+    --ring: #4d7dff;
+}
+
+@theme {
+    --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
 body {
-    font-family: var(--font-portal-sans);
-    color: var(--color-portal-ink);
-    background: var(--color-portal-surface);
     -webkit-font-smoothing: antialiased;
 }
 
-/* One visible keyboard focus style for every control; mouse clicks don't show it. */
-:focus-visible {
-    outline: 2px solid var(--color-portal-accent);
-    outline-offset: 2px;
+/*
+ * Public forms get roomier controls than the dense panel. Unlayered, so it wins over the
+ * components' own height utilities; a control that needs another height says so in `style`.
+ */
+[data-slot="input"],
+[data-slot="native-select"],
+[data-slot="select-trigger"] {
+    height: 2.5rem;
+}
+
+/* Page width and gutters of every site the portal renders. */
+@utility site-container {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
 }
 
 @media (prefers-reduced-motion: reduce) {

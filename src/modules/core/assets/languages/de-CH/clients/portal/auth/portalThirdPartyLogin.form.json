@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/portal/auth/portalThirdPartyLogin.form.tsx",
+  "axios": {
+    "start": {
+      "title": "Anmeldung…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Angemeldet",
+      "time": 2000
+    },
+    "error": {
+      "title": "Anmeldung fehlgeschlagen",
+      "time": 3000
+    }
+  }
+}

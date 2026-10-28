@@ -31,5 +31,6 @@
       "title": "The account could not be created",
       "time": 3000
     }
-  }
+  },
+  "orContinueWith": "Or continue with"
 }

@@ -1,0 +1,20 @@
+{
+  "path": "src/modules/core/clients/portal/home/catalog.tsx",
+  "label": "Catalogo",
+  "all": "Tutto",
+  "priceMin": "Prezzo min.",
+  "priceMax": "Prezzo max.",
+  "sort": "Ordina per",
+  "sorts": {
+    "newest": "Più recenti",
+    "priceAsc": "Prezzo crescente",
+    "priceDesc": "Prezzo decrescente"
+  },
+  "results": "{count} risultati",
+  "seeAll": "Vedi tutti ({count})",
+  "noResults": "Nessun risultato",
+  "noResultsHint": "Prova altre parole, un'altra città o meno filtri.",
+  "failed": "Impossibile caricare il catalogo. Riprova.",
+  "previous": "Precedente",
+  "next": "Successiva"
+}

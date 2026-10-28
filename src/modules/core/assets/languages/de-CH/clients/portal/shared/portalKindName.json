@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalKindName.tsx",
+  "product": {
+    "tab": "Produkte",
+    "item": "Produkt"
+  },
+  "service": {
+    "tab": "Dienstleistungen",
+    "item": "Dienstleistung"
+  },
+  "vehicleCategory": {
+    "tab": "Autos",
+    "item": "Auto"
+  },
+  "treatment": {
+    "tab": "Zahnmedizin",
+    "item": "Behandlung"
+  },
+  "project": {
+    "tab": "Immobilien",
+    "item": "Immobilie"
+  }
+}

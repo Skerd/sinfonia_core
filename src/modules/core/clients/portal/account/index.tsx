@@ -1,27 +1,21 @@
 import {compose} from "redux";
-import {useSelector} from "react-redux";
-import {Navigate} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {cn} from "@coreModule/components/lib/utils.ts";
-import {getPortalContributions} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
 import PortalSectionName from "../shared/portalSectionName.tsx";
-import {PORTAL_CARD, PORTAL_CONTAINER, PORTAL_HEADING} from "../shared/portalStyles.ts";
+import {usePortalSite} from "../shared/portalSiteContext.tsx";
 
-/** The visitor's bookings and orders, one block per section that has some to show. */
+/** The visitor's bookings and orders, one block per section this host offers (behind `RequireSession`). */
 function PortalAccountPage({resolveLanguageKey}: WithLanguageType) {
-    const token = useSelector((state: RootState) => state.authentication.token);
-    if (!token) return <Navigate to="/login?next=/account" replace />;
+    const {sections} = usePortalSite();
 
     return (
-        <div className={cn(PORTAL_CONTAINER, "flex flex-col gap-8 py-10")}>
+        <div className="flex flex-col gap-12">
             <div>
-                <h1 className={cn(PORTAL_HEADING, "text-3xl")}>{resolveLanguageKey("title")}</h1>
-                <p className="mt-2 text-portal-ink-muted">{resolveLanguageKey("subtitle")}</p>
+                <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">{resolveLanguageKey("title")}</h1>
+                <p className="mt-3 text-lg text-muted-foreground">{resolveLanguageKey("subtitle")}</p>
             </div>
-            {getPortalContributions().map(({section, AccountSection}) => AccountSection ? (
-                <section key={section} className={cn(PORTAL_CARD, "flex flex-col gap-4")}>
-                    <h2 className={cn(PORTAL_HEADING, "text-xl")}><PortalSectionName section={section} /></h2>
+            {sections.map(({section, AccountSection}) => AccountSection ? (
+                <section key={section} className="flex flex-col gap-4">
+                    <h2 className="font-display text-2xl font-bold tracking-tight"><PortalSectionName section={section} /></h2>
                     <AccountSection />
                 </section>
             ) : null)}

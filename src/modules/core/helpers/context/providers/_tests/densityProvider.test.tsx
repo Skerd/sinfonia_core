@@ -1,7 +1,7 @@
 import {act, renderHook} from "@testing-library/react";
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 import type {ReactNode} from "react";
-import {DENSITY_STORAGE_KEY, DensityProvider, isDensity, useDensity, type Density} from "@coreModule/helpers/context/providers/density-provider.tsx";
+import {DENSITY_STORAGE_KEY, DensityProvider, isDensity, useDensity, useDensityOptional, type Density} from "@coreModule/helpers/context/providers/density-provider.tsx";
 import {resetLocalStorageMemoryFallback} from "@coreModule/helpers/context/localStorage/localStorageProvider.ts";
 import {writeFromAnotherTab} from "./storageUtils.ts";
 
@@ -131,5 +131,16 @@ describe("DensityProvider", () => {
         vi.spyOn(console, "error").mockImplementation(() => {});
 
         expect(() => renderHook(() => useDensity())).toThrow("useDensity must be used within a DensityProvider");
+    });
+});
+
+describe("useDensityOptional", () => {
+    it("is undefined outside the provider, for apps without density", () => {
+        expect(renderHook(() => useDensityOptional()).result.current).toBeUndefined();
+    });
+
+    it("reads the provider when there is one", () => {
+        const wrapper = ({children}: {children: ReactNode}) => <DensityProvider defaultDensity="compact">{children}</DensityProvider>;
+        expect(renderHook(() => useDensityOptional(), {wrapper}).result.current?.density).toBe("compact");
     });
 });

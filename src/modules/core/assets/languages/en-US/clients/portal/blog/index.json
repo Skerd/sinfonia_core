@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/portal/blog/index.tsx",
+  "eyebrow": "Journal",
+  "title": "Stories & ideas",
+  "lead": "News and notes from the companies here.",
+  "leadCompany": "News and notes from this company.",
+  "categoriesLabel": "Blog categories",
+  "allStories": "All stories",
+  "loading": "Loading stories",
+  "emptyTitle": "No stories yet",
+  "emptyMessage": "New posts will appear here as soon as they are published.",
+  "emptyCategory": "There are no stories in this category yet.",
+  "loadMore": "Load more stories",
+  "loadingMore": "Loading…",
+  "shownOf": "Showing {shown} of {total}"
+}

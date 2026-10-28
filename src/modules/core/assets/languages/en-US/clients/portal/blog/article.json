@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/portal/blog/article.tsx",
+  "loading": "Loading story",
+  "breadcrumb": "Breadcrumb",
+  "blog": "Blog",
+  "readingTime": "{minutes} min read",
+  "publishedBy": "Published by",
+  "visitSite": "Visit site",
+  "visitSiteNamed": "Visit {name}",
+  "copyLink": "Copy link",
+  "linkCopied": "Link copied",
+  "linkCopyFailed": "Couldn't copy the link",
+  "backToBlog": "Back to the blog",
+  "moreStories": "More stories",
+  "notFound": "Story not found",
+  "notFoundMessage": "This story may have been moved or unpublished."
+}

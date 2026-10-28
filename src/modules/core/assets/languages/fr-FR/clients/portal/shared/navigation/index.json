@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/portal/shared/navigation/index.tsx",
+  "signIn": "Se connecter",
+  "account": "Mes réservations",
+  "signOut": "Se déconnecter",
+  "navLabel": "Navigation principale",
+  "openMenu": "Ouvrir le menu",
+  "home": "Accueil",
+  "blog": "Blog",
+  "accountMenu": "Compte",
+  "searchPlaceholder": "Rechercher produits, soins, voitures, logements…"
+}

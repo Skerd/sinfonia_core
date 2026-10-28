@@ -1,40 +1,91 @@
-import {useEffect} from "react";
-import {Link, useParams} from "react-router-dom";
+import {compose} from "redux";
+import {useEffect, useLayoutEffect, useState, type ReactNode} from "react";
+import {Link, useLocation, useParams} from "react-router-dom";
+import {ArrowLeft, ArrowUpRight} from "lucide-react";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import {setSiteCompany} from "@coreModule/helpers/apiClient/siteCompany.ts";
-import {getPortalContributionByPath} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
-import {cn} from "@coreModule/components/lib/utils.ts";
-import PortalNotFound from "@coreModule/clients/portal/notFound/index.tsx";
+import type {PortalContribution} from "@coreModule/helpers/types/portalContribution.types.ts";
+import Loader from "@coreModule/components/custom/loader/loader.tsx";
+import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
+import type {PortalCompaniesResponse, PortalCompanyCard} from "armonia/src/modules/core/api/portal/public/portal/portal.dto.ts";
+import PortalNotFound from "../notFound/index.tsx";
 import PortalSectionName from "./portalSectionName.tsx";
-import SectionRouter from "./sectionRouter.tsx";
-import {PORTAL_CONTAINER, PORTAL_LINK} from "./portalStyles.ts";
+import {PortalListedCompanyProvider} from "./portalListedCompany.tsx";
+import {SectionBaseProvider, sectionHref} from "./sectionBase.tsx";
+import {companySiteOrigin} from "./portalZone.ts";
+import {BlogSection} from "../blog/index.tsx";
+
+type PortalCompanySiteProps = WithLanguageType & {
+    contribution: PortalContribution;
+    children: ReactNode;
+};
 
 /**
- * One company's site within a section (`/<section>/<company>/*`). Every request it makes
- * names the company in `x-site-company`; the API answers only while the company is listed.
+ * One company's pages of a section on the apex (`/<path>/<company>/*`), under a strip naming
+ * the company. Every request they make names it in `x-site-company`.
  */
-export default function PortalCompanySite() {
-    const {sectionPath, company} = useParams();
-    const contribution = getPortalContributionByPath(sectionPath);
-    const CompanySite = contribution?.CompanySite;
+function PortalCompanySite({contribution, children, resolveLanguageKey}: PortalCompanySiteProps) {
+    const {company: slug = ""} = useParams();
+    const {pathname} = useLocation();
+    const [card, setCard] = useState<PortalCompanyCard | null | undefined>(undefined);
 
-    // Set during render, so the site's very first requests already carry it.
-    setSiteCompany(CompanySite && company ? company : null);
-    useEffect(() => () => setSiteCompany(null), []);
+    // Before the pages' own effects run, so their first requests already carry it.
+    useLayoutEffect(() => {
+        setSiteCompany(slug);
+        return () => setSiteCompany(null);
+    }, [slug]);
 
-    if (!contribution || !CompanySite || !company) return <PortalNotFound />;
+    useEffect(() => {
+        let cancelled = false;
+        setCard(undefined);
+        apiClient.post<PortalCompaniesResponse>("/api/portal/companies", {section: contribution.section, slug})
+            .then((res) => { if (!cancelled) setCard(res.data.data[0] ?? null); })
+            .catch(() => { if (!cancelled) setCard(null); });
+        return () => { cancelled = true; };
+    }, [contribution.section, slug]);
+
+    if (card === undefined) return <Loader />;
+    if (!card) return <PortalNotFound />;
+    const siteOrigin = companySiteOrigin(card.slug);
+
+    const visitHref = siteOrigin ? `${siteOrigin}/${contribution.path}` : undefined;
+    const companyBase = `/${contribution.path}/${card.slug}`;
+    const onCompanyIndex = pathname === companyBase || pathname === `${companyBase}/`;
 
     return (
-        <>
-            <div className="border-b border-portal-border bg-portal-surface">
-                <div className={cn(PORTAL_CONTAINER, "py-2 text-sm")}>
-                    <Link to={`/${contribution.path}`} className={PORTAL_LINK}>
-                        ← <PortalSectionName section={contribution.section} />
-                    </Link>
+        <PortalListedCompanyProvider company={{name: card.name, slug: card.slug, logo: card.logo, visitHref}}>
+            <div className="border-b bg-muted/40">
+                <div className="site-container flex items-center gap-3 py-3">
+                    <Button asChild variant="ghost" size="icon" aria-label={resolveLanguageKey("back")}>
+                        <Link to={sectionHref(contribution)}><ArrowLeft /></Link>
+                    </Button>
+                    <Avatar className="size-9">
+                        {card.logo ? <AvatarImage src={card.logo} alt="" className="object-contain" /> : null}
+                        <AvatarFallback>{card.name.slice(0, 2)}</AvatarFallback>
+                    </Avatar>
+                    <div className="min-w-0 flex-1">
+                        <p className="truncate font-medium">{card.name}</p>
+                        <p className="truncate text-xs text-muted-foreground">
+                            <PortalSectionName section={contribution.section} />
+                            {card.cities.length ? ` · ${card.cities.join(", ")}` : ""}
+                        </p>
+                    </div>
+                    {visitHref ? (
+                        <Button asChild variant="outline" className="hidden sm:inline-flex">
+                            <a href={visitHref}>
+                                {resolveLanguageKey("visitSite")}
+                                <ArrowUpRight aria-hidden />
+                            </a>
+                        </Button>
+                    ) : null}
                 </div>
             </div>
-            <SectionRouter basename={`/${contribution.path}/${company}`}>
-                <CompanySite />
-            </SectionRouter>
-        </>
+            {onCompanyIndex ? <BlogSection companySlug={card.slug} contained /> : null}
+            <SectionBaseProvider base={`/${contribution.path}/${card.slug}`}>{children}</SectionBaseProvider>
+        </PortalListedCompanyProvider>
     );
 }
+
+export default compose(withLanguage("src/modules/core/clients/portal/shared/portalCompanySite.tsx"))(PortalCompanySite);

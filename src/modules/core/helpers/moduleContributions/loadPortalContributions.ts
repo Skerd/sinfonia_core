@@ -9,6 +9,10 @@ import {
 
 const isOptionalComponent = (value: unknown) => value === undefined || isComponentLike(value);
 
+const isCatalog = (value: unknown) => typeof value === "object" && value !== null
+    && isString((value as {kind?: unknown}).kind)
+    && isOptionalComponent((value as {Filters?: unknown}).Filters);
+
 export function createPortalContributions(glob: ContributionGlob) {
     return createContributionList<PortalContribution>({
         kind: "portalContribution",
@@ -17,7 +21,10 @@ export function createPortalContributions(glob: ContributionGlob) {
             && isString(entry.path)
             && isOptionalComponent(entry.CompanySite)
             && isOptionalComponent(entry.SectionSite)
-            && isOptionalComponent(entry.SectionSearch)
+            && (entry.catalogs === undefined || (Array.isArray(entry.catalogs) && entry.catalogs.every(isCatalog)))
+            && isOptionalComponent(entry.Home)
+            && isOptionalComponent(entry.Provider)
+            && isOptionalComponent(entry.NavAction)
             && isOptionalComponent(entry.AccountSection),
         // A portal visitor's account belongs to the platform owner (core only); the sections
         // follow what the portal lists, not the signed-in company's modules.
@@ -33,9 +40,4 @@ const portalContributions = createPortalContributions(
 
 export function getPortalContributions(): readonly PortalContribution[] {
     return portalContributions();
-}
-
-/** The contribution serving `path` (the URL segment), if any. */
-export function getPortalContributionByPath(path: string | undefined): PortalContribution | undefined {
-    return portalContributions().find((contribution) => contribution.path === path);
 }

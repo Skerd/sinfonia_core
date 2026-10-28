@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/portal/blog/blogCard.tsx",
+  "noImage": "Kein Bild",
+  "readingTime": "{minutes} Min. Lesezeit",
+  "byAuthor": "Von {author}",
+  "fromCompany": "Von {company}"
+}

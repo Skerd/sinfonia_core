@@ -16,8 +16,8 @@
   "form": {
     "nameLabel": "Name",
     "namePlaceholder": "Name",
-    "shopSlugLabel": "Shop-Slug",
-    "shopSlugPlaceholder": "my-shop",
+    "siteSlugLabel": "Website-Slug",
+    "siteSlugPlaceholder": "my-company",
     "shopListedOnPortalLabel": "Meinen Shop im Portal anzeigen",
     "emailLabel": "E-Mail",
     "emailPlaceholder": "E-Mail",

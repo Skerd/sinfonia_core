@@ -1,0 +1,31 @@
+{
+  "path": "src/modules/core/clients/portal/account/security.tsx",
+  "title": "Security",
+  "subtitle": "Change your password and manage two-factor authentication.",
+  "passwordHeading": "Password",
+  "form": {
+    "currentPasswordLabel": "Current password",
+    "newPasswordLabel": "New password",
+    "confirmPasswordLabel": "Confirm password",
+    "mfaCodeLabel": "Authentication code",
+    "secretLabel": "Secret"
+  },
+  "savePassword": "Update password",
+  "saving": "Saving…",
+  "passwordSaved": "Password updated",
+  "passwordSaveError": "Could not update your password",
+  "mfaHeading": "Two-factor authentication",
+  "mfaLoadError": "Could not load MFA status",
+  "mfaOn": "Two-factor authentication is on. Enter a code from your authenticator app to turn it off.",
+  "mfaOff": "Add an extra step at login with an authenticator app.",
+  "mfaScan": "Scan this QR code in your authenticator app, then enter the code it shows.",
+  "mfaQrAlt": "MFA QR code",
+  "startMfa": "Set up two-factor authentication",
+  "enableMfa": "Turn on",
+  "disableMfa": "Turn off",
+  "mfaEnabled": "Two-factor authentication is on",
+  "mfaDisabled": "Two-factor authentication is off",
+  "mfaSetupError": "Could not start MFA setup",
+  "mfaEnableError": "Could not enable MFA",
+  "mfaDisableError": "Could not disable MFA"
+}

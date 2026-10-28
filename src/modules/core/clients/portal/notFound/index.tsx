@@ -1,16 +1,23 @@
 import {compose} from "redux";
 import {Link} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {cn} from "@coreModule/components/lib/utils.ts";
-import {PORTAL_CONTAINER, PORTAL_HEADING, PORTAL_LINK} from "../shared/portalStyles.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
+import {Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 
 function PortalNotFound({resolveLanguageKey}: WithLanguageType) {
     return (
-        <div className={cn(PORTAL_CONTAINER, "flex flex-col items-start gap-4 py-20")}>
-            <h1 className={cn(PORTAL_HEADING, "text-3xl")}>{resolveLanguageKey("title")}</h1>
-            <p className="text-portal-ink-muted">{resolveLanguageKey("description")}</p>
-            <Link to="/" className={PORTAL_LINK}>{resolveLanguageKey("home")}</Link>
-        </div>
+        <Empty className="site-container py-24">
+            <EmptyHeader>
+                <p className="font-display text-sm font-semibold tracking-widest text-muted-foreground uppercase">404</p>
+                <EmptyTitle className="font-display text-4xl font-bold tracking-tight">{resolveLanguageKey("title")}</EmptyTitle>
+                <EmptyDescription>{resolveLanguageKey("description")}</EmptyDescription>
+            </EmptyHeader>
+            <EmptyContent>
+                <Button asChild size="lg" className="px-5">
+                    <Link to="/">{resolveLanguageKey("home")}</Link>
+                </Button>
+            </EmptyContent>
+        </Empty>
     );
 }
 

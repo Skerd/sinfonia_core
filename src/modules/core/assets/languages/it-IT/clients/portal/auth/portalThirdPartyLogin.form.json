@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/portal/auth/portalThirdPartyLogin.form.tsx",
+  "axios": {
+    "start": {
+      "title": "Accesso in corso…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Accesso effettuato",
+      "time": 2000
+    },
+    "error": {
+      "title": "Accesso non riuscito",
+      "time": 3000
+    }
+  }
+}

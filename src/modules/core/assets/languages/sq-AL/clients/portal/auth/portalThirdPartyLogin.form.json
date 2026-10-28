@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/portal/auth/portalThirdPartyLogin.form.tsx",
+  "axios": {
+    "start": {
+      "title": "Duke hyrë…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Hytë me sukses",
+      "time": 2000
+    },
+    "error": {
+      "title": "Hyrja dështoi",
+      "time": 3000
+    }
+  }
+}

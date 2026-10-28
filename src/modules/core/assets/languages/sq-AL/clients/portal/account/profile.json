@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/portal/account/profile.tsx",
+  "title": "Profili",
+  "subtitle": "Përditësoni të dhënat që përdorim te porositë tuaja.",
+  "form": {
+    "nameLabel": "Emri",
+    "surnameLabel": "Mbiemri",
+    "phoneLabel": "Telefoni",
+    "emailLabel": "Email",
+    "newEmailLabel": "Email i ri"
+  },
+  "saveProfile": "Ruaj profilin",
+  "saving": "Duke ruajtur…",
+  "profileSaved": "Profili u përditësua",
+  "profileSaveError": "Profili nuk u ruajt",
+  "loadError": "Profili nuk u ngarkua",
+  "emailHeading": "Email",
+  "currentEmail": "Email-i aktual",
+  "unverified": "i paverifikuar",
+  "pendingEmail": "Një konfirmim u dërgua te {email}. Email-i i hyrjes ndryshon pas asaj lidhjeje.",
+  "saveEmail": "Dërgo konfirmimin",
+  "emailSaved": "Kontrolloni kutinë për të konfirmuar email-in e ri",
+  "emailSaveError": "Ndryshimi i email-it nuk nisi"
+}

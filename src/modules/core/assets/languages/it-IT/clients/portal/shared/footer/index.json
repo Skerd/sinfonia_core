@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/portal/shared/footer/index.tsx",
+  "footer": "Ogni azienda gestisce le proprie prenotazioni e ordini; il portale li riunisce.",
+  "home": "Home",
+  "blog": "Blog",
+  "exploreHeading": "Esplora",
+  "vatLabel": "P. IVA",
+  "socialWebsite": "Sito web",
+  "poweredBy": "Powered by Arpeggio"
+}

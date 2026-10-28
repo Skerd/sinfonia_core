@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/portal/shared/footer/index.tsx",
+  "footer": "Jede Firma hier nimmt ihre Buchungen und Bestellungen selbst an; das Portal bringt sie zusammen.",
+  "home": "Home",
+  "blog": "Blog",
+  "exploreHeading": "Entdecken",
+  "vatLabel": "MwSt.",
+  "socialWebsite": "Website",
+  "poweredBy": "Powered by Arpeggio"
+}

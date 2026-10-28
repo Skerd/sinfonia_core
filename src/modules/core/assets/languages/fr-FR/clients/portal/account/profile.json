@@ -1,0 +1,24 @@
+{
+  "path": "src/modules/core/clients/portal/account/profile.tsx",
+  "title": "Profil",
+  "subtitle": "Mettez à jour les informations utilisées sur vos commandes.",
+  "form": {
+    "nameLabel": "Prénom",
+    "surnameLabel": "Nom",
+    "phoneLabel": "Téléphone",
+    "emailLabel": "E-mail",
+    "newEmailLabel": "Nouvel e-mail"
+  },
+  "saveProfile": "Enregistrer le profil",
+  "saving": "Enregistrement…",
+  "profileSaved": "Profil mis à jour",
+  "profileSaveError": "Impossible d'enregistrer le profil",
+  "loadError": "Impossible de charger le profil",
+  "emailHeading": "E-mail",
+  "currentEmail": "E-mail actuel",
+  "unverified": "non vérifié",
+  "pendingEmail": "Une confirmation a été envoyée à {email}. L'e-mail de connexion change après ce lien.",
+  "saveEmail": "Envoyer la confirmation",
+  "emailSaved": "Consultez votre boîte pour confirmer le nouvel e-mail",
+  "emailSaveError": "Impossible de démarrer le changement d'e-mail"
+}

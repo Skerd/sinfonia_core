@@ -134,3 +134,37 @@ describe("clearAuth", () => {
         expect(getDeviceId()).toBe(deviceId);
     });
 });
+
+describe("in the portal build", () => {
+    afterEach(() => {
+        vi.doUnmock("@coreModule/helpers/context/cookies/cookies.ts");
+        vi.unstubAllEnvs();
+        vi.resetModules();
+    });
+
+    it("keeps credentials in a cookie on the zone, so every company site shares the session", async () => {
+        const jar = new Map<string, string>();
+        const cookies = {
+            getCookie: vi.fn((name: string) => jar.get(name)),
+            setCookie: vi.fn((name: string, value: string) => { jar.set(name, value); }),
+            removeCookie: vi.fn((name: string) => { jar.delete(name); }),
+        };
+        vi.stubEnv("VITE_PORTAL_ROOT_DOMAIN", "arpeggio.al");
+        vi.resetModules();
+        vi.doMock("@coreModule/helpers/context/cookies/cookies.ts", () => cookies);
+        const storage = await import("@coreModule/helpers/context/localStorage/authenticationStorage.ts");
+
+        storage.setToken("access");
+        storage.setUser(user);
+
+        expect(cookies.setCookie).toHaveBeenCalledWith(storage.AUTH_STORAGE_KEYS.token, "access", expect.objectContaining({domain: "arpeggio.al"}));
+        expect(localStorage.getItem(storage.AUTH_STORAGE_KEYS.token)).toBeNull();
+        expect(storage.getToken()).toBe("access");
+        // The cached user stays per host.
+        expect(localStorage.getItem(storage.AUTH_STORAGE_KEYS.user)).not.toBeNull();
+
+        storage.clearAuth();
+        expect(cookies.removeCookie).toHaveBeenCalledWith(storage.AUTH_STORAGE_KEYS.token, {domain: "arpeggio.al"});
+        expect(storage.getToken()).toBeNull();
+    });
+});

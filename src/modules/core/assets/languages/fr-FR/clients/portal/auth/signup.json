@@ -31,5 +31,6 @@
       "title": "Le compte n'a pas pu être créé",
       "time": 3000
     }
-  }
+  },
+  "orContinueWith": "Ou continuez avec"
 }

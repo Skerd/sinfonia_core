@@ -16,8 +16,8 @@
   "form": {
     "nameLabel": "Emri",
     "namePlaceholder": "Emri",
-    "shopSlugLabel": "Slug i dyqanit",
-    "shopSlugPlaceholder": "my-shop",
+    "siteSlugLabel": "Slug i faqes",
+    "siteSlugPlaceholder": "my-company",
     "shopListedOnPortalLabel": "Shfaq dyqanin tim në portal",
     "emailLabel": "Email",
     "emailPlaceholder": "Email",

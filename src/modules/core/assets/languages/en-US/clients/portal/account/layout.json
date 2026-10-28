@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/portal/account/layout.tsx",
+  "navLabel": "Account",
+  "navProfile": "Profile",
+  "navSecurity": "Security",
+  "navBookings": "My bookings"
+}

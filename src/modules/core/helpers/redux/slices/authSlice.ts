@@ -52,13 +52,18 @@ const createEmptyUser = (): AuthUser => ({
 /**
  * Lazy initial state: storage is read whenever the slice is (re)initialized,
  * not once at module load, so root resets never resurrect a stale session.
+ * The cached user only counts with a token: the portal's session can end on
+ * another host of its zone, which leaves this host's cache behind.
  */
-const createInitialState = (): AuthenticationState => ({
-    token: getToken() || null,
-    refreshToken: getRefreshToken() || null,
-    user: getUser() || createEmptyUser(),
-    sessionExpired: false,
-});
+const createInitialState = (): AuthenticationState => {
+    const token = getToken();
+    return {
+        token,
+        refreshToken: getRefreshToken() || null,
+        user: (token && getUser()) || createEmptyUser(),
+        sessionExpired: false,
+    };
+};
 
 /** Company id embedded in an access token. Requests scope with this, not a second copy of the id. */
 function companyIdFromAccessToken(token: string): string | null {

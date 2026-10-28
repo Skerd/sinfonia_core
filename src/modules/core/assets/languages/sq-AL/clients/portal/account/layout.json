@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/portal/account/layout.tsx",
+  "navLabel": "Llogaria",
+  "navProfile": "Profili",
+  "navSecurity": "Siguria",
+  "navBookings": "Rezervimet e mia"
+}

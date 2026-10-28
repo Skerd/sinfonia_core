@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalProviderCard.tsx",
+  "rentedBy": "Rented by",
+  "offeredBy": "Offered by",
+  "listedBy": "Listed by",
+  "visitSite": "Visit site",
+  "visitSiteNamed": "Visit {name}"
+}

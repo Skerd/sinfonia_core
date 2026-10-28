@@ -31,5 +31,6 @@
       "title": "Impossibile creare l'account",
       "time": 3000
     }
-  }
+  },
+  "orContinueWith": "Oppure continua con"
 }

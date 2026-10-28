@@ -1,0 +1,12 @@
+{
+  "path": "src/modules/core/clients/portal/shared/navigation/index.tsx",
+  "signIn": "Hyr",
+  "account": "Rezervimet e mia",
+  "signOut": "Dil",
+  "navLabel": "Navigimi kryesor",
+  "openMenu": "Hap menunë",
+  "home": "Kreu",
+  "blog": "Blogu",
+  "accountMenu": "Llogaria",
+  "searchPlaceholder": "Kërko produkte, trajtime, makina, shtëpi…"
+}
