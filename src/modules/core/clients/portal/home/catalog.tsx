@@ -24,6 +24,7 @@ import {
 } from "armonia/src/modules/core/api/portal/public/portal/portalBrowse.form.validator.ts";
 import PortalKindName from "../shared/portalKindName.tsx";
 import {usePortalSite} from "../shared/portalSiteContext.tsx";
+import {SectionBaseProvider} from "../shared/sectionBase.tsx";
 import {CATALOG_FILTER_PREFIX, CatalogFilterField, CatalogNumberInput} from "../shared/catalogFilters.tsx";
 import CatalogCard from "./catalogCard.tsx";
 
@@ -66,7 +67,7 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
     const [params, setParams] = useSearchParams();
     const form = useMemo(() => browseForm(params), [params]);
     const [groups, setGroups] = useState<PortalBrowseResponse["data"] | null | undefined>(undefined);
-    const catalogs = sections.flatMap((section) => section.catalogs ?? []);
+    const catalogs = sections.flatMap((section) => (section.catalogs ?? []).map((catalog) => ({...catalog, path: section.path})));
     const active = catalogs.find((catalog) => catalog.kind === form.kind);
 
     useEffect(() => {
@@ -120,6 +121,8 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
                     ))}
                 </TabsList>
             </Tabs>
+
+            {active?.Intro ? <SectionBaseProvider base={`/${active.path}`}><active.Intro /></SectionBaseProvider> : null}
 
             {active ? (
                 <div className="flex flex-wrap items-end gap-3 rounded-2xl border bg-card p-4">

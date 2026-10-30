@@ -6,6 +6,8 @@ export type PortalCatalog = {
     kind: string;
     /** This kind's own filters on the home catalog; they read and write `f.<name>` search params. */
     Filters?: ComponentType;
+    /** A block above this kind's filters while its tab is open (the dentists' estimate request); links start at `useSectionBase()`. */
+    Intro?: ComponentType;
 };
 
 /**
@@ -28,6 +30,12 @@ export type PortalContribution = {
     CompanySite?: ComponentType;
     /** Pages spanning the section (the shop), under `/<path>/*` on every host; the API scopes them by host. */
     SectionSite?: ComponentType;
+    /**
+     * Pages about several of the section's companies at once (e.g. one estimate request to several
+     * clinics), on the apex only, under `/<path>/<page.path>`. A fixed segment, so it wins over
+     * `/<path>/<company>`; pick one no company slug would take.
+     */
+    sectionPages?: readonly {path: string; Page: ComponentType}[];
     /** Item kinds the section lists in the home catalog, in tab order. */
     catalogs?: readonly PortalCatalog[];
     /** A block on the home page above the catalog (the shop's CMS blocks and categories). */

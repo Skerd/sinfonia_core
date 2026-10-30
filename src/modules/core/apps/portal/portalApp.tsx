@@ -82,6 +82,13 @@ function PortalRoutes() {
                     }
                     return [
                         <Route key={section} path={path} element={<Navigate to={sectionHref(contribution)} replace />} />,
+                        ...(contribution.sectionPages ?? []).map(({path: pagePath, Page}) => (
+                            <Route
+                                key={`${section}-${pagePath}`}
+                                path={`${path}/${pagePath}`}
+                                element={<ErrorBoundary><SectionBaseProvider base={`/${path}`}><Page /></SectionBaseProvider></ErrorBoundary>}
+                            />
+                        )),
                         CompanySite ? (
                             <Route
                                 key={`${section}-company`}
