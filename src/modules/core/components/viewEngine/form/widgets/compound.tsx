@@ -202,6 +202,7 @@ export const coreCompoundFormWidgetRenderers: Record<string, CompoundFormWidgetR
                 name={binding.name}
                 apiUrl={wp.apiUrl}
                 method={wp.method ?? "POST"}
+                postBody={wp.postBody}
                 placeholderKey={wp.placeholderKey}
                 removeTooltipKey={wp.removeTooltipKey}
                 selectPageSizeCreate={wp.selectPageSizeCreate}

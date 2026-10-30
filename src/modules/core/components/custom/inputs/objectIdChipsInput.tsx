@@ -23,6 +23,8 @@ export type ObjectIdChipsInputProps = {
     name: string;
     apiUrl: string;
     method?: string;
+    /** Extra select params, e.g. `{administration: true}` for staff only. */
+    postBody?: Record<string, unknown>;
     placeholderKey: string;
     removeTooltipKey: string;
     selectPageSizeCreate?: number;
@@ -86,6 +88,7 @@ export function ObjectIdChipsInput({
     name,
     apiUrl,
     method = "POST",
+    postBody,
     placeholderKey,
     removeTooltipKey,
     selectPageSizeCreate = 50,
@@ -172,6 +175,7 @@ export function ObjectIdChipsInput({
                         <ApiSelect
                             apiUrl={apiUrl}
                             method={method}
+                            postBody={postBody}
                             markedValues={ids}
                             onValueChange={addId}
                             placeholder={placeholder}
