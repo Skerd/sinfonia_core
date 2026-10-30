@@ -1,4 +1,5 @@
 import {createContext, useCallback, useMemo, useState, type ReactNode} from "react";
+import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logIn} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -37,9 +38,12 @@ export const ReloginContext = createContext<ReloginContextValue | undefined>(und
  * message when it sent one, otherwise the local `switchFailed` copy. An expired session is
  * not toasted here: `apiClient` already flags it and the session-expired flow takes over.
  * Starting a new switch cancels one still in flight.
+ * A successful switch opens Apps (`/`). The page the user was on may belong to a module
+ * the new company does not grant.
  */
 export function ReloginProvider({children}: {children: ReactNode}) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const currentCompanyId = useSelector((state: RootState) => state.authentication.user?.company?._id);
     const handleError = useErrorHandler({context: "ReloginProvider"});
     const {currentLanguage} = useSelectedLanguage(LANGUAGE_PATH);
@@ -50,6 +54,7 @@ export function ReloginProvider({children}: {children: ReactNode}) {
         success: (data) => {
             if (data?.token && data?.refreshToken) {
                 dispatch(logIn({token: data.token, refreshToken: data.refreshToken}));
+                navigate("/", {replace: true});
             } else {
                 // Logged in English for debugging; the user sees the translated copy.
                 handleError(new Error("Company switch returned no session tokens"), {
@@ -65,7 +70,7 @@ export function ReloginProvider({children}: {children: ReactNode}) {
                 fallbackMessage: switchFailedMessage,
             });
         },
-    }), [dispatch, handleError, switchFailedMessage]);
+    }), [dispatch, handleError, navigate, switchFailedMessage]);
 
     const {loading: switching} = useHttpRequest<ReloginDifferentCompanyFormResponseType>(
         RELOGIN_REQUEST,

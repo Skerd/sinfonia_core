@@ -28,7 +28,7 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
             hideCreate
             buildEditPath={() => ""}
             resolveLanguageKey={resolveLanguageKey}
-            cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-2 xl:grid-cols-3"
+            cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-2"
             rowActionMenu={{
                 hideDelete:                 true,
                 hideRestore:                true,

@@ -49,6 +49,8 @@ function AdministrativePanelSideBar({
     const chatUnreadTotal = useSelector(selectInternalChatUnread);
     const publicChatWaitingCount = useSelector((state: RootState) => state.chat.waitingCount);
     const publicChatMineUnread = useSelector(selectWebsiteChatMineUnread);
+    const isPlatformCompany = useSelector((state: RootState) => state.authentication.user.company.isPlatformOwner);
+    const isPlatformAdmin = useSelector((state: RootState) => state.authentication.user.isPlatformAdmin);
     const {pathname} = useLocation();
     // The module nav groups resolve their own active state; this entry is hardcoded here.
     const isHomeActive = pathname === "/" || pathname === "/home";
@@ -81,6 +83,8 @@ function AdministrativePanelSideBar({
                     chatUnreadTotal={chatUnreadTotal}
                     publicChatWaitingCount={publicChatWaitingCount}
                     publicChatMineUnread={publicChatMineUnread}
+                    isPlatformCompany={isPlatformCompany}
+                    isPlatformAdmin={isPlatformAdmin}
                 />
                 {postChildren}
             </SidebarContent>

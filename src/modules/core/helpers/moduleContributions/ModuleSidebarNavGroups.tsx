@@ -20,11 +20,15 @@ export function ModuleSidebarNavGroups({
     chatUnreadTotal = 0,
     publicChatWaitingCount = 0,
     publicChatMineUnread = 0,
+    isPlatformCompany = false,
+    isPlatformAdmin = false,
 }: {
     resolveLanguageKey: ResolveLanguageKey;
     chatUnreadTotal?: number;
     publicChatWaitingCount?: number;
     publicChatMineUnread?: number;
+    isPlatformCompany?: boolean;
+    isPlatformAdmin?: boolean;
 }) {
     const accessMap = useAccessMap();
     const accessHydrated = useAccessHydrated();
@@ -34,11 +38,13 @@ export function ModuleSidebarNavGroups({
                 chatUnreadTotal,
                 publicChatWaitingCount,
                 publicChatMineUnread,
+                isPlatformCompany,
+                isPlatformAdmin,
             }),
             accessMap,
             accessHydrated,
         ),
-        [resolveLanguageKey, chatUnreadTotal, publicChatWaitingCount, publicChatMineUnread, accessMap, accessHydrated],
+        [resolveLanguageKey, chatUnreadTotal, publicChatWaitingCount, publicChatMineUnread, isPlatformCompany, isPlatformAdmin, accessMap, accessHydrated],
     );
     return <>{groups.map((nav, i) => renderOneNavGroup(nav, i))}</>;
 }

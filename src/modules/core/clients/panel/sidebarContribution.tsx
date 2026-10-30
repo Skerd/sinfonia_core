@@ -26,7 +26,7 @@ import {
     IconUserKey,
 } from "@tabler/icons-react";
 import type {SidebarContribution} from "@coreModule/helpers/types/sidebarContribution.types.ts";
-import type {NavGroup, NavItem} from "@coreModule/helpers/types/sidebarNav.types.ts";
+import type {NavGroup, NavItem, NavSubItem} from "@coreModule/helpers/types/sidebarNav.types.ts";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {getTenancySettingsSubCollapsibles} from "@coreModule/helpers/moduleContributions/loadTenancySettingsContributions.ts";
 import {getAccountNavItems} from "@coreModule/helpers/moduleContributions/loadAccountNavContributions.ts";
@@ -172,16 +172,31 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
     };
 }
 
-function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup {
-    const items: NavItem[] = [
-        {
+function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatformCompany = false, isPlatformAdmin = false): NavGroup {
+    // Only platform admins may manage other companies; the server enforces the same rule.
+    const platformItems: NavSubItem[] = isPlatformAdmin
+        ? [{
+            title: resolveLanguageKey("menus.tenancy.companies.allCompanies.title"),
+            url: "/tenancy/systemSettings/companies",
+            icon: Building,
+            permissions: ["companies"],
+            usersPermissions: [],
+            atLeastOnePermission: true,
+        }]
+        : [];
+    // Performance covers the whole server, so only the platform company sees it.
+    const performanceItems: NavItem[] = isPlatformCompany
+        ? [{
             title: resolveLanguageKey("menus.tenancy.resources.serverPerformance.title"),
             url: "/tenancy/serverPerformance",
             icon: Gauge,
             permissions: ["serverPerformance1m", "serverPerformance1h", "serverPerformance1d"],
             usersPermissions: [],
             atLeastOnePermission: false,
-        },
+        }]
+        : [];
+    const items: NavItem[] = [
+        ...performanceItems,
         {
             title: resolveLanguageKey("menus.tenancy.systemSettings.title"),
             icon: Settings,
@@ -196,6 +211,7 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
                     usersPermissions: [],
                     atLeastOnePermission: true,
                     items: [
+                        ...platformItems,
                         {
                             title: resolveLanguageKey("menus.company.settings.roles.title"),
                             url: "/tenancy/systemSettings/roles",
@@ -307,8 +323,8 @@ const coreAccountSidebarContribution: SidebarContribution = {
 const coreTenancySidebarContribution: SidebarContribution = {
     id: "core-tenancy",
     order: 90,
-    getNavGroups(resolveLanguageKey) {
-        return [buildTenancyNavGroup(resolveLanguageKey)];
+    getNavGroups(resolveLanguageKey, context) {
+        return [buildTenancyNavGroup(resolveLanguageKey, context?.isPlatformCompany === true, context?.isPlatformAdmin === true)];
     },
 };
 

@@ -6,6 +6,10 @@ export type SidebarContributionContext = {
     chatUnreadTotal?: number;
     publicChatWaitingCount?: number;
     publicChatMineUnread?: number;
+    /** Acting in the platform-owner company: sees server-wide pages such as Performance. */
+    isPlatformCompany?: boolean;
+    /** Admin of the platform-owner company: sees the platform-wide Companies page. */
+    isPlatformAdmin?: boolean;
 };
 
 /**

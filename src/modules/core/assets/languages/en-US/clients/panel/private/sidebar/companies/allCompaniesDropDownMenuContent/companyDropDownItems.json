@@ -2,5 +2,6 @@
   "path": "src/modules/core/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/companyDropDownItems.tsx",
   "failTitle": "Failed to load companies",
   "failTitleTooltip": "Click to reload companies",
-  "noData": "No results"
+  "noData": "No results",
+  "searchPlaceholder": "Search companies"
 }

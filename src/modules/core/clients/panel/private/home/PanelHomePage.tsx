@@ -269,9 +269,11 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
             chatUnreadTotal,
             publicChatWaitingCount,
             publicChatMineUnread,
+            isPlatformCompany: user.company.isPlatformOwner,
+            isPlatformAdmin: user.isPlatformAdmin,
         });
         return flattenPanelNavLinks(filterNavGroups(groups, accessMap, accessHydrated));
-    }, [resolveLanguageKey, chatUnreadTotal, publicChatWaitingCount, publicChatMineUnread, accessMap, accessHydrated]);
+    }, [resolveLanguageKey, chatUnreadTotal, publicChatWaitingCount, publicChatMineUnread, user.company.isPlatformOwner, user.isPlatformAdmin, accessMap, accessHydrated]);
 
     const {recentLinks, trackVisit} = useRecentLinks(allLinks);
 

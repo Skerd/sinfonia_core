@@ -30,6 +30,7 @@ function CompaniesSwitcher({
     const {read} = useAccess("companies");
     const newCompanyCreated = useSelector((state: RootState) => state.ui.newCompanyCreated);
     const [forceReload, setForceReload] = useState<number>(0);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         if( !!read && Object.keys(read).length ){
@@ -60,7 +61,7 @@ function CompaniesSwitcher({
         <SidebarMenu>
             <SidebarMenuItem>
                 <ReloginProvider>
-                <DropdownMenu>
+                <DropdownMenu onOpenChange={setMenuOpen}>
                     <DropdownMenuTrigger asChild >
                         <SidebarMenuButton
                             size='lg'
@@ -100,7 +101,7 @@ function CompaniesSwitcher({
                             </div>
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
-                    <AllCompaniesDropDownMenuContent listReloadKey={newCompanyCreated} />
+                    <AllCompaniesDropDownMenuContent listReloadKey={newCompanyCreated} menuOpen={menuOpen} />
                 </DropdownMenu>
                 </ReloginProvider>
             </SidebarMenuItem>

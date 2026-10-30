@@ -3,6 +3,7 @@ import type {ReactNode} from "react";
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 import {Provider} from "react-redux";
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import {MemoryRouter, useLocation} from "react-router-dom";
 
 const {apiClientMock, toastMock} = vi.hoisted(() => ({
     apiClientMock: vi.fn(),
@@ -26,6 +27,9 @@ import enUS from "@coreModule/assets/languages/en-US/helpers/context/reloginCont
 import deCH from "@coreModule/assets/languages/de-CH/helpers/context/reloginContext.json";
 
 const LANGUAGE_PATH = "src/modules/core/helpers/context/reloginContext.tsx";
+
+/** A module page the new company may not grant. A successful switch must leave it. */
+const PAGE_BEFORE_SWITCH = "/dentalClinic/inquiries";
 
 const CURRENT_COMPANY = "company-current";
 const OTHER_COMPANY = "company-other";
@@ -62,16 +66,25 @@ async function setup(languageCode = "en-US") {
     store.dispatch(changeLanguage(languageCode));
 
     const wrapper = ({children}: {children: ReactNode}) => (
-        <Provider store={store}>
-            <ReloginProvider>{children}</ReloginProvider>
-        </Provider>
+        <MemoryRouter initialEntries={[PAGE_BEFORE_SWITCH]}>
+            <Provider store={store}>
+                <ReloginProvider>{children}</ReloginProvider>
+            </Provider>
+        </MemoryRouter>
     );
-    const rendered = renderHook(() => ({relogin: useRelogin(), language: useSelectedLanguage(LANGUAGE_PATH)}), {wrapper});
+    const rendered = renderHook(() => ({
+        relogin: useRelogin(),
+        language: useSelectedLanguage(LANGUAGE_PATH),
+        pathname: useLocation().pathname,
+    }), {wrapper});
     await waitFor(() => expect(rendered.result.current.language.loading).toBe(false));
 
     const hook = {
         get current() {
             return rendered.result.current.relogin;
+        },
+        get pathname() {
+            return rendered.result.current.pathname;
         },
         rerender: rendered.rerender,
         unmount: rendered.unmount,
@@ -136,6 +149,7 @@ describe("ReloginProvider", () => {
         }));
         expect(auth()).toMatchObject({token, refreshToken: "new-refresh"});
         expect(auth().user.company?._id).toBe(OTHER_COMPANY);
+        expect(hook.pathname).toBe("/");
         expect(toastMock.error).not.toHaveBeenCalled();
     });
 
@@ -201,6 +215,7 @@ describe("ReloginProvider", () => {
             expect(toastMock.error).toHaveBeenCalledWith("This company is inactive");
             expect(auth()).toMatchObject({token: "old-token", refreshToken: "old-refresh"});
             expect(auth().user.company?._id).toBe(CURRENT_COMPANY);
+            expect(hook.pathname).toBe(PAGE_BEFORE_SWITCH);
         });
 
         it("toasts the translated fallback for a network error", async () => {

@@ -45,7 +45,8 @@ const createEmptyUser = (): AuthUser => ({
     company: {
         _id: "",
         name: "",
-        modules: []
+        modules: [],
+        isPlatformOwner: false
     }
 });
 

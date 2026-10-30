@@ -39,12 +39,12 @@ beforeEach(() => {
 });
 
 describe("ModuleSidebarNavGroups", () => {
-    it("passes the counts to the loader, defaulting them to 0", () => {
+    it("passes the counts and platform flags to the loader, defaulting them to 0 and false", () => {
         render(<ModuleSidebarNavGroups resolveLanguageKey={resolve} />);
-        expect(state.getGroups).toHaveBeenCalledWith(resolve, {chatUnreadTotal: 0, publicChatWaitingCount: 0, publicChatMineUnread: 0});
+        expect(state.getGroups).toHaveBeenCalledWith(resolve, {chatUnreadTotal: 0, publicChatWaitingCount: 0, publicChatMineUnread: 0, isPlatformCompany: false, isPlatformAdmin: false});
 
-        render(<ModuleSidebarNavGroups resolveLanguageKey={resolve} chatUnreadTotal={2} publicChatWaitingCount={3} publicChatMineUnread={4} />);
-        expect(state.getGroups).toHaveBeenLastCalledWith(resolve, {chatUnreadTotal: 2, publicChatWaitingCount: 3, publicChatMineUnread: 4});
+        render(<ModuleSidebarNavGroups resolveLanguageKey={resolve} chatUnreadTotal={2} publicChatWaitingCount={3} publicChatMineUnread={4} isPlatformCompany isPlatformAdmin />);
+        expect(state.getGroups).toHaveBeenLastCalledWith(resolve, {chatUnreadTotal: 2, publicChatWaitingCount: 3, publicChatMineUnread: 4, isPlatformCompany: true, isPlatformAdmin: true});
     });
 
     it("hides groups the user cannot read", () => {
