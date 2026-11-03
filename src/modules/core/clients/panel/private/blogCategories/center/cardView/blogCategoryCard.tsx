@@ -52,8 +52,8 @@ function BlogCategoryCard({
             sheetEntityProp="blogCategory"
             deleteUrl="/api/auxiliary/blogCategory"
             restoreUrl="/api/auxiliary/blogCategory/restore"
-            failedTitle={String(resolveLanguageKey("failedTitle"))}
-            failedDescription={String(resolveLanguageKey("failedDescription"))}
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="name"
             innerRef={innerRef}
         >

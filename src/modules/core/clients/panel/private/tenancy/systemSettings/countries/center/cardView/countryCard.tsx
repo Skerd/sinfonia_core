@@ -57,8 +57,8 @@ function CountryCard({
             sheetEntityProp="country"
             deleteUrl="/api/auxiliary/country"
             restoreUrl="/api/auxiliary/country/restore"
-            failedTitle={String(resolveLanguageKey("failedTitle"))}
-            failedDescription={String(resolveLanguageKey("failedDescription"))}
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="name"
             innerRef={innerRef}
         >

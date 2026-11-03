@@ -53,8 +53,8 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
             sheetEntityProp="messagingProvider"
             deleteUrl={MESSAGING_PROVIDER_API_URL}
             restoreUrl={`${MESSAGING_PROVIDER_API_URL}/restore`}
-            failedTitle={String(resolveLanguageKey("failedTitle"))}
-            failedDescription={String(resolveLanguageKey("failedDescription"))}
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="name"
             innerRef={innerRef}
             sheetProps={({setEntity}) => ({

@@ -53,8 +53,8 @@ const SmtpServerCard = memo(function SmtpServerCard({
             sheetEntityProp="smtpServer"
             deleteUrl="/api/auxiliary/smtpServer"
             restoreUrl="/api/auxiliary/smtpServer/restore"
-            failedTitle={String(resolveLanguageKey("failedTitle"))}
-            failedDescription={String(resolveLanguageKey("failedDescription"))}
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="name"
             innerRef={innerRef}
             sheetProps={({setEntity}) => ({

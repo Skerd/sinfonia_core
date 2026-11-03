@@ -58,8 +58,8 @@ export default function UserSessionCard({
             sheetProps={() => ({viewingSelf, currentDeviceId, revoking, onRevoke})}
             deleteUrl="/api/user/userSession"
             restoreUrl="/api/user/userSession/restore"
-            failedTitle=""
-            failedDescription=""
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="deviceId"
             shellClassName={(row) =>
                 accessFieldPathExists(shellRead, "isActive") && !row.isActive ? "opacity-70" : undefined

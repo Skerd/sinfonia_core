@@ -81,8 +81,8 @@ function CronJobCard({job, resolveLanguageKey, onDelete, onRestore, onModifySucc
             sheetEntityProp="cronJob"
             deleteUrl="/api/auxiliary/cron-jobs"
             restoreUrl="/api/auxiliary/cron-jobs/restore"
-            failedTitle={String(resolveLanguageKey("failedTitle"))}
-            failedDescription={String(resolveLanguageKey("failedDescription"))}
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="name"
             sheetProps={({setEntity}) => ({
                 onModifySuccess: (updated?: CronJob) => {

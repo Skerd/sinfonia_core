@@ -79,8 +79,8 @@ const CityCard = memo(function CityCard({
             sheetEntityProp="city"
             deleteUrl="/api/auxiliary/city"
             restoreUrl="/api/auxiliary/city/restore"
-            failedTitle={String(resolveLanguageKey("failedTitle"))}
-            failedDescription={String(resolveLanguageKey("failedDescription"))}
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="name"
             innerRef={innerRef}
             sheetProps={({entity}) => ({

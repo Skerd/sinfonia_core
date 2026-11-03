@@ -53,8 +53,8 @@ const CurrencyCard = memo(function CurrencyCard({
             sheetEntityProp="currency"
             deleteUrl="/api/finance/currency"
             restoreUrl="/api/finance/currency/restore"
-            failedTitle={String(resolveLanguageKey("failedTitle"))}
-            failedDescription={String(resolveLanguageKey("failedDescription"))}
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="name"
             innerRef={innerRef}
         >

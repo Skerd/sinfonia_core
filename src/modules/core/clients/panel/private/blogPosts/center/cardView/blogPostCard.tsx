@@ -82,8 +82,8 @@ function BlogPostCard({
             sheetEntityProp="blogPost"
             deleteUrl="/api/auxiliary/blogPost"
             restoreUrl="/api/auxiliary/blogPost/restore"
-            failedTitle={String(resolveLanguageKey("failedTitle"))}
-            failedDescription={String(resolveLanguageKey("failedDescription"))}
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="title"
             innerRef={innerRef}
             sheetProps={({setEntity}) => ({

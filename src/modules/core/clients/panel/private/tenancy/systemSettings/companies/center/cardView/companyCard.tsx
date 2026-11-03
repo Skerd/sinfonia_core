@@ -115,8 +115,8 @@ const CompanyCard = memo(function CompanyCard({
                 sheetEntityProp="company"
                 deleteUrl="/api/company"
                 restoreUrl=""
-                failedTitle=""
-                failedDescription=""
+                failedTitle={resolveLanguageKey("failedTitle")}
+                failedDescription={resolveLanguageKey("failedDescription")}
                 titlePath="name"
                 innerRef={innerRef}
                 shellClassName={() =>

@@ -46,8 +46,8 @@ export default function LoginHistoryCard({
             sheetProps={() => ({viewingSelf})}
             deleteUrl="/api/user/loginHistory"
             restoreUrl="/api/user/loginHistory/restore"
-            failedTitle=""
-            failedDescription=""
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="ip"
             shellClassName={(row) =>
                 (accessFieldPathExists(shellRead, "deletedAt") || accessFieldPathExists(shellRead, "deletedBy")) && row.deletedAt != null

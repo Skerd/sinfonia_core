@@ -36,6 +36,7 @@ type RoleCardProps = WithLanguageType & {
 
 const RoleCard = React.memo(function RoleCard({
     role,
+    resolveLanguageKey,
     fetchId,
     hideActions,
     onDelete,
@@ -60,8 +61,8 @@ const RoleCard = React.memo(function RoleCard({
             sheetEntityProp="role"
             deleteUrl="/api/company/roles"
             restoreUrl="/api/company/roles/restore"
-            failedTitle=""
-            failedDescription=""
+            failedTitle={resolveLanguageKey("failedTitle")}
+            failedDescription={resolveLanguageKey("failedDescription")}
             titlePath="name"
             innerRef={innerRef}
             hideEdit={(row) => !row.canEdit}
