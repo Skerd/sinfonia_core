@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx",
+  "failedTitle": "Land konnten nicht geladen werden",
+  "failedDescription": "Beim Laden ist ein Fehler aufgetreten. Klicken Sie, um es erneut zu versuchen.",
+  "failedTooltipDescription": "Klicken, um die Daten erneut zu laden.",
   "overview": "Übersicht",
   "lifecycle": "Lebenszyklus",
   "country": "Land",

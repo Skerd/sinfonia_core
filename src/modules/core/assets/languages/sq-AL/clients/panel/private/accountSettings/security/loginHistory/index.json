@@ -1,5 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
+  "failedTitle": "Historia e hyrjes nuk u ngarkua",
+  "failedDescription": "Prekni për të provuar përsëri.",
   "title": "Historia e hyrjes",
   "description": "Rishiko identifikimin e fundit dhe përpjekjet e dështuara. Të dhënat e krijuara nga serveri nuk mund të modifikohen këtu.",
   "searchPlaceholder": "Kërkoni sipas kohës, pajisjes ose IP-së",

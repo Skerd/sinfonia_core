@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx",
+  "failedTitle": "Ngarkimi i monedhës dështoi",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të provuar përsëri.",
+  "failedTooltipDescription": "Klikoni për të provuar përsëri ngarkimin e të dhënave.",
   "currency": "Monedha",
   "name": "Emri",
   "overview": "Vështrim i përgjithshëm",

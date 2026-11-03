@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx",
+  "failedTitle": "Failed to load company",
+  "failedDescription": "Something went wrong while loading this company. Click to retry.",
+  "failedTooltipDescription": "Click to retry fetching data.",
   "overview": "Overview",
   "description": "Description",
   "company": "Company",

@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx",
+  "failedTitle": "Failed to load",
+  "failedDescription": "Something went wrong while loading this record. Click to retry.",
+  "failedTooltipDescription": "Click to retry fetching data.",
   "overview": "Overview",
   "lifecycle": "Lifecycle",
   "createdBy": "Created by",

@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx",
+  "failedTitle": "Impossible de charger le rôle",
+  "failedDescription": "Une erreur s'est produite lors du chargement. Cliquez pour réessayer.",
+  "failedTooltipDescription": "Cliquez pour réessayer de charger les données.",
   "overview": "Aperçu",
   "name": "Nom",
   "slug": "Identifiant",

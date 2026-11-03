@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx",
+  "failedTitle": "Failed to load city",
+  "failedDescription": "Something went wrong while loading this city. Click to retry.",
+  "failedTooltipDescription": "Click to retry fetching data.",
   "name": "Name",
   "city": "City",
   "overview": "Overview",

@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/blogPosts/center/sheetView/blogPostSheetView.tsx",
+  "failedTitle": "Beitrag konnte nicht geladen werden",
+  "failedDescription": "Beim Laden ist ein Fehler aufgetreten. Klicken Sie, um es erneut zu versuchen.",
+  "failedTooltipDescription": "Klicken, um die Daten erneut zu laden.",
   "overview": "Übersicht",
   "lifecycle": "Lebenszyklus",
   "gallery": "Galerie",

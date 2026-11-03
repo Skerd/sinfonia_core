@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx",
+  "failedTitle": "Impossibile caricare la città",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento. Fare clic per riprovare.",
+  "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
   "name": "Nome",
   "city": "Città",
   "overview": "Panoramica",

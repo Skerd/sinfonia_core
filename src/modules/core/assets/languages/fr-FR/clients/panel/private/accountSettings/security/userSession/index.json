@@ -1,5 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/userSession/index.tsx",
+  "failedTitle": "Impossible de charger la session",
+  "failedDescription": "Touchez pour réessayer.",
   "title": "Séances actives",
   "description": "Vérifiez où vous êtes connecté et révoquez l'accès aux appareils auxquels vous ne faites pas confiance.",
   "helperText": "Si vous ne reconnaissez pas un appareil, ouvrez le menu de la ligne (⋮) et choisissez Révoquer l'accès, puis modifiez votre mot de passe.",

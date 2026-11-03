@@ -1,3 +1,5 @@
 {
-  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/cardView/roleCard.tsx"
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/cardView/roleCard.tsx",
+  "failedTitle": "Impossibile caricare il ruolo",
+  "failedDescription": "Tocca per riprovare."
 }

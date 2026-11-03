@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx",
+  "failedTitle": "Failed to load role",
+  "failedDescription": "Something went wrong while loading this role. Click to retry.",
+  "failedTooltipDescription": "Click to retry fetching data.",
   "overview": "Overview",
   "name": "Name",
   "slug": "Slug",

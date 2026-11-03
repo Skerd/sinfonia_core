@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx",
+  "failedTitle": "Kompania nuk u ngarkua",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të provuar përsëri.",
+  "failedTooltipDescription": "Klikoni për të provuar përsëri ngarkimin e të dhënave.",
   "overview": "Vështrim i përgjithshëm",
   "description": "Përshkrimi",
   "company": "Kompania",

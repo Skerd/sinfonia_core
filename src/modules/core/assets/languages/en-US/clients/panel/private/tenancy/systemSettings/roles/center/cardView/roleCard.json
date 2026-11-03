@@ -1,3 +1,5 @@
 {
-  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/cardView/roleCard.tsx"
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/cardView/roleCard.tsx",
+  "failedTitle": "Failed to load role",
+  "failedDescription": "Tap to retry."
 }

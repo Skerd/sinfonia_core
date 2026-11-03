@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx",
+  "failedTitle": "Impossibile caricare l'azienda",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento. Fare clic per riprovare.",
+  "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
   "overview": "Panoramica",
   "description": "Descrizione",
   "company": "Azienda",

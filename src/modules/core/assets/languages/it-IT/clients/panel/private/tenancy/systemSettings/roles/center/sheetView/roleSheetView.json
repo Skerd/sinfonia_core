@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx",
+  "failedTitle": "Impossibile caricare il ruolo",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento. Fare clic per riprovare.",
+  "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
   "overview": "Panoramica",
   "name": "Nome",
   "slug": "Lumaca",

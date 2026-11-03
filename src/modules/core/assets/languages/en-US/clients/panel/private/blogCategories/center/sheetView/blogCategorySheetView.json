@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/blogCategories/center/sheetView/blogCategorySheetView.tsx",
+  "failedTitle": "Failed to load category",
+  "failedDescription": "Something went wrong while loading this category. Click to retry.",
+  "failedTooltipDescription": "Click to retry fetching data.",
   "overview": "Overview",
   "lifecycle": "Lifecycle",
   "blogCategory": "Blog category",

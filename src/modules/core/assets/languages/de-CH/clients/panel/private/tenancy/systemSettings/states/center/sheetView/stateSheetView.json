@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx",
+  "failedTitle": "Laden fehlgeschlagen",
+  "failedDescription": "Beim Laden ist ein Fehler aufgetreten. Klicken Sie, um es erneut zu versuchen.",
+  "failedTooltipDescription": "Klicken, um die Daten erneut zu laden.",
   "overview": "Übersicht",
   "lifecycle": "Lebenszyklus",
   "createdBy": "Erstellt von",

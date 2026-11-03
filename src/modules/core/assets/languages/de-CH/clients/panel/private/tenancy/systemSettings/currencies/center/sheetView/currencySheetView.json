@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx",
+  "failedTitle": "Währung konnten nicht geladen werden",
+  "failedDescription": "Beim Laden ist ein Fehler aufgetreten. Klicken Sie, um es erneut zu versuchen.",
+  "failedTooltipDescription": "Klicken, um die Daten erneut zu laden.",
   "currency": "Währung",
   "name": "Name",
   "overview": "Übersicht",

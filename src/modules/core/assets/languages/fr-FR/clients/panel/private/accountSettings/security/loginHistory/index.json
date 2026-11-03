@@ -1,5 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
+  "failedTitle": "Impossible de charger l'historique de connexion",
+  "failedDescription": "Touchez pour réessayer.",
   "title": "Historique de connexion",
   "description": "Passez en revue les connexions récentes et les tentatives infructueuses. Les enregistrements générés par le serveur ne peuvent pas être modifiés ici.",
   "searchPlaceholder": "Rechercher par heure, appareil ou IP",

@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx",
+  "failedTitle": "Ngarkimi i qytetit dështoi",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të provuar përsëri.",
+  "failedTooltipDescription": "Klikoni për të provuar përsëri ngarkimin e të dhënave.",
   "name": "Emri",
   "city": "Qyteti",
   "overview": "Vështrim i përgjithshëm",

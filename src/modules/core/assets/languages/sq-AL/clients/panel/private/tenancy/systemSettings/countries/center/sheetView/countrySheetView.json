@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx",
+  "failedTitle": "Ngarkimi i shtetit dështoi",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të provuar përsëri.",
+  "failedTooltipDescription": "Klikoni për të provuar përsëri ngarkimin e të dhënave.",
   "overview": "Vështrim i përgjithshëm",
   "lifecycle": "Cikli i jetës",
   "country": "Vendi",

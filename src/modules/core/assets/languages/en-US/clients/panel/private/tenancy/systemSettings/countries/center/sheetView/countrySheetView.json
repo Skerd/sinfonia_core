@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx",
+  "failedTitle": "Failed to load country",
+  "failedDescription": "Something went wrong while loading this country. Click to retry.",
+  "failedTooltipDescription": "Click to retry fetching data.",
   "overview": "Overview",
   "lifecycle": "Lifecycle",
   "country": "Country",

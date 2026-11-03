@@ -1,5 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/cardView/companyCard.tsx",
+  "failedTitle": "Impossible de charger l'entreprise",
+  "failedDescription": "Touchez pour réessayer.",
   "contactInfo": "Coordonnées",
   "location": "Emplacement",
   "aboutUs": "À propos",

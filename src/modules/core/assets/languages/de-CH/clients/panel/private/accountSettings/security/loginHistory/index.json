@@ -1,5 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
+  "failedTitle": "Anmeldeverlauf konnte nicht geladen werden",
+  "failedDescription": "Zum erneuten Versuch tippen.",
   "title": "Anmeldeverlauf",
   "description": "Überprüfen Sie kürzliche Anmeldungen und fehlgeschlagene Versuche. Servergenerierte Einträge können hier nicht bearbeitet werden.",
   "searchPlaceholder": "Nach Zeit, Gerät oder IP suchen",

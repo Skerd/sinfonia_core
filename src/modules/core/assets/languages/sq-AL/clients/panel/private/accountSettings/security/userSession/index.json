@@ -1,5 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/userSession/index.tsx",
+  "failedTitle": "Sesioni nuk u ngarkua",
+  "failedDescription": "Prekni për të provuar përsëri.",
   "title": "Seancat aktive",
   "description": "Shiko se ku je identifikuar dhe anuloje aksesin në pajisjet që nuk i beson.",
   "helperText": "Nëse nuk e njihni një pajisje, hapni menynë e rreshtave (⋮) dhe zgjidhni Revoko aksesin, më pas ndryshoni fjalëkalimin tuaj.",

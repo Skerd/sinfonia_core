@@ -1,5 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/blogCategories/center/sheetView/blogCategorySheetView.tsx",
+  "failedTitle": "Impossibile caricare la categoria",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento. Fare clic per riprovare.",
+  "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
   "overview": "Panoramica",
   "lifecycle": "Ciclo di vita",
   "blogCategory": "Categoria del blog",

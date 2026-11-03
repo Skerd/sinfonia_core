@@ -1,5 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/loginHistory/index.tsx",
+  "failedTitle": "Could not load login history",
+  "failedDescription": "Tap to retry.",
   "title": "Login history",
   "description": "Review recent sign-ins and failed attempts. Server-generated records cannot be edited here.",
   "searchPlaceholder": "Search by time, device, or IP",
