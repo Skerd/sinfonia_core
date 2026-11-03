@@ -14,6 +14,8 @@ import {Badge} from "@coreModule/components/ui/badge.tsx";
 import ThemeSwitch from "@coreModule/components/custom/preferences/themeSwitch.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import {ReloginProvider} from "@coreModule/helpers/context/reloginContext.tsx";
+import StudioCompanySwitcher from "./studioCompanySwitcher.tsx";
 import {Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import ModelCatalogPane from "../catalog/modelCatalogPane.tsx";
 import StudioCommandPalette from "../command/studioCommandPalette.tsx";
@@ -81,12 +83,14 @@ export default function StudioShell() {
     const entry = target ? catalog.byCollection[target.collection] : undefined;
 
     return (
+        <ReloginProvider redirectTo={false}>
         <div className="flex h-svh max-h-svh min-h-0 flex-col overflow-hidden">
             <header className="flex shrink-0 items-center gap-3 border-b px-3 py-2">
                 <div className="flex items-baseline gap-2">
                     <span className="text-sm font-semibold">Arpeggio Studio</span>
                     <span className="text-3xs text-muted-foreground">view &amp; table config editor</span>
                 </div>
+                <StudioCompanySwitcher />
 
                 <TooltipDisplayer
                     tooltip={
@@ -224,5 +228,6 @@ export default function StudioShell() {
                 </div>
             </div>
         </div>
+        </ReloginProvider>
     );
 }

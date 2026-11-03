@@ -6,6 +6,7 @@ import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx
 import FormMaxLengthControl from "@coreModule/components/viewEngine/widgets/inputs/formMaxLengthControl.tsx";
 import {omitProps, wpText} from "../../engine/widgetProps.ts";
 import type {FormWidgetExtra} from "../types.ts";
+import {rememberContextTitle} from "@coreModule/components/viewEngine/form/contextTitle.ts";
 import {clearedValue, orCleared} from "./emptyValue.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 
@@ -62,8 +63,11 @@ const apiSelect: ScalarAdapter = ({Widget, binding, field, resolveLanguageKey: t
     const labelKey = typeof inlineCreateKey === "string" && inlineCreateKey !== "" ? inlineCreateKey : binding.label;
 
     const onValueChange = (value: string | string[], label?: string | string[]) => {
+        rememberContextTitle(formExtras, binding.name, value, label);
         const isEmpty = !Array.isArray(value) && (value === "" || value == null);
-        field.onChange(isEmpty && extra?.editMode ? null : isEmpty && normalizeEmptyToUndefined ? undefined : value);
+        // `''`, not `undefined`: a cleared prefilled select must stay blank. `undefined`
+        // makes the controller paint `defaultValues` again. Zod turns `''` into undefined on submit.
+        field.onChange(isEmpty && extra?.editMode ? null : isEmpty && normalizeEmptyToUndefined ? "" : value);
         (onValueChangeFull as OnValueChangeFull | undefined)?.(value, label);
     };
 

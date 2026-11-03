@@ -38,10 +38,11 @@ export const ReloginContext = createContext<ReloginContextValue | undefined>(und
  * message when it sent one, otherwise the local `switchFailed` copy. An expired session is
  * not toasted here: `apiClient` already flags it and the session-expired flow takes over.
  * Starting a new switch cancels one still in flight.
- * A successful switch opens Apps (`/`). The page the user was on may belong to a module
- * the new company does not grant.
+ * A successful switch opens Apps (`/`), unless `redirectTo` is `false` — Studio stays on the
+ * view it was editing. The page the user was on may belong to a module the new company
+ * does not grant.
  */
-export function ReloginProvider({children}: {children: ReactNode}) {
+export function ReloginProvider({children, redirectTo = "/"}: {children: ReactNode; redirectTo?: string | false}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentCompanyId = useSelector((state: RootState) => state.authentication.user?.company?._id);
@@ -54,7 +55,7 @@ export function ReloginProvider({children}: {children: ReactNode}) {
         success: (data) => {
             if (data?.token && data?.refreshToken) {
                 dispatch(logIn({token: data.token, refreshToken: data.refreshToken}));
-                navigate("/", {replace: true});
+                if (redirectTo !== false) navigate(redirectTo, {replace: true});
             } else {
                 // Logged in English for debugging; the user sees the translated copy.
                 handleError(new Error("Company switch returned no session tokens"), {
@@ -70,7 +71,7 @@ export function ReloginProvider({children}: {children: ReactNode}) {
                 fallbackMessage: switchFailedMessage,
             });
         },
-    }), [dispatch, handleError, navigate, switchFailedMessage]);
+    }), [dispatch, handleError, navigate, redirectTo, switchFailedMessage]);
 
     const {loading: switching} = useHttpRequest<ReloginDifferentCompanyFormResponseType>(
         RELOGIN_REQUEST,

@@ -41,7 +41,7 @@ import {findFromObject} from "@coreModule/helpers/general/objectPath.ts";
 type ApiSelectFormDependencyProps = {
     /** RHF path for this control (e.g. binding.name from the view engine). */
     formFieldName?: string;
-    /** When this field’s value changes from one non-empty id to another, clear these sibling paths. */
+    /** When this field changes from a non-empty id to another id, or is cleared, clear these sibling paths. */
     cascadeClearFormFields?: string[];
     /**
      * Copy the live value of `field` onto POST body `paramName` (default `projectId`) and add an
@@ -104,6 +104,25 @@ type ApiSelectProps = WithLanguageType &
 
 const DEFAULT_SEARCH_DEBOUNCE_MS = 300;
 const EMPTY_DEFAULT_OPTIONS: SelectOption[] = [];
+
+/**
+ * Last non-derived parent id, keyed by the form control. A ref on the select
+ * is wiped when the field remounts on the same change that should clear its children.
+ */
+const cascadePreviousByControl = new WeakMap<object, Map<string, string>>();
+
+function readCascadePrevious(control: object, field: string): string {
+    return cascadePreviousByControl.get(control)?.get(field) ?? "";
+}
+
+function writeCascadePrevious(control: object, field: string, value: string) {
+    let byField = cascadePreviousByControl.get(control);
+    if (!byField) {
+        byField = new Map();
+        cascadePreviousByControl.set(control, byField);
+    }
+    byField.set(field, value);
+}
 
 type ApiSelectInnerProps = Omit<
     ApiSelectProps,
@@ -198,7 +217,6 @@ function ApiSelectFormDependencyBridge({
         return next;
     }, [form, watchedFieldNames, watchedSlices]);
 
-    const watchedSelf = findFromObject(allValues, formFieldName);
     const depWatched = depFieldKey ? findFromObject(allValues, depFieldKey) : undefined;
 
     const depValuesKey = postBodyDeps.map((d) => `${d.field}:${String(findFromObject(allValues, d.field) ?? "")}`).join("|");
@@ -206,19 +224,27 @@ function ApiSelectFormDependencyBridge({
         postBodyParamFallbackFromExtras?.map((f) => `${f.formExtraKey}:${String(formExtras?.[f.formExtraKey] ?? "")}`).join("|") ??
         "";
 
-    const prevSelfRef = useRef<string | undefined>(undefined);
     useEffect(() => {
         if (!cascadeClearFormFields?.length) return;
-        const current = watchedSelf != null && watchedSelf !== '' ? String(watchedSelf) : '';
-        const prevRaw = prevSelfRef.current;
-        const previous = prevRaw != null && prevRaw !== '' ? String(prevRaw) : '';
-        if (previous && current && current !== previous) {
-            for (const target of cascadeClearFormFields) {
-                form.setValue(target as keyof FieldValues, '' as never, { shouldValidate: false });
+        const apply = () => {
+            const raw = form.getValues(formFieldName);
+            const current = raw != null && raw !== "" ? String(raw) : "";
+            const previous = readCascadePrevious(form.control, formFieldName);
+            // Empty → value does not clear: a prefilled child must survive the parent's first paint.
+            if (previous && current !== previous) {
+                for (const target of cascadeClearFormFields) {
+                    form.setValue(target as keyof FieldValues, "" as never, {shouldValidate: false});
+                }
             }
-        }
-        prevSelfRef.current = watchedSelf as string | undefined;
-    }, [watchedSelf, cascadeClearFormFields, form]);
+            writeCascadePrevious(form.control, formFieldName, current);
+        };
+        apply();
+        const subscription = form.watch((_values, info) => {
+            if (info.name && info.name !== formFieldName && !info.name.startsWith(`${formFieldName}.`)) return;
+            apply();
+        });
+        return () => subscription.unsubscribe();
+    }, [cascadeClearFormFields, form, formFieldName]);
 
     const mergedPostBody = useMemo(() => {
         const staticPostBody = (innerProps.postBody as Record<string, unknown>) || {};
@@ -438,16 +464,18 @@ function ApiSelectCore({
         [searchText]
     );
 
-    // Default/cached selections shown only while missing from the fetched page(s).
-    // Once page 1 (or later pages) include the id, drop the duplicate default row.
+    // A prefilled row is only the closed-state label until its own page includes it.
+    // After the field moves on, that row is not a choice in the new list.
     const filteredDefaultOptions = useMemo(() => {
         const fetchedIds = new Set(options.map((o) => o.value));
-        return defaultOptions.filter(
-            (opt) =>
-                !fetchedIds.has(opt.value) &&
-                (!searchLower || opt.label.toLowerCase().includes(searchLower)),
-        );
-    }, [defaultOptions, options, searchLower]);
+        const current = !multiple && typeof value === "string" ? value : "";
+        return defaultOptions.filter((opt) => {
+            if (fetchedIds.has(opt.value)) return false;
+            if (searchLower && !opt.label.toLowerCase().includes(searchLower)) return false;
+            if (!multiple && opt.value !== current) return false;
+            return true;
+        });
+    }, [defaultOptions, options, searchLower, multiple, value]);
 
     const selectedValuesSet = useMemo(
         () => new Set(selectedValues),

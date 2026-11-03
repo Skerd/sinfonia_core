@@ -115,6 +115,8 @@ type TableConfigProviderProps = {
     children: ReactNode;
     setupStep?: number;
     setupTotal?: number;
+    /** `installed` loads every module on this server. Studio sets it; the panel does not. */
+    scope?: "installed";
 };
 
 type LoadState = "loading" | "ready" | "error";
@@ -127,6 +129,7 @@ export function TableConfigProvider({
     children,
     setupStep = 2,
     setupTotal = SESSION_SETUP_TOTAL_STEPS,
+    scope,
 }: TableConfigProviderProps) {
     const [configs, setConfigs] = useState<Record<string, CachedTableConfig>>({});
     const [loadState, setLoadState] = useState<LoadState>("loading");
@@ -165,8 +168,9 @@ export function TableConfigProvider({
         const abortController = new AbortController();
         setLoadState("loading");
 
+        const url = scope === "installed" ? `${TABLE_CONFIGS_URL}?scope=installed` : TABLE_CONFIGS_URL;
         apiClient
-            .get<TableConfiguration>(TABLE_CONFIGS_URL, {signal: abortController.signal})
+            .get<TableConfiguration>(url, {signal: abortController.signal})
             .then((res) => {
                 if (abortController.signal.aborted) return;
                 setConfigs(configsFromResponse(res.data));
@@ -179,7 +183,7 @@ export function TableConfigProvider({
             });
 
         return () => abortController.abort();
-    }, [handleError, attempt]);
+    }, [handleError, attempt, scope]);
 
     const isHydrated = loadState === "ready";
     const retry = useCallback(() => setAttempt((n) => n + 1), []);

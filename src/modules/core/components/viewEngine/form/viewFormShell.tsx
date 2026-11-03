@@ -1,7 +1,8 @@
 import type {ReactNode} from "react";
-import type {FieldValues, Path, UseFormReturn} from "react-hook-form";
+import {useWatch, type FieldValues, type Path, type UseFormReturn} from "react-hook-form";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {buildPageTitle} from "@coreModule/helpers/general/pageTitle.ts";
+import {contextTitleFieldName, contextTitleItems} from "@coreModule/components/viewEngine/form/contextTitle.ts";
 import {Form} from "@coreModule/components/ui/form.tsx";
 import {FieldGroup} from "@coreModule/components/ui/field.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -21,6 +22,11 @@ type ViewFormShellProps<T extends FieldValues> = {
     submitDisabled?: boolean;
     submitIcon?: ReactNode;
     extraTitles?: (string | undefined)[];
+    /**
+     * When `contextTitleField` is set, the heading follows that field instead of the
+     * URL title: the select's label replaces it, and a blank field drops it.
+     */
+    formExtras?: Record<string, unknown>;
     hideChrome?: boolean;
     hideActions?: boolean;
     /** Shown instead of the form (loader, load error). */
@@ -42,17 +48,33 @@ export function ViewFormShell<T extends FieldValues>({
     submitDisabled = false,
     submitIcon,
     extraTitles = [],
+    formExtras,
     hideChrome = false,
     hideActions = false,
     replaceForm,
     children,
 }: ViewFormShellProps<T>) {
+    const contextField = contextTitleFieldName(formExtras);
+    const watchedContext = useWatch({
+        control: form.control,
+        name: (contextField ?? "contextTitle") as Path<T>,
+        disabled: contextField == null,
+    });
+    // `useWatch` can miss the default on the first paint. A cleared select is
+    // `undefined` in both, so this still drops the name once the field is empty.
+    const contextValue = contextField == null
+        ? undefined
+        : watchedContext !== undefined
+            ? watchedContext
+            : form.getValues(contextField as Path<T>);
+    const titles = contextField == null ? extraTitles : contextTitleItems(formExtras, contextValue);
+
     return (
         // Avoid nested `.flex-full` (each sets overflow-y: auto) — panel content is the sole scroll root.
         <div className="flex flex-col gap-4">
             {!hideChrome && (
                 <Header
-                    title={buildPageTitle(t("formHeader.title"), extraTitles.filter(Boolean))}
+                    title={buildPageTitle(t("formHeader.title"), titles.filter(Boolean))}
                     description={t("formHeader.description")}
                     help={readPageHelp(t)}
                 />

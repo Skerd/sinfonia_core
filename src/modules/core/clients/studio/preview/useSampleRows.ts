@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import type {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 
 export type SampleRow = Record<string, unknown> & {_id: string};
@@ -16,10 +18,12 @@ type SampleRowsState = {
  * render almost nothing and hide most of the config being edited.
  *
  * Uses the list endpoint every `CardAndTableView` uses: `POST <apiUrl>` with
- * `{offset, limit}`. Failures are surfaced rather than swallowed; a model whose list
- * the current user cannot read is a real thing to know while editing its view.
+ * `{offset, limit}`. Rows belong to the signed-in company. `x-studio-sample` only lets
+ * the development server accept the read when that company was not granted the module;
+ * switch company to load the rows that company actually has.
  */
 export function useSampleRows(apiUrl: string | undefined, limit = 5): SampleRowsState {
+    const companyId = useSelector((state: RootState) => state.authentication.user?.company?._id);
     const [state, setState] = useState<SampleRowsState>({rows: [], loading: false, error: null});
 
     useEffect(() => {
@@ -32,7 +36,10 @@ export function useSampleRows(apiUrl: string | undefined, limit = 5): SampleRows
         setState({rows: [], loading: true, error: null});
 
         apiClient
-            .post<TableResponse<SampleRow>>(apiUrl, {offset: 0, limit}, {signal: abort.signal})
+            .post<TableResponse<SampleRow>>(apiUrl, {offset: 0, limit}, {
+                signal: abort.signal,
+                headers: {"x-studio-sample": "1"},
+            })
             .then(({data}) => {
                 if (abort.signal.aborted) return;
                 setState({rows: data?.data ?? [], loading: false, error: null});
@@ -47,7 +54,7 @@ export function useSampleRows(apiUrl: string | undefined, limit = 5): SampleRows
             });
 
         return () => abort.abort();
-    }, [apiUrl, limit]);
+    }, [apiUrl, companyId, limit]);
 
     return state;
 }

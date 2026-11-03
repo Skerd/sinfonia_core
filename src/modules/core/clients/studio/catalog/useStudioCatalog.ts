@@ -16,8 +16,11 @@ import {STUDIO_PREVIEW_KEY_PREFIX} from "../studioTarget.ts";
  * Assembled entirely from data the guard has already fetched — there is no
  * Studio endpoint and no new Maestro surface:
  *
- *  - `ViewConfigProvider`  → `GET /api/auxiliary/viewConfigs`   → sheet / form trees
- *  - `TableConfigProvider` → `GET /api/auxiliary/tableConfigs`  → column configs
+ *  - `ViewConfigProvider`  → `GET /api/auxiliary/viewConfigs?scope=installed`   → sheet / form trees
+ *  - `TableConfigProvider` → `GET /api/auxiliary/tableConfigs?scope=installed`  → column configs
+ *
+ * `scope=installed` is development-only. It returns every module loaded on this server.
+ * The panel's same endpoints stay limited to the signed-in company's `modules`.
  *  - `AccessProvider`     → `POST /api/user/permissions/access/all` → readable / writable paths
  *
  * All three are keyed by the Mongoose collection name (`countries`, `units`), which is

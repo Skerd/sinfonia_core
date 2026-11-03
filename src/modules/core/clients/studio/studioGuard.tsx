@@ -14,8 +14,8 @@ function StudioGuard() {
     return (
         <AuthenticationProvider setupStep={1} setupTotal={STUDIO_SESSION_SETUP_TOTAL_STEPS}>
             <AccessProvider setupStep={2} setupTotal={STUDIO_SESSION_SETUP_TOTAL_STEPS}>
-                <TableConfigProvider setupStep={3} setupTotal={STUDIO_SESSION_SETUP_TOTAL_STEPS}>
-                    <ViewConfigProvider setupStep={4} setupTotal={STUDIO_SESSION_SETUP_TOTAL_STEPS}>
+                <TableConfigProvider scope="installed" setupStep={3} setupTotal={STUDIO_SESSION_SETUP_TOTAL_STEPS}>
+                    <ViewConfigProvider scope="installed" setupStep={4} setupTotal={STUDIO_SESSION_SETUP_TOTAL_STEPS}>
                         <Outlet />
                     </ViewConfigProvider>
                 </TableConfigProvider>

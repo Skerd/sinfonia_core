@@ -101,6 +101,7 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
             submitDisabled={submitDisabled}
             submitIcon={submitIcon}
             extraTitles={extraTitles}
+            formExtras={formExtras}
             hideChrome={hideChrome}
             hideActions={hideActions}
         >

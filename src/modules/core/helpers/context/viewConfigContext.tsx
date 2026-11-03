@@ -41,6 +41,11 @@ type ViewConfigProviderProps = {
     children: ReactNode;
     setupStep?: number;
     setupTotal?: number;
+    /**
+     * `installed` loads every module on this server (`?scope=installed`). Studio uses it so the
+     * catalog is not limited to the signed-in company's `modules`. The panel omits it.
+     */
+    scope?: "installed";
 };
 
 type LoadState = "loading" | "ready" | "error";
@@ -53,6 +58,7 @@ export function ViewConfigProvider({
     children,
     setupStep = 3,
     setupTotal = SESSION_SETUP_TOTAL_STEPS,
+    scope,
 }: ViewConfigProviderProps) {
     const [configs, setConfigs] = useState<Record<string, CachedViewConfigs>>({});
     const [loadState, setLoadState] = useState<LoadState>("loading");
@@ -63,8 +69,9 @@ export function ViewConfigProvider({
         const abortController = new AbortController();
         setLoadState("loading");
 
+        const url = scope === "installed" ? `${VIEW_CONFIGS_URL}?scope=installed` : VIEW_CONFIGS_URL;
         apiClient
-            .get<ViewConfiguration>(VIEW_CONFIGS_URL, {signal: abortController.signal})
+            .get<ViewConfiguration>(url, {signal: abortController.signal})
             .then((res) => {
                 if (abortController.signal.aborted) return;
                 setConfigs(configsFromResponse(res.data));
@@ -77,7 +84,7 @@ export function ViewConfigProvider({
             });
 
         return () => abortController.abort();
-    }, [handleError, attempt]);
+    }, [handleError, attempt, scope]);
 
     const isHydrated = loadState === "ready";
     const retry = useCallback(() => setAttempt((n) => n + 1), []);

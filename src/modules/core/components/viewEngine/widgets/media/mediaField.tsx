@@ -509,7 +509,7 @@ function MediaField({
                 disabled={loading}
                 render={() => (
                     <FormItem>
-                        <FormLabel>{label}</FormLabel>
+                        {label.trim() !== "" && <FormLabel>{label}</FormLabel>}
                         <FormControl>
                             <div className="flex flex-col gap-y-2">
                                 {gridContent}
