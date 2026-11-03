@@ -104,7 +104,7 @@ describe("renderFormWidget: #ApiSelect", () => {
         expect(props).toMatchObject({inlineCreateEntityLabel: "t:lbl", defaultOptions: [{value: "dyn"}], value: "v"});
     });
 
-    it("normalizes cleared values: null in edit, undefined when asked, else as-is; forwards the label", () => {
+    it("normalizes cleared values: null in edit, blank string when asked, else as-is; forwards the label", () => {
         const full = vi.fn();
         const edit = mountScalar(bind("#ApiSelect", {__onValueChangeFull: full}), makeField("a"), {editMode: true});
         edit.props.onValueChange("", "");
@@ -114,7 +114,7 @@ describe("renderFormWidget: #ApiSelect", () => {
         const create = mountScalar(bind("#ApiSelect", {normalizeEmptyToUndefined: true}), makeField(null));
         expect(create.props.value).toBe("");
         create.props.onValueChange("");
-        expect(create.field.onChange).toHaveBeenCalledWith(undefined);
+        expect(create.field.onChange).toHaveBeenCalledWith("");
 
         const plain = mountScalar(bind("#ApiSelect"), makeField());
         plain.props.onValueChange("");

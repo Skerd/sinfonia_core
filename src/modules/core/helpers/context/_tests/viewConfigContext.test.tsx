@@ -88,6 +88,12 @@ describe("ViewConfigProvider", () => {
         expect(getMock).toHaveBeenCalledWith(VIEW_CONFIGS_URL, {signal: expect.any(AbortSignal)});
     });
 
+    it("asks for every installed module when Studio sets that scope", async () => {
+        render(<ViewConfigProvider scope="installed">child</ViewConfigProvider>);
+        expect(await screen.findByText("child")).toBeInTheDocument();
+        expect(getMock).toHaveBeenCalledWith(`${VIEW_CONFIGS_URL}?scope=installed`, {signal: expect.any(AbortSignal)});
+    });
+
     it("passes a custom setup step through", async () => {
         render(<ViewConfigProvider setupStep={1}>child</ViewConfigProvider>);
         expect(screen.getByTestId("setup")).toHaveAttribute("data-step", "1");

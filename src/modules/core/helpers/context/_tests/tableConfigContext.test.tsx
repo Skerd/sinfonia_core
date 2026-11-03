@@ -171,6 +171,12 @@ describe("TableConfigProvider", () => {
         expect(getMock).toHaveBeenCalledWith(TABLE_CONFIGS_URL, {signal: expect.any(AbortSignal)});
     });
 
+    it("asks for every installed module when Studio sets that scope", async () => {
+        render(<TableConfigProvider scope="installed">child</TableConfigProvider>);
+        expect(await screen.findByText("child")).toBeInTheDocument();
+        expect(getMock).toHaveBeenCalledWith(`${TABLE_CONFIGS_URL}?scope=installed`, {signal: expect.any(AbortSignal)});
+    });
+
     it("exposes the hydrated cache", async () => {
         storeVisibility("cities", {name: false});
         const {result} = await renderReady();

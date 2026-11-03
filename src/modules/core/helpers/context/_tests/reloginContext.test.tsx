@@ -51,7 +51,7 @@ function httpError(status: number, body: Record<string, unknown>) {
 }
 
 /** Renders the provider for a user signed in to {@link CURRENT_COMPANY}, once its dictionary has loaded. */
-async function setup(languageCode = "en-US") {
+async function setup(languageCode = "en-US", redirectTo?: string | false) {
     const signedOut = authenticationReducer(undefined, signOut());
     const authentication = {
         ...signedOut,
@@ -68,7 +68,7 @@ async function setup(languageCode = "en-US") {
     const wrapper = ({children}: {children: ReactNode}) => (
         <MemoryRouter initialEntries={[PAGE_BEFORE_SWITCH]}>
             <Provider store={store}>
-                <ReloginProvider>{children}</ReloginProvider>
+                <ReloginProvider redirectTo={redirectTo}>{children}</ReloginProvider>
             </Provider>
         </MemoryRouter>
     );
@@ -151,6 +151,17 @@ describe("ReloginProvider", () => {
         expect(auth().user.company?._id).toBe(OTHER_COMPANY);
         expect(hook.pathname).toBe("/");
         expect(toastMock.error).not.toHaveBeenCalled();
+    });
+
+    it("stays on the open page when redirecting is turned off", async () => {
+        const token = accessToken(OTHER_COMPANY);
+        apiClientMock.mockResolvedValue({data: {token, refreshToken: "new-refresh"}});
+        const {hook, trigger} = await setup("en-US", false);
+
+        trigger(OTHER_COMPANY);
+        await settle(hook);
+
+        expect(hook.pathname).toBe(PAGE_BEFORE_SWITCH);
     });
 
     it.each([
