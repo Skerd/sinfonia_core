@@ -133,7 +133,9 @@
       "publishedAt": "Pubblicato il",
       "slug": "Slug",
       "title": "Titolo",
-      "updatedAt": "Aggiornato il"
+      "updatedAt": "Aggiornato il",
+      "publish": "Pubblica l'articolo",
+      "unpublish": "Ritira la pubblicazione"
     },
     "Channels": {
       "adminUsers": "Utenti amministratori",
@@ -174,7 +176,10 @@
       "publicChat_visitor_referrer": "Referrer",
       "publicChat_visitor_userAgent": "User agent",
       "updatedAt": "Aggiornato il",
-      "users": "Utenti"
+      "users": "Utenti",
+      "join": "Partecipa alla chat del sito",
+      "release": "Restituisci la chat al bot",
+      "close": "Chiudi la chat del sito"
     },
     "Cities": {
       "cities": "Città",
@@ -289,7 +294,13 @@
       "timeoutSeconds": "Secondi di timeout",
       "timezone": "Fuso orario",
       "type": "Tipo",
-      "updatedAt": "Aggiornato il"
+      "updatedAt": "Aggiornato il",
+      "pause": "Metti in pausa l'attività",
+      "resume": "Riprendi l'attività",
+      "run": "Esegui ora",
+      "executions": "Visualizza le esecuzioni",
+      "metrics": "Visualizza le metriche",
+      "previewNextRuns": "Anteprima delle prossime esecuzioni"
     },
     "Cronlocks": {
       "createdAt": "Creato il",
@@ -419,7 +430,10 @@
       "messagingproviders": "Provider di messaggistica",
       "name": "Nome",
       "providerType": "Tipo di fornitore",
-      "updatedAt": "Aggiornato il"
+      "updatedAt": "Aggiornato il",
+      "activate": "Attiva",
+      "deactivate": "Disattiva",
+      "testConnection": "Verifica la connessione"
     },
     "Notifications": {
       "category": "Categoria",
@@ -576,7 +590,10 @@
       "sequence": "Sequenza",
       "smtpservers": "Server SMTP",
       "updatedAt": "Aggiornato il",
-      "username": "Nome utente"
+      "username": "Nome utente",
+      "activate": "Attiva",
+      "deactivate": "Disattiva",
+      "testConnection": "Verifica la connessione"
     },
     "States": {
       "code": "Codice",
@@ -670,7 +687,8 @@
       "updatedAt": "Aggiornato il",
       "user": "Utente",
       "userAgent": "Agente utente",
-      "usersessions": "Sessioni utente"
+      "usersessions": "Sessioni utente",
+      "revoke": "Revoca la sessione"
     }
   }
 }

@@ -133,7 +133,9 @@
       "publishedAt": "Veröffentlicht am",
       "slug": "Slug",
       "title": "Titel",
-      "updatedAt": "Aktualisiert am"
+      "updatedAt": "Aktualisiert am",
+      "publish": "Beitrag veröffentlichen",
+      "unpublish": "Veröffentlichung zurückziehen"
     },
     "Channels": {
       "adminUsers": "Admin users",
@@ -174,7 +176,10 @@
       "publicChat_visitor_referrer": "Verweis",
       "publicChat_visitor_userAgent": "User-Agent",
       "updatedAt": "Aktualisiert am",
-      "users": "Benutzer"
+      "users": "Benutzer",
+      "join": "Website-Chat übernehmen",
+      "release": "Chat an den Bot zurückgeben",
+      "close": "Website-Chat schliessen"
     },
     "Cities": {
       "cities": "Cities",
@@ -289,7 +294,13 @@
       "timeoutSeconds": "Timeout seconds",
       "timezone": "Zeitzone",
       "type": "Typ",
-      "updatedAt": "Aktualisiert am"
+      "updatedAt": "Aktualisiert am",
+      "pause": "Auftrag pausieren",
+      "resume": "Auftrag fortsetzen",
+      "run": "Jetzt ausführen",
+      "executions": "Ausführungen ansehen",
+      "metrics": "Kennzahlen ansehen",
+      "previewNextRuns": "Nächste Ausführungen ansehen"
     },
     "Cronlocks": {
       "createdAt": "Erstellt am",
@@ -419,7 +430,10 @@
       "messagingproviders": "Messaging providers",
       "name": "Name",
       "providerType": "Provider typ",
-      "updatedAt": "Aktualisiert am"
+      "updatedAt": "Aktualisiert am",
+      "activate": "Aktivieren",
+      "deactivate": "Deaktivieren",
+      "testConnection": "Verbindung testen"
     },
     "Notifications": {
       "category": "Kategorie",
@@ -576,7 +590,10 @@
       "sequence": "Sequence",
       "smtpservers": "SMTP servers",
       "updatedAt": "Aktualisiert am",
-      "username": "Benutzername"
+      "username": "Benutzername",
+      "activate": "Aktivieren",
+      "deactivate": "Deaktivieren",
+      "testConnection": "Verbindung testen"
     },
     "States": {
       "code": "Code",
@@ -670,7 +687,8 @@
       "updatedAt": "Aktualisiert am",
       "user": "Benutzer",
       "userAgent": "Benutzer makler",
-      "usersessions": "Benutzer sitzungen"
+      "usersessions": "Benutzer sitzungen",
+      "revoke": "Sitzung beenden"
     }
   }
 }

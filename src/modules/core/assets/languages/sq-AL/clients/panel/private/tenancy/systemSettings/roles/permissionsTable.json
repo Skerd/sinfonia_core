@@ -133,7 +133,9 @@
       "publishedAt": "Publikuar më",
       "slug": "Slug",
       "title": "Titulli",
-      "updatedAt": "Përditësuar në"
+      "updatedAt": "Përditësuar në",
+      "publish": "Publiko artikullin",
+      "unpublish": "Hiq nga publikimi"
     },
     "Channels": {
       "adminUsers": "Përdoruesit e administratorit",
@@ -174,7 +176,10 @@
       "publicChat_visitor_referrer": "Referuesi",
       "publicChat_visitor_userAgent": "Agjenti i përdoruesit",
       "updatedAt": "UpdatedAt",
-      "users": "Përdoruesit"
+      "users": "Përdoruesit",
+      "join": "Bashkohu në bisedën e faqes",
+      "release": "Kthe bisedën te boti",
+      "close": "Mbyll bisedën e faqes"
     },
     "Cities": {
       "cities": "Cities",
@@ -289,7 +294,13 @@
       "timeoutSeconds": "TimeoutSeconds",
       "timezone": "Timezone",
       "type": "Type",
-      "updatedAt": "UpdatedAt"
+      "updatedAt": "UpdatedAt",
+      "pause": "Pezullo detyrën",
+      "resume": "Rifillo detyrën",
+      "run": "Ekzekuto tani",
+      "executions": "Shiko ekzekutimet",
+      "metrics": "Shiko metrikat",
+      "previewNextRuns": "Shiko ekzekutimet e ardhshme"
     },
     "Cronlocks": {
       "createdAt": "Krijuar në",
@@ -419,7 +430,10 @@
       "messagingproviders": "Messagingproviders",
       "name": "Name",
       "providerType": "ProviderType",
-      "updatedAt": "UpdatedAt"
+      "updatedAt": "UpdatedAt",
+      "activate": "Aktivizo",
+      "deactivate": "Çaktivizo",
+      "testConnection": "Testo lidhjen"
     },
     "Notifications": {
       "category": "Kategoria",
@@ -576,7 +590,10 @@
       "sequence": "Sequence",
       "smtpservers": "Smtpservers",
       "updatedAt": "UpdatedAt",
-      "username": "Username"
+      "username": "Username",
+      "activate": "Aktivizo",
+      "deactivate": "Çaktivizo",
+      "testConnection": "Testo lidhjen"
     },
     "States": {
       "code": "Kodi",
@@ -670,7 +687,8 @@
       "updatedAt": "UpdatedAt",
       "user": "Përdoruesi",
       "userAgent": "Agjenti i përdoruesit",
-      "usersessions": "Usersessions"
+      "usersessions": "Usersessions",
+      "revoke": "Revoko seancën"
     }
   }
 }

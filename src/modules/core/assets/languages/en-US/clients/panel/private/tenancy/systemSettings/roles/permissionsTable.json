@@ -133,7 +133,9 @@
       "publishedAt": "Published at",
       "slug": "Slug",
       "title": "Title",
-      "updatedAt": "Updated at"
+      "updatedAt": "Updated at",
+      "publish": "Publish post",
+      "unpublish": "Unpublish post"
     },
     "Channels": {
       "adminUsers": "Admin users",
@@ -174,7 +176,10 @@
       "publicChat_visitor_referrer": "Referrer",
       "publicChat_visitor_userAgent": "User agent",
       "updatedAt": "Updated at",
-      "users": "Users"
+      "users": "Users",
+      "join": "Join website chat",
+      "release": "Hand chat back to the bot",
+      "close": "Close website chat"
     },
     "Cities": {
       "cities": "Cities",
@@ -289,7 +294,13 @@
       "timeoutSeconds": "Timeout seconds",
       "timezone": "Timezone",
       "type": "Type",
-      "updatedAt": "Updated at"
+      "updatedAt": "Updated at",
+      "pause": "Pause job",
+      "resume": "Resume job",
+      "run": "Run now",
+      "executions": "View runs",
+      "metrics": "View metrics",
+      "previewNextRuns": "Preview next runs"
     },
     "Cronlocks": {
       "createdAt": "Created at",
@@ -419,7 +430,10 @@
       "messagingproviders": "Messaging providers",
       "name": "Name",
       "providerType": "Provider type",
-      "updatedAt": "Updated at"
+      "updatedAt": "Updated at",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "testConnection": "Test connection"
     },
     "Notifications": {
       "category": "Category",
@@ -576,7 +590,10 @@
       "sequence": "Sequence",
       "smtpservers": "SMTP servers",
       "updatedAt": "Updated at",
-      "username": "Username"
+      "username": "Username",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "testConnection": "Test connection"
     },
     "States": {
       "code": "Code",
@@ -670,7 +687,8 @@
       "updatedAt": "Updated at",
       "user": "User",
       "userAgent": "User agent",
-      "usersessions": "User sessions"
+      "usersessions": "User sessions",
+      "revoke": "Revoke session"
     }
   }
 }

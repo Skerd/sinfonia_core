@@ -133,7 +133,9 @@
       "publishedAt": "Publié le",
       "slug": "Slug",
       "title": "Titre",
-      "updatedAt": "Mis à jour le"
+      "updatedAt": "Mis à jour le",
+      "publish": "Publier l'article",
+      "unpublish": "Dépublier l'article"
     },
     "Channels": {
       "adminUsers": "Utilisateurs administrateurs",
@@ -174,7 +176,10 @@
       "publicChat_visitor_referrer": "Référent",
       "publicChat_visitor_userAgent": "Agent utilisateur",
       "updatedAt": "Mis à jour le",
-      "users": "Utilisateurs"
+      "users": "Utilisateurs",
+      "join": "Rejoindre le chat du site",
+      "release": "Rendre le chat au bot",
+      "close": "Fermer le chat du site"
     },
     "Cities": {
       "cities": "Villes",
@@ -289,7 +294,13 @@
       "timeoutSeconds": "Secondes d'expiration",
       "timezone": "Fuseau horaire",
       "type": "Type",
-      "updatedAt": "Mis à jour le"
+      "updatedAt": "Mis à jour le",
+      "pause": "Mettre la tâche en pause",
+      "resume": "Reprendre la tâche",
+      "run": "Exécuter maintenant",
+      "executions": "Voir les exécutions",
+      "metrics": "Voir les métriques",
+      "previewNextRuns": "Aperçu des prochaines exécutions"
     },
     "Cronlocks": {
       "createdAt": "Créé le",
@@ -419,7 +430,10 @@
       "messagingproviders": "Fournisseurs de messagerie",
       "name": "Nom",
       "providerType": "Type de fournisseur",
-      "updatedAt": "Mis à jour le"
+      "updatedAt": "Mis à jour le",
+      "activate": "Activer",
+      "deactivate": "Désactiver",
+      "testConnection": "Tester la connexion"
     },
     "Notifications": {
       "category": "Catégorie",
@@ -576,7 +590,10 @@
       "sequence": "Séquence",
       "smtpservers": "Serveurs SMTP",
       "updatedAt": "Mis à jour le",
-      "username": "Nom d'utilisateur"
+      "username": "Nom d'utilisateur",
+      "activate": "Activer",
+      "deactivate": "Désactiver",
+      "testConnection": "Tester la connexion"
     },
     "States": {
       "code": "Code",
@@ -670,7 +687,8 @@
       "updatedAt": "Mis à jour le",
       "user": "Utilisateur",
       "userAgent": "Agent utilisateur",
-      "usersessions": "Sessions utilisateur"
+      "usersessions": "Sessions utilisateur",
+      "revoke": "Révoquer la session"
     }
   }
 }
