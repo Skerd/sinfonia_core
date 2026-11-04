@@ -38,11 +38,14 @@ export type PermissionTableRow = {
     createTags: string[];
     deleteTags: string[];
     restoreTags: string[];
+    /** An @action of the model (D14): one row per action, e.g. "Cancel" on Reservations. */
+    actionTags: string[];
     readIds: string[];
     writeIds: string[];
     createIds: string[];
     deleteIds: string[];
     restoreIds: string[];
+    actionIds: string[];
     model: string;
     scope: "self" | "others" | "global";
     groupDisplayName: string;
@@ -51,11 +54,13 @@ export type PermissionTableRow = {
     create: boolean;
     delete: boolean;
     restore: boolean;
+    action: boolean;
     readActive: boolean;
     writeActive: boolean;
     createActive: boolean;
     deleteActive: boolean;
     restoreActive: boolean;
+    actionActive: boolean;
 };
 
 /**
@@ -76,7 +81,7 @@ function parsePermissionTag(tag: string): { action: string; path: string } | nul
  * Aggregates permissions by (model, scope, pathRaw). One row per unique group,
  * with read/write/create/delete/restore OR-ed from all permissions in that group.
  */
-function flattenPermissionsToRows(
+export function flattenPermissionsToRows(
     permissions: GroupedPermissions | null | undefined,
     resolveLanguageKey: WithLanguageType["resolveLanguageKey"]
 ): PermissionTableRow[] {
@@ -121,6 +126,11 @@ function flattenPermissionsToRows(
                         existing.restoreTags.push(p.tag);
                         existing.restoreIds.push(p._id);
                         existing.restoreActive = existing.restoreActive || !!p.active;
+                    } else if (parsed.action === "action") {
+                        existing.action = true;
+                        existing.actionTags.push(p.tag);
+                        existing.actionIds.push(p._id);
+                        existing.actionActive = existing.actionActive || !!p.active;
                     }
                 } else {
                     aggregated.set(rowKey, {
@@ -131,11 +141,13 @@ function flattenPermissionsToRows(
                         createTags: parsed.action === "create" ? [p.tag] : [],
                         deleteTags: parsed.action === "delete" ? [p.tag] : [],
                         restoreTags: parsed.action === "restore" ? [p.tag] : [],
+                        actionTags: parsed.action === "action" ? [p.tag] : [],
                         readIds: parsed.action === "read" ? [p._id] : [],
                         writeIds: parsed.action === "write" ? [p._id] : [],
                         createIds: parsed.action === "create" ? [p._id] : [],
                         deleteIds: parsed.action === "delete" ? [p._id] : [],
                         restoreIds: parsed.action === "restore" ? [p._id] : [],
+                        actionIds: parsed.action === "action" ? [p._id] : [],
                         model: group,
                         scope: p.tag.includes("self:") ? "self" : ( p.tag.includes("others") ? "others" : "global" ),
                         groupDisplayName,
@@ -144,11 +156,13 @@ function flattenPermissionsToRows(
                         create: parsed.action === "create",
                         delete: parsed.action === "delete",
                         restore: parsed.action === "restore",
+                        action: parsed.action === "action",
                         readActive: parsed.action === "read" ? !!p.active : false,
                         writeActive: parsed.action === "write" ? !!p.active : false,
                         createActive: parsed.action === "create" ? !!p.active : false,
                         deleteActive: parsed.action === "delete" ? !!p.active : false,
                         restoreActive: parsed.action === "restore" ? !!p.active : false,
+                        actionActive: parsed.action === "action" ? !!p.active : false,
                     });
                 }
             }
@@ -347,6 +361,21 @@ function PermissionsTable({
                         checked={row.original.restoreActive}
                         tags={row.original.restoreTags}
                         ids={row.original.restoreIds}
+                        editable={editable}
+                        parentLoading={parentLoading}
+                        onPermissionSelect={onPermissionSelect}
+                    />
+                ),
+            },
+            {
+                accessorKey: "action",
+                header: () => resolveLanguageKey("action"),
+                cell: ({row}) => (
+                    <ActionCell
+                        hasPermission={row.original.action}
+                        checked={row.original.actionActive}
+                        tags={row.original.actionTags}
+                        ids={row.original.actionIds}
                         editable={editable}
                         parentLoading={parentLoading}
                         onPermissionSelect={onPermissionSelect}

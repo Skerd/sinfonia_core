@@ -10,6 +10,7 @@
   "create": "Create",
   "delete": "Delete",
   "restore": "Restore",
+  "action": "Perform",
   "target": "Target",
   "all": "Global",
   "global": "Global",
