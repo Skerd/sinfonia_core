@@ -1,6 +1,7 @@
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
-import type { TooltipValueType } from "recharts"
+// recharts 3.4 (locked) does not re-export this type from its index; same type as newer `TooltipValueType`.
+import type { ValueType as TooltipValueType } from "recharts/types/component/DefaultTooltipContent"
 
 import { cn } from "@coreModule/components/lib/utils"
 

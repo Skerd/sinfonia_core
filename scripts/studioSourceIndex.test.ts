@@ -343,17 +343,16 @@ describe("against the real maestro corpus", () => {
         }
     });
 
-    it.runIf(available)("finds the create/edit sharing the corpus is full of", () => {
+    /* Detection itself is pinned by the fixture suite above. The corpus count is not asserted: VC-02 (separate
+       typed create/edit node consts) removes shared arrays by design, so the real number only goes down. */
+    it.runIf(available)("still finds create/edit sharing in the real corpus", () => {
         const index = buildSourceIndex(maestroRoot);
-        expect(index.sharedGroups.length).toBeGreaterThan(40);
-
-        /* Nearly all of it is one form array behind both create and edit. */
         const createEditPairs = index.sharedGroups.filter(
             (group) =>
                 group.some((key) => key.endsWith(":form:create")) &&
                 group.some((key) => key.endsWith(":form:edit")),
         );
-        expect(createEditPairs.length).toBeGreaterThan(30);
+        expect(createEditPairs.length).toBeGreaterThan(0);
     });
 
     it.runIf(available)("resolves a known node to the line that actually declares it", () => {

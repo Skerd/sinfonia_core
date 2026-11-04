@@ -1,4 +1,4 @@
-import type {ReactNode} from "react";
+import type {JSX, ReactNode} from "react";
 
 /** What the account-settings page can tell a contributor about the current view. */
 export type AccountSettingsContext = {

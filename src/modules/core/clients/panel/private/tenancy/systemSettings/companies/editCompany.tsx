@@ -58,7 +58,7 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormType>({
     submitIcon: <Save />,
     afterSuccess: () => store.dispatch(newCompanyCreated()),
     mapSubmitPayload: (data, {writeFields}) => {
-        const postBody: EditCompanyFormType & {logo?: string | null} = {
+        const postBody: Omit<EditCompanyFormType, "logo"> & {logo?: string | null} = {
             _id:            data._id!,
             name:           data.name,
             email:          data.email,
