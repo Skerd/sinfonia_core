@@ -7,7 +7,7 @@
 /** Always part of the build. `core` is infrastructure, not a feature toggle. */
 export const ALWAYS_ENABLED_MODULES: readonly string[] = ["core"];
 
-/** Shape of `<repo>/scripts/modules.manifest.json` (only the fields used here). */
+/** Shape of `maestro/modules/core/modules.manifest.json` (only the fields used here). */
 export type ModuleManifest = Record<string, {dependsOn?: string[]}>;
 
 /** Splits a comma-separated module list. `null` when unset or blank, meaning "all modules". */

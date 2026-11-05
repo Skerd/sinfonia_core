@@ -12,7 +12,7 @@
  * the same ids `VITE_ENABLED_MODULES` accepts.
  *
  * This list is a **catalog**, not generated from `VITE_ENABLED_MODULES` or
- * `scripts/modules.manifest.json`. Grouping reads `ViewConfig.apiUrl` namespaces
+ * `maestro/modules/core/modules.manifest.json`. Grouping reads `ViewConfig.apiUrl` namespaces
  * (`realEstate` → propertyManagement), which folder names do not encode. Add a
  * `STUDIO_MODULES` row and a `MODULE_BY_API_NAMESPACE` line when a module is added
  * to the manifest. Disabled modules never reach the client (Vite stubs), so empty

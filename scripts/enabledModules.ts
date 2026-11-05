@@ -7,12 +7,13 @@ import {
     resolveModuleSelection,
 } from "../src/modules/core/helpers/modules/moduleSelection.ts";
 
-/** Same places maestro looks: deploy layout (`<deploy>/scripts`) and monorepo layout (`<repo>/scripts`). */
+/**
+ * The one module manifest lives in maestro core (D01a), next to sinfonia in the workspace and in the deploy folder
+ * (the sinfonia image copies just that file to the same place).
+ */
 function findModuleManifest(sinfoniaRoot: string): string | undefined {
-    return [
-        path.resolve(sinfoniaRoot, "scripts/modules.manifest.json"),
-        path.resolve(sinfoniaRoot, "../scripts/modules.manifest.json"),
-    ].find((candidate) => fs.existsSync(candidate));
+    const manifestPath = path.resolve(sinfoniaRoot, "../maestro/modules/core/modules.manifest.json");
+    return fs.existsSync(manifestPath) ? manifestPath : undefined;
 }
 
 /**

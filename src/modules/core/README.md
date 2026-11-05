@@ -11,7 +11,7 @@ Core UI that is not a feature module. Chat and Studio stay in core; they are not
 
 ## Studio catalog (`studioModules.ts`)
 
-`STUDIO_MODULES` and `MODULE_BY_API_NAMESPACE` are a **static catalog**, not generated from `VITE_ENABLED_MODULES` or `scripts/modules.manifest.json`.
+`STUDIO_MODULES` and `MODULE_BY_API_NAMESPACE` are a **static catalog**, not generated from `VITE_ENABLED_MODULES` or the module manifest (`maestro/modules/core/modules.manifest.json`).
 
 Grouping keys off `ViewConfig.apiUrl` namespaces (`/api/realEstate/…` → `propertyManagement`). Manifest folder names do not encode those router namespaces, so a generated list would still need the same map.
 
