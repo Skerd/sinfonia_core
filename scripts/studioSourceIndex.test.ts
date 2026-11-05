@@ -317,7 +317,8 @@ describe("resolve — node paths to source ranges", () => {
  */
 describe("against the real maestro corpus", () => {
     const maestroRoot = path.resolve(__dirname, "../../maestro");
-    const available = fs.existsSync(path.join(maestroRoot, "modules"));
+    // A full maestro checkout, not the deploy image's lone `modules/core/modules.manifest.json`.
+    const available = fs.existsSync(path.join(maestroRoot, "tsconfig.json"));
 
     it.runIf(available)("indexes every view file and resolves each target's first node", () => {
         const index = buildSourceIndex(maestroRoot);
