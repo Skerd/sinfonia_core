@@ -103,7 +103,6 @@ const MAESTRO_ALIASES: Record<string, string> = {
     "@coreModule/": "modules/core/",
     "@propertyManagement/": "modules/propertyManagement/",
     "@propertyDevelopmentModule/": "modules/propertyDevelopment/",
-    "@musicIndustry/": "modules/musicIndustry/",
     "@eCommerceModule/": "modules/eCommerce/",
     "@financeModule/": "modules/finance/",
     "@swissOutreachModule/": "modules/swissOutreach/",
