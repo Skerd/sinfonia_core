@@ -12,6 +12,7 @@
   "actionUpdate": "updated",
   "actionDelete": "deleted this record",
   "actionRestore": "restored this record",
+  "actionRead": "opened",
   "systemActor": "System",
   "unknownField": "Field",
   "from": "From",

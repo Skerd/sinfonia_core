@@ -12,6 +12,7 @@
   "actionUpdate": "hat aktualisiert",
   "actionDelete": "hat diesen Datensatz gelöscht",
   "actionRestore": "hat diesen Datensatz wiederhergestellt",
+  "actionRead": "hat geöffnet",
   "systemActor": "System",
   "unknownField": "Feld",
   "from": "Von",

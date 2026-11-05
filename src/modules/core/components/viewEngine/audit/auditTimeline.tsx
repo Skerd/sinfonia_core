@@ -1,6 +1,6 @@
 import {useState, type ComponentType} from "react";
 import {format, formatDistanceToNow, isToday, isYesterday} from "date-fns";
-import {IconArrowRight, IconPencil, IconPlus, IconRestore, IconRobot, IconTrash} from "@tabler/icons-react";
+import {IconArrowRight, IconEye, IconPencil, IconPlus, IconRestore, IconRobot, IconTrash} from "@tabler/icons-react";
 import type {
     DocumentAuditChangeDto,
     DocumentAuditEntryDto,
@@ -27,6 +27,8 @@ const ACTION_STYLES: Record<AuditAction, ActionStyle> = {
     UPDATE: {Icon: IconPencil, verbKey: "actionUpdate", badge: "bg-info text-info-foreground"},
     DELETE: {Icon: IconTrash, verbKey: "actionDelete", badge: "bg-destructive text-destructive-foreground"},
     RESTORE: {Icon: IconRestore, verbKey: "actionRestore", badge: "bg-warning text-warning-foreground"},
+    // Someone opened sensitive fields (SEC-06): the entry names them, never their values.
+    READ: {Icon: IconEye, verbKey: "actionRead", badge: "bg-muted text-muted-foreground"},
 };
 
 /** Changes shown before the rest are folded behind "Show all". */
@@ -152,6 +154,12 @@ export function AuditEntry({entry, isLast, fieldTitle, hints, t}: AuditEntryProp
                     <p className="min-w-0 text-sm leading-5">
                         <span className="font-medium text-sidebar-foreground">{who ?? t("systemActor")}</span>{" "}
                         <span className="text-sidebar-foreground/70">{t(style.verbKey)}</span>
+                        {entry.action === "READ" && count > 0 && (
+                            <span className="text-sidebar-foreground/70">
+                                {" · "}
+                                {entry.changes.map((change) => fieldTitle(change.field)).join(", ")}
+                            </span>
+                        )}
                         {showsChanges && count > 0 && (
                             <span className="text-sidebar-foreground/50">
                                 {" · "}

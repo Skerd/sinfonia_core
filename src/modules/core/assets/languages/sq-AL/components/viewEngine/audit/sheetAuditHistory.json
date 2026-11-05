@@ -12,6 +12,7 @@
   "actionUpdate": "përditësoi",
   "actionDelete": "fshi këtë rekord",
   "actionRestore": "riktheu këtë rekord",
+  "actionRead": "hapi",
   "systemActor": "Sistemi",
   "unknownField": "Fusha",
   "from": "Nga",

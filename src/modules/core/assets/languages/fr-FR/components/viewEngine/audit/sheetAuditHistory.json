@@ -12,6 +12,7 @@
   "actionUpdate": "mis à jour",
   "actionDelete": "supprimé cet enregistrement",
   "actionRestore": "restauré ce disque",
+  "actionRead": "a ouvert",
   "systemActor": "Système",
   "unknownField": "Champ",
   "from": "Du",

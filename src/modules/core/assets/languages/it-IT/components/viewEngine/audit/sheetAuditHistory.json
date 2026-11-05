@@ -12,6 +12,7 @@
   "actionUpdate": "aggiornato",
   "actionDelete": "cancellato questo record",
   "actionRestore": "ripristinato questo record",
+  "actionRead": "ha aperto",
   "systemActor": "Sistema",
   "unknownField": "Campo",
   "from": "Da",
