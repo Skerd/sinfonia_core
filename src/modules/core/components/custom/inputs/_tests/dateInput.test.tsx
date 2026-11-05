@@ -5,6 +5,7 @@ import {
     formatIncludesSeconds,
     formatIncludesTime,
 } from "@coreModule/components/custom/inputs/dateInput.tsx";
+import {DATE_FORMATS, formatDate} from "@coreModule/helpers/general/dateTime.ts";
 
 // The component only needs labels from the dictionary loader, and that loader pulls in the redux
 // store; the test supplies the dictionary directly instead.
@@ -17,13 +18,13 @@ const dateBox = () => screen.getByRole("textbox") as HTMLInputElement;
 describe("format token detection", () => {
     it.each([
         ["HH:mm", true],
-        ["yyyy-MM-dd HH:mm", true],
-        ["yyyy-MM-dd'T'HH:mm:ss", true],
+        ["YYYY-MM-DD HH:mm", true],
+        ["YYYY-MM-DD[T]HH:mm:ss", true],
         ["hh:mm a", true],
-        ["yyyy-MM-dd", false],
-        ["dd.MM.yyyy", false],
-        // The literal must not be mistaken for an hour/minute token.
-        ["yyyy-MM-dd'T00:00'", false],
+        ["YYYY-MM-DD", false],
+        ["DD.MM.YYYY", false],
+        // The escaped literal must not be mistaken for an hour/minute token.
+        ["YYYY-MM-DD[T00:00]", false],
     ])("formatIncludesTime(%s) === %s", (pattern, expected) => {
         expect(formatIncludesTime(pattern)).toBe(expected);
     });
@@ -36,7 +37,7 @@ describe("format token detection", () => {
 
 describe("DateInput value handling", () => {
     it("shows a value that matches its valueFormat", () => {
-        render(<DateInput valueFormat="yyyy-MM-dd" displayFormat="dd.MM.yyyy" value="2026-03-15"/>);
+        render(<DateInput valueFormat="YYYY-MM-DD" displayFormat="DD.MM.YYYY" value="2026-03-15"/>);
         expect(dateBox().value).toBe("15.03.2026");
     });
 
@@ -45,15 +46,15 @@ describe("DateInput value handling", () => {
      * pattern; the strict parse fails on those, and the field used to render empty.
      */
     it("falls back to ISO parsing when the value is wider than the format", () => {
-        render(<DateInput valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd" value="2026-03-15T09:30:00"/>);
+        render(<DateInput valueFormat="YYYY-MM-DD" displayFormat="YYYY-MM-DD" value="2026-03-15T09:30:00"/>);
         expect(dateBox().value).toBe("2026-03-15");
     });
 
     it("hydrates a UTC-midnight instant as that UTC calendar day", () => {
         render(
             <DateInput
-                valueFormat="yyyy-MM-dd"
-                displayFormat="yyyy-MM-dd"
+                valueFormat="YYYY-MM-DD"
+                displayFormat="YYYY-MM-DD"
                 value="2026-03-15T00:00:00.000Z"
             />,
         );
@@ -63,8 +64,8 @@ describe("DateInput value handling", () => {
     it("hydrates a datetime instant in the given timezone", () => {
         render(
             <DateInput
-                valueFormat="yyyy-MM-dd HH:mm"
-                displayFormat="yyyy-MM-dd HH:mm"
+                valueFormat="YYYY-MM-DD HH:mm"
+                displayFormat="YYYY-MM-DD HH:mm"
                 timeZone="Europe/Berlin"
                 value="2026-03-15T13:00:00.000Z"
             />,
@@ -72,28 +73,27 @@ describe("DateInput value handling", () => {
         expect(dateBox().value).toBe("2026-03-15 14:00");
     });
 
-    it("renders empty rather than throwing on a malformed display pattern", () => {
-        // date-fns rejects `YYYY`/`DD`; these patterns come from view JSON, so a typo must not
-        // take the surrounding form down with it.
-        render(<DateInput valueFormat="yyyy-MM-dd" displayFormat="YYYY-MM-DD" value="2026-03-15"/>);
-        expect(dateBox().value).toBe("");
+    it("shows a plain date as the localized long date when no display pattern is given", () => {
+        render(<DateInput valueFormat="YYYY-MM-DD" value="2026-03-15"/>);
+        expect(dateBox().value).toBe(formatDate(new Date(2026, 2, 15), {format: DATE_FORMATS.longDate}));
     });
 
+
     it("keeps an unparseable value out of the field", () => {
-        render(<DateInput valueFormat="yyyy-MM-dd" value="not a date"/>);
+        render(<DateInput valueFormat="YYYY-MM-DD" value="not a date"/>);
         expect(dateBox().value).toBe("");
     });
 });
 
 describe("DateInput clearing", () => {
     it("offers no clear control while the field is empty", () => {
-        render(<DateInput valueFormat="yyyy-MM-dd" value=""/>);
+        render(<DateInput valueFormat="YYYY-MM-DD" value=""/>);
         expect(screen.queryByRole("button", {name: "Clear"})).not.toBeInTheDocument();
     });
 
     it("emits an empty string and is reachable as a real button", () => {
         const onChange = vi.fn();
-        render(<DateInput valueFormat="yyyy-MM-dd" value="2026-03-15" onChange={onChange}/>);
+        render(<DateInput valueFormat="YYYY-MM-DD" value="2026-03-15" onChange={onChange}/>);
         const clear = screen.getByRole("button", {name: "Clear"});
         // Previously a `span role="button"` with tabIndex -1: no keyboard route to clearing.
         expect(clear.tagName).toBe("BUTTON");
@@ -104,7 +104,7 @@ describe("DateInput clearing", () => {
 
     it("does not emit when disabled", () => {
         const onChange = vi.fn();
-        render(<DateInput valueFormat="yyyy-MM-dd" value="2026-03-15" onChange={onChange} disabled/>);
+        render(<DateInput valueFormat="YYYY-MM-DD" value="2026-03-15" onChange={onChange} disabled/>);
         fireEvent.click(screen.getByRole("button", {name: "Clear"}));
         expect(onChange).not.toHaveBeenCalled();
     });
@@ -147,7 +147,7 @@ describe("DateInput time panel", () => {
         const onChange = vi.fn();
         openPanel(
             <DateInput
-                valueFormat="yyyy-MM-dd HH:mm"
+                valueFormat="YYYY-MM-DD HH:mm"
                 value="2026-03-15 09:30"
                 timeZone="Europe/Berlin"
                 onChange={onChange}
@@ -159,6 +159,17 @@ describe("DateInput time panel", () => {
             .find((b) => b.textContent === "20" && b.closest("table") != null);
         fireEvent.click(day!);
         expect(onChange).toHaveBeenCalledWith("2026-03-20T08:30:00.000Z");
+    });
+
+    it("emits a picked day in its value pattern", () => {
+        const onChange = vi.fn();
+        openPanel(<DateInput valueFormat="YYYY-MM-DD" value="2026-03-15" onChange={onChange}/>);
+
+        const day = screen
+            .getAllByRole("button")
+            .find((b) => b.textContent === "20" && b.closest("table") != null);
+        fireEvent.click(day!);
+        expect(onChange).toHaveBeenCalledWith("2026-03-20");
     });
 
     it("omits the calendar in time-only mode", () => {

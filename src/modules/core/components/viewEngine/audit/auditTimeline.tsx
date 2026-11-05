@@ -1,11 +1,12 @@
 import {useState, type ComponentType} from "react";
-import {format, formatDistanceToNow, isToday, isYesterday} from "date-fns";
+import dayjs from "dayjs";
 import {IconArrowRight, IconEye, IconPencil, IconPlus, IconRestore, IconRobot, IconTrash, IconUserX} from "@tabler/icons-react";
 import type {
     DocumentAuditChangeDto,
     DocumentAuditEntryDto,
 } from "armonia/src/modules/core/api/auxiliary/private/auditLog/documentAuditLog.dto.ts";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {DATE_FORMATS, formatDate, formatRelativeToNow} from "@coreModule/helpers/general/dateTime.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar, AvatarFallback} from "@coreModule/components/ui/avatar.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
@@ -43,9 +44,10 @@ function initials(name: string): string {
 }
 
 function dayLabel(date: Date, t: ResolveLanguageKey): string {
-    if (isToday(date)) return String(t("today"));
-    if (isYesterday(date)) return String(t("yesterday"));
-    return format(date, "PPP");
+    const day = dayjs(date);
+    if (day.isSame(dayjs(), "day")) return String(t("today"));
+    if (day.isSame(dayjs().subtract(1, "day"), "day")) return String(t("yesterday"));
+    return formatDate(date, {format: DATE_FORMATS.longDate});
 }
 
 export type AuditDayGroup = {key: string; label: string; entries: DocumentAuditEntryDto[]};
@@ -55,7 +57,7 @@ export function groupEntriesByDay(entries: DocumentAuditEntryDto[], t: ResolveLa
     const groups: AuditDayGroup[] = [];
     for (const entry of entries) {
         const date = new Date(entry.createdAt);
-        const key = format(date, "yyyy-MM-dd");
+        const key = dayjs(date).format("YYYY-MM-DD");
         const last = groups[groups.length - 1];
         if (last?.key === key) last.entries.push(entry);
         else groups.push({key, label: dayLabel(date, t), entries: [entry]});
@@ -121,10 +123,12 @@ type AuditEntryProps = {
     fieldTitle: (field: string) => string;
     hints: Record<string, AuditFieldHint> | undefined;
     t: ResolveLanguageKey;
+    /** For "3 hours ago"; English when absent. */
+    languageCode?: string;
 };
 
 /** One timeline row: avatar with action badge, "who did what", when, and the field changes. */
-export function AuditEntry({entry, isLast, fieldTitle, hints, t}: AuditEntryProps) {
+export function AuditEntry({entry, isLast, fieldTitle, hints, t, languageCode}: AuditEntryProps) {
     const style = ACTION_STYLES[entry.action] ?? ACTION_STYLES.UPDATE;
     const who = entry.actor?.displayName;
     const date = new Date(entry.createdAt);
@@ -169,9 +173,9 @@ export function AuditEntry({entry, isLast, fieldTitle, hints, t}: AuditEntryProp
                             </span>
                         )}
                     </p>
-                    <TooltipDisplayer tooltip={format(date, "PPpp")}>
+                    <TooltipDisplayer tooltip={formatDate(date, {format: DATE_FORMATS.dateTime})}>
                         <time dateTime={entry.createdAt} className="shrink-0 pt-0.5 text-xs text-sidebar-foreground/55">
-                            {formatDistanceToNow(date, {addSuffix: true})}
+                            {formatRelativeToNow(date, languageCode)}
                         </time>
                     </TooltipDisplayer>
                 </div>

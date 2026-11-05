@@ -19,8 +19,8 @@ export function enumLabel(fields: TranslationValue | undefined, path: string, va
     return typeof label === "string" && label !== key ? label : value;
 }
 
-const DATE_VALUE_FORMAT = "yyyy-MM-dd";
-const DATETIME_VALUE_FORMAT = "yyyy-MM-dd'T'HH:mm";
+const DATE_VALUE_FORMAT = "YYYY-MM-DD";
+const DATETIME_VALUE_FORMAT = "YYYY-MM-DD[T]HH:mm";
 
 function valueFormatForColumn(type: COLUMN_TYPE) {
     return type === COLUMN_TYPE.DATETIME ? DATETIME_VALUE_FORMAT : DATE_VALUE_FORMAT;
@@ -51,7 +51,7 @@ function DateFilterInput({
     return (
         <DateInput
             valueFormat={valueFormat}
-            displayFormat={withTime ? "PPp" : undefined}
+            displayFormat={withTime ? "YYYY-MM-DD HH:mm" : undefined}
             value={normalizeDateFilterValue(value, type)}
             onChange={onChange}
             placeholder={placeholder}

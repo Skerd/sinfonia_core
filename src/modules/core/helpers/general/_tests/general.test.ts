@@ -3,6 +3,7 @@ import {
     calendarDayUtc,
     formatDate,
     formatDurationInDaysHoursOrMinutes,
+    formatRelativeToNow,
     fromZonedWallClock,
     isSameDay,
     toZonedWallClockDate,
@@ -15,6 +16,16 @@ import {findFromLanguage, findFromObject} from "@coreModule/helpers/general/obje
 import {buildPageTitle} from "@coreModule/helpers/general/pageTitle.ts";
 import {generateRandomString} from "@coreModule/helpers/general/random.ts";
 import {buildUrlWithExistingParams} from "@coreModule/helpers/general/url.ts";
+
+describe("formatRelativeToNow", () => {
+    it("says how long ago in the user's language, and nothing for an invalid date", () => {
+        const threeHoursAgo = new Date(Date.now() - 3 * 60 * 60 * 1000);
+        expect(formatRelativeToNow(threeHoursAgo, "en-US")).toBe("3 hours ago");
+        expect(formatRelativeToNow(threeHoursAgo, "de-CH")).toBe("vor 3 Stunden");
+        expect(formatRelativeToNow(threeHoursAgo, "xx-XX")).toBe("3 hours ago");
+        expect(formatRelativeToNow("not a date", "en-US")).toBe("");
+    });
+});
 
 describe("calendarDayUtc", () => {
     it("keeps a date-only string as written", () => {

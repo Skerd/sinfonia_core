@@ -1,9 +1,12 @@
 import * as React from "react"
-import { format, isValid, parse, parseISO, addDays } from "date-fns"
+import dayjs from "dayjs"
+import customParseFormat from "dayjs/plugin/customParseFormat"
 
 import { cn } from "@coreModule/components/lib/utils.ts"
 import {
   calendarDayUtc,
+  DATE_FORMATS,
+  formatDate,
   fromZonedWallClock,
   toZonedWallClockDate,
 } from "@coreModule/helpers/general/dateTime.ts"
@@ -16,6 +19,8 @@ import useSelectedLanguage, {
 } from "@coreModule/helpers/hooks/useSelectedLanguage.ts"
 import { Calendar as CalendarIcon, X } from "lucide-react"
 import { IconClock } from "@tabler/icons-react"
+
+dayjs.extend(customParseFormat)
 
 const LANGUAGE_PATH = "src/modules/core/components/custom/inputs/dateInput.tsx"
 const DEFAULT_PLACEHOLDER = "Pick a date"
@@ -31,16 +36,21 @@ const TIME_CELL_CLASS = cn(
   "disabled:pointer-events-none disabled:opacity-50",
 )
 
+/** dayjs escapes literal text in brackets: `YYYY-MM-DD[T]HH:mm`. */
 function stripQuotedLiterals(pattern: string): string {
-  return pattern.replace(/'[^']*'/g, "")
+  return pattern.replace(/\[[^\]]*\]/g, "")
+}
+
+function isValid(date: Date): boolean {
+  return !Number.isNaN(date.getTime())
 }
 
 /** True when `valueFormat` includes hour/minute (and optionally second) tokens. */
 export function formatIncludesTime(valueFormat: string): boolean {
   const f = stripQuotedLiterals(valueFormat)
   return (
-    /(^|[^yMd])H{1,2}/.test(f) ||
-    /(^|[^yMd])h{1,2}/.test(f) ||
+    /(^|[^YMD])H{1,2}/.test(f) ||
+    /(^|[^YMD])h{1,2}/.test(f) ||
     /K{1,2}|k{1,2}/.test(f) ||
     (f.includes("mm") && /[:T\s]/.test(f))
   )
@@ -51,26 +61,16 @@ export function formatIncludesSeconds(valueFormat: string): boolean {
   return /ss/.test(stripQuotedLiterals(valueFormat))
 }
 
-/**
- * `format`/`parse` throw on malformed patterns (`YYYY`, `DD`, a stray quote …). Patterns reach
- * this component from view-engine JSON, so a typo there must degrade to an empty field rather
- * than take down the whole form with it.
- */
+/** dayjs pattern (`YYYY-MM-DD`, `DD.MM.YYYY`, `HH:mm`); patterns come from view-engine JSON too. */
 function safeFormat(date: Date, pattern: string): string {
-  try {
-    return format(date, pattern)
-  } catch {
-    return ""
-  }
+  const value = dayjs(date)
+  return value.isValid() ? value.format(pattern) : ""
 }
 
+/** Strict: the value must match the whole pattern. */
 function safeParse(value: string, pattern: string): Date | undefined {
-  try {
-    const parsed = parse(value, pattern, new Date())
-    return isValid(parsed) ? parsed : undefined
-  } catch {
-    return undefined
-  }
+  const parsed = dayjs(value, pattern, true)
+  return parsed.isValid() ? parsed.toDate() : undefined
 }
 
 function mergeCalendarDateWithTime(
@@ -313,7 +313,7 @@ function resolvePlaceholder(
   return fromDictionary ?? DEFAULT_PLACEHOLDER
 }
 
-/** Local calendar day from `yyyy-MM-dd` (avoids UTC-shift from `Date` parsing). */
+/** Local calendar day from `YYYY-MM-DD` (avoids UTC-shift from `Date` parsing). */
 function parseIsoDayLocal(iso?: string): Date | undefined {
   const s = iso?.trim() ?? ""
   if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return undefined
@@ -362,7 +362,7 @@ type DateInputBase = Omit<
   React.ComponentProps<typeof Input>,
   "type" | "value" | "onChange" | "readOnly"
 > & {
-  /** date-fns pattern for the visible text (defaults to `valueFormat` when it includes time, else `PPP`). */
+  /** dayjs pattern for the visible text (defaults to `valueFormat` when it includes time, else the localized long date). */
   displayFormat?: string
   calendarProps?: Omit<
     React.ComponentProps<typeof Calendar>,
@@ -378,9 +378,9 @@ type DateInputBase = Omit<
    * zone; the stored value is an ISO instant. Falls back to the runtime timezone.
    */
   timeZone?: string
-  /** Inclusive `yyyy-MM-dd` lower bound for the calendar (unless `minDateExclusive`). */
+  /** Inclusive `YYYY-MM-DD` lower bound for the calendar (unless `minDateExclusive`). */
   minDate?: string
-  /** Inclusive `yyyy-MM-dd` upper bound for the calendar (unless `maxDateExclusive`). */
+  /** Inclusive `YYYY-MM-DD` upper bound for the calendar (unless `maxDateExclusive`). */
   maxDate?: string
   minDateExclusive?: boolean
   maxDateExclusive?: boolean
@@ -394,7 +394,7 @@ export type DateInputProps =
       value?: Date
       onChange?: (date: Date | undefined) => void
     })
-  /** String values for forms, e.g. `valueFormat="yyyy-MM-dd"` or `yyyy-MM-dd'T'HH:mm:ss`. */
+  /** String values for forms, e.g. `valueFormat="YYYY-MM-DD"` or `YYYY-MM-DD[T]HH:mm:ss` (dayjs tokens). */
   | (DateInputBase & {
       valueFormat: string
       value?: string
@@ -430,13 +430,14 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
     const timeFormat = resolvedValueFormat ?? displayFormatProp ?? ""
     const hasTime = timeOnly || formatIncludesTime(timeFormat)
     const withSeconds = formatIncludesSeconds(timeFormat)
-    const displayFormat =
+    // No pattern: a plain date shows as the localized long date.
+    const displayFormat: string | undefined =
       displayFormatProp ??
       (resolvedValueFormat && hasTime
         ? resolvedValueFormat
         : timeOnly
           ? "HH:mm"
-          : "PPP")
+          : undefined)
 
     const [open, setOpen] = React.useState(false)
     const drawerPortalContainer = useDrawerPortalContainer()
@@ -483,7 +484,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
         const time = safeParse(s.slice(0, 5), "HH:mm")
         if (time) return time
       }
-      const iso = parseISO(s)
+      const iso = dayjs(s).toDate()
       if (!isValid(iso)) return undefined
       if (!timeOnly && hasTime) return wallClockFromInstant(iso, timeZone) ?? iso
       return iso
@@ -544,15 +545,18 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       [disabled, emitValue],
     )
 
-    const displayValue =
-      dateValue && isValid(dateValue) ? safeFormat(dateValue, displayFormat) : ""
+    const displayValue = !dateValue || !isValid(dateValue)
+      ? ""
+      : displayFormat
+        ? safeFormat(dateValue, displayFormat)
+        : formatDate(dateValue, { format: DATE_FORMATS.longDate })
     const canClear = displayValue.length > 0
 
     const rangeCalendarProps = React.useMemo(() => {
       const minBound = parseIsoDayLocal(minDate)
       const maxBound = parseIsoDayLocal(maxDate)
-      const lowerNav = minBound && minDateExclusive ? addDays(minBound, 1) : minBound
-      const upperNav = maxBound && maxDateExclusive ? addDays(maxBound, -1) : maxBound
+      const lowerNav = minBound && minDateExclusive ? dayjs(minBound).add(1, "day").toDate() : minBound
+      const upperNav = maxBound && maxDateExclusive ? dayjs(maxBound).subtract(1, "day").toDate() : maxBound
       const matchers: Array<{ before: Date } | { after: Date }> = []
       if (lowerNav) matchers.push({ before: lowerNav })
       if (upperNav) matchers.push({ after: upperNav })

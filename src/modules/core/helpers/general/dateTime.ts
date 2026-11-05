@@ -1,8 +1,17 @@
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/de-ch";
+import "dayjs/locale/fr";
+import "dayjs/locale/it";
+import "dayjs/locale/sq";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 
 /**
- * New Sinfonia UI date formatting. Prefer this over adding another `date-fns` call site.
+ * Sinfonia's one date display helper (D36): `Intl` for dates and times, dayjs for relative times. Parsing and
+ * arithmetic use dayjs; date-fns is not imported by our code.
  */
+
+dayjs.extend(relativeTime);
 
 const DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
 const HAS_EXPLICIT_OFFSET = /(?:Z|[+-]\d{2}:?\d{2})$/i;
@@ -47,6 +56,10 @@ export const DATE_FORMATS = {
     date: NUMERIC_DATE,
     time: NUMERIC_TIME,
     dateTime: {...NUMERIC_DATE, ...NUMERIC_TIME},
+    /** "5 November 2026" (order and words follow the locale). */
+    longDate: {day: "numeric", month: "long", year: "numeric"},
+    /** "5 Nov 2026" (order and words follow the locale). */
+    mediumDate: {day: "numeric", month: "short", year: "numeric"},
 } satisfies Record<string, Intl.DateTimeFormatOptions>;
 
 export interface FormatDateOptions {
@@ -86,6 +99,21 @@ export function formatDate(date: Date | string | number | null | undefined, opti
     const value = new Date(date);
     if (Number.isNaN(value.getTime())) return "";
     return getDateFormatter(options.timeZone || undefined, options.format ?? DEFAULT_DATE_FORMAT).format(value);
+}
+
+/** Our language codes → dayjs locale names (en is built in). */
+const RELATIVE_TIME_LOCALES: Record<string, string> = {"de-CH": "de-ch", "fr-FR": "fr", "it-IT": "it", "sq-AL": "sq"};
+
+/**
+ * "3 hours ago", "in 2 days" in the user's language.
+ *
+ * @returns `""` when `date` is empty or not a valid date.
+ */
+export function formatRelativeToNow(date: Date | string | number | null | undefined, languageCode?: string): string {
+    if (!date) return "";
+    const value = dayjs(date);
+    if (!value.isValid()) return "";
+    return value.locale(RELATIVE_TIME_LOCALES[languageCode ?? ""] ?? "en").fromNow();
 }
 
 function pad2(n: number): string {

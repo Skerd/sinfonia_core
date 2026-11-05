@@ -19,7 +19,7 @@ Keep the catalog in sync when adding a module: folder name in the manifest, a `M
 
 ## Dates (new code)
 
-New Sinfonia UI uses `formatDate` / `DATE_FORMATS` in `helpers/general/dateTime.ts` (`Intl.DateTimeFormat`). Do not rewrite `viewEngine/engine/format.ts` (`date-fns` `PP` / `PPp`) — that path is view-engine display formatting and stays as-is.
+Dates (D36): display goes through `formatDate` / `DATE_FORMATS` / `formatRelativeToNow` in `helpers/general/dateTime.ts` (`Intl.DateTimeFormat`; calendar days with `timeZone: "UTC"`). Parsing and date arithmetic use dayjs; `DateInput` patterns are dayjs tokens (`YYYY-MM-DD`, `YYYY-MM-DD HH:mm`, `HH:mm`). Our code never imports date-fns (react-day-picker uses it internally).
 
 ## Token refresh
 

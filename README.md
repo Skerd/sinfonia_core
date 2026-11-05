@@ -104,7 +104,7 @@ Mirrors maestro's `ENABLED_MODULES`.
 
 ## Dates (new code)
 
-New UI uses `formatDate` in `src/modules/core/helpers/general/dateTime.ts`. View-engine `formatTemporal` (`date-fns`) is left as-is.
+Dates (D36): display through `formatDate` / `formatRelativeToNow` in `src/modules/core/helpers/general/dateTime.ts`; parsing and arithmetic with dayjs. Our code never imports date-fns.
 
 ## Token refresh
 

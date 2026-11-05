@@ -65,7 +65,7 @@ function MyCompany({
             <div className="flex w-full flex-col items-center justify-center gap-4 pt-1">
                 <CompanyCard single={true} company={data} overrideCompanyId={data._id} />
                 {data.modules ? <CompanyModulesList modules={data.modules} /> : null}
-                {canErasePeople ? <ErasePersonSection /> : null}
+                {canErasePeople ? <ErasePersonSection modules={data.modules ?? []} /> : null}
             </div>
         </div>
     )

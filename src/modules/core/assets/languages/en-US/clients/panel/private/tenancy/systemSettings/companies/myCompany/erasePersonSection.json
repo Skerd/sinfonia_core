@@ -1,7 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/erasePersonSection.tsx",
   "title": "Erase a person's data",
-  "description": "Removes one person from this company's records, found by email. Records you must keep (invoices, bookings, appointments) stay with their amounts but lose the name and contact details; medical histories, X-rays, licences, ID scans and messages are deleted for good. Their login and other companies' records are not touched.",
+  "description": "Removes one person, found by email, from this company's records. Their login and other companies' records are not touched.",
+  "chats": "Website chats with this person are deleted.",
   "email": "Email address",
   "preview": "Preview",
   "nothingFound": "This company holds nothing about this email address.",

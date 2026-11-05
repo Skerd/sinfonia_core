@@ -22,14 +22,26 @@ vi.mock("@coreModule/helpers/moduleContributions/loadRolesPermissionsContributio
     getMergedModuleRolesPermissions: () => ({groups: {Patients: "Patient folders"}}),
 }));
 
+// Each module says what it erases; only the company's own modules are listed.
+vi.mock("@coreModule/helpers/moduleContributions/loadPersonErasureContributions.ts", () => ({
+    getModulePersonErasureTexts: () => ({dentalClinic: "Medical histories are deleted.", carRental: "Licences are deleted."}),
+}));
+
 import ErasePersonSection from "../erasePersonSection.tsx";
 
 const sent = () => apiClientMock.mock.calls.map(([config]) => config.data);
 
 describe("erase a person", () => {
+    it("says what the company's own modules erase", () => {
+        render(<ErasePersonSection modules={["core", "dentalClinic", "eCommerce"]} />);
+        expect(screen.getByText("Medical histories are deleted.")).toBeTruthy();
+        expect(screen.getByText("chats")).toBeTruthy();
+        expect(screen.queryByText("Licences are deleted.")).toBeNull();
+    });
+
     it("previews with the modules' own labels, then erases only the previewed email once it is typed again", async () => {
         apiClientMock.mockResolvedValueOnce({data: {preview: true, counts: [{collection: "patients", anonymised: 1, deleted: 0}, {collection: "media", anonymised: 0, deleted: 2}]}});
-        render(<ErasePersonSection />);
+        render(<ErasePersonSection modules={["dentalClinic"]} />);
 
         fireEvent.change(screen.getByLabelText("email"), {target: {value: " Giulia@Example.com "}});
         fireEvent.click(screen.getByText("preview"));

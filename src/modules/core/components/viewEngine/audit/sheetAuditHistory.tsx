@@ -59,6 +59,7 @@ function SheetAuditHistoryDrawerInner({
     auditFieldHints,
     sheetResolveLanguageKey,
     resolveLanguageKey,
+    languageCode,
 }: SheetAuditHistoryDrawerProps) {
     const [entries, setEntries] = useState<DocumentAuditEntryDto[]>([]);
     const [nextCursor, setNextCursor] = useState<string | null>(null);
@@ -179,6 +180,7 @@ function SheetAuditHistoryDrawerInner({
                                     fieldTitle={fieldTitle}
                                     hints={auditFieldHints}
                                     t={resolveLanguageKey}
+                                    languageCode={languageCode}
                                 />
                             ))}
                         </ol>

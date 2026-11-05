@@ -1,7 +1,8 @@
 import {useEffect, useId, useMemo, useRef, useState} from "react";
 import {compose} from "redux";
 import {X, CalendarIcon} from "lucide-react";
-import {format, isValid, parse} from "date-fns";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Calendar} from "@coreModule/components/ui/calendar.tsx";
@@ -13,6 +14,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators.ts";
 import type {FilterGroup, FilterOperator, FilterRule, FilterValue} from "armonia/src/modules/core/database/filter";
 import {generateUUID} from "@coreModule/helpers/general/uuid.ts";
+import {DATE_FORMATS, formatDate} from "@coreModule/helpers/general/dateTime.ts";
 
 export type QuickFilterDef = {
     field: string;
@@ -184,9 +186,11 @@ function TextOrNumberInput({id, def, value, onChange}: QuickFilterInputProps) {
     );
 }
 
+dayjs.extend(customParseFormat);
+
 const parseIsoDate = (s: string) => {
-    const d = parse(s, "yyyy-MM-dd", new Date());
-    return isValid(d) ? d : undefined;
+    const d = dayjs(s, "YYYY-MM-DD", true);
+    return d.isValid() ? d.toDate() : undefined;
 };
 
 function DateInput({id, def, value, onChange}: QuickFilterInputProps) {
@@ -209,7 +213,7 @@ function DateInput({id, def, value, onChange}: QuickFilterInputProps) {
                 >
                     <CalendarIcon className="mr-2 size-3.5 shrink-0" />
                     <span className="truncate">
-                        {selectedDate ? format(selectedDate, "PPP") : (def.placeholder ?? def.label)}
+                        {selectedDate ? formatDate(selectedDate, {format: DATE_FORMATS.longDate}) : (def.placeholder ?? def.label)}
                     </span>
                 </Button>
             </PopoverTrigger>
@@ -219,7 +223,7 @@ function DateInput({id, def, value, onChange}: QuickFilterInputProps) {
                     selected={selectedDate}
                     defaultMonth={selectedDate}
                     onSelect={(d) => {
-                        onChange(d ? format(d, "yyyy-MM-dd") : null);
+                        onChange(d ? dayjs(d).format("YYYY-MM-DD") : null);
                         setOpen(false);
                     }}
                     captionLayout="dropdown"

@@ -6,6 +6,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {getMergedModuleRolesPermissions} from "@coreModule/helpers/moduleContributions/loadRolesPermissionsContributions.ts";
+import {getModulePersonErasureTexts} from "@coreModule/helpers/moduleContributions/loadPersonErasureContributions.ts";
 import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import type {ErasePersonFormType} from "armonia/src/modules/core/api/company/private/privacy/erasePerson.form.validator.ts";
 import type {ErasePersonResponseDto, ErasureCountDto} from "armonia/src/modules/core/api/company/private/privacy/erasePerson.dto.ts";
@@ -23,13 +24,16 @@ import {
     AlertDialogTitle,
 } from "@coreModule/components/ui/alert-dialog.tsx";
 
-type Props = WithLanguageType & WithAxiosType<ErasePersonResponseDto, ErasePersonFormType>;
+type Props = WithLanguageType & WithAxiosType<ErasePersonResponseDto, ErasePersonFormType> & {
+    /** The company's modules: each one that erases something says what, in its own words. */
+    modules: string[];
+};
 
 /**
  * A company admin erases one person, found by email, from this company's records (D57). A preview lists what would
  * change; erasing asks for the email again. Kept records are anonymised, health and identity data deleted for good.
  */
-function ErasePersonSection({data, loading, onFilterChange, resolveLanguageKey}: Props) {
+function ErasePersonSection({data, loading, modules, onFilterChange, resolveLanguageKey}: Props) {
     const languageCode = useSelector((state: RootState) => state.language.languageCode);
     const [email, setEmail] = useState("");
     const [confirmOpen, setConfirmOpen] = useState(false);
@@ -46,6 +50,8 @@ function ErasePersonSection({data, loading, onFilterChange, resolveLanguageKey}:
         const named = groups && typeof groups === "object" ? (groups as Record<string, unknown>)[group] : undefined;
         return typeof named === "string" ? named : collection;
     };
+    const moduleTexts = getModulePersonErasureTexts(languageCode ?? "en-US");
+    const effects = modules.map((name) => moduleTexts[name]).filter((text): text is string => !!text);
     const rows = (data?.counts ?? []).filter((count: ErasureCountDto) => count.anonymised + count.deleted > 0);
     const previewed = data?.preview === true && !loading && previewedEmail === normalized;
     const erased = data?.preview === false && !loading;
@@ -56,7 +62,13 @@ function ErasePersonSection({data, loading, onFilterChange, resolveLanguageKey}:
                 <IconUserX size={16} />
                 <h3 className="font-medium">{resolveLanguageKey("title")}</h3>
             </div>
-            <p className="text-sm text-muted-foreground">{resolveLanguageKey("description")}</p>
+            <div className="flex flex-col gap-1 text-sm text-muted-foreground">
+                <p>{resolveLanguageKey("description")}</p>
+                <ul className="list-disc pl-5">
+                    {effects.map((text) => <li key={text}>{text}</li>)}
+                    <li>{resolveLanguageKey("chats")}</li>
+                </ul>
+            </div>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
                 <div className="flex flex-1 flex-col gap-2">
                     <Label htmlFor="erase-person-email">{resolveLanguageKey("email")}</Label>

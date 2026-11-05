@@ -1,7 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/erasePersonSection.tsx",
   "title": "Fshi të dhënat e një personi",
-  "description": "Heq një person, të gjetur me email, nga regjistrat e kësaj kompanie. Regjistrat që duhen ruajtur (fatura, rezervime, takime) mbajnë shumat, por humbasin emrin dhe kontaktet; historitë mjekësore, radiografitë, patentat, dokumentet e identitetit dhe mesazhet fshihen përgjithmonë. Llogaria e tij dhe regjistrat e kompanive të tjera nuk preken.",
+  "description": "Heq një person, të gjetur me email, nga regjistrat e kësaj kompanie. Hyrja e tij dhe regjistrat e kompanive të tjera nuk preken.",
+  "chats": "Bisedat e faqes së internetit me këtë person fshihen.",
   "email": "Adresa e email-it",
   "preview": "Parapamje",
   "nothingFound": "Kjo kompani nuk ka asgjë për këtë adresë email-i.",
