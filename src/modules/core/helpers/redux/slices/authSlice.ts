@@ -42,6 +42,7 @@ const createEmptyUser = (): AuthUser => ({
     permissions: [],
     maxClearance: 1,
     isPlatformAdmin: false,
+    canErasePeople: false,
     company: {
         _id: "",
         name: "",

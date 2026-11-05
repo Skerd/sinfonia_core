@@ -4,6 +4,9 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import CompanyCard from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/cardView/companyCard.tsx";
 import CompanyModulesList from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/myCompany/companyModulesList.tsx";
+import ErasePersonSection from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/myCompany/erasePersonSection.tsx";
+import {useSelector} from "react-redux";
+import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
@@ -25,6 +28,8 @@ function MyCompany({
 }: MyCompanyProps){
 
     const {read} = useAccess("companies");
+    // Only for this company's admins, and only when one of its modules can erase a person (D57); the server checks too.
+    const canErasePeople = useSelector((state: RootState) => state.authentication.user.canErasePeople);
 
     const [forceReload, setForceReload] = useState<number>(1);
     useEffect(() => {
@@ -60,6 +65,7 @@ function MyCompany({
             <div className="flex w-full flex-col items-center justify-center gap-4 pt-1">
                 <CompanyCard single={true} company={data} overrideCompanyId={data._id} />
                 {data.modules ? <CompanyModulesList modules={data.modules} /> : null}
+                {canErasePeople ? <ErasePersonSection /> : null}
             </div>
         </div>
     )

@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/erasePersonSection.tsx",
+  "title": "Daten einer Person löschen",
+  "description": "Entfernt eine Person, gefunden per E-Mail, aus den Unterlagen dieser Firma. Unterlagen, die Sie aufbewahren müssen (Rechnungen, Buchungen, Termine), bleiben mit ihren Beträgen erhalten, verlieren aber Name und Kontaktdaten; Krankengeschichten, Röntgenbilder, Ausweise, Führerscheine und Nachrichten werden endgültig gelöscht. Ihr Login und die Unterlagen anderer Firmen bleiben unberührt.",
+  "email": "E-Mail-Adresse",
+  "preview": "Vorschau",
+  "nothingFound": "Diese Firma hat nichts zu dieser E-Mail-Adresse gespeichert.",
+  "anonymised": "anonymisiert",
+  "deleted": "gelöscht",
+  "files": "Dateien",
+  "erase": "Löschen",
+  "done": "Die Daten der Person wurden gelöscht.",
+  "confirmTitle": "Daten dieser Person löschen?",
+  "confirmDescription": "Dies lässt sich nicht rückgängig machen. Geben Sie die E-Mail-Adresse zur Bestätigung erneut ein.",
+  "confirmEmail": "E-Mail-Adresse",
+  "cancel": "Abbrechen"
+}

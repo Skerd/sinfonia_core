@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/erasePersonSection.tsx",
+  "title": "Cancella i dati di una persona",
+  "description": "Rimuove una persona, trovata per e-mail, dai documenti di questa azienda. I documenti da conservare (fatture, prenotazioni, appuntamenti) mantengono gli importi ma perdono nome e contatti; anamnesi, radiografie, patenti, documenti d'identità e messaggi vengono cancellati definitivamente. Il suo accesso e i documenti di altre aziende non vengono toccati.",
+  "email": "Indirizzo e-mail",
+  "preview": "Anteprima",
+  "nothingFound": "Questa azienda non ha nulla su questo indirizzo e-mail.",
+  "anonymised": "anonimizzati",
+  "deleted": "cancellati",
+  "files": "File",
+  "erase": "Cancella",
+  "done": "I dati della persona sono stati cancellati.",
+  "confirmTitle": "Cancellare i dati di questa persona?",
+  "confirmDescription": "L'operazione non si può annullare. Digita di nuovo l'indirizzo e-mail per confermare.",
+  "confirmEmail": "Indirizzo e-mail",
+  "cancel": "Annulla"
+}

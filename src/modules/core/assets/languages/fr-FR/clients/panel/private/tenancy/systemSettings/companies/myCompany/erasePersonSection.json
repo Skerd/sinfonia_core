@@ -1,0 +1,17 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/erasePersonSection.tsx",
+  "title": "Effacer les données d'une personne",
+  "description": "Retire une personne, trouvée par e-mail, des dossiers de cette entreprise. Les dossiers à conserver (factures, réservations, rendez-vous) gardent leurs montants mais perdent le nom et les coordonnées ; les antécédents médicaux, radiographies, permis, pièces d'identité et messages sont supprimés définitivement. Son compte et les dossiers des autres entreprises ne sont pas touchés.",
+  "email": "Adresse e-mail",
+  "preview": "Aperçu",
+  "nothingFound": "Cette entreprise ne détient rien sur cette adresse e-mail.",
+  "anonymised": "anonymisé(s)",
+  "deleted": "supprimé(s)",
+  "files": "Fichiers",
+  "erase": "Effacer",
+  "done": "Les données de la personne ont été effacées.",
+  "confirmTitle": "Effacer les données de cette personne ?",
+  "confirmDescription": "Cette action est irréversible. Saisissez à nouveau l'adresse e-mail pour confirmer.",
+  "confirmEmail": "Adresse e-mail",
+  "cancel": "Annuler"
+}
