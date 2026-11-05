@@ -13,6 +13,7 @@
   "actionDelete": "supprimé cet enregistrement",
   "actionRestore": "restauré ce disque",
   "actionRead": "a ouvert",
+  "actionErase": "a effacé les données d'une personne",
   "systemActor": "Système",
   "unknownField": "Champ",
   "from": "Du",

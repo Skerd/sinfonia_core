@@ -13,6 +13,7 @@
   "actionDelete": "deleted this record",
   "actionRestore": "restored this record",
   "actionRead": "opened",
+  "actionErase": "erased a person's data",
   "systemActor": "System",
   "unknownField": "Field",
   "from": "From",

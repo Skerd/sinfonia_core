@@ -13,6 +13,7 @@
   "actionDelete": "cancellato questo record",
   "actionRestore": "ripristinato questo record",
   "actionRead": "ha aperto",
+  "actionErase": "ha cancellato i dati di una persona",
   "systemActor": "Sistema",
   "unknownField": "Campo",
   "from": "Da",

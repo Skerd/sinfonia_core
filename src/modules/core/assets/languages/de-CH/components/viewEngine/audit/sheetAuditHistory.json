@@ -13,6 +13,7 @@
   "actionDelete": "hat diesen Datensatz gelöscht",
   "actionRestore": "hat diesen Datensatz wiederhergestellt",
   "actionRead": "hat geöffnet",
+  "actionErase": "hat die Daten einer Person gelöscht",
   "systemActor": "System",
   "unknownField": "Feld",
   "from": "Von",

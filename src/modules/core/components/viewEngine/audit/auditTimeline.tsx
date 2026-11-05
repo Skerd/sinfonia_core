@@ -1,6 +1,6 @@
 import {useState, type ComponentType} from "react";
 import {format, formatDistanceToNow, isToday, isYesterday} from "date-fns";
-import {IconArrowRight, IconEye, IconPencil, IconPlus, IconRestore, IconRobot, IconTrash} from "@tabler/icons-react";
+import {IconArrowRight, IconEye, IconPencil, IconPlus, IconRestore, IconRobot, IconTrash, IconUserX} from "@tabler/icons-react";
 import type {
     DocumentAuditChangeDto,
     DocumentAuditEntryDto,
@@ -29,6 +29,8 @@ const ACTION_STYLES: Record<AuditAction, ActionStyle> = {
     RESTORE: {Icon: IconRestore, verbKey: "actionRestore", badge: "bg-warning text-warning-foreground"},
     // Someone opened sensitive fields (SEC-06): the entry names them, never their values.
     READ: {Icon: IconEye, verbKey: "actionRead", badge: "bg-muted text-muted-foreground"},
+    // An admin erased a person's data from this record (D57).
+    ERASE: {Icon: IconUserX, verbKey: "actionErase", badge: "bg-destructive text-destructive-foreground"},
 };
 
 /** Changes shown before the rest are folded behind "Show all". */
