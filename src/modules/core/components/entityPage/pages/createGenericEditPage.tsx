@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import {useEffect, useMemo, useState, type ReactNode} from "react";
+import {useEffect, useMemo, useState, type ReactNode, type ComponentType} from "react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -247,5 +247,5 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
         withLanguage(config.languagePath),
         withAxios<TDto, TForm>(patchHttp, true),
         withDebug(true, true, accessKey),
-    )(GenericEditInner) as any;
+    )(GenericEditInner) as ComponentType<GenericEditPageProps>;
 }

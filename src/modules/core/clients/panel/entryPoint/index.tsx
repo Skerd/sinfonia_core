@@ -15,7 +15,8 @@ import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {resolveCenterPanelClassName} from "@coreModule/helpers/moduleContributions/loadPanelLayoutContributions.ts";
-import {Fragment, useMemo, useState} from "react";
+import {Fragment, Suspense, useMemo, useState} from "react";
+import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import CommandPalette from "@coreModule/components/custom/commandPalette/commandPalette.tsx";
 import {CommandPaletteKbd} from "@coreModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -183,13 +184,16 @@ function CenterPanel({resolveLanguageKey}: CenterPanelProps){
                                     : "overflow-y-auto px-2 pb-2 mt-2"),
                         )}
                     >
-                        {renderCenterPanelContent({
-                            menu,
-                            subview,
-                            segments,
-                            searchParams,
-                            resolveLanguageKey,
-                        })}
+                        {/* Every page loads on first visit (D21): one boundary for all of them. */}
+                        <Suspense fallback={<Loader />}>
+                            {renderCenterPanelContent({
+                                menu,
+                                subview,
+                                segments,
+                                searchParams,
+                                resolveLanguageKey,
+                            })}
+                        </Suspense>
                     </div>
                 </div>
                 <CommandPalette open={commandOpen} onOpenChange={setCommandOpen} />
