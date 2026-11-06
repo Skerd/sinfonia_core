@@ -120,6 +120,8 @@ type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: numbe
     selfAccess?: boolean,
     url: string,
     tableConfigKey: string,
+    /** False when the page has no card renderer: the list always shows the table and hides the card/table toggle. */
+    cardView?: boolean;
     enableTableConfig?: boolean;
     tableConfigOptions?: TableConfigOptions;
     requestInfo?: {
@@ -185,6 +187,7 @@ function CountryCenterView<
     resolveLanguageKey,
     tableConfigOptions,
     tableConfigKey,
+    cardView = true,
     // getItems,
     // getTotal,
     getId = (item: T) => (item as { _id?: string | number })._id ?? String(item),
@@ -212,7 +215,7 @@ function CountryCenterView<
     // preference write and made the card/table toggle need two clicks.
     const [listViewFallback] = useState(() => loadStoredListViewMode(tableConfigKey));
     const {
-        viewMode,
+        viewMode: requestedViewMode,
         setViewMode,
         offset,
         setOffset,
@@ -223,6 +226,7 @@ function CountryCenterView<
         limit,
         paramScope: tableConfigKey,
     });
+    const viewMode: EntityListViewMode = cardView ? requestedViewMode : "table";
     const listPageParam = listChromeParam(LIST_PAGE_PARAM, tableConfigKey);
     // const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [rowOverlays, setRowOverlays] = useState<Record<string, EntityRowPatch<T>>>({});
@@ -682,7 +686,7 @@ function CountryCenterView<
                     {
                         read &&
                         <div className="flex items-center gap-2">
-                            <ToggleGroup
+                            {cardView && <ToggleGroup
                                 type="single"
                                 spacing={0}
                                 variant="outline"
@@ -704,7 +708,7 @@ function CountryCenterView<
                                         <IconLayoutGrid />
                                     </ToggleGroupItem>
                                 </TooltipDisplayer>
-                            </ToggleGroup>
+                            </ToggleGroup>}
                             {
                                 viewMode === "table" &&
                                 <DataTableViewOptions table={table} />

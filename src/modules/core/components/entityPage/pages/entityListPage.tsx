@@ -559,6 +559,7 @@ export default function EntityListPage<T extends BaseEntity>({
 
             <HiddenElement hideAll={true}>
                 <CardAndTableView<TableResponse<T>>
+                    cardView={renderCard !== undefined}
                     url={apiUrl}
                     tableConfigKey={tableConfigKey}
                     access={accessModel}
