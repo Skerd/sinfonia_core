@@ -17,8 +17,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@coreModule/components/
 import useSelectedLanguage, {
   type LanguageDictionary,
 } from "@coreModule/helpers/hooks/useSelectedLanguage.ts"
-import { Calendar as CalendarIcon, X } from "lucide-react"
-import { IconClock } from "@tabler/icons-react"
+import { IconCalendar, IconClock, IconX } from "@tabler/icons-react"
 
 dayjs.extend(customParseFormat)
 
@@ -576,7 +575,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
         .filter((matcher): matcher is NonNullable<typeof matcher> => matcher != null)
     }, [calendarProps?.disabled, rangeCalendarProps.disabled])
 
-    const EndIcon = timeOnly ? IconClock : CalendarIcon
+    const EndIcon = timeOnly ? IconClock : IconCalendar
 
     return (
       <Popover modal open={open} onOpenChange={setOpen}>
@@ -617,7 +616,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 }}
                 onClick={handleClear}
               >
-                <X className="h-4 w-4" />
+                <IconX className="h-4 w-4" />
               </button>
             ) : null}
             <EndIcon

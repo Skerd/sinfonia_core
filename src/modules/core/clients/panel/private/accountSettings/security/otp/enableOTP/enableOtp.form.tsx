@@ -140,7 +140,7 @@ function AccountSecurityEnableOtpForm({
                                         </FormControl>
 
                                         <TooltipProvider>
-                                            <Tooltip>
+                                            <Tooltip side="top">
                                                 <TooltipTrigger asChild>
                                                     <Button
                                                         type="submit"
@@ -153,14 +153,14 @@ function AccountSecurityEnableOtpForm({
                                                     </Button>
                                                 </TooltipTrigger>
 
-                                                <TooltipContent side="top" className="text-sm">
+                                                <TooltipContent className="text-sm">
                                                     <p>{resolveLanguageKey("confirm")}</p>
                                                 </TooltipContent>
                                             </Tooltip>
                                         </TooltipProvider>
 
                                         <TooltipProvider>
-                                            <Tooltip>
+                                            <Tooltip side="top">
                                                 <TooltipTrigger asChild>
                                                     <Button
                                                         type="button"
@@ -177,7 +177,7 @@ function AccountSecurityEnableOtpForm({
                                                     </Button>
                                                 </TooltipTrigger>
 
-                                                <TooltipContent side="top" className="text-sm">
+                                                <TooltipContent className="text-sm">
                                                     <p>{resolveLanguageKey("cancel")}</p>
                                                 </TooltipContent>
                                             </Tooltip>

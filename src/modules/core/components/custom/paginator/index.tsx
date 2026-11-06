@@ -1,3 +1,4 @@
+import {IconChevronLeft, IconChevronRight} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import LimitUpdater from "@coreModule/components/custom/paginator/limitUpdater.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
@@ -7,7 +8,6 @@ import {
     PaginationContent,
     PaginationItem,
 } from "@coreModule/components/ui/pagination.tsx";
-import {ChevronLeft, ChevronRight} from "lucide-react";
 import {useEffect, useState} from "react";
 
 type PaginatorProps = WithLanguageType & {
@@ -93,7 +93,7 @@ function Paginator({
                             }}
                             disabled={total === 0 || loading}
                         >
-                            <ChevronLeft />
+                            <IconChevronLeft />
                         </Button>
                     </TooltipDisplayer>
                 </PaginationItem>
@@ -116,7 +116,7 @@ function Paginator({
                             }}
                             disabled={total === 0 || loading}
                         >
-                            <ChevronRight />
+                            <IconChevronRight />
                         </Button>
                     </TooltipDisplayer>
                 </PaginationItem>

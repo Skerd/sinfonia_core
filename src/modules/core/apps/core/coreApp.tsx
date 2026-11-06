@@ -10,7 +10,7 @@ import {lazy, Suspense} from "react";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {SidebarProvider} from "@coreModule/components/ui/sidebar.tsx";
-import {TooltipProvider} from "@coreModule/components/animate-ui/components/animate/tooltip.tsx";
+import {TooltipProvider} from "@coreModule/components/ui/tooltip.tsx";
 import {ensureDeviceId} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 
 const PrivatePage = lazy(() => import("@coreModule/clients/panel/private"));

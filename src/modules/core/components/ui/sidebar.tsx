@@ -571,7 +571,8 @@ function SidebarMenuButton({
     />
   )
 
-  if (!tooltip) {
+  // The label tooltip only helps while the sidebar is collapsed to icons.
+  if (!tooltip || state !== "collapsed" || isMobile) {
     return (
       <HighlightItem
         asChild
@@ -590,19 +591,14 @@ function SidebarMenuButton({
 
   return (
     <TooltipProvider>
-      <Tooltip>
+      <Tooltip side="right" align="center">
         <HighlightItem
           asChild
           activeClassName={sidebarMenuButtonActiveVariants({ variant })}
         >
           <TooltipTrigger asChild>{button}</TooltipTrigger>
         </HighlightItem>
-        <TooltipContent
-          side="right"
-          align="center"
-          hidden={state !== "collapsed" || isMobile}
-          {...tooltip}
-        />
+        <TooltipContent {...tooltip} />
       </Tooltip>
     </TooltipProvider>
   )

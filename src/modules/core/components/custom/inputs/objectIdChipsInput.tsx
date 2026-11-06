@@ -1,3 +1,4 @@
+import {IconX} from "@tabler/icons-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import { useFormContext, type FieldPath, type FieldValues, type PathValue } from "react-hook-form";
@@ -7,7 +8,6 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@coreM
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import { ApiSelect } from "@coreModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
-import { X } from "lucide-react";
 
 /** `formExtras` key for optional `Record<fieldName, MutableRefObject<Record<id, label>>>`. */
 export const FORM_EXTRAS_OBJECT_ID_CHIP_LABEL_REFS = "objectIdChipLabelRefs";
@@ -209,7 +209,7 @@ export function ObjectIdChipsInput({
                                                 )}
                                                 onClick={() => removeId(id)}
                                             >
-                                                <X className="size-3 pointer-events-none" />
+                                                <IconX className="size-3 pointer-events-none" />
                                             </button>
                                         </TooltipDisplayer>
                                     </Badge>

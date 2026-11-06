@@ -166,14 +166,14 @@ function NavTruncatedTitle({ title, className }: { title: string; className?: st
     }, [title])
 
     return (
-        <TooltipProvider delayDuration={300}>
-            <Tooltip>
+        <TooltipProvider openDelay={300}>
+            <Tooltip side="right" sideOffset={8}>
                 <TooltipTrigger asChild>
                     <span ref={ref} className={cn('min-w-0 truncate', className)}>
                         {title}
                     </span>
                 </TooltipTrigger>
-                <TooltipContent side="right" sideOffset={8} hidden={!truncated}>
+                <TooltipContent hidden={!truncated}>
                     {title}
                 </TooltipContent>
             </Tooltip>

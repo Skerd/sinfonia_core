@@ -1,3 +1,4 @@
+import {IconInbox} from "@tabler/icons-react";
 import type { MouseEventHandler } from "react";
 import {
     Empty,
@@ -7,7 +8,6 @@ import {
     EmptyMedia,
     EmptyTitle,
 } from "@coreModule/components/ui/empty.tsx";
-import { BrushCleaning } from "lucide-react";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -38,7 +38,7 @@ export default function NoData({
 
             <EmptyHeader className="w-full">
                 <EmptyMedia variant="icon">
-                    <BrushCleaning />
+                    <IconInbox />
                 </EmptyMedia>
                 <EmptyTitle className="w-full">
                     <TruncatedValue className="w-full">{title}</TruncatedValue>

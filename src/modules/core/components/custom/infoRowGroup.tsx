@@ -1,5 +1,5 @@
+import {IconLock} from "@tabler/icons-react";
 import {createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode} from "react";
-import {LockKeyhole} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -112,7 +112,7 @@ function RestrictedFieldsNoticeBase({labels, resolveLanguageKey}: RestrictedFiel
                 data-slot="restricted-fields"
                 aria-label={`${summary}. ${tooltip}`}
             >
-                <LockKeyhole size={12} aria-hidden />
+                <IconLock size={12} aria-hidden />
                 {summary}
             </span>
         </TooltipDisplayer>

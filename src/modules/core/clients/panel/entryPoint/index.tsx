@@ -1,3 +1,4 @@
+import {IconSearch} from "@tabler/icons-react";
 import {compose} from "redux";
 import {SidebarInset, SidebarTrigger} from "@coreModule/components/ui/sidebar.tsx";
 import {Separator} from "@coreModule/components/ui/separator.tsx";
@@ -20,7 +21,6 @@ import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import CommandPalette from "@coreModule/components/custom/commandPalette/commandPalette.tsx";
 import {CommandPaletteKbd} from "@coreModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {Search} from "lucide-react";
 
 type CenterPanelProps = WithLanguageType;
 
@@ -164,7 +164,7 @@ function CenterPanel({resolveLanguageKey}: CenterPanelProps){
                                 onClick={() => setCommandOpen(true)}
                                 aria-label={String(resolveLanguageKey("commandPalette.title") || "Open command palette")}
                             >
-                                <Search className="size-4" aria-hidden />
+                                <IconSearch className="size-4" aria-hidden />
                                 <CommandPaletteKbd />
                             </Button>
                             <NotificationBell />

@@ -1,4 +1,4 @@
-import {AlertCircle} from "lucide-react";
+import {IconAlertCircle} from "@tabler/icons-react";
 import {HttpError} from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {Countdown} from "@coreModule/components/custom/countdown.tsx";
 import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/alert.tsx";
@@ -55,7 +55,7 @@ export function ErrorView({
                 {
                     !canRetry ?
                     <Alert variant="destructive" className="w-auto border-2 border-destructive">
-                        <AlertCircle/>
+                        <IconAlertCircle/>
                         <AlertTitle>{error.message}</AlertTitle>
                         <AlertDescription>
                             <div className="flex items-center gap-x-1">
@@ -70,7 +70,7 @@ export function ErrorView({
                         className="cursor-pointer w-auto border-2"
                         {...asActivation(() => {setCanRetry(false); onClick();})}
                     >
-                        <AlertCircle/>
+                        <IconAlertCircle/>
                         <AlertTitle>{resolveLanguageKey("waitFinished")}</AlertTitle>
                         <AlertDescription>
                             <p>{description}</p>
@@ -93,7 +93,7 @@ export function ErrorView({
                 className="cursor-pointer w-auto border-2 border-destructive"
                 {...asActivation(() => {setCanRetry(true); onClick();})}
             >
-                <AlertCircle/>
+                <IconAlertCircle/>
                 <AlertTitle>{title}</AlertTitle>
                 <AlertDescription>
                     <p>{description}</p>

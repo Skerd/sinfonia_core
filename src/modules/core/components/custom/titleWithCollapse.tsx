@@ -1,7 +1,7 @@
-import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@coreModule/components/animate-ui/primitives/radix/collapsible.tsx"
+import {IconChevronDown} from "@tabler/icons-react";
+import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@coreModule/components/ui/collapsible.tsx"
 import {CardDescription, CardTitle} from "@coreModule/components/ui/card.tsx";
 import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
-import {ChevronDown} from "lucide-react";
 import {ReactNode, useState} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -55,7 +55,7 @@ export default function TitleWithCollapse({children, title, description, inBetwe
                           * components on toggle would change the element type at this
                           * position, forcing React to unmount/remount the DOM node
                           * instead of just patching a class. */}
-                        <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", open && "rotate-180", {"text-destructive": danger})} />
+                        <IconChevronDown className={cn("h-4 w-4 transition-transform duration-200", open && "rotate-180", {"text-destructive": danger})} />
                     </Button>
                 </div>
             </CollapsibleTrigger>

@@ -1,5 +1,5 @@
+import {IconChevronRight} from "@tabler/icons-react";
 import {useId, type ComponentType} from "react";
-import {ChevronRight} from "lucide-react";
 import {Link} from "react-router-dom";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -84,7 +84,7 @@ function DrillDownIndicator({
             {showLabel && linkLabel ? (
                 <span className="hidden max-w-[5rem] truncate sm:inline">{linkLabel}</span>
             ) : null}
-            <ChevronRight size={14} className="shrink-0" />
+            <IconChevronRight size={14} className="shrink-0" />
         </span>
     );
 }

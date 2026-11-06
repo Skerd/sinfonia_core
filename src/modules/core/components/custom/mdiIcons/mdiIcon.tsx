@@ -1,3 +1,4 @@
+import {IconHelpCircle} from "@tabler/icons-react";
 import Icon from "@mdi/react";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import {
@@ -88,7 +89,6 @@ import {
     mdiFlash,
     mdiMapMarkerPath,
 } from "@mdi/js";
-import { CircleQuestionMark } from "lucide-react";
 import { forwardRef, type ReactNode } from "react";
 
 /** Icon name → path mapping. Aliases (e.g. mdiParkingCovered → mdiParking) use the same path. */
@@ -243,7 +243,7 @@ export type MdiIconProps = {
     title?: string;
 };
 
-const DEFAULT_FALLBACK = <CircleQuestionMark className="size-full" />;
+const DEFAULT_FALLBACK = <IconHelpCircle className="size-full" />;
 
 /**
  * Reusable MDI Icon component. Renders Material Design Icons by name; supports

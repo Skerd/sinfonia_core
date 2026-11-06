@@ -1,6 +1,6 @@
+import {IconCirclePlus, IconX} from "@tabler/icons-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useFormContext, type FieldPath, type FieldValues, type PathValue } from "react-hook-form";
-import { X, CirclePlus } from "lucide-react";
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -167,7 +167,7 @@ export function StringArrayInput<TFieldValues extends FieldValues = FieldValues>
                                 disabled={!canAdd}
                                 className="shrink-0"
                             >
-                                <CirclePlus className="h-4 w-4" />
+                                <IconCirclePlus className="h-4 w-4" />
                             </Button>
                         </TooltipDisplayer>
                     </div>
@@ -198,7 +198,7 @@ export function StringArrayInput<TFieldValues extends FieldValues = FieldValues>
                                             className="inline-flex shrink-0 cursor-pointer rounded-sm text-secondary-foreground/70 transition-colors hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                                             onClick={() => removeAt(index)}
                                         >
-                                            <X className="size-3 pointer-events-none" />
+                                            <IconX className="size-3 pointer-events-none" />
                                         </button>
                                     </TooltipDisplayer>
                                 </Badge>

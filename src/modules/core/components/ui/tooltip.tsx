@@ -1,69 +1,15 @@
-import * as React from "react"
-import { Tooltip as TooltipPrimitive } from "radix-ui"
-
-import { cn } from "@coreModule/components/lib/utils.ts"
-
-function TooltipProvider({
-  delayDuration = 0,
-  ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
-  return (
-    <TooltipPrimitive.Provider
-      data-slot="tooltip-provider"
-      delayDuration={delayDuration}
-      {...props}
-    />
-  )
-}
-
-function Tooltip({
-  ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Root>) {
-  return <TooltipPrimitive.Root data-slot="tooltip" {...props} />
-}
-
-function TooltipTrigger({
-  ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
-}
-
-function TooltipContent({
-  className,
-  sideOffset = 0,
-  children,
-  container,
-  disablePortal = false,
-  ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Content> & {
-  container?: HTMLElement | null
-  disablePortal?: boolean
-}) {
-  const content = (
-    <TooltipPrimitive.Content
-      data-slot="tooltip-content"
-      sideOffset={sideOffset}
-      className={cn(
-        // break-words: max-w-xs alone only wraps at spaces (overflow-wrap is
-        // "normal" by default), so a single long unbroken token -- an id, a
-        // url, a filename -- just spills past the bubble instead of wrapping.
-        "z-50 inline-flex w-fit max-w-xs break-words origin-(--radix-tooltip-content-transform-origin) items-center gap-1.5 rounded-md bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-sm data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <TooltipPrimitive.Arrow className="z-50 size-2.5 translate-y-[calc(-50%-2px)] rotate-45 rounded-[2px] bg-foreground fill-foreground" />
-    </TooltipPrimitive.Content>
-  )
-
-  if (disablePortal) return content
-
-  return (
-    <TooltipPrimitive.Portal container={container ?? undefined}>
-      {content}
-    </TooltipPrimitive.Portal>
-  )
-}
-
-export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger }
+/**
+ * The one tooltip primitive (D22): the animated animate-ui tooltip. Features import it from here, never from
+ * animate-ui. Placement (`side`, `sideOffset`, `container`) goes on `Tooltip`; the provider's delay is `openDelay`.
+ */
+export {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+    type TooltipContentProps,
+    type TooltipProps,
+    type TooltipProviderProps,
+    type TooltipTriggerProps,
+} from "@coreModule/components/animate-ui/components/animate/tooltip.tsx";
+export {useTooltipProviderPresent} from "@coreModule/components/animate-ui/primitives/animate/tooltip.tsx";

@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react"
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {CopyButton} from "@coreModule/components/animate-ui/components/buttons/copy.tsx";
+import {CopyButton} from "@coreModule/components/ui/copy-button.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 
 type CopyTooltipProps = WithLanguageType & {

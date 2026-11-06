@@ -1,6 +1,5 @@
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, useTooltipProviderPresent} from "@coreModule/components/ui/tooltip.tsx";
 import {isValidElement, ReactNode, useEffect, useRef, useState, useSyncExternalStore} from "react";
-import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@coreModule/components/animate-ui/components/animate/tooltip.tsx";
-import {useTooltipProviderPresent} from "@coreModule/components/animate-ui/primitives/animate/tooltip.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 type TooltipDisplayerProps = {

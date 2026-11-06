@@ -6,7 +6,7 @@ import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {LanguageProvider} from "@coreModule/helpers/context/providers/language-provider.tsx";
 import {ThemeProvider} from "@coreModule/helpers/context/providers/theme-provider.tsx";
 import {ensureDeviceId} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
-import {TooltipProvider} from "@coreModule/components/animate-ui/components/animate/tooltip.tsx";
+import {TooltipProvider} from "@coreModule/components/ui/tooltip.tsx";
 import ErrorBoundary from "@coreModule/components/custom/errors/errorBoundary.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import PortalLayout from "@coreModule/clients/portal/shared/layout/index.tsx";

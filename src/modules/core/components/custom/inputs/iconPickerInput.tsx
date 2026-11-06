@@ -1,6 +1,6 @@
+import {IconCheck, IconSelector, IconX} from "@tabler/icons-react";
 import { useCallback, useMemo, useState, type MouseEvent, type PointerEvent } from "react";
 import Icon from "@mdi/react";
-import { Check, ChevronsUpDown, X } from "lucide-react";
 import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
 
 // Common MDI icons for unit types - you can expand this list
@@ -313,10 +313,10 @@ function IconPickerInputBase({
               }}
               onClick={handleClear}
             >
-              <X className="h-3.5 w-3.5" />
+              <IconX className="h-3.5 w-3.5" />
             </button>
           ) : null}
-          <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" aria-hidden />
+          <IconSelector className="h-4 w-4 shrink-0 opacity-50" aria-hidden />
         </div>
         <PopoverContent
           className="flex max-h-[min(24rem,var(--radix-popover-content-available-height))] w-[var(--radix-popover-trigger-width)] min-w-72 max-w-[min(90vw,28rem)] flex-col overflow-hidden p-0"
@@ -360,7 +360,7 @@ function IconPickerInputBase({
                         <span className="relative">
                           <Icon path={icon.path} size={1.2} />
                           {isSelected && (
-                            <Check className="absolute -top-1 -right-1 h-3 w-3 text-primary" />
+                            <IconCheck className="absolute -top-1 -right-1 h-3 w-3 text-primary" />
                           )}
                         </span>
                         <span className="w-full truncate text-xs">{label}</span>

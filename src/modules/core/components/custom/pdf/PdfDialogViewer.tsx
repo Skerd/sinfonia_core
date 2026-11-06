@@ -1,5 +1,5 @@
+import {IconChevronLeft, IconChevronRight} from "@tabler/icons-react";
 import {useEffect, useRef, useState} from "react";
-import {ChevronLeft, ChevronRight} from "lucide-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -164,7 +164,7 @@ export default function PdfDialogViewer({src, className}: PdfDialogViewerProps) 
                         disabled={page <= 1}
                         onClick={() => goTo(page - 1)}
                     >
-                        <ChevronLeft className="h-4 w-4" />
+                        <IconChevronLeft className="h-4 w-4" />
                     </Button>
                     <span
                         className={cn(
@@ -183,7 +183,7 @@ export default function PdfDialogViewer({src, className}: PdfDialogViewerProps) 
                         disabled={page >= numPages}
                         onClick={() => goTo(page + 1)}
                     >
-                        <ChevronRight className="h-4 w-4" />
+                        <IconChevronRight className="h-4 w-4" />
                     </Button>
                 </div>
             )}

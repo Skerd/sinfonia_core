@@ -134,7 +134,7 @@ function AccountProfileEmail({
         <section className="flex flex-col gap-1 rounded-lg border border-border/50 p-(--density-pad)">
             <div className="flex min-h-7 items-center justify-between gap-2">
                 <div className="flex items-center gap-x-1">
-                    <TooltipProvider delayDuration={0}>
+                    <TooltipProvider openDelay={0}>
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 {(isEmailVerified && !unverifiedEmail)

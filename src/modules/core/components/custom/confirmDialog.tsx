@@ -1,5 +1,5 @@
+import {IconLoader2} from "@tabler/icons-react";
 import {ReactNode} from "react";
-import {LoaderCircle} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Button} from '@coreModule/components/ui/button.tsx';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle} from '@coreModule/components/ui/alert-dialog.tsx';
@@ -55,7 +55,7 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
                         onClick={handleConfirm}
                         disabled={disabled || isLoading}
                     >
-                        {isLoading && <LoaderCircle size={20} className="animate-spin"/>}
+                        {isLoading && <IconLoader2 size={20} className="animate-spin"/>}
                         {confirmText ?? resolveLanguageKey("confirm")}
                     </Button>
                 </AlertDialogFooter>

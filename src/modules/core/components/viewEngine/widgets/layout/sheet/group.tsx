@@ -6,7 +6,7 @@ import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "@coreModule/components/animate-ui/primitives/radix/collapsible.tsx";
+} from "@coreModule/components/ui/collapsible.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 
 type SheetGroupProps = {

@@ -55,7 +55,7 @@ function UpdateEmail({
     return (
         <div className="flex items-center grow gap-x-1 transition-all ease-in" style={{border: "0px solid red"}}>
             <TooltipProvider>
-                <Tooltip>
+                <Tooltip side="top">
                     <TooltipTrigger asChild>
                         <Button
                             type="submit"
@@ -68,13 +68,13 @@ function UpdateEmail({
                         </Button>
                     </TooltipTrigger>
 
-                    <TooltipContent side="top" className="text-sm">
+                    <TooltipContent className="text-sm">
                         <p>{resolveLanguageKey("confirm")}</p>
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
             <TooltipProvider>
-                <Tooltip>
+                <Tooltip side="top">
                     <TooltipTrigger asChild>
                         <Button
                             type="button"
@@ -88,7 +88,7 @@ function UpdateEmail({
                         </Button>
                     </TooltipTrigger>
 
-                    <TooltipContent side="top" className="text-sm">
+                    <TooltipContent className="text-sm">
                         <p>{resolveLanguageKey("cancel")}</p>
                     </TooltipContent>
                 </Tooltip>

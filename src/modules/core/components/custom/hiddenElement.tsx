@@ -1,6 +1,6 @@
+import {IconLock} from "@tabler/icons-react";
 import { useMemo, type ReactNode } from "react";
 import {generateRandomString} from "@coreModule/helpers/general/random.ts";
-import { LockKeyhole } from "lucide-react";
 import withLanguage, { type WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -51,7 +51,7 @@ function HiddenElement({
                         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                         aria-hidden
                     >
-                        <LockKeyhole size={LOCK_SIZE} />
+                        <IconLock size={LOCK_SIZE} />
                     </div>
                 )}
             </div>
@@ -65,7 +65,7 @@ function HiddenElement({
             <div className={cn("flex items-center gap-x-2", className)}>
                 {showLock && (
                     <TooltipDisplayer tooltip={resolveLanguageKey("tooltip")}>
-                        <LockKeyhole
+                        <IconLock
                             className="cursor-help text-muted-foreground"
                             size={LOCK_SIZE}
                         />

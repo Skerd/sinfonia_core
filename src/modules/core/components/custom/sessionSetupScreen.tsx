@@ -1,8 +1,8 @@
+import {IconAlertCircle} from "@tabler/icons-react";
 import {useRef} from "react";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {AlertCircle} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
@@ -104,7 +104,7 @@ function SessionSetupScreenComponent({
                 />
                 <div className="mt-4 flex items-start gap-2 text-sm">
                     {error ? (
-                        <AlertCircle className="mt-0.5 size-4 shrink-0 text-destructive" />
+                        <IconAlertCircle className="mt-0.5 size-4 shrink-0 text-destructive" />
                     ) : (
                         <Loader inline className="mt-0.5 shrink-0 text-muted-foreground" />
                     )}

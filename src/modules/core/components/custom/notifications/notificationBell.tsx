@@ -1,7 +1,7 @@
+import {IconBell, IconBellOff} from "@tabler/icons-react";
 import {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {compose} from "redux";
-import {Bell, BellOff} from "lucide-react";
 import {useNavigate} from "react-router-dom";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -78,7 +78,7 @@ function NotificationBell({resolveLanguageKey}: WithLanguageType) {
                     className="relative"
                     aria-label={triggerLabel}
                 >
-                    <Bell className="size-5" aria-hidden />
+                    <IconBell className="size-5" aria-hidden />
                     {unreadNotifications > 0 && (
                         <span
                             className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-3xs font-medium text-primary-foreground"
@@ -124,7 +124,7 @@ function NotificationBell({resolveLanguageKey}: WithLanguageType) {
                         </div>
                     ) : items.length === 0 ? (
                         <div className="flex flex-col items-center justify-center gap-3 py-8">
-                            <BellOff
+                            <IconBellOff
                                 className="size-10 text-muted-foreground/50"
                                 strokeWidth={1.25}
                                 aria-hidden

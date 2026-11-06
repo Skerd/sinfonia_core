@@ -5,7 +5,7 @@ import {ArrowLeft, MoreVertical, User} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
-import {AvatarGroup, AvatarGroupTooltip} from "@coreModule/components/animate-ui/components/animate/avatar-group.tsx";
+import {AvatarGroup, AvatarGroupTooltip} from "@coreModule/components/ui/avatar-group.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
