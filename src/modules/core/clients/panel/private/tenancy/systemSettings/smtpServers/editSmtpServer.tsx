@@ -1,4 +1,4 @@
-import {Save} from "lucide-react";
+import {IconDeviceFloppy} from "@tabler/icons-react";
 import {createGenericEditPage} from "@coreModule/components/entityPage/pages/createGenericEditPage.tsx";
 import {editSmtpServerFormSchema} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/editSmtpServer.form.validator.ts";
 import type {SmtpServer} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
@@ -24,5 +24,5 @@ export default createGenericEditPage<SmtpServer, EditSmtpServerFormType>({
         fromName: writeFields.fromName ? data.fromName ?? "" : undefined,
         replyTo: writeFields.replyTo ? data.replyTo ?? "" : undefined,
     }),
-    submitIcon: <Save />,
+    submitIcon: <IconDeviceFloppy />,
 });

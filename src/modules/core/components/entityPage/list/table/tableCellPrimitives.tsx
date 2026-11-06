@@ -13,6 +13,7 @@ import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui
 import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import {formatDate} from "@coreModule/helpers/general/dateTime.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 /**
  * Caps a long pill so a neighbour (or the "+N" counter) can still sit beside it.
@@ -82,9 +83,9 @@ function PopoverBadgeTrigger({children}: {children: ReactNode}) {
                 variant="secondary"
                 className="cursor-pointer font-normal hover:bg-accent hover:text-accent-foreground"
             >
-                <button type="button" onClick={(e) => e.stopPropagation()}>
+                <Button variant="bare" type="button" onClick={(e) => e.stopPropagation()}>
                     {children}
-                </button>
+                </Button>
             </Badge>
         </PopoverTrigger>
     );
@@ -192,7 +193,7 @@ export function InlineItems({items, max, moreLabel}: {items: InlineItem[]; max: 
             </div>
             <span className="pointer-events-none invisible absolute left-0 top-0" aria-hidden>
                 <Badge asChild variant="secondary" className="font-normal">
-                    <button ref={probeRef} type="button" tabIndex={-1} />
+                    <Button variant="bare" ref={probeRef} type="button" tabIndex={-1} />
                 </Badge>
             </span>
         </div>

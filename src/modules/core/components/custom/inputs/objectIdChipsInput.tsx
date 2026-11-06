@@ -8,6 +8,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@coreM
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import { ApiSelect } from "@coreModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 /** `formExtras` key for optional `Record<fieldName, MutableRefObject<Record<id, label>>>`. */
 export const FORM_EXTRAS_OBJECT_ID_CHIP_LABEL_REFS = "objectIdChipLabelRefs";
@@ -197,7 +198,7 @@ export function ObjectIdChipsInput({
                                     >
                                         <span className="min-w-0 flex-1 truncate">{label}</span>
                                         <TooltipDisplayer tooltip={removeTooltip}>
-                                            <button
+                                            <Button variant="bare"
                                                 type="button"
                                                 // Icon-only, and one per chip: the name has to say which.
                                                 aria-label={`${removeTooltip}: ${label}`}
@@ -210,7 +211,7 @@ export function ObjectIdChipsInput({
                                                 onClick={() => removeId(id)}
                                             >
                                                 <IconX className="size-3 pointer-events-none" />
-                                            </button>
+                                            </Button>
                                         </TooltipDisplayer>
                                     </Badge>
                                 );

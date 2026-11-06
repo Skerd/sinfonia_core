@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/rolePermissionsSection.tsx",
+  "templateLabel": "Template",
+  "templatePlaceholder": "Template",
+  "templateDescription": "Copy permissions from another role",
+  "none": "None",
+  "failTitle": "Failed to load permissions",
+  "failDescription": "Failed to load permissions, please try again",
+  "failTooltip": "Click here to retry loading permissions",
+  "noData": "No permissions found, so no role can be created"
+}

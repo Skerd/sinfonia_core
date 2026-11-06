@@ -1,4 +1,4 @@
-import {Save} from "lucide-react";
+import {IconDeviceFloppy} from "@tabler/icons-react";
 import {createGenericEditPage} from "@coreModule/components/entityPage/pages/createGenericEditPage.tsx";
 import {editBlogPostFormSchema} from "armonia/src/modules/core/api/auxiliary/private/blogPost/editBlogPost.form.validator.ts";
 import type {BlogPost} from "armonia/src/modules/core/api/auxiliary/private/blogPost/blogPost.dto.ts";
@@ -15,5 +15,5 @@ export default createGenericEditPage<BlogPost, EditBlogPostFormType>({
         mainImage: data.mainImage?._id ?? data.mainImage,
         imageGallery: data.imageGallery?.map((media) => media._id) ?? [],
     }),
-    submitIcon: <Save />,
+    submitIcon: <IconDeviceFloppy />,
 });

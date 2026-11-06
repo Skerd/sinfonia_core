@@ -1,4 +1,5 @@
-import {useState, useEffect, useImperativeHandle} from "react";
+import {IconArrowForwardUp} from "@tabler/icons-react";
+import {useState, useEffect, useImperativeHandle, type ComponentType} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {compose} from "redux";
@@ -7,7 +8,6 @@ import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription} fro
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {newMessage, setActionMessage} from "@coreModule/helpers/redux/slices/chatSlice.ts";
-import {Forward} from "lucide-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -91,7 +91,7 @@ const ChannelsInfiniteListWithAxios = compose(
         true
     ),
     withDebug(true, true, "messages")
-)(ChannelsInfiniteList);
+)(ChannelsInfiniteList) as ComponentType<Omit<ChannelsInfiniteListProps, keyof WithAxiosType>>;
 
 type ForwardMessageDialogProps = WithLanguageType & WithAxiosType<ForwardMessageFormResponseType, ForwardMessageFormType> & {
     message: MessageType | null;
@@ -165,7 +165,7 @@ function ForwardMessageDialog({
             <DialogContent className="max-w-md">
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
-                        <Forward size={20} />
+                        <IconArrowForwardUp size={20} />
                         {resolveLanguageKey("forward")} {resolveLanguageKey("message")}
                     </DialogTitle>
                     <DialogDescription>
@@ -202,7 +202,6 @@ function ForwardMessageDialog({
                             {resolveLanguageKey("selectChannels")}
                         </label>
                         <ChannelsInfiniteListWithAxios
-                            //@ts-expect-error
                             resolveLanguageKey={resolveLanguageKey}
                             selectedChannels={selectedChannels}
                             onChannelToggle={handleChannelToggle}

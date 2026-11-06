@@ -1,4 +1,5 @@
 import {Component, type ErrorInfo, type ReactNode} from "react";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 type GalleryErrorBoundaryProps = {
     token: string;
@@ -41,13 +42,14 @@ export default class GalleryErrorBoundary extends Component<
                     <p className="text-2xs text-destructive">
                         {this.props.token} failed to render ({this.state.error.message}).
                     </p>
-                    <button
+                    <Button
                         type="button"
-                        className="text-2xs text-muted-foreground underline"
+                        variant="link"
+                        className="h-auto p-0 text-2xs text-muted-foreground underline"
                         onClick={() => this.setState({error: null})}
                     >
                         Retry
-                    </button>
+                    </Button>
                 </div>
             );
         }

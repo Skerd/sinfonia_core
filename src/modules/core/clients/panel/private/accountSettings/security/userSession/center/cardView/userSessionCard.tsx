@@ -1,4 +1,4 @@
-import {Clock, Globe2, Monitor, ShieldCheck} from "lucide-react";
+import {IconClock, IconWorld, IconDeviceDesktop, IconShieldCheck} from "@tabler/icons-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -89,7 +89,7 @@ export default function UserSessionCard({
                                     "flex size-7 shrink-0 items-center justify-center rounded-full",
                                     canReadActive && row.isActive ? "bg-success/10 text-success" : "bg-muted text-muted-foreground",
                                 )}>
-                                    <ShieldCheck className="size-3.5 shrink-0" />
+                                    <IconShieldCheck className="size-3.5 shrink-0" />
                                 </div>
                             }
                             badges={
@@ -119,7 +119,7 @@ export default function UserSessionCard({
                         </EntityCard.Header>
                         <EntityCard.Body>
                             <EntityCardRow
-                                icon={Clock}
+                                icon={IconClock}
                                 label={resolveLanguageKey("lastActiveAt")}
                                 tooltip={resolveLanguageKey("lastActiveAt")}
                                 path={"lastActiveAt"}
@@ -127,14 +127,14 @@ export default function UserSessionCard({
                                 value={row.lastActiveAt}
                             />
                             <EntityCardRow
-                                icon={Globe2}
+                                icon={IconWorld}
                                 label={resolveLanguageKey("location")}
                                 tooltip={resolveLanguageKey("location")}
                                 show={canReadIp || canReadGeolocation}
                                 value={location || ip || resolveLanguageKey("unknownLocation")}
                             />
                             <EntityCardRow
-                                icon={Monitor}
+                                icon={IconDeviceDesktop}
                                 label={resolveLanguageKey("sessionId")}
                                 tooltip={resolveLanguageKey("sessionId")}
                                 path={"sessionId"}
@@ -147,7 +147,7 @@ export default function UserSessionCard({
                                 )}
                             </EntityCardRow>
                             <EntityCardRow
-                                icon={Monitor}
+                                icon={IconDeviceDesktop}
                                 label={resolveLanguageKey("userAgent")}
                                 tooltip={resolveLanguageKey("userAgent")}
                                 path={"userAgent"}
@@ -160,7 +160,7 @@ export default function UserSessionCard({
                                 )}
                             </EntityCardRow>
                             <EntityCardRow
-                                icon={Clock}
+                                icon={IconClock}
                                 label={resolveLanguageKey("expiresAt")}
                                 tooltip={resolveLanguageKey("expiresAt")}
                                 path={"expiresAt"}

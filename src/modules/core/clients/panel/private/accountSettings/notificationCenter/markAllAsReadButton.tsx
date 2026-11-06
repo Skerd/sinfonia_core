@@ -10,7 +10,6 @@ import {
     AlertDialogHeader,
     AlertDialogTitle
 } from "@coreModule/components/ui/alert-dialog.tsx";
-import { LoaderCircle } from "lucide-react";
 import withAxios, { WithAxiosType } from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, { WithLanguageType } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useDispatch, useSelector} from "react-redux";
@@ -23,7 +22,7 @@ import {
     markCachedNotificationsRead,
     setNotificationNumber
 } from "@coreModule/helpers/redux/slices/notificationSlice.ts";
-import {IconEyeCheck} from "@tabler/icons-react";
+import {IconEyeCheck, IconLoader2} from "@tabler/icons-react";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 
 type MarkAllAsReadButtonProps = WithLanguageType & WithAxiosType<MarkNotificationsReadFormResponseType, MarkNotificationsReadFormType> & {
@@ -88,7 +87,7 @@ function MarkAllAsReadButton({
                     <AlertDialogFooter>
                         <AlertDialogCancel disabled={loading}>{resolveLanguageKey("cancel")}</AlertDialogCancel>
                         <AlertDialogAction onClick={() => onFilterChange({ all: true })} disabled={loading}>
-                            {loading ? <LoaderCircle className="animate-spin" size={16} /> : null}
+                            {loading ? <IconLoader2 className="animate-spin" size={16} /> : null}
                             <span>{resolveLanguageKey("confirm")}</span>
                         </AlertDialogAction>
                     </AlertDialogFooter>

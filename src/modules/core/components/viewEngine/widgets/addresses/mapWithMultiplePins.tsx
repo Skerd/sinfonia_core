@@ -1,7 +1,7 @@
+import {IconExternalLink} from "@tabler/icons-react";
 import {useEffect, useState} from "react";
 import {MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
 import L, {type LatLngBoundsExpression, type LatLngExpression} from "leaflet";
-import {ExternalLink} from "lucide-react";
 import {CloseMapControl, ExpandMapControl, MapDialog, SyncMapSize} from "@coreModule/components/viewEngine/widgets/addresses/mapChrome.tsx";
 
 import iconUrl from "leaflet/dist/images/marker-icon.png";
@@ -117,11 +117,11 @@ function MapCanvas({
                                                 <div className="flex flex-nowrap gap-x-3">
                                                     <a className="inline-flex items-center gap-0.5 hover:underline shrink-0 whitespace-nowrap" href={`https://www.google.com/maps?q=${address.latitude},${address.longitude}`} target="_blank" rel="noreferrer">
                                                         {openInGoogleMaps || "Google Maps"}
-                                                        <ExternalLink className="h-3 w-3 shrink-0" />
+                                                        <IconExternalLink className="h-3 w-3 shrink-0" />
                                                     </a>
                                                     <a className="inline-flex items-center gap-0.5 hover:underline shrink-0 whitespace-nowrap" href={`https://maps.apple.com/?q=${address.latitude},${address.longitude}`} target="_blank" rel="noreferrer">
                                                         {openInAppleMaps || "Apple Maps"}
-                                                        <ExternalLink className="h-3 w-3 shrink-0" />
+                                                        <IconExternalLink className="h-3 w-3 shrink-0" />
                                                     </a>
                                                 </div>
                                             </div>

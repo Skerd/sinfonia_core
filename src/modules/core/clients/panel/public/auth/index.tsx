@@ -1,3 +1,4 @@
+import {IconLayoutRows} from "@tabler/icons-react";
 import {useParams} from "react-router-dom";
 import Login from "@coreModule/clients/panel/public/auth/login";
 import SignUp from "@coreModule/clients/panel/public/auth/signUp";
@@ -10,7 +11,6 @@ import LanguageSwitch from "@coreModule/components/custom/preferences/languageSw
 import ThemeSwitch from "@coreModule/components/custom/preferences/themeSwitch.tsx";
 import {resolveAuthPanelComponent} from "@coreModule/helpers/moduleContributions/loadAuthPanelContributions.ts";
 import type {CoreAuthPanelKey} from "@coreModule/helpers/moduleContributions/coreAuthPanelKeys.ts";
-import {GalleryVerticalEnd} from "lucide-react";
 import type {ComponentType} from "react";
 
 /** Core panels by `:panel` key; the key list is shared with the module loader, which reserves it. */
@@ -45,7 +45,7 @@ export default function AuthenticationPage() {
         <div className='container grid grid-cols-1 h-svh max-w-none items-center justify-center px-2'>
             <div className='mx-auto flex w-full flex-col justify-center gap-y-2 py-8 sm:w-[480px] sm:p-8'>
                 <div className='mb-4 flex items-center justify-center'>
-                    <GalleryVerticalEnd className='me-2' />
+                    <IconLayoutRows className='me-2' />
                     <h1 className='text-xl font-medium'>{window.location.host}</h1>
                 </div>
                 {Panel ? <Panel /> : null}

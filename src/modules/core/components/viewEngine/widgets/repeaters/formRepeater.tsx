@@ -1,8 +1,8 @@
+import {IconCirclePlus, IconTrash} from "@tabler/icons-react";
 import { type ReactNode, createElement, useEffect, useRef } from "react";
 import { get, useFieldArray, useFormContext, useFormState, type FieldValues } from "react-hook-form";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
-import { CirclePlus, Trash2 } from "lucide-react";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";
 import TitleWithCollapse from "@coreModule/components/custom/titleWithCollapse.tsx";
 import type { ViewNode, FieldBinding } from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
@@ -94,7 +94,7 @@ function RowOptionLabelSync({
     const form = useFormContext<FieldValues>();
     const valuePath = `${arrayField}.${index}.${fieldName}`;
     const labelPath = `${valuePath}__label`;
-    const value = form.watch(valuePath as any);
+    const value = form.watch(valuePath);
     const optionsKey = options.map((o) => `${o.value}:${o.label}`).join("|");
 
     useEffect(() => {
@@ -105,9 +105,9 @@ function RowOptionLabelSync({
         const label = rawLabel.includes(".")
             ? String(resolveLanguageKey(rawLabel))
             : rawLabel;
-        const current = form.getValues(labelPath as any);
+        const current = form.getValues(labelPath);
         if (current === label) return;
-        form.setValue(labelPath as any, label || undefined, {shouldDirty: false});
+        form.setValue(labelPath, label || undefined, {shouldDirty: false});
         // eslint-disable-next-line react-hooks/exhaustive-deps -- options keyed via optionsKey
     }, [arrayField, fieldName, index, labelPath, optionsKey, resolveLanguageKey, value]);
 
@@ -143,7 +143,7 @@ function RowCascadeEffects({
     }, [editMode, arrayField, index]);
 
     const watchPaths = cascades.map((c) => `${arrayField}.${index}.${c.watch}`);
-    const watched = form.watch(watchPaths as any[]);
+    const watched = form.watch(watchPaths);
     const values: unknown[] = Array.isArray(watched) ? watched : [watched];
 
     useEffect(() => {
@@ -153,7 +153,7 @@ function RowCascadeEffects({
             if (prevVal !== undefined && prevVal !== currentVal) {
                 cascade.clear.forEach((clearField) => {
                     form.setValue(
-                        `${arrayField}.${index}.${clearField}` as any,
+                        `${arrayField}.${index}.${clearField}`,
                         undefined,
                         { shouldDirty: true },
                     );
@@ -204,8 +204,8 @@ function RowTitle({
     fallback: string;
 }) {
     const form = useFormContext<FieldValues>();
-    const fieldPaths = titleFields.map((f) => `${arrayField}.${index}.${f}` as any);
-    const labelPaths = titleFields.map((f) => `${arrayField}.${index}.${f}__label` as any);
+    const fieldPaths = titleFields.map((f) => `${arrayField}.${index}.${f}`);
+    const labelPaths = titleFields.map((f) => `${arrayField}.${index}.${f}__label`);
     const fieldValues = form.watch(fieldPaths);
     const labelValues = form.watch(labelPaths);
     const vals = Array.isArray(fieldValues) ? fieldValues : [fieldValues];
@@ -298,7 +298,7 @@ function renderRowNode(
             const base = (wp.postBody as Record<string, unknown> | undefined) ?? {};
             const merged: Record<string, unknown> = { ...base };
             for (const [postKey, relField] of Object.entries(fromRowFields)) {
-                const val = form.watch(`${arrayField}.${index}.${relField}` as any);
+                const val = form.watch(`${arrayField}.${index}.${relField}`);
                 if (val != null && val !== "") merged[postKey] = val;
             }
             resolvedWidgetProps = { ...wp, postBody: merged };
@@ -308,7 +308,7 @@ function renderRowNode(
         const disableWhen = wp.disabledWhenRowFieldEmpty as string | undefined;
         let fieldDisabled = (extra.loading ?? false) || !!binding.disabled;
         if (disableWhen) {
-            const siblingVal = form.watch(`${arrayField}.${index}.${disableWhen}` as any);
+            const siblingVal = form.watch(`${arrayField}.${index}.${disableWhen}`);
             if (!siblingVal) fieldDisabled = true;
         }
 
@@ -318,7 +318,7 @@ function renderRowNode(
             binding.widget === "#SimpleSelect" ||
             binding.widget === "#Select"
         ) {
-            const labelPath = `${arrayField}.${index}.${binding.name}__label` as any;
+            const labelPath = `${arrayField}.${index}.${binding.name}__label`;
             resolvedWidgetProps = {
                 ...resolvedWidgetProps,
                 __onValueChangeFull: (_value: string | string[], label?: string | string[]) => {
@@ -369,7 +369,7 @@ function renderRowNode(
                 )}
                 <FormField
                     control={form.control}
-                    name={prefixedName as any}
+                    name={prefixedName}
                     disabled={fieldDisabled}
                     render={({ field }) => (
                         <FormItem>
@@ -496,13 +496,13 @@ function FormRepeater({
 
     const handleRemove = (index: number) => {
         if (editMode && deleteField) {
-            const current = form.getValues(`${arrayField}.${index}` as any) as
+            const current = form.getValues(`${arrayField}.${index}`) as
                 | { _id?: string }
                 | undefined;
             if (current?._id) {
                 const existing =
-                    (form.getValues(deleteField as any) as string[] | undefined) ?? [];
-                form.setValue(deleteField as any, [...existing, current._id], {
+                    (form.getValues(deleteField) as string[] | undefined) ?? [];
+                form.setValue(deleteField, [...existing, current._id], {
                     shouldDirty: true,
                     shouldValidate: true,
                 });
@@ -525,7 +525,7 @@ function FormRepeater({
                 void form.trigger(arrayField as never);
             }}
         >
-            <CirclePlus className="h-4 w-4" />
+            <IconCirclePlus className="h-4 w-4" />
             <span>{resolveLanguageKey(addLabel)}</span>
         </Button>
     );
@@ -578,7 +578,7 @@ function FormRepeater({
                                     handleRemove(index);
                                 }}
                             >
-                                <Trash2 className="h-4 w-4" />
+                                <IconTrash className="h-4 w-4" />
                                 <span>{resolveLanguageKey(removeLabel)}</span>
                             </Button>
                         }

@@ -1,4 +1,4 @@
-import {CheckCircle2, Clock, Globe2, MonitorSmartphone, XCircle} from "lucide-react";
+import {IconCircleCheck, IconClock, IconWorld, IconDevices, IconCircleX} from "@tabler/icons-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -89,10 +89,10 @@ export default function LoginHistoryCard({
                                     )}
                                 >
                                     {canReadStatus && !rowIsSuccess
-                                        ? <XCircle className="size-3.5" />
+                                        ? <IconCircleX className="size-3.5" />
                                         : canReadStatus
-                                            ? <CheckCircle2 className="size-3.5" />
-                                            : <MonitorSmartphone className="size-3.5" />}
+                                            ? <IconCircleCheck className="size-3.5" />
+                                            : <IconDevices className="size-3.5" />}
                                 </div>
                             }
                             badges={
@@ -112,7 +112,7 @@ export default function LoginHistoryCard({
                         />
                         <EntityCard.Body>
                             <EntityCardRow
-                                icon={Clock}
+                                icon={IconClock}
                                 label={resolveLanguageKey("time")}
                                 tooltip={resolveLanguageKey("time")}
                                 path="time"
@@ -120,14 +120,14 @@ export default function LoginHistoryCard({
                                 value={row.time}
                             />
                             <EntityCardRow
-                                icon={Globe2}
+                                icon={IconWorld}
                                 label={resolveLanguageKey("location")}
                                 tooltip={resolveLanguageKey("location")}
                                 show={canReadIp || canReadGeo}
                                 value={location || ip || resolveLanguageKey("unknownLocation")}
                             />
                             <EntityCardRow
-                                icon={MonitorSmartphone}
+                                icon={IconDevices}
                                 label={resolveLanguageKey("device")}
                                 tooltip={resolveLanguageKey("device")}
                                 show={canReadDevice || canReadOs || canReadBrowser}

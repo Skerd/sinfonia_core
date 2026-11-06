@@ -1,6 +1,6 @@
+import {IconMessage} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {MessageSquare} from "lucide-react";
 import {clsx} from "clsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -54,7 +54,7 @@ function WebsocketOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLangu
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <MessageSquare className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
+                    <IconMessage className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>

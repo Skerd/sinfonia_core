@@ -1,10 +1,9 @@
+import {IconLockOpen} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {LockKeyholeOpen} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {UnlockUserRequestFormType} from "armonia/src/modules/core/api/company/private/users/unlockUserRequest.form.type.ts";
 import type {ActionMessage} from "armonia/src/modules/core/types/shared.types.ts";
@@ -15,14 +14,16 @@ import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
 import {useImperativeHandle, useState} from "react";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 
-type UnlockInvitationActionProps = WithLanguageType & WithAxiosType<ActionMessage, UnlockUserRequestFormType> & {
+type UnlockInvitationActionProps = WithLanguageType & WithAxiosType<ActionMessage, UnlockUserRequestFormType & {_id: string}> & {
     user: CompanyUserType;
     specificUserId?: string;
 };
 
-function UnlockInvitationAction({user, resolveLanguageKey, onFilterChange, loading, innerRef, specificUserId}: UnlockInvitationActionProps) {
-    const {write} = useAccess("users", !specificUserId ? "self" : "others");
+function UnlockInvitationAction({user, resolveLanguageKey, onFilterChange, loading, innerRef}: UnlockInvitationActionProps) {
+    // The `others` permission of this account action (D65), not a field-write stand-in.
+    const allowed = useActionAccess("users", "unlockInvitation", "others");
     const {updateRow} = useTableUpdate();
     const [open, setOpen] = useState(false);
     const [resendEmail, setResendEmail] = useState(false);
@@ -47,15 +48,15 @@ function UnlockInvitationAction({user, resolveLanguageKey, onFilterChange, loadi
     }));
 
     const shortcut = "6";
-    useKeyboardShortcuts(shortcut, () => setOpen(true), {enabled: hasLock});
+    useKeyboardShortcuts(shortcut, () => setOpen(true), {enabled: hasLock && allowed});
 
     if (!hasLock) return null;
-    if (!write?.requests?.keys?.invitation?.keys?.lockedUntil) return <HiddenElement />;
+    if (!allowed) return <HiddenElement />;
 
     return (
         <>
             <DropdownMenuItem onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen(true); }}>
-                <LockKeyholeOpen size={16}/>
+                <IconLockOpen size={16}/>
                 <p>{resolveLanguageKey("unlockInvitation")}</p>
                 <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>
             </DropdownMenuItem>
@@ -64,7 +65,7 @@ function UnlockInvitationAction({user, resolveLanguageKey, onFilterChange, loadi
                 onOpenChange={(isOpen: boolean) => { setOpen(isOpen); if (!isOpen) setResendEmail(false); }}
                 title={resolveLanguageKey("unlockInvitationConfirm")}
                 desc={resolveLanguageKey("unlockInvitationConfirmDesc")}
-                handleConfirm={() => onFilterChange({ resendEmail })}
+                handleConfirm={() => onFilterChange({_id: user._id, resendEmail})}
                 isLoading={loading}
             >
                 <div className="flex items-center gap-x-2 mt-4">
@@ -85,13 +86,9 @@ function UnlockInvitationAction({user, resolveLanguageKey, onFilterChange, loadi
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/users/center/actions/unlockInvitation.tsx"),
     withAxios({
-        method: "PATCH",
+        method: "POST",
         url: "/api/company/users/unlockInvitation",
-        data: {},
-        addToHeader: [{
-            whatToGet: "specificUserId",
-            whereToPut: "specificUser"
-        }]
+        data: {}
     }, true),
     withDebug(true, true, "users")
 )(UnlockInvitationAction);

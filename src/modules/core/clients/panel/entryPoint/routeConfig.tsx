@@ -74,14 +74,6 @@ function renderCoreCenterPanelContent({
     searchParams,
 }: RouteConfigArgs) {
 
-    if( menu === "test" ){
-        return (
-            <div>
-                111
-            </div>
-        )
-    }
-
     // Company routes
     if (menu === "company") {
         if (subview === "administration") return <Users administration={true} specificUserId={"yes"}/>;
@@ -149,7 +141,7 @@ function renderCoreCenterPanelContent({
             }
             if (resource === "roles") {
                 if (action === "create") return <CreateRole />;
-                if (action === "edit") return <EditRole roleId={roleId} roleName={roleName} />;
+                if (action === "edit") return <EditRole entityId={roleId} entityName={roleName} />;
                 if (action === undefined) return <Roles />;
             }
             if (resource === "countries") {

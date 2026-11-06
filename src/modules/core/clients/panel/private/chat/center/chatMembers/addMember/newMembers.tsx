@@ -1,6 +1,6 @@
+import {IconCheck, IconUserSearch, IconX} from "@tabler/icons-react";
 import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
-import {useCallback, useEffect, useState} from 'react'
-import {Check, UserRoundSearch, X} from 'lucide-react'
+import {useCallback, useEffect, useState, type ComponentType} from 'react'
 import {compose} from "redux";
 import withLanguage, {ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
@@ -67,7 +67,7 @@ function MemberRow({
                     </p>
                 </div>
             </div>
-            {showCheck && <Check className='h-4 w-4' />}
+            {showCheck && <IconCheck className='h-4 w-4' />}
         </div>
     );
 }
@@ -142,7 +142,7 @@ const MembersInfiniteListWithAxios = compose(
         true
     ),
     withDebug(true, true, "users")
-)(MembersInfiniteList);
+)(MembersInfiniteList) as ComponentType<Omit<MembersInfiniteListProps, keyof WithAxiosType>>;
 
 
 
@@ -171,7 +171,7 @@ function SelectedMembers({
                                     return (
                                         <div className="flex flex-col relative gap-y-1" key={user._id}>
                                             <div className="absolute p-0.5 right-0 top-0 hover:cursor-pointer rounded-full bg-muted-foreground text-background hover:bg-foreground" style={{zIndex: 1}} {...buttonLike(() => onToggleMember(user))} aria-label={String(resolveLanguageKey("removeMember")).replace("{name}", user.name ?? "")}>
-                                                <X size={12}/>
+                                                <IconX size={12}/>
                                             </div>
                                             <UserAvatar user={user} avatarClassName={"size-14"}/>
                                             <p className="text-xs text-center font-semibold">{user.name}</p>
@@ -257,7 +257,7 @@ function NewMembers({
                     <div className="flex flex-col border rounded-lg overflow-hidden gap-y-2">
                         <InputGroup>
                             <InputGroupAddon align="inline-start">
-                                <UserRoundSearch size={16} className="text-muted-foreground" />
+                                <IconUserSearch size={16} className="text-muted-foreground" />
                             </InputGroupAddon>
                             <InputGroupInput
                                 type="text"
@@ -269,7 +269,6 @@ function NewMembers({
                         </InputGroup>
                         <MembersInfiniteListWithAxios
                             key={nameSearch}
-                            // @ts-expect-error
                             nameSearch={nameSearch}
                             resolveLanguageKey={resolveLanguageKey}
                             selectedUserIds={selectedUserIds}

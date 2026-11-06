@@ -15,6 +15,7 @@ import {Badge} from "@coreModule/components/ui/badge.tsx";
 import type {StudioModelEntry} from "./useStudioCatalog.ts";
 import {computeCoverage} from "../coverage/viewCoverage.ts";
 import {scaffoldNodes} from "../scaffold/scaffoldView.ts";
+import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 
 type NewViewDialogProps = {
     entry: StudioModelEntry;
@@ -135,10 +136,9 @@ export default function NewViewDialog({entry, open, onOpenChange, onCreate}: New
                     </div>
 
                     <label className="flex items-start gap-2">
-                        <input
-                            type="checkbox"
+                        <Checkbox
                             checked={scaffold}
-                            onChange={(event) => setScaffold(event.target.checked)}
+                            onCheckedChange={(checked) => setScaffold(checked === true)}
                             className="mt-0.5"
                         />
                         <span className="text-2xs">

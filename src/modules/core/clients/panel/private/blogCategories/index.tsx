@@ -1,7 +1,7 @@
+import {IconTags} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {Tags} from "lucide-react";
 import type {BlogCategory} from "armonia/src/modules/core/api/auxiliary/private/blogCategory/blogCategory.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import BlogCategoryCard from "@coreModule/clients/panel/private/blogCategories/center/cardView/blogCategoryCard.tsx";
@@ -26,7 +26,7 @@ function AllBlogCategories({resolveLanguageKey}: WithLanguageType) {
                     <EntityListCreateButton
                         ctx={ctx}
                         path="/tenancy/systemSettings/blogCategories/create"
-                        icon={<Tags className="h-4 w-4" />}
+                        icon={<IconTags className="h-4 w-4" />}
                         labelKey="createBlogCategory"
                     />
                 </EntityListHeader>

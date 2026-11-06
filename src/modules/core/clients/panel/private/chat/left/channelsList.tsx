@@ -5,7 +5,6 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Fragment, RefObject, useEffect, useRef} from "react";
-import {Info, Users} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
 import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
@@ -19,7 +18,8 @@ import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import type {SimpleUser} from "armonia/src/modules/core/dto/user.dto";
 import {MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
-import {IconAi} from "@tabler/icons-react";
+import {IconAi, IconInfoCircle, IconUsers} from "@tabler/icons-react";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 type ChannelProps = WithLanguageType & {
     channelId: string,
@@ -104,7 +104,7 @@ function ChannelInfo({
                         {
                             message.type === "notification" ?
                             <>
-                                <Info size={14} />
+                                <IconInfoCircle size={14} />
                                 <div className="flex-full">
                                     <TruncatedValue preview="popover" className='max-w-full'>
                                         {
@@ -154,7 +154,7 @@ function ChannelInfo({
 
     return (
         <Fragment key={channelId + "_" + index}>
-            <button
+            <Button variant="bare"
                 type='button'
                 ref={ref}
                 className={cn(
@@ -169,10 +169,10 @@ function ChannelInfo({
                     {
                         channel.metaData.isGroup ?
                         <Avatar className="flex size-10 shrink-0 items-center justify-center border">
-                            <Users size={18} />
+                            <IconUsers size={18} />
                         </Avatar>
                         :
-                        <HiddenElement Render={<Avatar className="flex size-10 shrink-0 items-center justify-center border"><Users size={18} /></Avatar>}>
+                        <HiddenElement Render={<Avatar className="flex size-10 shrink-0 items-center justify-center border"><IconUsers size={18} /></Avatar>}>
                             {
                                 read.users &&
                                 <>
@@ -253,7 +253,7 @@ function ChannelInfo({
                         })()
                     }
                 </div>
-            </button>
+            </Button>
         </Fragment>
     )
 }

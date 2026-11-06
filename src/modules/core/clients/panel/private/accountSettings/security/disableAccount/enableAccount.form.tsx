@@ -1,6 +1,6 @@
+import {IconAlertTriangle} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useState} from 'react';
-import {TriangleAlert} from "lucide-react";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/alert.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -32,7 +32,7 @@ function UserAccountSecurityEnableAccountForm({
     return (
         <div className="flex flex-col gap-y-4">
             <Alert variant={"destructive"}>
-                <TriangleAlert className="h-4 w-4"/>
+                <IconAlertTriangle className="h-4 w-4"/>
                 <AlertTitle>{resolveLanguageKey("title")}</AlertTitle>
                 <AlertDescription>{resolveLanguageKey("description")}</AlertDescription>
             </Alert>

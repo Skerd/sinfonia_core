@@ -22,6 +22,7 @@ import {Dialog, DialogContent, DialogTitle} from "@coreModule/components/ui/dial
 import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
 import ExpandableText from "@coreModule/components/viewEngine/widgets/display/expandableText.tsx";
 import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 function plainTextFromNode(node: ReactNode): string {
     if (node == null || typeof node === "boolean") return "";
@@ -254,7 +255,7 @@ export default function DisplayCard({
 
     const media = avatar != null ? (
         <ItemMedia className={stackedBody ? undefined : "self-start"}>
-            <button
+            <Button variant="bare"
                 type="button"
                 aria-label={`View photo of ${avatar.name}`}
                 className="cursor-pointer rounded-full outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-ring"
@@ -266,7 +267,7 @@ export default function DisplayCard({
                     /* Sized to the icon well it replaces, not to a profile header. */
                     className="size-10 border-0 shadow-none"
                 />
-            </button>
+            </Button>
         </ItemMedia>
     ) : flagCode ? (
         /* The same 40px square an icon's well occupies (20px glyph + p-2.5), but
@@ -329,7 +330,7 @@ export default function DisplayCard({
             </ItemTitle>
             {hasTooltip && (
                 <TooltipDisplayer tooltip={tooltipText}>
-                    <button
+                    <Button variant="bare"
                         type="button"
                         className={cn(
                             "inline-flex shrink-0 items-center justify-center rounded-full",
@@ -340,7 +341,7 @@ export default function DisplayCard({
                         onClick={(e) => e.stopPropagation()}
                     >
                         <IconInfoCircle className="size-3.5" stroke={1.75} />
-                    </button>
+                    </Button>
                 </TooltipDisplayer>
             )}
         </div>
@@ -488,7 +489,7 @@ export default function DisplayCard({
                         ) : null}
                         {showLinkedBadge && LinkedSheet != null ? (
                             <TooltipDisplayer tooltip={title}>
-                                <button
+                                <Button variant="bare"
                                     type="button"
                                     className={cn(
                                         "shrink-0 p-1.5 flex items-center justify-center rounded-md border border-border",
@@ -503,7 +504,7 @@ export default function DisplayCard({
                                     }}
                                 >
                                     <IconLink size={16} />
-                                </button>
+                                </Button>
                             </TooltipDisplayer>
                         ) : null}
                     </ItemActions>

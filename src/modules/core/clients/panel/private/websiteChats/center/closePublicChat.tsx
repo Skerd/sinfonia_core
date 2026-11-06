@@ -1,7 +1,7 @@
+import {IconCircleX} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
-import {CircleX} from "lucide-react";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useImperativeHandle, useState} from "react";
@@ -9,9 +9,9 @@ import {deleteChannel, openChannel} from "@coreModule/helpers/redux/slices/chatS
 import {useDispatch} from "react-redux";
 import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
-import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import type {ActionMessage, SingleForm} from "armonia/src/modules/core/types/shared.types";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 
 type ClosePublicChatProps = WithLanguageType & WithAxiosType<ActionMessage, SingleForm> & {
     channel: Channel;
@@ -24,8 +24,8 @@ function ClosePublicChat({
     onFilterChange,
     innerRef,
 }: ClosePublicChatProps) {
-    const {write} = useAccess("channels");
-    const canAct = write === true || (!!write && typeof write === "object" && !!write.users);
+    // Joining, releasing and closing a website chat are one permission (D71), not a write on channel members.
+    const canAct = useActionAccess("channels", "answerWebsiteChats");
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
 
@@ -44,7 +44,7 @@ function ClosePublicChat({
     return (
         <>
             <DropdownMenuItem onClick={(event) => {event.preventDefault(); setOpen(true);}} disabled={loading}>
-                <CircleX />
+                <IconCircleX />
                 {resolveLanguageKey("closeChat")}
             </DropdownMenuItem>
 

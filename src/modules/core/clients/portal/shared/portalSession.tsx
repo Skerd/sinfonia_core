@@ -1,8 +1,7 @@
 import {createContext, useContext, useEffect, useMemo, useState, type ReactNode} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
-import {getToken} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {type AuthUser, signOut, updateToken, updateUserData} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
@@ -13,6 +12,8 @@ type PortalSessionValue = {
     isHydrating: boolean;
     user: AuthUser;
 };
+
+const VALIDATE_TOKEN_REQUEST = {method: "get" as const, url: "/api/user/validateToken", data: {}};
 
 const PortalSessionContext = createContext<PortalSessionValue | null>(null);
 
@@ -26,7 +27,9 @@ export function PortalSessionProvider({children}: {children: ReactNode}) {
     const token = useSelector((state: RootState) => state.authentication.token);
     const user = useSelector((state: RootState) => state.authentication.user);
     const sessionExpired = useSelector((state: RootState) => state.authentication.sessionExpired);
-    const [isHydrating, setIsHydrating] = useState(() => Boolean(getToken()));
+    // The token whose check finished (either way); until it matches, guarded pages wait.
+    const [checkedToken, setCheckedToken] = useState<string | null>(null);
+    const isHydrating = Boolean(token) && checkedToken !== token;
 
     // No expiry dialog: end the session and send the visitor to sign in once.
     // Signing out clears the flag, so later navigations are not redirected again.
@@ -36,35 +39,23 @@ export function PortalSessionProvider({children}: {children: ReactNode}) {
         navigate("/login");
     }, [dispatch, navigate, sessionExpired]);
 
-    // Depends on the token only: `navigate` changes on every pathname change, and
-    // re-validating then would flash the account pages back to a loader.
-    useEffect(() => {
-        if (!token) {
-            setIsHydrating(false);
-            return;
-        }
-
-        const abortController = new AbortController();
-        setIsHydrating(true);
-
-        apiClient
-            .get<ValidateTokenFormResponseType>("/api/user/validateToken", {signal: abortController.signal})
-            .then(({data}) => {
-                if (abortController.signal.aborted) return;
-                dispatch(updateUserData(data));
-                dispatch(updateToken(token));
-                setIsHydrating(false);
-            })
-            .catch(() => {
-                if (abortController.signal.aborted) return;
-                dispatch(signOut());
-                setIsHydrating(false);
-            });
-
-        return () => {
-            abortController.abort();
-        };
-    }, [dispatch, token]);
+    // One check per new token. Counted during render so the first one starts with the first render.
+    const [validation, setValidation] = useState({token, count: token ? 1 : 0});
+    if (validation.token !== token) {
+        setValidation({token, count: token ? validation.count + 1 : validation.count});
+    }
+    // Silent (no translator); a newer token aborts the check of the previous one.
+    useHttpRequest<ValidateTokenFormResponseType>(VALIDATE_TOKEN_REQUEST, {}, validation.count, true, {
+        success: (data) => {
+            dispatch(updateUserData(data));
+            if (token) dispatch(updateToken(token));
+            setCheckedToken(token);
+        },
+        error: () => {
+            dispatch(signOut());
+            setCheckedToken(token);
+        },
+    });
 
     const value = useMemo(
         () => ({isAuthenticated: Boolean(token) && Boolean(user.id), isHydrating, user}),

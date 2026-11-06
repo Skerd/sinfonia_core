@@ -23,6 +23,7 @@ import {
     resolveLinkedRefStub,
     type EmbeddedItemFieldConfig,
 } from "./fieldText.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 function resourceHasPositiveRead(read: unknown): boolean {
     return (
@@ -251,7 +252,7 @@ function EmbeddedEntityCardLinkedRefRow({
                 {showLinkedBadge && LinkedSheet != null ? (
                     <ItemActions className="shrink-0">
                         <TooltipDisplayer tooltip={linkLabel}>
-                            <button
+                            <Button variant="bare"
                                 type="button"
                                 className={cn(
                                     "shrink-0 size-5 p-0 flex items-center justify-center rounded border border-border",
@@ -266,7 +267,7 @@ function EmbeddedEntityCardLinkedRefRow({
                                 }}
                             >
                                 <IconLink size={12} />
-                            </button>
+                            </Button>
                         </TooltipDisplayer>
                     </ItemActions>
                 ) : null}

@@ -5,7 +5,7 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import type {SmtpServer, TestSmtpConnectionResponse} from "armonia/src/modules/core/api/auxiliary/private/smtpServer/smtpServer.dto.ts";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import {requestFromApi} from "@coreModule/helpers/apiClient/requestFromApi.ts";
 
 type TestSmtpConnectionDialogProps = WithLanguageType & WithAxiosType<TestSmtpConnectionResponse> & {
     open: boolean;
@@ -25,9 +25,11 @@ function TestSmtpConnectionDialog({
     loading,
 }: TestSmtpConnectionDialogProps) {
 
+    // Outlives the dialog, which unmounts as it closes. Silent, as before: a failed reload changes nothing.
     const reloadLastTest = async () => {
-        const {data} = await apiClient.post<SmtpServer>("/api/auxiliary/smtpServer/single", {_id: smtpServer._id});
-        const {lastTestedAt, lastTestStatus, lastTestMessage} = data;
+        const {lastTestedAt, lastTestStatus, lastTestMessage} = await requestFromApi<SmtpServer>({
+            method: "post", url: "/api/auxiliary/smtpServer/single", data: {_id: smtpServer._id}, silent: true,
+        });
         onTestComplete?.({lastTestedAt, lastTestStatus, lastTestMessage});
     };
 
@@ -37,7 +39,7 @@ function TestSmtpConnectionDialog({
             onOpenChange(false);
         },
         error: () => {
-            void reloadLastTest();
+            reloadLastTest().catch(() => {});
             onOpenChange(false);
         },
     }));

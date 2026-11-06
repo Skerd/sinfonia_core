@@ -1,9 +1,9 @@
+import {IconCheck, IconPencil, IconX} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {Check, Pencil, X} from "lucide-react";
 import {useImperativeHandle} from "react";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {ToggledUserRole} from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/index.tsx";
@@ -62,7 +62,7 @@ function SaveNewCompanyRoles({
                                     });
                                 }}
                             >
-                                <Check className="h-4 w-4"/>
+                                <IconCheck className="h-4 w-4"/>
                             </Button>
                         </TooltipDisplayer>
                         <TooltipDisplayer tooltip={resolveLanguageKey("cancel")} contentClassName="text-sm">
@@ -72,14 +72,14 @@ function SaveNewCompanyRoles({
                                 disabled={loading}
                                 onClick={() => {setIsOpen(false);}}
                             >
-                                <X className="h-4 w-4"/>
+                                <IconX className="h-4 w-4"/>
                             </Button>
                         </TooltipDisplayer>
                     </div>
                     :
                     <TooltipDisplayer tooltip={resolveLanguageKey("editRoles")} contentClassName="text-sm">
                         <Button variant="outline" size="icon" onClick={() => {setIsOpen(true);}} disabled={loading}>
-                            <Pencil className="h-4 w-4"/>
+                            <IconPencil className="h-4 w-4"/>
                         </Button>
                     </TooltipDisplayer>
                 }

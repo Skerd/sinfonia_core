@@ -1,6 +1,6 @@
+import {IconPhotoOff} from "@tabler/icons-react";
 import {Link} from "react-router-dom";
 import {compose} from "redux";
-import {ImageOff} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {formatDate} from "@coreModule/helpers/general/dateTime.ts";
 import type {PublicBlogPostItem} from "armonia/src/modules/core/api/auxiliary/public/blog/blog.form.response.type.ts";
@@ -40,7 +40,7 @@ function BlogCard({resolveLanguageKey, post, companySlug, showCompany = false}: 
                     <img src={post.mainImage} alt="" loading="lazy" className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                 ) : (
                     <div className="flex size-full flex-col items-center justify-center gap-2 text-muted-foreground">
-                        <ImageOff className="size-6" aria-hidden />
+                        <IconPhotoOff className="size-6" aria-hidden />
                         <span className="text-xs">{resolveLanguageKey("noImage")}</span>
                     </div>
                 )}

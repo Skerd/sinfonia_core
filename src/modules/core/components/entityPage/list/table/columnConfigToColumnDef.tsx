@@ -246,12 +246,12 @@ function readableColumns(columns: TableColumnConfig[], read: unknown): TableColu
     return columns.filter((col) => !col.accessorPath || accessFieldPathExists(read, col.accessorPath));
 }
 
-export function columnConfigToColumnDef<T>(columns: TableColumnConfig[], options: ColumnConfigToColumnDefOptions<T>): ColumnDef<T>[] {
+export function useColumnConfigToColumnDef<T>(columns: TableColumnConfig[], options: ColumnConfigToColumnDefOptions<T>): ColumnDef<T>[] {
     const {fields, renderActions, timezone, read} = options;
 
     /*
      * The one hook in this function: it must stay unconditional and at the top, because
-     * the caller invokes `columnConfigToColumnDef` inline during its own render.
+     * the caller invokes `useColumnConfigToColumnDef` inline during its own render.
      */
     const {currentLanguage} = useSelectedLanguage("src/modules/core/helpers/mappers/columnConfigToColumnDef.tsx");
 

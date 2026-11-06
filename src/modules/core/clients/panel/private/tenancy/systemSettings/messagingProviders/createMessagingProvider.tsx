@@ -1,4 +1,4 @@
-import {MessageSquarePlus} from "lucide-react";
+import {IconMessagePlus} from "@tabler/icons-react";
 import {createGenericCreatePage} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
 import {createMessagingProviderFormSchema} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/createMessagingProvider.form.validator.ts";
 import type {CreateMessagingProviderFormType} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.schema-def.ts";
@@ -11,5 +11,5 @@ export default createGenericCreatePage<CreateMessagingProviderFormType>({
     schema:         createMessagingProviderFormSchema,
     // defaultValues:  {name: "", providerType: "twilio", accountSid: "", authTokenEncrypted: ""},
     successPath:    "/tenancy/systemSettings/messagingProviders",
-    submitIcon:     <MessageSquarePlus />,
+    submitIcon:     <IconMessagePlus />,
 });

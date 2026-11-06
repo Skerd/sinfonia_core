@@ -1,8 +1,8 @@
+import {IconMessageCircle, IconSend, IconX} from "@tabler/icons-react";
 import {useCallback, useEffect, useRef, useState, type KeyboardEvent} from "react";
 import {Link, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {compose} from "redux";
-import {MessageCircle, SendHorizontal, X} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -15,6 +15,8 @@ import {
 import {PUBLIC_CHAT_MAX_MESSAGE_LENGTH} from "armonia/src/modules/core/api/user/public/publicChat/sendPublicChatMessage/sendPublicChatMessage.form.validator";
 import {usePortalSession} from "../portalSession.tsx";
 import {usePortalSite} from "../portalSiteContext.tsx";
+import {Input} from "@coreModule/components/ui/input.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 const LANGUAGE_PATH = "src/modules/core/clients/portal/shared/chat/index.tsx";
 
@@ -150,14 +152,14 @@ function PortalChatPanel({resolveLanguageKey}: WithLanguageType) {
                             </p>
                         ) : null}
                     </div>
-                    <button
+                    <Button variant="bare"
                         type="button"
                         onClick={close}
                         aria-label={resolveLanguageKey("close")}
                         className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-primary-foreground/10"
                     >
-                        <X className="size-4" aria-hidden />
-                    </button>
+                        <IconX className="size-4" aria-hidden />
+                    </Button>
                 </div>
 
                 {banner ? (
@@ -182,7 +184,7 @@ function PortalChatPanel({resolveLanguageKey}: WithLanguageType) {
                     ) : (
                         <div className="mb-3 flex min-h-0 flex-1 flex-col items-center justify-center gap-3.5 overflow-hidden px-3">
                             <span className="flex size-16 shrink-0 items-center justify-center rounded-full bg-primary-foreground/15 md:size-[4.5rem]">
-                                <MessageCircle className="size-7" aria-hidden />
+                                <IconMessageCircle className="size-7" aria-hidden />
                             </span>
                             <p className="max-w-[19rem] shrink-0 text-center font-display text-lg font-semibold leading-snug md:text-xl">
                                 {idleCopy}
@@ -199,15 +201,15 @@ function PortalChatPanel({resolveLanguageKey}: WithLanguageType) {
                             </Link>
                         ) : null}
                         {canRequestHuman ? (
-                            <button type="button" onClick={() => requestHuman()} className={TEXT_LINK_CLASS}>
+                            <Button variant="bare" type="button" onClick={() => requestHuman()} className={TEXT_LINK_CLASS}>
                                 {resolveLanguageKey("talkToPerson")}
-                            </button>
+                            </Button>
                         ) : null}
                     </div>
                 ) : null}
 
                 {isClosed ? (
-                    <button
+                    <Button variant="bare"
                         type="button"
                         onClick={() => {
                             setDraft("");
@@ -217,10 +219,10 @@ function PortalChatPanel({resolveLanguageKey}: WithLanguageType) {
                         className="w-full shrink-0 cursor-pointer rounded-xl bg-primary-foreground px-3 py-2.5 text-sm font-medium text-primary disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {resolveLanguageKey(isConnecting ? "starting" : "startNewChat")}
-                    </button>
+                    </Button>
                 ) : (
                     <div className="flex shrink-0 items-center gap-2 rounded-xl border border-primary-foreground/70 bg-primary-foreground/5 px-3 py-2.5">
-                        <input
+                        <Input
                             type="text"
                             value={draft}
                             onChange={(event) => setDraft(event.target.value)}
@@ -229,17 +231,17 @@ function PortalChatPanel({resolveLanguageKey}: WithLanguageType) {
                             maxLength={PUBLIC_CHAT_MAX_MESSAGE_LENGTH}
                             placeholder={resolveLanguageKey(isUnavailable ? "placeholderUnavailable" : "placeholder")}
                             aria-label={resolveLanguageKey("placeholder")}
-                            className="min-w-0 flex-1 bg-transparent text-[15px] leading-6 text-primary-foreground outline-none placeholder:text-primary-foreground/55 disabled:cursor-not-allowed disabled:opacity-60"
+                            className="h-auto min-w-0 flex-1 rounded-none border-0 bg-transparent p-0 text-[15px] leading-6 text-primary-foreground shadow-none outline-none placeholder:text-primary-foreground/55 focus-visible:ring-0 disabled:cursor-not-allowed disabled:bg-transparent disabled:opacity-60 md:text-[15px] dark:bg-transparent"
                         />
-                        <button
+                        <Button variant="bare"
                             type="button"
                             onClick={handleSend}
                             disabled={!draft.trim() || !canSend}
                             aria-label={resolveLanguageKey("send")}
                             className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-primary-foreground/10 disabled:cursor-not-allowed disabled:opacity-40"
                         >
-                            <SendHorizontal className="size-[17px]" aria-hidden />
-                        </button>
+                            <IconSend className="size-[17px]" aria-hidden />
+                        </Button>
                     </div>
                 )}
             </div>
@@ -256,7 +258,7 @@ function PortalChatWidget(props: WithLanguageType) {
             {isOpen ? (
                 <PortalChatPanel {...props} />
             ) : (
-                <button
+                <Button variant="bare"
                     type="button"
                     /* Wrapped: `open` takes an optional context object, and React
                        would otherwise pass the MouseEvent into it. */
@@ -264,8 +266,8 @@ function PortalChatWidget(props: WithLanguageType) {
                     aria-label={props.resolveLanguageKey("open")}
                     className="flex size-14 cursor-pointer items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_18px_50px_rgba(2,40,140,0.35)] transition-transform duration-300 hover:scale-110 md:size-16"
                 >
-                    <MessageCircle className="size-6 md:size-7" aria-hidden />
-                </button>
+                    <IconMessageCircle className="size-6 md:size-7" aria-hidden />
+                </Button>
             )}
         </div>
     );

@@ -32,7 +32,7 @@ function restrictedImports({icons = true, animateUi = true, axios = true, apiCli
 const RAW_HTML_SYNTAX = ["error", {selector: "JSXOpeningElement[name.name=/^(button|select|table|input)$/]", message: RAW_HTML}];
 
 export default tseslint.config(
-  { ignores: ["dist", "node_modules", "**/apps/public/**", "**/apps/shop/**"] },
+  { ignores: ["dist", "node_modules", "**/apps/public/**"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
@@ -54,6 +54,8 @@ export default tseslint.config(
         controlComponents: ["Input", "Textarea", "Checkbox", "Switch", "RadioGroupItem", "SelectTrigger", "PhoneInput", "DateInput"],
         depth: 3,
       }],
+      // D76: the architect dropped video captions (product/demo videos without speech); no caption files are produced.
+      "jsx-a11y/media-has-caption": "off",
       // A scrollable text region takes focus so keyboard users can scroll it.
       "jsx-a11y/no-noninteractive-tabindex": ["error", {roles: ["tabpanel", "region"], tags: []}],
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],

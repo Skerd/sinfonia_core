@@ -1,8 +1,8 @@
+import {IconMessage, IconPhone, IconPower} from "@tabler/icons-react";
 import {compose} from "redux";
 import {memo, type RefObject} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {MessageSquare, Phone, Power} from "lucide-react";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import MessagingProviderSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
@@ -99,7 +99,7 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                     </EntityCard.Header>
                     <EntityCard.Body>
                         <EntityCardRow
-                            icon={MessageSquare}
+                            icon={IconMessage}
                             label={resolveLanguageKey("providerType")}
                             tooltip={resolveLanguageKey("providerType")}
                             path="providerType"
@@ -108,7 +108,7 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                             value={entity.providerType}
                         />
                         <EntityCardRow
-                            icon={Power}
+                            icon={IconPower}
                             label={resolveLanguageKey("active")}
                             tooltip={resolveLanguageKey("active")}
                             path="active"
@@ -116,7 +116,7 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                             value={entity.active}
                         />
                         <EntityCardRow
-                            icon={Phone}
+                            icon={IconPhone}
                             label={resolveLanguageKey("fromPhone")}
                             tooltip={resolveLanguageKey("fromPhone")}
                             path="fromPhone"

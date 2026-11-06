@@ -1,7 +1,7 @@
+import {IconInfoCircle} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {DropdownMenuItem, DropdownMenuSeparator, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {Info} from "lucide-react";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useState} from "react";
@@ -34,7 +34,7 @@ function ChatMemberInfo({
     return (
         <>
             <DropdownMenuItem onClick={(event) => {event.preventDefault(); setOpen(true);}}>
-                <Info />
+                <IconInfoCircle />
                 {resolveLanguageKey("info")}
                 <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>
             </DropdownMenuItem>

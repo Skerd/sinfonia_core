@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
+import {useMemo, useState} from "react";
 import {compose} from "redux";
 import {useSearchParams} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import type {
@@ -16,6 +16,7 @@ import {useBlogCompanyQuery} from "./blogCompany.ts";
 
 const LANGUAGE_PATH = "src/modules/core/clients/portal/blog/index.tsx";
 const PAGE_SIZE = 12;
+const BLOG_REQUEST = {method: "post" as const, url: "/api/auxiliary/public/blog", data: {}};
 
 type BlogBrowserProps = WithLanguageType & {
     /** `page` is `/blog`. `section` is the block on the home and on a company's pages. */
@@ -35,52 +36,40 @@ function BlogBrowser({resolveLanguageKey, mode, companySlug, contained = false}:
     const [posts, setPosts] = useState<PublicBlogPostItem[]>([]);
     const [categories, setCategories] = useState<PublicBlogCategoryItem[]>([]);
     const [total, setTotal] = useState(0);
+    /** The last page shown; only moves when that page arrived. */
     const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(true);
-    const [loadingMore, setLoadingMore] = useState(false);
 
-    useEffect(() => {
-        let cancelled = false;
-        setLoading(true);
-        setPage(1);
-        (async () => {
-            try {
-                const res = await apiClient.post<PublicBlogFormResponseType>("/api/auxiliary/public/blog", {
-                    categorySlug: categorySlug || undefined,
-                    limit: PAGE_SIZE,
-                });
-                if (cancelled) return;
-                setPosts(res.data.posts ?? []);
-                setTotal(res.data.total ?? 0);
-                setCategories(res.data.categories ?? []);
-            } catch {
-                if (!cancelled) {
-                    setPosts([]);
-                    setTotal(0);
-                }
-            } finally {
-                if (!cancelled) setLoading(false);
+    // Page 1 again whenever the category or the company changes; `loadMore` asks for the next one.
+    const listKey = `${categorySlug}|${companySlug ?? ""}`;
+    const [request, setRequest] = useState({listKey, page: 1, count: 1});
+    if (request.listKey !== listKey) setRequest({listKey, page: 1, count: request.count + 1});
+    const requestBody = useMemo(
+        () => ({categorySlug: categorySlug || undefined, limit: PAGE_SIZE, ...(request.page > 1 ? {page: request.page} : {})}),
+        [categorySlug, request.page],
+    );
+    // Silent, as before: a failed first page shows no posts; a failed next page leaves the button for another try.
+    const {loading: requesting} = useHttpRequest<PublicBlogFormResponseType>(BLOG_REQUEST, requestBody, request.count, true, {
+        success: (data) => {
+            if (request.page > 1) {
+                setPosts((current) => [...current, ...(data.posts ?? [])]);
+            } else {
+                setPosts(data.posts ?? []);
+                setTotal(data.total ?? 0);
+                setCategories(data.categories ?? []);
             }
-        })();
-        return () => { cancelled = true; };
-    }, [categorySlug, companySlug]);
+            setPage(request.page);
+        },
+        error: () => {
+            if (request.page > 1) return;
+            setPosts([]);
+            setTotal(0);
+        },
+    });
+    const loading = request.page === 1 && requesting;
+    const loadingMore = request.page > 1 && requesting;
 
-    async function loadMore() {
-        const next = page + 1;
-        setLoadingMore(true);
-        try {
-            const res = await apiClient.post<PublicBlogFormResponseType>("/api/auxiliary/public/blog", {
-                categorySlug: categorySlug || undefined,
-                limit: PAGE_SIZE,
-                page: next,
-            });
-            setPosts((current) => [...current, ...(res.data.posts ?? [])]);
-            setPage(next);
-        } catch {
-            // The button stays for another try.
-        } finally {
-            setLoadingMore(false);
-        }
+    function loadMore() {
+        setRequest((current) => ({...current, page: page + 1, count: current.count + 1}));
     }
 
     function selectCategory(slug: string) {

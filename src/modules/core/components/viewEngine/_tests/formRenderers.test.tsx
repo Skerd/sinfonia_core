@@ -6,13 +6,13 @@ import type {Resolver} from "react-hook-form";
 import type {ViewConfig, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 
 vi.mock("@coreModule/helpers/moduleContributions/loadWidgetContributions.ts", async () => {
-    const pm = await import("@propertyManagementModule/clients/panel/formWidgetRenderers.tsx");
+    const fixture = await import("./widgetContributionFixture.tsx");
     return {
         getSortedWidgetContributions: () => [
             {
-                id: "propertyManagement",
-                compoundFormWidgetRenderers: pm.propertyManagementFormWidgetRenderers,
-                formWriteAccessKeys: pm.propertyManagementFormWriteAccessKeys,
+                id: "fixture",
+                compoundFormWidgetRenderers: fixture.fixtureFormWidgetRenderers,
+                formWriteAccessKeys: fixture.fixtureFormWriteAccessKeys,
             },
         ],
     };
@@ -30,10 +30,10 @@ const {rendersOnEditForm} = await import("@coreModule/clients/studio/simulate/fo
 const {makeProbe, propsOf, resetCalls, t} = await import("./harness.tsx");
 
 const COMPOUND_TOKENS = [
-    "#FormFloorPolygon",
-    "#FormEdificePolygon",
-    "#FormUnitPolygon",
-    "#FormExpenditureItemsField",
+    "#FixturePolygon",
+    "#FixtureOutline",
+    "#FixtureShape",
+    "#FixtureItems",
     "#FormEditMediaField",
     "#FormTabbedRepeater",
     "#FormRepeater",
@@ -159,9 +159,9 @@ describe("EditFormViewRenderer", () => {
         ["renderWhenWriteAny miss", input("code", {renderWhenWriteAny: ["zip"]})],
         ["nested write key", input("address.city")],
         ["nested write key miss", input("address.zip")],
-        ["floor polygon", {render: "x", field: {name: "__floorPolygon", widget: "#FormFloorPolygon"}} as ViewNode],
-        ["edifice polygon", {render: "x", field: {name: "any", widget: "#FormEdificePolygon"}} as ViewNode],
-        ["expenditure items (not writable)", {render: "x", field: {name: "any", widget: "#FormExpenditureItemsField"}} as ViewNode],
+        ["contributed key", {render: "x", field: {name: "__polygon", widget: "#FixturePolygon"}} as ViewNode],
+        ["contributed key, other widget", {render: "x", field: {name: "any", widget: "#FixtureOutline"}} as ViewNode],
+        ["contributed key (not writable)", {render: "x", field: {name: "any", widget: "#FixtureItems"}} as ViewNode],
         ["edit media (not writable)", {render: "x", field: {name: "media", widget: "#FormEditMediaField"}} as ViewNode],
         ["tabbed repeater by name", {render: "x", field: {name: "items", widget: "#FormTabbedRepeater"}} as ViewNode],
         ["tabbed repeater by key", {render: "x", field: {name: "rows", widget: "#FormTabbedRepeater", widgetProps: {writeAccessKey: "nope"}}} as ViewNode],
@@ -176,7 +176,7 @@ describe("EditFormViewRenderer", () => {
 
     it("does not gate without a writeAccess map", () => {
         mount({initialValues: {_id: "1"}, config: config([input("code"), gateCases[8][1]])});
-        expect(renderedNames()).toEqual(["code", "#FormFloorPolygon"]);
+        expect(renderedNames()).toEqual(["code", "#FixturePolygon"]);
     });
 
     // Audit finding 5: the edit form ignored both options the create form supports.

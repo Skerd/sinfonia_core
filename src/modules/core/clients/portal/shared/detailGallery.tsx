@@ -1,8 +1,9 @@
+import {IconPhotoOff, IconPlayerPlay} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useState} from "react";
-import {ImageOff, Play} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 type DetailGalleryProps = WithLanguageType & {
     title: string;
@@ -35,7 +36,7 @@ function DetailGallery({title, images, videos = [], shape = "portrait", placehol
         if (!placeholder) return null;
         return (
             <div className={cn("flex w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-3xl bg-muted text-muted-foreground", stage)}>
-                <ImageOff className="size-10 stroke-[1.25]" aria-hidden />
+                <IconPhotoOff className="size-10 stroke-[1.25]" aria-hidden />
                 <span className="text-sm">{resolveLanguageKey("noImage")}</span>
             </div>
         );
@@ -55,7 +56,7 @@ function DetailGallery({title, images, videos = [], shape = "portrait", placehol
                 <ul className="flex gap-2 overflow-x-auto lg:col-start-1 lg:row-start-1 lg:flex-col lg:overflow-visible">
                     {media.map((item, index) => (
                         <li key={item.src} className="shrink-0">
-                            <button
+                            <Button variant="bare"
                                 type="button"
                                 onClick={() => select(item.src)}
                                 aria-label={resolveLanguageKey(item.video ? "videoOf" : "imageOf")
@@ -70,12 +71,12 @@ function DetailGallery({title, images, videos = [], shape = "portrait", placehol
                             >
                                 {item.video ? (
                                     <span className="flex size-full items-center justify-center bg-foreground/85 text-background">
-                                        <Play className="size-5 fill-current" aria-hidden />
+                                        <IconPlayerPlay className="size-5 fill-current" aria-hidden />
                                     </span>
                                 ) : (
                                     <img src={item.src} alt="" loading="lazy" className="size-full object-cover" />
                                 )}
-                            </button>
+                            </Button>
                         </li>
                     ))}
                 </ul>

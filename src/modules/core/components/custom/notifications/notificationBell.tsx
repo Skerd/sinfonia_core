@@ -1,5 +1,5 @@
 import {IconBell, IconBellOff} from "@tabler/icons-react";
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {compose} from "redux";
 import {useNavigate} from "react-router-dom";
@@ -11,7 +11,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import MarkAllAsReadButton from "@coreModule/clients/panel/private/accountSettings/notificationCenter/markAllAsReadButton.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {NotificationRow} from "@coreModule/components/custom/notifications/notificationRow.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {
     setNotificationItems,
     setNotificationNumber,
@@ -25,6 +25,9 @@ import {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 
 const PREVIEW_LIMIT = 10;
+const UNREAD_COUNT_REQUEST = {method: "get" as const, url: "/api/user/notifications/unread-count", data: {}};
+const PREVIEW_REQUEST = {method: "post" as const, url: "/api/user/notifications", data: {}};
+const PREVIEW_BODY = {offset: 0, limit: PREVIEW_LIMIT};
 
 function NotificationBell({resolveLanguageKey}: WithLanguageType) {
     const navigate = useNavigate();
@@ -33,30 +36,22 @@ function NotificationBell({resolveLanguageKey}: WithLanguageType) {
     const {read} = useAccess("notifications");
     const {unreadNotifications, items, loading} = useSelector((state: RootState) => state.notifications);
 
-    const refreshNotifications = useCallback(async () => {
-        dispatch(setNotificationsLoading(true));
-        try {
-            const [unreadResponse, listResponse] = await Promise.all([
-                apiClient.get<UnreadNotificationsFormResponseType>("/api/user/notifications/unread-count"),
-                apiClient.post<TableResponse<NotificationType>>("/api/user/notifications", {
-                    offset: 0,
-                    limit: PREVIEW_LIMIT,
-                }),
-            ]);
-            dispatch(setNotificationNumber(unreadResponse.data.unreadNotifications));
-            dispatch(setNotificationItems(listResponse.data.data ?? []));
-        } catch {
-            // The shell must stay usable if notifications are briefly unavailable.
-        } finally {
-            dispatch(setNotificationsLoading(false));
-        }
-    }, [dispatch]);
-
-    // Badge count on mount; list refresh again when the popover opens.
+    // Badge count on mount; list refresh again when the popover opens. Silent: the shell must stay
+    // usable if notifications are briefly unavailable.
+    const [refreshCount, setRefreshCount] = useState(0);
     useEffect(() => {
-        if (!read) return;
-        void refreshNotifications();
-    }, [refreshNotifications, read]);
+        if (read) setRefreshCount((count) => count + 1);
+    }, [read]);
+    const unread = useHttpRequest<UnreadNotificationsFormResponseType>(UNREAD_COUNT_REQUEST, {}, refreshCount, true, {
+        success: (data) => dispatch(setNotificationNumber(data.unreadNotifications)),
+    });
+    const preview = useHttpRequest<TableResponse<NotificationType>>(PREVIEW_REQUEST, PREVIEW_BODY, refreshCount, true, {
+        success: (data) => dispatch(setNotificationItems(data.data ?? [])),
+    });
+    const refreshing = unread.loading || preview.loading;
+    useEffect(() => {
+        dispatch(setNotificationsLoading(refreshing));
+    }, [dispatch, refreshing]);
 
     const badge = unreadNotifications > 99 ? "99+" : String(unreadNotifications);
     const triggerLabel =
@@ -66,7 +61,7 @@ function NotificationBell({resolveLanguageKey}: WithLanguageType) {
 
     const handleOpenChange = (next: boolean) => {
         setOpen(next);
-        if (next && read) void refreshNotifications();
+        if (next && read) setRefreshCount((count) => count + 1);
     };
 
     return (

@@ -1,5 +1,5 @@
 import {useRef} from "react";
-import type {LucideIcon} from "lucide-react";
+import type {TablerIcon} from "@tabler/icons-react";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -16,7 +16,7 @@ const TONE_CLASS: Record<ActionTone, string | undefined> = {
 
 type ActionDropdownItemProps = {
     label: string;
-    Icon: LucideIcon;
+    Icon: TablerIcon;
     /** Key handed to `useKeyboardShortcuts` (e.g. `"E"`, `"Backspace"`). */
     shortcutKey: string;
     /** What the row shows after the ⌘ glyph (e.g. `"E"`, `"⌫"`). */

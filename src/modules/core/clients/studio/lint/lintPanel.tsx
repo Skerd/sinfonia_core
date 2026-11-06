@@ -30,7 +30,7 @@ export default function LintPanel({findings, onSelectPath, selectedPath}: LintPa
 
     return (
         <div className="shrink-0 border-t">
-            <button
+            <Button variant="bare"
                 type="button"
                 onClick={() => setChoice(!expanded)}
                 className="flex w-full items-center gap-2 px-3 py-1.5 text-left hover:bg-muted/60"
@@ -73,7 +73,7 @@ export default function LintPanel({findings, onSelectPath, selectedPath}: LintPa
                         <IconChevronUp className="size-3.5" />
                     )}
                 </span>
-            </button>
+            </Button>
 
             {expanded && findings.length > 0 && (
                 <ul className="max-h-48 overflow-y-auto border-t">

@@ -1,3 +1,4 @@
+import {IconLoader2, IconUserPlus} from "@tabler/icons-react";
 import {compose} from "redux";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -11,7 +12,6 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {useTableUpdate} from "@coreModule/helpers/hooks/useTableUpdate.ts";
-import {LoaderCircle, UserPlus} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -268,7 +268,7 @@ function CreateUserForm({
                         className=""
                         disabled={loading}
                     >
-                        {loading ? <LoaderCircle className="animate-spin"/> : <UserPlus size={18} />}
+                        {loading ? <IconLoader2 className="animate-spin"/> : <IconUserPlus size={18} />}
                         {resolveLanguageKey("confirmButton")}
                     </Button>
                 </div>

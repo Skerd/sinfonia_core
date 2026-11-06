@@ -1,11 +1,13 @@
+import {IconPlus} from "@tabler/icons-react";
 import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { ImageWithRemove } from "@coreModule/components/viewEngine/widgets/gallery/imageWithRemove.tsx";
-import { Plus } from "lucide-react";
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
 import {useObjectUrls} from "@coreModule/helpers/hooks/components/useObjectUrls.ts";
+import {Input} from "@coreModule/components/ui/input.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 
 type MainImageFieldProps = {
@@ -61,7 +63,7 @@ export function MainImageField({ resolveLanguageKey, loading = false, editMode =
                                     {
                                         !isExistingString && !isFile &&
                                         <div className="relative">
-                                            <button
+                                            <Button variant="bare"
                                                 type="button"
                                                 disabled={loading}
                                                 aria-label={resolveLanguageKey("form.uploadNewImageHint")}
@@ -72,11 +74,11 @@ export function MainImageField({ resolveLanguageKey, loading = false, editMode =
                                                 onClick={() => mainImageInputRef.current?.click()}
                                             >
                                                 <div className="text-center">
-                                                    <Plus className="h-10 w-10 mx-auto text-muted-foreground mb-2" />
+                                                    <IconPlus className="h-10 w-10 mx-auto text-muted-foreground mb-2" />
                                                     <p className="text-sm text-muted-foreground">{resolveLanguageKey("form.uploadNewImageHint")}</p>
                                                 </div>
-                                            </button>
-                                            <input
+                                            </Button>
+                                            <Input
                                                 ref={mainImageInputRef}
                                                 type="file"
                                                 className="hidden"

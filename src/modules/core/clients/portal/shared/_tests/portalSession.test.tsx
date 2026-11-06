@@ -6,7 +6,8 @@ import {Link, MemoryRouter, Route, Routes} from "react-router-dom";
 
 const {apiGetMock} = vi.hoisted(() => ({apiGetMock: vi.fn()}));
 
-vi.mock("@coreModule/helpers/apiClient/apiClient.ts", () => ({default: {get: apiGetMock}}));
+// The provider validates through `useHttpRequest`, which calls `apiClient(config)`.
+vi.mock("@coreModule/helpers/apiClient/apiClient.ts", () => ({default: Object.assign((config: unknown) => apiGetMock(config), {get: apiGetMock})}));
 
 import authenticationReducer, {markSessionExpired, signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import {PortalSessionProvider, usePortalSession} from "@coreModule/clients/portal/shared/portalSession.tsx";

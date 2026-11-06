@@ -1,7 +1,7 @@
+import {IconActivity, IconTrendingUp, IconAlertTriangle, IconClock, IconBolt, IconChartBar} from "@tabler/icons-react";
 import {useState} from "react";
 import {useSelector} from "react-redux";
 import {compose} from "redux";
-import {Activity, TrendingUp, AlertTriangle, Clock, Zap, BarChart3} from "lucide-react";
 import {clsx} from "clsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
@@ -10,6 +10,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@co
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {DATE_FORMATS, formatDate} from "@coreModule/helpers/general/dateTime.ts";
 import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 type EndpointPerformanceProps = WithLanguageType & {}
 type EndpointStat = {
@@ -78,17 +79,17 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
                     {/* Summary Stats */}
                     <div className="grid grid-cols-3 gap-2">
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
-                            <BarChart3 className="h-5 w-5 text-primary" />
+                            <IconChartBar className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("totalMetrics")}</span>
                             <span className="font-medium text-sm">{formatNumber(stats.summary.totalMetrics || 0)}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
-                            <Zap className="h-5 w-5 text-primary" />
+                            <IconBolt className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("uniqueEndpoints")}</span>
                             <span className="font-medium text-sm">{formatNumber(stats.summary.uniqueEndpoints || 0)}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
-                            <Activity className="h-5 w-5 text-primary" />
+                            <IconActivity className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("tracked")}</span>
                             <span className="font-medium text-sm">{formatNumber(stats.summary.totalEndpointsTracked || 0)}</span>
                         </div>
@@ -96,7 +97,7 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
 
                     {/* Tabs */}
                     <div className="flex gap-x-2 border-b">
-                        <button
+                        <Button variant="bare"
                             onClick={() => setActiveTab('slowest')}
                             className={clsx(
                                 "px-4 py-2 text-sm font-medium border-b-2 transition-colors",
@@ -105,10 +106,10 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
                                     : "border-transparent text-muted-foreground hover:text-foreground"
                             )}
                         >
-                            <Clock className="inline h-4 w-4 mr-1" />
+                            <IconClock className="inline h-4 w-4 mr-1" />
                             {resolveLanguageKey("slowest")}
-                        </button>
-                        <button
+                        </Button>
+                        <Button variant="bare"
                             onClick={() => setActiveTab('mostCalled')}
                             className={clsx(
                                 "px-4 py-2 text-sm font-medium border-b-2 transition-colors",
@@ -117,10 +118,10 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
                                     : "border-transparent text-muted-foreground hover:text-foreground"
                             )}
                         >
-                            <TrendingUp className="inline h-4 w-4 mr-1" />
+                            <IconTrendingUp className="inline h-4 w-4 mr-1" />
                             {resolveLanguageKey("mostCalled")}
-                        </button>
-                        <button
+                        </Button>
+                        <Button variant="bare"
                             onClick={() => setActiveTab('errors')}
                             className={clsx(
                                 "px-4 py-2 text-sm font-medium border-b-2 transition-colors",
@@ -129,9 +130,9 @@ function EndpointPerformance({resolveLanguageKey}: EndpointPerformanceProps) {
                                     : "border-transparent text-muted-foreground hover:text-foreground"
                             )}
                         >
-                            <AlertTriangle className="inline h-4 w-4 mr-1" />
+                            <IconAlertTriangle className="inline h-4 w-4 mr-1" />
                             {resolveLanguageKey("errors")}
-                        </button>
+                        </Button>
                     </div>
 
                     {/* Endpoints Table */}

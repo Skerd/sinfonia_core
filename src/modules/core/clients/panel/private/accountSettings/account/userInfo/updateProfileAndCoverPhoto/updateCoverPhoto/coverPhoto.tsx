@@ -1,6 +1,6 @@
+import {IconRotate} from "@tabler/icons-react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {compose} from "redux";
-import {RotateCcw} from "lucide-react";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useEffect, useState} from "react";
@@ -54,7 +54,7 @@ function CoverPhoto({
                     {
                         (error) ?
                         <TooltipDisplayer tooltip={resolveLanguageKey("tooltipTitle")}>
-                            <RotateCcw color={"red"} className="rotate-45 hover:-rotate-45 transition-all duration-300" onClick={(e) => {e.stopPropagation(); e.preventDefault(); setForceRefresh(Date.now());}}/>
+                            <IconRotate color={"red"} className="rotate-45 hover:-rotate-45 transition-all duration-300" onClick={(e) => {e.stopPropagation(); e.preventDefault(); setForceRefresh(Date.now());}}/>
                         </TooltipDisplayer>
                         :
                         <>

@@ -1,5 +1,5 @@
+import {IconBuildingStore} from "@tabler/icons-react";
 import {compose} from "redux";
-import {Store} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {usePortalListedCompany} from "./portalListedCompany.tsx";
@@ -66,7 +66,7 @@ function PortalProviderCard({kind, className, resolveLanguageKey}: PortalProvide
                     href={company.visitHref}
                     className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-xs font-semibold text-foreground transition-colors hover:border-foreground"
                 >
-                    <Store className="size-3.5" aria-hidden />
+                    <IconBuildingStore className="size-3.5" aria-hidden />
                     {resolveLanguageKey("visitSite")}
                 </a>
             ) : null}

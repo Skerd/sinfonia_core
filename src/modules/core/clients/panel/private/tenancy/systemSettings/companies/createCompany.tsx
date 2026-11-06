@@ -1,5 +1,5 @@
+import {IconBuildingCommunity} from "@tabler/icons-react";
 import {useEffect} from "react";
-import {Building2} from "lucide-react";
 import type {UseFormReturn} from "react-hook-form";
 import {createGenericCreatePage} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
 import {createCompanyFormSchema} from "armonia/src/modules/core/api/company/private/company/createCompany.form.validator.ts";
@@ -13,7 +13,7 @@ export default createGenericCreatePage<CreateCompanyFormType>({
     apiUrl: "/api/company",
     schema: createCompanyFormSchema,
     defaultValues: {name: "", vat: "", siteSlug: ""},
-    submitIcon: <Building2 />,
+    submitIcon: <IconBuildingCommunity />,
     renderChildren: (form) => <PrefillSiteSlug form={form} />,
     mapSubmitPayload: (data) => {
         const postBody: CreateCompanyFormType = {

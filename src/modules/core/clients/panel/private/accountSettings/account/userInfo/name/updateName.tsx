@@ -1,9 +1,9 @@
+import {IconCheck, IconX} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useEffect, useImperativeHandle} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {Check, X} from "lucide-react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -63,7 +63,7 @@ function UpdateName({
                     className={cn("h-full px-2 text-success", {"hover:border-success/50 hover:dark:border-success/50": !!fieldValue})}
                     disabled={loading || !fieldValue}
                 >
-                    <Check className={cn("h-4 w-4")} />
+                    <IconCheck className={cn("h-4 w-4")} />
                 </Button>
             </TooltipDisplayer>
             <TooltipDisplayer tooltip={resolveLanguageKey("cancel")} contentClassName="text-sm">
@@ -75,7 +75,7 @@ function UpdateName({
                     disabled={loading}
                     onClick={() => {updateCanEdit(false);}}
                 >
-                    <X className="h-4 w-4 hover:opacity-50" />
+                    <IconX className="h-4 w-4 hover:opacity-50" />
                 </Button>
             </TooltipDisplayer>
         </div>

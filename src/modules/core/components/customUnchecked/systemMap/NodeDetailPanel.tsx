@@ -1,6 +1,7 @@
 import {useMemo} from "react";
 import type {SystemMapModelNode} from "./systemMap.types.ts";
 import {CLUSTER_META} from "./clusterMeta.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 type NodeDetailPanelProps = {
     node: SystemMapModelNode | null;
@@ -28,14 +29,14 @@ export function NodeDetailPanel({node, onClose}: NodeDetailPanelProps) {
                     </div>
                     <h3 className="text-base font-semibold leading-tight mt-0.5">{node.label}</h3>
                 </div>
-                <button
+                <Button variant="bare"
                     type="button"
                     onClick={onClose}
                     className="text-muted-foreground hover:text-foreground text-lg leading-none px-1"
                     aria-label="Close"
                 >
                     ×
-                </button>
+                </Button>
             </div>
 
             <div className="flex flex-col gap-4 p-4 text-sm">

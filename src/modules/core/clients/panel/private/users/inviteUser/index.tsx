@@ -1,4 +1,4 @@
-import { MailPlus } from 'lucide-react'
+import {IconMailPlus} from "@tabler/icons-react";
 import {Button, ButtonTitle} from '@coreModule/components/ui/button.tsx'
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '@coreModule/components/ui/dialog.tsx'
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -32,7 +32,7 @@ function UsersInviteDialog({
                 className='flex gap-x-1'
                 onClick={() => setOpen(true)}
             >
-                <MailPlus size={18} />
+                <IconMailPlus size={18} />
                 <ButtonTitle hideMobile={true} tooltip={resolveLanguageKey("inviteUser")}>
                     {resolveLanguageKey("inviteUser")}
                 </ButtonTitle>
@@ -42,7 +42,7 @@ function UsersInviteDialog({
                 <DialogContent className='sm:max-w-md'>
                     <DialogHeader className='text-start'>
                         <DialogTitle className='flex items-center gap-2'>
-                            <MailPlus /> {resolveLanguageKey(administration ? "administrationTitle" : "title")}
+                            <IconMailPlus /> {resolveLanguageKey(administration ? "administrationTitle" : "title")}
                         </DialogTitle>
                         <DialogDescription>
                             {resolveLanguageKey(administration ? "administrationDescription" : "description")}

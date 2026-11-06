@@ -3,6 +3,7 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import {useCanHover} from "@coreModule/helpers/hooks/useCanHover.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 /**
  * Horizontal clip only, with a 1px slack — the same test as `NavTruncatedTitle`.
@@ -136,14 +137,14 @@ export default function TruncatedValue(props: TruncatedValueProps) {
         return (
             <Popover>
                 <PopoverTrigger asChild>
-                    <button
+                    <Button variant="bare"
                         ref={mobileRef}
                         type="button"
                         className={cn("block w-full truncate text-left", className)}
                         onClick={(e) => e.stopPropagation()}
                     >
                         {children}
-                    </button>
+                    </Button>
                 </PopoverTrigger>
                 {mobileOverflown && (
                     <PopoverContent className={cn("w-fit", props.contentClassName)}>

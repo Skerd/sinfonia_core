@@ -1,5 +1,6 @@
 import {IconChevronRight} from "@tabler/icons-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 export type Crumb = {key: string; label: string};
 
@@ -31,19 +32,19 @@ export default function NodeBreadcrumb({crumbs, onSelect}: NodeBreadcrumbProps) 
                                 className="size-3 shrink-0 text-muted-foreground/60"
                             />
                         )}
-                        <button
+                        <Button variant="bare"
                             type="button"
                             disabled={isLast}
                             onClick={() => onSelect(crumb.key)}
                             className={cn(
-                                "max-w-[10rem] truncate rounded px-1 font-mono text-3xs",
+                                "max-w-[10rem] truncate rounded px-1 font-mono text-3xs disabled:pointer-events-auto disabled:opacity-100",
                                 isLast
                                     ? "text-foreground"
                                     : "text-muted-foreground hover:bg-muted hover:text-foreground",
                             )}
                         >
                             {crumb.label}
-                        </button>
+                        </Button>
                     </span>
                 );
             })}

@@ -1,9 +1,9 @@
+import {IconChevronDown, IconFlag, IconUsers} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {ChevronDown, Flag, Users} from "lucide-react";
 import ChatMemberInfo from "@coreModule/clients/panel/private/chat/center/chatMembers/dropdown/chatMemberInfo.tsx";
 import ChatMemberRemoveFromGroup from "@coreModule/clients/panel/private/chat/center/chatMembers/dropdown/chatMemberRemoveFromGroup.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
@@ -39,7 +39,7 @@ function ChatMember({
         <>
             <div className={cn("flex items-center", {"mb-2": hasSeparator})}>
                 <div className="flex items-center grow gap-x-2">
-                    <HiddenElement Render={<Avatar className="flex items-center justify-center border size-10"><Users size={18} /></Avatar>}>
+                    <HiddenElement Render={<Avatar className="flex items-center justify-center border size-10"><IconUsers size={18} /></Avatar>}>
                         {
                             sanitizedUsers.photo &&
                             <UserAvatar user={member} avatarClassName="size-10"/>
@@ -75,7 +75,7 @@ function ChatMember({
                                                 {
                                                     member.userType === "owner" &&
                                                     <Button size="icon" variant='ghost'>
-                                                        <Flag className='stroke-muted-foreground sm:size-5' />
+                                                        <IconFlag className='stroke-muted-foreground sm:size-5' />
                                                     </Button>
                                                 }
                                             </div>
@@ -85,7 +85,7 @@ function ChatMember({
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
                                                         <Button size='icon' variant='ghost'>
-                                                            <ChevronDown className='stroke-muted-foreground sm:size-5'/>
+                                                            <IconChevronDown className='stroke-muted-foreground sm:size-5'/>
                                                         </Button>
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent className="w-fit" align="start">

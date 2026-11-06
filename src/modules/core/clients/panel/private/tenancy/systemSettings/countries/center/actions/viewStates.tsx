@@ -21,9 +21,6 @@ function ViewStates({
     const {read} = useAccess("states");
     const navigate = useNavigate();
 
-    if( !read ){
-        return <></>
-    }
     const shortcut = "1";
     const viewStates = () => {
         const params = new URLSearchParams();
@@ -31,7 +28,9 @@ function ViewStates({
         if (countryName) params.set("countryName", countryName);
         navigate(`/tenancy/systemSettings/states?${params.toString()}`);
     }
-    useKeyboardShortcuts(shortcut, viewStates);
+    useKeyboardShortcuts(shortcut, viewStates, {enabled: read});
+
+    if (!read) return null;
 
     return (
         <DropdownMenuItem onClick={(e) => { e.preventDefault(); e.stopPropagation(); viewStates()}}>

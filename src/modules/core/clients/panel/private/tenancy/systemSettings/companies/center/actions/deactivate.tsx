@@ -1,9 +1,9 @@
+import {IconShieldMinus} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {ShieldMinus} from "lucide-react";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 
 type DeactivateCompanyProps = WithLanguageType & {
@@ -20,7 +20,7 @@ function DeactivateCompany({company, resolveLanguageKey, onAction}: DeactivateCo
 
     return (
         <DropdownMenuItem onClick={() => {onAction("deactivateCompany");}}>
-            <ShieldMinus className="text-destructive" size={16} />
+            <IconShieldMinus className="text-destructive" size={16} />
             {resolveLanguageKey("title")}
         </DropdownMenuItem>
     );

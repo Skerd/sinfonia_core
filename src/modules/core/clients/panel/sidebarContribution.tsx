@@ -1,30 +1,4 @@
-import {
-    MessagesSquare,
-    Users,
-    UserCog,
-    Wrench,
-    Bell,
-    ShieldUser,
-    Building,
-    Settings,
-    Gauge,
-    Boxes,
-    Mail,
-    MessageSquare,
-    Globe,
-    UserCheck,
-    Timer,
-    MailCheck,
-    BookOpen,
-    Tags,
-} from "lucide-react";
-import {
-    IconBuilding,
-    IconCash,
-    IconFlag,
-    IconMap,
-    IconUserKey,
-} from "@tabler/icons-react";
+import {IconBuilding, IconCash, IconFlag, IconMap, IconUserKey, IconMessages, IconUsers, IconUserCog, IconTool, IconBell, IconUserShield, IconSettings, IconGauge, IconBoxMultiple, IconMail, IconMessage, IconWorld, IconUserCheck, IconStopwatch, IconMailCheck, IconBook, IconTags} from "@tabler/icons-react";
 import type {SidebarContribution} from "@coreModule/helpers/types/sidebarContribution.types.ts";
 import type {NavGroup, NavItem, NavSubItem} from "@coreModule/helpers/types/sidebarNav.types.ts";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -41,7 +15,7 @@ function buildCompanyNavGroup(
         {
             title: resolveLanguageKey("menus.company.administration.title"),
             url: "/company/administration",
-            icon: ShieldUser,
+            icon: IconUserShield,
             permissions: ["users"],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -50,7 +24,7 @@ function buildCompanyNavGroup(
         {
             title: resolveLanguageKey("menus.company.users.title"),
             url: "/company/users",
-            icon: Users,
+            icon: IconUsers,
             permissions: ["users"],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -60,14 +34,14 @@ function buildCompanyNavGroup(
             title: resolveLanguageKey("menus.company.chats.title"),
             url: "/company/chats",
             badge: chatUnreadTotal > 0 ? chatUnreadTotal : undefined,
-            icon: MessagesSquare,
+            icon: IconMessages,
             permissions: ["channels"],
             usersPermissions: [],
             atLeastOnePermission: true,
         },
         {
             title: resolveLanguageKey("menus.company.websiteChats.title"),
-            icon: Globe,
+            icon: IconWorld,
             permissions: [],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -76,7 +50,7 @@ function buildCompanyNavGroup(
                 {
                     title: resolveLanguageKey("menus.company.websiteChats.waiting.title"),
                     url: "/company/websiteChats/waiting",
-                    icon: MessagesSquare,
+                    icon: IconMessages,
                     permissions: ["channels"],
                     usersPermissions: [],
                     atLeastOnePermission: true,
@@ -85,7 +59,7 @@ function buildCompanyNavGroup(
                 {
                     title: resolveLanguageKey("menus.company.websiteChats.mine.title"),
                     url: "/company/websiteChats/mine",
-                    icon: UserCheck,
+                    icon: IconUserCheck,
                     permissions: ["channels"],
                     usersPermissions: [],
                     atLeastOnePermission: true,
@@ -96,7 +70,7 @@ function buildCompanyNavGroup(
         {
             title: resolveLanguageKey("menus.company.blog.title"),
             url: "/company/blogPosts",
-            icon: BookOpen,
+            icon: IconBook,
             permissions: ["blogPosts"],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -104,7 +78,7 @@ function buildCompanyNavGroup(
         {
             title: resolveLanguageKey("menus.company.settings.company.title"),
             url: "/company/info",
-            icon: Building,
+            icon: IconBuilding,
             permissions: ["companies"],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -124,7 +98,7 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
         {
             title: resolveLanguageKey("menus.account.accountSettings.account.title"),
             url: "/account/account",
-            icon: UserCog,
+            icon: IconUserCog,
             permissions: ["users"],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -132,7 +106,7 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
         {
             title: resolveLanguageKey("menus.account.accountSettings.security.title"),
             url: "/account/security",
-            icon: Wrench,
+            icon: IconTool,
             permissions: ["userSessions", "loginHistories"],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -140,7 +114,7 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
         {
             title: resolveLanguageKey("menus.account.accountSettings.notificationCenter.title"),
             url: "/account/notificationCenter",
-            icon: Bell,
+            icon: IconBell,
             permissions: ["notifications"],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -148,7 +122,7 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
         {
             title: resolveLanguageKey("menus.account.accountSettings.notifications.title"),
             url: "/account/notifications",
-            icon: MailCheck,
+            icon: IconMailCheck,
             permissions: ["notifications"],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -156,7 +130,7 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
         {
             title: resolveLanguageKey("menus.account.accountSettings.connectedApps.title"),
             url: "/account/apps",
-            icon: Boxes,
+            icon: IconBoxMultiple,
             permissions: ["users"],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -178,7 +152,7 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatform
         ? [{
             title: resolveLanguageKey("menus.tenancy.companies.allCompanies.title"),
             url: "/tenancy/systemSettings/companies",
-            icon: Building,
+            icon: IconBuilding,
             permissions: ["companies"],
             usersPermissions: [],
             atLeastOnePermission: true,
@@ -189,7 +163,7 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatform
         ? [{
             title: resolveLanguageKey("menus.tenancy.resources.serverPerformance.title"),
             url: "/tenancy/serverPerformance",
-            icon: Gauge,
+            icon: IconGauge,
             permissions: ["serverPerformance1m", "serverPerformance1h", "serverPerformance1d"],
             usersPermissions: [],
             atLeastOnePermission: false,
@@ -199,14 +173,14 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatform
         ...performanceItems,
         {
             title: resolveLanguageKey("menus.tenancy.systemSettings.title"),
-            icon: Settings,
+            icon: IconSettings,
             permissions: [],
             usersPermissions: [],
             atLeastOnePermission: true,
             items: [
                 {
                     title: resolveLanguageKey("menus.tenancy.systemSettings.core.title"),
-                    icon: Boxes,
+                    icon: IconBoxMultiple,
                     permissions: [],
                     usersPermissions: [],
                     atLeastOnePermission: true,
@@ -223,7 +197,7 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatform
                         {
                             title: resolveLanguageKey("menus.tenancy.systemSettings.cronJobs.title"),
                             url: "/tenancy/systemSettings/cronJobs",
-                            icon: Timer,
+                            icon: IconStopwatch,
                             permissions: ["cronjobs"],
                             usersPermissions: [],
                             atLeastOnePermission: true,
@@ -263,7 +237,7 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatform
                         {
                             title: resolveLanguageKey("menus.tenancy.systemSettings.smtpServers.title"),
                             url: "/tenancy/systemSettings/smtpServers",
-                            icon: Mail,
+                            icon: IconMail,
                             permissions: ["smtpServers"],
                             usersPermissions: [],
                             atLeastOnePermission: true,
@@ -271,7 +245,7 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatform
                         {
                             title: resolveLanguageKey("menus.tenancy.systemSettings.messagingProviders.title"),
                             url: "/tenancy/systemSettings/messagingProviders",
-                            icon: MessageSquare,
+                            icon: IconMessage,
                             permissions: ["messagingProviders"],
                             usersPermissions: [],
                             atLeastOnePermission: true,
@@ -279,7 +253,7 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatform
                         {
                             title: resolveLanguageKey("menus.tenancy.systemSettings.blogCategories.title"),
                             url: "/tenancy/systemSettings/blogCategories",
-                            icon: Tags,
+                            icon: IconTags,
                             permissions: ["blogCategories"],
                             usersPermissions: [],
                             atLeastOnePermission: true,

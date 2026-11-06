@@ -2,7 +2,12 @@ import * as React from "react"
 
 import { cn } from "@coreModule/components/lib/utils.ts"
 
-function Table({ className, ...props }: React.ComponentProps<"table">) {
+/**
+ * `bare` drops the scroll container and the default sizing, for a table that already sits in a
+ * scroller or is laid out by a virtualizer (which needs the `<table>` itself).
+ */
+function Table({ className, bare = false, ...props }: React.ComponentProps<"table"> & { bare?: boolean }) {
+  if (bare) return <table data-slot="table" className={className} {...props} />
   return (
     <div
       data-slot="table-container"

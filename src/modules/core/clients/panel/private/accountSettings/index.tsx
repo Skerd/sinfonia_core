@@ -1,4 +1,4 @@
-import { Bell, Boxes, MailCheck, UserCog, Wrench } from 'lucide-react'
+import {IconBell, IconBoxMultiple, IconMailCheck, IconUserCog, IconTool} from "@tabler/icons-react";
 import { SidebarNav } from './components/sidebar-nav.tsx'
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -82,28 +82,28 @@ function AccountSettings({
         ...(readProfile !== false ? [{
             title: resolveLanguageKey("account"),
             href: specificUserId ? "account" : '/account/account',
-            icon: <UserCog size={18} />
+            icon: <IconUserCog size={18} />
         }] : []),
         ...(!isBot ? [
             ...(readSecurity !== false ? [{
                 title: resolveLanguageKey("security"),
                 href: specificUserId ? "security" : '/account/security',
-                icon: <Wrench size={18} />,
+                icon: <IconTool size={18} />,
             }] : []),
             ...(readNotifications !== false ? [{
                 title: resolveLanguageKey("activity"),
                 href: specificUserId ? "notificationCenter" : '/account/notificationCenter',
-                icon: <Bell size={18} />,
+                icon: <IconBell size={18} />,
             }] : []),
             ...(readNotifications !== false ? [{
                 title: resolveLanguageKey("notifications"),
                 href: specificUserId ? "notifications" : '/account/notifications',
-                icon: <MailCheck size={18} />,
+                icon: <IconMailCheck size={18} />,
             }] : []),
             ...(readProfile !== false ? [{
                 title: resolveLanguageKey("connectedApps"),
                 href: specificUserId ? "apps" : '/account/apps',
-                icon: <Boxes size={18} />,
+                icon: <IconBoxMultiple size={18} />,
             }] : []),
             ...visiblePages.map((page) => ({
                 title: resolveLanguageKey(page.titleKey),

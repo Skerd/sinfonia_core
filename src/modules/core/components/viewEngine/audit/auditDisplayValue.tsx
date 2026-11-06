@@ -2,7 +2,7 @@ import {createContext, Fragment, useContext, useEffect, useState, type ReactElem
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import SingleFile from "@coreModule/components/viewEngine/widgets/media/singleFile.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import {requestFromApi} from "@coreModule/helpers/apiClient/requestFromApi.ts";
 import type {Media} from "armonia/src/modules/core/types";
 import type {AuditFieldHint} from "@coreModule/components/viewEngine/audit/auditFieldHints.ts";
 import {inferMimeFromFilename} from "@coreModule/components/viewEngine/widgets/media/mediaPreviewKind.ts";
@@ -198,8 +198,8 @@ function normalizeSinglePayload(data: unknown): Record<string, unknown> | null {
 
 async function fetchSingleLabel(url: string, id: string, labelFields: string[]): Promise<string | null> {
     try {
-        const res = await apiClient.post<unknown>(url, {_id: id});
-        const row = normalizeSinglePayload(res.data);
+        // Silent: a label that cannot be loaded falls back to the raw id. Shared by the module-level cache below.
+        const row = normalizeSinglePayload(await requestFromApi<unknown>({method: "post", url, data: {_id: id}, silent: true}));
         if (!row) {
             return null;
         }

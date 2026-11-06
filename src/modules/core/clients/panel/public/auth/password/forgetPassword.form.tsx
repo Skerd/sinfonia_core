@@ -1,12 +1,11 @@
+import {IconAlertOctagon, IconArrowRight, IconLoader2} from "@tabler/icons-react";
 import {z} from "zod";
 import {compose} from "redux";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useForm} from "react-hook-form";
-import {OctagonAlert} from "lucide-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {getClientConfig} from "@coreModule/helpers/general/config.ts";
-import { ArrowRight, Loader2 } from 'lucide-react';
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useImperativeHandle, useState} from 'react';
 import {SiTicktick} from "@icons-pack/react-simple-icons";
@@ -70,7 +69,7 @@ function ForgotPassword({
         return (
             <Card className="gap-4 w-full h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <OctagonAlert size={30} color="var(--destructive)"/>
+                    <IconAlertOctagon size={30} color="var(--destructive)"/>
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("fail")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("failDescription")}</CardDescription>
                 </CardHeader>
@@ -125,7 +124,7 @@ function ForgotPassword({
                             )}
                         />
                         <Button className='mt-2' disabled={loading}>
-                            {(loading) ? <Loader2 className='animate-spin' /> : <ArrowRight />}
+                            {(loading) ? <IconLoader2 className='animate-spin' /> : <IconArrowRight />}
                             {resolveLanguageKey("continue")}
                         </Button>
                     </form>

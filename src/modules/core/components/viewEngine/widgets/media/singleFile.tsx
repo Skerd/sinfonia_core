@@ -1,12 +1,7 @@
+import {IconDotsVertical, IconEye, IconTrash, IconDownload} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import {
-    EllipsisVertical,
-    Eye,
-    Trash2,
-    Download,
-} from "lucide-react";
 import {useEffect, useMemo, useState} from "react";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
@@ -211,16 +206,16 @@ function SingleFile({
                             onClick={(e) => {e.stopPropagation();}}
                             onPointerDown={(e) => {e.stopPropagation();}}
                         >
-                            <EllipsisVertical className="size-3.5" />
+                            <IconDotsVertical className="size-3.5" />
                         </Button>
                         :
                         isBig ?
                         <div className="hover:cursor-pointer">
-                            <EllipsisVertical size={16} className="text-muted-foreground" />
+                            <IconDotsVertical size={16} className="text-muted-foreground" />
                         </div>
                         :
                         <Button variant="ghost" className="size-6 text-muted-foreground hover:cursor-pointer">
-                            <EllipsisVertical color={"gray"} size={1} />
+                            <IconDotsVertical color={"gray"} size={1} />
                         </Button>
                     }
                 </DropdownMenuTrigger>
@@ -228,21 +223,21 @@ function SingleFile({
                     {
                         canRemove &&
                         <DropdownMenuItem onClick={() => {onRemove(file?.id)}}>
-                            <Trash2 color="red"/>
+                            <IconTrash color="red"/>
                             <p>{resolveLanguageKey("remove")}</p>
                         </DropdownMenuItem>
                     }
                     {
                         canPreview &&
                         <DropdownMenuItem onClick={openPreview}>
-                            <Eye/>
+                            <IconEye/>
                             <p>{resolveLanguageKey("preview")}</p>
                         </DropdownMenuItem>
                     }
                     {
                         canDownload &&
                         <DropdownMenuItem onClick={runDownload}>
-                            <Download />
+                            <IconDownload />
                             <p>{resolveLanguageKey("download")}</p>
                         </DropdownMenuItem>
                     }
@@ -257,21 +252,21 @@ function SingleFile({
             {
                 canRemove &&
                 <ContextMenuItem onClick={() => {onRemove(file?.id)}}>
-                    <Trash2 color="red"/>
+                    <IconTrash color="red"/>
                     <p>{resolveLanguageKey("remove")}</p>
                 </ContextMenuItem>
             }
             {
                 canPreview &&
                 <ContextMenuItem onClick={openPreview}>
-                    <Eye/>
+                    <IconEye/>
                     <p>{resolveLanguageKey("preview")}</p>
                 </ContextMenuItem>
             }
             {
                 canDownload &&
                 <ContextMenuItem onClick={runDownload}>
-                    <Download />
+                    <IconDownload />
                     <p>{resolveLanguageKey("download")}</p>
                 </ContextMenuItem>
             }
@@ -330,19 +325,19 @@ function SingleFile({
                     isChat ? "rounded-md bg-transparent" : "rounded-lg bg-muted",
                     {"rounded-se-none rounded-ss-none ": isBig && !isChat},
                 )}>
-                    <button
+                    <Button variant="bare"
                         type="button"
                         disabled={!canPreview}
                         aria-label={resolveLanguageKey("preview")}
                         className={cn(
-                            "relative h-full w-full overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                            "relative h-full w-full overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-auto disabled:opacity-100",
                             canPreview ? "hover:cursor-pointer" : "cursor-default",
                             isChat ? "text-current" : "text-muted-foreground",
                         )}
                         onClick={openPreview}
                     >
                         {!!file && renderPreviewCard("thumb")}
-                    </button>
+                    </Button>
                 </div>
             </>
         </div>

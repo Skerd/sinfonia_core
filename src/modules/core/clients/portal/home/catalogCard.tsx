@@ -1,6 +1,6 @@
+import {IconPhotoOff} from "@tabler/icons-react";
 import {compose} from "redux";
 import {Link} from "react-router-dom";
-import {ImageOff} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {formatCurrency} from "@coreModule/helpers/general/numbers.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -35,7 +35,7 @@ function CatalogCard({item, resolveLanguageKey}: WithLanguageType & {item: Porta
                 {item.image ? (
                     <img src={item.image} alt="" loading="lazy" className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                 ) : (
-                    <div className="flex size-full items-center justify-center text-muted-foreground"><ImageOff className="size-6" aria-hidden /></div>
+                    <div className="flex size-full items-center justify-center text-muted-foreground"><IconPhotoOff className="size-6" aria-hidden /></div>
                 )}
                 <Badge variant="secondary" className="absolute top-3 left-3 bg-background/90 backdrop-blur">
                     <PortalKindName kind={item.kind} part="item" />

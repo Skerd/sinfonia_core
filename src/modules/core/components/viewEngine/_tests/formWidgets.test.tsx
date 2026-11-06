@@ -5,11 +5,11 @@ import {FormProvider, useForm} from "react-hook-form";
 import type {FieldBinding} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 
 vi.mock("@coreModule/helpers/moduleContributions/loadWidgetContributions.ts", async () => {
-    const pm = await import("@propertyManagementModule/clients/panel/formWidgetRenderers.tsx");
+    const fixture = await import("./widgetContributionFixture.tsx");
     return {
         getSortedWidgetContributions: () => [
             {id: "test", compoundFormWidgets: ["#ModuleCompound"]},
-            {id: "propertyManagement", compoundFormWidgetRenderers: pm.propertyManagementFormWidgetRenderers},
+            {id: "fixture", compoundFormWidgetRenderers: fixture.fixtureFormWidgetRenderers},
         ],
     };
 });
@@ -57,7 +57,7 @@ beforeEach(() => {
 describe("isCompoundFormWidget", () => {
     it("knows core compound tokens and module-contributed ones", () => {
         expect(isCompoundFormWidget("#FormRepeater")).toBe(true);
-        expect(isCompoundFormWidget("#FormFloorPolygon")).toBe(true);
+        expect(isCompoundFormWidget("#FixturePolygon")).toBe(true);
         expect(isCompoundFormWidget("#ModuleCompound")).toBe(true);
         expect(isCompoundFormWidget("#Input")).toBe(false);
     });
@@ -290,13 +290,10 @@ describe("renderCompoundWidget", () => {
         expect(mountCompound(bind("#ObjectIdChipsInput", {apiUrl: "/x"}))).toMatchObject({name: "f", apiUrl: "/x", method: "POST"});
     });
 
-    it("propertyManagement polygon and item widgets (contributed) get their keys", () => {
-        expect(mountCompound(bind("#FormFloorPolygon", {polygonField: "p", closedField: "c"}))).toMatchObject({polygonField: "p", closedField: "c", resolveLanguageKey: t});
-        expect(mountCompound(bind("#FormEdificePolygon", {errorTitleKey: "e"}))).toMatchObject({errorTitleKey: "e"});
-        expect(mountCompound(bind("#FormUnitPolygon", {edificeField: "ed"}))).toMatchObject({edificeField: "ed"});
-        expect(mountCompound(bind("#FormExpenditureItemsField", {}, {label: "items"}))).toMatchObject({name: "f", label: "t:items"});
-        expect(mountCompound(bind("#FormExpenditureItemsField", {name: "other"}))).toMatchObject({name: "other", label: undefined});
-        expect(mountCompound(bind("#PaymentPlanInstallmentsField", {name: "wp-wins"}, {label: "plan"}))).toMatchObject({name: "wp-wins", label: "t:plan"});
+    it("module-contributed renderers get the widget, binding, translator and form state", () => {
+        expect(mountCompound(bind("#FixturePolygon", {polygonField: "p", closedField: "c"}))).toMatchObject({polygonField: "p", closedField: "c", resolveLanguageKey: t});
+        expect(mountCompound(bind("#FixtureItems", {}, {label: "items"}), {loading: true})).toMatchObject({name: "f", label: "t:items", loading: true});
+        expect(mountCompound(bind("#FixtureItems", {name: "wp-wins"}))).toMatchObject({name: "wp-wins", label: undefined});
     });
 
     it("#FormMultiLocalFileField prefixes a relative name only once", () => {
@@ -308,14 +305,11 @@ describe("renderCompoundWidget", () => {
         expect("fieldPrefix" in p).toBe(false);
     });
 
-    it("#UnitCard renders the unit snapshot from form extras, or nothing", () => {
-        const unit = {_id: "u1", project: {_id: "p", name: "P"}, edifice: {_id: "e", name: "E"}, floor: {_id: "f", name: "F"}};
-        const {container} = render(<>{renderCompoundWidget(W, bind("#UnitCard", {small: true}), t, {formExtras: {cashSaleUnitSnapshot: unit}})}</>);
-        expect(lastProps("W")).toMatchObject({unit, projectId: "p", edificeName: "E", floorId: "f", hideActions: true, small: true});
-        expect(container.firstElementChild?.className).toContain("md:sticky");
-
-        resetCalls();
-        expect(renderCompoundWidget(W, bind("#UnitCard", {formExtraUnitKey: "other"}), t, {formExtras: {cashSaleUnitSnapshot: unit}})).toBeNull();
+    it("a contributed renderer may read form extras, or render nothing", () => {
+        const record = {_id: "r1"};
+        render(<>{renderCompoundWidget(W, bind("#FixtureRecordCard"), t, {formExtras: {fixtureRecord: record}})}</>);
+        expect(lastProps("W")).toMatchObject({record});
+        expect(renderCompoundWidget(W, bind("#FixtureRecordCard"), t, {formExtras: {}})).toBeNull();
     });
 
     it("#FormEditMediaField and the fallback spread widget props last", () => {

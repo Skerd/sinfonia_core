@@ -1,7 +1,7 @@
+import {IconLoader2, IconPinnedOff} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {LoaderCircle, PinOff} from "lucide-react";
 import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/context-menu.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
@@ -52,7 +52,7 @@ function UnpinMessage({
 
     return (
         <ContextMenuItem disabled={loading} onClick={(e) => {e.stopPropagation(); e.preventDefault(); unpinMessage();}} className="hover:cursor-pointer">
-            {loading ? <LoaderCircle className="animate-spin mr-2 h-4 w-4"/> : <PinOff className="mr-2 h-4 w-4"/>}
+            {loading ? <IconLoader2 className="animate-spin mr-2 h-4 w-4"/> : <IconPinnedOff className="mr-2 h-4 w-4"/>}
             {resolveLanguageKey("unpin")}
             <ContextMenuShortcut>⌘{shortcut}</ContextMenuShortcut>
         </ContextMenuItem>

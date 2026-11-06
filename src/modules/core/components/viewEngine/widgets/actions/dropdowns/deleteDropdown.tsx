@@ -1,7 +1,7 @@
+import {IconTrash} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {Trash2} from "lucide-react";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import ActionDropdownItem from "@coreModule/components/viewEngine/widgets/actions/dropdowns/actionDropdownItem.tsx";
 
@@ -15,7 +15,7 @@ function DeleteDropdown({resolveLanguageKey, onAction, accessModel}: DeleteDropd
     return (
         <ActionDropdownItem
             label={resolveLanguageKey("title")}
-            Icon={Trash2}
+            Icon={IconTrash}
             shortcutKey="Backspace"
             shortcutLabel="⌫"
             tone="destructive"

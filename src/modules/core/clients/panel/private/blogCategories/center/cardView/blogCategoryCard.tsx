@@ -1,9 +1,9 @@
+import {IconHash} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import type {BlogCategory} from "armonia/src/modules/core/api/auxiliary/private/blogCategory/blogCategory.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import {Hash} from "lucide-react";
 import BlogCategorySheetView from "@coreModule/clients/panel/private/blogCategories/center/sheetView/blogCategorySheetView.tsx";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
@@ -65,7 +65,7 @@ function BlogCategoryCard({
                     />
                     <EntityCard.Body>
                         <EntityCardRow
-                            icon={Hash}
+                            icon={IconHash}
                             label={resolveLanguageKey("slug")}
                             tooltip={resolveLanguageKey("slug")}
                             path="slug"

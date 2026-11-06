@@ -1,9 +1,9 @@
+import {IconEyeOff} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {EyeOff} from "lucide-react";
 import type {BlogPost} from "armonia/src/modules/core/api/auxiliary/private/blogPost/blogPost.dto.ts";
 
 export const UNPUBLISH_BLOG_POST_ACTION = "unpublishBlogPost";
@@ -21,7 +21,7 @@ function UnpublishBlogPost({blogPost, resolveLanguageKey, onAction}: UnpublishBl
 
     return (
         <DropdownMenuItem onClick={() => onAction(UNPUBLISH_BLOG_POST_ACTION)}>
-            <EyeOff className="text-destructive" size={16} />
+            <IconEyeOff className="text-destructive" size={16} />
             {resolveLanguageKey("title")}
         </DropdownMenuItem>
     );

@@ -1,3 +1,4 @@
+import {IconDotsVertical, IconPlugOff} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
@@ -10,7 +11,6 @@ import {IconTelegram} from '@coreModule/assets/brand-icons/icon-telegram.tsx'
 import ConnectTelegram from "@coreModule/clients/panel/private/accountSettings/apps/apps/telegram/connect";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
-import {EllipsisVertical, PowerOff} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {TelegramStatusFormResponseType} from "armonia/src/modules/core/api/user/private/telegram/telegramStatus.form.response.type.ts";
@@ -98,13 +98,13 @@ function UserLinkTelegram({
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="outline" size={"icon"}>
-                                        <EllipsisVertical />
+                                        <IconDotsVertical />
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-56" align="start">
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem onClick={() => { if( linked ){ setOpenWhat("unlink"); } }}>
-                                            <PowerOff className="text-destructive" />
+                                            <IconPlugOff className="text-destructive" />
                                             <p>{resolveLanguageKey("disconnect")}</p>
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>

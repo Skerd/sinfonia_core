@@ -1,16 +1,4 @@
-import type {LucideIcon} from "lucide-react";
-import {
-    File,
-    FileArchive,
-    FileAudio,
-    FileCode,
-    FileImage,
-    FileSpreadsheet,
-    FileText,
-    FileType,
-    FileVideo,
-    Presentation,
-} from "lucide-react";
+import {IconFile, IconFileZip, IconFileMusic, IconFileCode, IconPhoto, IconFileSpreadsheet, IconFileText, IconFileTypography, IconVideo, IconPresentation, type TablerIcon} from "@tabler/icons-react";
 
 export type FieldMediaType = "image" | "video" | "file";
 
@@ -163,24 +151,24 @@ export function isDialogPreviewable(kind: MediaPreviewKind): boolean {
     );
 }
 
-export function iconForMedia(kind: MediaPreviewKind, mime?: string, filename?: string): LucideIcon {
-    if (kind === "image") return FileImage;
-    if (kind === "video") return FileVideo;
-    if (kind === "audio") return FileAudio;
-    if (kind === "pdf") return FileText;
-    if (kind === "word") return FileType;
-    if (kind === "spreadsheet") return FileSpreadsheet;
-    if (kind === "presentation") return Presentation;
-    if (kind === "archive") return FileArchive;
+export function iconForMedia(kind: MediaPreviewKind, mime?: string, filename?: string): TablerIcon {
+    if (kind === "image") return IconPhoto;
+    if (kind === "video") return IconVideo;
+    if (kind === "audio") return IconFileMusic;
+    if (kind === "pdf") return IconFileText;
+    if (kind === "word") return IconFileTypography;
+    if (kind === "spreadsheet") return IconFileSpreadsheet;
+    if (kind === "presentation") return IconPresentation;
+    if (kind === "archive") return IconFileZip;
     if (kind === "text") {
         const ext = extensionFromFilename(filename);
         const normalized = normalizeMime(mime);
         if (ext === "json" || ext === "xml" || ext === "html" || ext === "htm" || normalized === "application/json") {
-            return FileCode;
+            return IconFileCode;
         }
-        return FileText;
+        return IconFileText;
     }
-    return File;
+    return IconFile;
 }
 
 export function formatFileSize(bytes: number): string {

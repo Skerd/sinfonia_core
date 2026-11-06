@@ -1,16 +1,18 @@
 import {IconAlertCircle} from "@tabler/icons-react";
-import {useRef} from "react";
+import {useState} from "react";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Progress} from "@coreModule/components/ui/progress.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import {Countdown} from "@coreModule/components/custom/countdown.tsx";
+
+const CURRENT_REVOKE_REQUEST = {method: "post" as const, url: "/api/user/userSession/currentRevoke", data: {}};
 
 export const SESSION_SETUP_TOTAL_STEPS = 6;
 export const STUDIO_SESSION_SETUP_TOTAL_STEPS = 4;
@@ -50,7 +52,13 @@ function SessionSetupScreenComponent({
     const {name, surname} = useSelector((state: RootState) => state.authentication.user);
     const sessionExpired = useSelector((state: RootState) => state.authentication.sessionExpired);
     const displayName = displayNameFromUser(name, surname);
-    const signingOutRef = useRef(false);
+    const [signOutCount, setSignOutCount] = useState(0);
+    const finishSignOut = () => {
+        dispatch(signOut());
+        navigate("/authenticate/login");
+    };
+    // Local logout completes either way: the network or the session may already be gone.
+    useHttpRequest(CURRENT_REVOKE_REQUEST, {}, signOutCount, true, {success: finishSignOut, error: finishSignOut});
 
     const isSessionExpiredError = error && sessionExpired;
 
@@ -69,21 +77,9 @@ function SessionSetupScreenComponent({
 
     const progressValue = (step / total) * 100;
 
-    async function handleSignOut() {
-        if (signingOutRef.current) {
-            return;
-        }
-        signingOutRef.current = true;
-        try {
-            await apiClient.post("/api/user/userSession/currentRevoke").then((res) => {
-                console.log(res.data);
-            });
-        } catch {
-            // Local logout must still complete when the network or session is already gone.
-        } finally {
-            dispatch(signOut());
-            navigate("/authenticate/login");
-        }
+    function handleSignOut() {
+        // One revoke only, however often the button is pressed.
+        setSignOutCount((count) => (count === 0 ? 1 : count));
     }
 
     return (

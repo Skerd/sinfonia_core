@@ -1,3 +1,4 @@
+import {IconCheck} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -25,7 +26,6 @@ import {
     TableRow,
 } from "@coreModule/components/ui/table/table.tsx";
 import {useEffect, useMemo, useState} from "react";
-import {Check} from "lucide-react";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import PageController from "@coreModule/components/custom/paginator";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
@@ -204,7 +204,7 @@ function ActionCell({hasPermission, checked, tags, ids, editable, parentLoading,
     if (!checked) return <span className="text-muted-foreground">—</span>;
     const content = (
         <div className="size-5 flex items-center justify-center">
-            <Check className="size-5 text-success" aria-label="yes" />
+            <IconCheck className="size-5 text-success" aria-label="yes" />
         </div>
     );
     if (!tags.length) return content;

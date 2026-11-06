@@ -1,7 +1,7 @@
+import {IconTrash} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {toggleDeleteMessageId, updateOpenDelete} from "@coreModule/helpers/redux/slices/chatSlice.ts";
-import {Trash2} from "lucide-react";
 import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/context-menu.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -42,7 +42,7 @@ function DeleteMessage({
     return (
         <div>
             <ContextMenuItem onClick={() => {toggleMessageDelete()}} className="hover:cursor-pointer">
-                <Trash2 className="mr-2 h-4 w-4 text-destructive" />
+                <IconTrash className="mr-2 h-4 w-4 text-destructive" />
                 {resolveLanguageKey("delete")}
                 <ContextMenuShortcut>⌘{shortcut}</ContextMenuShortcut>
             </ContextMenuItem>

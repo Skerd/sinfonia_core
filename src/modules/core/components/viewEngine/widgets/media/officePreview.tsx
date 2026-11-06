@@ -1,9 +1,10 @@
+import {IconDownload} from "@tabler/icons-react";
 import {useEffect, useRef, useState} from "react";
-import {Download} from "lucide-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {SPREADSHEET_PREVIEW_MAX_ROWS, TEXT_PREVIEW_MAX_BYTES} from "@coreModule/components/viewEngine/widgets/media/mediaPreviewKind.ts";
 import {fetchMediaBytes, fetchMediaText} from "@coreModule/helpers/media/fetchMediaBytes.ts";
+import {Table} from "@coreModule/components/ui/table/table.tsx";
 
 type OfficePreviewProps = {
     src: string;
@@ -104,7 +105,7 @@ export function SpreadsheetDialogViewer({src, className}: OfficePreviewProps) {
 
     return (
         <div className={cn("max-h-[75vh] max-w-full overflow-auto rounded-lg border border-border", className)}>
-            <table className="w-max min-w-full text-xs">
+            <Table bare className="w-max min-w-full text-xs">
                 <tbody>
                     {rows.map((row, i) => (
                         <tr key={i} className="border-b border-border/60">
@@ -116,7 +117,7 @@ export function SpreadsheetDialogViewer({src, className}: OfficePreviewProps) {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </Table>
         </div>
     );
 }
@@ -172,8 +173,8 @@ export function FileDetailsFallback({filename, mime, fileSizeLabel, src, classNa
             {src ? (
                 <Button variant="outline" size="sm" className="mt-2 w-fit" asChild>
                     <a href={src} download={filename || true}>
-                        <Download className="h-4 w-4" />
-                        Download
+                        <IconDownload className="h-4 w-4" />
+                        IconDownload
                     </a>
                 </Button>
             ) : null}

@@ -1,3 +1,4 @@
+import {IconCircleCheck, IconCircleX, IconLoader2, IconLogin2, IconShieldExclamation, IconShieldX} from "@tabler/icons-react";
 import {z} from "zod";
 import {compose} from "redux";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -12,19 +13,20 @@ import {PasswordInput} from "@coreModule/components/custom/inputs/passwordInput.
 import {useEffect, useImperativeHandle, useState} from 'react';
 import PasswordStrength from "@coreModule/components/custom/passwordStrength.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {CircleCheckBig, CircleX, Loader2, LogIn, ShieldAlert, ShieldBan} from "lucide-react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import GoBackToLogin from "@coreModule/clients/panel/public/auth/shared/goBackToLogin.tsx";
 import {acceptInvitationFormSchema} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.validator.ts";
 import {AcceptInvitationFormType} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.type.ts";
 import {AcceptInvitationFormResponseType} from "armonia/src/modules/core/api/user/public/acceptInvitation/acceptInvitation.form.response.type.ts";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 
 const EMPTY_FORM_VALUES: AcceptInvitationFormType = {
     password: "",
     invitationCode: "",
 };
+
+const VALIDATE_INVITATION_REQUEST = {method: "post" as const, url: "/api/user/acceptInvitation/validate", data: {}};
 
 type AcceptInvitationProps =  WithLanguageType & WithAxiosType<AcceptInvitationFormResponseType, AcceptInvitationFormType> & {}
 
@@ -38,10 +40,13 @@ function AcceptInvitation({
 
     const navigate = useNavigate();
     const params = useParams();
-    const [verifyingInvitationCode, setVerifyingInvitationCode] = useState<boolean>(false);
-    const [errorVerifyingInvitationCode, setErrorVerifyingInvitationCode] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
     const [success, setSuccess] = useState<boolean>(false);
+
+    const code = params.platform;
+    useEffect(() => {
+        if (!code) navigate("/authenticate/login");
+    }, [code, navigate]);
 
     const formSchema: any = acceptInvitationFormSchema(languageCode, resolveLanguageKey("form"));
     const form = useForm<z.infer<typeof formSchema>>({
@@ -49,28 +54,15 @@ function AcceptInvitation({
         defaultValues: EMPTY_FORM_VALUES
     });
 
-    useEffect(() => {
-        if( !!params.platform ){
-            const currCode = params.platform;
-            if( !!currCode ){
-                setVerifyingInvitationCode(true);
-                setErrorVerifyingInvitationCode(false);
-                apiClient.post(`/api/user/acceptInvitation/validate`, {invitationCode: currCode})
-                .then(() => {
-                    form.setValue("invitationCode", currCode);
-                })
-                .catch(() => {
-                    setErrorVerifyingInvitationCode(true);
-                })
-                .finally(() => {
-                    setVerifyingInvitationCode(false);
-                });
-            }
-        }
-        else{
-            navigate("/authenticate/login");
-        }
-    }, [params, form, navigate]);
+    // Silent check of the emailed code: the page shows its own verifying / invalid states.
+    const [verification, setVerification] = useState({code, count: code ? 1 : 0});
+    if (verification.code !== code) setVerification({code, count: code ? verification.count + 1 : verification.count});
+    const {loading: verifyingInvitationCode, error: verifyError} = useHttpRequest(VALIDATE_INVITATION_REQUEST, {invitationCode: code}, verification.count, true, {
+        success: () => {
+            if (code) form.setValue("invitationCode", code);
+        },
+    });
+    const errorVerifyingInvitationCode = !!verifyError;
 
     useImperativeHandle(innerRef, () => ({
         start: () => {},
@@ -91,7 +83,7 @@ function AcceptInvitation({
         return (
             <Card className="w-full gap-4 h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <ShieldAlert size={30} color="green" className="animate-pulse" />
+                    <IconShieldExclamation size={30} color="green" className="animate-pulse" />
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("verifyingInvitationCodeTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("verifyingInvitationCodeDescription")}</CardDescription>
                 </CardHeader>
@@ -105,7 +97,7 @@ function AcceptInvitation({
         return (
             <Card className="w-full gap-4 h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <ShieldBan size={30} color="var(--destructive)"/>
+                    <IconShieldX size={30} color="var(--destructive)"/>
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("errorVerifyingInvitationCodeTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("errorVerifyingInvitationCodeDescription")}</CardDescription>
                 </CardHeader>
@@ -119,7 +111,7 @@ function AcceptInvitation({
         return (
             <Card className="w-full gap-4 h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <CircleX size={30} color="var(--destructive)" />
+                    <IconCircleX size={30} color="var(--destructive)" />
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("errorAcceptingInvitationTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("errorAcceptingInvitationDescription")}</CardDescription>
                 </CardHeader>
@@ -133,7 +125,7 @@ function AcceptInvitation({
         return (
             <Card className="w-full gap-4 h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <CircleCheckBig size={30} color="green"/>
+                    <IconCircleCheck size={30} color="green"/>
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("successAcceptingInvitationTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("successAcceptingInvitationDescription")}</CardDescription>
                 </CardHeader>
@@ -180,7 +172,7 @@ function AcceptInvitation({
                         }
 
                         <Button className='mt-2' disabled={loading}>
-                            {(loading) ? <Loader2 className='animate-spin' /> : <LogIn />}
+                            {(loading) ? <IconLoader2 className='animate-spin' /> : <IconLogin2 />}
                             {resolveLanguageKey("confirm")}
                         </Button>
                     </form>

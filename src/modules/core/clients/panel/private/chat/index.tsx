@@ -20,8 +20,10 @@ import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/priv
 import LeftWebsiteChatPanel from "@coreModule/clients/panel/private/websiteChats/left/index.tsx";
 import WebsiteChatHeader from "@coreModule/clients/panel/private/websiteChats/center/chatHeader.tsx";
 import PeekComposerBar from "@coreModule/clients/panel/private/websiteChats/center/peekComposerBar.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {GetChannelSingleFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/getChannelSingle.form.response.type.ts";
+
+const CHANNEL_SINGLE_REQUEST = {method: "post" as const, url: "/api/user/chats/channels/single", data: {}};
 
 type ChatProps = WithLanguageType & {
     websiteChannels?: PublicChatInboxFilter;
@@ -58,29 +60,23 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
         // };
     }, [dispatch, isWebsiteInbox, websiteChannels]);
 
-    // ?channelId=… → load channel, select it, drop the query param.
-    useEffect(() => {
-        if (!openChannelId) return;
-
-        let cancelled = false;
-        apiClient
-            .post<GetChannelSingleFormResponseType>("/api/user/chats/channels/single", {id: openChannelId})
-            .then((res) => {
-                if (cancelled || !res.data?._id) return;
-                dispatch(upsertChannel(res.data));
-                dispatch(openChannel(res.data._id));
-                setSearchParams((prev) => {
-                    const next = new URLSearchParams(prev);
-                    next.delete("channelId");
-                    return next;
-                }, {replace: true});
-            })
-            .catch(() => {});
-
-        return () => {
-            cancelled = true;
-        };
-    }, [openChannelId, dispatch, setSearchParams]);
+    // ?channelId=… → load channel, select it, drop the query param. Silent if it cannot be loaded.
+    const [channelLookup, setChannelLookup] = useState({openChannelId, count: openChannelId ? 1 : 0});
+    if (channelLookup.openChannelId !== openChannelId) {
+        setChannelLookup({openChannelId, count: openChannelId ? channelLookup.count + 1 : channelLookup.count});
+    }
+    useHttpRequest<GetChannelSingleFormResponseType>(CHANNEL_SINGLE_REQUEST, {id: openChannelId}, channelLookup.count, true, {
+        success: (data) => {
+            if (!data?._id) return;
+            dispatch(upsertChannel(data));
+            dispatch(openChannel(data._id));
+            setSearchParams((prev) => {
+                const next = new URLSearchParams(prev);
+                next.delete("channelId");
+                return next;
+            }, {replace: true});
+        },
+    });
 
     const bird = () => {
         return (

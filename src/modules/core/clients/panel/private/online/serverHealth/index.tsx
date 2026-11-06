@@ -1,7 +1,7 @@
+import {IconCircleCheck, IconAlertCircle} from "@tabler/icons-react";
 import {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {compose} from "redux";
-import {CheckCircle, AlertCircle} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {useWebSocketRoom} from "@coreModule/helpers/hooks/useWebSocketRoom.ts";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
@@ -64,7 +64,7 @@ function ServerHealth({
                                 {
                                     health.status == 'ok' ?
                                         <Badge variant={"default"} className="px-3">
-                                            <CheckCircle className="mr-1 h-3.5 w-3.5" />
+                                            <IconCircleCheck className="mr-1 h-3.5 w-3.5" />
                                             {resolveLanguageKey("healthy")}
                                         </Badge>
                                         :
@@ -72,12 +72,12 @@ function ServerHealth({
                                             {
                                                 health.status === 'degraded' ?
                                                     <Badge variant={"destructive"} className="px-3">
-                                                        <AlertCircle className="mr-1 h-3.5 w-3.5" />
+                                                        <IconAlertCircle className="mr-1 h-3.5 w-3.5" />
                                                         {resolveLanguageKey("degraded")}
                                                     </Badge>
                                                     :
                                                     <Badge variant={"destructive"} className="px-3">
-                                                        <AlertCircle className="mr-1 h-3.5 w-3.5" />
+                                                        <IconAlertCircle className="mr-1 h-3.5 w-3.5" />
                                                         {resolveLanguageKey("error")}
                                                     </Badge>
                                             }

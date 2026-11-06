@@ -1,3 +1,4 @@
+import {IconCirclePlus, IconTrash} from "@tabler/icons-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFieldArray, useFormContext, type FieldValues } from "react-hook-form";
 import withLanguage, {type ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -6,7 +7,6 @@ import MapWithPins from "@coreModule/components/viewEngine/widgets/addresses/map
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@coreModule/components/ui/form.tsx";
 import { Input } from "@coreModule/components/ui/input.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
-import { CirclePlus, Trash2 } from "lucide-react";
 import {buildFilterGroup, buildFilterRule} from "@coreModule/helpers/filter/filterUrl.ts";
 
 export type FormAddressWithMapLabels = {
@@ -109,9 +109,9 @@ export function SingleFormAddressWithMap({
     const pLat = fieldPath(fieldPrefix, "latitude");
     const pLng = fieldPath(fieldPrefix, "longitude");
 
-    const watchCountry = form.watch(pCountry as any);
-    const watchState = form.watch(pState as any);
-    const recordId = form.watch("_id" as any);
+    const watchCountry = form.watch(pCountry);
+    const watchState = form.watch(pState);
+    const recordId = form.watch("_id");
 
     const stateSelectPostBody = useMemo(
         () => selectBodyWithEqualsFilters([{field: "country", value: watchCountry}]),
@@ -208,8 +208,8 @@ export function SingleFormAddressWithMap({
 
     if (isEdit && !showBlock) return null;
 
-    const latVal = (form.watch(pLat as any) as number | undefined) ?? mapDefaultLat;
-    const lngVal = (form.watch(pLng as any) as number | undefined) ?? mapDefaultLng;
+    const latVal = (form.watch(pLat) as number | undefined) ?? mapDefaultLat;
+    const lngVal = (form.watch(pLng) as number | undefined) ?? mapDefaultLng;
 
     return (
         <div
@@ -226,7 +226,7 @@ export function SingleFormAddressWithMap({
                         <div>
                             <FormField
                                 control={form.control}
-                                name={pCountry as any}
+                                name={pCountry}
                                 disabled={isDisabled}
                                 render={({ field }) => (
                                     <FormItem>
@@ -250,7 +250,7 @@ export function SingleFormAddressWithMap({
                         <div>
                             <FormField
                                 control={form.control}
-                                name={pState as any}
+                                name={pState}
                                 disabled={isDisabled || !watchCountry}
                                 render={({ field }) => (
                                     <FormItem>
@@ -276,7 +276,7 @@ export function SingleFormAddressWithMap({
                         <div>
                             <FormField
                                 control={form.control}
-                                name={pCity as any}
+                                name={pCity}
                                 disabled={isDisabled || !watchCountry}
                                 render={({ field }) => (
                                     <FormItem>
@@ -307,7 +307,7 @@ export function SingleFormAddressWithMap({
                             <div>
                                 <FormField
                                     control={form.control}
-                                    name={fieldPath(fieldPrefix, "street") as any}
+                                    name={fieldPath(fieldPrefix, "street")}
                                     disabled={isDisabled}
                                     render={({ field }) => (
                                         <FormItem>
@@ -331,7 +331,7 @@ export function SingleFormAddressWithMap({
                             <div>
                                 <FormField
                                     control={form.control}
-                                    name={fieldPath(fieldPrefix, "postalCode") as any}
+                                    name={fieldPath(fieldPrefix, "postalCode")}
                                     disabled={isDisabled}
                                     render={({ field }) => (
                                         <FormItem>
@@ -359,7 +359,7 @@ export function SingleFormAddressWithMap({
                             <div>
                                 <FormField
                                     control={form.control}
-                                    name={pLat as any}
+                                    name={pLat}
                                     disabled={isDisabled}
                                     render={({ field }) => (
                                         <FormItem>
@@ -389,7 +389,7 @@ export function SingleFormAddressWithMap({
                             <div>
                                 <FormField
                                     control={form.control}
-                                    name={pLng as any}
+                                    name={pLng}
                                     disabled={isDisabled}
                                     render={({ field }) => (
                                         <FormItem>
@@ -426,8 +426,8 @@ export function SingleFormAddressWithMap({
                             longitude={lngVal}
                             onPinChange={(coords: { lat: number; lng: number } | null) => {
                                 if (coords) {
-                                    form.setValue(pLat as any, coords.lat);
-                                    form.setValue(pLng as any, coords.lng);
+                                    form.setValue(pLat, coords.lat);
+                                    form.setValue(pLng, coords.lng);
                                 }
                             }}
                         />
@@ -457,7 +457,7 @@ function FormAddressArrayWithMap({
     const form = useFormContext<FieldValues>();
     const {fields, append, remove} = useFieldArray({
         control: form.control,
-        name: arrayField as any,
+        name: arrayField,
     });
 
     useEffect(() => {
@@ -498,7 +498,7 @@ function FormAddressArrayWithMap({
                         });
                     }}
                 >
-                    <CirclePlus className="h-4 w-4" />
+                    <IconCirclePlus className="h-4 w-4" />
                     <span>{resolveLanguageKey(addLabel)}</span>
                 </Button>
             </div>
@@ -513,10 +513,10 @@ function FormAddressArrayWithMap({
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                const currentAddress = form.getValues(`${arrayField}.${index}` as any) as {_id?: string} | undefined;
+                                const currentAddress = form.getValues(`${arrayField}.${index}`) as {_id?: string} | undefined;
                                 if (editMode && currentAddress?._id) {
-                                    const currentDeleted = (form.getValues(deleteField as any) as string[] | undefined) || [];
-                                    form.setValue(deleteField as any, [...currentDeleted, currentAddress._id], {
+                                    const currentDeleted = (form.getValues(deleteField) as string[] | undefined) || [];
+                                    form.setValue(deleteField, [...currentDeleted, currentAddress._id], {
                                         shouldDirty: true,
                                         shouldValidate: true,
                                     });
@@ -524,7 +524,7 @@ function FormAddressArrayWithMap({
                                 remove(index);
                             }}
                         >
-                            <Trash2 className="h-4 w-4" />
+                            <IconTrash className="h-4 w-4" />
                             <span>{resolveLanguageKey(removeLabel)}</span>
                         </Button>
                     </div>

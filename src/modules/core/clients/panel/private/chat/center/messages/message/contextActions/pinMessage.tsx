@@ -1,7 +1,7 @@
+import {IconLoader2, IconPin} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {LoaderCircle, Pin} from "lucide-react";
 import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/context-menu.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
@@ -55,7 +55,7 @@ function PinMessage({
 
     return (
         <ContextMenuItem disabled={loading} onClick={(e) => {e.stopPropagation(); e.preventDefault(); pinMessage();}} className="hover:cursor-pointer">
-            {loading ? <LoaderCircle className="animate-spin mr-2 h-4 w-4"/> : <Pin className="mr-2 h-4 w-4"/>}
+            {loading ? <IconLoader2 className="animate-spin mr-2 h-4 w-4"/> : <IconPin className="mr-2 h-4 w-4"/>}
             {resolveLanguageKey("pin")}
             <ContextMenuShortcut>⌘{shortcut}</ContextMenuShortcut>
         </ContextMenuItem>

@@ -1,7 +1,7 @@
+import {IconStopwatch} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
 import {clsx} from "clsx";
-import {Timer} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -58,7 +58,7 @@ function CronOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKe
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Timer className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
+                    <IconStopwatch className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>

@@ -18,6 +18,7 @@ import useSelectedLanguage, {
   type LanguageDictionary,
 } from "@coreModule/helpers/hooks/useSelectedLanguage.ts"
 import { IconCalendar, IconClock, IconX } from "@tabler/icons-react"
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 dayjs.extend(customParseFormat)
 
@@ -187,7 +188,7 @@ function TimeScrollColumn({
         {values.map((v) => {
           const isSelected = v === selected
           return (
-            <button
+            <Button variant="bare"
               key={v}
               ref={isSelected ? selectedRef : undefined}
               type="button"
@@ -201,7 +202,7 @@ function TimeScrollColumn({
               className={TIME_CELL_CLASS}
             >
               {String(v).padStart(2, "0")}
-            </button>
+            </Button>
           )
         })}
       </div>
@@ -599,7 +600,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
           </PopoverTrigger>
           <div className="pointer-events-none absolute inset-y-0 end-2 flex shrink-0 items-center gap-1">
             {canClear ? (
-              <button
+              <Button variant="bare"
                 type="button"
                 aria-label={clearLabel}
                 title={clearLabel}
@@ -607,7 +608,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 className={cn(
                   "rounded-sm p-0.5 text-muted-foreground",
                   disabled
-                    ? "cursor-not-allowed opacity-50"
+                    ? "cursor-not-allowed opacity-50 disabled:pointer-events-auto"
                     : "pointer-events-auto cursor-pointer hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
                 )}
                 // The trigger sits underneath; clearing must not also open the calendar.
@@ -618,7 +619,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 onClick={handleClear}
               >
                 <IconX className="h-4 w-4" />
-              </button>
+              </Button>
             ) : null}
             <EndIcon
               className="h-4 w-4 shrink-0 text-muted-foreground/50 me-1"

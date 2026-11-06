@@ -89,6 +89,7 @@ import {useStudioLanguage} from "../preview/previewLanguage.ts";
 import ExportDialog from "../export/exportDialog.tsx";
 import {suggestExportName, viewConfigToTs} from "../export/viewConfigToTs.ts";
 import {diffNodeTrees, nodeLabel, type ChangeKind} from "../export/changeList.ts";
+import {NativeSelect, NativeSelectOption} from "@coreModule/components/ui/native-select.tsx";
 
 /** Selected node and collapsed nodes, as positional keys in the URL. */
 const NODE_PARAM = "node";
@@ -664,17 +665,17 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                             />
                         </TooltipDisplayer>
                         {rows.length > 1 && (
-                            <select
+                            <NativeSelect
                                 value={sampleIndex}
                                 onChange={(e) => setSampleIndex(Number(e.target.value))}
-                                className="h-7 rounded border bg-background px-1 text-3xs"
+                                size="sm" className="text-3xs"
                             >
                                 {rows.map((row, index) => (
-                                    <option key={row._id} value={index}>
+                                    <NativeSelectOption key={row._id} value={index}>
                                         {String(row.name ?? row._id)}
-                                    </option>
+                                    </NativeSelectOption>
                                 ))}
-                            </select>
+                            </NativeSelect>
                         )}
                         <TooltipDisplayer tooltip="Discard this view's draft">
                             <Button
@@ -731,7 +732,7 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                     >
                         <div className="flex shrink-0 items-center gap-1 border-b px-2 py-1">
                             {(["palette", "fields", "coverage", "access"] as const).map((tab) => (
-                                <button
+                                <Button variant="bare"
                                     key={tab}
                                     type="button"
                                     onClick={() => {
@@ -754,7 +755,7 @@ export default function ViewEditor({entry, viewKey}: ViewEditorProps) {
                                             {coverage.unbound.length}
                                         </Badge>
                                     )}
-                                </button>
+                                </Button>
                             ))}
                             <Button
                                 type="button"

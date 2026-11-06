@@ -6,9 +6,11 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {PhoneInput} from "@coreModule/components/ui/phone-input.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import type {PhoneNumberFormResponseType} from "armonia/src/modules/core/api/user/private/data/phoneNumber.form.response.type.ts";
 import type {MessagingProvider, TestMessagingProviderConnectionResponse} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
+
+const OWN_PHONE_REQUEST = {method: "get" as const, url: "/api/user/data/phoneNumber", data: {}};
 
 type TestMessagingProviderConnectionDialogProps = WithLanguageType &
     WithAxiosType<TestMessagingProviderConnectionResponse> & {
@@ -31,25 +33,17 @@ function TestMessagingProviderConnectionDialog({
     const [testPhone, setTestPhone] = useState("");
 
     useEffect(() => {
-        if (!open) {
-            setTestPhone("");
-            return;
-        }
-
-        let cancelled = false;
-        void apiClient
-            .get<PhoneNumberFormResponseType>("/api/user/data/phoneNumber")
-            .then((res) => {
-                if (!cancelled && res.data?.phoneNumber?.trim()) {
-                    setTestPhone(res.data.phoneNumber.trim());
-                }
-            })
-            .catch(() => {});
-
-        return () => {
-            cancelled = true;
-        };
+        if (!open) setTestPhone("");
     }, [open]);
+
+    // Prefill with the user's own number each time the dialog opens; silent if it has none.
+    const [phoneLookup, setPhoneLookup] = useState({open, count: open ? 1 : 0});
+    if (phoneLookup.open !== open) setPhoneLookup({open, count: open ? phoneLookup.count + 1 : phoneLookup.count});
+    useHttpRequest<PhoneNumberFormResponseType>(OWN_PHONE_REQUEST, {}, phoneLookup.count, true, {
+        success: (data) => {
+            if (data?.phoneNumber?.trim()) setTestPhone(data.phoneNumber.trim());
+        },
+    });
 
     useImperativeHandle(innerRef, () => ({
         success: (data: TestMessagingProviderConnectionResponse) => {

@@ -1,8 +1,8 @@
 import {compose} from "redux";
-import {useEffect, useMemo, useState} from "react";
+import {useMemo, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import {Tabs, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
@@ -29,6 +29,7 @@ import {CATALOG_FILTER_PREFIX, CatalogFilterField, CatalogNumberInput} from "../
 import CatalogCard from "./catalogCard.tsx";
 
 const PAGE_SIZE = 24;
+const BROWSE_REQUEST = {method: "post" as const, url: "/api/portal/browse", data: {}};
 const ALL = "all";
 /** Params that belong to one kind and are dropped when switching kinds. */
 const KIND_PARAMS = ["page", "priceMin", "priceMax", "sort"];
@@ -66,18 +67,14 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
     const {sections} = usePortalSite();
     const [params, setParams] = useSearchParams();
     const form = useMemo(() => browseForm(params), [params]);
-    const [groups, setGroups] = useState<PortalBrowseResponse["data"] | null | undefined>(undefined);
     const catalogs = sections.flatMap((section) => (section.catalogs ?? []).map((catalog) => ({...catalog, path: section.path})));
     const active = catalogs.find((catalog) => catalog.kind === form.kind);
 
-    useEffect(() => {
-        let cancelled = false;
-        setGroups(undefined);
-        apiClient.post<PortalBrowseResponse>("/api/portal/browse", form)
-            .then((res) => { if (!cancelled) setGroups(res.data.data); })
-            .catch(() => { if (!cancelled) setGroups(null); });
-        return () => { cancelled = true; };
-    }, [form]);
+    // One request per URL state; silent, like before: loading shows skeletons, a failure shows the empty state.
+    const [browse, setBrowse] = useState({form, count: 1});
+    if (browse.form !== form) setBrowse({form, count: browse.count + 1});
+    const {data, loading, error} = useHttpRequest<PortalBrowseResponse>(BROWSE_REQUEST, form, browse.count);
+    const groups: PortalBrowseResponse["data"] | null | undefined = loading ? undefined : error ? null : data?.data;
 
     const update = (change: (next: URLSearchParams) => void) => {
         setParams((current) => {

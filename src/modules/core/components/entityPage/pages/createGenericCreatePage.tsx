@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import {useMemo, type ReactNode} from "react";
+import {useMemo, type ComponentType, type ReactNode} from "react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -134,5 +134,5 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
         withLanguage(config.languagePath),
         withAxios<unknown, TForm>({url: config.apiUrl, method: "PUT", data: {}}, true),
         withDebug(true, true, accessKey),
-    )(GenericCreateInner) as any;
+    )(GenericCreateInner) as ComponentType<GenericCreateSurfaceProps>;
 }

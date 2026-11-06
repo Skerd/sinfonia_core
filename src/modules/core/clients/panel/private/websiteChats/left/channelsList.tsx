@@ -1,3 +1,4 @@
+import {IconWorld, IconUserCheck} from "@tabler/icons-react";
 import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
@@ -6,7 +7,6 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Fragment, type MouseEvent, RefObject} from "react";
-import {Globe, UserCheck} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
 import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
@@ -21,6 +21,8 @@ import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/ch
 import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";
 import WebsiteChannelsFetcher from "@coreModule/clients/panel/private/websiteChats/left/channelsFetcher.tsx";
 import {useJoinPublicChat} from "@coreModule/clients/panel/private/websiteChats/center/useJoinPublicChat.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 
 type ChannelProps = WithLanguageType & {
     channelId: string;
@@ -34,8 +36,9 @@ function WebsiteChannelInfo({
     websiteChannels,
     resolveLanguageKey,
 }: ChannelProps) {
-    const {read, write} = useAccess("channels");
-    const canTakeOver = write === true || (!!write && typeof write === "object" && !!write.users);
+    const {read} = useAccess("channels");
+    // Joining, releasing and closing a website chat are one permission (D71), not a write on channel members.
+    const canTakeOver = useActionAccess("channels", "answerWebsiteChats");
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.authentication.user);
     const channel = useSelector((state: RootState) => state.chat.channels[channelId]);
@@ -66,12 +69,12 @@ function WebsiteChannelInfo({
         );
     }
 
-    async function handleTakeOver(event: MouseEvent) {
+    function handleTakeOver(event: MouseEvent) {
         event.stopPropagation();
         if (!canTakeOver) {
             return;
         }
-        await join(channel._id);
+        join(channel._id);
     }
 
     if (!read || !channel || !channel.metaData?.isPublicChat) {
@@ -97,7 +100,7 @@ function WebsiteChannelInfo({
                     <UserAvatar user={avatarUser} />
                 ) : (
                     <Avatar className="flex size-10 shrink-0 items-center justify-center border">
-                        <Globe size={18} />
+                        <IconWorld size={18} />
                     </Avatar>
                 )}
 
@@ -133,15 +136,16 @@ function WebsiteChannelInfo({
 
                     {isWaiting && canTakeOver && (
                         <div className="pt-2">
-                            <button
+                            <Button
                                 type="button"
                                 disabled={joining}
-                                onClick={(event) => void handleTakeOver(event)}
-                                className="bg-primary text-primary-foreground inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs disabled:opacity-50"
+                                onClick={handleTakeOver}
+                                size="xs"
+                                className="rounded-md"
                             >
-                                <UserCheck size={13} />
+                                <IconUserCheck size={13} />
                                 {joining ? resolveLanguageKey("joining") : resolveLanguageKey("takeOver")}
-                            </button>
+                            </Button>
                         </div>
                     )}
                 </div>

@@ -1,3 +1,4 @@
+import {IconChevronDown, IconChevronUp} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {CompanyRole as CompanyRoleType} from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
@@ -7,7 +8,6 @@ import PermissionsTable from "@coreModule/clients/panel/private/tenancy/systemSe
 import React, {useState} from "react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
-import {ChevronDown, ChevronUp} from "lucide-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
@@ -103,7 +103,7 @@ const RoleCard = React.memo(function RoleCard({
                                     setOpen((prev) => !prev);
                                 }}
                             >
-                                {open ? <ChevronUp /> : <ChevronDown />}
+                                {open ? <IconChevronUp /> : <IconChevronDown />}
                             </Button>
                         </div>
                         <Collapsible open={open} onOpenChange={setOpen} className="w-full">

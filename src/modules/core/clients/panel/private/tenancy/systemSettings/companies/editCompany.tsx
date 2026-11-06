@@ -1,10 +1,10 @@
-import {Save} from "lucide-react";
+import {IconDeviceFloppy} from "@tabler/icons-react";
 import type {ReactElement} from "react";
 import {createGenericEditPage, type GenericEditPageProps} from "@coreModule/components/entityPage/pages/createGenericEditPage.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import type {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import {editCompanyFormSchema} from "armonia/src/modules/core/api/company/private/company/editCompany.form.validator.ts";
 import {EditCompanyFormType} from "armonia/src/modules/core/api/company/private/company/company.schema-def.ts";
+import {notifyCompanyUpdated} from "@coreModule/clients/panel/private/sidebar/companies/companyUpdatedEvent.ts";
 
 const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormType>({
     languagePath: "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/editCompany.tsx",
@@ -13,7 +13,7 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormType>({
     apiUrl: "/api/company",
     /** Same company scope as GET — `authMW` resolves `req.company` from `x-company-id`. */
     patchAddToHeader: [{whatToGet: "entityId", whereToPut: "x-company-id"}],
-    fetchEntity: (entityId: string) => apiClient.get<Company>("/api/company", {headers: {"x-company-id": entityId}}).then((r) => r.data),
+    entityRequest: {method: "get", url: "/api/company", data: {}, addToHeader: [{whatToGet: "entityId", whereToPut: "x-company-id"}]},
     schema: editCompanyFormSchema,
     buildInitialValues: (companyData, writeFields): EditCompanyFormType => ({
         _id:            companyData._id,
@@ -53,7 +53,8 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormType>({
             }
             : undefined,
     }),
-    submitIcon: <Save />,
+    submitIcon: <IconDeviceFloppy />,
+    afterSuccess: notifyCompanyUpdated,
     mapSubmitPayload: (data, {writeFields}) => {
         const postBody: Omit<EditCompanyFormType, "logo"> & {logo?: string | null} = {
             _id:            data._id!,

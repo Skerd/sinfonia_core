@@ -1,7 +1,7 @@
+import {IconRotate} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {RotateCcw} from "lucide-react";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import ActionDropdownItem from "@coreModule/components/viewEngine/widgets/actions/dropdowns/actionDropdownItem.tsx";
 
@@ -15,7 +15,7 @@ function RestoreDropdown({resolveLanguageKey, onAction, accessModel}: RestoreDro
     return (
         <ActionDropdownItem
             label={resolveLanguageKey("title")}
-            Icon={RotateCcw}
+            Icon={IconRotate}
             shortcutKey="Enter"
             shortcutLabel="⏎"
             tone="success"

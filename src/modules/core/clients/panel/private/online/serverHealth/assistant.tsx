@@ -1,7 +1,7 @@
+import {IconRobot} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
 import {clsx} from "clsx";
-import {Bot} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -58,7 +58,7 @@ function AssistantOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLangu
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Bot className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
+                    <IconRobot className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>

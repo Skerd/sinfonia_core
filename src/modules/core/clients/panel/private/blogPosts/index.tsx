@@ -1,8 +1,8 @@
+import {IconBook} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useMemo} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {BookOpen} from "lucide-react";
 import EntityListPage, {EntityListCreateButton, EntityListHeader, type QuickFilterDef} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators";
 import type {BlogPost} from "armonia/src/modules/core/api/auxiliary/private/blogPost/blogPost.dto.ts";
@@ -43,7 +43,7 @@ function AllBlogPosts({resolveLanguageKey}: WithLanguageType) {
                     <EntityListCreateButton
                         ctx={ctx}
                         path="/company/blogPosts/create"
-                        icon={<BookOpen className="h-4 w-4" />}
+                        icon={<IconBook className="h-4 w-4" />}
                         labelKey="createBlogPost"
                     />
                 </EntityListHeader>

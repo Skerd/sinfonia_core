@@ -1,9 +1,9 @@
+import {IconPlayerPlay} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {Play} from "lucide-react";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import type {CronJob} from "armonia/src/modules/core/api/auxiliary/private/cronJob/cronJob.dto.ts";
 
@@ -29,7 +29,7 @@ function RunCronJob({job, onAction, resolveLanguageKey}: RunCronJobProps) {
 
     return (
         <DropdownMenuItem onClick={() => { openDialog(); }}>
-            <Play size={16}/>
+            <IconPlayerPlay size={16}/>
             {resolveLanguageKey("title")}
             <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>
         </DropdownMenuItem>

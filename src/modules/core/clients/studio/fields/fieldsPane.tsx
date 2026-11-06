@@ -104,7 +104,7 @@ export default function FieldsPane({
 
             <div className="flex shrink-0 items-center gap-1 border-b px-2 py-1">
                 {(["all", "rendered", "missing"] as const).map((option) => (
-                    <button
+                    <Button variant="bare"
                         key={option}
                         type="button"
                         onClick={() => setStatus(option)}
@@ -121,7 +121,7 @@ export default function FieldsPane({
                                 {option === "rendered" ? summary.rendered : summary.missing}
                             </span>
                         )}
-                    </button>
+                    </Button>
                 ))}
                 <span className="ml-auto text-3xs tabular-nums text-muted-foreground">
                     {visible.length} shown
@@ -155,7 +155,7 @@ export default function FieldsPane({
                                     style={{paddingLeft: 8 + field.depth * 10}}
                                 >
                                     {canReveal ? (
-                                        <button
+                                        <Button variant="bare"
                                             type="button"
                                             onClick={() => onReveal?.(field, site)}
                                             className="flex min-w-0 flex-1 items-center text-left hover:text-primary"
@@ -166,7 +166,7 @@ export default function FieldsPane({
                                             }
                                         >
                                             <FieldPath field={field} />
-                                        </button>
+                                        </Button>
                                     ) : (
                                         <FieldPath field={field} />
                                     )}

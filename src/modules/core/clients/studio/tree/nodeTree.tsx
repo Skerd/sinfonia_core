@@ -139,7 +139,7 @@ function NodeTreeRow({
                         <IconGripVertical className="size-3.5" />
                     </span>
                 ) : (
-                    <button
+                    <Button variant="bare"
                         type="button"
                         aria-label="Drag to move"
                         className="cursor-grab p-1 text-muted-foreground/60 active:cursor-grabbing"
@@ -147,11 +147,11 @@ function NodeTreeRow({
                         {...listeners}
                     >
                         <IconGripVertical className="size-3.5" />
-                    </button>
+                    </Button>
                 )}
 
                 {row.childCount > 0 ? (
-                    <button
+                    <Button variant="bare"
                         type="button"
                         aria-label={collapsed ? "Expand" : "Collapse"}
                         onClick={onToggleCollapse}
@@ -162,12 +162,12 @@ function NodeTreeRow({
                         ) : (
                             <IconChevronDown className="size-3.5" />
                         )}
-                    </button>
+                    </Button>
                 ) : (
                     <span className="w-[1.125rem]" />
                 )}
 
-                <button
+                <Button variant="bare"
                     type="button"
                     onClick={onSelect}
                     className="flex min-w-0 flex-1 items-center gap-1.5 py-1 text-left"
@@ -243,7 +243,7 @@ function NodeTreeRow({
                             />
                         </TooltipDisplayer>
                     )}
-                </button>
+                </Button>
 
                 {!isDragActive && (
                     <div className="flex shrink-0 items-center opacity-0 transition-opacity group-hover/row:opacity-100">

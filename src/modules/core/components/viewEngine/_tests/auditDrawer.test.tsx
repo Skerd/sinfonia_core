@@ -9,7 +9,8 @@ vi.mock("@coreModule/helpers/hocs/withLanguage.tsx", async (importOriginal) => (
     default: (await import("./harness.tsx")).fakeWithLanguage,
 }));
 const get = vi.hoisted(() => vi.fn());
-vi.mock("@coreModule/helpers/apiClient/apiClient.ts", () => ({default: {get, post: vi.fn()}}));
+// The drawer loads through `useHttpRequest`, which calls `apiClient(config)`; `get` stands for the GET.
+vi.mock("@coreModule/helpers/apiClient/apiClient.ts", () => ({default: Object.assign((config: {method: string}) => get(config), {get, post: vi.fn()})}));
 
 const {default: SheetAuditHistoryDrawer} = await import("../audit/sheetAuditHistory.tsx");
 const {t} = await import("./harness.tsx");

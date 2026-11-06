@@ -191,7 +191,7 @@ export function StringArrayInput<TFieldValues extends FieldValues = FieldValues>
                                         {item}
                                     </TruncatedValue>
                                     <TooltipDisplayer tooltip={removeTooltip}>
-                                        <button
+                                        <Button variant="bare"
                                             type="button"
                                             aria-label={`${removeTooltip}: ${item}`}
                                             disabled={loading}
@@ -199,7 +199,7 @@ export function StringArrayInput<TFieldValues extends FieldValues = FieldValues>
                                             onClick={() => removeAt(index)}
                                         >
                                             <IconX className="size-3 pointer-events-none" />
-                                        </button>
+                                        </Button>
                                     </TooltipDisplayer>
                                 </Badge>
                             ))}

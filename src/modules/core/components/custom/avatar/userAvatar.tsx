@@ -4,6 +4,7 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {getName, NamedUser} from "@coreModule/helpers/general/names.ts";
 import {MediaAvatar} from "@coreModule/components/viewEngine/widgets/display/mediaAvatar.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 type AvatarUser = ChannelUser | SimpleUser;
 
@@ -56,7 +57,7 @@ export function UserAvatar({avatarClassName, user, onClick}: UserAvatarProps) {
     return (
         <TooltipDisplayer tooltip={fullName || undefined}>
             {interactive ? (
-                <button
+                <Button variant="bare"
                     type="button"
                     // Without this the button has no accessible name whenever the photo is missing
                     // or fails to load, since the fallback is initials or an icon, not alt text.
@@ -65,7 +66,7 @@ export function UserAvatar({avatarClassName, user, onClick}: UserAvatarProps) {
                     onClick={onClick}
                 >
                     {avatar}
-                </button>
+                </Button>
             ) : (
                 // Deliberately no wrapper element: `MediaAvatar` forwards the tooltip trigger's ref
                 // and props to the avatar itself. A wrapper `div` used to sit here and silently

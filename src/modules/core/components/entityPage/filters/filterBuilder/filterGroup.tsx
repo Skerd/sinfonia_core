@@ -1,4 +1,4 @@
-import {GitBranch, Plus, Trash2} from "lucide-react";
+import {IconGitBranch, IconPlus, IconTrash} from "@tabler/icons-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import FilterRuleComponent from "./filterRule.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
@@ -38,7 +38,7 @@ function OperatorSegment({
             aria-label={String(resolveLanguageKey("matchMode"))}
             className="inline-flex items-center rounded-md border border-border bg-background p-0.5 shadow-xs"
         >
-            <button
+            <Button variant="bare"
                 type="button"
                 role="radio"
                 aria-checked={value === "and"}
@@ -52,8 +52,8 @@ function OperatorSegment({
                 )}
             >
                 {resolveLanguageKey("matchAllShort")}
-            </button>
-            <button
+            </Button>
+            <Button variant="bare"
                 type="button"
                 role="radio"
                 aria-checked={value === "or"}
@@ -67,7 +67,7 @@ function OperatorSegment({
                 )}
             >
                 {resolveLanguageKey("matchAnyShort")}
-            </button>
+            </Button>
         </div>
     );
 }
@@ -115,7 +115,7 @@ export function FilterGroup({
                             onClick={() => parentId != null && onRemoveGroup(parentId, group.id)}
                             className="h-7 w-7 shrink-0 px-0 text-destructive hover:text-destructive hover:bg-destructive/10"
                         >
-                            <Trash2 className="size-4" />
+                            <IconTrash className="size-4" />
                         </Button>
                     </TooltipDisplayer>
                 )}
@@ -162,7 +162,7 @@ export function FilterGroup({
                             className="flex grow w-full rounded-md"
                             onClick={() => onAddRule(group.id)}
                         >
-                            <Plus className="size-4" />
+                            <IconPlus className="size-4" />
                             {resolveLanguageKey("newRule")}
                         </Button>
                     </div>
@@ -176,7 +176,7 @@ export function FilterGroup({
                             className="text-muted-foreground"
                             onClick={() => onAddGroup(group.id)}
                         >
-                            <GitBranch className="size-4" />
+                            <IconGitBranch className="size-4" />
                             {resolveLanguageKey("addGroup")}
                         </Button>
                     )}

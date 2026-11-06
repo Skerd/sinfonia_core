@@ -1,8 +1,8 @@
+import {IconBlocks, IconChecks, IconFileText, IconWorld, IconMail, IconPhone, IconPhotoDown, IconArrowsMaximize, IconArrowsMinimize} from "@tabler/icons-react";
 import {compose} from "redux";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
-import {Blocks, CheckCheck, FileText, Globe, Mail, Phone} from "lucide-react";
 import "leaflet/dist/leaflet.css";
 import {RefObject, useCallback, useRef, useState, lazy, memo, Suspense} from "react";
 import {useReactToPrint} from "react-to-print";
@@ -12,7 +12,6 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {ImageDown, Maximize2, Minimize2} from "lucide-react";
 import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx";
 import DeactivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx";
 import ActivateCompanyDialog from "../dialogs/activateCompanyDialog.tsx";
@@ -29,6 +28,7 @@ import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCar
 import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {openActionMenuFromContextMenu} from "@coreModule/components/viewEngine/widgets/actions/menu/openActionMenuFromContextMenu.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 const CompanyMap = lazy(() => import("@coreModule/components/viewEngine/widgets/addresses/mapWithMultiplePins.tsx"));
 
@@ -209,7 +209,7 @@ const CompanyCard = memo(function CompanyCard({
                                         reactToPrintFn();
                                     }}
                                 >
-                                    <ImageDown size={16} />
+                                    <IconPhotoDown size={16} />
                                     {resolveLanguageKey("downloadCard")}
                                 </DropdownMenuItem>
                                 {!single && accessFieldPathExists(read, "description") && !!row.description && (
@@ -220,7 +220,7 @@ const CompanyCard = memo(function CompanyCard({
                                             setExpanded((prev) => !prev);
                                         }}
                                     >
-                                        {expanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+                                        {expanded ? <IconArrowsMinimize size={16} /> : <IconArrowsMaximize size={16} />}
                                         {resolveLanguageKey(expanded ? "collapse" : "expand")}
                                     </DropdownMenuItem>
                                 )}
@@ -232,7 +232,7 @@ const CompanyCard = memo(function CompanyCard({
                             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" ref={companyInfoRef}>
                                 <EntityCard.Body className="flex-col flex-nowrap gap-4">
                                     <EntityCardRow
-                                        icon={Mail}
+                                        icon={IconMail}
                                         tooltip={resolveLanguageKey("email")}
                                         label={resolveLanguageKey("email")}
                                         path="email"
@@ -247,7 +247,7 @@ const CompanyCard = memo(function CompanyCard({
                                         }
                                     </EntityCardRow>
                                     <EntityCardRow
-                                        icon={Phone}
+                                        icon={IconPhone}
                                         tooltip={resolveLanguageKey("phone")}
                                         label={resolveLanguageKey("phone")}
                                         path="phoneNumber"
@@ -262,14 +262,14 @@ const CompanyCard = memo(function CompanyCard({
                                         }
                                     </EntityCardRow>
                                     <EntityCardRow
-                                        icon={FileText}
+                                        icon={IconFileText}
                                         tooltip={resolveLanguageKey("vat")}
                                         label={resolveLanguageKey("vat")}
                                         path="vat"
                                         value={row.vat}
                                     />
                                     <EntityCardRow
-                                        icon={Globe}
+                                        icon={IconWorld}
                                         tooltip={resolveLanguageKey("website")}
                                         label={resolveLanguageKey("website")}
                                         path="website"
@@ -287,7 +287,7 @@ const CompanyCard = memo(function CompanyCard({
                                         would count as restricted); My company lists them on its own. */}
                                     {!single && row.modules ? (
                                         <EntityCardRow
-                                            icon={Blocks}
+                                            icon={IconBlocks}
                                             tooltip={resolveLanguageKey("modules")}
                                             label={resolveLanguageKey("modules")}
                                             show
@@ -309,7 +309,7 @@ const CompanyCard = memo(function CompanyCard({
                                     ) : null}
                                     {expanded ? (
                                         <EntityCardRow
-                                            icon={CheckCheck}
+                                            icon={IconChecks}
                                             tooltip={resolveLanguageKey("allowedDomains")}
                                             label={resolveLanguageKey("allowedDomains")}
                                             path="allowedDomains"
@@ -336,7 +336,7 @@ const CompanyCard = memo(function CompanyCard({
                                                         {row.allowedDomains.length > numberOfVisibleDomains && (
                                                             <Popover>
                                                                 <PopoverTrigger asChild>
-                                                                    <button
+                                                                    <Button variant="bare"
                                                                         type="button"
                                                                         className="inline-flex"
                                                                         onClick={(e) => e.stopPropagation()}
@@ -348,7 +348,7 @@ const CompanyCard = memo(function CompanyCard({
                                                                             +
                                                                             {row.allowedDomains.length - numberOfVisibleDomains}
                                                                         </Badge>
-                                                                    </button>
+                                                                    </Button>
                                                                 </PopoverTrigger>
                                                                 <PopoverContent
                                                                     align="start"

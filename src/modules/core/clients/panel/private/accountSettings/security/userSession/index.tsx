@@ -1,7 +1,7 @@
+import {IconKey} from "@tabler/icons-react";
 import {compose} from "redux";
-import {useImperativeHandle, useMemo, useRef, useState} from "react";
+import {useImperativeHandle, useMemo, useRef, useState, type ComponentType} from "react";
 import {useSelector} from "react-redux";
-import {KeyRound} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -80,7 +80,7 @@ function UserAccountSecurityUserSession({
             defaultOpen={false}
         >
             <div className="flex items-start gap-1.5 rounded-lg border border-border/60 bg-muted/40 p-2 text-xs text-muted-foreground">
-                <KeyRound className="mt-0.5 size-3.5 shrink-0" />
+                <IconKey className="mt-0.5 size-3.5 shrink-0" />
                 <span>{resolveLanguageKey("helperText")}</span>
             </div>
             <EntityListPage<UserSession>
@@ -151,15 +151,26 @@ function UserAccountSecurityUserSession({
     );
 }
 
-export default compose(
+const UserAccountSecurityUserSessionWithRevoke = compose(
     withLanguage("src/modules/core/clients/panel/private/accountSettings/security/userSession/index.tsx"),
     withAxios<{message: string}, {_id: string}>(
         {
             method: "POST",
-            url: "/api/user/userSession/revoke",
+            url: "/api/user/userSession",
+            addToPath: [{whatToGet: "revokeRoute"}],
             data: {},
         },
         true,
     ),
     withDebug(true, true, "userSessions")
-)(UserAccountSecurityUserSession);
+)(UserAccountSecurityUserSession) as ComponentType<{specificUserId?: string; revokeRoute: "revoke" | "revokeOwn"}>;
+
+/** Your own sessions end through `revokeOwn`, which only accepts them; an admin viewing another user uses `revoke` (TD-B24). */
+export default function UserAccountSecurityUserSessionPage({specificUserId}: {specificUserId?: string}) {
+    return (
+        <UserAccountSecurityUserSessionWithRevoke
+            specificUserId={specificUserId}
+            revokeRoute={specificUserId ? "revoke" : "revokeOwn"}
+        />
+    );
+}

@@ -1,6 +1,6 @@
-import { useRef, useState, useEffect } from "react";
+import {IconX, IconEye, IconPlayerPlay, IconPlus, IconFileText} from "@tabler/icons-react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { useFormContext, type FieldPath, type FieldValues } from "react-hook-form";
-import { X, Eye, Play, Plus, FileText } from "lucide-react";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { cn } from "@coreModule/components/lib/utils.ts";
 import { Dialog, DialogContent } from "@coreModule/components/ui/dialog.tsx";
@@ -12,7 +12,7 @@ import {
     FormMessage,
 } from "@coreModule/components/ui/form.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import MediaPreviewContent from "@coreModule/components/viewEngine/widgets/media/mediaPreviewContent.tsx";
 import {
     classifyMedia,
@@ -21,9 +21,11 @@ import {
     type FieldMediaType,
 } from "@coreModule/components/viewEngine/widgets/media/mediaPreviewKind.ts";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
+import {Input} from "@coreModule/components/ui/input.tsx";
 
 
 const VIDEO_ALT_MAX_LENGTH = 15;
+const MEDIA_INFO_REQUEST = {method: "get" as const, url: "/api/auxiliary/media", data: {}, addToPath: [{whatToGet: "mediaId"}, {whatToGet: "infoSegment"}]};
 
 type MediaType = FieldMediaType;
 
@@ -70,30 +72,18 @@ function MediaPreviewWithRemove({
     fetchInfo = false,
 }: MediaPreviewWithRemoveProps) {
     const [open, setOpen] = useState(false);
-    const [info, setInfo] = useState<MediaInfoDto | null>(null);
     const sizeClasses = {
         sm: "w-32 h-32",
         md: "w-40 h-40",
         lg: "w-48 h-48",
     };
 
-    useEffect(() => {
-        if (!fetchInfo) return;
-        const id = mediaIdFromSrc(src);
-        if (!id) return;
-        let cancelled = false;
-        apiClient
-            .get<MediaInfoDto>(`/api/auxiliary/media/${id}/info`)
-            .then((res) => {
-                if (!cancelled) setInfo(res.data);
-            })
-            .catch(() => {
-                /* keep field-level classification */
-            });
-        return () => {
-            cancelled = true;
-        };
-    }, [fetchInfo, src]);
+    // Real mime/name/size for a stored file; silent, the field-level classification stays otherwise.
+    const mediaId = fetchInfo ? mediaIdFromSrc(src) : null;
+    const [infoLoad, setInfoLoad] = useState({mediaId, count: mediaId ? 1 : 0});
+    if (infoLoad.mediaId !== mediaId) setInfoLoad({mediaId, count: mediaId ? infoLoad.count + 1 : infoLoad.count});
+    const infoProps = useMemo(() => ({mediaId, infoSegment: "info"}), [mediaId]);
+    const {data: info} = useHttpRequest<MediaInfoDto>(MEDIA_INFO_REQUEST, {}, infoLoad.count, true, {}, infoProps);
 
     const resolvedMime = info?.mimeType || fileType;
     const resolvedName = info?.originalName || filename || alt;
@@ -136,11 +126,11 @@ function MediaPreviewWithRemove({
                             disabled={disabled}
                         >
                             {kind === "video" ? (
-                                <Play className="h-5 w-5" />
+                                <IconPlayerPlay className="h-5 w-5" />
                             ) : kind === "image" ? (
-                                <Eye className="h-5 w-5" />
+                                <IconEye className="h-5 w-5" />
                             ) : (
-                                <FileText className="h-5 w-5" />
+                                <IconFileText className="h-5 w-5" />
                             )}
                         </Button>
                         <Button
@@ -151,7 +141,7 @@ function MediaPreviewWithRemove({
                             onClick={onRemove}
                             disabled={disabled}
                         >
-                            <X className="h-5 w-5" />
+                            <IconX className="h-5 w-5" />
                         </Button>
                     </div>
                 </div>
@@ -425,7 +415,7 @@ function MediaField({
         const slotLabel = isSingle ? uploadHint : `${slotIndex + 1}/${maxCount}`;
         return (
             <div key={`placeholder-${slotIndex}`} className="relative">
-                <button
+                <Button variant="bare"
                     type="button"
                     aria-label={slotLabel}
                     className={cn(
@@ -435,7 +425,7 @@ function MediaField({
                     onClick={() => inputRef.current?.click()}
                 >
                     <div className="flex flex-col text-center gap-y-1">
-                        <Plus className="mx-auto text-muted-foreground" />
+                        <IconPlus className="mx-auto text-muted-foreground" />
                         <p className="text-xs text-muted-foreground px-2">
                             {uploadHint}
                         </p>
@@ -443,10 +433,10 @@ function MediaField({
                             {slotLabel}
                         </p>
                     </div>
-                </button>
+                </Button>
                 {
                     (isSingle || isFirstPlaceholder) &&
-                    <input
+                    <Input
                         ref={inputRef}
                         type="file"
                         className="hidden"

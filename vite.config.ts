@@ -2,9 +2,7 @@ import fs from "node:fs";
 import path from "path";
 import { fileURLToPath } from "node:url";
 import {defineConfig, loadEnv, normalizePath, type Plugin} from 'vite';
-//@ts-ignore
 import react from '@vitejs/plugin-react';
-//@ts-ignore
 import tailwindcss from '@tailwindcss/vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import {createRequire} from "node:module";
@@ -96,8 +94,8 @@ function sinfoniaAppFaviconPlugin(appRoot: string): Plugin {
  * When a module selection is active, stub files under disabled `src/modules/<name>`
  * packages so eager contribution globs do not pull them into the graph.
  * `rolesPermissions.json` is left intact: the roles catalog in the database is global.
- * `enabledModules` comes from `resolveEnabledModules`, so it already includes `core`, `base`
- * and every `dependsOn` module. (`base` holds the shared `apiClient`; stubbing it would break every request.)
+ * `enabledModules` comes from `resolveEnabledModules`, so it already includes `core` (which holds the shared
+ * `apiClient`) and every `dependsOn` module.
  */
 function enabledModulesExcludePlugin(enabledModules: string[] | null): Plugin {
     if (!enabledModules) {

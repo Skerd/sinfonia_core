@@ -1,10 +1,9 @@
+import {IconLockOpen} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {LockKeyholeOpen} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {useImperativeHandle, useState} from "react";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
@@ -15,14 +14,16 @@ import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {useTableUpdate} from "@coreModule/helpers/hooks/useTableUpdate.ts";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 
-type UnlockActivationActionProps = WithLanguageType & WithAxiosType<ActionMessage, UnlockUserRequestFormType> & {
+type UnlockActivationActionProps = WithLanguageType & WithAxiosType<ActionMessage, UnlockUserRequestFormType & {_id: string}> & {
     user: CompanyUserType;
     specificUserId?: string;
 }
 
-function UnlockActivationAction({user, resolveLanguageKey, onFilterChange, loading, innerRef, specificUserId}: UnlockActivationActionProps) {
-    const {write} = useAccess("users", !specificUserId ? "self" : "others");
+function UnlockActivationAction({user, resolveLanguageKey, onFilterChange, loading, innerRef}: UnlockActivationActionProps) {
+    // The `others` permission of this account action (D65), not a field-write stand-in.
+    const allowed = useActionAccess("users", "unlockActivation", "others");
     const {refetch} = useTableUpdate();
     const [open, setOpen] = useState(false);
     const [resendEmail, setResendEmail] = useState(false);
@@ -41,15 +42,15 @@ function UnlockActivationAction({user, resolveLanguageKey, onFilterChange, loadi
     }));
 
     const shortcut = "2";
-    useKeyboardShortcuts(shortcut, () => setOpen(true), {enabled: hasLock});
+    useKeyboardShortcuts(shortcut, () => setOpen(true), {enabled: hasLock && allowed});
 
     if( !hasLock ) return (<></>)
-    if (!write?.requests?.keys?.activation?.keys?.lockedUntil || !hasLock) return <HiddenElement />;
+    if (!allowed) return <HiddenElement />;
 
     return (
         <>
             <DropdownMenuItem onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen(true); }}>
-                <LockKeyholeOpen size={16} />
+                <IconLockOpen size={16} />
                 <p>{resolveLanguageKey("unlockActivation")}</p>
                 <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>
             </DropdownMenuItem>
@@ -58,11 +59,11 @@ function UnlockActivationAction({user, resolveLanguageKey, onFilterChange, loadi
                 onOpenChange={(isOpen: boolean) => { setOpen(isOpen); if (!isOpen) setResendEmail(false); }}
                 title={resolveLanguageKey("unlockActivationConfirm")}
                 desc={resolveLanguageKey("unlockActivationConfirmDesc")}
-                handleConfirm={() => onFilterChange({ resendEmail })}
+                handleConfirm={() => onFilterChange({_id: user._id, resendEmail})}
                 isLoading={loading}
             >
                 {
-                    write?.requests?.keys?.activation?.keys?.date &&
+                    allowed &&
                     <div className="flex items-center gap-x-2 mt-4">
                         <Checkbox
                             id="unlock-activation-resend"
@@ -82,13 +83,9 @@ function UnlockActivationAction({user, resolveLanguageKey, onFilterChange, loadi
 export default compose(
     withLanguage("src/modules/core/clients/panel/private/users/center/actions/unlockActivation.tsx"),
     withAxios({
-        method: "PATCH",
+        method: "POST",
         url: "/api/company/users/unlockActivation",
-        data: {},
-        addToHeader: [{
-            whatToGet: "specificUserId",
-            whereToPut: "specificUser"
-        }]
+        data: {}
     }, true),
     withDebug(true, true, "users")
 )(UnlockActivationAction);

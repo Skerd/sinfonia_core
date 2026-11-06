@@ -1,8 +1,10 @@
-import {useEffect, useState} from "react";
+import {useMemo, useState} from "react";
 import {useSelector} from "react-redux";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import type {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
+
+const SAMPLE_REQUEST = {method: "post" as const, url: "", data: {}, extraHeader: {"x-studio-sample": "1"}};
 
 export type SampleRow = Record<string, unknown> & {_id: string};
 
@@ -24,37 +26,20 @@ type SampleRowsState = {
  */
 export function useSampleRows(apiUrl: string | undefined, limit = 5): SampleRowsState {
     const companyId = useSelector((state: RootState) => state.authentication.user?.company?._id);
-    const [state, setState] = useState<SampleRowsState>({rows: [], loading: false, error: null});
+    // A new load per endpoint, company or size; silent (the preview shows the error itself).
+    const loadKey = apiUrl ? `${apiUrl}|${companyId ?? ""}|${limit}` : "";
+    const [load, setLoad] = useState({loadKey, count: loadKey ? 1 : 0});
+    if (load.loadKey !== loadKey) setLoad({loadKey, count: loadKey ? load.count + 1 : load.count});
+    const body = useMemo(() => ({offset: 0, limit}), [limit]);
+    const runtimeProps = useMemo(() => ({url: apiUrl}), [apiUrl]);
+    const {data, loading, error} = useHttpRequest<TableResponse<SampleRow>>(SAMPLE_REQUEST, body, load.count, true, {}, runtimeProps);
 
-    useEffect(() => {
-        if (!apiUrl) {
-            setState({rows: [], loading: false, error: null});
-            return;
-        }
-
-        const abort = new AbortController();
-        setState({rows: [], loading: true, error: null});
-
-        apiClient
-            .post<TableResponse<SampleRow>>(apiUrl, {offset: 0, limit}, {
-                signal: abort.signal,
-                headers: {"x-studio-sample": "1"},
-            })
-            .then(({data}) => {
-                if (abort.signal.aborted) return;
-                setState({rows: data?.data ?? [], loading: false, error: null});
-            })
-            .catch((error: unknown) => {
-                if (abort.signal.aborted) return;
-                setState({
-                    rows: [],
-                    loading: false,
-                    error: error instanceof Error ? error.message : "Could not load sample rows",
-                });
-            });
-
-        return () => abort.abort();
-    }, [apiUrl, companyId, limit]);
-
+    const state: SampleRowsState = !apiUrl
+        ? {rows: [], loading: false, error: null}
+        : {
+            rows: loading || error ? [] : data?.data ?? [],
+            loading,
+            error: error ? error.message || "Could not load sample rows" : null,
+        };
     return state;
 }

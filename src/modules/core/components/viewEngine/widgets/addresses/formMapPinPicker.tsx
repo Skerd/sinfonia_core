@@ -29,8 +29,8 @@ export default function FormMapPinPicker({
     const pLat = fieldPrefix ? `${fieldPrefix}.${latField}` : latField;
     const pLng = fieldPrefix ? `${fieldPrefix}.${lngField}` : lngField;
 
-    const latVal = (form.watch(pLat as any) as number | undefined) ?? defaultLat;
-    const lngVal = (form.watch(pLng as any) as number | undefined) ?? defaultLng;
+    const latVal = (form.watch(pLat) as number | undefined) ?? defaultLat;
+    const lngVal = (form.watch(pLng) as number | undefined) ?? defaultLng;
 
     if (loading) return null;
 
@@ -41,8 +41,8 @@ export default function FormMapPinPicker({
                 longitude={lngVal}
                 onPinChange={(coords: { lat: number; lng: number } | null) => {
                     if (coords) {
-                        form.setValue(pLat as any, coords.lat);
-                        form.setValue(pLng as any, coords.lng);
+                        form.setValue(pLat, coords.lat);
+                        form.setValue(pLng, coords.lng);
                     }
                 }}
             />

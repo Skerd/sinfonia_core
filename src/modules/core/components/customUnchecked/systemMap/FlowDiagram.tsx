@@ -11,6 +11,7 @@ import {
 import "@xyflow/react/dist/style.css";
 import type {SystemMapFlow} from "./systemMap.types.ts";
 import {FlowStepNode} from "./nodes.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 const nodeTypes = {flowStep: FlowStepNode};
 
@@ -128,7 +129,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                         const on = f.id === flow.id;
                         const color = FLOW_ACCENTS[f.id] ?? "var(--muted-foreground)";
                         return (
-                            <button
+                            <Button variant="bare"
                                 key={f.id}
                                 type="button"
                                 onClick={() => {
@@ -143,7 +144,7 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                                 }}
                             >
                                 {f.title}
-                            </button>
+                            </Button>
                         );
                     })}
                 </div>
@@ -203,13 +204,13 @@ export function FlowDiagram({flows}: FlowDiagramProps) {
                             <ol className="mt-3 flex flex-col gap-1.5 list-decimal list-inside text-xs">
                                 {flow.steps.map((s) => (
                                     <li key={s.id}>
-                                        <button
+                                        <Button variant="bare"
                                             type="button"
                                             className="hover:underline text-left"
                                             onClick={() => setSelectedStepId(s.id)}
                                         >
                                             {s.label}
-                                        </button>
+                                        </Button>
                                     </li>
                                 ))}
                             </ol>

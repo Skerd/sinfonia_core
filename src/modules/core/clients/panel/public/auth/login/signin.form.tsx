@@ -4,7 +4,6 @@ import { cn } from '@coreModule/components/lib/utils.ts'
 import {useDispatch} from "react-redux";
 import { useForm } from 'react-hook-form';
 import { Input } from '@coreModule/components/ui/input.tsx';
-import { Loader2, LogIn } from 'lucide-react';
 import {logIn} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import { Button } from '@coreModule/components/ui/button.tsx';
 import {getClientConfig} from "@coreModule/helpers/general/config.ts";
@@ -21,7 +20,7 @@ import {InputOTP, InputOTPGroup, InputOTPSlot} from "@coreModule/components/ui/i
 import {LoginFormResponseType, MFAEnabledLoginFormResponseType} from "armonia/src/modules/core/api/user/public/login/login.form.response.type.ts";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {IconKey} from "@tabler/icons-react";
+import {IconKey, IconLoader2, IconLogin2} from "@tabler/icons-react";
 
 const EMPTY_FORM_VALUES: LoginFormType = {
     username: "",
@@ -149,7 +148,7 @@ function SignInForm({
                             )}
                         />
                         <Button className='mt-2' disabled={mfaCode?.length !== 6 || loading}>
-                            {(loading) ? <Loader2 className='animate-spin' /> : <IconKey /> }
+                            {(loading) ? <IconLoader2 className='animate-spin' /> : <IconKey /> }
                             {resolveLanguageKey("verify")}
                         </Button>
                     </form>
@@ -208,7 +207,7 @@ function SignInForm({
                     )}
                 />
                 <Button className='mt-2' disabled={formBusy}>
-                    {(formBusy) ? <Loader2 className='animate-spin' /> : <LogIn />}
+                    {(formBusy) ? <IconLoader2 className='animate-spin' /> : <IconLogin2 />}
                     {resolveLanguageKey("signInButtonLabel")}
                 </Button>
             </form>

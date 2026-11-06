@@ -1,11 +1,11 @@
-import {useCallback, useEffect, useState} from "react";
+import {IconChevronDown, IconRefresh} from "@tabler/icons-react";
+import {useMemo, useState} from "react";
 import {useSelector} from "react-redux";
-import {ChevronDown, RefreshCw} from "lucide-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {DATE_FORMATS, formatDate} from "@coreModule/helpers/general/dateTime.ts";
 import {SheetGroup} from "@coreModule/components/viewEngine/widgets/layout/sheet/group.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -24,9 +24,7 @@ type CronJobExecutionsProps = {
     refreshNonce?: number;
 };
 
-function fetchExecutions(jobId: string, offset: number) {
-    return apiClient.post<TableResponse<CronExecution>>("/api/auxiliary/cron-jobs/executions", {offset, limit: PAGE_SIZE, jobId});
-}
+const EXECUTIONS_REQUEST = {method: "post" as const, url: "/api/auxiliary/cron-jobs/executions", data: {}};
 
 /** Run history of one job, newest first; a row opens to its error and log lines. */
 export default function CronJobExecutions({jobId, resolveLanguageKey, refreshNonce = 0}: CronJobExecutionsProps) {
@@ -38,39 +36,25 @@ export default function CronJobExecutions({jobId, resolveLanguageKey, refreshNon
 
     const [rows, setRows] = useState<CronExecution[]>([]);
     const [total, setTotal] = useState(0);
-    const [loading, setLoading] = useState(false);
     const [reloadNonce, setReloadNonce] = useState(0);
     const [expanded, setExpanded] = useState<string | null>(null);
 
-    useEffect(() => {
-        if (!canRead) return;
-        let cancelled = false;
-        setLoading(true);
-        fetchExecutions(jobId, 0)
-            .then((res) => {
-                if (cancelled) return;
-                setRows(res.data.data);
-                setTotal(res.data.total);
-            })
-            .catch(() => undefined)
-            .finally(() => {
-                if (!cancelled) setLoading(false);
-            });
-        return () => {
-            cancelled = true;
-        };
-    }, [canRead, jobId, refreshNonce, reloadNonce]);
+    // The newest page again whenever the job, a refresh or access changes; `loadMore` appends the next one.
+    const listKey = canRead ? `${jobId}|${refreshNonce}|${reloadNonce}` : "";
+    const [request, setRequest] = useState({listKey, offset: 0, count: listKey ? 1 : 0});
+    if (request.listKey !== listKey) {
+        setRequest({listKey, offset: 0, count: listKey ? request.count + 1 : request.count});
+    }
+    const body = useMemo(() => ({offset: request.offset, limit: PAGE_SIZE, jobId}), [request.offset, jobId]);
+    // Silent: a failed load keeps what is on screen.
+    const {loading} = useHttpRequest<TableResponse<CronExecution>>(EXECUTIONS_REQUEST, body, request.count, true, {
+        success: (data) => {
+            setRows((prev) => (request.offset === 0 ? data.data : [...prev, ...data.data]));
+            setTotal(data.total);
+        },
+    });
 
-    const loadMore = useCallback(() => {
-        setLoading(true);
-        fetchExecutions(jobId, rows.length)
-            .then((res) => {
-                setRows((prev) => [...prev, ...res.data.data]);
-                setTotal(res.data.total);
-            })
-            .catch(() => undefined)
-            .finally(() => setLoading(false));
-    }, [jobId, rows.length]);
+    const loadMore = () => setRequest((current) => ({...current, offset: rows.length, count: current.count + 1}));
 
     if (!canRead) return null;
 
@@ -91,7 +75,7 @@ export default function CronJobExecutions({jobId, resolveLanguageKey, refreshNon
                     disabled={loading}
                     aria-label={rk("refresh")}
                 >
-                    <RefreshCw className={cn("size-4", loading && "animate-spin")} />
+                    <IconRefresh className={cn("size-4", loading && "animate-spin")} />
                 </Button>
             )}
         >
@@ -107,9 +91,9 @@ export default function CronJobExecutions({jobId, resolveLanguageKey, refreshNon
                             const open = hasDetails && expanded === row._id;
                             return (
                                 <li key={row._id}>
-                                    <button
+                                    <Button variant="bare"
                                         type="button"
-                                        className="flex w-full items-center gap-3 px-3 py-2 text-left text-sm enabled:hover:bg-muted/50"
+                                        className="flex w-full items-center gap-3 px-3 py-2 text-left text-sm enabled:hover:bg-muted/50 disabled:pointer-events-auto disabled:opacity-100"
                                         disabled={!hasDetails}
                                         aria-expanded={hasDetails ? open : undefined}
                                         onClick={() => setExpanded(open ? null : row._id)}
@@ -126,11 +110,11 @@ export default function CronJobExecutions({jobId, resolveLanguageKey, refreshNon
                                         <span className="ml-auto tabular-nums text-muted-foreground">
                                             {row.status === "running" ? "…" : formatDurationMs(row.durationMs)}
                                         </span>
-                                        <ChevronDown
+                                        <IconChevronDown
                                             className={cn("size-4 shrink-0 transition-transform", open && "rotate-180", !hasDetails && "invisible")}
                                             aria-hidden
                                         />
-                                    </button>
+                                    </Button>
                                     {open ? (
                                         <div className="flex flex-col gap-2 border-t bg-muted/30 px-3 py-2">
                                             {error ? <p className="text-sm text-destructive">{error}</p> : null}

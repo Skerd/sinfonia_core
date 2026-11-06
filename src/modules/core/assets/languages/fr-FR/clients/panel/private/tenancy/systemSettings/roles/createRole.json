@@ -1,25 +1,22 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/createRole.tsx",
-  "title": "Créer un rôle",
-  "description": "Ajouter un nouveau rôle avec des autorisations",
-  "failTitle": "Échec du chargement des autorisations",
-  "failDescription": "Échec du chargement des autorisations, veuillez réessayer",
-  "failTooltip": "Cliquez ici pour réessayer de charger les autorisations",
-  "noData": "Aucune autorisation trouvée, aucun rôle ne peut donc être créé",
+  "formHeader": {
+    "title": "Créer un rôle",
+    "description": "Ajouter un nouveau rôle avec des autorisations"
+  },
   "form": {
     "nameLabel": "Nom du rôle",
     "namePlaceholder": "Nom du rôle",
-    "nameDescription": "Le nom d'affichage du rôle",
     "descriptionLabel": "Description",
     "descriptionPlaceholder": "À quoi sert ce rôle",
-    "descriptionHelp": "Affichée sur la carte du rôle",
     "templateLabel": "Modèle",
-    "templatePlaceholder": "Modèle",
-    "templateDescription": "Copier les autorisations d'un autre rôle"
+    "nameDescription": "Le nom d'affichage du rôle",
+    "descriptionHelp": "Affichée sur la carte du rôle"
   },
-  "none": "Aucun",
-  "cancel": "Annuler",
-  "submit": "Créer",
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Créer"
+  },
   "axios": {
     "start": {
       "title": "Création d'un rôle",

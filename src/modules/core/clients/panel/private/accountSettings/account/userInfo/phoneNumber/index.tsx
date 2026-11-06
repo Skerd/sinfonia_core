@@ -1,6 +1,6 @@
+import {IconPencil} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useEffect, useState} from "react";
-import {Pencil} from "lucide-react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useForm} from "react-hook-form";
@@ -109,7 +109,7 @@ function AccountProfilePhoneNumber({
                             setEditing(true);
                         }}
                     >
-                        <Pencil size={14} />
+                        <IconPencil size={14} />
                         {resolveLanguageKey("edit")}
                     </Button>
                 )}

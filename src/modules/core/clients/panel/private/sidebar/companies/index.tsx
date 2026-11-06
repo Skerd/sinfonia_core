@@ -1,9 +1,9 @@
+import {IconSelector} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useEffect, useState} from "react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {ReloginProvider} from "@coreModule/helpers/context/reloginContext.tsx";
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem} from "@coreModule/components/ui/sidebar.tsx";
-import {ChevronsUpDown} from "lucide-react";
 import {DropdownMenu, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import AllCompaniesDropDownMenuContent from "@coreModule/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent";
@@ -14,6 +14,7 @@ import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.t
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import {useOnCompanyUpdated} from "@coreModule/clients/panel/private/sidebar/companies/companyUpdatedEvent.ts";
 
 type CompaniesSwitcherProps = WithLanguageType & WithAxiosType<BasicCompanyInfoFormResponseType> & {};
 
@@ -28,6 +29,7 @@ function CompaniesSwitcher({
     const {read} = useAccess("companies");
     const [forceReload, setForceReload] = useState<number>(0);
     const [menuOpen, setMenuOpen] = useState(false);
+    useOnCompanyUpdated(() => setForceReload(Date.now()));
 
     useEffect(() => {
         if( !!read && Object.keys(read).length ){
@@ -94,7 +96,7 @@ function CompaniesSwitcher({
                                 </HiddenElement>
                             </div>
                             <div className="ms-auto">
-                                <ChevronsUpDown className="size-4" />
+                                <IconSelector className="size-4" />
                             </div>
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>

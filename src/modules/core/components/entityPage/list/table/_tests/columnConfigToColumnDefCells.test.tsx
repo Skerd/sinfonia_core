@@ -13,7 +13,7 @@ import type {ReactNode} from "react";
 import type {ColumnDef, Row} from "@tanstack/react-table";
 import languageReducer from "@coreModule/helpers/redux/slices/languageSlice.ts";
 import type {TableColumnConfig} from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type.ts";
-import {columnConfigToColumnDef} from "@coreModule/components/entityPage/list/table/columnConfigToColumnDef.tsx";
+import {useColumnConfigToColumnDef} from "@coreModule/components/entityPage/list/table/columnConfigToColumnDef.tsx";
 
 type Doc = Record<string, unknown>;
 
@@ -55,7 +55,7 @@ function fakeRow(doc: Doc): Row<Doc> {
  */
 function renderCell(col: TableColumnConfig, doc: Doc, fields: Record<string, unknown> = {}) {
     function Harness() {
-        const defs = columnConfigToColumnDef<Doc>([col], {fields, timezone: "UTC"}) as ColumnDef<Doc>[];
+        const defs = useColumnConfigToColumnDef<Doc>([col], {fields, timezone: "UTC"}) as ColumnDef<Doc>[];
         const def = defs[0];
         const cell = def.cell as (ctx: {row: Row<Doc>}) => ReactNode;
         return <div data-testid="cell">{cell({row: fakeRow(doc)})}</div>;
@@ -222,7 +222,7 @@ describe("links", () => {
 describe("headers", () => {
     it("falls back to a humanised label when nothing is translated", () => {
         function Harness() {
-            const defs = columnConfigToColumnDef<Doc>([column({id: "submissionDeadline"})], {
+            const defs = useColumnConfigToColumnDef<Doc>([column({id: "submissionDeadline"})], {
                 fields: {},
                 timezone: "UTC",
             }) as ColumnDef<Doc>[];

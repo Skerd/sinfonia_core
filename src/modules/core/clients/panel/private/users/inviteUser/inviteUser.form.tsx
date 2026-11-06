@@ -1,7 +1,7 @@
+import {IconLoader2, IconSend} from "@tabler/icons-react";
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {LoaderCircle, Send} from 'lucide-react'
 import { Button } from '@coreModule/components/ui/button.tsx'
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@coreModule/components/ui/form.tsx'
 import { Input } from '@coreModule/components/ui/input.tsx'
@@ -200,7 +200,7 @@ function InviteUserForm({
                             {resolveLanguageKey("cancel")}
                         </Button>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <LoaderCircle className="animate-spin"/> : <Send size={18} />}
+                            {loading ? <IconLoader2 className="animate-spin"/> : <IconSend size={18} />}
                             {resolveLanguageKey("invite")}
                         </Button>
                     </div>

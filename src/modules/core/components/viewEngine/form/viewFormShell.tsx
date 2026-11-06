@@ -1,3 +1,4 @@
+import {IconLoader2, IconDeviceFloppy} from "@tabler/icons-react";
 import type {ReactNode} from "react";
 import {useWatch, type FieldValues, type Path, type UseFormReturn} from "react-hook-form";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -8,7 +9,6 @@ import {FieldGroup} from "@coreModule/components/ui/field.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import Header from "@coreModule/components/custom/header.tsx";
 import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
-import {LoaderCircle, Save} from "lucide-react";
 
 type ViewFormShellProps<T extends FieldValues> = {
     form: UseFormReturn<T>;
@@ -97,7 +97,7 @@ export function ViewFormShell<T extends FieldValues>({
                                             {t("formButtons.cancel")}
                                         </Button>
                                         <Button type="submit" disabled={busy || submitDisabled}>
-                                            {submitting ? <LoaderCircle className="animate-spin h-4 w-4" /> : (submitIcon ?? <Save />)}
+                                            {submitting ? <IconLoader2 className="animate-spin h-4 w-4" /> : (submitIcon ?? <IconDeviceFloppy />)}
                                             {t("formButtons.submit")}
                                         </Button>
                                     </div>

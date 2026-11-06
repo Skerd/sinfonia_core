@@ -39,10 +39,7 @@ export function DataTableHeaderRows({table}: DataTableTableHeaderProps) {
                                                 'overflow-hidden',
                                                 isActions && "sticky right-0 z-20 shadow-[-4px_0_8px_-6px_oklch(0_0_0/0.15)]",
                                                 // isSelect && "sticky left-0 z-20 w-10",
-                                                //@ts-ignore
-                                                header.column.columnDef.meta?.className,
-                                                //@ts-ignore
-                                                header.column.columnDef.meta?.thClassName,
+                                                (header.column.columnDef.meta as {className?: string} | undefined)?.className,
                                             )}
                                         >
                                             {

@@ -1,9 +1,9 @@
+import {IconPower} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {Power} from "lucide-react";
 import type {MessagingProvider} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
 
 type ActivateMessagingProviderProps = WithLanguageType & {
@@ -19,7 +19,7 @@ function ActivateMessagingProvider({messagingProvider, resolveLanguageKey, onAct
 
     return (
         <DropdownMenuItem onClick={() => onAction("activateMessagingProvider")}>
-            <Power className="text-success" size={16} />
+            <IconPower className="text-success" size={16} />
             {resolveLanguageKey("title")}
         </DropdownMenuItem>
     );

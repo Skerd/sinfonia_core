@@ -1,23 +1,7 @@
+import {IconAmpersand, IconRosetteDiscountCheckOff, IconRosetteDiscountCheck, IconCalendar, IconCircleOff, IconClockHour9, IconKey, IconLock, IconMailCheck, IconPhone, IconShield, IconShieldX, IconShieldCheck, IconShieldQuestion, IconUserPlus} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import {
-    Ampersand,
-    BadgeAlert,
-    BadgeCheck,
-    Calendar,
-    CircleSlash,
-    Clock9,
-    Key,
-    Lock,
-    MailCheck,
-    Phone,
-    Shield,
-    ShieldBan,
-    ShieldCheck,
-    ShieldQuestionMark,
-    UserPlus,
-} from "lucide-react";
 import {EntityCardShell} from "@coreModule/components/entityPage/list/card/entityCardShell.tsx";
 import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
 import CoverPhoto
@@ -363,7 +347,7 @@ function UserProfileCardInner({
                                                         "border-success/50 text-success": data.mfaStatus === "active",
                                                     })}
                                                 >
-                                                    <Shield size={12} className={cn("mr-1")}/>
+                                                    <IconShield size={12} className={cn("mr-1")}/>
                                                     {resolveLanguageKey(`mfaStatuses.${data.mfaStatus}`)}
                                                 </Badge>
                                             </TooltipDisplayer>
@@ -396,9 +380,9 @@ function UserProfileCardInner({
                                                 <>
                                                     {
                                                         (data.verified && !data.unverifiedEmail) ?
-                                                        <BadgeCheck size={20} className="text-info"/>
+                                                        <IconRosetteDiscountCheck size={20} className="text-info"/>
                                                         :
-                                                        <BadgeAlert size={20} className="text-destructive"/>
+                                                        <IconRosetteDiscountCheckOff size={20} className="text-destructive"/>
                                                     }
                                                 </>
                                             }
@@ -436,7 +420,7 @@ function UserProfileCardInner({
                                     value={data.username || (read?.requests?.keys?.activation?.keys?.email ? data.unverifiedEmail : "")}
                                 />
                                 <EntityCardRow
-                                    icon={Phone}
+                                    icon={IconPhone}
                                     label={resolveLanguageKey("phoneNumber")}
                                     tooltip={resolveLanguageKey("phoneNumber")}
                                     show={!!read.phoneNumber}
@@ -444,7 +428,7 @@ function UserProfileCardInner({
                                     value={data.phoneNumber}
                                 />
                                 <EntityCardRow
-                                    icon={Clock9}
+                                    icon={IconClockHour9}
                                     label={resolveLanguageKey("timezone")}
                                     tooltip={resolveLanguageKey("timezone")}
                                     show={!!read.timezone}
@@ -452,7 +436,7 @@ function UserProfileCardInner({
                                 />
                                 </>}
                                 <EntityCardRow
-                                    icon={MailCheck}
+                                    icon={IconMailCheck}
                                     label={resolveLanguageKey("emailVerifiedAt")}
                                     tooltip={resolveLanguageKey("emailVerifiedAt")}
                                     show={!!read.emailVerifiedAt}
@@ -471,15 +455,15 @@ function UserProfileCardInner({
                                                         <>
                                                             {
                                                                 data.status === "active" &&
-                                                                <ShieldCheck size={18} className="text-success"/>
+                                                                <IconShieldCheck size={18} className="text-success"/>
                                                             }
                                                             {
                                                                 data.status === "inactive" &&
-                                                                <ShieldBan size={18} className="text-destructive"/>
+                                                                <IconShieldX size={18} className="text-destructive"/>
                                                             }
                                                             {
                                                                 data.status === "invited" &&
-                                                                <ShieldQuestionMark size={18} className="text-info"/>
+                                                                <IconShieldQuestion size={18} className="text-info"/>
                                                             }
                                                         </>
                                                     }
@@ -547,7 +531,7 @@ function UserProfileCardInner({
                         <TabsContent value="info" className="rounded-md border bg-muted/30 p-3 text-sm">
                             <InfoRowGroup layout="stack">
                                 <EntityCardRow
-                                    icon={Ampersand}
+                                    icon={IconAmpersand}
                                     label={resolveLanguageKey("registeredDate")}
                                     tooltip={resolveLanguageKey("registeredDate")}
                                     show={!!read.registerDate}
@@ -556,7 +540,7 @@ function UserProfileCardInner({
                                     value={data.registerDate}
                                 />
                                 <EntityCardRow
-                                    icon={UserPlus}
+                                    icon={IconUserPlus}
                                     label={resolveLanguageKey("registeredFrom")}
                                     tooltip={resolveLanguageKey("registeredFrom")}
                                     show={!!read.registeredFrom}
@@ -564,7 +548,7 @@ function UserProfileCardInner({
                                     value={data.registeredFrom}
                                 />
                                 <EntityCardRow
-                                    icon={Calendar}
+                                    icon={IconCalendar}
                                     label={resolveLanguageKey("birthday")}
                                     tooltip={resolveLanguageKey("birthday")}
                                     show={!!read.birthday}
@@ -573,7 +557,7 @@ function UserProfileCardInner({
                                     value={data.birthday}
                                 />
                                 <EntityCardRow
-                                    icon={Key}
+                                    icon={IconKey}
                                     label={resolveLanguageKey("lastLoginDate")}
                                     tooltip={resolveLanguageKey("lastLoginDate")}
                                     show={!!read.roles?.keys?.lastLogin}
@@ -582,7 +566,7 @@ function UserProfileCardInner({
                                     value={data.lastLogin}
                                 />
                                 <EntityCardRow
-                                    icon={CircleSlash}
+                                    icon={IconCircleOff}
                                     label={resolveLanguageKey("unsuccessfulLogins")}
                                     tooltip={resolveLanguageKey("unsuccessfulLogins")}
                                     show={!!read.roles?.keys?.unsuccessfulLogins}
@@ -590,7 +574,7 @@ function UserProfileCardInner({
                                     value={data.unsuccessfulLogins}
                                 />
                                 <EntityCardRow
-                                    icon={Lock}
+                                    icon={IconLock}
                                     label={resolveLanguageKey("lockedOutUntil")}
                                     tooltip={resolveLanguageKey("lockedOutUntil")}
                                     show={!!read.roles?.keys?.lockedOutUntil}

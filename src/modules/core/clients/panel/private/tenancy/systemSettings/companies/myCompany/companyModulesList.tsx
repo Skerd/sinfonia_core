@@ -1,5 +1,5 @@
+import {IconBlocks} from "@tabler/icons-react";
 import {compose} from "redux";
-import {Blocks} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -13,7 +13,7 @@ function CompanyModulesList({modules, resolveLanguageKey}: CompanyModulesListPro
     return (
         <section className="flex w-full max-w-6xl flex-col gap-2 rounded-lg border p-4">
             <div className="flex items-center gap-2">
-                <Blocks size={16} />
+                <IconBlocks size={16} />
                 <h3 className="font-medium">{resolveLanguageKey("title")}</h3>
             </div>
             <p className="text-sm text-muted-foreground">{resolveLanguageKey("managedByPlatform")}</p>

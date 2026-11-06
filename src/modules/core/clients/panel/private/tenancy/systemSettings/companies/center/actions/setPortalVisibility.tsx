@@ -1,6 +1,6 @@
+import {IconEye, IconEyeOff} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {Eye, EyeOff} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -20,7 +20,7 @@ function SetPortalVisibility({company, resolveLanguageKey, onAction}: SetPortalV
 
     return (
         <DropdownMenuItem onClick={() => {onAction("setPortalVisibility");}}>
-            {company.hiddenFromPortal ? <Eye size={16} /> : <EyeOff size={16} />}
+            {company.hiddenFromPortal ? <IconEye size={16} /> : <IconEyeOff size={16} />}
             {resolveLanguageKey(company.hiddenFromPortal ? "show" : "hide")}
         </DropdownMenuItem>
     );

@@ -80,7 +80,7 @@ function ModelRow({
         <div className="mb-1">
             {/* The name toggles; the `+` stays a sibling rather than a button inside one. */}
             <div className="flex items-center gap-1.5 px-2 py-1">
-                <button
+                <Button variant="bare"
                     type="button"
                     onClick={onToggleExpanded}
                     aria-expanded={expanded}
@@ -124,7 +124,7 @@ function ModelRow({
                             </span>
                         </TooltipDisplayer>
                     )}
-                </button>
+                </Button>
                 <TooltipDisplayer
                     tooltip={
                         entry.viewKeys.length === 0
@@ -167,7 +167,7 @@ function ModelRow({
                                     : "text-muted-foreground hover:bg-muted",
                             )}
                         >
-                            <button
+                            <Button variant="bare"
                                 type="button"
                                 onClick={() => onSelect(target)}
                                 className="flex min-w-0 flex-1 items-center gap-1.5 py-1 text-left text-2xs"
@@ -176,7 +176,7 @@ function ModelRow({
                                 <span className={cn("truncate", isChecked && !isActive && "text-foreground")}>
                                     {viewKeyLabel(viewKey)}
                                 </span>
-                            </button>
+                            </Button>
                             <TooltipDisplayer
                                 tooltip={
                                     isChecked
@@ -265,7 +265,7 @@ export default function ModelCatalogPane({
                         const allComplete = groupComplete(group.entries, checked.isChecked);
                         return (
                             <div key={group.id} className="mb-2">
-                                <button
+                                <Button variant="bare"
                                     type="button"
                                     onClick={() => collapsedModules.toggle(group.id)}
                                     aria-expanded={!isCollapsed}
@@ -290,7 +290,7 @@ export default function ModelCatalogPane({
                                     >
                                         {group.entries.length}
                                     </Badge>
-                                </button>
+                                </Button>
 
                                 {!isCollapsed &&
                                     group.entries.map((entry) => (

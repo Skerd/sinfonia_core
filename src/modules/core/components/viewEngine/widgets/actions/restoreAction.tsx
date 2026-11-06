@@ -1,9 +1,9 @@
+import {IconLoader2, IconRotate} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useEffect, useImperativeHandle, useState} from "react";
-import {LoaderCircle, RotateCcw} from "lucide-react";
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle} from "@coreModule/components/ui/alert-dialog.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -104,7 +104,7 @@ function RestoreAction({
                             // variant=
                             disabled={loading || ( !!confirmName && confirmName !== confirmValue ) }
                         >
-                            {(loading) ? <LoaderCircle className="animate-spin"/> : <RotateCcw />}
+                            {(loading) ? <IconLoader2 className="animate-spin"/> : <IconRotate />}
                             <p>{resolveLanguageKey("restore")}</p>
                         </AlertDialogAction>
                     </AlertDialogFooter>

@@ -1,3 +1,4 @@
+import {IconUser} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@coreModule/components/ui/dialog.tsx";
@@ -6,7 +7,6 @@ import {useEffect, useState} from "react";
 import ProfilePhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/profilePhoto.tsx";
 import NewPhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/newPhoto.tsx";
 import DeletePhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/deletePhoto.tsx";
-import {User} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -95,7 +95,7 @@ function UpdateProfilePhoto({
                             <div className="rounded-full flex justify-center items-center bg-muted-foreground text-background border-4 border-background" style={{width: dialogAvatarSize, height: dialogAvatarSize}}>
                                 {
                                     !currentPhotoUrl ?
-                                    <User size="91px"/>
+                                    <IconUser size="91px"/>
                                     :
                                     <img src={currentPhotoUrl} alt="profilePhoto" className="rounded-full h-full w-full object-cover"/>
                                 }

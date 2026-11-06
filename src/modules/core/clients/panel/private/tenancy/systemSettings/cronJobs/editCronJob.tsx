@@ -1,8 +1,8 @@
+import {IconDeviceFloppy} from "@tabler/icons-react";
 import {createGenericEditPage} from "@coreModule/components/entityPage/pages/createGenericEditPage.tsx";
 import {editCronJobFormSchema} from "armonia/src/modules/core/api/auxiliary/private/cronJob/editCronJob.form.validator.ts";
 import type {CronJob} from "armonia/src/modules/core/api/auxiliary/private/cronJob/cronJob.dto.ts";
 import type {EditCronJobFormType} from "armonia/src/modules/core/api/auxiliary/private/cronJob/cronJob.schema-def.ts";
-import {Save} from "lucide-react";
 import CronJobRunsPreview from "./cronJobRunsPreview.tsx";
 
 export default createGenericEditPage<CronJob, EditCronJobFormType>({
@@ -22,7 +22,7 @@ export default createGenericEditPage<CronJob, EditCronJobFormType>({
         priority: writeFields.priority ? data.priority : undefined,
         missedRunPolicy: writeFields.missedRunPolicy ? data.missedRunPolicy : undefined,
     }),
-    submitIcon: <Save />,
+    submitIcon: <IconDeviceFloppy />,
     renderChildren: (form, entity, {writeFields, resolveLanguageKey}) => (entity && writeFields.cronExpression
         ? <CronJobRunsPreview form={form} jobId={entity._id} resolveLanguageKey={resolveLanguageKey} />
         : null),

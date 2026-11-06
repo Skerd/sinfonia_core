@@ -1,18 +1,6 @@
+import {IconBarbell, IconBrush, IconCircleCheck, IconCircleOff, IconFingerprint, IconLanguage, IconLoader2, IconRotate, IconRss, IconSearch, IconShieldQuestion} from "@tabler/icons-react";
 import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {useMemo, useState} from "react";
-import {
-    BicepsFlexed,
-    BrushCleaning,
-    CircleCheckBig,
-    CircleOff,
-    Fingerprint,
-    Languages,
-    LoaderCircle,
-    RotateCcw,
-    Rss,
-    Search,
-    ShieldQuestionMark
-} from "lucide-react";
 import {toast} from "sonner";
 import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
@@ -83,7 +71,7 @@ function DebugSegmentedControl<T extends string>({
             style={{gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))`}}
         >
             {options.map((opt) => (
-                <button
+                <Button variant="bare"
                     key={opt.value}
                     type="button"
                     className={cn(
@@ -98,7 +86,7 @@ function DebugSegmentedControl<T extends string>({
                     {opt.hint ? (
                         <span className="ms-1 tabular-nums text-muted-foreground">{opt.hint}</span>
                     ) : null}
-                </button>
+                </Button>
             ))}
         </div>
     );
@@ -195,7 +183,7 @@ function AccessFieldMapPanel({
 
             <div className="flex h-8 shrink-0 items-center gap-1.5">
                 <div className="relative min-w-0 flex-1">
-                    <Search className="pointer-events-none absolute left-2 top-1/2 size-3 -translate-y-1/2 text-muted-foreground"/>
+                    <IconSearch className="pointer-events-none absolute left-2 top-1/2 size-3 -translate-y-1/2 text-muted-foreground"/>
                     <Input
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
@@ -232,7 +220,7 @@ function AccessFieldMapPanel({
                     onClick={clearFieldOverrides}
                     title="Reset field overrides"
                 >
-                    <RotateCcw className="size-3"/>
+                    <IconRotate className="size-3"/>
                 </Button>
             </div>
 
@@ -495,7 +483,7 @@ function AccessDebugPopover({
     return (
         <Popover open={open} onOpenChange={setOpen} modal={false}>
             <PopoverTrigger asChild>
-                <button
+                <Button variant="bare"
                     type="button"
                     className={cn(
                         "inline-flex items-center justify-center rounded-sm p-0.5 hover:bg-background/80",
@@ -504,8 +492,8 @@ function AccessDebugPopover({
                     aria-label="Access debug overrides"
                     title="Access overrides"
                 >
-                    <ShieldQuestionMark size={size}/>
-                </button>
+                    <IconShieldQuestion size={size}/>
+                </Button>
             </PopoverTrigger>
             <PopoverContent
                 align="start"
@@ -530,7 +518,7 @@ function AccessDebugPopover({
                             disabled={!selectedId || !debugOverrides || selectedOverrideCount === 0}
                             onClick={clearSelected}
                         >
-                            <RotateCcw className="size-3"/>
+                            <IconRotate className="size-3"/>
                             Reset
                         </Button>
                         <Button
@@ -660,7 +648,7 @@ const withDebug = (
                     [{normalizedResourceIds?.join(",")}]
                         {
                             effectiveChecked ?
-                                <CircleCheckBig color="green" size={size} className="top-0"/>
+                                <IconCircleCheck color="green" size={size} className="top-0"/>
                                 :
                                 <div className="text-[10px]/[8px] font-bold cursor-default opacity-100">
                                     {ratio}
@@ -670,7 +658,7 @@ const withDebug = (
                             props.withLanguage &&
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Languages size={size}
+                                    <IconLanguage size={size}
                                                className="top-0 opacity-100 hover:cursor-pointer hover:text-muted-foreground"/>
                                 </PopoverTrigger>
                                 <PopoverContent asChild>
@@ -694,7 +682,7 @@ const withDebug = (
                             props.withAxios &&
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Rss size={size}
+                                    <IconRss size={size}
                                          className="top-0 opacity-100 hover:cursor-pointer hover:text-muted-foreground"/>
                                 </PopoverTrigger>
                                 <PopoverContent asChild>
@@ -772,7 +760,7 @@ const withDebug = (
                                                     setTestLoadings((on) => !on);
                                                 }}
                                             >
-                                                <LoaderCircle
+                                                <IconLoader2
                                                     className={cn(props.loading || testLoadings ? "animate-spin" : "")}/>
                                                 <p>{props.loading ? "Loading..." : (!testLoadings ? "Test loading" : "Loading...")}</p>
                                             </Toggle>
@@ -785,7 +773,7 @@ const withDebug = (
                                                     setTestError((on) => !on);
                                                 }}
                                             >
-                                                <CircleOff
+                                                <IconCircleOff
                                                     className={cn(props.error || testError ? "text-red-500" : "")}/>
                                                 <p>{!testError ? "Test error" : "Error!"}</p>
                                             </Toggle>
@@ -798,7 +786,7 @@ const withDebug = (
                                                     setTestEmptyData((on) => !on);
                                                 }}
                                             >
-                                                <BrushCleaning className={cn(testEmptyData ? "text-red-500" : "")}/>
+                                                <IconBrush className={cn(testEmptyData ? "text-red-500" : "")}/>
                                                 <p>{!props.data && !props.accumulatedItems?.length ? "No data!" : (!testEmptyData ? "Test no data" : "No data!")}</p>
                                             </Toggle>
                                             {
@@ -816,7 +804,7 @@ const withDebug = (
                                                     }
                                                     }
                                                 >
-                                                    <BicepsFlexed
+                                                    <IconBarbell
                                                         className={cn(forceReloadData > 0 ? "text-green-500" : "")}/>
                                                     <p>Reloaded: {forceReloadData} times</p>
                                                 </Toggle>
@@ -878,7 +866,7 @@ const withDebug = (
                             props.withClearance &&
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Fingerprint size={size}
+                                    <IconFingerprint size={size}
                                                  className="top-0 opacity-100 hover:cursor-pointer hover:text-muted-foreground"/>
                                 </PopoverTrigger>
                                 <PopoverContent asChild>

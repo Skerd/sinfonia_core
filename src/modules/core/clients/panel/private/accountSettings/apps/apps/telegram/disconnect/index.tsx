@@ -1,3 +1,4 @@
+import {IconLoader2} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useImperativeHandle} from 'react';
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -6,7 +7,6 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {DeactivateTelegramFormResponseType} from "armonia/src/modules/core/api/user/private/telegram/deactivateTelegram.form.response.type.ts";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
-import {LoaderCircle} from "lucide-react";
 
 type UserLinkTelegramDeactivationProps = WithAxiosType<DeactivateTelegramFormResponseType> & WithLanguageType & {
     onSuccess?: Function,
@@ -64,7 +64,7 @@ const UserLinkTelegramDeactivation = ({
                             }}
                             disabled={loading}
                         >
-                            {loading && <LoaderCircle className="animate-spin"/>}
+                            {loading && <IconLoader2 className="animate-spin"/>}
                             {resolveLanguageKey("button")}
                         </Button>
                     </div>
@@ -93,7 +93,7 @@ const UserLinkTelegramDeactivation = ({
                             }}
                             disabled={loading}
                         >
-                            {loading && <LoaderCircle className="animate-spin"/>}
+                            {loading && <IconLoader2 className="animate-spin"/>}
                             {resolveLanguageKey("button")}
                         </Button>
                     </div>
@@ -118,5 +118,4 @@ export default compose(
         true
     ),
     withDebug(true, true, "users")
-)
-(UserLinkTelegramDeactivation)
+)(UserLinkTelegramDeactivation)

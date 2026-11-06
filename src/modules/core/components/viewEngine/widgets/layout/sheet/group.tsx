@@ -8,6 +8,7 @@ import {
     CollapsibleTrigger,
 } from "@coreModule/components/ui/collapsible.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 type SheetGroupProps = {
     title?: string;
@@ -115,7 +116,7 @@ export function SheetGroup({
             {opts?.collapsible ? (
                 <>
                     <CollapsibleTrigger asChild>
-                        <button
+                        <Button variant="bare"
                             type="button"
                             className={cn(
                                 "group/sheet-group-header flex min-w-0 flex-1 items-center gap-2",
@@ -124,13 +125,13 @@ export function SheetGroup({
                             )}
                         >
                             {headerLeading}
-                        </button>
+                        </Button>
                     </CollapsibleTrigger>
                     {titleActions != null ? (
                         <div className="flex shrink-0 items-center">{titleActions}</div>
                     ) : null}
                     <CollapsibleTrigger asChild>
-                        <button
+                        <Button variant="bare"
                             type="button"
                             className={cn(
                                 "group/sheet-group-chevron shrink-0 bg-transparent p-0",
@@ -146,7 +147,7 @@ export function SheetGroup({
                                 )}
                                 aria-hidden
                             />
-                        </button>
+                        </Button>
                     </CollapsibleTrigger>
                 </>
             ) : (

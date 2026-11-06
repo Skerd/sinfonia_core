@@ -1,6 +1,6 @@
+import {IconSearch} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import {Search} from "lucide-react";
 import SmallCompanyWithReLogin from "@coreModule/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/smallCompany/smallCompanyWithRelogin.tsx";
 import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import {TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
@@ -87,7 +87,7 @@ function CompanyDropDownItems({
                     {title}
                 </DropdownMenuLabel>
                 <div className="relative">
-                    <Search className="pointer-events-none absolute start-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+                    <IconSearch className="pointer-events-none absolute start-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
                     <Input
                         ref={searchInputRef}
                         value={searchText}

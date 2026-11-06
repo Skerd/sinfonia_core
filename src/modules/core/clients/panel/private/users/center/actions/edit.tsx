@@ -1,7 +1,7 @@
+import {IconUserEdit} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {UserPen} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
@@ -18,16 +18,16 @@ type EditUserActionProps = WithLanguageType & {
 function EditUserAction({user, resolveLanguageKey, specificUserId, onEdit}: EditUserActionProps) {
     const {write} = useAccess("users", !specificUserId ? "self" : "others");
 
-    if (!write) return <HiddenElement />;
-
     const handleEdit = () => onEdit(user);
 
     const shortcut = "1";
-    useKeyboardShortcuts(shortcut, () => {handleEdit();});
+    useKeyboardShortcuts(shortcut, () => {handleEdit();}, {enabled: write});
+
+    if (!write) return <HiddenElement />;
 
     return (
         <DropdownMenuItem onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleEdit(); }}>
-            <UserPen size={16} />
+            <IconUserEdit size={16} />
             <p>{resolveLanguageKey("editProfile")}</p>
             <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>
         </DropdownMenuItem>

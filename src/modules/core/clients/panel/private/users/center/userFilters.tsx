@@ -1,9 +1,9 @@
+import {IconEraser} from "@tabler/icons-react";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Eraser} from "lucide-react";
 import {ApiSelect} from "@coreModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
 import {SimpleSelect} from "@coreModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
 
@@ -137,7 +137,7 @@ function UserFilters({filters, setFilters, resolveLanguageKey, extraParams}: Use
                     />
                 </div>
                 <Button onClick={onClear} variant="outline" className="flex-1 sm:flex-none col-span-2 md:col-span-1">
-                    <Eraser />
+                    <IconEraser />
                     {resolveLanguageKey("clearFilters")}
                 </Button>
             </div>

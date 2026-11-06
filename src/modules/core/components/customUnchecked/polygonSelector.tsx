@@ -1,6 +1,6 @@
+import {IconZoomIn, IconZoomOut, IconRotate, IconArrowsMaximize, IconArrowsMinimize, IconEraser, IconArrowBackUp} from "@tabler/icons-react";
 import React, {useState, useRef, useEffect, useLayoutEffect, useMemo, useCallback} from 'react';
 import {createPortal} from 'react-dom';
-import {ZoomIn, ZoomOut, RotateCcw, Maximize2, Minimize2, Eraser, Undo2} from 'lucide-react';
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
@@ -533,8 +533,7 @@ function PolygonSelector({
             return;
         }
 
-        const upTarget = e.target as unknown as SVGCircleElement | HTMLElement | null;
-        const circleTarget = upTarget && "cx" in upTarget ? (upTarget as SVGCircleElement) : null;
+        const circleTarget = e.target instanceof SVGCircleElement ? e.target : null;
 
         if (circleTarget?.id?.includes("phantom-point") && circleTarget.cx && circleTarget.cy) {
             setIsClosed(false);
@@ -1267,7 +1266,7 @@ function PolygonSelector({
                                     }}
                                     disabled={zoom <= MIN_ZOOM}
                                 >
-                                    <ZoomOut />
+                                    <IconZoomOut />
                                 </Button>
                             </TooltipDisplayer>
 
@@ -1283,7 +1282,7 @@ function PolygonSelector({
                                     }}
                                     disabled={zoom >= MAX_ZOOM}
                                 >
-                                    <ZoomIn className="h-4 w-4" />
+                                    <IconZoomIn className="h-4 w-4" />
                                 </Button>
                             </TooltipDisplayer>
 
@@ -1299,7 +1298,7 @@ function PolygonSelector({
                                     }}
                                     disabled={zoom <= MIN_ZOOM}
                                 >
-                                    <RotateCcw className="h-4 w-4" />
+                                    <IconRotate className="h-4 w-4" />
                                 </Button>
                             </TooltipDisplayer>
 
@@ -1321,7 +1320,7 @@ function PolygonSelector({
                                         }}
                                         title={resolveLanguageKey(small ? "expand" : "collapse")}
                                     >
-                                        {small ? <Maximize2 /> : <Minimize2 />}
+                                        {small ? <IconArrowsMaximize /> : <IconArrowsMinimize />}
                                     </Button>
                                 </TooltipDisplayer>
                             }
@@ -1350,7 +1349,7 @@ function PolygonSelector({
                                             }}
                                             title={resolveLanguageKey("revert")}
                                         >
-                                            <Undo2 />
+                                            <IconArrowBackUp />
                                         </Button>
                                     </TooltipDisplayer>
 
@@ -1368,7 +1367,7 @@ function PolygonSelector({
                                             style={{borderColor: "red"}}
                                             title={resolveLanguageKey("clear")}
                                         >
-                                            <Eraser />
+                                            <IconEraser />
                                         </Button>
                                     </TooltipDisplayer>
 

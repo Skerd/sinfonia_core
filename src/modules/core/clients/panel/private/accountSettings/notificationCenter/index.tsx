@@ -1,6 +1,6 @@
-import {useEffect, useState, useCallback} from "react";
+import {useState} from "react";
 import {useDispatch} from "react-redux";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {setNotificationNumber} from "@coreModule/helpers/redux/slices/notificationSlice.ts";
 import {Separator} from "@coreModule/components/ui/separator.tsx";
 import {Switch} from "@coreModule/components/ui/switch.tsx";
@@ -24,6 +24,8 @@ import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 
 const PAGE_SIZE = 20;
 
+const UNREAD_COUNT_REQUEST = {method: "get" as const, url: "/api/user/notifications/unread-count", data: {}};
+
 type NotificationCenterProps = WithLanguageType & WithAxiosType<TableResponse<NotificationType>, ListNotificationsFormType> & {
     specificUserId?: string;
 }
@@ -41,19 +43,10 @@ function NotificationCenter({
     const [unreadOnly, setUnreadOnly] = useState(false);
     const [reloadKey, setReloadKey] = useState(0);
 
-    const fetchUnreadCount = useCallback(async () => {
-        try {
-            const res = await apiClient.get<UnreadNotificationsFormResponseType>("/api/user/notifications/unread-count");
-            dispatch(setNotificationNumber(res.data.unreadNotifications));
-        } catch {
-            // Ignore
-        }
-    }, [dispatch]);
-
-    useEffect(() => {
-        if (specificUserId) return;
-        fetchUnreadCount();
-    }, [fetchUnreadCount, specificUserId]);
+    // Silent: a failed count keeps the badge as it is.
+    useHttpRequest<UnreadNotificationsFormResponseType>(UNREAD_COUNT_REQUEST, {}, specificUserId ? 0 : 1, true, {
+        success: (data) => dispatch(setNotificationNumber(data.unreadNotifications)),
+    });
 
     return (
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">

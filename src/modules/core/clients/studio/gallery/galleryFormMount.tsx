@@ -1,5 +1,5 @@
 import {useMemo, useRef} from "react";
-import {z} from "zod";
+import {emptyFormSchema} from "armonia/src/modules/core/utilities/zod/emptyForm.validator.ts";
 import type {FieldValues, Resolver} from "react-hook-form";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -31,14 +31,13 @@ export default function GalleryFormMount({
         () => async (values) => ({values, errors: {}}),
         [],
     );
-    const emptySchema = useMemo(() => z.object({}), []);
 
     return (
         <FormViewRenderer
             key={config.nodes[0]?.render ?? config.model}
             config={config}
             resolveLanguageKey={resolveLanguageKey}
-            formSchema={emptySchema}
+            formSchema={emptyFormSchema}
             resolver={passThroughResolver}
             defaultValues={defaultValues}
             loading={false}

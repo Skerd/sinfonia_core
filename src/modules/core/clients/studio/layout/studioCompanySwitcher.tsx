@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useMemo, useState} from "react";
 import {useSelector} from "react-redux";
 import {IconCheck, IconSelector} from "@tabler/icons-react";
 import type {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
@@ -10,9 +10,12 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@coreModule/components/ui/dropdown-menu.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {useRelogin} from "@coreModule/helpers/hooks/useRelogin.ts";
 import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+
+const COMPANIES_REQUEST = {method: "post" as const, url: "/api/companies/basicInfo", data: {}};
+const COMPANIES_BODY = {offset: 0, limit: 50};
 
 /**
  * Same company switch as the panel sidebar: `POST /api/user/login/differentCompany`.
@@ -22,26 +25,11 @@ export default function StudioCompanySwitcher() {
     const currentId = useSelector((state: RootState) => state.authentication.user?.company?._id);
     const currentName = useSelector((state: RootState) => state.authentication.user?.company?.name);
     const {triggerRelogin, switching} = useRelogin();
-    const [companies, setCompanies] = useState<BasicCompanyInfoFormResponseType[]>([]);
-
-    useEffect(() => {
-        const abort = new AbortController();
-        apiClient
-            .post<TableResponse<BasicCompanyInfoFormResponseType>>(
-                "/api/companies/basicInfo",
-                {offset: 0, limit: 50},
-                {signal: abort.signal},
-            )
-            .then(({data}) => {
-                if (abort.signal.aborted) return;
-                const rows = [...(data?.data ?? [])].sort((a, b) => a.name.localeCompare(b.name));
-                setCompanies(rows);
-            })
-            .catch(() => {
-                if (abort.signal.aborted) return;
-            });
-        return () => abort.abort();
-    }, [currentId]);
+    // Reloaded after every switch; silent, so a failed load just leaves the menu as it was.
+    const [load, setLoad] = useState({currentId, count: 1});
+    if (load.currentId !== currentId) setLoad({currentId, count: load.count + 1});
+    const {data} = useHttpRequest<TableResponse<BasicCompanyInfoFormResponseType>>(COMPANIES_REQUEST, COMPANIES_BODY, load.count);
+    const companies = useMemo(() => [...(data?.data ?? [])].sort((a, b) => a.name.localeCompare(b.name)), [data]);
 
     return (
         <DropdownMenu>

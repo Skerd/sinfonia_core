@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
+import {Input} from "@coreModule/components/ui/input.tsx";
 
 function parseRange(input: string): { start: number; end: number } | null {
   const trimmed = input.trim().replace(/\s+/g, "");
@@ -88,7 +89,7 @@ export default function LimitUpdater({
         >
           {inputValue || placeholder}
         </span>
-        <input
+        <Input
           ref={inputRef}
           type="text"
           inputMode="numeric"
@@ -114,7 +115,7 @@ export default function LimitUpdater({
           }}
           placeholder={placeholder}
           style={{ width: inputWidth }}
-          className="min-w-8 rounded text-center text-inherit focus:border-b focus:border-primary-500 focus:outline-none focus:ring-0 bg-transparent p-0 text-lg"
+          className="h-auto min-w-8 rounded border-0 bg-transparent p-0 text-center text-lg text-inherit shadow-none md:text-lg focus:border-b focus:border-primary-500 focus:outline-none focus-visible:ring-0 dark:bg-transparent"
           aria-label="Edit range"
         />
       </span>

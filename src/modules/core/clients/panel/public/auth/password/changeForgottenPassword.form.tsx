@@ -1,3 +1,4 @@
+import {IconCircleCheck, IconCircleX, IconLoader2, IconLogin2, IconShieldExclamation, IconShieldX} from "@tabler/icons-react";
 import {z} from "zod";
 import {compose} from "redux";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -11,7 +12,6 @@ import {PasswordInput} from "@coreModule/components/custom/inputs/passwordInput.
 import {useEffect, useImperativeHandle, useState} from 'react';
 import PasswordStrength from "@coreModule/components/custom/passwordStrength.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {CircleCheckBig, CircleX, Loader2, LogIn, ShieldAlert, ShieldBan} from "lucide-react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import GoBackToLogin from "@coreModule/clients/panel/public/auth/shared/goBackToLogin.tsx";
@@ -19,13 +19,15 @@ import {ChangeForgottenPasswordFormType} from "armonia/src/modules/core/api/user
 import {ChangeForgottenPasswordFormResponseType} from "armonia/src/modules/core/api/user/public/forgotPassword/changeForgottenPassword.form.response.type.ts";
 import {changeForgottenPasswordFormSchema} from "armonia/src/modules/core/api/user/public/forgotPassword/changeForgottenPassword.form.validator.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 
 const EMPTY_FORM_VALUES: ChangeForgottenPasswordFormType = {
     password: "",
     confirmPassword: "",
     resetPasswordCode: "",
 };
+
+const OPEN_RESET_LINK_REQUEST = {method: "post" as const, url: "/api/user/forgotPassword/openLink", data: {}};
 
 type ChangeForgottenPasswordProps = WithLanguageType & WithAxiosType<ChangeForgottenPasswordFormResponseType, ChangeForgottenPasswordFormType> & {}
 
@@ -39,33 +41,13 @@ function ChangeForgottenPassword({
 
     const navigate = useNavigate();
     const params = useParams();
-    const [verifyingResetPasswordLink, setVerifyingResetPasswordLink] = useState<boolean>(false);
-    const [errorVerifyingResetPasswordLink, setErrorVerifyingResetPasswordLink] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
     const [success, setSuccess] = useState<boolean>(false);
 
+    const code = params.platform;
     useEffect(() => {
-        if( !!params.platform ){
-            const currCode = params.platform;
-            if( !!currCode ){
-                setVerifyingResetPasswordLink(true);
-                setErrorVerifyingResetPasswordLink(false);
-                apiClient.post(`/api/user/forgotPassword/openLink`, {resetPasswordCode: currCode})
-                .then(() => {
-                    setVerifyingResetPasswordLink(false);
-                    setErrorVerifyingResetPasswordLink(false);
-                    form.setValue("resetPasswordCode", currCode);
-                })
-                .catch(() => {
-                    setVerifyingResetPasswordLink(false);
-                    setErrorVerifyingResetPasswordLink(true);
-                });
-            }
-        }
-        else{
-            navigate("/authenticate/login");
-        }
-    }, [params]);
+        if (!code) navigate("/authenticate/login");
+    }, [code, navigate]);
 
     useImperativeHandle(innerRef, () => ({
         start: () => {},
@@ -78,6 +60,16 @@ function ChangeForgottenPassword({
         resolver: zodResolver(formSchema),
         defaultValues: EMPTY_FORM_VALUES
     });
+
+    // Silent check of the emailed code: the page shows its own verifying / invalid states.
+    const [verification, setVerification] = useState({code, count: code ? 1 : 0});
+    if (verification.code !== code) setVerification({code, count: code ? verification.count + 1 : verification.count});
+    const {loading: verifyingResetPasswordLink, error: verifyError} = useHttpRequest(OPEN_RESET_LINK_REQUEST, {resetPasswordCode: code}, verification.count, true, {
+        success: () => {
+            if (code) form.setValue("resetPasswordCode", code);
+        },
+    });
+    const errorVerifyingResetPasswordLink = !!verifyError;
     const password = form.watch("password")
 
     function onSubmit(data: z.infer<typeof formSchema>) {
@@ -92,7 +84,7 @@ function ChangeForgottenPassword({
         return (
             <Card className="gap-4 w-full h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <ShieldAlert size={30} color="green" className="animate-pulse" />
+                    <IconShieldExclamation size={30} color="green" className="animate-pulse" />
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("verifyingPasswordResetLinkTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("verifyingPasswordResetLinkDescription")}</CardDescription>
                 </CardHeader>
@@ -106,7 +98,7 @@ function ChangeForgottenPassword({
         return (
             <Card className="gap-4 w-full h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <ShieldBan size={30} color="var(--destructive)"/>
+                    <IconShieldX size={30} color="var(--destructive)"/>
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("errorVerifyingPasswordResetLinkTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("errorVerifyingPasswordResetLinkDescription")}</CardDescription>
                 </CardHeader>
@@ -120,7 +112,7 @@ function ChangeForgottenPassword({
         return (
             <Card className="gap-4 w-full h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <CircleX size={30} color="var(--destructive)" />
+                    <IconCircleX size={30} color="var(--destructive)" />
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("errorChangingPasswordTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("errorChangingPasswordDescription")}</CardDescription>
                 </CardHeader>
@@ -134,7 +126,7 @@ function ChangeForgottenPassword({
         return (
             <Card className="gap-4 w-full h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <CircleCheckBig size={30} color="green"/>
+                    <IconCircleCheck size={30} color="green"/>
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("successChangingPasswordTitle")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("successChangingPasswordDescription")}</CardDescription>
                 </CardHeader>
@@ -201,7 +193,7 @@ function ChangeForgottenPassword({
                         />
 
                         <Button className='mt-2' disabled={loading}>
-                            {(loading) ? <Loader2 className='animate-spin' /> : <LogIn />}
+                            {(loading) ? <IconLoader2 className='animate-spin' /> : <IconLogin2 />}
                             {resolveLanguageKey("confirm")}
                         </Button>
                     </form>

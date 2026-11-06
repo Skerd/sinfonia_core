@@ -79,7 +79,7 @@ function SortableColumnRow({
                 isDragging && "opacity-40",
             )}
         >
-            <button
+            <Button variant="bare"
                 type="button"
                 aria-label="Drag to reorder"
                 className="cursor-grab p-1 text-muted-foreground/60 active:cursor-grabbing"
@@ -87,9 +87,9 @@ function SortableColumnRow({
                 {...listeners}
             >
                 <IconGripVertical className="size-3.5" />
-            </button>
+            </Button>
 
-            <button
+            <Button variant="bare"
                 type="button"
                 onClick={onSelect}
                 className="flex min-w-0 flex-1 items-center gap-1.5 py-1 text-left"
@@ -105,7 +105,7 @@ function SortableColumnRow({
                         no filter
                     </Badge>
                 )}
-            </button>
+            </Button>
 
             <TooltipDisplayer tooltip={column.visible ? "Hide by default" : "Show by default"}>
                 <Button
@@ -308,7 +308,7 @@ export default function TableEditor({entry}: TableEditorProps) {
                 <div className="flex w-80 shrink-0 flex-col overflow-hidden border-r">
                     <div className="flex shrink-0 items-center gap-1 border-b px-2 py-1">
                         {(["columns", "fields"] as const).map((tab) => (
-                            <button
+                            <Button variant="bare"
                                 key={tab}
                                 type="button"
                                 onClick={() => setLeftTab(tab)}
@@ -323,7 +323,7 @@ export default function TableEditor({entry}: TableEditorProps) {
                                 <span className="ml-1 tabular-nums">
                                     {tab === "columns" ? columns.length : fields.length}
                                 </span>
-                            </button>
+                            </Button>
                         ))}
                     </div>
 

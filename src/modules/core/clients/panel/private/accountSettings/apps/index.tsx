@@ -1,8 +1,8 @@
+import {IconSortAscendingLetters, IconSortDescendingLetters, IconAdjustmentsHorizontal} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@coreModule/components/ui/select.tsx";
-import {ArrowDownAZ, ArrowUpAZ, SlidersHorizontal} from "lucide-react";
 import {ChangeEvent, useEffect, useState} from "react";
 import Telegram from "@coreModule/clients/panel/private/accountSettings/apps/apps/telegram";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -93,19 +93,19 @@ function Apps({
                     <Select value={sort} onValueChange={handleSortChange}>
                         <SelectTrigger className='w-16'>
                             <SelectValue>
-                                <SlidersHorizontal size={18} />
+                                <IconAdjustmentsHorizontal size={18} />
                             </SelectValue>
                         </SelectTrigger>
                         <SelectContent align='end'>
                             <SelectItem value='asc'>
                                 <div className='flex items-center gap-4'>
-                                    <ArrowUpAZ size={16} />
+                                    <IconSortDescendingLetters size={16} />
                                     <span>{resolveLanguageKey("order.ascending")}</span>
                                 </div>
                             </SelectItem>
                             <SelectItem value='desc'>
                                 <div className='flex items-center gap-4'>
-                                    <ArrowDownAZ size={16} />
+                                    <IconSortAscendingLetters size={16} />
                                     <span>{resolveLanguageKey("order.descending")}</span>
                                 </div>
                             </SelectItem>

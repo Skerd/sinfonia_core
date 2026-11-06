@@ -1,3 +1,4 @@
+import {IconCheck, IconX} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useImperativeHandle, useEffect} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -10,7 +11,6 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
-import {Check, X} from "lucide-react";
 import {enableMfaFormSchema} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.validator.ts";
 import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -149,7 +149,7 @@ function AccountSecurityEnableOtpForm({
                                                         className={cn("h-full px-2", {"text-success hover:border-success/50 hover:dark:border-success/50": (token?.length === 6)})}
                                                         disabled={loading || token?.length !== 6}
                                                     >
-                                                        <Check className="h-4 w-4" />
+                                                        <IconCheck className="h-4 w-4" />
                                                     </Button>
                                                 </TooltipTrigger>
 
@@ -173,7 +173,7 @@ function AccountSecurityEnableOtpForm({
                                                             onCancel();
                                                         }}
                                                     >
-                                                        <X className=" h-4 w-4 hover:opacity-50 " />
+                                                        <IconX className=" h-4 w-4 hover:opacity-50 " />
                                                     </Button>
                                                 </TooltipTrigger>
 

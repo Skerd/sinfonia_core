@@ -1,7 +1,7 @@
+import {IconUserMinus} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {DropdownMenuItem, DropdownMenuSeparator, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {UserMinus} from "lucide-react";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {useImperativeHandle} from "react";
@@ -59,7 +59,7 @@ function ChatMemberRemoveFromGroup({
     return (
         <>
             <DropdownMenuItem disabled={loading} onClick={(e) => {e.stopPropagation(); e.preventDefault(); deleteMember();}}>
-                <UserMinus color="red" />
+                <IconUserMinus color="red" />
                 {resolveLanguageKey("removeMember")}
                 <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>
             </DropdownMenuItem>

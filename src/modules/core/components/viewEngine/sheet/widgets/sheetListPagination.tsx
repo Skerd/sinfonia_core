@@ -1,5 +1,5 @@
+import {IconChevronLeft, IconChevronRight} from "@tabler/icons-react";
 import { useEffect, useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -93,7 +93,7 @@ export function SheetListPaginationFooter({
                         disabled={pageIndex <= 0}
                         onClick={onPrevious}
                     >
-                        <ChevronLeft />
+                        <IconChevronLeft />
                     </Button>
                 </TooltipDisplayer>
                 <TooltipDisplayer tooltip={resolveLanguageKey("nextPage")}>
@@ -105,7 +105,7 @@ export function SheetListPaginationFooter({
                         disabled={pageIndex >= totalPages - 1}
                         onClick={onNext}
                     >
-                        <ChevronRight />
+                        <IconChevronRight />
                     </Button>
                 </TooltipDisplayer>
             </div>

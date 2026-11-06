@@ -3,6 +3,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {MediaAvatar} from "@coreModule/components/viewEngine/widgets/display/mediaAvatar.tsx";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 /** Table rows activate on click, so the avatar must swallow the event before it bubbles. */
 function stopRowActivate(e: {stopPropagation: () => void}) {
@@ -19,12 +20,12 @@ export default function TableAvatar({mediaId}: {mediaId: string}) {
 
     return (
         <>
-            <button
+            <Button variant="bare"
                 type="button"
                 disabled={!imageSrc}
                 aria-label="View image"
                 className={cn(
-                    "rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    "rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-auto disabled:opacity-100",
                     imageSrc && "hover:cursor-pointer",
                 )}
                 onClick={(e) => {
@@ -34,7 +35,7 @@ export default function TableAvatar({mediaId}: {mediaId: string}) {
                 onPointerDown={stopRowActivate}
             >
                 <MediaAvatar mediaId={mediaId} alt={mediaId + " media"} className="size-8 hover:border-muted-foreground"/>
-            </button>
+            </Button>
 
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="max-w-[90vw] max-h-[90vh] min-w-[min(90vw,560px)] min-h-[min(80vh,420px)] w-fit p-0 overflow-auto bg-transparent border-0 flex items-center justify-center">

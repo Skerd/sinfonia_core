@@ -1,4 +1,4 @@
-import {X, type LucideIcon} from "lucide-react";
+import {IconX, type TablerIcon} from "@tabler/icons-react";
 import {useState} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -25,7 +25,7 @@ export type MediaWithRemoveProps = {
 type MediaWithRemoveInternalProps = MediaWithRemoveProps & {
     fieldMediaType: FieldMediaType;
     /** Glyph on the "open larger" button — an eye for stills, a play triangle for video. */
-    PreviewIcon: LucideIcon;
+    PreviewIcon: TablerIcon;
     thumbClassName?: string;
     dialogClassName?: string;
 };
@@ -83,7 +83,7 @@ export function MediaWithRemove({
                             onClick={onRemove}
                             disabled={disabled}
                         >
-                            <X className="h-5 w-5"/>
+                            <IconX className="h-5 w-5"/>
                         </Button>
                     </div>
                 </div>

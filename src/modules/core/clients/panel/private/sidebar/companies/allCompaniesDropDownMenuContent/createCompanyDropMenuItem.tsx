@@ -1,8 +1,8 @@
+import {IconPlus} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {useState} from "react";
 import {DropdownMenuItem, DropdownMenuSeparator} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {Plus} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -40,7 +40,7 @@ function CreateCompanyDropMenuItem({resolveLanguageKey, onFinished}: CreateCompa
                 }}
             >
                 <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-                    <Plus className="size-4" />
+                    <IconPlus className="size-4" />
                 </div>
                 <div className="text-muted-foreground font-medium">{resolveLanguageKey("addCompany")}</div>
             </DropdownMenuItem>

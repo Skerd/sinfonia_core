@@ -1,6 +1,6 @@
+import {IconCornerRightDown} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {CornerRightDown} from "lucide-react";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import type {ChannelUser} from "armonia/src/modules/core/dto/channel.dto";
@@ -59,7 +59,7 @@ function DemoteToUser({
     return (
         <>
             <DropdownMenuItem onClick={(e) => {e.preventDefault(); e.stopPropagation(); demoteUser(); }}>
-                <CornerRightDown color="red"/>
+                <IconCornerRightDown color="red"/>
                 {resolveLanguageKey("removeFromAdmin")}
                 <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>
             </DropdownMenuItem>

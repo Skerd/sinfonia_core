@@ -1,5 +1,5 @@
 import {useMemo, useRef} from "react";
-import {z} from "zod";
+import {emptyFormSchema} from "armonia/src/modules/core/utilities/zod/emptyForm.validator.ts";
 import type {FieldValues, Resolver} from "react-hook-form";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -52,8 +52,6 @@ export default function FormPreview({
         [],
     );
 
-    const emptySchema = useMemo(() => z.object({}), []);
-
     const defaultValues = useMemo<FieldValues>(
         () => (config.viewMode === "edit" && row ? (row as FieldValues) : {}),
         [config.viewMode, row],
@@ -72,7 +70,7 @@ export default function FormPreview({
                         key={`${config.model}:edit:${row?._id ?? "blank"}`}
                         config={config}
                         resolveLanguageKey={resolveLanguageKey}
-                        formSchema={emptySchema}
+                        formSchema={emptyFormSchema}
                         resolver={passThroughResolver}
                         initialValues={defaultValues}
                         loading={false}
@@ -91,7 +89,7 @@ export default function FormPreview({
                         key={`${config.model}:${config.viewMode}:${row?._id ?? "blank"}`}
                         config={config}
                         resolveLanguageKey={resolveLanguageKey}
-                        formSchema={emptySchema}
+                        formSchema={emptyFormSchema}
                         resolver={passThroughResolver}
                         defaultValues={defaultValues}
                         loading={false}

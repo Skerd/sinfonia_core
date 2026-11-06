@@ -1,8 +1,8 @@
+import {IconHash} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {memo, type ReactNode, type RefObject} from "react";
-import {Hash} from "lucide-react";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import DisplayValue from "@coreModule/components/viewEngine/widgets/display/displayValue.tsx";
@@ -73,7 +73,7 @@ const CurrencyCard = memo(function CurrencyCard({
                     />
                     <EntityCard.Body>
                         <EntityCardRow
-                            icon={Hash}
+                            icon={IconHash}
                             label={resolveLanguageKey("abbreviation")}
                             tooltip={resolveLanguageKey("abbreviation")}
                             path="abbreviation"

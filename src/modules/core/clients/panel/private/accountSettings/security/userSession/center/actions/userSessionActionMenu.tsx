@@ -1,4 +1,4 @@
-import {LogOut} from "lucide-react";
+import {IconLogout} from "@tabler/icons-react";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type {UserSession} from "armonia/src/modules/core/api/user/private/userSession/userSession.dto.ts";
@@ -31,7 +31,7 @@ export function UserSessionRevokeMenuItem({
                 if (!revokeDisabled) onRevoke(session);
             }}
         >
-            <LogOut className="size-4" />
+            <IconLogout className="size-4" />
             <p>{String(resolveLanguageKey("revoke"))}</p>
         </DropdownMenuItem>
     );

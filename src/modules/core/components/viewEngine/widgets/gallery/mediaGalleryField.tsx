@@ -1,9 +1,11 @@
+import {IconPlus} from "@tabler/icons-react";
 import {useRef, type ComponentType} from "react";
 import {useFormContext} from "react-hook-form";
-import {Plus} from "lucide-react";
 import {Label} from "@coreModule/components/ui/label.tsx";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
 import {useObjectUrls} from "@coreModule/helpers/hooks/components/useObjectUrls.ts";
+import {Input} from "@coreModule/components/ui/input.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 /** Props every caller of a concrete gallery field (image, video, …) passes through. */
 export type GalleryFieldProps = {
@@ -126,7 +128,7 @@ export function MediaGalleryField({
                         }
                         return (
                             <div key={`placeholder-${idx}`} className="relative">
-                                <button
+                                <Button variant="bare"
                                     type="button"
                                     disabled={loading}
                                     aria-label={label}
@@ -134,12 +136,12 @@ export function MediaGalleryField({
                                     onClick={() => inputRef.current?.click()}
                                 >
                                     <div className="text-center">
-                                        <Plus className="h-10 w-10 mx-auto text-muted-foreground mb-2"/>
+                                        <IconPlus className="h-10 w-10 mx-auto text-muted-foreground mb-2"/>
                                         <p className="text-xs text-muted-foreground px-2">{item.index + 1}/{maxItems}</p>
                                     </div>
-                                </button>
+                                </Button>
                                 {idx === firstPlaceholder && (
-                                    <input
+                                    <Input
                                         ref={inputRef}
                                         type="file"
                                         className="hidden"

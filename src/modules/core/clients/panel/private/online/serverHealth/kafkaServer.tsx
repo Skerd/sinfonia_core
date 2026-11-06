@@ -1,7 +1,7 @@
+import {IconStack, IconAlertTriangle, IconMailExclamation} from "@tabler/icons-react";
 import {useState} from "react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {Layers, AlertTriangle, MailWarning} from "lucide-react";
 import {clsx} from "clsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -79,7 +79,7 @@ function KafkaServerConsumers({title, resolveLanguageKey}:{title: string, resolv
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Badge variant={variant} className="text-xs font-medium hover:cursor-pointer flex items-center gap-1">
-                        {!allHealthy && <AlertTriangle className="h-3 w-3" />}
+                        {!allHealthy && <IconAlertTriangle className="h-3 w-3" />}
                         {title}: {running}/{expected}
                     </Badge>
                 </TooltipTrigger>
@@ -123,7 +123,7 @@ function KafkaServerDeadLetters({title, resolveLanguageKey}:{title: string, reso
                             className="text-xs font-medium hover:cursor-pointer flex items-center gap-1"
                             onClick={() => setConfirming(true)}
                         >
-                            <MailWarning className="h-3 w-3" />
+                            <IconMailExclamation className="h-3 w-3" />
                             {title}: {formatNumber(total)}
                         </Badge>
                     </TooltipTrigger>
@@ -153,7 +153,7 @@ function KafkaServerOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLan
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Layers className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
+                    <IconStack className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>

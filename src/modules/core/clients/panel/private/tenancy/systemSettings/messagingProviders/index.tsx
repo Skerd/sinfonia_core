@@ -1,8 +1,8 @@
+import {IconMessagePlus} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
-import {MessageSquarePlus} from "lucide-react";
 import type {MessagingProvider} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import MessagingProviderCard from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/cardView/messagingProviderCard.tsx";
@@ -33,7 +33,7 @@ function AllMessagingProviders({resolveLanguageKey}: WithLanguageType) {
                     <EntityListCreateButton
                         ctx={ctx}
                         path="/tenancy/systemSettings/messagingProviders/create"
-                        icon={<MessageSquarePlus className="h-4 w-4" />}
+                        icon={<IconMessagePlus className="h-4 w-4" />}
                         labelKey="createMessagingProvider"
                     />
                 </EntityListHeader>

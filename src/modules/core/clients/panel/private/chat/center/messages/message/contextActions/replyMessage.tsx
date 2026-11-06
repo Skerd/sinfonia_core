@@ -1,7 +1,7 @@
+import {IconArrowBackUp} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {setActionMessage} from "@coreModule/helpers/redux/slices/chatSlice.ts";
-import {Reply} from "lucide-react";
 import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/context-menu.tsx";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import {useDispatch} from "react-redux";
@@ -35,7 +35,7 @@ function ReplyMessage({
 
     return (
         <ContextMenuItem onClick={(e) => {e.stopPropagation(); replyToMessage();}} className="hover:cursor-pointer">
-            <Reply className="mr-2 h-4 w-4" />
+            <IconArrowBackUp className="mr-2 h-4 w-4" />
             {resolveLanguageKey("reply")}
             <ContextMenuShortcut>⌘{shortcut}</ContextMenuShortcut>
         </ContextMenuItem>

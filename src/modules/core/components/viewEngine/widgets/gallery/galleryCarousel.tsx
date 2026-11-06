@@ -13,6 +13,7 @@ import { cn } from "@coreModule/components/lib/utils.ts";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
 import {IconPhoto} from "@tabler/icons-react";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 function resolveMediaUrl(url: string, media: Media): string {
     return `${url}${media._id}`
@@ -118,7 +119,7 @@ function GalleryPreviewRail({
             aria-label={ariaLabel}
         >
             {media.map((item, i) => (
-                <button
+                <Button variant="bare"
                     key={item._id}
                     type="button"
                     role="tab"
@@ -159,7 +160,7 @@ function GalleryPreviewRail({
                             }
                         />
                     )}
-                </button>
+                </Button>
             ))}
         </div>
     )
@@ -385,7 +386,7 @@ export function GalleryCarousel({
                     return (
                         <CarouselItem key={item._id}>
                             {allowFullScreen ? (
-                                <button
+                                <Button variant="bare"
                                     type="button"
                                     className="w-full h-full"
                                     onClick={() => {
@@ -396,7 +397,7 @@ export function GalleryCarousel({
                                     aria-label={`View media ${i + 1} of ${media.length}`}
                                 >
                                     {slide}
-                                </button>
+                                </Button>
                             ) : (
                                 <div className="h-full w-full">{slide}</div>
                             )}

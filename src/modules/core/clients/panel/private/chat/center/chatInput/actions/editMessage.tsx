@@ -1,10 +1,10 @@
+import {IconPencil, IconX} from "@tabler/icons-react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {useEffect, useImperativeHandle} from "react";
 import {useDispatch} from "react-redux";
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import { Button } from "@coreModule/components/ui/button.tsx";
-import {Pencil, X} from "lucide-react";
 import {getName} from "@coreModule/helpers/general/names.ts";
 import {editMessage as editMessageAction, setActionMessage} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import withLanguage from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -62,7 +62,7 @@ function EditMessage({
     return (
         <div className="flex items-center justify-between bg-muted rounded-lg px-3 py-2 border-l-4 border-primary">
             <div className="flex items-center gap-2 flex-1 min-w-0">
-                <Pencil size={16} className="text-primary shrink-0" />
+                <IconPencil size={16} className="text-primary shrink-0" />
                 <div className="flex-1 min-w-0">
                     <div className="text-xs font-semibold text-primary">
                         {getName(editMessage?.sender)}
@@ -80,7 +80,7 @@ function EditMessage({
                 className="h-6 w-6 shrink-0"
                 onClick={() => dispatch(setActionMessage(null))}
             >
-                <X size={14} />
+                <IconX size={14} />
             </Button>
         </div>
     )

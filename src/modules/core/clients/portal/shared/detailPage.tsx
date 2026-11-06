@@ -1,7 +1,6 @@
 import {compose} from "redux";
-import {Fragment, type ReactNode} from "react";
+import {Fragment, type ComponentType, type ReactNode} from "react";
 import {Link} from "react-router-dom";
-import type {LucideIcon} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {
@@ -123,7 +122,10 @@ export function DetailStatus({tone, children}: {tone: keyof typeof STATUS_TONES;
 }
 
 /** The few numbers that describe the item at a glance, as tiles: "5 seats", "84 m²". */
-export function DetailFacts({facts}: {facts: readonly {icon: LucideIcon; label: string; value: string}[]}) {
+/** Any icon component that takes a class (module pages may still pass lucide icons). */
+type DetailFactIcon = ComponentType<{className?: string}>;
+
+export function DetailFacts({facts}: {facts: readonly {icon: DetailFactIcon; label: string; value: string}[]}) {
     return (
         <dl className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {facts.map(({icon: Icon, label, value}) => (

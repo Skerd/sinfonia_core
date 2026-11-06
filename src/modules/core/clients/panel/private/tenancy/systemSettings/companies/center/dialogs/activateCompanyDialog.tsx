@@ -1,3 +1,4 @@
+import {IconLoader2, IconShieldCheck} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useImperativeHandle} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -14,7 +15,6 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@coreModule/components/ui/alert-dialog.tsx";
-import {LoaderCircle, ShieldCheck} from "lucide-react";
 import {ActionMessage} from "armonia/src/modules/core/types/shared.types.ts";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 
@@ -62,7 +62,7 @@ function ActivateCompanyDialog({
                 <AlertDialogFooter>
                     <AlertDialogCancel disabled={loading}>{resolveLanguageKey("cancel")}</AlertDialogCancel>
                     <AlertDialogAction onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleActivate(); }} disabled={loading}>
-                        {loading ? <LoaderCircle className="animate-spin" /> : <ShieldCheck />}
+                        {loading ? <IconLoader2 className="animate-spin" /> : <IconShieldCheck />}
                         {resolveLanguageKey("confirm")}
                     </AlertDialogAction>
                 </AlertDialogFooter>

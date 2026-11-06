@@ -1,6 +1,6 @@
+import {IconBlocks} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {Blocks} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -20,7 +20,7 @@ function ManageModules({resolveLanguageKey, onAction}: ManageModulesProps) {
 
     return (
         <DropdownMenuItem onClick={() => {onAction("manageModules");}}>
-            <Blocks size={16} />
+            <IconBlocks size={16} />
             {resolveLanguageKey("title")}
         </DropdownMenuItem>
     );

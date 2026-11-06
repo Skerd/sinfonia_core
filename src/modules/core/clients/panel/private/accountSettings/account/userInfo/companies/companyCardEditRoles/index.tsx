@@ -1,8 +1,8 @@
+import {IconInfoCircle} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {useEffect, useImperativeHandle, useState} from "react";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import {Info} from "lucide-react";
 import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/alert.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -220,7 +220,7 @@ function AccountCompaniesCardEditRoles({
                         }
                     </div>
                     <Alert>
-                        <Info />
+                        <IconInfoCircle />
                         <AlertTitle>{resolveLanguageKey("clarification")}</AlertTitle>
                         <AlertDescription>{resolveLanguageKey("clarificationDescription")}</AlertDescription>
                     </Alert>
@@ -254,9 +254,4 @@ export default compose(
         true
     ),
     withDebug(true, true, "users")
-)
-(AccountCompaniesCardEditRoles)
-
-
-
-
+)(AccountCompaniesCardEditRoles)

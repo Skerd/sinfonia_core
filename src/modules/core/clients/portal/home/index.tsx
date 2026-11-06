@@ -1,7 +1,7 @@
+import {IconWorld, IconMail, IconMapPin, IconPhone, IconSearch} from "@tabler/icons-react";
 import {useState} from "react";
 import {compose} from "redux";
 import {useSearchParams} from "react-router-dom";
-import {Globe, Mail, MapPin, Phone, Search} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
@@ -97,7 +97,7 @@ function CatalogSearchForm({
             }}
         >
             <InputGroup className="h-12 border-0 shadow-none dark:bg-transparent">
-                <InputGroupAddon><Search aria-hidden /></InputGroupAddon>
+                <InputGroupAddon><IconSearch aria-hidden /></InputGroupAddon>
                 <InputGroupInput name="q" defaultValue={query} placeholder={resolveLanguageKey("whatPlaceholder")} aria-label={resolveLanguageKey("what")} />
             </InputGroup>
             <InputGroup
@@ -106,7 +106,7 @@ function CatalogSearchForm({
                     if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
                 }}
             >
-                <InputGroupAddon><MapPin aria-hidden /></InputGroupAddon>
+                <InputGroupAddon><IconMapPin aria-hidden /></InputGroupAddon>
                 <InputGroupInput
                     role="combobox"
                     aria-label={resolveLanguageKey("where")}
@@ -159,7 +159,7 @@ function CatalogSearchForm({
                             <li className="px-2 py-1.5 text-sm text-muted-foreground">{resolveLanguageKey("noCities")}</li>
                         ) : choices.map((name, index) => (
                             <li key={name || "anywhere"} role="presentation">
-                                <button
+                                <Button variant="bare"
                                     type="button"
                                     role="option"
                                     aria-selected={index === active}
@@ -172,14 +172,14 @@ function CatalogSearchForm({
                                     onClick={() => fill(name)}
                                 >
                                     {name || resolveLanguageKey("anywhere")}
-                                </button>
+                                </Button>
                             </li>
                         ))}
                     </ul>
                 ) : null}
             </InputGroup>
             <Button type="submit" size="lg" className="h-12 px-6">
-                <Search aria-hidden />
+                <IconSearch aria-hidden />
                 {resolveLanguageKey("search")}
             </Button>
         </form>
@@ -200,21 +200,21 @@ function CompanyIntro({company, resolveLanguageKey}: {company: PortalSiteCompany
                 {company.cities.length ? (
                     <div className="flex flex-wrap gap-1.5">
                         {company.cities.map((city) => (
-                            <Badge key={city} variant="outline" className="bg-background"><MapPin aria-hidden />{city}</Badge>
+                            <Badge key={city} variant="outline" className="bg-background"><IconMapPin aria-hidden />{city}</Badge>
                         ))}
                     </div>
                 ) : null}
             </div>
             <div className="flex flex-wrap gap-2 sm:flex-col">
                 {company.phoneNumber ? (
-                    <Button asChild size="lg"><a href={`tel:${company.phoneNumber.replace(/[^\d+]/g, "")}`}><Phone aria-hidden />{resolveLanguageKey("call")}</a></Button>
+                    <Button asChild size="lg"><a href={`tel:${company.phoneNumber.replace(/[^\d+]/g, "")}`}><IconPhone aria-hidden />{resolveLanguageKey("call")}</a></Button>
                 ) : null}
                 {company.email ? (
-                    <Button asChild size="lg" variant="outline" className="bg-background"><a href={`mailto:${company.email}`}><Mail aria-hidden />{resolveLanguageKey("email")}</a></Button>
+                    <Button asChild size="lg" variant="outline" className="bg-background"><a href={`mailto:${company.email}`}><IconMail aria-hidden />{resolveLanguageKey("email")}</a></Button>
                 ) : null}
                 {company.website ? (
                     <Button asChild size="lg" variant="outline" className="bg-background">
-                        <a href={company.website} target="_blank" rel="noopener noreferrer"><Globe aria-hidden />{resolveLanguageKey("website")}</a>
+                        <a href={company.website} target="_blank" rel="noopener noreferrer"><IconWorld aria-hidden />{resolveLanguageKey("website")}</a>
                     </Button>
                 ) : null}
             </div>

@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/rolePermissionsSection.tsx",
+  "templateLabel": "Modèle",
+  "templatePlaceholder": "Modèle",
+  "templateDescription": "Copier les autorisations d'un autre rôle",
+  "none": "Aucun",
+  "failTitle": "Échec du chargement des autorisations",
+  "failDescription": "Échec du chargement des autorisations, veuillez réessayer",
+  "failTooltip": "Cliquez ici pour réessayer de charger les autorisations",
+  "noData": "Aucune autorisation trouvée, aucun rôle ne peut donc être créé"
+}

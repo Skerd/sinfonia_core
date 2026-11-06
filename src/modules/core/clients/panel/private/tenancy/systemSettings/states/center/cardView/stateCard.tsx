@@ -4,13 +4,12 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {memo, type RefObject} from "react";
 import {State} from "armonia/src/modules/core/api/auxiliary/private/state/state.dto.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
-import {Tag} from "lucide-react";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import DisplayValue from "@coreModule/components/viewEngine/widgets/display/displayValue.tsx";
 import StateSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/actions/viewCities.tsx";
-import {IconFlag} from "@tabler/icons-react";
+import {IconFlag, IconTag} from "@tabler/icons-react";
 import {stateEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/states";
 import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
@@ -78,7 +77,7 @@ const StateCard = memo(function StateCard({
                         </EntityCard.Header>
                         <EntityCard.Body>
                             <EntityCardRow
-                                icon={Tag}
+                                icon={IconTag}
                                 label={resolveLanguageKey("code")}
                                 tooltip={resolveLanguageKey("code")}
                                 path="code"

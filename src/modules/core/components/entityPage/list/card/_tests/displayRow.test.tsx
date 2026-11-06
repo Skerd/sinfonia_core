@@ -7,6 +7,7 @@
  */
 import {describe, expect, it, vi} from "vitest";
 import {screen} from "@testing-library/react";
+import type {ComponentProps} from "react";
 
 vi.mock("@coreModule/helpers/hocs/withLanguage.tsx", async (importOriginal) => ({
     ...(await importOriginal<Record<string, unknown>>()),
@@ -26,7 +27,7 @@ const {renderWithCardEnv, resetCalls} = await import("./harness.tsx");
 /** Loosely typed on purpose: each test spells out only the props it exercises. */
 function row(props: Record<string, unknown>, read: unknown = true) {
     resetCalls();
-    const rowProps = {label: "Label", ...props} as any;
+    const rowProps = {label: "Label", ...props} as ComponentProps<typeof DisplayRow>;
     return renderWithCardEnv(
         <AccessFields read={read}>
             <InfoRowGroup>

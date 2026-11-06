@@ -8,6 +8,7 @@ import {getWidgetMeta} from "@coreModule/components/viewEngine/widgetRegistry.ts
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {PALETTE_PREFIX} from "../tree/treeProjection.ts";
 import {buildPaletteGroups, isContainerToken} from "./widgetCatalog.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 type WidgetPaletteProps = {
     /** Click-to-append, for when dragging into an empty tree is awkward. */
@@ -33,7 +34,7 @@ function PaletteChip({token, onAppend}: {token: string; onAppend: () => void}) {
     });
 
     return (
-        <button
+        <Button variant="bare"
             ref={setNodeRef}
             type="button"
             onClick={onAppend}
@@ -49,7 +50,7 @@ function PaletteChip({token, onAppend}: {token: string; onAppend: () => void}) {
             {...listeners}
         >
             {token}
-        </button>
+        </Button>
     );
 }
 

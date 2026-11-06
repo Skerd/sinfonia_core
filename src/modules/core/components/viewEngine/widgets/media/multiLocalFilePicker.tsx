@@ -1,9 +1,10 @@
-import { Plus } from "lucide-react";
+import {IconPlus} from "@tabler/icons-react";
 import { useEffect, useRef } from "react";
 import { Button } from "@coreModule/components/ui/button.tsx";
 import { FormLabel } from "@coreModule/components/ui/form.tsx";
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import SingleFile from "@coreModule/components/viewEngine/widgets/media/singleFile.tsx";
+import {Input} from "@coreModule/components/ui/input.tsx";
 
 export type MultiLocalFilePickerProps = {
     files: File[];
@@ -83,7 +84,7 @@ export default function MultiLocalFilePicker({
         <div className="flex flex-col gap-y-4">
             {showLabel ? <FormLabel>{String(resolveLanguageKey(labelKey))}</FormLabel> : null}
             <div className="flex items-center gap-2">
-                <input
+                <Input
                     ref={inputRef}
                     type="file"
                     className="hidden"
@@ -105,7 +106,7 @@ export default function MultiLocalFilePicker({
                     onClick={() => inputRef.current?.click()}
                     disabled={disabled || reserved + files.length >= maxFiles}
                 >
-                    <Plus className="mr-2 h-4 w-4" />
+                    <IconPlus className="mr-2 h-4 w-4" />
                     {String(resolveLanguageKey(addFileKey))}
                 </Button>
                 {reserved + files.length > 0 && (

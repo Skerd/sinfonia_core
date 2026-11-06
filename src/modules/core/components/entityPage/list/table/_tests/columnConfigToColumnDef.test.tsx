@@ -5,7 +5,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import type {ReactNode} from "react";
 import languageReducer from "@coreModule/helpers/redux/slices/languageSlice.ts";
 import type {TableColumnConfig} from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type.ts";
-import {columnConfigToColumnDef} from "@coreModule/components/entityPage/list/table/columnConfigToColumnDef.tsx";
+import {useColumnConfigToColumnDef} from "@coreModule/components/entityPage/list/table/columnConfigToColumnDef.tsx";
 
 const column = (id: string, accessorPath: string): TableColumnConfig => ({
     id,
@@ -18,20 +18,20 @@ const column = (id: string, accessorPath: string): TableColumnConfig => ({
 
 const COLUMNS = [column("name", "name"), column("code", "code"), column("phoneCode", "phoneCode")];
 
-/** `columnConfigToColumnDef` calls `useSelectedLanguage`, so it has to run inside a store. */
+/** `useColumnConfigToColumnDef` calls `useSelectedLanguage`, so it has to run inside a store. */
 const wrapper = ({children}: {children: ReactNode}) => (
     <Provider store={configureStore({reducer: {language: languageReducer}})}>{children}</Provider>
 );
 
 function columnIds(read: unknown): (string | undefined)[] {
     const {result} = renderHook(
-        () => columnConfigToColumnDef(COLUMNS, {fields: {}, timezone: "UTC", read}),
+        () => useColumnConfigToColumnDef(COLUMNS, {fields: {}, timezone: "UTC", read}),
         {wrapper},
     );
     return result.current.map((def) => def.id);
 }
 
-describe("columnConfigToColumnDef read gating", () => {
+describe("useColumnConfigToColumnDef read gating", () => {
     it("keeps every column when the server grants them all", () => {
         expect(columnIds({name: {}, code: {}, phoneCode: {}})).toEqual(["name", "code", "phoneCode"]);
     });

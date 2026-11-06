@@ -1,10 +1,10 @@
+import {IconPhone, IconTag} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {Country} from "armonia/src/modules/core/api/auxiliary/private/country/country.dto.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import {Phone, Tag} from "lucide-react";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import DisplayValue from "@coreModule/components/viewEngine/widgets/display/displayValue.tsx";
 import CountrySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx";
@@ -82,7 +82,7 @@ function CountryCard({
                     </EntityCard.Header>
                     <EntityCard.Body>
                         <EntityCardRow
-                            icon={Tag}
+                            icon={IconTag}
                             label={resolveLanguageKey("code")}
                             tooltip={resolveLanguageKey("code")}
                             path="code"
@@ -91,7 +91,7 @@ function CountryCard({
                             {(formatted) => (<Badge variant="secondary">{formatted}</Badge>)}
                         </EntityCardRow>
                         <EntityCardRow
-                            icon={Phone}
+                            icon={IconPhone}
                             label={resolveLanguageKey("phoneCode")}
                             tooltip={resolveLanguageKey("phoneCode")}
                             path="phoneCode"

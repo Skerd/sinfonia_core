@@ -1,9 +1,9 @@
-import {useEffect, useState, type FormEvent} from "react";
+import {useState, type FormEvent} from "react";
 import {compose} from "redux";
 import {toast} from "sonner";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {handleError} from "@coreModule/helpers/general/errors.ts";
 import {changePasswordFormSchema} from "armonia/src/modules/core/api/user/private/data/changePassword.form.validator.ts";
 import {enableMfaFormSchema} from "armonia/src/modules/core/api/user/private/mfa/enableMfa.form.validator.ts";
@@ -18,6 +18,12 @@ import {FieldError} from "@coreModule/components/ui/field.tsx";
 
 const LANGUAGE_PATH = "src/modules/core/clients/portal/account/security.tsx";
 
+const MFA_STATUS_REQUEST = {method: "get" as const, url: "/api/user/mfa", data: {}};
+const CHANGE_PASSWORD_REQUEST = {method: "patch" as const, url: "/api/user/data/password", data: {}};
+const MFA_SETUP_REQUEST = {method: "post" as const, url: "/api/user/mfa", data: {}};
+const MFA_ENABLE_REQUEST = {method: "put" as const, url: "/api/user/mfa", data: {}};
+const MFA_DISABLE_REQUEST = {method: "delete" as const, url: "/api/user/mfa", data: {}};
+
 type PasswordErrors = Partial<Record<"currentPassword" | "newPassword" | "confirmPassword", string>>;
 
 function SecurityPageInner({resolveLanguageKey, languageCode}: WithLanguageType) {
@@ -25,35 +31,71 @@ function SecurityPageInner({resolveLanguageKey, languageCode}: WithLanguageType)
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordErrors, setPasswordErrors] = useState<PasswordErrors>({});
-    const [savingPassword, setSavingPassword] = useState(false);
 
     const [mfaEnabled, setMfaEnabled] = useState(false);
-    const [mfaLoading, setMfaLoading] = useState(true);
     const [setup, setSetup] = useState<GenerateMfaQrCodeFormResponseType | null>(null);
     const [mfaToken, setMfaToken] = useState("");
     const [mfaTokenError, setMfaTokenError] = useState<string | undefined>();
     const [disableCode, setDisableCode] = useState("");
     const [disableError, setDisableError] = useState<string | undefined>();
-    const [mfaBusy, setMfaBusy] = useState(false);
 
-    useEffect(() => {
-        let cancelled = false;
-        (async () => {
-            try {
-                const res = await apiClient.get<MfaStatusFormResponseType>("/api/user/mfa");
-                if (!cancelled) setMfaEnabled(res.data.enabled);
-            } catch (err) {
-                handleError(err, {context: "Shop security", showToast: true, fallbackMessage: resolveLanguageKey("mfaLoadError")});
-            } finally {
-                if (!cancelled) setMfaLoading(false);
+    // No translator: these keep their own toasts (`handleError` on failure, a message on success).
+    const failed = (fallbackKey: string) => (err: unknown) =>
+        handleError(err, {context: "Shop security", showToast: true, fallbackMessage: resolveLanguageKey(fallbackKey)});
+    const mfaStatus = useHttpRequest<MfaStatusFormResponseType>(MFA_STATUS_REQUEST, {}, 1, true, {
+        success: (data) => setMfaEnabled(data.enabled),
+        error: failed("mfaLoadError"),
+    });
+    const mfaLoading = mfaStatus.loading;
+
+    const [passwordRequest, setPasswordRequest] = useState({body: {} as Record<string, unknown>, count: 0});
+    const passwordSave = useHttpRequest(CHANGE_PASSWORD_REQUEST, passwordRequest.body, passwordRequest.count, true, {
+        success: () => {
+            setCurrentPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+            toast.success(resolveLanguageKey("passwordSaved"));
+        },
+        error: failed("passwordSaveError"),
+    });
+    const savingPassword = passwordSave.loading;
+
+    const [setupCount, setSetupCount] = useState(0);
+    const mfaSetup = useHttpRequest<GenerateMfaQrCodeFormResponseType>(MFA_SETUP_REQUEST, {}, setupCount, true, {
+        success: (data) => {
+            if (data.enabled) {
+                setMfaEnabled(true);
+                setSetup(null);
+                return;
             }
-        })();
-        return () => {
-            cancelled = true;
-        };
-    }, [resolveLanguageKey]);
+            setSetup(data);
+        },
+        error: failed("mfaSetupError"),
+    });
 
-    const handleChangePassword = async (event: FormEvent) => {
+    const [enableRequest, setEnableRequest] = useState({body: {} as Record<string, unknown>, count: 0});
+    const mfaEnable = useHttpRequest(MFA_ENABLE_REQUEST, enableRequest.body, enableRequest.count, true, {
+        success: () => {
+            setMfaEnabled(true);
+            setSetup(null);
+            setMfaToken("");
+            toast.success(resolveLanguageKey("mfaEnabled"));
+        },
+        error: failed("mfaEnableError"),
+    });
+
+    const [disableRequest, setDisableRequest] = useState({body: {} as Record<string, unknown>, count: 0});
+    const mfaDisable = useHttpRequest(MFA_DISABLE_REQUEST, disableRequest.body, disableRequest.count, true, {
+        success: () => {
+            setMfaEnabled(false);
+            setDisableCode("");
+            toast.success(resolveLanguageKey("mfaDisabled"));
+        },
+        error: failed("mfaDisableError"),
+    });
+    const mfaBusy = mfaSetup.loading || mfaEnable.loading || mfaDisable.loading;
+
+    const handleChangePassword = (event: FormEvent) => {
         event.preventDefault();
         if (savingPassword) return;
 
@@ -76,38 +118,12 @@ function SecurityPageInner({resolveLanguageKey, languageCode}: WithLanguageType)
         }
 
         setPasswordErrors({});
-        setSavingPassword(true);
-        try {
-            await apiClient.patch("/api/user/data/password", parsed.data);
-            setCurrentPassword("");
-            setNewPassword("");
-            setConfirmPassword("");
-            toast.success(resolveLanguageKey("passwordSaved"));
-        } catch (err) {
-            handleError(err, {context: "Shop security", showToast: true, fallbackMessage: resolveLanguageKey("passwordSaveError")});
-        } finally {
-            setSavingPassword(false);
-        }
+        setPasswordRequest((current) => ({body: parsed.data, count: current.count + 1}));
     };
 
-    const startMfaSetup = async () => {
-        setMfaBusy(true);
-        try {
-            const res = await apiClient.post<GenerateMfaQrCodeFormResponseType>("/api/user/mfa", {});
-            if (res.data.enabled) {
-                setMfaEnabled(true);
-                setSetup(null);
-                return;
-            }
-            setSetup(res.data);
-        } catch (err) {
-            handleError(err, {context: "Shop security", showToast: true, fallbackMessage: resolveLanguageKey("mfaSetupError")});
-        } finally {
-            setMfaBusy(false);
-        }
-    };
+    const startMfaSetup = () => setSetupCount((count) => count + 1);
 
-    const confirmMfa = async (event: FormEvent) => {
+    const confirmMfa = (event: FormEvent) => {
         event.preventDefault();
         if (!setup || mfaBusy) return;
 
@@ -122,21 +138,10 @@ function SecurityPageInner({resolveLanguageKey, languageCode}: WithLanguageType)
         }
 
         setMfaTokenError(undefined);
-        setMfaBusy(true);
-        try {
-            await apiClient.put("/api/user/mfa", parsed.data);
-            setMfaEnabled(true);
-            setSetup(null);
-            setMfaToken("");
-            toast.success(resolveLanguageKey("mfaEnabled"));
-        } catch (err) {
-            handleError(err, {context: "Shop security", showToast: true, fallbackMessage: resolveLanguageKey("mfaEnableError")});
-        } finally {
-            setMfaBusy(false);
-        }
+        setEnableRequest((current) => ({body: parsed.data, count: current.count + 1}));
     };
 
-    const disableMfa = async (event: FormEvent) => {
+    const disableMfa = (event: FormEvent) => {
         event.preventDefault();
         if (mfaBusy) return;
 
@@ -150,17 +155,7 @@ function SecurityPageInner({resolveLanguageKey, languageCode}: WithLanguageType)
         }
 
         setDisableError(undefined);
-        setMfaBusy(true);
-        try {
-            await apiClient.delete("/api/user/mfa", {data: parsed.data});
-            setMfaEnabled(false);
-            setDisableCode("");
-            toast.success(resolveLanguageKey("mfaDisabled"));
-        } catch (err) {
-            handleError(err, {context: "Shop security", showToast: true, fallbackMessage: resolveLanguageKey("mfaDisableError")});
-        } finally {
-            setMfaBusy(false);
-        }
+        setDisableRequest((current) => ({body: parsed.data, count: current.count + 1}));
     };
 
     return (

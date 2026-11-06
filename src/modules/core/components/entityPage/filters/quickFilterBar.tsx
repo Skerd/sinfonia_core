@@ -1,6 +1,6 @@
+import {IconX, IconCalendar} from "@tabler/icons-react";
 import {useEffect, useId, useMemo, useRef, useState} from "react";
 import {compose} from "redux";
-import {X, CalendarIcon} from "lucide-react";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {Input} from "@coreModule/components/ui/input.tsx";
@@ -211,7 +211,7 @@ function DateInput({id, def, value, onChange}: QuickFilterInputProps) {
                         selectedDate ? CLEARABLE_PADDING : "text-muted-foreground",
                     )}
                 >
-                    <CalendarIcon className="mr-2 size-3.5 shrink-0" />
+                    <IconCalendar className="mr-2 size-3.5 shrink-0" />
                     <span className="truncate">
                         {selectedDate ? formatDate(selectedDate, {format: DATE_FORMATS.longDate}) : (def.placeholder ?? def.label)}
                     </span>
@@ -396,14 +396,14 @@ function QuickFilterBar({
                                 resolveLanguageKey={resolveLanguageKey}
                             />
                             {active && !SELF_CLEARING_TYPES.has(def.type) && (
-                                <button
+                                <Button variant="bare"
                                     type="button"
                                     onClick={() => onChange(def.field, null, null)}
                                     className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring transition-colors"
                                     aria-label={`${String(resolveLanguageKey("clear"))} ${def.label}`}
                                 >
-                                    <X className="size-3.5" />
-                                </button>
+                                    <IconX className="size-3.5" />
+                                </Button>
                             )}
                         </div>
                     </div>
@@ -417,7 +417,7 @@ function QuickFilterBar({
                     onClick={onClearAll}
                     className="h-8 px-2 text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                 >
-                    <X className="size-3.5 mr-1" />
+                    <IconX className="size-3.5 mr-1" />
                     {String(resolveLanguageKey("clearFilters"))}
                 </Button>
             )}

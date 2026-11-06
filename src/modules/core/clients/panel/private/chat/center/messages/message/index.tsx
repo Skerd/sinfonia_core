@@ -1,3 +1,4 @@
+import {IconArrowForwardUp, IconCircleOff, IconPin, IconUser, IconCalendar, IconCheck, IconChecks} from "@tabler/icons-react";
 import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {CSSProperties, ReactNode, useEffect, useRef, useState} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -6,7 +7,6 @@ import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {ContextMenu, ContextMenuContent, ContextMenuTrigger} from "@coreModule/components/ui/context-menu.tsx";
-import {Forward, CircleSlash, Pin, User, Calendar, Check, CheckCheck} from "lucide-react";
 import {isPeekingWebsiteChannel, toggleDeleteMessageId, updateOpenDelete} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import UserAvatar from "@coreModule/components/custom/avatar/userAvatar.tsx";
 import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
@@ -36,6 +36,7 @@ import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 const MAX_FILES = 2;
 const RECEIPT_MEDIA_BASE = "/api/auxiliary/media/";
@@ -71,8 +72,7 @@ function Message({
     openedChannel,
     goTo
 }: MessageProps){
-    //@ts-ignore
-    const ref = useRef<any>();
+    const ref = useRef<HTMLDivElement>(null);
     const {read = {}} = useAccess("messages") || {};
     const dispatch = useDispatch();
     const [contextOpened, setContextOpened] = useState<boolean>(false);
@@ -324,7 +324,7 @@ function Message({
                                             hasPhoto ? <AvatarImage src={`${RECEIPT_MEDIA_BASE}${photo}`} alt="" className="object-cover"/> : null
                                         }
                                         <AvatarFallback className="rounded-full bg-background/15">
-                                            <User className="size-4 text-background/70" aria-hidden />
+                                            <IconUser className="size-4 text-background/70" aria-hidden />
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="min-w-0 flex-1 text-left">
@@ -344,10 +344,10 @@ function Message({
         );
 
         let icon: ReactNode;
-        if (otherIds.length === 0) {return <Check className="size-3 opacity-70" aria-hidden />;}
-        if (allRead) {icon = (<CheckCheck className="size-3 text-info" aria-hidden/>);}
-        else if (allDelivered) {icon = <CheckCheck className="size-3 opacity-70" aria-hidden />;}
-        else {icon = <Check className="size-3 opacity-70" aria-hidden />;}
+        if (otherIds.length === 0) {return <IconCheck className="size-3 opacity-70" aria-hidden />;}
+        if (allRead) {icon = (<IconChecks className="size-3 text-info" aria-hidden/>);}
+        else if (allDelivered) {icon = <IconChecks className="size-3 opacity-70" aria-hidden />;}
+        else {icon = <IconCheck className="size-3 opacity-70" aria-hidden />;}
 
         return (
             <TooltipDisplayer tooltipRender={receiptTooltip} side="top" contentClassName="!max-w-[min(252px,calc(100vw-16px))] !w-full !flex-col !items-stretch !gap-0 !px-2.5 !py-1.5 !text-xs [&>svg]:hidden">
@@ -406,7 +406,7 @@ function Message({
                                 className="h-full w-full"
                             />
                             {index === visible.length - 1 && overflow > 0 && (
-                                <button
+                                <Button variant="bare"
                                     type="button"
                                     className={cn(
                                         "absolute inset-0 z-10 flex cursor-pointer items-center justify-center rounded-md text-sm font-semibold backdrop-blur-[2px]",
@@ -425,7 +425,7 @@ function Message({
                                     }}
                                 >
                                     +{overflow}
-                                </button>
+                                </Button>
                             )}
                         </div>
                     ))}
@@ -560,7 +560,7 @@ function Message({
                 )}>
                     <div className="flex flex-col gap-y-0.5">
                         <div className="flex items-center font-medium not-italic">
-                            <Forward size={12} className="mr-1 inline" />
+                            <IconArrowForwardUp size={12} className="mr-1 inline" />
                             <p>{resolveLanguageKey("forwarded")}</p>
                         </div>
                         <p>
@@ -597,7 +597,7 @@ function Message({
                                         <>
                                             <EntityCardRow
                                                 className="text-background"
-                                                icon={User}
+                                                icon={IconUser}
                                                 label={resolveLanguageKey("pinnedBy")}
                                                 show={!!read.pinned?.keys?.user}
                                                 type="user"
@@ -605,7 +605,7 @@ function Message({
                                             />
                                             <EntityCardRow
                                                 className="text-background"
-                                                icon={Calendar}
+                                                icon={IconCalendar}
                                                 label={resolveLanguageKey("pinnedAt")}
                                                 show={!!read.pinned?.keys?.date}
                                                 type="dateTime"
@@ -616,7 +616,7 @@ function Message({
                                 </div>
                             )}
                         >
-                            <Pin size={12} className="inline" />
+                            <IconPin size={12} className="inline" />
                         </TooltipDisplayer>
                     }
                 </>
@@ -710,7 +710,7 @@ function Message({
                                 >
                                     <div className="grid min-w-0">
                                         <div className="col-start-1 row-start-1 flex min-w-0 items-center gap-1">
-                                            <CircleSlash size={12} />
+                                            <IconCircleOff size={12} />
                                             <p className="italic">{resolveLanguageKey(  message.sender._id === user.id ? "youDeletedTheMessage" : "messageDeleted")}</p>
                                         </div>
                                     </div>

@@ -1,6 +1,6 @@
+import {IconCalendar, IconCircleOff, IconLock, IconDotsVertical} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Calendar, CircleSlash, Lock} from "lucide-react";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {CompanyUserRequestsType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
@@ -10,11 +10,11 @@ import {
     DropdownMenuTrigger
 } from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import UnlockMfaDeactivationAction from "@coreModule/clients/panel/private/users/center/actions/unlockMfaDeactivation.tsx";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 
 function isMfaDeactivationLocked(mfaDeactivation: NonNullable<CompanyUserRequestsType["mfaDeactivation"]>): boolean {
     const lockedUntil = mfaDeactivation.lockedUntil;
@@ -35,10 +35,9 @@ function MfaDeactivationRequestActions({
     specificUserId,
 }: Pick<MfaDeactivationRequestTabContentProps, "mfaDeactivation" | "user" | "specificUserId">) {
 
-    const {write} = useAccess("users", !specificUserId ? "self" : "others");
 
     const locked = isMfaDeactivationLocked(mfaDeactivation);
-    const showUnlock = !!write?.requests?.keys?.mfaDeactivation?.keys?.lockedUntil && locked;
+    const showUnlock = useActionAccess("users", "unlockMfaDeactivation", "others") && locked;
 
     if (!showUnlock) return null;
 
@@ -51,7 +50,7 @@ function MfaDeactivationRequestActions({
                         size="icon-sm"
                         className="size-8 rounded-md opacity-0 scale-[0.98] max-md:opacity-100 max-md:scale-100 md:group-hover/mfa-deactivation-row:opacity-100 md:group-hover/mfa-deactivation-row:scale-100 md:group-hover/mfa-deactivation-row:bg-muted/60 md:group-hover/row:opacity-100 md:group-hover/row:scale-100 md:group-hover/row:bg-muted/60 hover:opacity-100 hover:bg-muted/80 hover:scale-100 data-[state=open]:opacity-100 data-[state=open]:scale-100 data-[state=open]:bg-muted/60 transition-all duration-200 ease-out"
                     >
-                        <EllipsisVertical className="size-4"/>
+                        <IconDotsVertical className="size-4"/>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end">
@@ -82,7 +81,7 @@ function MfaDeactivationRequestTabContentInner({
                     <div className="flex-1 min-w-0">
                         <InfoRowGroup layout="stack">
                             <EntityCardRow
-                                icon={CircleSlash}
+                                icon={IconCircleOff}
                                 label={resolveLanguageKey("attempts")}
                                 tooltip={resolveLanguageKey("attempts")}
                                 show={!!mfaRead?.attempts}
@@ -90,7 +89,7 @@ function MfaDeactivationRequestTabContentInner({
                                 value={mfaDeactivation.attempts}
                             />
                             <EntityCardRow
-                                icon={Calendar}
+                                icon={IconCalendar}
                                 label={resolveLanguageKey("date")}
                                 tooltip={resolveLanguageKey("date")}
                                 show={!!mfaRead?.date}
@@ -98,7 +97,7 @@ function MfaDeactivationRequestTabContentInner({
                                 value={mfaDeactivation.date}
                             />
                             <EntityCardRow
-                                icon={Lock}
+                                icon={IconLock}
                                 label={resolveLanguageKey("lockedUntil")}
                                 tooltip={resolveLanguageKey("lockedUntil")}
                                 show={!!mfaRead?.lockedUntil}

@@ -1,6 +1,6 @@
+import {IconBlocks, IconLoader2} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useImperativeHandle, useState} from "react";
-import {Blocks, LoaderCircle} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -107,7 +107,7 @@ function ManageModulesForm({
                         {resolveLanguageKey("cancel")}
                     </Button>
                     <Button disabled={loading} onClick={() => onFilterChange({modules: selected})}>
-                        {loading ? <LoaderCircle className="animate-spin" /> : <Blocks />}
+                        {loading ? <IconLoader2 className="animate-spin" /> : <IconBlocks />}
                         {resolveLanguageKey("confirm")}
                     </Button>
                 </DialogFooter>

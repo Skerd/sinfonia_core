@@ -1,7 +1,7 @@
+import {IconArrowLeft, IconDotsVertical, IconUser} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {ArrowLeft, MoreVertical, User} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
@@ -61,7 +61,7 @@ function ChatHeader({}: MessageHeaderProps ){
             <div className='flex'>
                 <div className="sm:hidden">
                     <Button size='icon' variant='ghost' className='h-full' onClick={() => {dispatch(openChannel(null));}}>
-                        <ArrowLeft className='rtl:rotate-180' />
+                        <IconArrowLeft className='rtl:rotate-180' />
                     </Button>
                 </div>
                 <div className='flex items-center gap-2'>
@@ -87,7 +87,7 @@ function ChatHeader({}: MessageHeaderProps ){
                                                             : null
                                                         }
                                                         <AvatarFallback>
-                                                            <User size={18} />
+                                                            <IconUser size={18} />
                                                         </AvatarFallback>
                                                         <AvatarGroupTooltip>
                                                             {fullName}
@@ -168,7 +168,7 @@ function ChatHeader({}: MessageHeaderProps ){
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button size='icon' variant='ghost'>
-                            <MoreVertical className='stroke-muted-foreground sm:size-5' />
+                            <IconDotsVertical className='stroke-muted-foreground sm:size-5' />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-fit" align="start">

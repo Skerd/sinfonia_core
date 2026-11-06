@@ -2,6 +2,7 @@ import {IconDeviceDesktop, IconDeviceMobile, IconDeviceTablet} from "@tabler/ico
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {PREVIEW_DEVICES, type PreviewDevice, type PreviewDeviceId} from "./previewDevice.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 const ICONS = {
     desktop: IconDeviceDesktop,
@@ -33,7 +34,7 @@ export default function DeviceToggle({
                                 : `${option.label} — fills the pane`
                         }
                     >
-                        <button
+                        <Button variant="bare"
                             type="button"
                             aria-label={`${option.label} preview`}
                             aria-pressed={active}
@@ -46,7 +47,7 @@ export default function DeviceToggle({
                             )}
                         >
                             <Icon className="size-3.5" />
-                        </button>
+                        </Button>
                     </TooltipDisplayer>
                 );
             })}

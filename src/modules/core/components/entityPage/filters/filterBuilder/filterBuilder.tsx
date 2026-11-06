@@ -1,8 +1,8 @@
+import {IconSearch, IconTrash} from "@tabler/icons-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import { Popover, PopoverContent, PopoverTrigger } from "@coreModule/components/ui/popover.tsx";
-import {Search, Trash2} from "lucide-react";
 import { FilterBuilderProvider, useFilterBuilder } from "./filterBuilderContext.tsx";
 import FilterGroup from "./filterGroup.tsx";
 import FilterChip from "./filterChip.tsx";
@@ -310,7 +310,7 @@ function FilterBuilderInner({
                         activeCount > 0 && "border-primary/40 ring-1 ring-primary/10"
                     )}
                 >
-                    <Search className="size-4 shrink-0 text-muted-foreground mr-2.5" />
+                    <IconSearch className="size-4 shrink-0 text-muted-foreground mr-2.5" />
                     <div className="flex flex-1 min-w-0 items-center gap-1.5 overflow-x-auto scrollbar-none py-1.5">
                         {
                             rulesWithGroups.length > 0 ?
@@ -350,7 +350,7 @@ function FilterBuilderInner({
                                     }}
                                     className="h-7 px-1.5 text-destructive hover:text-destructive hover:bg-destructive/10"
                                 >
-                                    <Trash2 className="size-4" />
+                                    <IconTrash className="size-4" />
                                     {/*<ButtonTitle hideMobile={true} className="ml-1">*/}
                                     {/*    {resolveLanguageKey("clearFilters")}*/}
                                     {/*</ButtonTitle>*/}

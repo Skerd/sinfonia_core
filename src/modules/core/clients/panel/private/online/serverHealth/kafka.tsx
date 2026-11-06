@@ -1,6 +1,6 @@
+import {IconWorld} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {Globe} from "lucide-react";
 import {clsx} from "clsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -99,7 +99,7 @@ function KafkaOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageK
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Globe className={clsx("h-5 w-5 hover:cursor-pointer", online ? "text-success" : "text-destructive")} />
+                    <IconWorld className={clsx("h-5 w-5 hover:cursor-pointer", online ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(online ? "online" : "offline")}</p>

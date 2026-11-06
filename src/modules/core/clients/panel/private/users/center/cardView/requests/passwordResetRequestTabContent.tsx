@@ -1,6 +1,6 @@
+import {IconRosetteDiscountCheck, IconCalendar, IconCircleOff, IconLock, IconDotsVertical} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {BadgeCheck, Calendar, CircleSlash, Lock} from "lucide-react";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {CompanyUserRequestsType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
@@ -10,11 +10,11 @@ import {
     DropdownMenuTrigger
 } from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import UnlockPasswordResetAction from "@coreModule/clients/panel/private/users/center/actions/unlockPasswordReset.tsx";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 
 function isPasswordResetLocked(passwordReset: NonNullable<CompanyUserRequestsType["passwordReset"]>): boolean {
     const lockedUntil = passwordReset.lockedUntil;
@@ -35,10 +35,9 @@ function PasswordResetRequestActions({
     specificUserId,
 }: Pick<PasswordResetRequestTabContentProps, "passwordReset" | "user" | "specificUserId">) {
 
-    const {write} = useAccess("users", !specificUserId ? "self" : "others");
 
     const locked = isPasswordResetLocked(passwordReset);
-    const showUnlock = !!write?.requests?.keys?.passwordReset?.keys?.lockedUntil && locked;
+    const showUnlock = useActionAccess("users", "unlockPasswordReset", "others") && locked;
 
     if (!showUnlock) return null;
 
@@ -51,7 +50,7 @@ function PasswordResetRequestActions({
                         size="icon-sm"
                         className="size-8 rounded-md opacity-0 scale-[0.98] max-md:opacity-100 max-md:scale-100 md:group-hover/password-reset-row:opacity-100 md:group-hover/password-reset-row:scale-100 md:group-hover/password-reset-row:bg-muted/60 md:group-hover/row:opacity-100 md:group-hover/row:scale-100 md:group-hover/row:bg-muted/60 hover:opacity-100 hover:bg-muted/80 hover:scale-100 data-[state=open]:opacity-100 data-[state=open]:scale-100 data-[state=open]:bg-muted/60 transition-all duration-200 ease-out"
                     >
-                        <EllipsisVertical className="size-4"/>
+                        <IconDotsVertical className="size-4"/>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end">
@@ -82,7 +81,7 @@ function PasswordResetRequestTabContentInner({
                     <div className="flex-1 min-w-0">
                         <InfoRowGroup layout="stack">
                             <EntityCardRow
-                                icon={BadgeCheck}
+                                icon={IconRosetteDiscountCheck}
                                 label={resolveLanguageKey("opened")}
                                 tooltip={resolveLanguageKey("opened")}
                                 show={!!passwordResetRead?.opened}
@@ -90,7 +89,7 @@ function PasswordResetRequestTabContentInner({
                                 value={passwordReset.opened}
                             />
                             <EntityCardRow
-                                icon={CircleSlash}
+                                icon={IconCircleOff}
                                 label={resolveLanguageKey("attempts")}
                                 tooltip={resolveLanguageKey("attempts")}
                                 show={!!passwordResetRead?.attempts}
@@ -98,7 +97,7 @@ function PasswordResetRequestTabContentInner({
                                 value={passwordReset.attempts}
                             />
                             <EntityCardRow
-                                icon={Calendar}
+                                icon={IconCalendar}
                                 label={resolveLanguageKey("date")}
                                 tooltip={resolveLanguageKey("date")}
                                 show={!!passwordResetRead?.date}
@@ -106,7 +105,7 @@ function PasswordResetRequestTabContentInner({
                                 value={passwordReset.date}
                             />
                             <EntityCardRow
-                                icon={Lock}
+                                icon={IconLock}
                                 label={resolveLanguageKey("lockedUntil")}
                                 tooltip={resolveLanguageKey("lockedUntil")}
                                 show={!!passwordResetRead?.lockedUntil}

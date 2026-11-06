@@ -1,6 +1,6 @@
+import {IconMoodPlus} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import {SmilePlus} from "lucide-react";
 import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/context-menu.tsx";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -30,7 +30,7 @@ function ReactMessage({
 
     return (
         <ContextMenuItem onClick={(e) => {e.stopPropagation(); reactToMessage();}} className="hover:cursor-pointer">
-            <SmilePlus className="mr-2 h-4 w-4"/>
+            <IconMoodPlus className="mr-2 h-4 w-4"/>
             {resolveLanguageKey("react")}
             <ContextMenuShortcut>⌘{shortcut}</ContextMenuShortcut>
         </ContextMenuItem>

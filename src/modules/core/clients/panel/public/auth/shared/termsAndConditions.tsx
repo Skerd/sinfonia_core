@@ -2,43 +2,42 @@ import {useState} from "react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {cn} from "@coreModule/components/lib/utils.ts";
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
 } from "@coreModule/components/ui/dialog.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 type TermsAndConditionsProps = WithLanguageType & {};
 
 function TermsAndConditions({resolveLanguageKey}: TermsAndConditionsProps) {
     const [open, setOpen] = useState<null | "terms" | "privacy">(null);
 
-    const linkClass = cn(
-        "inline cursor-pointer border-0 bg-transparent p-0 font-inherit text-inherit",
-        "underline underline-offset-4 hover:text-primary"
-    );
+    const linkClass = "h-auto p-0 align-baseline text-[length:inherit] font-normal text-inherit underline underline-offset-4 hover:text-primary";
 
     return (
         <>
             <p className="text-muted-foreground px-8 text-center text-sm">
                 {resolveLanguageKey("byClickingYouAgree")}{" "}
-                <button
+                <Button
                     type="button"
+                    variant="link"
                     className={linkClass}
                     onClick={() => setOpen("terms")}
                 >
                     {resolveLanguageKey("termsOfService")}
-                </button>{" "}
+                </Button>{" "}
                 {resolveLanguageKey("and")}{" "}
-                <button
+                <Button
                     type="button"
+                    variant="link"
                     className={linkClass}
                     onClick={() => setOpen("privacy")}
                 >
                     {resolveLanguageKey("privacyPolicy")}
-                </button>
+                </Button>
             </p>
 
             <Dialog

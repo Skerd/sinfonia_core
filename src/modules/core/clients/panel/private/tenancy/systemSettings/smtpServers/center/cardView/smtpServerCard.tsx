@@ -1,9 +1,9 @@
+import {IconMail, IconPower, IconServer} from "@tabler/icons-react";
 import {compose} from "redux";
 import {memo, type RefObject} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
-import {Mail, Power, Server} from "lucide-react";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import DisplayValue from "@coreModule/components/viewEngine/widgets/display/displayValue.tsx";
 import SmtpServerSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx";
@@ -99,7 +99,7 @@ const SmtpServerCard = memo(function SmtpServerCard({
                     </EntityCard.Header>
                     <EntityCard.Body>
                         <EntityCardRow
-                            icon={Server}
+                            icon={IconServer}
                             label={resolveLanguageKey("host")}
                             tooltip={resolveLanguageKey("host")}
                             show={accessFieldPathExists(read, "host") || accessFieldPathExists(read, "port")}
@@ -114,7 +114,7 @@ const SmtpServerCard = memo(function SmtpServerCard({
                             }
                         />
                         <EntityCardRow
-                            icon={Power}
+                            icon={IconPower}
                             label={resolveLanguageKey("active")}
                             tooltip={resolveLanguageKey("active")}
                             path="active"
@@ -122,7 +122,7 @@ const SmtpServerCard = memo(function SmtpServerCard({
                             value={entity.active}
                         />
                         <EntityCardRow
-                            icon={Mail}
+                            icon={IconMail}
                             label={resolveLanguageKey("sequence")}
                             tooltip={resolveLanguageKey("sequence")}
                             path="sequence"

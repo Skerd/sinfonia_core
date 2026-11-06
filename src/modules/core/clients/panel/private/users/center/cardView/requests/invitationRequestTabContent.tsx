@@ -1,6 +1,6 @@
+import {IconRosetteDiscountCheck, IconCalendar, IconClockHour9, IconLock, IconMail, IconMessage2, IconUserPlus, IconDotsVertical} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {BadgeCheck, Calendar, Clock9, Lock, Mail, MessageSquareText, UserPlus} from "lucide-react";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {CompanyUserRequestsType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
@@ -10,12 +10,12 @@ import {
     DropdownMenuTrigger
 } from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import ResendInvitationAction from "@coreModule/clients/panel/private/users/center/actions/resendInvitation.tsx";
 import UnlockInvitationAction from "@coreModule/clients/panel/private/users/center/actions/unlockInvitation.tsx";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 
 function isInvitationLocked(invitation: NonNullable<CompanyUserRequestsType["invitation"]>): boolean {
     const lockedUntil = invitation.lockedUntil;
@@ -36,12 +36,15 @@ function InvitationRequestActions({
     specificUserId,
 }: Pick<InvitationRequestTabContentProps, "invitation" | "user" | "specificUserId">) {
 
-    const {read, write} = useAccess("users", !specificUserId ? "self" : "others");
+    const {read} = useAccess("users", !specificUserId ? "self" : "others");
 
     const accepted = invitation.accepted === true;
     const locked = isInvitationLocked(invitation);
-    const showResend = !!write?.requests?.keys?.invitation?.keys?.invitationExpiresAt && !!read?.requests?.keys?.invitation?.keys?.lockedUntil && !locked;
-    const showUnlock = !!write?.requests?.keys?.invitation?.keys?.lockedUntil && locked;
+    // The account actions are the `others` permissions of users (D65); reading the lock still needs its field.
+    const canResend = useActionAccess("users", "resendInvitationEmail", "others");
+    const canUnlock = useActionAccess("users", "unlockInvitation", "others");
+    const showResend = canResend && !!read?.requests?.keys?.invitation?.keys?.lockedUntil && !locked;
+    const showUnlock = canUnlock && locked;
 
     if ((!showResend && !showUnlock) || accepted) return null;
 
@@ -54,7 +57,7 @@ function InvitationRequestActions({
                         size="icon-sm"
                         className="size-8 rounded-md opacity-0 scale-[0.98] max-md:opacity-100 max-md:scale-100 md:group-hover/invitation-row:opacity-100 md:group-hover/invitation-row:scale-100 md:group-hover/invitation-row:bg-muted/60 md:group-hover/row:opacity-100 md:group-hover/row:scale-100 md:group-hover/row:bg-muted/60 hover:opacity-100 hover:bg-muted/80 hover:scale-100 data-[state=open]:opacity-100 data-[state=open]:scale-100 data-[state=open]:bg-muted/60 transition-all duration-200 ease-out"
                     >
-                        <EllipsisVertical className="size-4"/>
+                        <IconDotsVertical className="size-4"/>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end">
@@ -96,7 +99,7 @@ function InvitationRequestTabContentInner({
                     <div className="flex-1 min-w-0">
                         <InfoRowGroup layout="stack">
                             <EntityCardRow
-                                icon={UserPlus}
+                                icon={IconUserPlus}
                                 label={resolveLanguageKey("invitedBy")}
                                 tooltip={resolveLanguageKey("invitedBy")}
                                 show={!!invitationRead?.invitedBy}
@@ -104,7 +107,7 @@ function InvitationRequestTabContentInner({
                                 value={invitation.invitedBy}
                             />
                             <EntityCardRow
-                                icon={Calendar}
+                                icon={IconCalendar}
                                 label={resolveLanguageKey("invitedAt")}
                                 tooltip={resolveLanguageKey("invitedAt")}
                                 show={!!invitationRead?.invitedAt}
@@ -112,7 +115,7 @@ function InvitationRequestTabContentInner({
                                 value={invitation.invitedAt}
                             />
                             <EntityCardRow
-                                icon={MessageSquareText}
+                                icon={IconMessage2}
                                 label={resolveLanguageKey("welcomeMessage")}
                                 tooltip={resolveLanguageKey("welcomeMessage")}
                                 show={!!invitationRead?.welcomeMessage}
@@ -123,7 +126,7 @@ function InvitationRequestTabContentInner({
                                 !accepted &&
                                 <>
                                     <EntityCardRow
-                                        icon={Mail}
+                                        icon={IconMail}
                                         label={resolveLanguageKey("opened")}
                                         tooltip={resolveLanguageKey("opened")}
                                         show={!!invitationRead?.opened}
@@ -131,7 +134,7 @@ function InvitationRequestTabContentInner({
                                         value={invitation.opened}
                                     />
                                     <EntityCardRow
-                                        icon={Calendar}
+                                        icon={IconCalendar}
                                         label={resolveLanguageKey("attempts")}
                                         tooltip={resolveLanguageKey("attempts")}
                                         show={!!invitationRead?.attempts}
@@ -139,7 +142,7 @@ function InvitationRequestTabContentInner({
                                         value={invitation.attempts}
                                     />
                                     <EntityCardRow
-                                        icon={Clock9}
+                                        icon={IconClockHour9}
                                         label={resolveLanguageKey("invitationExpiresAt")}
                                         tooltip={resolveLanguageKey("invitationExpiresAt")}
                                         show={!!invitationRead?.invitationExpiresAt}
@@ -147,7 +150,7 @@ function InvitationRequestTabContentInner({
                                         value={invitation.invitationExpiresAt}
                                     />
                                     <EntityCardRow
-                                        icon={Lock}
+                                        icon={IconLock}
                                         label={resolveLanguageKey("lockedUntil")}
                                         tooltip={resolveLanguageKey("lockedUntil")}
                                         show={!accepted && !!invitationRead?.lockedUntil}
@@ -160,7 +163,7 @@ function InvitationRequestTabContentInner({
                                 accepted &&
                                 <>
                                     <EntityCardRow
-                                        icon={BadgeCheck}
+                                        icon={IconRosetteDiscountCheck}
                                         label={resolveLanguageKey("accepted")}
                                         tooltip={resolveLanguageKey("accepted")}
                                         show={!!invitationRead?.accepted}
@@ -168,7 +171,7 @@ function InvitationRequestTabContentInner({
                                         value={invitation.accepted}
                                     />
                                     <EntityCardRow
-                                        icon={Calendar}
+                                        icon={IconCalendar}
                                         label={resolveLanguageKey("acceptedAt")}
                                         tooltip={resolveLanguageKey("acceptedAt")}
                                         show={!!invitationRead?.acceptedAt}

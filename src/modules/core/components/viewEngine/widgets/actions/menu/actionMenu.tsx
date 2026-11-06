@@ -1,8 +1,8 @@
+import {IconDotsVertical} from "@tabler/icons-react";
 import {ReactNode, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {EllipsisVertical} from "lucide-react";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import DeleteDropdown from "@coreModule/components/viewEngine/widgets/actions/dropdowns/deleteDropdown.tsx";
@@ -169,7 +169,7 @@ function ActionMenu({
                         }}
                         className={`size-8 rounded-md ${alwaysShowDropDownMenuTrigger ? "opacity-100 scale-100" : "bg-muted/60 opacity-0 scale-[0.98] max-md:opacity-100 max-md:scale-100 md:group-hover:opacity-100 md:group-hover:scale-100 md:group-hover:bg-muted/60 md:group-hover/row:opacity-100 md:group-hover/row:scale-100 md:group-hover/row:bg-muted/60 hover:opacity-100 hover:bg-muted/80 hover:scale-100"} data-[state=open]:opacity-100 data-[state=open]:scale-100 data-[state=open]:bg-muted/60 transition-all duration-200 ease-out`}
                     >
-                        <EllipsisVertical className="size-4" />
+                        <IconDotsVertical className="size-4" />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent

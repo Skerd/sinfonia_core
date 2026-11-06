@@ -1,4 +1,4 @@
-import {Trash2} from "lucide-react";
+import {IconTrash} from "@tabler/icons-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import { SimpleSelect } from "@coreModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
 import type { FilterRule as FilterRuleType, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
@@ -115,7 +115,7 @@ export function FilterRuleComponent({
                         onClick={() => onRemove(groupId, rule.id)}
                         className="h-8 w-8 shrink-0 px-0 text-destructive hover:text-destructive hover:bg-destructive/10"
                     >
-                        <Trash2 className="size-4" />
+                        <IconTrash className="size-4" />
                     </Button>
                 </TooltipDisplayer>
             )}

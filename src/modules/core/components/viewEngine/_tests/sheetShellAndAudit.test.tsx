@@ -17,7 +17,10 @@ vi.mock("@coreModule/components/viewEngine/widgets/display/displayCard.tsx", asy
     default: (await import("./harness.tsx")).makeProbe("#DisplayCard"),
 }));
 const post = vi.hoisted(() => vi.fn());
-vi.mock("@coreModule/helpers/apiClient/apiClient.ts", () => ({default: {post, get: vi.fn()}}));
+// Audit labels load through `requestFromApi` (`apiClient.request`); `post` stands for the POST.
+vi.mock("@coreModule/helpers/apiClient/apiClient.ts", () => ({
+    default: {post, get: vi.fn(), request: (config: {url: string; data: unknown}) => post(config.url, config.data)},
+}));
 
 const {SheetViewRenderer: RealSheetViewRenderer} = await import("../SheetViewRenderer.tsx");
 /** Tests pass the HOC-injected props (`onFilterChange`, `loading`, …) by hand. */

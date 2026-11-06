@@ -11,7 +11,7 @@ import {AddChannelMembersFormResponseType} from "armonia/src/modules/core/api/us
 import {AddChannelMembersFormType} from "armonia/src/modules/core/api/user/private/chats/channels/addChannelMembers.form.type.ts";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import {requestFromApi} from "@coreModule/helpers/apiClient/requestFromApi.ts";
 import {AllChannelMembersFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/allChannelMembers.form.response.type.ts";
 
 type AddMembersToChannelProps = WithLanguageType & WithAxiosType<AddChannelMembersFormResponseType, AddChannelMembersFormType> & {
@@ -49,12 +49,12 @@ function AddMembersToChannel({
     useImperativeHandle(innerRef, () => ({
         start: () => {},
         success: (data: AddChannelMembersFormResponseType) => {
-            apiClient.post<AllChannelMembersFormResponseType>("/api/user/chats/channels/members", {channelId: data.channelId})
-            .then((res) => {
-                let {data: membersData} = res;
+            // Outlives the dialog, which closes right away; silent, the member list just stays as it was.
+            requestFromApi<AllChannelMembersFormResponseType>({method: "post", url: "/api/user/chats/channels/members", data: {channelId: data.channelId}, silent: true})
+            .then((membersData) => {
                 dispatch(updateChannelUsers({channelId: data.channelId, users: membersData.members}));
             })
-            .catch(() => {})
+            .catch(() => {});
             handleClose(false);
         }
     }));

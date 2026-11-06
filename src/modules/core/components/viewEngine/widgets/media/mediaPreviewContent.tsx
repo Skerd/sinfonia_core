@@ -1,5 +1,5 @@
+import {IconPlayerPlay} from "@tabler/icons-react";
 import {useCallback, useState} from "react";
-import {Play} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {
     classifyMedia,
@@ -183,7 +183,7 @@ export default function MediaPreviewContent({
                         onError={onMediaError}
                     />
                     <div className="absolute bottom-1.5 end-1.5 rounded-full bg-background/80 p-1 shadow-sm">
-                        <Play className="h-3.5 w-3.5 text-foreground" fill="currentColor" />
+                        <IconPlayerPlay className="h-3.5 w-3.5 text-foreground" fill="currentColor" />
                     </div>
                 </div>
             );

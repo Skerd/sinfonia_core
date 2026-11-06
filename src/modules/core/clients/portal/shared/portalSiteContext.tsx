@@ -1,5 +1,5 @@
-import {createContext, useContext, useEffect, useMemo, useState, type ReactNode} from "react";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import {createContext, useContext, useMemo, type ReactNode} from "react";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {getPortalContributions} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
 import type {PortalContribution} from "@coreModule/helpers/types/portalContribution.types.ts";
 import type {PortalSite, PortalSiteResponse} from "armonia/src/modules/core/api/portal/public/portal/portal.dto.ts";
@@ -11,19 +11,15 @@ type PortalSiteState = {
     sections: PortalContribution[];
 };
 
+const SITE_REQUEST = {method: "post" as const, url: "/api/portal/site", data: {}};
+
 const PortalSiteContext = createContext<PortalSiteState>({site: undefined, sections: []});
 
 /** Loads what this host is (the apex or one company's site) once. */
 export function PortalSiteProvider({children}: {children: ReactNode}) {
-    const [site, setSite] = useState<PortalSite | null | undefined>(undefined);
-
-    useEffect(() => {
-        let cancelled = false;
-        apiClient.post<PortalSiteResponse>("/api/portal/site", {})
-            .then((res) => { if (!cancelled) setSite(res.data.data); })
-            .catch(() => { if (!cancelled) setSite(null); });
-        return () => { cancelled = true; };
-    }, []);
+    // Silent (no translator): a host that cannot be loaded renders as `null`.
+    const {data, error} = useHttpRequest<PortalSiteResponse>(SITE_REQUEST, {}, 1);
+    const site: PortalSite | null | undefined = error ? null : data ? data.data : undefined;
 
     const value = useMemo(() => ({
         site,

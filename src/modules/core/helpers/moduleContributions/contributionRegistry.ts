@@ -129,7 +129,8 @@ export function createContributionList<T extends ContributionBase>({
                         : `[${kind}] Invalid default export in ${path}: expected a ${kind} or an array of them`);
                 }
                 sourcePaths.set(candidate, path);
-                entries.push({entry: candidate as unknown as T, path, index});
+                // `isValid` is the kind's runtime shape check, so it is what vouches for `T` here.
+                entries.push({entry: candidate as T, path, index});
             });
         }
 

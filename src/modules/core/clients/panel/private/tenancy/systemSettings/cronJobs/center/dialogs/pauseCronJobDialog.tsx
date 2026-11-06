@@ -1,10 +1,10 @@
+import {IconLoader2, IconPlayerPause} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useImperativeHandle} from "react";
 import type {SingleForm} from "armonia/src/modules/core/types/shared.types.ts";
-import {LoaderCircle, Pause} from "lucide-react";
 import {
     AlertDialog, AlertDialogAction, AlertDialogCancel,
     AlertDialogContent,
@@ -63,7 +63,7 @@ function PauseCronJobDialog({
                         }}
                         disabled={loading}
                     >
-                        {(loading) ? <LoaderCircle className="animate-spin"/> : <Pause />}
+                        {(loading) ? <IconLoader2 className="animate-spin"/> : <IconPlayerPause />}
                         <p>{resolveLanguageKey("confirm")}</p>
                     </AlertDialogAction>
                 </AlertDialogFooter>

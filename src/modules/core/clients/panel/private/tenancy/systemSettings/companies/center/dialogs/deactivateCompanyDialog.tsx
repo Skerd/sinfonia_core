@@ -1,3 +1,4 @@
+import {IconLoader2, IconShieldMinus} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useImperativeHandle, useState} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -17,7 +18,6 @@ import {
 } from "@coreModule/components/ui/alert-dialog.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
-import {LoaderCircle, ShieldMinus} from "lucide-react";
 import {ActionMessage} from "armonia/src/modules/core/types/shared.types.ts";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 
@@ -95,7 +95,7 @@ function DeactivateCompanyDialog({
                         disabled={loading || !canConfirm}
                         className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                     >
-                        {loading ? <LoaderCircle className="animate-spin" /> : <ShieldMinus />}
+                        {loading ? <IconLoader2 className="animate-spin" /> : <IconShieldMinus />}
                         {resolveLanguageKey("confirm")}
                     </AlertDialogAction>
                 </AlertDialogFooter>

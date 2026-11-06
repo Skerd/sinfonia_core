@@ -1,8 +1,8 @@
+import {IconUserPlus} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {UserPlus} from "lucide-react";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import {useState} from "react";
 import AddMembersToChannel from "@coreModule/clients/panel/private/chat/center/chatMembers/addMember/addMembersToChannel.tsx";
@@ -32,7 +32,7 @@ function AddMember({
                 !open ?
                 <div className="flex w-full items-center justify-end">
                     <Button variant="outline" onClick={() => setOpen(true)}>
-                        <UserPlus />
+                        <IconUserPlus />
                         <p>{resolveLanguageKey("addMember")}</p>
                     </Button>
                 </div>

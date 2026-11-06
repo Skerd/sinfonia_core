@@ -1,6 +1,6 @@
+import {IconCalendar, IconCircleOff, IconLock, IconMail, IconDotsVertical} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Calendar, CircleSlash, Lock, Mail} from "lucide-react";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {CompanyUserRequestsType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
@@ -10,12 +10,12 @@ import {
     DropdownMenuTrigger
 } from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {EllipsisVertical} from "lucide-react";
 import {TabsContent} from "@coreModule/components/ui/tabs.tsx";
 import ResendActivationAction from "@coreModule/clients/panel/private/users/center/actions/resendActivation.tsx";
 import UnlockActivationAction from "@coreModule/clients/panel/private/users/center/actions/unlockActivation.tsx";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 
 function isActivationLocked(activation: NonNullable<CompanyUserRequestsType["activation"]>): boolean {
     const lockedUntil = activation.lockedUntil;
@@ -36,11 +36,14 @@ function ActivationRequestActions({
     specificUserId,
 }: Pick<ActivationRequestTabContentProps, "activation" | "user" | "specificUserId">) {
 
-    const {read, write} = useAccess("users", !specificUserId ? "self" : "others");
+    const {read} = useAccess("users", !specificUserId ? "self" : "others");
 
     const locked = isActivationLocked(activation);
-    const showResend = !!write?.requests?.keys?.activation?.keys?.date && !!read?.requests?.keys?.activation?.keys?.lockedUntil && !locked;
-    const showUnlock = !!write?.requests?.keys?.activation?.keys?.lockedUntil && locked;
+    // The account actions are the `others` permissions of users (D65); reading the lock still needs its field.
+    const canResend = useActionAccess("users", "resendActivationEmail", "others");
+    const canUnlock = useActionAccess("users", "unlockActivation", "others");
+    const showResend = canResend && !!read?.requests?.keys?.activation?.keys?.lockedUntil && !locked;
+    const showUnlock = canUnlock && locked;
 
     if (!showResend && !showUnlock) return null;
 
@@ -53,7 +56,7 @@ function ActivationRequestActions({
                         size="icon-sm"
                         className="size-8 rounded-md opacity-0 scale-[0.98] max-md:opacity-100 max-md:scale-100 md:group-hover/activation-row:opacity-100 md:group-hover/activation-row:scale-100 md:group-hover/activation-row:bg-muted/60 md:group-hover/row:opacity-100 md:group-hover/row:scale-100 md:group-hover/row:bg-muted/60 hover:opacity-100 hover:bg-muted/80 hover:scale-100 data-[state=open]:opacity-100 data-[state=open]:scale-100 data-[state=open]:bg-muted/60 transition-all duration-200 ease-out"
                     >
-                        <EllipsisVertical className="size-4"/>
+                        <IconDotsVertical className="size-4"/>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end">
@@ -94,7 +97,7 @@ function ActivationRequestTabContentInner({
                     <div className="flex-1 min-w-0">
                         <InfoRowGroup layout="stack">
                             <EntityCardRow
-                                icon={Mail}
+                                icon={IconMail}
                                 label={resolveLanguageKey("activationEmail")}
                                 tooltip={resolveLanguageKey("activationEmail")}
                                 show={!!activationRead?.email}
@@ -102,7 +105,7 @@ function ActivationRequestTabContentInner({
                                 value={activation.email}
                             />
                             <EntityCardRow
-                                icon={CircleSlash}
+                                icon={IconCircleOff}
                                 label={resolveLanguageKey("attempts")}
                                 tooltip={resolveLanguageKey("attempts")}
                                 show={!!activationRead?.attempts}
@@ -110,7 +113,7 @@ function ActivationRequestTabContentInner({
                                 value={activation.attempts}
                             />
                             <EntityCardRow
-                                icon={Calendar}
+                                icon={IconCalendar}
                                 label={resolveLanguageKey("date")}
                                 tooltip={resolveLanguageKey("date")}
                                 show={!!activationRead?.date}
@@ -118,7 +121,7 @@ function ActivationRequestTabContentInner({
                                 value={activation.date}
                             />
                             <EntityCardRow
-                                icon={Lock}
+                                icon={IconLock}
                                 label={resolveLanguageKey("lockedUntil")}
                                 tooltip={resolveLanguageKey("lockedUntil")}
                                 show={!!activationRead?.lockedUntil}

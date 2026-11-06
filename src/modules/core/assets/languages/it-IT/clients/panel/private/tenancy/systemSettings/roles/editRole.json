@@ -1,23 +1,23 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/editRole.tsx",
-  "title": "Modifica ruolo",
-  "description": "Aggiorna i dettagli del ruolo",
+  "formHeader": {
+    "title": "Modifica ruolo",
+    "description": "Aggiorna i dettagli del ruolo"
+  },
   "errorTitle": "Impossibile caricare i dati del ruolo",
   "errorDescription": "Fare clic qui per riprovare a recuperare i dati del ruolo",
   "form": {
     "nameLabel": "Nome del ruolo",
     "namePlaceholder": "Nome del ruolo",
-    "nameDescription": "Il nome visualizzato del ruolo",
     "descriptionLabel": "Descrizione",
     "descriptionPlaceholder": "A cosa serve questo ruolo",
-    "descriptionHelp": "Mostrata sulla scheda del ruolo",
-    "templateLabel": "Modello",
-    "templatePlaceholder": "Modello",
-    "templateDescription": "Copia le autorizzazioni da un altro ruolo"
+    "nameDescription": "Il nome visualizzato del ruolo",
+    "descriptionHelp": "Mostrata sulla scheda del ruolo"
   },
-  "none": "Nessuno",
-  "cancel": "Annulla",
-  "submit": "Salva",
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Salva"
+  },
   "axios": {
     "start": {
       "title": "Salvataggio del ruolo",

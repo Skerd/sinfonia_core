@@ -1,7 +1,7 @@
+import {IconArrowLeft, IconWorld, IconDotsVertical, IconUserCheck} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {ArrowLeft, Globe, MoreVertical, UserCheck} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Avatar} from "@coreModule/components/ui/avatar.tsx";
@@ -19,10 +19,12 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import ReleaseToBot from "@coreModule/clients/panel/private/websiteChats/center/releaseToBot.tsx";
 import ClosePublicChat from "@coreModule/clients/panel/private/websiteChats/center/closePublicChat.tsx";
 import {useJoinPublicChat} from "@coreModule/clients/panel/private/websiteChats/center/useJoinPublicChat.ts";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 
 function WebsiteChatHeader({resolveLanguageKey}: WithLanguageType) {
-    const {read, write} = useAccess("channels");
-    const canAct = write === true || (!!write && typeof write === "object" && !!write.users);
+    const {read} = useAccess("channels");
+    // Joining, releasing and closing a website chat are one permission (D71), not a write on channel members.
+    const canAct = useActionAccess("channels", "answerWebsiteChats");
     const dispatch = useDispatch();
     const activeChannelId = useSelector((state: RootState) => state.chat.activeChannelId);
     const channel = useSelector((state: RootState) => state.chat.channels[activeChannelId ?? ""]);
@@ -53,7 +55,7 @@ function WebsiteChatHeader({resolveLanguageKey}: WithLanguageType) {
             <div className="flex min-w-0">
                 <div className="sm:hidden">
                     <Button size="icon" variant="ghost" className="h-full" onClick={() => {dispatch(openChannel(null));}}>
-                        <ArrowLeft className="rtl:rotate-180" />
+                        <IconArrowLeft className="rtl:rotate-180" />
                     </Button>
                 </div>
                 <div className="flex min-w-0 items-center gap-2">
@@ -61,7 +63,7 @@ function WebsiteChatHeader({resolveLanguageKey}: WithLanguageType) {
                         <UserAvatar user={avatarUser} onClick={() => {setViewChannelUserId(avatarUser._id);}} />
                     ) : (
                         <Avatar className="flex size-10 items-center justify-center border">
-                            <Globe size={18} />
+                            <IconWorld size={18} />
                         </Avatar>
                     )}
                     <div className="min-w-0">
@@ -74,20 +76,21 @@ function WebsiteChatHeader({resolveLanguageKey}: WithLanguageType) {
             </div>
 
             {peeking && canAct ? (
-                <button
+                <Button
                     type="button"
                     disabled={joining}
-                    onClick={() => void join(channel._id)}
-                    className="bg-primary text-primary-foreground inline-flex shrink-0 items-center gap-1 rounded-md px-2 py-1 text-xs disabled:opacity-50"
+                    onClick={() => join(channel._id)}
+                    size="xs"
+                    className="shrink-0 rounded-md"
                 >
-                    <UserCheck size={13} />
+                    <IconUserCheck size={13} />
                     {joining ? resolveLanguageKey("joining") : resolveLanguageKey("takeOver")}
-                </button>
+                </Button>
             ) : canAct ? (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button size="icon" variant="ghost">
-                            <MoreVertical className="stroke-muted-foreground sm:size-5" />
+                            <IconDotsVertical className="stroke-muted-foreground sm:size-5" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-fit" align="start">

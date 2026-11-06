@@ -52,7 +52,7 @@ export default function FormTabbedRepeater({
     const form = useFormContext();
     const watchedArrays = useWatch({
         control: form.control,
-        name: tabs.map((t) => `${fieldPrefix}.${t.key}`) as any[],
+        name: tabs.map((t) => `${fieldPrefix}.${t.key}`),
     });
 
     const counts = tabs.map((_, i) => {

@@ -1,25 +1,22 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/createRole.tsx",
-  "title": "Krijo rol",
-  "description": "Shto një rol të ri me leje",
-  "failTitle": "Ngarkimi i lejeve dështoi",
-  "failDescription": "Ngarkimi i lejeve dështoi, ju lutemi provoni përsëri",
-  "failTooltip": "Kliko këtu për të riprovuar ngarkimin e lejeve",
-  "noData": "Nuk u gjetën leje, kështu që asnjë rol nuk mund të krijohet",
+  "formHeader": {
+    "title": "Krijo rol",
+    "description": "Shto një rol të ri me leje"
+  },
   "form": {
     "nameLabel": "Emri i rolit",
     "namePlaceholder": "Emri i rolit",
-    "nameDescription": "Emri i shfaqur i rolit",
     "descriptionLabel": "Përshkrimi",
     "descriptionPlaceholder": "Për çfarë shërben ky rol",
-    "descriptionHelp": "Shfaqet në kartën e rolit që operatorët të dinë se çfarë bën",
-    "templateLabel": "shabllon",
-    "templatePlaceholder": "shabllon",
-    "templateDescription": "Kopjoni lejet nga një rol tjetër"
+    "templateLabel": "Shablloni",
+    "nameDescription": "Emri i shfaqur i rolit",
+    "descriptionHelp": "Shfaqet në kartën e rolit që operatorët të dinë se çfarë bën"
   },
-  "none": "Asnjë",
-  "cancel": "Anulo",
-  "submit": "Krijo",
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Krijo"
+  },
   "axios": {
     "start": {
       "title": "Krijimi i rolit",

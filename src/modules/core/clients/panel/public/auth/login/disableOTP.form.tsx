@@ -6,8 +6,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx"
 import {DisableMfaFormType} from "armonia/src/modules/core/api/user/public/mfa/disableMfa.form.type.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {IconKeyOff} from "@tabler/icons-react";
-import {Loader2} from "lucide-react";
+import {IconKeyOff, IconLoader2} from "@tabler/icons-react";
 
 type DisableOTPProps = WithAxiosType & WithLanguageType & {
     username: string,
@@ -63,7 +62,7 @@ function DisableOTP({
                 </DialogHeader>
                 <DialogFooter>
                     <Button disabled={loading} type="button" onClick={() => {requestMFADeactivation()}}>
-                        {(loading) ? <Loader2 className='animate-spin' /> : <IconKeyOff /> }
+                        {(loading) ? <IconLoader2 className='animate-spin' /> : <IconKeyOff /> }
                         {resolveLanguageKey("confirmTitle")}
                     </Button>
                 </DialogFooter>

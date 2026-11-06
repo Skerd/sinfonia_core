@@ -1,9 +1,9 @@
+import {IconUserPlus} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useState} from "react";
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import CreateUserForm from "@coreModule/clients/panel/private/users/createUser/createUser.form.tsx";
-import {UserPlus} from "lucide-react";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -28,7 +28,7 @@ function CreateUsers({
     return (
         <>
             <Button className='flex gap-x-1' onClick={() => setOpen(true)}>
-                <UserPlus size={18} />
+                <IconUserPlus size={18} />
                 <ButtonTitle hideMobile={true} tooltip={resolveLanguageKey("addUser")}>
                     {resolveLanguageKey("addUser")}
                 </ButtonTitle>

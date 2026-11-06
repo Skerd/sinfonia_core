@@ -6,6 +6,7 @@ import CreateCompanyDropMenuItem from "@coreModule/clients/panel/private/sidebar
 import {useSidebar} from "@coreModule/components/ui/sidebar.tsx";
 import CompanyDropDownItems from "@coreModule/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/companyDropDownItems.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import {useOnCompanyUpdated} from "@coreModule/clients/panel/private/sidebar/companies/companyUpdatedEvent.ts";
 
 type AllCompaniesDropDownMenuContentProps = WithLanguageType & {
     menuOpen: boolean;
@@ -16,8 +17,9 @@ function AllCompaniesDropDownMenuContent({
     menuOpen,
 }: AllCompaniesDropDownMenuContentProps) {
 
-    // Bumped when the create-company dialog finishes, so the list reloads from the first page.
+    // Bumped when the create-company dialog finishes or a company is saved, so the list reloads from the first page.
     const [listReloadKey, setListReloadKey] = useState(0);
+    useOnCompanyUpdated(() => setListReloadKey((key) => key + 1));
 
     const { isMobile } = useSidebar();
 

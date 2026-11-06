@@ -1,10 +1,11 @@
+import {IconLayoutGrid, IconList, IconAdjustments} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {ToggleGroup, ToggleGroupItem} from "@coreModule/components/ui/toggle-group.tsx";
-import {LayoutGrid, List, SlidersVertical} from "lucide-react";
 import {type CSSProperties, JSX, type KeyboardEvent, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {TableVirtuoso, type FillerRowProps, type ItemProps, type TableComponents, type TableProps} from "react-virtuoso";
+import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 // ROW SELECTION — parked until a multi-selection action exists (bulk delete/export/assign).
 // import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
 import {useListUrlState, listChromeParam, LIST_PAGE_PARAM, type EntityListViewMode as UrlViewMode} from "@coreModule/helpers/hooks/useListUrlState.ts";
@@ -33,12 +34,15 @@ import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useTableConfig} from "@coreModule/helpers/hooks/useTableConfig.ts";
 import {GRID_MASONRY_ITEM} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
 import {CardMosaic} from "@coreModule/components/entityPage/list/cardMosaic.tsx";
-import {columnConfigToColumnDef} from "@coreModule/components/entityPage/list/table/columnConfigToColumnDef.tsx";
+import {useColumnConfigToColumnDef} from "@coreModule/components/entityPage/list/table/columnConfigToColumnDef.tsx";
 import FilterBuilder from "@coreModule/components/entityPage/filters/filterBuilder/filterBuilder.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {openActionMenuFromContextMenu} from "@coreModule/components/viewEngine/widgets/actions/menu/openActionMenuFromContextMenu.ts";
 import {useSearchParams} from "react-router-dom";
+
+/** Fields of the row, or the soft-delete stamp any row can gain or lose (delete / restore). */
+export type EntityRowPatch<T> = Partial<T> | DeletedData;
 
 /**
  * Imperative list-mutation API exposed by {@link CardAndTableView} via `ref`/`listRef`
@@ -50,7 +54,7 @@ import {useSearchParams} from "react-router-dom";
  */
 export type EntityListApi<T> = {
     refetch: () => void;
-    updateRow: (id: string | number, patch: Partial<T>) => void;
+    updateRow: (id: string | number, patch: EntityRowPatch<T>) => void;
     /** Patch currently loaded rows in place (no network). Return a patch or void to skip. */
     mapRows: (mapper: (row: T) => Partial<T> | void) => void;
 };
@@ -105,8 +109,13 @@ type TableConfigOptions = {
     filterConfig: { placeholder: string; fields: unknown };
 };
 
-/** Response shape: { data: T[], total: number }. PostType = request/filter params. */
-type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: number }, PostType extends Record<string, unknown> = Record<string, unknown>, T = ResponseType['data'][number]> = WithLanguageType & WithAxiosType<ResponseType, PostType> & {
+type ListRequest = Record<string, unknown>;
+
+/**
+ * Response shape: { data: T[], total: number }. The request is always the list body this view builds
+ * (offset, limit, sort, filters and the extra parameters), so it is a plain record, not a type parameter.
+ */
+type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: number }, T = ResponseType['data'][number]> = WithLanguageType & WithAxiosType<ResponseType, ListRequest> & {
     access: string,
     selfAccess?: boolean,
     url: string,
@@ -159,7 +168,6 @@ type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: numbe
 
 function CountryCenterView<
     ResponseType extends { data: unknown[]; total: number },
-    PostType extends Record<string, unknown> = Record<string, unknown>,
     T = ResponseType['data'][number]
 >({
     access,
@@ -190,7 +198,7 @@ function CountryCenterView<
     aboveToolbar,
     quickFilterBar,
     syncExtraFiltersKeys,
-}: CountryCenterViewProps<ResponseType, PostType, T>) {
+}: CountryCenterViewProps<ResponseType, T>) {
 
     const {read} = useAccess(access, selfAccess ? "self" : "others");
     const isMobile = useIsMobile();
@@ -217,7 +225,7 @@ function CountryCenterView<
     });
     const listPageParam = listChromeParam(LIST_PAGE_PARAM, tableConfigKey);
     // const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-    const [rowOverlays, setRowOverlays] = useState<Record<string, Partial<T>>>({});
+    const [rowOverlays, setRowOverlays] = useState<Record<string, EntityRowPatch<T>>>({});
     const [columnFilters, onColumnFiltersChange] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState | undefined>(undefined);
 
@@ -228,7 +236,7 @@ function CountryCenterView<
 
     const listApi = useMemo(() => ({
         refetch: () => setForceReload((prev) => prev + 1),
-        updateRow: (id: string | number, patch: Partial<T>) => {
+        updateRow: (id: string | number, patch: EntityRowPatch<T>) => {
             const key = String(id);
             setRowOverlays((prev) => ({...prev, [key]: {...prev[key], ...patch}}));
         },
@@ -355,7 +363,7 @@ function CountryCenterView<
                 ...extraParameters,
                 ...filtersRest,
                 ...filterOut,
-            } as unknown as PostType);
+            });
         }
     }, [offset, limit, forceReload, sorting, filters, extraParameters, loadingTableConfig, tableConfigError, toolbarFilterDSL, read]);
     const effectiveRef = listRefFromParent ?? refFromParent;
@@ -377,11 +385,11 @@ function CountryCenterView<
     }, [data, rowOverlays, getId]);
 
     /*
-     * columnConfigToColumnDef calls useSelectedLanguage (a hook). It must run
+     * useColumnConfigToColumnDef calls useSelectedLanguage (a hook). It must run
      * on every render at this call site — never inside useMemo — or React's
      * hook order breaks and the whole tree unmounts.
      */
-    const dataColumns = columnConfigToColumnDef<T>(tableColumns ?? [], {
+    const dataColumns = useColumnConfigToColumnDef<T>(tableColumns ?? [], {
         fields: tableConfigOptions?.filterConfig?.fields,
         renderActions: renderFunctions.action,
         timezone,
@@ -484,14 +492,15 @@ function CountryCenterView<
             Table: ({style, children, ...props}: TableProps) => {
                 const liveTable = tableRef.current;
                 return (
-                    <table
+                    <Table
+                        bare
                         {...props}
                         style={{...style, ...(liveTable ? tableWidthStyle(liveTable) : {})}}
                         className="table-fixed caption-bottom text-sm"
                     >
                         {liveTable && <TableColGroup table={liveTable} />}
                         {children}
-                    </table>
+                    </Table>
                 );
             },
             /* Virtuoso measures the header through this ref to size the scroll area. */
@@ -528,7 +537,7 @@ function CountryCenterView<
                         )}
                         tabIndex={canActivate ? 0 : undefined}
                         onClick={(e) => handlers?.activateRow(row.original, e)}
-                        onKeyDown={(e) => handlers?.handleRowKeyDown(row.original, e as unknown as KeyboardEvent<HTMLTableRowElement>)}
+                        onKeyDown={(e) => handlers?.handleRowKeyDown(row.original, e)}
                         onContextMenu={openActionMenuFromContextMenu}
                     />
                 );
@@ -651,7 +660,7 @@ function CountryCenterView<
                                         onClick={() => {setOpen(!open)}}
                                         className={cn("border")}
                                     >
-                                        <SlidersVertical />
+                                        <IconAdjustments />
                                     </Button>
                                 </TooltipDisplayer>
                                 :
@@ -687,12 +696,12 @@ function CountryCenterView<
                             >
                                 <TooltipDisplayer tooltip={resolveLanguageKey("showTableView")}>
                                     <ToggleGroupItem value="table" aria-label={resolveLanguageKey("showTableView")}>
-                                        <List />
+                                        <IconList />
                                     </ToggleGroupItem>
                                 </TooltipDisplayer>
                                 <TooltipDisplayer tooltip={resolveLanguageKey("showCardView")}>
                                     <ToggleGroupItem value="card" aria-label={resolveLanguageKey("showCardView")}>
-                                        <LayoutGrid />
+                                        <IconLayoutGrid />
                                     </ToggleGroupItem>
                                 </TooltipDisplayer>
                             </ToggleGroup>
@@ -895,20 +904,18 @@ const ComposedCardAndTableView = compose(
 /** Consumer-facing props (HOC-injected props omitted). */
 type CardAndTableViewConsumerProps<
     ResponseType extends { data: unknown[]; total: number },
-    PostType extends Record<string, unknown> = Record<string, unknown>,
     T = ResponseType["data"][number]
 > = Omit<
-    CountryCenterViewProps<ResponseType, PostType, T>,
-    keyof WithAxiosType<ResponseType, PostType> | keyof WithLanguageType | "configurations"
+    CountryCenterViewProps<ResponseType, T>,
+    keyof WithAxiosType<ResponseType, ListRequest> | keyof WithLanguageType | "configurations"
 > & {
     configurations?: { limit?: number, columnVisibility?: VisibilityState };
 };
 
 function CardAndTableView<
     ResponseType extends { data: unknown[]; total: number },
-    PostType extends Record<string, unknown> = Record<string, unknown>,
     T = ResponseType["data"][number]
->(props: CardAndTableViewConsumerProps<ResponseType, PostType, T>) {
+>(props: CardAndTableViewConsumerProps<ResponseType, T>) {
     return <ComposedCardAndTableView {...(props as Record<string, unknown>)} />;
 }
 

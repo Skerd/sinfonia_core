@@ -1,6 +1,6 @@
+import {IconPencil} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useEffect, useMemo, useState} from "react";
-import {Pencil} from "lucide-react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import timezones from "timezones.json";
@@ -136,7 +136,7 @@ function AccountProfileTimeZone({
                             setEditing(true);
                         }}
                     >
-                        <Pencil size={14} />
+                        <IconPencil size={14} />
                         {resolveLanguageKey("edit")}
                     </Button>
                 )}

@@ -1,10 +1,10 @@
-import {useEffect, useState} from "react";
+import {IconArrowLeft, IconChevronRight, IconLink, IconBuildingStore} from "@tabler/icons-react";
+import {useEffect, useRef, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {compose} from "redux";
 import {toast} from "sonner";
-import {ArrowLeft, ChevronRight, Link2, Store} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import type {
@@ -86,13 +86,16 @@ function BlogCompanyCard({seller, resolveLanguageKey}: {seller: PublicBlogSeller
             )}
             {href ? (
                 <a href={href} className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-xs font-semibold text-foreground transition-colors hover:border-foreground">
-                    <Store className="size-3.5" aria-hidden />
+                    <IconBuildingStore className="size-3.5" aria-hidden />
                     {resolveLanguageKey("visitSite")}
                 </a>
             ) : null}
         </div>
     );
 }
+
+const ARTICLE_REQUEST = {method: "post" as const, url: "/api/auxiliary/public/blog/single", data: {}};
+const RELATED_REQUEST = {method: "post" as const, url: "/api/auxiliary/public/blog", data: {}};
 
 function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
     const companySlug = useBlogCompanyQuery();
@@ -104,30 +107,46 @@ function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
     const showCompany = !companySlug && site?.scope !== "company";
     const listHref = withCompany("/blog", companySlug);
 
+    // The article, then its related stories; the page shows once both settled. Silent, as before:
+    // either one failing shows the not-found state.
+    const articleKey = `${slug}|${companySlug ?? ""}`;
+    const latestKey = useRef(articleKey);
     useEffect(() => {
-        let cancelled = false;
-        setLoading(true);
+        latestKey.current = articleKey;
+    });
+    const [articleRequest, setArticleRequest] = useState({articleKey, count: 1});
+    const [relatedRequest, setRelatedRequest] = useState({articleKey, body: {} as Record<string, unknown>, count: 0});
+    if (articleRequest.articleKey !== articleKey) {
+        setArticleRequest({articleKey, count: articleRequest.count + 1});
         setPost(null);
         setMore([]);
-        (async () => {
-            try {
-                const res = await apiClient.post<PublicBlogSingleFormResponseType>("/api/auxiliary/public/blog/single", {slug});
-                if (cancelled) return;
-                const current = res.data.post;
-                setPost(current);
-                const related = await apiClient.post<PublicBlogFormResponseType>("/api/auxiliary/public/blog", {
-                    categorySlug: current.category?.slug,
-                    limit: MORE_STORIES + 1,
-                });
-                if (!cancelled) setMore((related.data.posts ?? []).filter((item) => item._id !== current._id).slice(0, MORE_STORIES));
-            } catch {
-                if (!cancelled) setPost(null);
-            } finally {
-                if (!cancelled) setLoading(false);
-            }
-        })();
-        return () => { cancelled = true; };
-    }, [slug, companySlug]);
+        setLoading(true);
+    }
+    const failed = () => {
+        setPost(null);
+        setLoading(false);
+    };
+    useHttpRequest<PublicBlogSingleFormResponseType>(ARTICLE_REQUEST, {slug}, articleRequest.count, true, {
+        success: (data) => {
+            setPost(data.post);
+            setRelatedRequest((current) => ({
+                articleKey,
+                body: {categorySlug: data.post.category?.slug, limit: MORE_STORIES + 1},
+                count: current.count + 1,
+            }));
+        },
+        error: failed,
+    });
+    useHttpRequest<PublicBlogFormResponseType>(RELATED_REQUEST, relatedRequest.body, relatedRequest.count, true, {
+        success: (data) => {
+            if (relatedRequest.articleKey !== latestKey.current) return;
+            setMore((data.posts ?? []).filter((item) => item._id !== post?._id).slice(0, MORE_STORIES));
+            setLoading(false);
+        },
+        error: () => {
+            if (relatedRequest.articleKey === latestKey.current) failed();
+        },
+    });
 
     async function copyLink() {
         try {
@@ -173,7 +192,7 @@ function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
                             <li><Link to={listHref} className="hover:text-foreground">{resolveLanguageKey("blog")}</Link></li>
                             {post.category ? (
                                 <>
-                                    <li aria-hidden><ChevronRight className="size-3.5" /></li>
+                                    <li aria-hidden><IconChevronRight className="size-3.5" /></li>
                                     <li>
                                         <Link to={withCompany(`/blog?category=${encodeURIComponent(post.category.slug)}`, companySlug)} className="hover:text-foreground">
                                             {post.category.name}
@@ -191,7 +210,7 @@ function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
                             <span className="text-muted-foreground">{blogMetaLine(resolveLanguageKey, post)}</span>
                         </div>
                         <Button type="button" variant="outline" size="lg" onClick={copyLink}>
-                            <Link2 aria-hidden />
+                            <IconLink aria-hidden />
                             {resolveLanguageKey("copyLink")}
                         </Button>
                     </div>
@@ -215,7 +234,7 @@ function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
 
                 <div className="mx-auto w-full max-w-2xl">
                     <Link to={listHref} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground">
-                        <ArrowLeft className="size-4" aria-hidden />
+                        <IconArrowLeft className="size-4" aria-hidden />
                         {resolveLanguageKey("backToBlog")}
                     </Link>
                 </div>

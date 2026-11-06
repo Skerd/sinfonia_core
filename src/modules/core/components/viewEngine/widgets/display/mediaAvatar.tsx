@@ -1,6 +1,6 @@
+import {IconUser} from "@tabler/icons-react";
 import type {ComponentProps, ReactNode} from "react";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
-import {User} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
 
@@ -36,7 +36,7 @@ export function MediaAvatar({mediaId, alt = "", className, fallback, iconSize = 
         >
             {mediaId ? <AvatarImage src={`${MEDIA_BASE_URL}${mediaId}`} alt={alt}/> : null}
             <AvatarFallback className="font-medium">
-                {fallback ?? <User size={iconSize}/>}
+                {fallback ?? <IconUser size={iconSize}/>}
             </AvatarFallback>
         </Avatar>
     );

@@ -1,6 +1,6 @@
+import {IconRotate, IconUser} from "@tabler/icons-react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {compose} from "redux";
-import {RotateCcw, User} from "lucide-react";
 import {Tooltip, TooltipContent, TooltipTrigger} from "@coreModule/components/ui/tooltip.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useEffect, useState} from "react";
@@ -52,7 +52,7 @@ function ProfilePhoto({
                         error ?
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <RotateCcw color={"red"} className="rotate-45 hover:-rotate-45 transition-all duration-300" onClick={(e) => {e.preventDefault(); e.stopPropagation(); setForceRefresh(Date.now());}}/>
+                                <IconRotate color={"red"} className="rotate-45 hover:-rotate-45 transition-all duration-300" onClick={(e) => {e.preventDefault(); e.stopPropagation(); setForceRefresh(Date.now());}}/>
                             </TooltipTrigger>
                             <TooltipContent>
                                 <p>{resolveLanguageKey("tooltipTitle")}</p>
@@ -62,7 +62,7 @@ function ProfilePhoto({
                         <>
                             {
                                 (!data || !previewPhoto) ?
-                                <User size="50px"/>
+                                <IconUser size="50px"/>
                                 :
                                 <img src={previewPhoto} alt="profilePhoto" className="rounded-full h-full w-full object-cover"/>
                             }

@@ -1,3 +1,4 @@
+import {IconSelector, IconX, IconCheck, IconCirclePlus} from "@tabler/icons-react";
 import { useCallback, useMemo, useRef, useState, type MouseEvent, type PointerEvent } from 'react';
 import { Button } from '@coreModule/components/ui/button.tsx';
 import { Popover, PopoverContent, PopoverTrigger } from '@coreModule/components/ui/popover.tsx';
@@ -13,10 +14,8 @@ import {
 } from '@coreModule/components/ui/command.tsx';
 import { Badge } from '@coreModule/components/ui/badge.tsx';
 import { Separator } from '@coreModule/components/ui/separator.tsx';
-import { ChevronsUpDown, X } from 'lucide-react';
 import { cn } from '@coreModule/components/lib/utils.ts';
 import {buttonLike} from '@coreModule/helpers/general/a11y.ts';
-import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons';
 import withLanguage, { WithLanguageType } from '@coreModule/helpers/hocs/withLanguage.tsx';
 import SelectOptionLabel from '@coreModule/components/custom/selectOptionLabel.tsx';
 
@@ -169,7 +168,7 @@ function SimpleSelectRender({
                     e.stopPropagation();
                 }}
             >
-                <X className="h-3.5 w-3.5" />
+                <IconX className="h-3.5 w-3.5" />
             </span>
         ) : null;
 
@@ -193,10 +192,10 @@ function SimpleSelectRender({
                                 isSelected ? 'bg-primary text-primary-foreground' : 'opacity-50 [&_svg]:invisible',
                             )}
                         >
-                            <CheckIcon className={cn('text-background h-4 w-4')} />
+                            <IconCheck className={cn('text-background h-4 w-4')} />
                         </div>
                     ) : (
-                        <CheckIcon className={cn('text-primary h-4 w-4 shrink-0', isSelected ? 'opacity-100' : 'opacity-0')} />
+                        <IconCheck className={cn('text-primary h-4 w-4 shrink-0', isSelected ? 'opacity-100' : 'opacity-0')} />
                     )}
                     <SelectOptionLabel label={option.label} className="min-w-0 flex-1" />
                 </CommandItem>
@@ -240,7 +239,7 @@ function SimpleSelectRender({
                         onClick={stopCardActivation}
                         onPointerDown={stopCardActivation}
                     >
-                        <PlusCircledIcon className="size-4" />
+                        <IconCirclePlus className="size-4" />
                         {effectivePlaceholder}
                         {selectedValues.length > 0 && (
                             <>
@@ -295,7 +294,7 @@ function SimpleSelectRender({
                             </span>
                             <span className="ml-2 flex shrink-0 items-center gap-1">
                                 {renderClearTriggerControl()}
-                                <ChevronsUpDown className="h-4 w-4 opacity-50" />
+                                <IconSelector className="h-4 w-4 opacity-50" />
                             </span>
                         </Button>
                 )}

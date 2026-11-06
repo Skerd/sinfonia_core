@@ -1,6 +1,6 @@
+import {IconRosetteDiscountCheckOff, IconRosetteDiscountCheck, IconPencil} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useEffect, useState, type ReactNode} from "react";
-import {BadgeAlert, BadgeCheck, Pencil} from "lucide-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -138,8 +138,8 @@ function AccountProfileEmail({
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 {(isEmailVerified && !unverifiedEmail)
-                                    ? <BadgeCheck size={20} className="text-info hover:cursor-pointer"/>
-                                    : <BadgeAlert size={20} className="text-destructive hover:cursor-pointer"/>}
+                                    ? <IconRosetteDiscountCheck size={20} className="text-info hover:cursor-pointer"/>
+                                    : <IconRosetteDiscountCheckOff size={20} className="text-destructive hover:cursor-pointer"/>}
                             </TooltipTrigger>
                             <TooltipContent>{verificationTooltip}</TooltipContent>
                         </Tooltip>
@@ -156,7 +156,7 @@ function AccountProfileEmail({
                             setEditing(true);
                         }}
                     >
-                        <Pencil size={14} />
+                        <IconPencil size={14} />
                         {resolveLanguageKey("edit")}
                     </Button>
                 )}

@@ -5,13 +5,25 @@ import { IconSelector } from "@tabler/icons-react"
 
 type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
   size?: "sm" | "default"
+  /**
+   * Renders just the `<select>` with the caller's classes on it (no wrapper, no chevron), keeping
+   * only focus and disabled handling: for custom-styled public / Figma layouts.
+   */
+  bare?: boolean
 }
+
+/** Focus and disabled handling only, for `bare`. */
+const NATIVE_SELECT_BARE = "focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50"
 
 function NativeSelect({
   className,
   size = "default",
+  bare = false,
   ...props
 }: NativeSelectProps) {
+  if (bare) {
+    return <select data-slot="native-select" className={cn(NATIVE_SELECT_BARE, className)} {...props} />
+  }
   return (
     <div
       className={cn(

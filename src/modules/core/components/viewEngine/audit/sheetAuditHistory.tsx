@@ -1,13 +1,12 @@
 import {compose} from "redux";
-import {useCallback, useEffect, useMemo, useState, type ReactNode} from "react";
+import {useCallback, useMemo, useState, type ReactNode} from "react";
 import withLanguage, {ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle} from "@coreModule/components/ui/sheet.tsx";
 import {FLOATING_SHEET_CONTENT_CLASS} from "../sheet/widgets/sheetFloatingChrome.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {History, X} from "lucide-react";
-import {IconAlertTriangle, IconChevronDown, IconRefresh} from "@tabler/icons-react";
+import {IconAlertTriangle, IconChevronDown, IconRefresh, IconHistory, IconX} from "@tabler/icons-react";
 import {Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import type {
@@ -36,6 +35,7 @@ export type SheetAuditHistoryDrawerProps = WithLanguageType & {
 };
 
 const AUDIT_DOCUMENT_URL = "/api/auxiliary/auditLog/document";
+const AUDIT_REQUEST = {method: "get" as const, url: AUDIT_DOCUMENT_URL, data: {}};
 
 /**
  * Secondary panel: 36rem on tablets, 44rem on desktop, never wider than the viewport. `!` beats the
@@ -47,7 +47,7 @@ const ACTIVITY_SHEET_WIDTH_CLASS =
     "!w-[98vw] !max-w-[98vw] sm:!w-[min(36rem,calc(100vw-16px))] lg:!w-[min(44rem,calc(100vw-16px))] overflow-y-auto";
 
 function AuditActivityIcon({className}: {className?: string}) {
-    return <History aria-hidden className={cn("shrink-0", className)} />;
+    return <IconHistory aria-hidden className={cn("shrink-0", className)} />;
 }
 
 function SheetAuditHistoryDrawerInner({
@@ -63,55 +63,39 @@ function SheetAuditHistoryDrawerInner({
 }: SheetAuditHistoryDrawerProps) {
     const [entries, setEntries] = useState<DocumentAuditEntryDto[]>([]);
     const [nextCursor, setNextCursor] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [loadingMore, setLoadingMore] = useState(false);
-    const [error, setError] = useState(false);
     const [referenceLabels, setReferenceLabels] = useState<Record<string, string>>({});
 
-    const fetchPage = useCallback(
-        async (cursor: string | null, append: boolean) => {
-            if (!documentId || !collectionName) {
-                return;
-            }
-            if (append) {
-                setLoadingMore(true);
-            } else {
-                setLoading(true);
-            }
-            setError(false);
-            try {
-                const res = await apiClient.get<DocumentAuditLogResponseDto>(AUDIT_DOCUMENT_URL, {
-                    params: {
-                        documentId,
-                        collectionName,
-                        limit: 25,
-                        ...(cursor ? {cursor} : {}),
-                    },
-                });
-                const data = res.data;
-                setEntries((prev) => (append ? [...prev, ...data.entries] : data.entries));
-                setReferenceLabels((prev) => (append ? {...prev, ...data.referenceLabels} : (data.referenceLabels ?? {})));
-                setNextCursor(data.nextCursor ?? null);
-            } catch {
-                setError(true);
-                if (!append) {
-                    setEntries([]);
-                    setNextCursor(null);
-                }
-            } finally {
-                setLoading(false);
-                setLoadingMore(false);
-            }
+    // The newest page each time the drawer opens on a document; `fetchPage(cursor, true)` appends older ones.
+    const historyKey = open && documentId && collectionName ? `${documentId}|${collectionName}` : "";
+    const [request, setRequest] = useState({historyKey, cursor: null as string | null, append: false, count: historyKey ? 1 : 0});
+    if (request.historyKey !== historyKey) {
+        setRequest({historyKey, cursor: null, append: false, count: historyKey ? request.count + 1 : request.count});
+    }
+    const fetchPage = (cursor: string | null, append: boolean) => {
+        if (!documentId || !collectionName) return;
+        setRequest((current) => ({...current, cursor, append, count: current.count + 1}));
+    };
+    const query = useMemo(() => {
+        const params = new URLSearchParams({documentId: documentId ?? "", collectionName: collectionName ?? "", limit: "25"});
+        if (request.cursor) params.set("cursor", request.cursor);
+        return {url: `${AUDIT_DOCUMENT_URL}?${params}`};
+    }, [documentId, collectionName, request.cursor]);
+    // Silent: the drawer shows its own error state with a retry.
+    const {loading: requesting, error: requestError} = useHttpRequest<DocumentAuditLogResponseDto>(AUDIT_REQUEST, {}, request.count, true, {
+        success: (data) => {
+            setEntries((prev) => (request.append ? [...prev, ...data.entries] : data.entries));
+            setReferenceLabels((prev) => (request.append ? {...prev, ...data.referenceLabels} : (data.referenceLabels ?? {})));
+            setNextCursor(data.nextCursor ?? null);
         },
-        [documentId, collectionName],
-    );
-
-    useEffect(() => {
-        if (!open || !documentId) {
-            return;
-        }
-        void fetchPage(null, false);
-    }, [open, documentId, collectionName, fetchPage]);
+        error: () => {
+            if (request.append) return;
+            setEntries([]);
+            setNextCursor(null);
+        },
+    }, query);
+    const loading = requesting && !request.append;
+    const loadingMore = requesting && request.append;
+    const error = !!requestError;
 
     const fieldTitle = useCallback(
         (fieldPath: string) => {
@@ -146,7 +130,7 @@ function SheetAuditHistoryDrawerInner({
                     <EmptyTitle>{resolveLanguageKey("errorTitle")}</EmptyTitle>
                 </EmptyHeader>
                 <EmptyContent>
-                    <Button variant="outline" size="sm" type="button" onClick={() => void fetchPage(null, false)}>
+                    <Button variant="outline" size="sm" type="button" onClick={() => fetchPage(null, false)}>
                         <IconRefresh />
                         {resolveLanguageKey("retry")}
                     </Button>
@@ -158,7 +142,7 @@ function SheetAuditHistoryDrawerInner({
             <Empty className="py-10">
                 <EmptyHeader>
                     <EmptyMedia variant="icon" className="bg-sidebar-accent text-sidebar-foreground/70">
-                        <History />
+                        <IconHistory />
                     </EmptyMedia>
                     <EmptyTitle>{resolveLanguageKey("empty")}</EmptyTitle>
                     <EmptyDescription>{resolveLanguageKey("emptyDescription")}</EmptyDescription>
@@ -192,7 +176,7 @@ function SheetAuditHistoryDrawerInner({
                         size="sm"
                         type="button"
                         disabled={loadingMore}
-                        onClick={() => void fetchPage(nextCursor, true)}
+                        onClick={() => fetchPage(nextCursor, true)}
                         className="self-center text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
                     >
                         {loadingMore ? <Loader inline className="size-4" /> : <IconChevronDown />}
@@ -227,7 +211,7 @@ function SheetAuditHistoryDrawerInner({
                             </div>
                             <SheetClose asChild>
                                 <Button variant="ghost" size="icon-sm" className="shrink-0" type="button" aria-label={String(resolveLanguageKey("close"))}>
-                                    <X className="size-4" />
+                                    <IconX className="size-4" />
                                 </Button>
                             </SheetClose>
                         </div>

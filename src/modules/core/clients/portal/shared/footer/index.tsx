@@ -1,6 +1,9 @@
+import type {ComponentType} from "react";
+import {IconWorld, IconBrandLinkedin, IconMail, IconMapPin, IconPhone} from "@tabler/icons-react";
+// simple-icons has no LinkedIn mark (removed at LinkedIn's request), so that one stays on tabler.
+import {SiFacebook, SiInstagram} from "@icons-pack/react-simple-icons";
 import {compose} from "redux";
 import {Link} from "react-router-dom";
-import {Facebook, Globe, Instagram, Linkedin, Mail, MapPin, Phone} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import type {PortalCompanyAddress} from "armonia/src/modules/core/api/portal/public/portal/portal.dto.ts";
@@ -28,12 +31,13 @@ function PortalFooter({resolveLanguageKey}: WithLanguageType) {
     const {site, sections} = usePortalSite();
     if (!site) return null;
     const {company} = site;
-    const socials = [
-        {label: resolveLanguageKey("socialWebsite"), href: company.website, Icon: Globe},
-        {label: "LinkedIn", href: company.linkedin, Icon: Linkedin},
-        {label: "Instagram", href: company.instagram, Icon: Instagram},
-        {label: "Facebook", href: company.facebook, Icon: Facebook},
-    ].filter((item): item is {label: string; href: string; Icon: typeof Globe} => Boolean(item.href));
+    const socialLinks: {label: string; href: string | undefined; Icon: ComponentType<{className?: string}>}[] = [
+        {label: resolveLanguageKey("socialWebsite"), href: company.website, Icon: IconWorld},
+        {label: "LinkedIn", href: company.linkedin, Icon: IconBrandLinkedin},
+        {label: "Instagram", href: company.instagram, Icon: SiInstagram},
+        {label: "Facebook", href: company.facebook, Icon: SiFacebook},
+    ];
+    const socials = socialLinks.filter((item): item is (typeof socialLinks)[number] & {href: string} => Boolean(item.href));
 
     return (
         <footer className="mt-24 border-t bg-muted/40">
@@ -50,13 +54,13 @@ function PortalFooter({resolveLanguageKey}: WithLanguageType) {
                     <div className="flex flex-col gap-2.5">
                         {company.email ? (
                             <a href={`mailto:${company.email}`} className={FOOTER_LINK_CLASS}>
-                                <Mail className="size-4 shrink-0" aria-hidden />
+                                <IconMail className="size-4 shrink-0" aria-hidden />
                                 {company.email}
                             </a>
                         ) : null}
                         {company.phoneNumber ? (
                             <a href={`tel:${company.phoneNumber.replace(/[^\d+]/g, "")}`} className={FOOTER_LINK_CLASS}>
-                                <Phone className="size-4 shrink-0" aria-hidden />
+                                <IconPhone className="size-4 shrink-0" aria-hidden />
                                 {company.phoneNumber}
                             </a>
                         ) : null}
@@ -70,7 +74,7 @@ function PortalFooter({resolveLanguageKey}: WithLanguageType) {
                                     rel="noopener noreferrer"
                                     className={FOOTER_LINK_CLASS}
                                 >
-                                    <MapPin className="size-4 shrink-0" aria-hidden />
+                                    <IconMapPin className="size-4 shrink-0" aria-hidden />
                                     {label}
                                 </a>
                             ) : null;

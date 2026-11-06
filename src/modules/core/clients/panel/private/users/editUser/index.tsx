@@ -1,5 +1,5 @@
+import {IconX} from "@tabler/icons-react";
 import {useEffect} from "react";
-import {X} from "lucide-react";
 import {compose} from "redux";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Drawer, DrawerClose, DrawerContent} from "@coreModule/components/ui/drawer.tsx";
@@ -42,7 +42,7 @@ function EditUser({user, onClose}: EditUserProps) {
                         headerEnd={(
                             <DrawerClose asChild>
                                 <Button variant="ghost" size="icon" className="shrink-0">
-                                    <X />
+                                    <IconX />
                                     <span className="sr-only">Close</span>
                                 </Button>
                             </DrawerClose>

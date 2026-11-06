@@ -2,7 +2,7 @@ import type {ReactNode} from "react";
 import type {Control, FieldValues, Path} from "react-hook-form";
 import type {FieldBinding, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
+import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {isCompoundFormWidget, resolveWidget} from "../widgetRegistry.ts";
 import type {FormWidgetExtra} from "./types.ts";
 import {renderCompoundWidget} from "./widgets/compound.tsx";
@@ -58,6 +58,7 @@ export function createFormFieldRenderer<T extends FieldValues>({
                             <FormControl aria-required={binding.required || undefined}>
                                 {renderFormWidget(Widget, binding, field, resolveLanguageKey, extra)}
                             </FormControl>
+                            {binding.description && <FormDescription>{resolveLanguageKey(binding.description)}</FormDescription>}
                             <FormMessage />
                         </FormItem>
                     )}

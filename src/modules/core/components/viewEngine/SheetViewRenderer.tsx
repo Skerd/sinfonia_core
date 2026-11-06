@@ -1,6 +1,5 @@
+import {IconX} from "@tabler/icons-react";
 import {useEffect, useImperativeHandle, useMemo, useState, type ComponentType, type ReactNode} from "react";
-import {compose} from "redux";
-import {X} from "lucide-react";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import {type DeletedData, SingleForm} from "armonia/src/modules/core/types/shared.types.ts";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -270,7 +269,7 @@ export function SheetViewRenderer({
                                         {header?.showCloseButton && (
                                             <SheetClose asChild>
                                                 <Button variant="ghost" size="icon" className="shrink-0">
-                                                    <X />
+                                                    <IconX />
                                                 </Button>
                                             </SheetClose>
                                         )}
@@ -322,17 +321,14 @@ export function SheetViewRenderer({
     );
 }
 
-const SheetViewRendererWithAxios = compose(
-    withAxios(
-        {
-            url: "overriden-from-component",
-            method: "POST",
-            data: {}
-        },
-        true,
-        "modelData"
-    ),
-    withDebug(true, true)
-)(SheetViewRenderer);
+const SheetViewRendererWithAxios: ComponentType<SheetViewRendererPublicProps> = withAxios(
+    {
+        url: "overriden-from-component",
+        method: "POST",
+        data: {}
+    },
+    true,
+    "modelData"
+)<SheetViewRendererPublicProps>(withDebug(true, true)(SheetViewRenderer));
 
-export default SheetViewRendererWithAxios as unknown as ComponentType<SheetViewRendererPublicProps>;
+export default SheetViewRendererWithAxios;

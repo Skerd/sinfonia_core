@@ -16,7 +16,7 @@ import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import {readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
 import {Button, ButtonTitle} from "@coreModule/components/ui/button.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import CardAndTableView, {type EntityListApi} from "@coreModule/components/entityPage/list/cardAndTableView.tsx";
+import CardAndTableView, {type EntityListApi, type EntityRowPatch} from "@coreModule/components/entityPage/list/cardAndTableView.tsx";
 import ActionMenu from "@coreModule/components/viewEngine/widgets/actions/menu/actionMenu.tsx";
 import DeleteAction from "@coreModule/components/viewEngine/widgets/actions/deleteAction.tsx";
 import RestoreAction from "@coreModule/components/viewEngine/widgets/actions/restoreAction.tsx";
@@ -516,7 +516,7 @@ export default function EntityListPage<T extends BaseEntity>({
     };
 
     /** Patch a row in the list and, when it is the one open in the sheet/modal, there too. */
-    const patchRow = (id: string, patch: Partial<T>) => {
+    const patchRow = (id: string, patch: EntityRowPatch<T>) => {
         listRef.current?.updateRow?.(id, patch);
         setSheetEntity((current) => (current?._id === id ? {...current, ...patch} : current));
     };
@@ -524,14 +524,14 @@ export default function EntityListPage<T extends BaseEntity>({
     const handleDelete = (entity: T, response?: DeletedData) => {
         // Soft delete: keep the row and show it as deleted. Hard delete: reload the page.
         if (response?.deletedAt != null || response?.deletedBy != null) {
-            patchRow(entity._id, {deletedAt: response.deletedAt, deletedBy: response.deletedBy} as unknown as Partial<T>);
+            patchRow(entity._id, {deletedAt: response.deletedAt, deletedBy: response.deletedBy});
             return;
         }
         listRef.current?.refetch?.();
     };
 
     const handleRestore = (entity: T) =>
-        patchRow(entity._id, {deletedAt: undefined, deletedBy: undefined} as unknown as Partial<T>);
+        patchRow(entity._id, {deletedAt: undefined, deletedBy: undefined});
 
     const replaceRow = (row: T) => {
         listRef.current?.updateRow?.(row._id, row as Partial<T>);
@@ -558,7 +558,7 @@ export default function EntityListPage<T extends BaseEntity>({
             {header === undefined ? <EntityListHeader ctx={headerContext} /> : header && header(headerContext)}
 
             <HiddenElement hideAll={true}>
-                <CardAndTableView<TableResponse<T>, Record<string, unknown>>
+                <CardAndTableView<TableResponse<T>>
                     url={apiUrl}
                     tableConfigKey={tableConfigKey}
                     access={accessModel}

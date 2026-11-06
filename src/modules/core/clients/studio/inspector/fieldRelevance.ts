@@ -1,4 +1,4 @@
-import type {ViewMode, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
+import type {FieldBinding, ViewMode, ViewNode} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 
 /**
  * Which inspector controls actually do something for the view being edited.
@@ -225,16 +225,16 @@ export function clearInspectorKey(node: ViewNode, key: InspectorKey): ViewNode {
     }
     if (key.startsWith("field.")) {
         if (!node.field) return node;
-        const leaf = key.slice("field.".length);
-        const field = {...node.field} as Record<string, unknown>;
+        // Only optional keys are ever cleared here: `name` and `widget` are never `inapplicable`.
+        const leaf = key.slice("field.".length) as Exclude<keyof FieldBinding, "name" | "widget">;
+        const field = {...node.field};
         delete field[leaf];
-        /* Only optional keys are ever cleared here — `name` and `widget` are never
-           `inapplicable` — but `delete` on a keyof loses that, hence the widening. */
-        return {...node, field: field as unknown as NonNullable<ViewNode["field"]>};
+        return {...node, field};
     }
-    const next = {...node} as Record<string, unknown>;
-    delete next[key];
-    return next as unknown as ViewNode;
+    // Likewise `render` is never `inapplicable`; the prefixed keys were handled above.
+    const next = {...node};
+    delete next[key as Exclude<keyof ViewNode, "render">];
+    return next;
 }
 
 export type DeadConfigEntry = {

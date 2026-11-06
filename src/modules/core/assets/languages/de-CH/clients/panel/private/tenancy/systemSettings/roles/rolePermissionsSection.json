@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/rolePermissionsSection.tsx",
+  "templateLabel": "Vorlage",
+  "templatePlaceholder": "Vorlage",
+  "templateDescription": "Berechtigungen einer anderen Rolle übernehmen",
+  "none": "Keine",
+  "failTitle": "Berechtigungen konnten nicht geladen werden",
+  "failDescription": "Die Berechtigungen konnten nicht geladen werden, bitte erneut versuchen",
+  "failTooltip": "Hier klicken, um die Berechtigungen erneut zu laden",
+  "noData": "Keine Berechtigungen gefunden, daher kann keine Rolle erstellt werden"
+}

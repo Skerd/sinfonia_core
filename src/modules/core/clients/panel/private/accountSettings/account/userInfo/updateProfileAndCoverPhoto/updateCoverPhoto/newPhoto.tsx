@@ -1,6 +1,6 @@
+import {IconCamera, IconLoader2, IconDeviceFloppy} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Camera, LoaderCircle, Save} from "lucide-react";
 import {useEffect, useImperativeHandle, useRef, useState} from "react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
@@ -8,6 +8,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {UpdateProfileCoverPhotoFormResponseType} from "armonia/src/modules/core/api/user/private/data/updateProfileCoverPhoto.form.response.type.ts";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
+import {Input} from "@coreModule/components/ui/input.tsx";
 
 type NewPhotoProps = WithLanguageType & WithAxiosType<UpdateProfileCoverPhotoFormResponseType> & {
     specificUserId?: string,
@@ -86,18 +87,18 @@ function NewPhoto({
                             }
                         }}
                     >
-                        {loading ? <LoaderCircle className="animate-spin"/> : <Save />}
+                        {loading ? <IconLoader2 className="animate-spin"/> : <IconDeviceFloppy />}
                         {resolveLanguageKey("confirm")}
                     </Button>
                 </div>
                 :
                 <>
                     <Button variant="ghost" className="" onClick={() => fileInputRef.current?.click()}>
-                        <Camera />
+                        <IconCamera />
                         <p>{resolveLanguageKey("updatePhoto")}</p>
                     </Button>
 
-                    <input
+                    <Input
                         type='file'
                         ref={fileInputRef}
                         className='hidden'

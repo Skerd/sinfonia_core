@@ -296,7 +296,7 @@ function IconPickerInputBase({
             invalid markup, and a real button keeps clearing reachable from the keyboard. */}
         <div className="pointer-events-none absolute inset-y-0 end-2.5 flex items-center gap-1">
           {value ? (
-            <button
+            <Button variant="bare"
               type="button"
               aria-label={clearLabel}
               title={clearLabel}
@@ -304,7 +304,7 @@ function IconPickerInputBase({
               className={cn(
                 'rounded-sm p-0.5 text-muted-foreground',
                 disabled
-                  ? 'cursor-not-allowed opacity-50'
+                  ? 'cursor-not-allowed opacity-50 disabled:pointer-events-auto'
                   : 'pointer-events-auto cursor-pointer hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
               )}
               onPointerDown={(event) => {
@@ -314,7 +314,7 @@ function IconPickerInputBase({
               onClick={handleClear}
             >
               <IconX className="h-3.5 w-3.5" />
-            </button>
+            </Button>
           ) : null}
           <IconSelector className="h-4 w-4 shrink-0 opacity-50" aria-hidden />
         </div>

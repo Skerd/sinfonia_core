@@ -7,6 +7,7 @@ import {IconAlertTriangle} from "@tabler/icons-react";
 import {resolveIcon} from "@coreModule/components/viewEngine/widgetRegistry.ts";
 import type {WidgetPropMeta} from "@coreModule/components/viewEngine/widgetMeta.ts";
 import JsonPropsEditor from "./jsonPropsEditor.tsx";
+import {NativeSelect, NativeSelectOption} from "@coreModule/components/ui/native-select.tsx";
 
 type WidgetPropsEditorProps = {
     label: string;
@@ -101,18 +102,18 @@ export default function WidgetPropsEditor({
 
         if (prop.type === "enum") {
             return (
-                <select
+                <NativeSelect
                     value={typeof current === "string" ? current : ""}
                     onChange={(e) => setKey(prop.name, e.target.value || undefined)}
-                    className="h-8 rounded border bg-background px-2 font-mono text-2xs"
+                    className="font-mono text-2xs"
                 >
-                    <option value="">{placeholder ? `(${placeholder})` : "(unset)"}</option>
+                    <NativeSelectOption value="">{placeholder ? `(${placeholder})` : "(unset)"}</NativeSelectOption>
                     {(prop.enum ?? []).map((option) => (
-                        <option key={option} value={option}>
+                        <NativeSelectOption key={option} value={option}>
                             {option}
-                        </option>
+                        </NativeSelectOption>
                     ))}
-                </select>
+                </NativeSelect>
             );
         }
 

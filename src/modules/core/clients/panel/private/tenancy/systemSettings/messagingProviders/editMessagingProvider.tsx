@@ -1,4 +1,4 @@
-import {Save} from "lucide-react";
+import {IconDeviceFloppy} from "@tabler/icons-react";
 import {createGenericEditPage} from "@coreModule/components/entityPage/pages/createGenericEditPage.tsx";
 import {editMessagingProviderFormSchema} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/editMessagingProvider.form.validator.ts";
 import type {MessagingProvider} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
@@ -19,5 +19,5 @@ export default createGenericEditPage<MessagingProvider, EditMessagingProviderFor
         fromPhone: writeFields.fromPhone ? data.fromPhone ?? "" : undefined,
         fromWhatsapp: writeFields.fromWhatsapp ? data.fromWhatsapp ?? "" : undefined,
     }),
-    submitIcon: <Save />,
+    submitIcon: <IconDeviceFloppy />,
 });

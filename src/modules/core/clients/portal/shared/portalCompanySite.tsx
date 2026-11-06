@@ -1,9 +1,9 @@
+import {IconArrowLeft, IconArrowUpRight} from "@tabler/icons-react";
 import {compose} from "redux";
-import {useEffect, useLayoutEffect, useState, type ReactNode} from "react";
+import {useLayoutEffect, useMemo, useState, type ReactNode} from "react";
 import {Link, useLocation, useParams} from "react-router-dom";
-import {ArrowLeft, ArrowUpRight} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {setSiteCompany} from "@coreModule/helpers/apiClient/siteCompany.ts";
 import type {PortalContribution} from "@coreModule/helpers/types/portalContribution.types.ts";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
@@ -17,6 +17,8 @@ import {SectionBaseProvider, sectionHref} from "./sectionBase.tsx";
 import {companySiteOrigin} from "./portalZone.ts";
 import {BlogSection} from "../blog/index.tsx";
 
+const COMPANIES_REQUEST = {method: "post" as const, url: "/api/portal/companies", data: {}};
+
 type PortalCompanySiteProps = WithLanguageType & {
     contribution: PortalContribution;
     children: ReactNode;
@@ -29,7 +31,6 @@ type PortalCompanySiteProps = WithLanguageType & {
 function PortalCompanySite({contribution, children, resolveLanguageKey}: PortalCompanySiteProps) {
     const {company: slug = ""} = useParams();
     const {pathname} = useLocation();
-    const [card, setCard] = useState<PortalCompanyCard | null | undefined>(undefined);
 
     // Before the pages' own effects run, so their first requests already carry it.
     useLayoutEffect(() => {
@@ -37,14 +38,12 @@ function PortalCompanySite({contribution, children, resolveLanguageKey}: PortalC
         return () => setSiteCompany(null);
     }, [slug]);
 
-    useEffect(() => {
-        let cancelled = false;
-        setCard(undefined);
-        apiClient.post<PortalCompaniesResponse>("/api/portal/companies", {section: contribution.section, slug})
-            .then((res) => { if (!cancelled) setCard(res.data.data[0] ?? null); })
-            .catch(() => { if (!cancelled) setCard(null); });
-        return () => { cancelled = true; };
-    }, [contribution.section, slug]);
+    // Silent; runs after the layout effect above, so it already names the company.
+    const body = useMemo(() => ({section: contribution.section, slug}), [contribution.section, slug]);
+    const [lookup, setLookup] = useState({body, count: 1});
+    if (lookup.body !== body) setLookup({body, count: lookup.count + 1});
+    const {data, loading, error} = useHttpRequest<PortalCompaniesResponse>(COMPANIES_REQUEST, body, lookup.count);
+    const card: PortalCompanyCard | null | undefined = loading ? undefined : error ? null : data ? data.data[0] ?? null : undefined;
 
     if (card === undefined) return <Loader />;
     if (!card) return <PortalNotFound />;
@@ -59,7 +58,7 @@ function PortalCompanySite({contribution, children, resolveLanguageKey}: PortalC
             <div className="border-b bg-muted/40">
                 <div className="site-container flex items-center gap-3 py-3">
                     <Button asChild variant="ghost" size="icon" aria-label={resolveLanguageKey("back")}>
-                        <Link to={sectionHref(contribution)}><ArrowLeft /></Link>
+                        <Link to={sectionHref(contribution)}><IconArrowLeft /></Link>
                     </Button>
                     <Avatar className="size-9">
                         {card.logo ? <AvatarImage src={card.logo} alt="" className="object-contain" /> : null}
@@ -76,7 +75,7 @@ function PortalCompanySite({contribution, children, resolveLanguageKey}: PortalC
                         <Button asChild variant="outline" className="hidden sm:inline-flex">
                             <a href={visitHref}>
                                 {resolveLanguageKey("visitSite")}
-                                <ArrowUpRight aria-hidden />
+                                <IconArrowUpRight aria-hidden />
                             </a>
                         </Button>
                     ) : null}

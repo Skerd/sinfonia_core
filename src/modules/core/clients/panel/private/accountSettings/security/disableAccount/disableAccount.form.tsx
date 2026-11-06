@@ -1,6 +1,6 @@
+import {IconAlertTriangle} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useDispatch} from "react-redux";
-import {TriangleAlert} from "lucide-react";
 import {useNavigate} from "react-router-dom";
 import {useImperativeHandle, useState} from 'react';
 import {Input} from "@coreModule/components/ui/input.tsx";
@@ -84,7 +84,7 @@ function UserAccountSecurityDisableAccountForm({
     return (
         <div className="flex flex-col gap-y-4">
             <Alert>
-                <TriangleAlert className="h-4 w-4"/>
+                <IconAlertTriangle className="h-4 w-4"/>
                 <AlertTitle>{resolveLanguageKey("title")}</AlertTitle>
                 <AlertDescription>{resolveLanguageKey("description")}</AlertDescription>
             </Alert>

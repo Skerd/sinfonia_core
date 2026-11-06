@@ -1,7 +1,7 @@
+import {IconActivity, IconCircleCheck, IconGauge, IconPlayerPlay, IconCircleX} from "@tabler/icons-react";
 import {useEffect, useState} from "react";
-import {Activity, CheckCircle2, Gauge, PlayCircle, XCircle} from "lucide-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {KpiCard} from "@coreModule/components/custom/kpiCard.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import type {CronJobMetrics as Metrics} from "armonia/src/modules/core/api/auxiliary/private/cronJob/cronJob.dto.ts";
@@ -9,6 +9,7 @@ import {formatDurationMs} from "./cronExecutionDisplay.ts";
 
 /** Runs start and finish without the page knowing, so the tiles refresh on their own. */
 const REFRESH_MS = 30_000;
+const METRICS_REQUEST = {method: "post" as const, url: "/api/auxiliary/cron-jobs/metrics", data: {}};
 const GRID_CLASS = "grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5";
 
 type CronJobMetricsProps = {
@@ -17,29 +18,14 @@ type CronJobMetricsProps = {
 
 /** The company's scheduled actions at a glance: how many run, and how the last 24 hours went. */
 export default function CronJobMetrics({resolveLanguageKey}: CronJobMetricsProps) {
-    const [metrics, setMetrics] = useState<Metrics | null>(null);
-    const [failed, setFailed] = useState(false);
+    const [refreshCount, setRefreshCount] = useState(1);
+    // A failed refresh keeps the last figures on screen: the hook only replaces data on success.
+    const {data: metrics, error} = useHttpRequest<Metrics>(METRICS_REQUEST, {}, refreshCount);
+    const failed = !!error;
 
     useEffect(() => {
-        let cancelled = false;
-        const load = () => {
-            apiClient.post<Metrics>("/api/auxiliary/cron-jobs/metrics", {})
-                .then((res) => {
-                    if (cancelled) return;
-                    setMetrics(res.data);
-                    setFailed(false);
-                })
-                // A failed refresh keeps the last figures on screen.
-                .catch(() => {
-                    if (!cancelled) setFailed(true);
-                });
-        };
-        load();
-        const timer = setInterval(load, REFRESH_MS);
-        return () => {
-            cancelled = true;
-            clearInterval(timer);
-        };
+        const timer = setInterval(() => setRefreshCount((count) => count + 1), REFRESH_MS);
+        return () => clearInterval(timer);
     }, []);
 
     const rk = (key: string) => String(resolveLanguageKey(`metrics.${key}`));
@@ -56,35 +42,35 @@ export default function CronJobMetrics({resolveLanguageKey}: CronJobMetricsProps
         <div className={GRID_CLASS}>
             <KpiCard
                 compact
-                icon={PlayCircle}
+                icon={IconPlayerPlay}
                 title={rk("active")}
                 value={metrics.activeJobs}
                 subtitle={rk("pausedCount").replace("{count}", String(metrics.pausedJobs))}
             />
             <KpiCard
                 compact
-                icon={Activity}
+                icon={IconActivity}
                 variant={metrics.runningExecutions > 0 ? "primary" : "default"}
                 title={rk("running")}
                 value={metrics.runningExecutions}
             />
             <KpiCard
                 compact
-                icon={CheckCircle2}
+                icon={IconCircleCheck}
                 variant="success"
                 title={rk("succeeded24h")}
                 value={metrics.successLast24h}
             />
             <KpiCard
                 compact
-                icon={XCircle}
+                icon={IconCircleX}
                 variant={metrics.failedLast24h > 0 ? "danger" : "default"}
                 title={rk("failed24h")}
                 value={metrics.failedLast24h}
             />
             <KpiCard
                 compact
-                icon={Gauge}
+                icon={IconGauge}
                 title={rk("avgDuration24h")}
                 value={formatDurationMs(metrics.successLast24h > 0 ? metrics.avgDurationMsLast24h : undefined)}
             />

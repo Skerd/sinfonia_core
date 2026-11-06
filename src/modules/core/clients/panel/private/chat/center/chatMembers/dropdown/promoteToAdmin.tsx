@@ -1,8 +1,8 @@
+import {IconCrown} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {Crown} from "lucide-react";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -57,7 +57,7 @@ function PromoteToAdmin({
 
     return (
         <DropdownMenuItem disabled={loading} onClick={(e) => {e.preventDefault(); e.stopPropagation(); promoteToAdmin();}}>
-            <Crown color="green"/>
+            <IconCrown color="green"/>
             {resolveLanguageKey("makeAdmin")}
             <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>
         </DropdownMenuItem>

@@ -4,8 +4,7 @@ import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModu
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import type {BlogPost} from "armonia/src/modules/core/api/auxiliary/private/blogPost/blogPost.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import {IconCalendar} from "@tabler/icons-react";
-import {Hash, Tag} from "lucide-react";
+import {IconCalendar, IconHash, IconTag} from "@tabler/icons-react";
 import BlogPostSheetView from "@coreModule/clients/panel/private/blogPosts/center/sheetView/blogPostSheetView.tsx";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
@@ -121,14 +120,14 @@ function BlogPostCard({
                     </EntityCard.Header>
                     <EntityCard.Body>
                         <EntityCardRow
-                            icon={Tag}
+                            icon={IconTag}
                             label={resolveLanguageKey("fields.category")}
                             tooltip={resolveLanguageKey("fields.category")}
                             path="category.name"
                             value={entity.category.name}
                         />
                         <EntityCardRow
-                            icon={Hash}
+                            icon={IconHash}
                             label={resolveLanguageKey("fields.slug")}
                             tooltip={resolveLanguageKey("fields.slug")}
                             path="slug"

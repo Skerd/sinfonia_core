@@ -44,7 +44,7 @@ export default function ApplyToSourcePanel({target, changes, onApplied}: ApplyTo
         for (const change of changes) {
             if (change.kind === "changed" && change.keys?.length && change.to && change.node) {
                 for (const key of change.keys) {
-                    const value = (change.node as unknown as Record<string, unknown>)[key];
+                    const value = change.node[key];
                     supported.push(
                         value === undefined
                             ? {kind: "removeProperty", nodePath: change.to, property: key}

@@ -29,7 +29,7 @@ export type Change = {
      * consumer build real source edits instead of re-parsing {@link detail}, which is a
      * display string.
      */
-    keys?: string[];
+    keys?: (keyof ViewNode)[];
     node?: ViewNode;
     /**
      * What `from` / `to` mean. `"node"` (default) reads them as tree positions and
@@ -160,8 +160,8 @@ const NODE_CONTENT_KEYS = [
 ] as const satisfies readonly (keyof ViewNode)[];
 
 /** The keys whose values differ, so "changed" can both describe and be acted on. */
-function differingKeys(before: ViewNode, after: ViewNode): string[] {
-    const differing: string[] = [];
+function differingKeys(before: ViewNode, after: ViewNode): (keyof ViewNode)[] {
+    const differing: (keyof ViewNode)[] = [];
     for (const key of NODE_CONTENT_KEYS) {
         if (JSON.stringify(before[key]) !== JSON.stringify(after[key])) {
             differing.push(key);

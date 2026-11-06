@@ -1,3 +1,4 @@
+import {IconUsers} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -5,7 +6,6 @@ import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import {useState} from "react";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
-import {Users} from "lucide-react";
 import {Channel} from "armonia/src/modules/core/api/user/private/chats/channels/channels.form.response.type.ts";
 import ChatMembers from "@coreModule/clients/panel/private/chat/center/chatMembers";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -32,7 +32,7 @@ function ShowChannelMembers({
     return (
         <>
             <DropdownMenuItem onClick={(event) => {event.preventDefault(); setOpenMembers(true)}}>
-                <Users />
+                <IconUsers />
                 {resolveLanguageKey("members")}
                 <DropdownMenuShortcut>⌘1</DropdownMenuShortcut>
             </DropdownMenuItem>

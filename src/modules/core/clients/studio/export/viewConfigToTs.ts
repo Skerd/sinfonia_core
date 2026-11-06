@@ -175,6 +175,7 @@ export function suggestExportName(config: ViewConfig): string {
 }
 
 export function viewConfigToTs(config: ViewConfig, options: ViewConfigTsOptions): string {
-    const body = printObject(config as unknown as Record<string, unknown>, 0, CONFIG_KEY_ORDER);
+    // `ViewConfig` is an interface (no index signature), so its entries are copied into the record `printObject` reads.
+    const body = printObject(Object.fromEntries(Object.entries(config)), 0, CONFIG_KEY_ORDER);
     return `export const ${options.exportName}: ViewConfig = ${body};\n`;
 }

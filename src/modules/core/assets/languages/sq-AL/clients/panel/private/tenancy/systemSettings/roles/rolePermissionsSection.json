@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/rolePermissionsSection.tsx",
+  "templateLabel": "Shablloni",
+  "templatePlaceholder": "Shablloni",
+  "templateDescription": "Kopjoni lejet nga një rol tjetër",
+  "none": "Asnjë",
+  "failTitle": "Ngarkimi i lejeve dështoi",
+  "failDescription": "Ngarkimi i lejeve dështoi, ju lutemi provoni përsëri",
+  "failTooltip": "Kliko këtu për të riprovuar ngarkimin e lejeve",
+  "noData": "Nuk u gjetën leje, kështu që asnjë rol nuk mund të krijohet"
+}

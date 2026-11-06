@@ -1,6 +1,6 @@
+import {IconPencil} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
-import {Pencil} from "lucide-react";
 import {ContextMenuItem, ContextMenuShortcut} from "@coreModule/components/ui/context-menu.tsx";
 import {useDispatch} from "react-redux";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
@@ -35,7 +35,7 @@ function EditMessage({
 
     return (
         <ContextMenuItem onClick={(e) => {e.stopPropagation(); editMessage();}} className="hover:cursor-pointer">
-            <Pencil className="mr-2 h-4 w-4" />
+            <IconPencil className="mr-2 h-4 w-4" />
             {resolveLanguageKey("edit")}
             <ContextMenuShortcut>⌘{shortcut}</ContextMenuShortcut>
         </ContextMenuItem>

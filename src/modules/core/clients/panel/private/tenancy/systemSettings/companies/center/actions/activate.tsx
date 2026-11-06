@@ -1,9 +1,9 @@
+import {IconShieldCheck} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {ShieldCheck} from "lucide-react";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 
 type ActivateCompanyProps = WithLanguageType & {
@@ -20,7 +20,7 @@ function ActivateCompany({company, resolveLanguageKey, onAction}: ActivateCompan
 
     return (
         <DropdownMenuItem onClick={() => {onAction("activateCompany");}}>
-            <ShieldCheck className="text-success" size={16} />
+            <IconShieldCheck className="text-success" size={16} />
             {resolveLanguageKey("title")}
         </DropdownMenuItem>
     );

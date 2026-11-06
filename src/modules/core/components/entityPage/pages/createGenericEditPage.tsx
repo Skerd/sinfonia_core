@@ -8,8 +8,7 @@ import {toast} from "sonner";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
-import type {HttpRequestHeaderBuilder} from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import useHttpRequest, {type HttpRequest, type HttpRequestHeaderBuilder} from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import EditFormViewRenderer from "@coreModule/components/viewEngine/editFormViewRenderer.tsx";
 import {useViewConfigState} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import type {FieldValues, UseFormReturn} from "react-hook-form";
@@ -25,8 +24,12 @@ type GenericEditPageConfig<TDto, TForm extends FieldValues> = {
     submitIcon?: ReactNode;
     buildExtraTitles?: (params: URLSearchParams, entityName?: string | null) => string[];
 
-    // to be checked
-    /** Bypass `POST {apiUrl}/single` when loading the entity document. */
+    /**
+     * How the entity document loads, instead of `POST {apiUrl}/single` with `{_id}`. Header and
+     * path builders read `entityId` (e.g. `{whatToGet: "entityId", whereToPut: "x-company-id"}`).
+     */
+    entityRequest?: HttpRequest;
+    /** @deprecated Use `entityRequest`; kept until its last module caller moves. */
     fetchEntity?: (entityId: string) => Promise<TDto>;
     buildFormExtras?: (entityId: string, params: URLSearchParams, entity?: TDto | null) => Record<string, unknown>;
     mapSubmitPayload?: (
@@ -44,6 +47,8 @@ type GenericEditPageConfig<TDto, TForm extends FieldValues> = {
     ) => string | null;
     /** Runs after PATCH succeeds, before navigating back (`EditFormViewRenderer` success pipeline). */
     afterSuccess?: () => void;
+    /** Route (or history delta) to go to after a save; defaults to `navigate(-1)`, as in `createGenericCreatePage`. */
+    successPath?: string | number;
     /**
      * Dynamic headers merged into the PATCH (`addToHeader` on `HttpRequest`).
      * Values are read from serialized component props (e.g. `{ whatToGet: "entityId", whereToPut: "x-company-id" }`).
@@ -112,10 +117,8 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
     // Config is static per page, so resolve the keys once instead of on every render.
     const {accessKey, viewCollectionKey} = resolveEntityPageKeys(config);
 
-    const loadEntity = (entityId: string): Promise<TDto> =>
-        config.fetchEntity
-            ? config.fetchEntity(entityId)
-            : apiClient.post<TDto>(`${config.apiUrl}/single`, {_id: entityId}).then((res) => res.data);
+    const entityRequest: HttpRequest = config.entityRequest ?? {method: "post", url: `${config.apiUrl}/single`, data: {}};
+    const usesRequest = !config.fetchEntity;
 
     function GenericEditInner({
         resolveLanguageKey,
@@ -133,9 +136,23 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
         const readFields = useMemo(() => (read || {}) as Record<string, unknown>, [read]);
 
         const [reloadCount, setReloadCount] = useState(0);
-        const [entityData, setEntityData] = useState<TDto | null>(null);
-        const [loadingEntity, setLoadingEntity] = useState(true);
-        const [entityError, setEntityError] = useState(false);
+        const [fetchedData, setFetchedData] = useState<TDto | null>(null);
+        const [fetching, setFetching] = useState(usesRequest ? false : true);
+        const [fetchError, setFetchError] = useState(false);
+
+        // One silent load per entity and per retry; the page shows its own loader and error.
+        const loadKey = `${entityId ?? ""}|${reloadCount}`;
+        const [load, setLoad] = useState({loadKey, count: entityId && usesRequest ? 1 : 0});
+        if (load.loadKey !== loadKey) {
+            setLoad({loadKey, count: entityId && usesRequest ? load.count + 1 : load.count});
+        }
+        const entityBody = useMemo(() => ({_id: entityId}), [entityId]);
+        const entityProps = useMemo(() => ({entityId}), [entityId]);
+        const entityLoad = useHttpRequest<TDto>(entityRequest, entityBody, load.count, true, {}, entityProps);
+
+        const entityData = usesRequest ? entityLoad.data : fetchedData;
+        const loadingEntity = usesRequest ? entityLoad.loading : fetching;
+        const entityError = usesRequest ? !!entityLoad.error : fetchError;
 
         const {config: viewConfig, loading: viewConfigLoading} = useViewConfigState(viewCollectionKey, "form:edit");
         const formSchema = useMemo(
@@ -144,18 +161,19 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
         );
 
         useEffect(() => {
+            if (!config.fetchEntity) return;
             if (!entityId) {
-                setLoadingEntity(false);
+                setFetching(false);
                 return;
             }
             // Ignore responses that arrive after the id changed or the page unmounted.
             let stale = false;
-            setLoadingEntity(true);
-            setEntityError(false);
-            loadEntity(entityId)
-                .then((data) => { if (!stale) setEntityData(data); })
-                .catch(() => { if (!stale) setEntityError(true); })
-                .finally(() => { if (!stale) setLoadingEntity(false); });
+            setFetching(true);
+            setFetchError(false);
+            config.fetchEntity(entityId)
+                .then((data) => { if (!stale) setFetchedData(data); })
+                .catch(() => { if (!stale) setFetchError(true); })
+                .finally(() => { if (!stale) setFetching(false); });
             return () => { stale = true; };
         }, [entityId, reloadCount]);
 
@@ -205,7 +223,9 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
 
         const handleSuccess = () => {
             config.afterSuccess?.();
-            navigate(-1);
+            if (config.successPath === undefined) navigate(-1);
+            else if (typeof config.successPath === "number") navigate(config.successPath);
+            else navigate(config.successPath);
         };
 
         return (

@@ -1,8 +1,8 @@
+import {IconMenu, IconSearch, IconUser} from "@tabler/icons-react";
 import {useState} from "react";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, NavLink, useLocation, useNavigate} from "react-router-dom";
-import {Menu, Search, UserRound} from "lucide-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -62,7 +62,7 @@ function NavigationSearch({resolveLanguageKey}: Pick<WithLanguageType, "resolveL
             }}
         >
             <InputGroup>
-                <InputGroupAddon><Search aria-hidden /></InputGroupAddon>
+                <InputGroupAddon><IconSearch aria-hidden /></InputGroupAddon>
                 <InputGroupInput
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
@@ -114,7 +114,7 @@ function PortalNavigation({resolveLanguageKey}: WithLanguageType) {
                         <DropdownMenu modal={false}>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" size="icon" aria-label={resolveLanguageKey("accountMenu")}>
-                                    <UserRound />
+                                    <IconUser />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="min-w-44">
@@ -134,7 +134,7 @@ function PortalNavigation({resolveLanguageKey}: WithLanguageType) {
                     <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon" className="lg:hidden" aria-label={resolveLanguageKey("openMenu")}>
-                                <Menu />
+                                <IconMenu />
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="right" className="w-80 gap-0">

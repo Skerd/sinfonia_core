@@ -1,6 +1,6 @@
+import {IconDatabase} from "@tabler/icons-react";
 import {useSelector} from "react-redux";
 import {compose} from "redux";
-import {Database} from "lucide-react";
 import {clsx} from "clsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -66,7 +66,7 @@ function MongoOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageK
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Database className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
+                    <IconDatabase className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>

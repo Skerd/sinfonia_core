@@ -1,6 +1,6 @@
+import {IconBolt} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {Zap} from "lucide-react";
 import {clsx} from "clsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -45,7 +45,7 @@ function RedisOnline({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageK
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Zap className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
+                    <IconBolt className={clsx("h-5 w-5 hover:cursor-pointer", connected ? "text-success" : "text-destructive")} />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{resolveLanguageKey(connected ? "online" : "offline")}</p>

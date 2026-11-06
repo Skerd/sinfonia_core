@@ -1,5 +1,6 @@
 import type {
     TableColumnConfig,
+    TableColumnMeta,
 } from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type";
 import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators";
 import type {Relevance} from "../inspector/fieldRelevance.ts";
@@ -7,7 +8,7 @@ import type {Relevance} from "../inspector/fieldRelevance.ts";
 /**
  * Which column `meta` keys the table renderer actually reads, per cell type.
  *
- * `columnConfigToColumnDef` is the only consumer, and it is narrower than the contract
+ * `useColumnConfigToColumnDef` is the only consumer, and it is narrower than the contract
  * type suggests:
  *
  *  - `refDisplayKey` — read in the `objectId` branch and again in the `address` branch.
@@ -144,13 +145,12 @@ export function columnDeadEntries(column: TableColumnConfig): ColumnDeadEntry[] 
 
 /** Removes one `meta.*` key, dropping `meta` entirely once it is empty. */
 export function clearColumnMetaKey(column: TableColumnConfig, key: string): TableColumnConfig {
-    const leaf = key.startsWith("meta.") ? key.slice("meta.".length) : key;
-    const meta = {...(column.meta ?? {})} as Record<string, unknown>;
+    // Every `meta` key is optional, so whichever one the dead-config strip names can go.
+    const leaf = (key.startsWith("meta.") ? key.slice("meta.".length) : key) as keyof TableColumnMeta;
+    const meta = {...column.meta};
     delete meta[leaf];
     return {
         ...column,
-        meta: Object.keys(meta).length > 0
-            ? (meta as unknown as TableColumnConfig["meta"])
-            : undefined,
+        meta: Object.keys(meta).length > 0 ? meta : undefined,
     };
 }

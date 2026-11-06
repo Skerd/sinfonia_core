@@ -1,6 +1,7 @@
 import {useMemo, useState, type ReactNode} from "react";
 import type {
     TableColumnConfig,
+    TableColumnMeta,
 } from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type";
 import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators";
 import {Input} from "@coreModule/components/ui/input.tsx";
@@ -20,6 +21,7 @@ import {
     columnRelevanceFor,
     type ColumnInspectorKey,
 } from "./columnRelevance.ts";
+import {NativeSelect, NativeSelectOption} from "@coreModule/components/ui/native-select.tsx";
 
 type ColumnInspectorProps = {
     column: TableColumnConfig;
@@ -36,17 +38,15 @@ type Slot = {key: ColumnInspectorKey; render: () => ReactNode};
 export default function ColumnInspector({column, pristine, onChange}: ColumnInspectorProps) {
     const [advancedOpen, setAdvancedOpen] = useState(false);
 
-    const setMeta = (patch: Record<string, unknown>, coalesceKey?: string) => {
-        const merged = {...(column.meta ?? {}), ...patch} as Record<string, unknown>;
-        for (const [key, value] of Object.entries(merged)) {
-            if (value === undefined) delete merged[key];
+    const setMeta = (patch: TableColumnMeta, coalesceKey?: string) => {
+        const merged: TableColumnMeta = {...column.meta, ...patch};
+        for (const key of Object.keys(merged) as (keyof TableColumnMeta)[]) {
+            if (merged[key] === undefined) delete merged[key];
         }
         onChange(
             {
                 ...column,
-                meta: Object.keys(merged).length > 0
-                    ? (merged as unknown as TableColumnConfig["meta"])
-                    : undefined,
+                meta: Object.keys(merged).length > 0 ? merged : undefined,
             },
             coalesceKey,
         );
@@ -107,19 +107,19 @@ export default function ColumnInspector({column, pristine, onChange}: ColumnInsp
                     label="cellType"
                     hint="Overrides what the schema type would infer, and decides which meta keys apply."
                 >
-                    <select
+                    <NativeSelect
                         value={column.cellType}
                         onChange={(e) =>
                             onChange({...column, cellType: e.target.value as COLUMN_TYPE})
                         }
-                        className="h-8 rounded border bg-background px-2 font-mono text-2xs"
+                        className="font-mono text-2xs"
                     >
                         {CELL_TYPES.map((type) => (
-                            <option key={type} value={type}>
+                            <NativeSelectOption key={type} value={type}>
                                 {type}
-                            </option>
+                            </NativeSelectOption>
                         ))}
-                    </select>
+                    </NativeSelect>
                 </Row>
             ),
         },

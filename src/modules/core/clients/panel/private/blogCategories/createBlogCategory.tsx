@@ -1,4 +1,4 @@
-import {Tags} from "lucide-react";
+import {IconTags} from "@tabler/icons-react";
 import {createGenericCreatePage} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
 import {createBlogCategoryFormSchema} from "armonia/src/modules/core/api/auxiliary/private/blogCategory/createBlogCategory.form.validator.ts";
 import type {CreateBlogCategoryFormType} from "armonia/src/modules/core/api/auxiliary/private/blogCategory/blogCategory.schema-def.ts";
@@ -9,5 +9,5 @@ export default createGenericCreatePage<CreateBlogCategoryFormType>({
     apiUrl: "/api/auxiliary/blogCategory",
     schema: createBlogCategoryFormSchema,
     successPath: "/tenancy/systemSettings/blogCategories",
-    submitIcon: <Tags />,
+    submitIcon: <IconTags />,
 });

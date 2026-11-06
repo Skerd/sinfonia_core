@@ -1,3 +1,4 @@
+import {IconCheck, IconX} from "@tabler/icons-react";
 import {toast} from "sonner";
 import {compose} from "redux";
 import {Link} from "react-router-dom";
@@ -12,7 +13,6 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
-import {Check, X} from "lucide-react";
 import {deactivateMfaFormSchema} from "armonia/src/modules/core/api/user/private/mfa/deactivateMfa.form.validator.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
@@ -117,7 +117,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                 onClick={handleAdminDeactivate}
                                 disabled={loading}
                             >
-                                <Check className="h-4 w-4" />
+                                <IconCheck className="h-4 w-4" />
                             </Button>
 
                             <Button
@@ -130,7 +130,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                 }}
                                 disabled={loading}
                             >
-                                <X className="h-4 w-4 hover:opacity-50" />
+                                <IconX className="h-4 w-4 hover:opacity-50" />
                             </Button>
                         </div>
                     </div>
@@ -177,7 +177,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                                             className={cn("h-full px-2", {"text-success hover:border-success/50 hover:dark:border-success/50": (mfaCode?.length === 6)})}
                                                             disabled={loading || mfaCode?.length !== 6}
                                                         >
-                                                            <Check className="h-4 w-4" />
+                                                            <IconCheck className="h-4 w-4" />
                                                         </Button>
                                                     </TooltipDisplayer>
                                                     <TooltipDisplayer tooltip={resolveLanguageKey("cancel")} contentClassName="text-sm">
@@ -192,7 +192,7 @@ const AccountSecurityDeactivateOtpForm = ({
                                                                 onCancel();
                                                             }}
                                                         >
-                                                            <X className=" h-4 w-4 hover:opacity-50 " />
+                                                            <IconX className=" h-4 w-4 hover:opacity-50 " />
                                                         </Button>
                                                     </TooltipDisplayer>
                                                 </div>

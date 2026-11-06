@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import {toast} from "sonner";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import {requestFromApi} from "@coreModule/helpers/apiClient/requestFromApi.ts";
 import {handleError} from "@coreModule/helpers/general/errors.ts";
 import {updateUserValue} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import {updateUserProfileNameFormSchema} from "armonia/src/modules/core/api/user/private/data/updateUserProfileName.form.validator.ts";
@@ -43,19 +43,20 @@ function ProfilePageInner({resolveLanguageKey, languageCode}: WithLanguageType) 
         let cancelled = false;
         (async () => {
             try {
+                // Silent each: one combined toast below if any of them fails.
                 const [nameRes, surnameRes, phoneRes, emailRes] = await Promise.all([
-                    apiClient.get<UserProfileNameFormResponse>("/api/user/data/name"),
-                    apiClient.get<UserProfileSurnameFormResponse>("/api/user/data/surname"),
-                    apiClient.get<PhoneNumberFormResponseType>("/api/user/data/phoneNumber"),
-                    apiClient.get<EmailPreferencesFormResponse>("/api/user/data/username"),
+                    requestFromApi<UserProfileNameFormResponse>({method: "get", url: "/api/user/data/name", silent: true}),
+                    requestFromApi<UserProfileSurnameFormResponse>({method: "get", url: "/api/user/data/surname", silent: true}),
+                    requestFromApi<PhoneNumberFormResponseType>({method: "get", url: "/api/user/data/phoneNumber", silent: true}),
+                    requestFromApi<EmailPreferencesFormResponse>({method: "get", url: "/api/user/data/username", silent: true}),
                 ]);
                 if (cancelled) return;
-                setName(nameRes.data.name ?? "");
-                setSurname(surnameRes.data.surname ?? "");
-                setPhoneNumber(phoneRes.data.phoneNumber ?? "");
-                setEmail(emailRes.data.email ?? "");
-                setVerified(emailRes.data.verified);
-                setUnverifiedEmail(emailRes.data.unverifiedEmail ?? "");
+                setName(nameRes.name ?? "");
+                setSurname(surnameRes.surname ?? "");
+                setPhoneNumber(phoneRes.phoneNumber ?? "");
+                setEmail(emailRes.email ?? "");
+                setVerified(emailRes.verified);
+                setUnverifiedEmail(emailRes.unverifiedEmail ?? "");
             } catch (err) {
                 handleError(err, {context: "Shop profile", showToast: true, fallbackMessage: resolveLanguageKey("loadError")});
             } finally {
@@ -93,10 +94,11 @@ function ProfilePageInner({resolveLanguageKey, languageCode}: WithLanguageType) 
         setFieldErrors({});
         setSavingProfile(true);
         try {
+            // Silent each: one combined success or failure toast for the three fields.
             await Promise.all([
-                apiClient.patch("/api/user/data/name", {name: name.trim()}),
-                apiClient.patch("/api/user/data/surname", {surname: surname.trim()}),
-                apiClient.patch("/api/user/data/phoneNumber", {phoneNumber: phoneNumber.trim()}),
+                requestFromApi({method: "patch", url: "/api/user/data/name", data: {name: name.trim()}, silent: true}),
+                requestFromApi({method: "patch", url: "/api/user/data/surname", data: {surname: surname.trim()}, silent: true}),
+                requestFromApi({method: "patch", url: "/api/user/data/phoneNumber", data: {phoneNumber: phoneNumber.trim()}, silent: true}),
             ]);
             dispatch(updateUserValue({field: "name", value: name.trim()}));
             dispatch(updateUserValue({field: "surname", value: surname.trim()}));
@@ -128,7 +130,7 @@ function ProfilePageInner({resolveLanguageKey, languageCode}: WithLanguageType) 
         });
         setSavingEmail(true);
         try {
-            await apiClient.patch("/api/user/data/username", {newEmail: newEmail.trim()});
+            await requestFromApi({method: "patch", url: "/api/user/data/username", data: {newEmail: newEmail.trim()}, silent: true});
             setUnverifiedEmail(newEmail.trim());
             setNewEmail("");
             toast.success(resolveLanguageKey("emailSaved"));

@@ -1,7 +1,7 @@
+import {IconPencil} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {PencilLine} from "lucide-react";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import ActionDropdownItem from "@coreModule/components/viewEngine/widgets/actions/dropdowns/actionDropdownItem.tsx";
 
@@ -16,7 +16,7 @@ function EditDropdown({resolveLanguageKey, onAction, accessModel}: EditDropdownP
     return (
         <ActionDropdownItem
             label={resolveLanguageKey("title")}
-            Icon={PencilLine}
+            Icon={IconPencil}
             shortcutKey="E"
             shortcutLabel="E"
             allowed={!!write}

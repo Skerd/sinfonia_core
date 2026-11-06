@@ -1,36 +1,33 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/createRole.tsx",
-  "title": "Rolle erstellen",
-  "description": "A neu rolle mit berechtigungen hinzufügen",
-  "failTitle": "Berechtigungen konnten nicht geladen werden",
-  "failDescription": "Berechtigungen, bitte versuchen erneut konnten nicht geladen werden",
-  "failTooltip": "Click here bis retry laden berechtigungen",
-  "noData": "Keine berechtigungen gefunden, so keine rolle can werden erstellt",
+  "formHeader": {
+    "title": "Rolle erstellen",
+    "description": "Neue Rolle mit Berechtigungen hinzufügen"
+  },
   "form": {
-    "nameLabel": "Rolle name",
-    "namePlaceholder": "Rolle name",
-    "nameDescription": "Die display name von die rolle",
+    "nameLabel": "Rollenname",
+    "namePlaceholder": "Rollenname",
     "descriptionLabel": "Beschreibung",
     "descriptionPlaceholder": "Wofür diese Rolle da ist",
-    "descriptionHelp": "Wird auf der Rollenkarte angezeigt",
     "templateLabel": "Vorlage",
-    "templatePlaceholder": "Vorlage",
-    "templateDescription": "Copy berechtigungen von another rolle"
+    "nameDescription": "Der Anzeigename der Rolle",
+    "descriptionHelp": "Wird auf der Rollenkarte angezeigt"
   },
-  "none": "Keine",
-  "cancel": "Abbrechen",
-  "submit": "Erstellen",
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Erstellen"
+  },
   "axios": {
     "start": {
       "title": "Rolle wird erstellt",
       "time": 3000
     },
     "success": {
-      "title": "Rolle erstellt erfolgreich",
+      "title": "Rolle erfolgreich erstellt",
       "time": 3000
     },
     "error": {
-      "title": "Rolle creation fehlgeschlagen",
+      "title": "Rolle konnte nicht erstellt werden",
       "time": 3000
     }
   }

@@ -1,6 +1,6 @@
+import {IconPencil} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useEffect, useState} from "react";
-import {Pencil} from "lucide-react";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -111,7 +111,7 @@ function AccountProfileSurname({
                             setEditing(true);
                         }}
                     >
-                        <Pencil size={14} />
+                        <IconPencil size={14} />
                         {resolveLanguageKey("edit")}
                     </Button>
                 )}

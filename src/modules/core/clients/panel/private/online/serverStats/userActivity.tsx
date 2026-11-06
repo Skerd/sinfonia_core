@@ -1,7 +1,7 @@
+import {IconUsers, IconMessage, IconWorld, IconActivity, IconChevronDown, IconSearch, IconChevronLeft, IconChevronRight} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useEffect, useMemo, useState} from "react";
 import {useSelector} from "react-redux";
-import {Users, MessageSquare, Globe, Activity, ChevronDown, Search, ChevronLeft, ChevronRight} from "lucide-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -75,7 +75,7 @@ function RoomUsersList({users, resolveLanguageKey}: RoomUsersListProps) {
         <div className="flex flex-col gap-y-2">
             {showControls && (
                 <div className="relative">
-                    <Search className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+                    <IconSearch className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
                     <Input
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
@@ -127,7 +127,7 @@ function RoomUsersList({users, resolveLanguageKey}: RoomUsersListProps) {
                             }}
                             aria-label={resolveLanguageKey("previousPage")}
                         >
-                            <ChevronLeft className="h-3.5 w-3.5" />
+                            <IconChevronLeft className="h-3.5 w-3.5" />
                         </Button>
                         <span className="min-w-10 text-center text-xs text-muted-foreground">
                             {safePage + 1}/{pageCount}
@@ -144,7 +144,7 @@ function RoomUsersList({users, resolveLanguageKey}: RoomUsersListProps) {
                             }}
                             aria-label={resolveLanguageKey("nextPage")}
                         >
-                            <ChevronRight className="h-3.5 w-3.5" />
+                            <IconChevronRight className="h-3.5 w-3.5" />
                         </Button>
                     </div>
                 </div>
@@ -203,7 +203,7 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                 <div className="flex items-center justify-between">
                     <CardTitle className="text-xl font-semibold">{resolveLanguageKey("userActivityTitle")}</CardTitle>
                     <Badge variant="outline" className="text-xs">
-                        <Activity className="h-3 w-3 mr-1" />
+                        <IconActivity className="h-3 w-3 mr-1" />
                         {resolveLanguageKey("live")}
                     </Badge>
                 </div>
@@ -215,17 +215,17 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                 <div className="flex flex-col gap-y-4 pt-2">
                     <div className="grid grid-cols-3 gap-2">
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
-                            <Users className="h-5 w-5 text-primary" />
+                            <IconUsers className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("activeUsers")}</span>
                             <span className="font-medium text-sm">{formatNumber(wsStats.totalUsers || 0)}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
-                            <Globe className="h-5 w-5 text-primary" />
+                            <IconWorld className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("connections")}</span>
                             <span className="font-medium text-sm">{formatNumber(wsStats.totalConnections || 0)}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-y-1 rounded-lg border bg-background p-3">
-                            <MessageSquare className="h-5 w-5 text-primary" />
+                            <IconMessage className="h-5 w-5 text-primary" />
                             <span className="text-sm text-muted-foreground">{resolveLanguageKey("activeRooms")}</span>
                             <span className="font-medium text-sm">{formatNumber(wsStats.totalRooms || 0)}</span>
                         </div>
@@ -236,7 +236,7 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                                 <h4 className="text-sm font-semibold">{resolveLanguageKey("whoIsWhere")}</h4>
                                 <div className="relative w-full sm:max-w-xs">
-                                    <Search className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+                                    <IconSearch className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
                                     <Input
                                         value={roomQuery}
                                         onChange={(e) => setRoomQuery(e.target.value)}
@@ -255,13 +255,13 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                                     const roomUsers = Array.isArray(room.users) ? room.users : [];
                                     return (
                                         <div key={room.id} className="rounded-lg border bg-background">
-                                            <button
+                                            <Button variant="bare"
                                                 type="button"
                                                 onClick={() => toggleRoom(room.id)}
                                                 className="flex w-full items-center justify-between gap-3 p-2 text-left hover:bg-muted/40"
                                             >
                                                 <div className="flex min-w-0 items-center gap-2">
-                                                    <ChevronDown
+                                                    <IconChevronDown
                                                         className={cn(
                                                             "h-4 w-4 shrink-0 text-muted-foreground transition-transform",
                                                             expanded ? "rotate-0" : "-rotate-90",
@@ -288,7 +288,7 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
                                                         <p className="text-sm font-medium">{formatNumber(room.messages || 0)}</p>
                                                     </div>
                                                 </div>
-                                            </button>
+                                            </Button>
                                             {expanded && (
                                                 <div className="border-t px-3 py-2">
                                                     <RoomUsersList
@@ -306,7 +306,7 @@ function UserActivity({resolveLanguageKey}: UserActivityProps) {
 
                     {rooms.length === 0 && (
                         <div className="text-center py-8 text-muted-foreground">
-                            <Users className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                            <IconUsers className="h-12 w-12 mx-auto mb-2 opacity-50" />
                             <p className="text-sm">{resolveLanguageKey("noActiveRooms")}</p>
                         </div>
                     )}

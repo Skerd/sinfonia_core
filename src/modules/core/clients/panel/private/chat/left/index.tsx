@@ -1,7 +1,7 @@
+import {IconMessages, IconSearch} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import ChannelsList from "@coreModule/clients/panel/private/chat/left/channelsList.tsx";
-import {MessagesSquare, SearchIcon} from "lucide-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useEffect, useRef, useState} from "react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -9,6 +9,7 @@ import SearchChatUsers from "@coreModule/clients/panel/private/chat/searchChatUs
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {PageHelp, readPageHelp} from "@coreModule/components/custom/pageHelp.tsx";
+import {Input} from "@coreModule/components/ui/input.tsx";
 
 type LeftChatPanelProps = WithLanguageType & {}
 
@@ -45,7 +46,7 @@ function LeftChatPanel({
                     <div className='flex items-center gap-2'>
                         <p className='text-xl font-bold'>{resolveLanguageKey("title")}</p>
                         {help && <PageHelp help={help} />}
-                        <MessagesSquare size={20} />
+                        <IconMessages size={20} />
                     </div>
                     {
                         create &&
@@ -55,11 +56,11 @@ function LeftChatPanel({
                     }
                 </div>
                 <label className={cn('focus-within:ring-ring focus-within:ring-1 focus-within:outline-hidden', 'border-border flex h-9 w-full items-center gap-0 rounded-md border ps-2')}>
-                    <SearchIcon size={15} className='me-2 text-muted-foreground' />
+                    <IconSearch size={15} className='me-2 text-muted-foreground' />
                     <span className='sr-only'>{resolveLanguageKey("searchChat")}</span>
-                    <input
-                        type='text'
-                        className='w-full flex-1 bg-inherit text-sm focus-visible:outline-hidden'
+                    <Input
+                        type="text"
+                        className="h-auto flex-1 rounded-none border-0 bg-inherit p-0 text-sm shadow-none focus-visible:ring-0 focus-visible:outline-hidden dark:bg-inherit"
                         placeholder={resolveLanguageKey("searchChat") + "..."}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}

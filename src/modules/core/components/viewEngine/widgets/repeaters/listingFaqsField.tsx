@@ -1,4 +1,4 @@
-import {CirclePlus, X} from "lucide-react";
+import {IconCirclePlus, IconX} from "@tabler/icons-react";
 import {useFieldArray, useFormContext} from "react-hook-form";
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
@@ -91,7 +91,7 @@ export function ListingFaqsField({
                                     title={resolve(removeRowTooltipKey, resolveLanguageKey)}
                                     onClick={() => remove(index)}
                                 >
-                                    <X className="h-4 w-4" />
+                                    <IconX className="h-4 w-4" />
                                 </Button>
                             </div>
                         ))}
@@ -103,7 +103,7 @@ export function ListingFaqsField({
                         className="w-fit gap-2"
                         onClick={() => append({question: "", answer: ""} as never)}
                     >
-                        <CirclePlus className="h-4 w-4" />
+                        <IconCirclePlus className="h-4 w-4" />
                         {resolve(addRowLabelKey, resolveLanguageKey)}
                     </Button>
                 </FormItem>

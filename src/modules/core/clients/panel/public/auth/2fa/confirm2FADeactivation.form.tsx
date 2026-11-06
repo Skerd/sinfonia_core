@@ -1,5 +1,5 @@
+import {IconAlertOctagon, IconShieldExclamation} from "@tabler/icons-react";
 import {compose} from "redux";
-import {OctagonAlert, ShieldAlert} from "lucide-react";
 import {useNavigate, useParams} from "react-router-dom";
 import {SiTicktick} from "@icons-pack/react-simple-icons";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
@@ -57,7 +57,7 @@ function ConfirmOTPDeactivation({
         return (
             <Card className="w-full gap-4 h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <ShieldAlert size={30} color="green" className="animate-pulse"/>
+                    <IconShieldExclamation size={30} color="green" className="animate-pulse"/>
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("loading")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("loadingDescription")}</CardDescription>
                 </CardHeader>
@@ -71,7 +71,7 @@ function ConfirmOTPDeactivation({
         return (
             <Card className="w-full gap-4 h-fit">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
-                    <OctagonAlert size={30} color="var(--destructive)"/>
+                    <IconAlertOctagon size={30} color="var(--destructive)"/>
                     <CardTitle className='text-lg tracking-tight'>{resolveLanguageKey("fail")}</CardTitle>
                     <CardDescription>{resolveLanguageKey("failDescription")}</CardDescription>
                 </CardHeader>

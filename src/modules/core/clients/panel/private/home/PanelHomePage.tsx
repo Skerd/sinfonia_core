@@ -1,3 +1,4 @@
+import {IconLayoutGrid, IconSearch} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useEffect, useMemo, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
@@ -12,9 +13,9 @@ import {useAccessHydrated, useAccessMap} from "@coreModule/helpers/context/acces
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Empty, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
-import {LayoutGrid, Search} from "lucide-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {CommandPaletteKbd, COMMAND_PALETTE_OPEN_EVENT} from "@coreModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 const TILE_COLORS = [
     {
@@ -124,7 +125,7 @@ function AppTile({
     launchingUrl: string | null;
     onLaunch: (url: string) => void;
 }) {
-    const Icon = link.icon ?? LayoutGrid;
+    const Icon = link.icon ?? IconLayoutGrid;
     const isLaunching = launchingUrl !== null;
     const isThisTile = launchingUrl === link.url;
     const isOtherTile = isLaunching && !isThisTile;
@@ -217,7 +218,7 @@ function RecentChip({
     launchingUrl: string | null;
     onLaunch: (url: string) => void;
 }) {
-    const Icon = link.icon ?? LayoutGrid;
+    const Icon = link.icon ?? IconLayoutGrid;
     const isLaunching = launchingUrl !== null;
     const isThisChip = launchingUrl === link.url;
     const isOtherChip = isLaunching && !isThisChip;
@@ -312,7 +313,7 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
                 </div>
 
                 <div className="relative w-full">
-                    <button
+                    <Button variant="bare"
                         type="button"
                         className={cn(
                             "flex h-12 w-full items-center gap-3 rounded-2xl pe-4 ps-11 text-start text-sm",
@@ -323,10 +324,10 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
                         onClick={() => window.dispatchEvent(new CustomEvent(COMMAND_PALETTE_OPEN_EVENT))}
                         aria-label={String(resolveLanguageKey("home.searchPlaceholder") || "Search")}
                     >
-                        <Search className="pointer-events-none absolute start-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                        <IconSearch className="pointer-events-none absolute start-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                         <span className="flex-1 truncate">{resolveLanguageKey("home.searchPlaceholder")}</span>
                         <CommandPaletteKbd className="hidden sm:inline-flex" />
-                    </button>
+                    </Button>
                 </div>
 
                 {recentLinks.length > 0 && (
@@ -347,7 +348,7 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
                     <Empty className="py-20">
                         <EmptyHeader>
                             <EmptyMedia variant="icon">
-                                <Search />
+                                <IconSearch />
                             </EmptyMedia>
                             <EmptyTitle>{resolveLanguageKey("home.noResults")}</EmptyTitle>
                         </EmptyHeader>

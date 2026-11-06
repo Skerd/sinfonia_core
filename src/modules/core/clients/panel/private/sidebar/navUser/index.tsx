@@ -1,3 +1,4 @@
+import {IconBell, IconBoxMultiple, IconSelector, IconLogout, IconMailCheck, IconUserCog, IconTool} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useState} from "react";
 import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
@@ -8,11 +9,12 @@ import ConfirmDialog from "@coreModule/components/custom/confirmDialog.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {DropdownMenuGroup} from "@coreModule/components/ui/dropdown-menu.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Bell, Boxes, ChevronsUpDown, LogOut, MailCheck, UserCog, Wrench} from "lucide-react";
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@coreModule/components/ui/sidebar.tsx";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger}from "@coreModule/components/ui/dropdown-menu.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
+
+const CURRENT_REVOKE_REQUEST = {method: "post" as const, url: "/api/user/userSession/currentRevoke", data: {}};
 
 type LoggedUserProps = WithLanguageType & {}
 
@@ -21,9 +23,16 @@ function NavUser({
 }: LoggedUserProps) {
 
     const [open, setOpen] = useState(false);
+    const [signOutCount, setSignOutCount] = useState(0);
     const { isMobile } = useSidebar();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const finishSignOut = () => {
+        dispatch(signOut());
+        navigate("/authenticate/login");
+    };
+    // Local logout completes either way: the network or the session may already be gone.
+    useHttpRequest(CURRENT_REVOKE_REQUEST, {}, signOutCount, true, {success: finishSignOut, error: finishSignOut});
     const {name, surname, email, photo} = useSelector((state: RootState) => state.authentication.user);
     function getAvatarFallbackName() {
         const first = name?.trim();
@@ -56,7 +65,7 @@ function NavUser({
                                     <span className='truncate font-semibold'>{name} {surname}</span>
                                     <span className='truncate text-xs'>{email}</span>
                                 </div>
-                                <ChevronsUpDown className='ms-auto size-4' />
+                                <IconSelector className='ms-auto size-4' />
                             </SidebarMenuButton>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
@@ -81,38 +90,38 @@ function NavUser({
                             <DropdownMenuGroup>
                                 <DropdownMenuItem asChild>
                                     <Link to='/account/account'>
-                                        <UserCog />
+                                        <IconUserCog />
                                         {resolveLanguageKey("account")}
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link to='/account/security'>
-                                        <Wrench />
+                                        <IconTool />
                                         {resolveLanguageKey("security")}
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link to='/account/notificationCenter'>
-                                        <Bell />
+                                        <IconBell />
                                         {resolveLanguageKey("activity")}
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link to='/account/notifications'>
-                                        <MailCheck />
+                                        <IconMailCheck />
                                         {resolveLanguageKey("notifications")}
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link to='/account/apps'>
-                                        <Boxes />
+                                        <IconBoxMultiple />
                                         {resolveLanguageKey("connectedApps")}
                                     </Link>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem variant='destructive' onClick={() => setOpen(true)}>
-                                <LogOut />
+                                <IconLogout />
                                 {resolveLanguageKey("signOut")}
                             </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -127,16 +136,7 @@ function NavUser({
                 confirmText={resolveLanguageKey("dialog.confirmText")}
                 cancelBtnText={resolveLanguageKey("dialog.cancelText")}
                 destructive
-                handleConfirm={async () => {
-                    try {
-                        await apiClient.post("/api/user/userSession/currentRevoke");
-                    } catch {
-                        // Local logout must still complete when the network or session is already gone.
-                    } finally {
-                        dispatch(signOut());
-                        navigate("/authenticate/login");
-                    }
-                }}
+                handleConfirm={() => setSignOutCount((count) => (count === 0 ? 1 : count))}
             />
         </>
     )

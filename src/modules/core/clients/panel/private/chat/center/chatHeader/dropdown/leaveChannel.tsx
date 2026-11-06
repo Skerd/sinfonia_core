@@ -1,7 +1,7 @@
+import {IconLogout} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
-import {LogOut} from "lucide-react";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -98,7 +98,7 @@ function LeaveChannel({
     return (
         <>
             <DropdownMenuItem onClick={(event) => {event.preventDefault(); setOpen(true);}} disabled={loading}>
-                <LogOut/>
+                <IconLogout/>
                 {resolveLanguageKey((channel.metaData.isGroup && !channel.metaData.readOnly) ? "leaveGroup" : "deleteChat")}
                 <DropdownMenuShortcut>⌘{shortCut}</DropdownMenuShortcut>
             </DropdownMenuItem>

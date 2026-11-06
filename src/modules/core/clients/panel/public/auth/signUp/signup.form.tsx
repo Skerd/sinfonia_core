@@ -1,7 +1,7 @@
+import {IconLoader2, IconUserPlus} from "@tabler/icons-react";
 import {z} from "zod";
 import {compose} from "redux";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {LoaderCircle, UserPlus} from "lucide-react";
 import {useForm} from "react-hook-form";
 import {useImperativeHandle} from 'react';
 import {Input} from "@coreModule/components/ui/input.tsx";
@@ -190,7 +190,7 @@ const SignUpForm = ({
                     className="w-full"
                     disabled={loading}
                 >
-                    {loading ? <LoaderCircle className="animate-spin"/> :  <UserPlus />}
+                    {loading ? <IconLoader2 className="animate-spin"/> :  <IconUserPlus />}
                     {resolveLanguageKey("signUpButtonLabel")}
                 </Button>
             </form>

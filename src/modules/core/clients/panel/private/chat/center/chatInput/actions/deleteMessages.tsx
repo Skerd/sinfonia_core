@@ -1,8 +1,8 @@
+import {IconLoader2, IconTrash} from "@tabler/icons-react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import {LoaderCircle, Trash} from "lucide-react";
 import {updateDeletedMessageIds, updateOpenDelete} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -50,7 +50,7 @@ function DeleteMessages({
                     onClick={() => {onFilterChange({messageIds: deleteMessageIds})}}
                     disabled={loading}
                 >
-                    {loading ? <LoaderCircle className="animate-spin"/> : <Trash />}
+                    {loading ? <IconLoader2 className="animate-spin"/> : <IconTrash />}
                     {resolveLanguageKey("delete")}
                 </Button>
                 <Button disabled={loading} variant="outline" size="sm" onClick={() => {dispatch(updateOpenDelete(false));}}>

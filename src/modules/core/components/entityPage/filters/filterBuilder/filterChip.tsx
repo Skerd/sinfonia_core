@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import {IconX} from "@tabler/icons-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@coreModule/components/ui/popover.tsx";
 import { SimpleSelect } from "@coreModule/components/viewEngine/widgets/inputs/simpleSelect.tsx";
 import FilterValueInput, {enumLabel} from "./filterValueInput.tsx";
@@ -7,6 +7,7 @@ import type { FilterRule, FilterFieldConfig } from "armonia/src/modules/core/dat
 import withLanguage, {ResolveLanguageKey, TranslationValue, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {findFromLanguage} from "@coreModule/helpers/general/objectPath.ts";
 import { useFilterBuilder } from "./filterBuilderContext.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 function formatChipValue(
     val: unknown,
@@ -77,7 +78,7 @@ export function FilterChip({
         <div className="inline-flex items-center rounded-md bg-secondary/50 border border-border/50 overflow-hidden shrink-0 h-6">
             <Popover>
                 <PopoverTrigger asChild>
-                    <button
+                    <Button variant="bare"
                         type="button"
                         onClick={(e) => e.stopPropagation()}
                         className={cn(
@@ -88,7 +89,7 @@ export function FilterChip({
                         <span className="max-w-40 truncate">
                             {formatChipLabel(rule, fields, resolveLanguageKey, fieldsLanguage, refLabelsByFieldPath)}
                         </span>
-                    </button>
+                    </Button>
                 </PopoverTrigger>
                 <PopoverContent align="start" sideOffset={4} className="w-[min(360px,calc(100vw-24px))] p-2.5 rounded-md" onClick={(e) => e.stopPropagation()}>
                     <div className="flex flex-col gap-y-1.5">
@@ -137,7 +138,7 @@ export function FilterChip({
                     </div>
                 </PopoverContent>
             </Popover>
-            <button
+            <Button variant="bare"
                 type="button"
                 onClick={(e) => {
                     e.stopPropagation();
@@ -146,8 +147,8 @@ export function FilterChip({
                 className="w-5 h-6 flex items-center justify-center shrink-0 hover:bg-destructive/15 hover:text-destructive transition-colors border-l border-border/50 hover:cursor-pointer"
                 aria-label={resolveLanguageKey("removeFilter")}
             >
-                <X className="size-3" />
-            </button>
+                <IconX className="size-3" />
+            </Button>
         </div>
     );
 }

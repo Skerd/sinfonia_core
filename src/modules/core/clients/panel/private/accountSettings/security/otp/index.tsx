@@ -1,8 +1,8 @@
+import {IconShieldCheck, IconAlertTriangle} from "@tabler/icons-react";
 import {compose} from "redux";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {MfaStatusFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/mfaStatus.form.response.type.ts";
-import {ShieldCheck, TriangleAlert} from "lucide-react";
 import {Alert, AlertDescription, AlertTitle} from "@coreModule/components/ui/alert.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {useEffect, useState} from "react";
@@ -93,9 +93,9 @@ function UserAccountSecurityOTP({
                     <Alert>
                         {
                             otpEnabled ?
-                            <ShieldCheck className="h-4 w-4"/>
+                            <IconShieldCheck className="h-4 w-4"/>
                             :
-                            <TriangleAlert className="h-4 w-4"/>
+                            <IconAlertTriangle className="h-4 w-4"/>
                         }
                         <AlertTitle>{resolveLanguageKey(otpEnabled ? "otpEnabled.title" : "otpDisabled.title")}</AlertTitle>
                         <AlertDescription>{resolveLanguageKey(otpEnabled ? "otpEnabled.description" : "otpDisabled.description")}</AlertDescription>

@@ -14,6 +14,8 @@ import {CLUSTER_META} from "./clusterMeta.ts";
 import type {SystemMapCluster, SystemMapDataset, SystemMapModelNode} from "./systemMap.types.ts";
 import {ModelNode} from "./nodes.tsx";
 import {NodeDetailPanel} from "./NodeDetailPanel.tsx";
+import {Input} from "@coreModule/components/ui/input.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 const nodeTypes = {model: ModelNode};
 
@@ -138,19 +140,19 @@ export function ModelGraph({dataset, onSelectModel}: ModelGraphProps) {
         <div className="flex h-full min-h-[560px] rounded-md border overflow-hidden bg-muted">
             <div className="flex flex-1 flex-col min-w-0">
                 <div className="flex flex-wrap items-center gap-2 border-b bg-background px-3 py-2">
-                    <input
+                    <Input
                         type="search"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Filter models…"
-                        className="h-8 w-48 rounded-md border bg-background px-2 text-sm"
+                        className="w-48 rounded-md bg-background px-2 text-sm"
                     />
                     <div className="flex flex-wrap gap-1.5">
                         {clusters.map((cluster) => {
                             const meta = CLUSTER_META[cluster];
                             const on = activeClusters.has(cluster);
                             return (
-                                <button
+                                <Button variant="bare"
                                     key={cluster}
                                     type="button"
                                     onClick={() => toggleCluster(cluster)}
@@ -163,7 +165,7 @@ export function ModelGraph({dataset, onSelectModel}: ModelGraphProps) {
                                     }}
                                 >
                                     {meta.label}
-                                </button>
+                                </Button>
                             );
                         })}
                     </div>

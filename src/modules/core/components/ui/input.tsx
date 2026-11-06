@@ -2,15 +2,22 @@ import * as React from "react"
 
 import { cn } from "@coreModule/components/lib/utils.ts"
 
+/** Focus and disabled handling only, for `bare`. */
+const INPUT_BARE = "focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50"
+
+/**
+ * `bare` drops the field look (border, height, padding, text size) so the caller's classes are
+ * the whole style: for custom-styled public / Figma layouts, inline editors and range sliders.
+ */
 const Input = React.forwardRef<
   HTMLInputElement,
-  React.ComponentProps<"input">
->(({ className, type, ...props }, ref) => (
+  React.ComponentProps<"input"> & { bare?: boolean }
+>(({ className, type, bare = false, ...props }, ref) => (
   <input
     type={type}
     ref={ref}
     data-slot="input"
-    className={cn(
+    className={bare ? cn(INPUT_BARE, className) : cn(
       "h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
       className
     )}

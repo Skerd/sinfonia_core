@@ -13,6 +13,7 @@ import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {AuditDiffValuePresentation} from "./auditDisplayValue.tsx";
 import {auditHintOrPrimitive, type AuditFieldHint} from "./auditFieldHints.ts";
+import {Button} from "@coreModule/components/ui/button.tsx";
 
 type AuditAction = DocumentAuditEntryDto["action"];
 
@@ -105,13 +106,13 @@ function ChangeList({changes, showFrom, fieldTitle, hints, t}: ChangeListProps) 
                 })}
             </dl>
             {changes.length > VISIBLE_CHANGES && (
-                <button
+                <Button variant="bare"
                     type="button"
                     onClick={() => setExpanded((v) => !v)}
                     className="w-full border-t border-sidebar-border/60 px-3 py-1.5 text-left text-xs font-medium text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground"
                 >
                     {expanded ? t("showFewerChanges") : `${t("showAllChanges")} (+${hidden})`}
-                </button>
+                </Button>
             )}
         </div>
     );

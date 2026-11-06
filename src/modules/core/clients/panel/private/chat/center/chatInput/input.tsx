@@ -1,6 +1,6 @@
+import {IconPaperclip, IconArrowBackUp, IconRotateClockwise, IconSend, IconX} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Paperclip, Reply, RotateCw, Send, X} from "lucide-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
@@ -32,6 +32,7 @@ import {
     wireTextToMentionsMarkup
 } from "./mentionWire.ts";
 import "./chatMentionsInput.css";
+import {Input} from "@coreModule/components/ui/input.tsx";
 
 type ChatInputAllProps = WithLanguageType & WithAxiosType<MessageTypeWithParticipants, NewMessageFormType> &  {
     specificUserId: string
@@ -261,7 +262,7 @@ function ChatInputAll({
                         write.replyTo  && actionMessage.action === "reply" &&
                         <div className="flex items-center justify-between bg-muted rounded-lg px-3 py-2 border-l-4 border-primary">
                             <div className="flex items-center gap-2 flex-1 min-w-0">
-                                <Reply size={16} className="text-primary shrink-0" />
+                                <IconArrowBackUp size={16} className="text-primary shrink-0" />
                                 <div className="flex-1 min-w-0">
                                     <div className="text-xs font-semibold text-primary">
                                         {getName(actionMessage.message?.sender)}
@@ -284,7 +285,7 @@ function ChatInputAll({
                                 className="h-6 w-6 shrink-0"
                                 onClick={() => dispatch(setActionMessage(null))}
                             >
-                                <X size={14} />
+                                <IconX size={14} />
                             </Button>
                         </div>
                     }
@@ -350,9 +351,9 @@ function ChatInputAll({
                             disabled={loading}
                             onClick={() => fileInputRef.current?.click()}
                         >
-                            <Paperclip className='stroke-muted-foreground' />
+                            <IconPaperclip className='stroke-muted-foreground' />
                         </Button>
-                        <input
+                        <Input
                             type='file'
                             ref={fileInputRef}
                             className='hidden'
@@ -429,7 +430,7 @@ function ChatInputAll({
                 <TooltipDisplayer tooltip={resolveLanguageKey("send")}>
                     <div className="bg-card rounded-full flex items-center justify-center md:p-1">
                         <Button variant='ghost' size='icon' onClick={() => { if(!loading)sendMessage();}} disabled={loading}>
-                            {(loading) ? <RotateCw className="animate-spin"/> : <Send/>}
+                            {(loading) ? <IconRotateClockwise className="animate-spin"/> : <IconSend/>}
                         </Button>
                     </div>
                 </TooltipDisplayer>

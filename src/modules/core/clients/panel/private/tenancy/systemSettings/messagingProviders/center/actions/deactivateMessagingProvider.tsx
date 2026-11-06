@@ -1,9 +1,9 @@
+import {IconPlugOff} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {PowerOff} from "lucide-react";
 import type {MessagingProvider} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
 
 type DeactivateMessagingProviderProps = WithLanguageType & {
@@ -19,7 +19,7 @@ function DeactivateMessagingProvider({messagingProvider, resolveLanguageKey, onA
 
     return (
         <DropdownMenuItem onClick={() => onAction("deactivateMessagingProvider")}>
-            <PowerOff className="text-destructive" size={16} />
+            <IconPlugOff className="text-destructive" size={16} />
             {resolveLanguageKey("title")}
         </DropdownMenuItem>
     );

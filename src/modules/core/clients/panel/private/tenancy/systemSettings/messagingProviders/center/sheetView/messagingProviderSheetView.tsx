@@ -13,7 +13,7 @@ import DeactivateMessagingProvider from "@coreModule/clients/panel/private/tenan
 import TestMessagingProviderConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/actions/testMessagingProviderConnection.tsx";
 import SetMessagingProviderActiveDialog from "../dialogs/setMessagingProviderActiveDialog.tsx";
 import TestMessagingProviderConnectionDialog from "../dialogs/testMessagingProviderConnectionDialog.tsx";
-import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 
 export type MessagingProviderSheetViewOwnProps = {
     open: boolean;
@@ -27,6 +27,7 @@ export type MessagingProviderSheetViewOwnProps = {
 };
 
 const MESSAGING_PROVIDER_SINGLE_URL = "/api/auxiliary/messagingProvider/single";
+const SINGLE_REQUEST = {method: "post" as const, url: MESSAGING_PROVIDER_SINGLE_URL, data: {}};
 
 function MessagingProviderSheetView({
     open,
@@ -54,15 +55,18 @@ function MessagingProviderSheetView({
     }, [messagingProviderProp]);
 
     const entityId = messagingProviderProp?._id ?? fetchId;
+    // Reloads the provider after a connection test (the test stamps its result on it). Silent.
+    const [refreshCount, setRefreshCount] = useState(0);
+    useHttpRequest<MessagingProvider>(SINGLE_REQUEST, {_id: entityId}, refreshCount, true, {
+        success: (data) => {
+            setSheetData(data);
+            onSheetRowPatched?.(data);
+        },
+    });
+
     if (!viewConfig || !entityId) return null;
 
     const asMessagingProvider = sheetData as MessagingProvider;
-
-    const refreshSheetData = async () => {
-        const res = await apiClient.post<MessagingProvider>(MESSAGING_PROVIDER_SINGLE_URL, {_id: entityId});
-        setSheetData(res.data);
-        onSheetRowPatched?.(res.data);
-    };
 
     return (
         <>
@@ -107,7 +111,7 @@ function MessagingProviderSheetView({
                     open={action === "testMessagingProviderConnection"}
                     onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
                     messagingProvider={asMessagingProvider}
-                    onTestComplete={() => { void refreshSheetData(); }}
+                    onTestComplete={() => setRefreshCount((count) => count + 1)}
                 />
             )}
         </>

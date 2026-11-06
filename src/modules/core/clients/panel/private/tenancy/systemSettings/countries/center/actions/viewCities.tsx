@@ -1,9 +1,9 @@
+import {IconBuilding} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import {useNavigate} from "react-router-dom";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/dropdown-menu.tsx";
-import {Building} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 
@@ -21,9 +21,6 @@ function ViewCities({
     const {read} = useAccess("cities");
     const navigate = useNavigate();
 
-    if( !read ){
-        return <></>
-    }
     const shortcut = "2";
     const viewStates = () => {
         const params = new URLSearchParams();
@@ -31,11 +28,13 @@ function ViewCities({
         if (countryName) params.set("countryName", countryName);
         navigate(`/tenancy/systemSettings/cities?${params.toString()}`);
     }
-    useKeyboardShortcuts(shortcut, viewStates);
+    useKeyboardShortcuts(shortcut, viewStates, {enabled: read});
+
+    if (!read) return null;
 
     return (
         <DropdownMenuItem onClick={(e) => { e.preventDefault(); e.stopPropagation(); viewStates()}}>
-            <Building size={16}/>
+            <IconBuilding size={16}/>
             {resolveLanguageKey("title")}
             <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>
         </DropdownMenuItem>
