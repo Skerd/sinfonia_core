@@ -82,7 +82,7 @@ function CompanyDropDownItems({
 
     return (
         <div className="flex min-h-0 flex-1 flex-col">
-            <div className="shrink-0 -mx-1 -mt-1 border-b px-3 pt-2.5 pb-2.5" onKeyDown={(event) => event.stopPropagation()}>
+            <div role="presentation" className="shrink-0 -mx-1 -mt-1 border-b px-3 pt-2.5 pb-2.5" onKeyDown={(event) => event.stopPropagation()}>
                 <DropdownMenuLabel className="px-0.5 py-0 pb-2.5">
                     {title}
                 </DropdownMenuLabel>

@@ -1,3 +1,4 @@
+import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -87,7 +88,7 @@ function Reactions({
                         visibleEmojis.map((emoji) => {
                             const count = grouped[emoji]?.length || 0;
                             return (
-                                <div key={emoji} className="flex items-center justify-center cursor-pointer gap-x-0.5 border border-transparent hover:border-muted-foreground rounded-lg p-0.5" onClick={() => setSelectedEmoji(emoji)}>
+                                <div key={emoji} className="flex items-center justify-center cursor-pointer gap-x-0.5 border border-transparent hover:border-muted-foreground rounded-lg p-0.5" {...buttonLike(() => setSelectedEmoji(emoji))}>
                                     {
                                         reactionRead.emoji &&
                                         <p>{emoji}</p>
@@ -99,7 +100,7 @@ function Reactions({
                     }
                     {
                         hiddenCount > 0 &&
-                        <div className="flex h-7 items-center justify-center cursor-pointer p-0.5 px-1 border hover:border-muted-foreground rounded-lg" onClick={() => setSelectedEmoji("all")}>
+                        <div className="flex h-7 items-center justify-center cursor-pointer p-0.5 px-1 border hover:border-muted-foreground rounded-lg" {...buttonLike(() => setSelectedEmoji("all"))}>
                             <p className="text-xs font-semibold ">+{hiddenCount} {resolveLanguageKey("more")}</p>
                         </div>
                     }
@@ -130,7 +131,7 @@ function Reactions({
                         {
                             reactions.map((r, index) => {
                                 return (
-                                    <div key={`${r.user?._id ?? ""}-${String(r.date ?? "")}-${index}`} className="flex justify-between px-2 py-1 rounded hover:bg-muted/50 hover:cursor-pointer" onClick={() => r.user?._id && removeReaction(messageId, r.emoji ?? "", r.user._id)}>
+                                    <div key={`${r.user?._id ?? ""}-${String(r.date ?? "")}-${index}`} className="flex justify-between px-2 py-1 rounded hover:bg-muted/50 hover:cursor-pointer" {...buttonLike(() => r.user?._id && removeReaction(messageId, r.emoji ?? "", r.user._id))}>
                                         <div className="flex items-center gap-x-1">
                                             {
                                                 reactionRead.user && r.user &&
@@ -180,7 +181,7 @@ function Reactions({
                                     {
                                         grouped[emoji].map((r, index) => {
                                             return (
-                                                <div key={`${r.user?._id ?? ""}-${String(r.date ?? "")}-${index}`} className="flex justify-between px-2 py-1 rounded hover:bg-muted/50 hover:cursor-pointer" onClick={() => r.user?._id && removeReaction(messageId, r.emoji ?? "", r.user._id)}>
+                                                <div key={`${r.user?._id ?? ""}-${String(r.date ?? "")}-${index}`} className="flex justify-between px-2 py-1 rounded hover:bg-muted/50 hover:cursor-pointer" {...buttonLike(() => r.user?._id && removeReaction(messageId, r.emoji ?? "", r.user._id))}>
                                                     <div className="flex items-center gap-x-1">
                                                         {
                                                             reactionRead.user && r.user &&

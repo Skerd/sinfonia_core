@@ -10,5 +10,6 @@
     "nameLabel": "Channel Name",
     "namePlaceholder": "Enter channel name"
   },
-  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx"
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx",
+  "removeMember": "Remove {name}"
 }

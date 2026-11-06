@@ -1,3 +1,4 @@
+import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {useMemo, useState} from "react";
 import {
     BicepsFlexed,
@@ -651,10 +652,10 @@ const withDebug = (
                 <div
                     className="flex items-center gap-x-0.5 z-10 px-0.5 py-1 border bg-muted rounded-lg text-xs"
                     style={effectiveChecked ? {border: "2px solid red"} : {}}
-                    onClick={(e) => {
+                    {...buttonLike((e) => {
                         e.stopPropagation();
                         e.preventDefault();
-                    }}
+                    })}
                 >
                     [{normalizedResourceIds?.join(",")}]
                         {

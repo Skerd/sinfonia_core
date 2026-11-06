@@ -180,6 +180,7 @@ function TimeScrollColumn({
         ref={listRef}
         className="h-[calc(var(--cell-size)*7.5)] overflow-x-hidden overflow-y-auto overscroll-y-contain scroll-smooth px-0.5 snap-y snap-mandatory [scrollbar-gutter:stable]"
         role="listbox"
+        tabIndex={-1}
         aria-label={label}
         onKeyDown={handleKeyDown}
       >

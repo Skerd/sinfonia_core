@@ -1,3 +1,4 @@
+import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {useCallback, useEffect, useState} from 'react'
 import {Check, UserRoundSearch, X} from 'lucide-react'
 import {compose} from "redux";
@@ -50,7 +51,8 @@ function MemberRow({
 
     return (
         <div
-            onClick={handleClick}
+            {...buttonLike(handleClick)}
+            aria-disabled={isExisting}
             className={
                 isExisting
                     ? 'flex items-center justify-between gap-2 px-2 py-1 rounded opacity-60 cursor-not-allowed'
@@ -168,7 +170,7 @@ function SelectedMembers({
                                 selectedUsers.map((user) => {
                                     return (
                                         <div className="flex flex-col relative gap-y-1" key={user._id}>
-                                            <div className="absolute p-0.5 right-0 top-0 hover:cursor-pointer rounded-full bg-muted-foreground text-background hover:bg-foreground" style={{zIndex: 1}} onClick={() => onToggleMember(user)}>
+                                            <div className="absolute p-0.5 right-0 top-0 hover:cursor-pointer rounded-full bg-muted-foreground text-background hover:bg-foreground" style={{zIndex: 1}} {...buttonLike(() => onToggleMember(user))} aria-label={String(resolveLanguageKey("removeMember")).replace("{name}", user.name ?? "")}>
                                                 <X size={12}/>
                                             </div>
                                             <UserAvatar user={user} avatarClassName={"size-14"}/>

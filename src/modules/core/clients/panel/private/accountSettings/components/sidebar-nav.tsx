@@ -1,3 +1,4 @@
+import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {useState, type JSX, useEffect, HTMLAttributes} from 'react'
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { buttonVariants } from '@coreModule/components/ui/button.tsx'
@@ -77,7 +78,7 @@ export function SidebarNav({
                         return (
                             <div
                                 key={item.href}
-                                onClick={() => { handleSelect(item.href) }}
+                                {...buttonLike(() => { handleSelect(item.href) })}
                                 className={cn(
                                     buttonVariants({ variant: 'ghost' }),
                                     (!specificUserId ? pathname : activeTab) === item.href

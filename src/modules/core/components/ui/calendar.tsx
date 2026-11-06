@@ -135,6 +135,7 @@ function CompactCaptionDropdown({
         <div
           ref={listRef}
           role="listbox"
+          tabIndex={-1}
           aria-label={ariaLabel}
           className={cn(
             "absolute top-[calc(100%+4px)] left-0 z-50 max-h-48 overflow-y-auto overscroll-contain rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 pointer-events-auto isolate",

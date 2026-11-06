@@ -8,5 +8,6 @@
   "form": {
     "nameLabel": "Group name",
     "namePlaceholder": "Group name"
-  }
+  },
+  "removeMember": "{name} entfernen"
 }

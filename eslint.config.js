@@ -54,6 +54,8 @@ export default tseslint.config(
         controlComponents: ["Input", "Textarea", "Checkbox", "Switch", "RadioGroupItem", "SelectTrigger", "PhoneInput", "DateInput"],
         depth: 3,
       }],
+      // A scrollable text region takes focus so keyboard users can scroll it.
+      "jsx-a11y/no-noninteractive-tabindex": ["error", {roles: ["tabpanel", "region"], tags: []}],
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],

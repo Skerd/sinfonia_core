@@ -409,7 +409,7 @@ function PermissionsTable({
     const totalRows = filteredData.length;
 
     return (
-        <div
+        <div role="presentation"
             className="flex flex-col gap-y-2 mt-2"
             onClick={(e) => e.stopPropagation()}
             onPointerDown={(e) => e.stopPropagation()}

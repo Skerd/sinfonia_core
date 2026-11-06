@@ -8,5 +8,6 @@
   "form": {
     "nameLabel": "Emri i grupit",
     "namePlaceholder": "Emri i grupit"
-  }
+  },
+  "removeMember": "Hiq {name}"
 }

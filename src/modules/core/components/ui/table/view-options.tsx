@@ -55,6 +55,7 @@ export function DataTableViewOptions<TData>({
                 <div className="shrink-0">
                     <DropdownMenuLabel>{resolveLanguageKey("toggleColumns")}</DropdownMenuLabel>
                     <div
+                        role="presentation"
                         className="px-2 pb-2"
                         onKeyDown={(e) => e.stopPropagation()}
                     >

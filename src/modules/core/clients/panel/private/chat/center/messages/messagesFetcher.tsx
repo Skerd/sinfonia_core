@@ -192,7 +192,7 @@ function MessagesFetcher({
 
     return (
         <>
-            <div ref={ref} className="relative text-muted-foreground" onClick={() => {}} style={{border: "0px solid red"}}>
+            <div ref={ref} className="relative text-muted-foreground" style={{border: "0px solid red"}}>
                 {renderRefData(false)}
                 {
                     !activeChannelId || !channelId ?

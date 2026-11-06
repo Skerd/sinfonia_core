@@ -325,9 +325,7 @@ const CompanyCard = memo(function CompanyCard({
                                                                 className="text-muted-foreground"
                                                             >
                                                                 {domain === "*" ? (
-                                                                    <a className="hover:underline" href="#">
-                                                                        {domain}
-                                                                    </a>
+                                                                    <span>{domain}</span>
                                                                 ) : (
                                                                     <a className="hover:underline" target="_blank" href={`${domain}`}>
                                                                         {domain}
@@ -365,9 +363,7 @@ const CompanyCard = memo(function CompanyCard({
                                                                                 className="text-muted-foreground"
                                                                             >
                                                                                 {domain === "*" ? (
-                                                                                    <a className="hover:underline" href="#">
-                                                                                        {domain}
-                                                                                    </a>
+                                                                                    <span>{domain}</span>
                                                                                 ) : (
                                                                                     <a className="hover:underline" target="_blank" href={`${domain}`}>
                                                                                         {domain}
@@ -391,7 +387,7 @@ const CompanyCard = memo(function CompanyCard({
                                     {accessFieldPathExists(read, "addresses") &&
                                         !!row.addresses &&
                                         row.addresses.filter((a) => a?.longitude && a?.latitude).length > 0 && (
-                                            <div className="h-full min-h-32 w-full" onClick={(e) => e.stopPropagation()}>
+                                            <div role="presentation" className="h-full min-h-32 w-full" onClick={(e) => e.stopPropagation()}>
                                                 <Suspense fallback={<div className="w-full animate-pulse rounded-md border bg-muted" />}>
                                                     <CompanyMap
                                                         openInGoogleMaps={resolveLanguageKey("openInGoogleMaps")}
@@ -403,7 +399,7 @@ const CompanyCard = memo(function CompanyCard({
                                         )}
                                 </HiddenElement>
                             </div>
-                            <div onClick={(e) => e.stopPropagation()}>
+                            <div role="presentation" onClick={(e) => e.stopPropagation()}>
                                 <Collapsible open={expanded} onOpenChange={setExpanded}>
                                     <CollapsibleContent>
                                         <HiddenElement>

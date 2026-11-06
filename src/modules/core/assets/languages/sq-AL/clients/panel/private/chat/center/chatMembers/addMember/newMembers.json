@@ -10,5 +10,6 @@
     "nameLabel": "Emri i kanalit",
     "namePlaceholder": "Fut emrin e kanalit"
   },
-  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx"
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx",
+  "removeMember": "Hiq {name}"
 }

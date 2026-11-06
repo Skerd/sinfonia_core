@@ -1,3 +1,4 @@
+import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {openChannel, selectChannelOrderIdsByKind} from "@coreModule/helpers/redux/slices/chatSlice.ts";
@@ -88,10 +89,9 @@ function WebsiteChannelInfo({
                     "group relative flex min-w-0 w-full cursor-pointer items-center gap-3 px-2 py-3 text-start hover:bg-muted/50",
                     activeChannelId === channel._id && "bg-muted",
                 )}
-                onClick={() => {
+                {...buttonLike(() => {
                     dispatch(openChannel(channel._id));
-                }}
-                role="button"
+                })}
             >
                 {avatarUser ? (
                     <UserAvatar user={avatarUser} />

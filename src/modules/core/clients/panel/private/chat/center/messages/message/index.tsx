@@ -1,3 +1,4 @@
+import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {CSSProperties, ReactNode, useEffect, useRef, useState} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {useDispatch, useSelector} from "react-redux";
@@ -506,7 +507,7 @@ function Message({
                         "mb-1 overflow-hidden rounded-md border-l-4 px-2 py-1 text-xs italic",
                         owner ? "border-primary-foreground/40 bg-primary-foreground/10" : "border-muted-foreground/50 bg-background/40"
                     )}
-                    onClick={(e) => {
+                    {...buttonLike((e) => {
                         e.stopPropagation();
                         e.preventDefault();
                         if( message.replyTo?._id ) {
@@ -515,7 +516,7 @@ function Message({
                                 found.scrollIntoView({behavior: "smooth"});
                             }
                         }
-                    }}
+                    })}
                 >
                     <div className="flex flex-col gap-y-0.5">
                         <HiddenElement>
@@ -675,7 +676,7 @@ function Message({
 
     if( message.status === "deleted" ){
         return (
-            <div
+            <div role="presentation"
                 ref={ref}
                 key={`message-${messageId}`}
                 id={`message-${messageId}`}
@@ -702,7 +703,7 @@ function Message({
                             }}
                         >
                             <ContextMenuTrigger asChild>
-                                <div
+                                <div role="presentation"
                                     className={cn(messageBubbleClassNameResolver(), "bg-muted text-muted-foreground")}
                                     ref={bubbleRef}
                                     onClick={(e) => {e.stopPropagation(); e.preventDefault();}}
@@ -729,7 +730,7 @@ function Message({
     }
 
     return (
-        <div
+        <div role="presentation"
             ref={ref}
             key={`message-${messageId}`}
             id={`message-${messageId}`}
@@ -758,7 +759,7 @@ function Message({
                                 }}
                             >
                                 <ContextMenuTrigger asChild>
-                                    <div
+                                    <div role="presentation"
                                         className={messageBubbleClassNameResolver()}
                                         ref={bubbleRef}
                                         onClick={(e) => {e.stopPropagation(); e.preventDefault();}}

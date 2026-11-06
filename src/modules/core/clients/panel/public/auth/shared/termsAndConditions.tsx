@@ -65,6 +65,9 @@ function TermsAndConditions({resolveLanguageKey}: TermsAndConditionsProps) {
                     {open != null && (
                         <div
                             className="text-muted-foreground mt-2 max-h-[min(65vh,560px)] overflow-y-auto pr-1 text-sm leading-relaxed whitespace-pre-line"
+                            // Focusable so keyboard users can scroll it (D23).
+                            role="region"
+                            aria-label={String(resolveLanguageKey(open === "terms" ? "termsOfService" : "privacyPolicy"))}
                             tabIndex={0}
                         >
                             {open === "terms"

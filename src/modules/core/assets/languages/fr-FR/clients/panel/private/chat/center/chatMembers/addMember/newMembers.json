@@ -10,5 +10,6 @@
     "nameLabel": "Nom de la chaîne",
     "namePlaceholder": "Entrez le nom de la chaîne"
   },
-  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx"
+  "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx",
+  "removeMember": "Retirer {name}"
 }
