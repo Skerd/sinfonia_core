@@ -75,6 +75,24 @@ export function mergeWithStoredVisibility(
     return merged;
 }
 
+/**
+ * A page's own column defaults (e.g. a list already scoped to one parent hides that parent's column) sit
+ * between the server defaults and the user's stored choices: they override the server, the user overrides them.
+ * Only columns the table knows are taken.
+ */
+export function applyPageColumnDefaults(
+    visibility: ColumnVisibility,
+    pageDefaults: ColumnVisibility,
+    userId: string | undefined,
+    tableConfigKey: string,
+): ColumnVisibility {
+    const withPageDefaults = {...visibility};
+    for (const [columnId, visible] of Object.entries(pageDefaults)) {
+        if (Object.hasOwn(withPageDefaults, columnId)) withPageDefaults[columnId] = visible;
+    }
+    return mergeWithStoredVisibility(withPageDefaults, userId, tableConfigKey);
+}
+
 // ---------------------------------------------------------------------------
 // Response → cache
 // ---------------------------------------------------------------------------

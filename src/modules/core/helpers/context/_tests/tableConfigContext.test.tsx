@@ -25,6 +25,7 @@ vi.mock("@coreModule/components/custom/sessionSetupScreen.tsx", () => ({
 }));
 
 import {
+    applyPageColumnDefaults,
     columnVisibilityStorageKey,
     configsFromResponse,
     mergeWithStoredVisibility,
@@ -59,6 +60,20 @@ beforeEach(() => {
     getUserMock.mockReset();
     getUserMock.mockReturnValue({id: USER_ID});
     getMock.mockResolvedValue({data: RESPONSE});
+});
+
+// TD-F26: a page's own defaults override the server's, and the user's stored choice overrides both.
+describe("applyPageColumnDefaults", () => {
+    it("hides a column the page turns off, ignoring columns the table doesn't know", () => {
+        expect(applyPageColumnDefaults({campaign: true, name: true}, {campaign: false, ghost: false}, USER_ID, "prospects"))
+            .toEqual({campaign: false, name: true});
+    });
+
+    it("lets the user's stored choice win over the page default", () => {
+        storeVisibility("prospects", {campaign: true});
+        expect(applyPageColumnDefaults({campaign: true, name: true}, {campaign: false}, USER_ID, "prospects"))
+            .toEqual({campaign: true, name: true});
+    });
 });
 
 describe("mergeWithStoredVisibility", () => {

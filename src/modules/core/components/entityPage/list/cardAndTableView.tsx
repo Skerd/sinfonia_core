@@ -32,6 +32,8 @@ import DataTableViewOptions from "@coreModule/components/ui/table/view-options.t
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useTableConfig} from "@coreModule/helpers/hooks/useTableConfig.ts";
+import {applyPageColumnDefaults} from "@coreModule/helpers/context/tableConfigContext.tsx";
+import {getUser} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 import {GRID_MASONRY_ITEM} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
 import {CardMosaic} from "@coreModule/components/entityPage/list/cardMosaic.tsx";
 import {useColumnConfigToColumnDef} from "@coreModule/components/entityPage/list/table/columnConfigToColumnDef.tsx";
@@ -344,9 +346,14 @@ function CountryCenterView<
     useEffect(() => {
         onRegister?.(listApi);
     }, [onRegister, listApi]);
+    // Compared by value: callers often pass the defaults inline, a new object every render.
+    const pageColumnDefaultsKey = JSON.stringify(configurations.columnVisibility ?? null);
     useEffect(() => {
-        setColumnVisibility(tableColumnVisibility);
-    }, [tableColumnVisibility]);
+        const pageColumnDefaults = JSON.parse(pageColumnDefaultsKey) as VisibilityState | null;
+        setColumnVisibility(tableColumnVisibility && pageColumnDefaults
+            ? applyPageColumnDefaults(tableColumnVisibility, pageColumnDefaults, getUser()?.id, tableConfigKey)
+            : tableColumnVisibility);
+    }, [tableColumnVisibility, pageColumnDefaultsKey, tableConfigKey]);
     useEffect(() => {
         if (!read) return;
         if ( !loadingTableConfig && !tableConfigError ) {
