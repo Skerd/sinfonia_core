@@ -1,5 +1,5 @@
 import {type ReactNode, useEffect, useLayoutEffect, useRef, useState} from 'react';
-import { ChevronRight } from 'lucide-react';
+import {IconChevronRight} from "@tabler/icons-react";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {Link, useParams, useLocation} from 'react-router-dom';
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from '@coreModule/components/ui/collapsible.tsx'
@@ -131,7 +131,8 @@ export function NavGroup({ title, items }: {title: string; items: NavItem[]}) {
             <SidebarMenu>
                 {
                     items.map((item) => {
-                        const key = `${item.title}-${("url" in item ? item.url : "group") ?? 'group'}`
+                        // Not the title: it is translated, and empty until the dictionary loads (TD-F18).
+                        const key = item.items ? navCollapsibleStorageKey(item) : `link:${String(item.url)}`
                         if (!item.items){
                             return <SidebarMenuLink key={key} item={item} />
                         }
@@ -214,7 +215,7 @@ function SidebarMenuCollapsedDropdown({item}: { item: NavCollapsible }) {
                     <SidebarMenuButton tooltip={item.title} isActive={checkIsActive(href, item)}>
                         {item.icon && <item.icon />}
                         <NavTruncatedTitle title={item.title} className='flex-1' />
-                        <ChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
+                        <IconChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent side='right' align='start' sideOffset={4}>
@@ -330,7 +331,7 @@ function NestedNavCollapsible({
                     <SidebarMenuSubButton isActive={routeActive}>
                         {item.icon && <item.icon />}
                         <NavTruncatedTitle title={item.title} className='flex-1' />
-                        <ChevronRight className={chevronClass} />
+                        <IconChevronRight className={chevronClass} />
                     </SidebarMenuSubButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="collapsible-content">
@@ -381,7 +382,7 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                     <SidebarMenuButton tooltip={item.title}>
                         {item.icon && <item.icon />}
                         <NavTruncatedTitle title={item.title} className='flex-1' />
-                        <ChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180' />
+                        <IconChevronRight className='ms-auto shrink-0 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180' />
                     </SidebarMenuButton>
                 </CollapsibleTrigger>
                 {item.badge && (

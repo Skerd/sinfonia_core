@@ -1,4 +1,4 @@
-import { Monitor, Moon, Rows2, Rows3, Sun, type LucideIcon } from 'lucide-react'
+import { IconBaselineDensityMedium, IconBaselineDensitySmall, IconDeviceDesktop, IconMoon, IconSun, type TablerIcon } from "@tabler/icons-react"
 import { Button } from '@coreModule/components/ui/button.tsx'
 import {
     DENSITIES,
@@ -27,22 +27,22 @@ type ThemeSwitchProps = WithLanguageType & {
     showTitles?: boolean,
 }
 
-const THEME_ICONS: Record<Theme, LucideIcon> = {
-    light: Sun,
-    dark: Moon,
-    system: Monitor,
+const THEME_ICONS: Record<Theme, TablerIcon> = {
+    light: IconSun,
+    dark: IconMoon,
+    system: IconDeviceDesktop,
 }
 
-const DENSITY_ICONS: Record<Density, LucideIcon> = {
-    comfortable: Rows2,
-    compact: Rows3,
+const DENSITY_ICONS: Record<Density, TablerIcon> = {
+    comfortable: IconBaselineDensityMedium,
+    compact: IconBaselineDensitySmall,
 }
 
 type PreferenceGroupProps<TValue extends string> = {
     /** Language key for the group heading. */
     labelKey: string
     options: readonly TValue[]
-    icons: Record<TValue, LucideIcon>
+    icons: Record<TValue, TablerIcon>
     value: TValue
     /** The provider's own runtime guard, so a stray radio value can never reach the setter. */
     isValue: (candidate: unknown) => candidate is TValue
@@ -77,7 +77,7 @@ function PreferenceGroup<TValue extends string>({
                 }}
             >
                 {options.map((option) => {
-                    const Icon: LucideIcon = icons[option]
+                    const Icon: TablerIcon = icons[option]
                     return (
                         <DropdownMenuRadioItem
                             key={option}
@@ -113,8 +113,8 @@ function ThemeSwitch({resolveLanguageKey, showTitles}: ThemeSwitchProps) {
                       * even while the choice is `system`.
                       */}
                     <span className="relative flex items-center justify-center size-[1.2rem]">
-                        <Sun className="size-[1.2rem] absolute inset-0 scale-100 rotate-0 opacity-100 transition-[transform,opacity] duration-300 dark:scale-0 dark:-rotate-90 dark:opacity-0" />
-                        <Moon className="size-[1.2rem] absolute inset-0 scale-0 rotate-90 opacity-0 transition-[transform,opacity] duration-300 dark:scale-100 dark:rotate-0 dark:opacity-100" />
+                        <IconSun className="size-[1.2rem] absolute inset-0 scale-100 rotate-0 opacity-100 transition-[transform,opacity] duration-300 dark:scale-0 dark:-rotate-90 dark:opacity-0" />
+                        <IconMoon className="size-[1.2rem] absolute inset-0 scale-0 rotate-90 opacity-0 transition-[transform,opacity] duration-300 dark:scale-100 dark:rotate-0 dark:opacity-100" />
                     </span>
                     {showTitles && <p>{resolveLanguageKey(theme)}</p>}
                 </Button>

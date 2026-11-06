@@ -1,5 +1,5 @@
 import React from 'react'
-import { Eye, EyeOff } from 'lucide-react'
+import { IconEye, IconEyeOff } from "@tabler/icons-react"
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button } from '@coreModule/components/ui/button.tsx'
 import { Input } from '@coreModule/components/ui/input.tsx'
@@ -55,7 +55,7 @@ export const PasswordInput = React.forwardRef<
         onClick={() => setShowPassword((prev) => !prev)}
       >
         {/* The icon names the action, matching the label: an eye means "reveal it". */}
-        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+        {showPassword ? <IconEyeOff size={18} /> : <IconEye size={18} />}
       </Button>
     </div>
   )

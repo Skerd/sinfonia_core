@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { AnimatePresence, motion } from 'motion/react';
-import { CheckIcon, CopyIcon } from 'lucide-react';
+import { IconCheck, IconCopy } from '@tabler/icons-react';
 
 import {
   Button as ButtonPrimitive,
@@ -97,7 +97,7 @@ function CopyButton({
     [onClick, copied, content, setIsCopied, delay],
   );
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
+  const Icon = isCopied ? IconCheck : IconCopy;
 
   return (
     <ButtonPrimitive
