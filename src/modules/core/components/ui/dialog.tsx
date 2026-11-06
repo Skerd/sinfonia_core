@@ -141,6 +141,59 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * A modal that brings its own layout (full-screen panels, drawers, lightboxes, D23). Radix gives the focus trap, focus
+ * return, Escape and scroll lock; nothing is styled. `overlayClassName` styles the backdrop, which also positions the
+ * content (a click on it closes the modal); `className` styles the content. `title` is the accessible name, read by
+ * screen readers only. The standard card is `DialogContent`.
+ */
+function DialogFrame({
+  title,
+  className,
+  overlayClassName,
+  children,
+  onPointerDownOutside,
+  onOpenAutoFocus,
+  onCloseAutoFocus,
+  ...props
+}: Omit<React.ComponentProps<typeof DialogPrimitive.Content>, "title"> & {
+  title: string
+  overlayClassName?: string
+}) {
+  // Radix returns focus only to a DialogTrigger; these modals open from their own buttons, so remember the opener.
+  const openerRef = React.useRef<HTMLElement | null>(null)
+  return (
+    <DialogPortal>
+      <DialogPrimitive.Overlay data-slot="dialog-overlay" className={overlayClassName}>
+        <DialogPrimitive.Content
+          data-slot="dialog-content"
+          aria-describedby={undefined}
+          className={cn("outline-none", className)}
+          {...props}
+          onOpenAutoFocus={(event) => {
+            openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+            onOpenAutoFocus?.(event)
+          }}
+          onCloseAutoFocus={(event) => {
+            onCloseAutoFocus?.(event)
+            if (event.defaultPrevented) return
+            event.preventDefault()
+            openerRef.current?.focus()
+          }}
+          onPointerDownOutside={(event) => {
+            onPointerDownOutside?.(event)
+            if (event.defaultPrevented) return
+            armDialogDismissGuard()
+          }}
+        >
+          <DialogPrimitive.Title className="sr-only">{title}</DialogPrimitive.Title>
+          {children}
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Overlay>
+    </DialogPortal>
+  )
+}
+
 function DialogFooter({
   className,
   showCloseButton = false,
@@ -203,6 +256,7 @@ export {
   DialogContent,
   DialogDescription,
   DialogFooter,
+  DialogFrame,
   DialogHeader,
   DialogOverlay,
   DialogPortal,

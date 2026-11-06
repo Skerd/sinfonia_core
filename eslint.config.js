@@ -49,6 +49,11 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       // D23: the jsx-a11y recommended set is an error in every app.
       ...jsxA11y.flatConfigs.recommended.rules,
+      // Our primitives are controls too; a label may wrap its text in two spans (title + hint).
+      "jsx-a11y/label-has-associated-control": ["error", {
+        controlComponents: ["Input", "Textarea", "Checkbox", "Switch", "RadioGroupItem", "SelectTrigger", "PhoneInput", "DateInput"],
+        depth: 3,
+      }],
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
