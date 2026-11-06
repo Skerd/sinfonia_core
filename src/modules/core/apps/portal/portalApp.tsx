@@ -1,4 +1,4 @@
-import {Toaster} from "sonner";
+import {Toaster} from "@coreModule/components/ui/sonner.tsx";
 import {Provider} from "react-redux";
 import {lazy, Suspense, type ReactNode} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";

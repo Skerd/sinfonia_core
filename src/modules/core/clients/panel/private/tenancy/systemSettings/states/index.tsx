@@ -8,7 +8,7 @@ import {buildPageTitle} from "@coreModule/helpers/general/pageTitle.ts";
 import StateCard from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/actions/viewCities.tsx";
 import StateSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx";
-import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 export function stateEditPath(countryId: string | undefined, countryName: string | undefined, state: State) {
     const params = new URLSearchParams();
@@ -51,12 +51,18 @@ function AllStates({resolveLanguageKey, countryId, countryName}: AllStatesProps)
             collectionName="states"
             accessModel="states"
             tableConfigKey="states"
-            createPath={buildStatesCreatePath(countryId, countryName)}
-            createIcon={<IconMapPlus />}
-            createLanguageKey="createState"
+            header={(ctx) => (
+                <EntityListHeader ctx={ctx} title={buildPageTitle(resolveLanguageKey("title"), [countryName])}>
+                    <EntityListCreateButton
+                        ctx={ctx}
+                        path={buildStatesCreatePath(countryId, countryName)}
+                        icon={<IconMapPlus />}
+                        labelKey="createState"
+                    />
+                </EntityListHeader>
+            )}
             buildEditPath={(state) => stateEditPath(countryId, countryName, state)}
             resolveLanguageKey={resolveLanguageKey}
-            headerTitle={buildPageTitle(resolveLanguageKey("title"), [countryName])}
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
             renderCard={(state, onDelete, onRestore) => (
                 <StateCard

@@ -177,32 +177,87 @@ function buildExtraFiltersDSL(extraFilters: Record<string, unknown> | undefined)
     return {id: generateUUID(), operator: "and", rules, groups: []};
 }
 
+// ---------------------------------------------------------------------------
+// Header seam: the `header` slot and the parts a page composes inside it
+// ---------------------------------------------------------------------------
+
+/** What `EntityListPage` hands to its `header` slot. */
+export type EntityListHeaderContext = {
+    /** The page's dictionary (the `resolveLanguageKey` the page received). */
+    resolveLanguageKey: ResolveLanguageKey;
+    /** The viewer's create grant on the page's `accessModel`, read with the page's access perspective. */
+    canCreate: boolean;
+};
+
+type EntityListHeaderProps = {
+    ctx: EntityListHeaderContext;
+    /**
+     * Defaults to the dictionary's `title`. Pass {@link buildPageTitle} output when
+     * the list is scoped to a parent entity, so those names reach the shell
+     * breadcrumb as links instead of being printed into the heading.
+     */
+    title?: string | PageTitle;
+    /** Defaults to the dictionary's `description`. */
+    description?: string;
+    /**
+     * Dictionary key for {@link readPageHelp} (default `"help"`).
+     * Use when one language file serves two menus (e.g. Users vs Administration).
+     */
+    helpKey?: string;
+    /** Header controls (e.g. {@link EntityListCreateButton}), shown on the title row. */
+    children?: ReactNode;
+};
+
+/** The list page heading: title, description and page help, with optional controls. */
+export function EntityListHeader({ctx, title, description, helpKey, children}: EntityListHeaderProps) {
+    const {resolveLanguageKey} = ctx;
+    return (
+        <Header
+            title={title ?? resolveLanguageKey("title")}
+            description={description ?? resolveLanguageKey("description")}
+            help={readPageHelp(resolveLanguageKey, helpKey)}
+        >
+            {children ? <div className="flex items-center gap-2">{children}</div> : null}
+        </Header>
+    );
+}
+
+type EntityListCreateButtonProps = {
+    ctx: EntityListHeaderContext;
+    /** Route of the create page. */
+    path: string;
+    icon?: ReactNode;
+    /** Dictionary key of the button label (default `"create"`). */
+    labelKey?: string;
+};
+
+/** Navigates to the create page; renders nothing when the viewer lacks the create grant. */
+export function EntityListCreateButton({ctx, path, icon, labelKey = "create"}: EntityListCreateButtonProps) {
+    const navigate = useNavigate();
+    if (!ctx.canCreate) return null;
+    return (
+        <Button type="button" onClick={(e) => {navigate(path); e.stopPropagation(); e.preventDefault();}}>
+            {icon}
+            <ButtonTitle>{ctx.resolveLanguageKey(labelKey)}</ButtonTitle>
+        </Button>
+    );
+}
+
 export type EntityListPageProps<T extends BaseEntity> = {
     apiUrl: string;
     collectionName: string;
     accessModel: string;
     tableConfigKey: string;
-    /** When omitted or with `hideCreate`, the header create button is not shown. */
-    createPath?: string;
-    /** Force-hide create affordance even when `createPath` is set. */
-    hideCreate?: boolean;
     buildEditPath: (entity: T) => string;
     resolveLanguageKey: ResolveLanguageKey;
     /**
-     * Overrides `resolveLanguageKey("title")`. Pass {@link buildPageTitle} when
-     * the list is scoped to a parent entity, so those names reach the shell
-     * breadcrumb as links instead of being printed into the heading.
+     * Page header slot (seam). Omitted: {@link EntityListHeader} with the dictionary's
+     * `title`, `description` and `help`, no controls. `false`: no header (embedded lists,
+     * overview tabs). A function: compose the exported parts with the page's
+     * {@link EntityListHeaderContext}, e.g.
+     * `header={(ctx) => <EntityListHeader ctx={ctx}><EntityListCreateButton ctx={ctx} path="/x/create" /></EntityListHeader>}`.
      */
-    headerTitle?: string | PageTitle;
-    /** Overrides `resolveLanguageKey("description")` for the page header. */
-    headerDescription?: string;
-    /**
-     * Dictionary key for {@link readPageHelp} (default `"help"`).
-     * Use when one language file serves two menus (e.g. Users vs Administration).
-     */
-    helpLanguageKey?: string;
-    /** Hide page header chrome (e.g. embedded dashboard / overview tabs). */
-    hideHeader?: boolean;
+    header?: false | ((ctx: EntityListHeaderContext) => ReactNode);
     /** Custom delete/restore confirm label (default uses `read.name` + `entity.name`). */
     buildDeleteConfirmLabel?: (entity: T, read: Record<string, unknown> | undefined) => string | undefined;
     /** Required for card view; when omitted, the list stays in table mode. */
@@ -235,11 +290,6 @@ export type EntityListPageProps<T extends BaseEntity> = {
         bindRowAction: (actionName: string) => void,
         listHelpers: {replaceRow: (row: T) => void},
     ) => ReactNode;
-    createIcon?: ReactNode;
-    /** Key passed to resolveLanguageKey for the create button label (default `"create"`). */
-    createLanguageKey?: string;
-    /** Extra controls rendered in the page header beside the create button. */
-    headerActions?: ReactNode;
     /**
      * Defaults to {@link GRID_TRANSACTIONAL}. Pass {@link GRID_HIERARCHY} for
      * media-led cards; both are column mosaics driven by density min-widths,
@@ -298,23 +348,15 @@ export default function EntityListPage<T extends BaseEntity>({
     collectionName,
     accessModel,
     tableConfigKey,
-    createPath,
-    hideCreate,
     buildEditPath,
     resolveLanguageKey,
-    headerTitle,
-    headerDescription,
-    helpLanguageKey,
-    hideHeader,
+    header,
     buildDeleteConfirmLabel,
     renderCard,
     sheetLanguagePath,
     renderSheet,
     renderActionMenuChildren,
     renderSheetActionMenuChildren,
-    createIcon,
-    createLanguageKey = "create",
-    headerActions,
     cardViewClassName = GRID_TRANSACTIONAL,
     scrollRootClassName = "flex-full",
     configurations,
@@ -327,7 +369,6 @@ export default function EntityListPage<T extends BaseEntity>({
     selfAccess = true,
     listApiRef,
 }: EntityListPageProps<T>) {
-    const navigate = useNavigate();
     const access = useAccess(accessModel, selfAccess ? "self" : "others");
     const {create, read} = access;
     const hasSheet = !!(renderSheet || sheetLanguagePath);
@@ -507,32 +548,14 @@ export default function EntityListPage<T extends BaseEntity>({
         typeof flag === "function" ? flag(entity) : !!flag;
 
     const listHelpers = {replaceRow};
+    const headerContext: EntityListHeaderContext = {resolveLanguageKey, canCreate: !!create};
     if (read === false) {
         return <Forbidden />;
     }
 
     return (
         <div className="min-w-0 flex-full gap-4">
-            {!hideHeader && (
-            <Header
-                title={headerTitle ?? resolveLanguageKey("title")}
-                description={(headerDescription ?? resolveLanguageKey("description")) as string}
-                help={readPageHelp(resolveLanguageKey, helpLanguageKey)}
-            >
-                <div className="flex items-center gap-2">
-                    <HiddenElement hideAll={true}>
-                        {headerActions}
-                        {
-                            !hideCreate && create && createPath &&
-                            <Button type="button" onClick={(e) => {navigate(createPath); e.stopPropagation(); e.preventDefault();}}>
-                                {createIcon}
-                                <ButtonTitle>{resolveLanguageKey(createLanguageKey)}</ButtonTitle>
-                            </Button>
-                        }
-                    </HiddenElement>
-                </div>
-            </Header>
-            )}
+            {header === undefined ? <EntityListHeader ctx={headerContext} /> : header && header(headerContext)}
 
             <HiddenElement hideAll={true}>
                 <CardAndTableView<TableResponse<T>, Record<string, unknown>>

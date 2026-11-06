@@ -8,7 +8,7 @@ import {IconBuildingPlus} from "@tabler/icons-react";
 import {buildPageTitle} from "@coreModule/helpers/general/pageTitle.ts";
 import CityCard from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx";
 import CitySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx";
-import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 export function cityEditPath(countryId: string | undefined, countryName: string | undefined, stateId: string | undefined, stateName: string | undefined, city: City) {
     const params = new URLSearchParams();
@@ -62,12 +62,18 @@ function AllCities({
             collectionName="cities"
             accessModel="cities"
             tableConfigKey="cities"
-            createPath={buildCitiesCreatePath(countryId, countryName, stateId, stateName)}
-            createIcon={<IconBuildingPlus />}
-            createLanguageKey="createCity"
+            header={(ctx) => (
+                <EntityListHeader ctx={ctx} title={headerTitle}>
+                    <EntityListCreateButton
+                        ctx={ctx}
+                        path={buildCitiesCreatePath(countryId, countryName, stateId, stateName)}
+                        icon={<IconBuildingPlus />}
+                        labelKey="createCity"
+                    />
+                </EntityListHeader>
+            )}
             buildEditPath={(city) => cityEditPath(countryId, countryName, stateId, stateName, city)}
             resolveLanguageKey={resolveLanguageKey}
-            headerTitle={headerTitle}
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
             configurations={{limit: 20}}
             extraFilters={extraFilters}

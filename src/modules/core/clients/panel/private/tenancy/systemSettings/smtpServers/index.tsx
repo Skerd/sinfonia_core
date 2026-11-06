@@ -11,7 +11,7 @@ import DeactivateSmtpServer from "@coreModule/clients/panel/private/tenancy/syst
 import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/actions/testSmtpConnection.tsx";
 import SetSmtpServerActiveDialog from "./center/dialogs/setSmtpServerActiveDialog.tsx";
 import TestSmtpConnectionDialog from "./center/dialogs/testSmtpConnectionDialog.tsx";
-import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 export function smtpServerEditPath(s: SmtpServer) {
     const params = new URLSearchParams();
@@ -28,9 +28,16 @@ function AllSmtpServers({resolveLanguageKey}: WithLanguageType) {
             accessModel="smtpServers"
             tableConfigKey="smtpservers"
             rowActionMenu={{allowMenuForCustomChildren: true}}
-            createPath="/tenancy/systemSettings/smtpServers/create"
-            createIcon={<IconMailPlus />}
-            createLanguageKey="createSmtpServer"
+            header={(ctx) => (
+                <EntityListHeader ctx={ctx}>
+                    <EntityListCreateButton
+                        ctx={ctx}
+                        path="/tenancy/systemSettings/smtpServers/create"
+                        icon={<IconMailPlus />}
+                        labelKey="createSmtpServer"
+                    />
+                </EntityListHeader>
+            )}
             buildEditPath={smtpServerEditPath}
             resolveLanguageKey={resolveLanguageKey}
             renderActionMenuChildren={(_entity, bindRowAction) => (

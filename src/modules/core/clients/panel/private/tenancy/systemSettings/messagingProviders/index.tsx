@@ -1,7 +1,7 @@
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 import {MessageSquarePlus} from "lucide-react";
 import type {MessagingProvider} from "armonia/src/modules/core/api/auxiliary/private/messagingProvider/messagingProvider.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
@@ -28,9 +28,16 @@ function AllMessagingProviders({resolveLanguageKey}: WithLanguageType) {
             accessModel="messagingProviders"
             tableConfigKey="messagingproviders"
             rowActionMenu={{allowMenuForCustomChildren: true}}
-            createPath="/tenancy/systemSettings/messagingProviders/create"
-            createIcon={<MessageSquarePlus className="h-4 w-4" />}
-            createLanguageKey="createMessagingProvider"
+            header={(ctx) => (
+                <EntityListHeader ctx={ctx}>
+                    <EntityListCreateButton
+                        ctx={ctx}
+                        path="/tenancy/systemSettings/messagingProviders/create"
+                        icon={<MessageSquarePlus className="h-4 w-4" />}
+                        labelKey="createMessagingProvider"
+                    />
+                </EntityListHeader>
+            )}
             buildEditPath={messagingProviderEditPath}
             resolveLanguageKey={resolveLanguageKey}
             sheetLanguagePath="src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx"

@@ -15,9 +15,12 @@ import {
 } from "@coreModule/components/ui/dialog.tsx";
 import CreateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/createCompany.tsx";
 
-type CreateCompanyDropMenuItemProps = WithLanguageType & {}
+type CreateCompanyDropMenuItemProps = WithLanguageType & {
+    /** Runs when the create dialog's form finishes (saved or cancelled), so the host can reload its list. */
+    onFinished: () => void;
+}
 
-function CreateCompanyDropMenuItem({resolveLanguageKey}: CreateCompanyDropMenuItemProps) {
+function CreateCompanyDropMenuItem({resolveLanguageKey, onFinished}: CreateCompanyDropMenuItemProps) {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const {create} = useAccess("companies");
@@ -54,7 +57,10 @@ function CreateCompanyDropMenuItem({resolveLanguageKey}: CreateCompanyDropMenuIt
                         {dialogOpen ? (
                             <CreateCompany
                                 embedForm
-                                onFinished={() => setDialogOpen(false)}
+                                onFinished={() => {
+                                    setDialogOpen(false);
+                                    onFinished();
+                                }}
                             />
                         ) : null}
                     </div>

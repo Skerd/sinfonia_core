@@ -7,7 +7,7 @@ import {IconFlagPlus} from "@tabler/icons-react";
 import CountryCard from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx";
 import ViewStates from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewStates.tsx";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/actions/viewCities.tsx";
-import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 function countryEditPath(country: Country) {
     const params = new URLSearchParams();
@@ -31,8 +31,11 @@ function AllCountries({resolveLanguageKey}: WithLanguageType) {
             collectionName="countries"
             accessModel="countries"
             tableConfigKey="countries"
-            createPath="/tenancy/systemSettings/countries/create"
-            createIcon={<IconFlagPlus />}
+            header={(ctx) => (
+                <EntityListHeader ctx={ctx}>
+                    <EntityListCreateButton ctx={ctx} path="/tenancy/systemSettings/countries/create" icon={<IconFlagPlus />} />
+                </EntityListHeader>
+            )}
             buildEditPath={countryEditPath}
             resolveLanguageKey={resolveLanguageKey}
             sheetLanguagePath="src/modules/core/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx"

@@ -1,4 +1,5 @@
 import {compose} from "redux";
+import {useState} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {DropdownMenuContent} from "@coreModule/components/ui/dropdown-menu.tsx";
 import CreateCompanyDropMenuItem from "@coreModule/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/createCompanyDropMenuItem.tsx";
@@ -7,16 +8,16 @@ import CompanyDropDownItems from "@coreModule/clients/panel/private/sidebar/comp
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 
 type AllCompaniesDropDownMenuContentProps = WithLanguageType & {
-    /** Bumped when a company is created, so the list reloads from the first page. */
-    listReloadKey: number;
     menuOpen: boolean;
 }
 
 function AllCompaniesDropDownMenuContent({
     resolveLanguageKey,
-    listReloadKey,
     menuOpen,
 }: AllCompaniesDropDownMenuContentProps) {
+
+    // Bumped when the create-company dialog finishes, so the list reloads from the first page.
+    const [listReloadKey, setListReloadKey] = useState(0);
 
     const { isMobile } = useSidebar();
 
@@ -35,7 +36,7 @@ function AllCompaniesDropDownMenuContent({
                 title={resolveLanguageKey("title")}
             />
             <div className="shrink-0">
-                <CreateCompanyDropMenuItem />
+                <CreateCompanyDropMenuItem onFinished={() => setListReloadKey((key) => key + 1)} />
             </div>
         </DropdownMenuContent>
     )

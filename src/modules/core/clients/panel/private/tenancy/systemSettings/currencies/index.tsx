@@ -6,7 +6,7 @@ import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconCashPlus} from "@tabler/icons-react";
 import CurrencyCard from "@coreModule/clients/panel/private/tenancy/systemSettings/currencies/center/cardView/currencyCard.tsx";
 import CurrencySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx";
-import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 export function currencyEditPath(c: Currency) {
     const params = new URLSearchParams();
@@ -24,9 +24,16 @@ function AllCurrencies({resolveLanguageKey}: AllCurrenciesProps) {
             collectionName="currencies"
             accessModel="currencies"
             tableConfigKey="currencies"
-            createPath="/tenancy/systemSettings/currencies/create"
-            createIcon={<IconCashPlus />}
-            createLanguageKey="createCurrency"
+            header={(ctx) => (
+                <EntityListHeader ctx={ctx}>
+                    <EntityListCreateButton
+                        ctx={ctx}
+                        path="/tenancy/systemSettings/currencies/create"
+                        icon={<IconCashPlus />}
+                        labelKey="createCurrency"
+                    />
+                </EntityListHeader>
+            )}
             buildEditPath={currencyEditPath}
             resolveLanguageKey={resolveLanguageKey}
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"

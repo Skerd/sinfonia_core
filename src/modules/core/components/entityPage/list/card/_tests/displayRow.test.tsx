@@ -70,9 +70,8 @@ describe("DisplayRow access gating", () => {
 });
 
 describe("DisplayRow inside InfoRowGroup", () => {
-    /* Found by its accessible name: the tooltip trigger it is wrapped in replaces its `data-slot`,
-       so that attribute never reaches the DOM (a selector on it also made the negative test vacuous). */
-    const restrictionNotice = () => screen.queryByRole("listitem", {name: /t:tooltip/});
+    /* Found by its accessible name: the notice is the tooltip trigger button inside the list item. */
+    const restrictionNotice = () => screen.queryByRole("button", {name: /t:tooltip/});
 
     it("reports a denied row to the group instead of rendering a padlock per field", () => {
         row({path: "slug", value: "alpha", label: "Slug"}, {other: {}});

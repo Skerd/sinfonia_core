@@ -3,7 +3,7 @@ import {useMemo} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {BookOpen} from "lucide-react";
-import EntityListPage, {type QuickFilterDef} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListCreateButton, EntityListHeader, type QuickFilterDef} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators";
 import type {BlogPost} from "armonia/src/modules/core/api/auxiliary/private/blogPost/blogPost.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
@@ -38,9 +38,16 @@ function AllBlogPosts({resolveLanguageKey}: WithLanguageType) {
             accessModel="blogPosts"
             tableConfigKey="blogposts"
             rowActionMenu={{allowMenuForCustomChildren: true}}
-            createPath="/company/blogPosts/create"
-            createIcon={<BookOpen className="h-4 w-4" />}
-            createLanguageKey="createBlogPost"
+            header={(ctx) => (
+                <EntityListHeader ctx={ctx}>
+                    <EntityListCreateButton
+                        ctx={ctx}
+                        path="/company/blogPosts/create"
+                        icon={<BookOpen className="h-4 w-4" />}
+                        labelKey="createBlogPost"
+                    />
+                </EntityListHeader>
+            )}
             buildEditPath={buildEditPath}
             cardViewClassName={GRID_HIERARCHY}
             resolveLanguageKey={resolveLanguageKey}

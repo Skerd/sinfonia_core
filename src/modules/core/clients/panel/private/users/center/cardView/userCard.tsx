@@ -8,9 +8,11 @@ import {CompanyUserType} from "armonia/src/modules/core/api/company/private/user
 type UserCardProps = {
     user: CompanyUserType;
     specificUserId?: string;
+    /** Opens the edit drawer the users page owns. */
+    onEdit: (user: CompanyUserType) => void;
 }
 
-function UserCard({ user, specificUserId }: UserCardProps) {
+function UserCard({ user, specificUserId, onEdit }: UserCardProps) {
     const {write} = useAccess("users", !specificUserId ? "self" : "others");
     const editable = !!write;
 
@@ -19,7 +21,7 @@ function UserCard({ user, specificUserId }: UserCardProps) {
             <UserProfileCard data={user} specificUserId={user._id} />
             {editable && (
                 <div className="absolute top-2 right-2 z-10">
-                    <UserActions user={user} specificUserId={user._id}/>
+                    <UserActions user={user} specificUserId={user._id} onEdit={onEdit} />
                 </div>
             )}
         </div>

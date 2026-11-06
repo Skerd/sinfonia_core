@@ -4,8 +4,6 @@ import {DropdownMenuItem, DropdownMenuShortcut} from "@coreModule/components/ui/
 import {UserPen} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
-import {useDispatch} from "react-redux";
-import {editUser} from "@coreModule/helpers/redux/slices/uiSlice.ts";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import {useKeyboardShortcuts} from "@coreModule/helpers/hooks/useKeyboardShortcut.ts";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -13,21 +11,16 @@ import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 type EditUserActionProps = WithLanguageType & {
     specificUserId?: string,
     user: CompanyUserType;
+    /** Opens the edit drawer the users page owns. */
+    onEdit: (user: CompanyUserType) => void;
 }
 
-function EditUserAction({user, resolveLanguageKey, specificUserId}: EditUserActionProps) {
+function EditUserAction({user, resolveLanguageKey, specificUserId, onEdit}: EditUserActionProps) {
     const {write} = useAccess("users", !specificUserId ? "self" : "others");
-    const dispatch = useDispatch();
 
     if (!write) return <HiddenElement />;
 
-    const handleEdit = () => {
-        dispatch(editUser({
-            _id: user._id,
-            name: user.name,
-            surname: user.surname
-        }));
-    };
+    const handleEdit = () => onEdit(user);
 
     const shortcut = "1";
     useKeyboardShortcuts(shortcut, () => {handleEdit();});

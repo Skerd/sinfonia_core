@@ -10,8 +10,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import {compose} from "redux";
 import {useImperativeHandle} from "react";
 import {ApiSelect} from "@coreModule/components/viewEngine/widgets/inputs/apiSelect/apiSelect.tsx";
-import {newUserCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
-import {useDispatch} from "react-redux";
+import {useTableUpdate} from "@coreModule/helpers/hooks/useTableUpdate.ts";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -44,7 +43,7 @@ function InviteUserForm({
     administration
 }: InviteUserFormProps) {
 
-    const dispatch = useDispatch();
+    const {refetch} = useTableUpdate();
     const {create} = useAccess("users");
 
     const formSchema = inviteCompanyUserFormSchema(languageCode, resolveLanguageKey("form"));
@@ -55,7 +54,7 @@ function InviteUserForm({
 
     useImperativeHandle(innerRef, () => ({
         success: () => {
-            dispatch(newUserCreated());
+            refetch();
             form.reset({
                 name: "",
                 surname: "",

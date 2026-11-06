@@ -1,7 +1,5 @@
 import {compose} from "redux";
 import {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {ReloginProvider} from "@coreModule/helpers/context/reloginContext.tsx";
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem} from "@coreModule/components/ui/sidebar.tsx";
@@ -28,7 +26,6 @@ function CompaniesSwitcher({
 }: CompaniesSwitcherProps) {
 
     const {read} = useAccess("companies");
-    const newCompanyCreated = useSelector((state: RootState) => state.ui.newCompanyCreated);
     const [forceReload, setForceReload] = useState<number>(0);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -36,7 +33,7 @@ function CompaniesSwitcher({
         if( !!read && Object.keys(read).length ){
             onFilterChange({});
         }
-    }, [newCompanyCreated, forceReload, read]);
+    }, [forceReload, read]);
 
     if( !read ){
         return <HiddenElement />
@@ -101,7 +98,7 @@ function CompaniesSwitcher({
                             </div>
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
-                    <AllCompaniesDropDownMenuContent listReloadKey={newCompanyCreated} menuOpen={menuOpen} />
+                    <AllCompaniesDropDownMenuContent menuOpen={menuOpen} />
                 </DropdownMenu>
                 </ReloginProvider>
             </SidebarMenuItem>

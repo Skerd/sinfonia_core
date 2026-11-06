@@ -15,6 +15,7 @@ import { Badge } from '@coreModule/components/ui/badge.tsx';
 import { Separator } from '@coreModule/components/ui/separator.tsx';
 import { ChevronsUpDown, X } from 'lucide-react';
 import { cn } from '@coreModule/components/lib/utils.ts';
+import {buttonLike} from '@coreModule/helpers/general/a11y.ts';
 import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons';
 import withLanguage, { WithLanguageType } from '@coreModule/helpers/hocs/withLanguage.tsx';
 import SelectOptionLabel from '@coreModule/components/custom/selectOptionLabel.tsx';
@@ -152,7 +153,8 @@ function SimpleSelectRender({
     const renderClearTriggerControl = () =>
         canClear ? (
             <span
-                role="button"
+                {...buttonLike<HTMLSpanElement>(handleClear)}
+                // Nested in the combobox trigger button, so it stays out of the tab order.
                 tabIndex={-1}
                 aria-label={String(resolveLanguageKey('clear'))}
                 aria-disabled={disabled || undefined}
@@ -166,7 +168,6 @@ function SimpleSelectRender({
                     e.preventDefault();
                     e.stopPropagation();
                 }}
-                onClick={disabled ? undefined : handleClear}
             >
                 <X className="h-3.5 w-3.5" />
             </span>

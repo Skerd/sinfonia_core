@@ -92,7 +92,7 @@ function UserAccountSecurityUserSession({
                 selfAccess={viewingSelf}
                 buildEditPath={() => ""}
                 resolveLanguageKey={resolveLanguageKey}
-                hideHeader
+                header={false}
                 cardViewClassName="grid grid-cols-1 gap-2"
                 scrollRootClassName="max-h-[min(440px,55vh)]"
                 configurations={{limit: 8}}

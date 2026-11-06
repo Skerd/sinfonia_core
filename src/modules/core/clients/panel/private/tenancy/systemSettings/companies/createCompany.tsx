@@ -2,8 +2,6 @@ import {useEffect} from "react";
 import {Building2} from "lucide-react";
 import type {UseFormReturn} from "react-hook-form";
 import {createGenericCreatePage} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
-import {newCompanyCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
-import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {createCompanyFormSchema} from "armonia/src/modules/core/api/company/private/company/createCompany.form.validator.ts";
 import type {CreateCompanyFormType} from "armonia/src/modules/core/api/company/private/company/company.schema-def.ts";
 import {slugifySiteSlug} from "armonia/src/modules/core/api/company/private/company/siteSlug.ts";
@@ -16,7 +14,6 @@ export default createGenericCreatePage<CreateCompanyFormType>({
     schema: createCompanyFormSchema,
     defaultValues: {name: "", vat: "", siteSlug: ""},
     submitIcon: <Building2 />,
-    afterSuccess: () => store.dispatch(newCompanyCreated()),
     renderChildren: (form) => <PrefillSiteSlug form={form} />,
     mapSubmitPayload: (data) => {
         const postBody: CreateCompanyFormType = {

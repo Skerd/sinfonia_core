@@ -12,9 +12,10 @@ const emptyDeleted: DeletedData = {};
 type UserActionsProps = {
     specificUserId?: string;
     user: CompanyUserType;
+    onEdit: (user: CompanyUserType) => void;
 }
 
-function UserActions({user, specificUserId}: UserActionsProps) {
+function UserActions({user, specificUserId, onEdit}: UserActionsProps) {
     const {read, write} = useAccess("users", !specificUserId ? "self" : "others");
 
     if (!read && !write) return <HiddenElement />;
@@ -30,7 +31,7 @@ function UserActions({user, specificUserId}: UserActionsProps) {
             hideRestore
             allowMenuForCustomChildren
         >
-            <EditUserAction user={user} specificUserId={user._id}/>
+            <EditUserAction user={user} specificUserId={user._id} onEdit={onEdit} />
         </ActionMenu>
     );
 }

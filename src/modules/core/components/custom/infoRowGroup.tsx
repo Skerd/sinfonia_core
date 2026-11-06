@@ -4,6 +4,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {ItemGroup} from "@coreModule/components/ui/item.tsx";
+import {Button} from "@coreModule/components/ui/button.tsx";
 import {CARD_INFO_ROWS_CLASS} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
 
 type RestrictedFieldsApi = {
@@ -103,19 +104,22 @@ function RestrictedFieldsNoticeBase({labels, resolveLanguageKey}: RestrictedFiel
     const fieldList = labels.join(", ");
     const tooltip = `${permissionHint}: ${fieldList}`;
 
+    // A button, so keyboard users can focus it and open the tooltip that lists the hidden fields.
     return (
-        <TooltipDisplayer tooltip={tooltip}>
-            <span
-                role="listitem"
-                tabIndex={0}
-                className="inline-flex w-fit items-center gap-1 text-2xs text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                data-slot="restricted-fields"
-                aria-label={`${summary}. ${tooltip}`}
-            >
-                <IconLock size={12} aria-hidden />
-                {summary}
-            </span>
-        </TooltipDisplayer>
+        <div role="listitem" data-slot="restricted-fields" className="w-fit">
+            <TooltipDisplayer tooltip={tooltip}>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    size="xs"
+                    className="h-auto gap-1 p-0 text-2xs font-normal text-muted-foreground hover:bg-transparent"
+                    aria-label={`${summary}. ${tooltip}`}
+                >
+                    <IconLock size={12} aria-hidden />
+                    {summary}
+                </Button>
+            </TooltipDisplayer>
+        </div>
     );
 }
 

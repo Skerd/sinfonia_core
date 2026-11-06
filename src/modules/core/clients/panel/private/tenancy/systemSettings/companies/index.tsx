@@ -25,7 +25,6 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
             collectionName="companies"
             accessModel="companies"
             tableConfigKey="companies"
-            hideCreate
             buildEditPath={() => ""}
             resolveLanguageKey={resolveLanguageKey}
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-2"

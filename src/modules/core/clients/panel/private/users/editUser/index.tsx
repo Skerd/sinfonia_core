@@ -1,33 +1,32 @@
 import {useEffect} from "react";
 import {X} from "lucide-react";
 import {compose} from "redux";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Drawer, DrawerClose, DrawerContent} from "@coreModule/components/ui/drawer.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {editUser} from "@coreModule/helpers/redux/slices/uiSlice.ts";
+import type {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import AccountSettings from "@coreModule/clients/panel/private/accountSettings";
 import {getName} from "@coreModule/helpers/general/names.ts";
 import {ENTITY_SHEET_WIDTH_CLASS, FLOATING_SHEET_CONTENT_CLASS} from "@coreModule/components/viewEngine/sheet/widgets/sheetFloatingChrome.ts";
 import {clearStaleBodyPointerEventsLock, SheetMenuNavigateDismissProvider} from "@coreModule/components/viewEngine/sheet/widgets/sheetMenuNavigateDismiss.tsx";
 
-type EditUserProps = WithLanguageType & {}
+type EditUserProps = WithLanguageType & {
+    /** The user being edited; `null` keeps the drawer closed. */
+    user: CompanyUserType | null;
+    onClose: () => void;
+}
 
-function EditUser({}: EditUserProps) {
-
-    const dispatch = useDispatch();
-    const editUserData = useSelector((state: RootState) => state.ui.editUser);
+function EditUser({user, onClose}: EditUserProps) {
 
     useEffect(() => () => {
         window.setTimeout(clearStaleBodyPointerEventsLock, 0);
     }, []);
 
-    if( !editUserData ) return <></>;
+    if( !user ) return <></>;
 
     return (
-        <Drawer direction="right" open={!!editUserData} onOpenChange={ () => { dispatch(editUser(null)); }}>
+        <Drawer direction="right" open={true} onOpenChange={onClose}>
             <DrawerContent
                 className={cn(
                     FLOATING_SHEET_CONTENT_CLASS,
@@ -36,10 +35,10 @@ function EditUser({}: EditUserProps) {
                     "!w-auto !rounded-lg sm:!max-w-[98vw] lg:!max-w-[58vw]",
                 )}
             >
-                <SheetMenuNavigateDismissProvider onDismiss={() => dispatch(editUser(null))}>
+                <SheetMenuNavigateDismissProvider onDismiss={onClose}>
                     <AccountSettings
-                        specificUserId={editUserData._id}
-                        fullName={getName(editUserData)}
+                        specificUserId={user._id}
+                        fullName={getName(user)}
                         headerEnd={(
                             <DrawerClose asChild>
                                 <Button variant="ghost" size="icon" className="shrink-0">

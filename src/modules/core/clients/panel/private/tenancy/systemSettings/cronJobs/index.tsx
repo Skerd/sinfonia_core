@@ -20,7 +20,6 @@ function AllCronJobs({resolveLanguageKey}: WithLanguageType) {
             collectionName="cronjobs"
             accessModel="cronjobs"
             tableConfigKey="cronjobs"
-            hideCreate
             buildEditPath={cronJobEditPath}
             resolveLanguageKey={resolveLanguageKey}
             aboveToolbar={<CronJobMetrics resolveLanguageKey={resolveLanguageKey} />}

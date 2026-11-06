@@ -1,13 +1,11 @@
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {useEffect, useRef} from "react";
+import {useRef, useState} from "react";
 import {compose} from "redux";
-import {useSelector} from "react-redux";
-import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import UsersInviteDialog from "@coreModule/clients/panel/private/users/inviteUser";
 import CreateUsers from "@coreModule/clients/panel/private/users/createUser";
 import {type EntityListApi} from "@coreModule/components/entityPage/list/cardAndTableView.tsx";
-import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 import {UserCard} from "@coreModule/clients/panel/private/users/center/cardView";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import EditUser from "@coreModule/clients/panel/private/users/editUser";
@@ -22,13 +20,7 @@ type UsersProps = WithLanguageType & {
 
 function Users({resolveLanguageKey, administration}: UsersProps) {
     const listApiRef = useRef<EntityListApi<CompanyUserType> | null>(null);
-    const newUserCreated = useSelector((state: RootState) => state.ui.newUserCreated);
-
-    useEffect(() => {
-        if (newUserCreated > 0) {
-            listApiRef.current?.refetch?.();
-        }
-    }, [newUserCreated]);
+    const [editingUser, setEditingUser] = useState<CompanyUserType | null>(null);
 
     const contextValue = {
         updateRow: (id: any, patch: any) => listApiRef.current?.updateRow?.(id, patch),
@@ -42,20 +34,21 @@ function Users({resolveLanguageKey, administration}: UsersProps) {
                 collectionName="users"
                 accessModel="users"
                 tableConfigKey="users"
-                hideCreate
                 selfAccess={false}
                 listApiRef={listApiRef}
                 buildEditPath={() => ""}
                 resolveLanguageKey={resolveLanguageKey}
-                headerTitle={resolveLanguageKey(administration ? "administrationTitle" : "title")}
-                headerDescription={resolveLanguageKey(administration ? "administrationDescription" : "description")}
-                helpLanguageKey={administration ? "administrationHelp" : "help"}
-                headerActions={
-                    <>
+                header={(ctx) => (
+                    <EntityListHeader
+                        ctx={ctx}
+                        title={resolveLanguageKey(administration ? "administrationTitle" : "title")}
+                        description={resolveLanguageKey(administration ? "administrationDescription" : "description")}
+                        helpKey={administration ? "administrationHelp" : "help"}
+                    >
                         <UsersInviteDialog administration={administration} />
                         <CreateUsers administration={administration} />
-                    </>
-                }
+                    </EntityListHeader>
+                )}
                 extraParams={{administration, fetchAdministrationUsers: true}}
                 configurations={{limit: 20}}
                 cardViewClassName="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 pe-1"
@@ -66,12 +59,12 @@ function Users({resolveLanguageKey, administration}: UsersProps) {
                     hideRestore: true,
                     allowMenuForCustomChildren: true,
                 }}
-                renderCard={(user) => <UserCard user={user} specificUserId={user._id} />}
+                renderCard={(user) => <UserCard user={user} specificUserId={user._id} onEdit={setEditingUser} />}
                 renderActionMenuChildren={(user) => (
-                    <EditUserAction user={user} specificUserId={user._id} />
+                    <EditUserAction user={user} specificUserId={user._id} onEdit={setEditingUser} />
                 )}
             />
-            <EditUser />
+            <EditUser user={editingUser} onClose={() => setEditingUser(null)} />
         </TableUpdateContext.Provider>
     );
 }

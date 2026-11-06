@@ -3,6 +3,7 @@ import {createPortal} from 'react-dom';
 import {ZoomIn, ZoomOut, RotateCcw, Maximize2, Minimize2, Eraser, Undo2} from 'lucide-react';
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {Card} from "@coreModule/components/ui/card.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -916,12 +917,13 @@ function PolygonSelector({
                                 if (!hoverCapable) return;
                                 clearPhantomHover();
                             }}
-                            onClick={(e) => {
-                                // Touch: tapping the label opens the previewed floor.
-                                if (hoverCapable || !dashboard) return;
-                                e.stopPropagation();
-                                onFloorClick(phantomPoints[hoveredPhantomIndex]);
-                            }}
+                            // Touch: tapping the label opens the previewed floor, so only there is it a button.
+                            {...(!hoverCapable && dashboard
+                                ? buttonLike<HTMLDivElement>((e) => {
+                                    e.stopPropagation();
+                                    onFloorClick(phantomPoints[hoveredPhantomIndex]);
+                                })
+                                : {})}
                         >
                             {phantomHoverContent(phantomPoints[hoveredPhantomIndex])}
                         </div>

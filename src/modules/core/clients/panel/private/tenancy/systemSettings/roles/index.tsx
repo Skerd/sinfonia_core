@@ -6,7 +6,7 @@ import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import {IconUserPlus} from "@tabler/icons-react";
 import RoleCard from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/center/cardView/roleCard.tsx";
 import RoleSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx";
-import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 function roleEditPath(role: CompanyRoleType) {
     const params = new URLSearchParams();
@@ -22,8 +22,11 @@ function Roles({resolveLanguageKey}: WithLanguageType) {
             collectionName="roles"
             accessModel="roles"
             tableConfigKey="roles"
-            createPath="/tenancy/systemSettings/roles/create"
-            createIcon={<IconUserPlus />}
+            header={(ctx) => (
+                <EntityListHeader ctx={ctx}>
+                    <EntityListCreateButton ctx={ctx} path="/tenancy/systemSettings/roles/create" icon={<IconUserPlus />} />
+                </EntityListHeader>
+            )}
             buildEditPath={roleEditPath}
             resolveLanguageKey={resolveLanguageKey}
             cardViewClassName="grid grid-cols-1 gap-3 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 pe-1"

@@ -49,6 +49,8 @@ function InputGroupAddon({
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>) {
   return (
+    // Clicking the addon focuses its input: a pointer shortcut only, as keyboard users reach the input itself.
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <div
       role="group"
       data-slot="input-group-addon"

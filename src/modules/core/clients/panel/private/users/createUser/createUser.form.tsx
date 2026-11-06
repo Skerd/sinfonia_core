@@ -10,8 +10,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@coreModule/components/ui/form.tsx";
-import {useDispatch} from "react-redux";
-import {newUserCreated} from "@coreModule/helpers/redux/slices/uiSlice.ts";
+import {useTableUpdate} from "@coreModule/helpers/hooks/useTableUpdate.ts";
 import {LoaderCircle, UserPlus} from "lucide-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -50,7 +49,7 @@ function CreateUserForm({
     prefillNameQuery,
 }: CreateUserFormProps){
 
-    const dispatch = useDispatch();
+    const {refetch} = useTableUpdate();
     const {create} = useAccess("users");
     const formSchema = createCompanyUserFormSchema(languageCode, resolveLanguageKey("form"));
     const form = useForm<z.infer<typeof formSchema>>({
@@ -69,7 +68,7 @@ function CreateUserForm({
 
     useImperativeHandle(innerRef, () => ({
         success: (data?: CreateUserFormResponseType) => {
-            dispatch(newUserCreated());
+            refetch();
             form.reset({
                 name: "",
                 surname: "",

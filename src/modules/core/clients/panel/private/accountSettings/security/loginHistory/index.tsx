@@ -49,7 +49,7 @@ function UserAccountSecurityLoginHistory({specificUserId, resolveLanguageKey}: U
                 selfAccess={viewingSelf}
                 buildEditPath={() => ""}
                 resolveLanguageKey={resolveLanguageKey}
-                hideHeader
+                header={false}
                 cardViewClassName="grid grid-cols-1 gap-2"
                 scrollRootClassName="max-h-[min(400px,50vh)]"
                 configurations={{limit: 8}}

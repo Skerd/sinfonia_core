@@ -47,7 +47,6 @@ describe("EntityListPage smoke", () => {
                     collectionName="countries"
                     accessModel="countries"
                     tableConfigKey="countries"
-                    createPath="/countries/create"
                     buildEditPath={(entity) => `/countries/${entity._id}`}
                     resolveLanguageKey={(key) => key}
                     renderSheet={() => null}
@@ -64,7 +63,6 @@ describe("EntityListPage smoke", () => {
                     collectionName="countries"
                     accessModel="countries"
                     tableConfigKey="countries"
-                    createPath="/countries/create"
                     buildEditPath={(entity) => `/countries/${entity._id}`}
                     resolveLanguageKey={(key) => key}
                     renderSheet={() => null}
