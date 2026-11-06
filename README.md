@@ -1,6 +1,6 @@
 # Sinfonia — Core Module
 
-Sinfonia is the Arpeggio client application. It renders the admin panel, connects to **maestro** over HTTP/WebSocket, and consumes shared types from **armonia**.
+Sinfonia is the Arpeggio client application. One build is one app, chosen with `VITE_SINFONIA_APP`: the admin panel (`core`, default), the public `portal` (shop, clinic and rental sites), the `studio` (ViewConfig editor, dev), and propertyManagement's `public` site and `dyeus` magazine. It connects to **maestro** over HTTP/WebSocket and consumes shared types from **armonia**.
 
 The **core** module is always enabled and provides the UI foundation, routing shell, design system, and module contribution framework that feature modules plug into.
 
@@ -13,56 +13,58 @@ Subdomain ownership (panel shell, view engine, chat, studio): [`src/modules/core
 - **View engine** — server-driven forms and tables from maestro `ViewConfig`
 - **Entity pages** — reusable list/create/edit page scaffolding
 - **Design system** — Radix UI primitives, Tailwind, shared custom components
-- **API clients** — authenticated axios instances, error handling
-- **Redux store** — session, company, permissions, UI state
-- **i18n** — locale files under `assets/languages/`
+- **API client** — one axios instance (`helpers/apiClient/apiClient.ts`), used through `withAxios` / `useHttpRequest` (D09)
+- **Redux store** — session, language, notifications, chat, UI chrome and server health only (D46)
+- **i18n** — locale files under `assets/languages/`, 5 locales (en-US, de-CH, fr-FR, it-IT, sq-AL)
 
 ## Directory layout
 
 ```
 src/modules/core/
-├── apps/
-│   └── core/               # Panel Vite entry (coreApp, coreEntryPoint)
+├── apps/                   # Vite entries per app: core (panel), portal, studio
 ├── assets/
 │   ├── brand-icons/
-│   └── languages/          # en-US, sq-AL locale JSON
+│   └── languages/          # en-US, de-CH, fr-FR, it-IT, sq-AL locale JSON
 ├── clients/
+│   ├── portal/             # Public portal pages
+│   ├── studio/             # ViewConfig studio (dev)
 │   └── panel/
 │       ├── entryPoint/     # Panel shell, route resolution
 │       ├── private/        # Core panel pages (users, tenancy, chat, …); index.tsx is the auth-gated layout route
 │       └── public/         # Login, signup, password reset; auth/index.tsx is the /authenticate/:panel page
 ├── components/
-│   ├── ui/                 # Radix/shadcn primitives
-│   ├── animate-ui/         # Motion primitives
+│   ├── ui/                 # shadcn primitives: the only primitive layer (D22)
+│   ├── animate-ui/         # Motion primitives, used only inside ui/
+│   ├── viewEngine/         # ViewConfig forms and sheets (see below)
+│   ├── entityPage/         # List/create/edit page scaffolding
 │   └── custom/             # Core-owned app components (entity cards, system map, domain dialogs)
 ├── environment/            # Vite env, API base URLs
 └── helpers/
-    ├── axiosClients/
-    ├── hooks/ & hocs/      # withLanguage, useMobile, …
+    ├── apiClient/          # The axios instance
+    ├── hooks/ & hocs/      # withAxios, withLanguage, useHttpRequest, …
+    ├── moduleContributions/# Contribution loaders
     ├── modules/            # VITE_ENABLED_MODULES filtering
-    ├── panel/              # Sidebar nav types
+    ├── general/            # Formatting (dateTime.ts, numbers.ts), names, URLs
     └── redux/              # Store slices
 ```
 
 ## Module contribution system
 
-Feature modules register UI by exporting contribution files from `clients/panel/`. Core discovers them via Vite globs filtered by `VITE_ENABLED_MODULES`:
+Feature modules register UI by exporting contribution files from their `clients/<app>/` folders. Core discovers them via eager Vite globs filtered by `VITE_ENABLED_MODULES`; each kind has a loader in `src/modules/core/helpers/moduleContributions/load<Kind>Contributions.ts`:
 
 | File | Purpose |
 |------|---------|
 | `sidebarContribution.tsx` | Nav groups and menu items |
 | `routeConfigContribution.tsx` | Maps URL segments → page components |
-| `widgetContribution.tsx` | Dashboard/home widgets |
-| `tenancySettingsContribution.tsx` | Company settings tabs (optional) |
-| `siteRoomContribution.tsx` | Extra tenancy system-settings rooms (optional) |
+| `widgetContribution.tsx` | View-engine widget tokens → components (with their Studio descriptions) |
+| `tenancySettingsContribution.tsx` | Company settings tabs |
+| `siteRoomContribution.ts` | Extra tenancy system-settings rooms |
+| `accountNavContribution.tsx` / `accountSettingsContribution.tsx` | Account menu entries and settings pages |
+| `authPanelContribution.tsx` | Extra panels on `/authenticate/:panel` |
+| `panelLayoutContribution.ts` | The center panel's class name for a route |
+| `portalContribution.tsx` | The module's portal section (URL segment and pages) |
 
-Loaders live in `src/modules/core/helpers/moduleContributions/`:
-
-- `loadSidebarContributions.ts`
-- `loadRouteConfigContributions.ts`
-- `loadWidgetContributions.ts`
-- `loadTenancySettingsContributions.ts`
-- `loadSiteRoomContributions.ts`
+Modules also contribute JSON language fragments, deep-merged across modules: `assets/languages/<locale>/menus.json` (menu labels), `rolesPermissions.json` (permission and role labels) and `personErasure.json` (what the module's person eraser removes, D57).
 
 Contributions are sorted by `order`, then `id`. Route contributions use first-match wins.
 
@@ -100,9 +102,9 @@ Mirrors maestro's `ENABLED_MODULES`.
 
 ## Tooling
 
-`npm run lint` uses `eslint.config.js`. Maestro has no matching ESLint config (Node/Express vs React). `vite-plugin-checker` is a dependency but stays **commented out** in `vite.config.ts` — overlay typecheck duplicated `npm run typecheck` on every save. Re-enable locally if you want in-browser tsc.
+`npm run lint` uses `eslint.config.js`: the recommended sets plus the governance rules (D09 API calls, D22 UI primitives and icons, D23 jsx-a11y as errors, D36 dates). The root `npm run lint` lints sinfonia, maestro and armonia and freezes existing findings in a baseline, so only new ones fail. `vite-plugin-checker` is a dependency but stays **commented out** in `vite.config.ts` — overlay typecheck duplicated `npm run typecheck` on every save. Re-enable locally if you want in-browser tsc.
 
-## Dates (new code)
+## Dates
 
 Dates (D36): display through `formatDate` / `formatRelativeToNow` in `src/modules/core/helpers/general/dateTime.ts`; parsing and arithmetic with dayjs. Our code never imports date-fns.
 
@@ -114,14 +116,11 @@ See [`src/modules/core/README.md`](src/modules/core/README.md). No silent refres
 
 | Alias | Path |
 |-------|------|
-| `@coreModule/*` | `src/modules/core/*` |
-| `@eCommerceModule/*` | `src/modules/eCommerce/*` |
-| `@propertyManagementModule/*` | `src/modules/propertyManagement/*` |
-| `@propertyDevelopmentModule/*` | `src/modules/propertyDevelopment/*` |
+| `@<module>Module/*` | `src/modules/<module>/*`, one per module folder (core, eCommerce, finance, propertyManagement, propertyDevelopment, carRental, dentalClinic, swissOutreach) |
 | `armonia/*` | `../armonia/*` |
 | `@/*` | `src/*` |
 
-Run `npm run sync:module-aliases` after adding modules to regenerate aliases in `tsconfig.json` and `vite.config.ts`.
+The module aliases come from the module folders: Vite and Vitest build them at start (`scripts/moduleAliases.ts`), and the dev server, `npm run typecheck` and `npm run sync:module-aliases` rewrite the `paths` in `tsconfig.json` to match. Nothing to do by hand after adding a module.
 
 ## Related modules
 
@@ -130,6 +129,9 @@ Feature modules extend core and are documented separately:
 - [`src/modules/eCommerce`](src/modules/eCommerce/README.md)
 - [`src/modules/propertyManagement`](src/modules/propertyManagement/README.md)
 - [`src/modules/propertyDevelopment`](src/modules/propertyDevelopment/README.md)
+- [`src/modules/carRental`](src/modules/carRental/README.md)
+- [`src/modules/dentalClinic`](src/modules/dentalClinic/README.md)
+- [`src/modules/swissOutreach`](src/modules/swissOutreach/README.md)
 
 Armonia contracts: [`../armonia/README.md`](../armonia/README.md)  
 Maestro API: [`../maestro/README.md`](../maestro/README.md)
@@ -137,10 +139,12 @@ Maestro API: [`../maestro/README.md`](../maestro/README.md)
 ## Development
 
 ```bash
-npm run sinfoniaDev          # Vite dev server
+npm run sinfoniaDev          # Vite dev server (panel)
+npm run portal               # portal app (also: studio, publicDev, dyeus)
 npm run coreInstallAndDev    # rebuild armonia + start dev
 npm run typecheck            # sync aliases + tsc
 npm test                     # vitest
+npm run lint                 # ESLint
 ```
 
 Limit modules at dev time:
