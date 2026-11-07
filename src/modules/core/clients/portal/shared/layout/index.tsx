@@ -1,8 +1,9 @@
 import {useEffect} from "react";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
-import {Outlet} from "react-router-dom";
+import {Outlet, matchPath, useLocation} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {getPortalContributions, portalHostPagesOf} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
 import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import PortalNotFound from "../../notFound/index.tsx";
@@ -11,11 +12,16 @@ import PortalFooter from "../footer/index.tsx";
 import PortalNavigation from "../navigation/index.tsx";
 import {usePortalSite} from "../portalSiteContext.tsx";
 
-/** Portal chrome around every page (and a company site's visitor chat); a host the portal does not know shows only "not found". */
+/**
+ * Portal chrome around every page (and a company site's visitor chat). A host the portal does not know shows only
+ * "not found", except the modules' host pages (D96): emailed token links work on every company host.
+ */
 function PortalLayout({resolveLanguageKey}: WithLanguageType) {
     const dispatch = useDispatch();
     const sessionExpired = useSelector((state: RootState) => state.authentication.sessionExpired);
     const {site} = usePortalSite();
+    const {pathname} = useLocation();
+    const onHostPage = portalHostPagesOf(getPortalContributions()).some(({path}) => matchPath(`/${path}`, pathname) !== null);
 
     // No expiry dialog on the portal: an expired session simply ends.
     useEffect(() => {
@@ -32,7 +38,7 @@ function PortalLayout({resolveLanguageKey}: WithLanguageType) {
             </a>
             <PortalNavigation />
             <main id="portal-main" tabIndex={-1} className="flex-1 outline-none">
-                {site === null ? <PortalNotFound /> : <Outlet />}
+                {site === null && !onHostPage ? <PortalNotFound /> : <Outlet />}
             </main>
             <PortalFooter />
             <PortalChat />

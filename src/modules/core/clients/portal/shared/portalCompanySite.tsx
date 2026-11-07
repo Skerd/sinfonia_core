@@ -5,7 +5,7 @@ import {Link, useLocation, useParams} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {setSiteCompany} from "@coreModule/helpers/apiClient/siteCompany.ts";
-import type {PortalContribution} from "@coreModule/helpers/types/portalContribution.types.ts";
+import type {PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
@@ -20,7 +20,7 @@ import {BlogSection} from "../blog/index.tsx";
 const COMPANIES_REQUEST = {method: "post" as const, url: "/api/portal/companies", data: {}};
 
 type PortalCompanySiteProps = WithLanguageType & {
-    contribution: PortalContribution;
+    contribution: PortalSection;
     children: ReactNode;
 };
 

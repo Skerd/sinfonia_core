@@ -1,14 +1,14 @@
 import {createContext, useContext, useMemo, type ReactNode} from "react";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
-import {getPortalContributions} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
-import type {PortalContribution} from "@coreModule/helpers/types/portalContribution.types.ts";
+import {getPortalContributions, isPortalSection} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
+import type {PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
 import type {PortalSite, PortalSiteResponse} from "armonia/src/modules/core/api/portal/public/portal/portal.dto.ts";
 
 type PortalSiteState = {
     /** What this host is; `undefined` while loading, `null` when it could not be loaded. */
     site: PortalSite | null | undefined;
     /** Sections this host offers that this build can show. */
-    sections: PortalContribution[];
+    sections: PortalSection[];
 };
 
 const SITE_REQUEST = {method: "post" as const, url: "/api/portal/site", data: {}};
@@ -23,7 +23,7 @@ export function PortalSiteProvider({children}: {children: ReactNode}) {
 
     const value = useMemo(() => ({
         site,
-        sections: getPortalContributions().filter((contribution) => site?.sections.includes(contribution.section)),
+        sections: getPortalContributions().filter(isPortalSection).filter((contribution) => site?.sections.includes(contribution.section)),
     }), [site]);
 
     return <PortalSiteContext.Provider value={value}>{children}</PortalSiteContext.Provider>;

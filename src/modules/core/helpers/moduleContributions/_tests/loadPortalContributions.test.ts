@@ -1,5 +1,9 @@
 import {afterEach, describe, expect, it} from "vitest";
-import {createPortalContributions} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
+import {
+    createPortalContributions,
+    isPortalSection,
+    portalHostPagesOf,
+} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
 import {setCompanyModules} from "@coreModule/helpers/modules/enabledModules.ts";
 
 const Site = () => null;
@@ -26,7 +30,7 @@ describe("createPortalContributions", () => {
                 catalogs: [{kind: "product", Filters: Site}, {kind: "service"}],
             }},
         });
-        expect(list()[0].catalogs?.map((catalog) => catalog.kind)).toEqual(["product", "service"]);
+        expect(list().filter(isPortalSection)[0].catalogs?.map((catalog) => catalog.kind)).toEqual(["product", "service"]);
     });
 
     it("rejects a catalog without a kind", () => {
@@ -37,5 +41,36 @@ describe("createPortalContributions", () => {
     it("rejects an entry without a section path", () => {
         const list = createPortalContributions({[path("x")]: {default: {section: "x"}}});
         expect(() => list()).toThrow(/portalContribution/);
+    });
+
+    describe("host pages (D96)", () => {
+        const Page = () => null;
+
+        it("accepts a contribution that brings only host pages, and keeps it out of the sections", () => {
+            const list = createPortalContributions({
+                [path("carRental")]: {default: {section: "carRental", path: "car-rental", CompanySite: Site}},
+                [path("hostOnly")]: {default: {id: "hostOnly", hostPages: [{path: "/token-page", Page}]}},
+            });
+            expect(list().filter(isPortalSection).map((entry) => entry.section)).toEqual(["carRental"]);
+            expect(list().map((entry) => entry.id ?? entry.section)).toEqual(["carRental", "hostOnly"]);
+        });
+
+        it("collects every contribution's host pages, sections' too, from the host root", () => {
+            const list = createPortalContributions({
+                [path("a")]: {default: {section: "a", path: "a", order: 10, hostPages: [{path: "a-link", Page}]}},
+                [path("b")]: {default: {order: 20, hostPages: [{path: "/b-link", Page}]}},
+            });
+            expect(portalHostPagesOf(list()).map((page) => page.path)).toEqual(["a-link", "b-link"]);
+        });
+
+        it("rejects a host page without a component or a path", () => {
+            expect(() => createPortalContributions({[path("x")]: {default: {hostPages: [{path: "x"}]}}})()).toThrow(/portalContribution/);
+            expect(() => createPortalContributions({[path("x")]: {default: {hostPages: [{path: "/", Page}]}}})()).toThrow(/portalContribution/);
+        });
+
+        it("rejects a contribution without a section that has no host pages, or carries section parts", () => {
+            expect(() => createPortalContributions({[path("x")]: {default: {hostPages: []}}})()).toThrow(/portalContribution/);
+            expect(() => createPortalContributions({[path("x")]: {default: {hostPages: [{path: "x", Page}], CompanySite: Site}}})()).toThrow(/portalContribution/);
+        });
     });
 });

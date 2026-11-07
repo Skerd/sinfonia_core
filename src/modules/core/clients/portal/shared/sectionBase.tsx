@@ -1,12 +1,12 @@
 import {createContext, useCallback, useContext, type ReactNode} from "react";
-import type {PortalContribution} from "@coreModule/helpers/types/portalContribution.types.ts";
+import type {PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
 import {usePortalSite} from "./portalSiteContext.tsx";
 import {companySiteOrigin} from "./portalZone.ts";
 
 const SectionBaseContext = createContext("");
 
 /** Where a section opens: the home catalog on its first kind (its items straight away), else its own pages. */
-export function sectionHref({path, catalogs}: Pick<PortalContribution, "path" | "catalogs">): string {
+export function sectionHref({path, catalogs}: Pick<PortalSection, "path" | "catalogs">): string {
     const kind = catalogs?.[0]?.kind;
     return kind ? `/?${new URLSearchParams({kind})}` : `/${path}`;
 }

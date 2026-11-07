@@ -16,6 +16,8 @@ import {GuestOnly, RequireSession} from "@coreModule/clients/portal/shared/sessi
 import {SectionBaseProvider, sectionHref} from "@coreModule/clients/portal/shared/sectionBase.tsx";
 import PortalCompanySite from "@coreModule/clients/portal/shared/portalCompanySite.tsx";
 import PortalScrollToTop from "@coreModule/clients/portal/shared/portalScrollToTop.tsx";
+import SitePageLayout from "@coreModule/clients/portal/shared/sitePageLayout.tsx";
+import {getPortalContributions, portalHostPagesOf} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
 
 const HomePage = lazy(() => import("@coreModule/clients/portal/home/index.tsx"));
 const BlogPage = lazy(() => import("@coreModule/clients/portal/blog/index.tsx"));
@@ -38,7 +40,7 @@ function SectionProviders({children}: {children: ReactNode}) {
 }
 
 /**
- * The pages of the sections this host offers. A section spanning companies (the shop) and a
+ * The pages of the sections this host offers, and the modules' host pages. A section spanning companies (the shop) and a
  * company's own site live under `/<path>/*`; on the apex a company's pages live under
  * `/<path>/<company>/*`, and `/<path>` itself opens the section's items in the home catalog.
  */
@@ -46,6 +48,8 @@ function PortalRoutes() {
     const {site, sections} = usePortalSite();
     if (site === undefined) return <Loader />;
     const companyHost = site?.scope === "company";
+    // The modules' host pages (D96): on every host, whatever sections it lists, and never in the navbar or footer.
+    const hostPages = portalHostPagesOf(getPortalContributions());
 
     return (
         <Routes>
@@ -68,6 +72,11 @@ function PortalRoutes() {
                     <Route path="reset-password/:code" element={<ErrorBoundary><ResetPasswordPage /></ErrorBoundary>} />
                 </Route>
                 <Route path="activate/:code" element={<ErrorBoundary><ActivatePage /></ErrorBoundary>} />
+                <Route element={<SitePageLayout />}>
+                    {hostPages.map(({path, Page}) => (
+                        <Route key={`host-${path}`} path={path} element={<ErrorBoundary><Page /></ErrorBoundary>} />
+                    ))}
+                </Route>
                 {sections.map((contribution) => {
                     const {section, path, CompanySite} = contribution;
                     const Site = contribution.SectionSite ?? (companyHost ? CompanySite : undefined);

@@ -22,10 +22,10 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import PortalSectionName from "../portalSectionName.tsx";
 import {usePortalSite} from "../portalSiteContext.tsx";
 import {SectionBaseProvider, sectionHref} from "../sectionBase.tsx";
-import type {PortalContribution} from "@coreModule/helpers/types/portalContribution.types.ts";
+import type {PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
 
 /** A section is current on its own pages, and on the home catalog while one of its kinds is chosen. */
-function useIsSectionActive(): (section: PortalContribution) => boolean {
+function useIsSectionActive(): (section: PortalSection) => boolean {
     const {pathname, search} = useLocation();
     const kind = new URLSearchParams(search).get("kind");
     return (section) => pathname.startsWith(`/${section.path}`) || Boolean(kind && section.catalogs?.some((catalog) => catalog.kind === kind));
