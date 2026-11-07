@@ -13,6 +13,8 @@
     "namePlaceholder": "Name",
     "siteSlugLabel": "Site slug",
     "siteSlugPlaceholder": "my-company",
+    "timezoneLabel": "Time zone",
+    "timezonePlaceholder": "Europe/Zurich",
     "emailLabel": "Email",
     "emailPlaceholder": "Email",
     "phoneNumberNumberLabel": "Phone number",

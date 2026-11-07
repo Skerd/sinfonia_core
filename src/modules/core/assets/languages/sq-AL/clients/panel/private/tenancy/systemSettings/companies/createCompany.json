@@ -13,6 +13,8 @@
     "namePlaceholder": "Emri",
     "siteSlugLabel": "Slug i faqes",
     "siteSlugPlaceholder": "my-company",
+    "timezoneLabel": "Zona kohore",
+    "timezonePlaceholder": "Europe/Tirane",
     "emailLabel": "Email",
     "emailPlaceholder": "Email",
     "phoneNumberNumberLabel": "Numri i telefonit",

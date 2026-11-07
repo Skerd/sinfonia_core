@@ -18,6 +18,8 @@
     "namePlaceholder": "Emri",
     "siteSlugLabel": "Slug i faqes",
     "siteSlugPlaceholder": "my-company",
+    "timezoneLabel": "Zona kohore",
+    "timezonePlaceholder": "Europe/Tirane",
     "shopListedOnPortalLabel": "Shfaq dyqanin tim në portal",
     "emailLabel": "Email",
     "emailPlaceholder": "Email",

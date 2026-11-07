@@ -16,6 +16,7 @@
   "logo": "Logo",
   "vat": "VAT",
   "siteSlug": "Website-Slug",
+  "timezone": "Zeitzone",
   "siteHost": "Website-Host",
   "siteStatus": "Website-Status",
   "siteHostLastError": "Letzter Fehler",

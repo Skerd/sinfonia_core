@@ -18,6 +18,8 @@
     "namePlaceholder": "Nom",
     "siteSlugLabel": "Slug du site",
     "siteSlugPlaceholder": "my-company",
+    "timezoneLabel": "Fuseau horaire",
+    "timezonePlaceholder": "Europe/Zurich",
     "shopListedOnPortalLabel": "Afficher ma boutique sur le portail",
     "emailLabel": "E-mail",
     "emailPlaceholder": "E-mail",

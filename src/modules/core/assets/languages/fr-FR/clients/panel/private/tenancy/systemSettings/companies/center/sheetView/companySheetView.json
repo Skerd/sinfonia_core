@@ -16,6 +16,7 @@
   "logo": "Logo",
   "vat": "TVA",
   "siteSlug": "Slug du site",
+  "timezone": "Fuseau horaire",
   "siteHost": "Hôte du site",
   "siteStatus": "Statut du site",
   "siteHostLastError": "Dernière erreur",

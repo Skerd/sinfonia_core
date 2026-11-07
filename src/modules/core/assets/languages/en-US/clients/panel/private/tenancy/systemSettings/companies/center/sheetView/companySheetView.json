@@ -16,6 +16,7 @@
   "logo": "Logo",
   "vat": "VAT",
   "siteSlug": "Site slug",
+  "timezone": "Time zone",
   "siteHost": "Site host",
   "siteStatus": "Site status",
   "siteHostLastError": "Last error",

@@ -16,6 +16,7 @@
   "logo": "Logo",
   "vat": "TVSH",
   "siteSlug": "Slug i faqes",
+  "timezone": "Zona kohore",
   "siteHost": "Host i faqes",
   "siteStatus": "Statusi i faqes",
   "siteHostLastError": "Gabimi i fundit",
