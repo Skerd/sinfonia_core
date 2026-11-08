@@ -128,8 +128,9 @@ type DetailFactIcon = ComponentType<{className?: string}>;
 export function DetailFacts({facts}: {facts: readonly {icon: DetailFactIcon; label: string; value: string}[]}) {
     return (
         <dl className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-            {facts.map(({icon: Icon, label, value}) => (
-                <div key={label} className="flex items-center gap-3 rounded-2xl bg-muted px-4 py-3">
+            {/* Keyed by position too: labels are translated and all read "" until the caller's dictionary loads. */}
+            {facts.map(({icon: Icon, label, value}, index) => (
+                <div key={`${index}-${label}`} className="flex items-center gap-3 rounded-2xl bg-muted px-4 py-3">
                     <Icon className="size-5 shrink-0 text-muted-foreground" aria-hidden />
                     <div className="min-w-0">
                         <dt className="text-xs text-muted-foreground">{label}</dt>
@@ -160,8 +161,8 @@ export function DetailText({children}: {children: string}) {
 export function DetailSpecs({rows}: {rows: readonly {label: string; value: ReactNode}[]}) {
     return (
         <dl className="divide-y divide-border text-sm">
-            {rows.map((row) => (
-                <div key={row.label} className="flex justify-between gap-6 py-2.5">
+            {rows.map((row, index) => (
+                <div key={`${index}-${row.label}`} className="flex justify-between gap-6 py-2.5">
                     <dt className="text-muted-foreground">{row.label}</dt>
                     <dd className="text-right font-medium">{row.value}</dd>
                 </div>
