@@ -2,9 +2,9 @@ import {act, render, screen} from "@testing-library/react";
 import {beforeEach, describe, expect, it, vi} from "vitest";
 import {Provider, useSelector} from "react-redux";
 import {configureStore} from "@reduxjs/toolkit";
-import languageReducer, {changeLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import languageReducer, {changeLanguage, pickLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
 import mainConfig from "@coreModule/assets/languages/mainConfig.json";
-import {isSupportedLanguageCode, LANGUAGE_STORAGE_KEY, LanguageProvider} from "@coreModule/helpers/context/providers/language-provider.tsx";
+import {isSupportedLanguageCode, LANGUAGE_PICKED_STORAGE_KEY, LANGUAGE_STORAGE_KEY, LanguageProvider} from "@coreModule/helpers/context/providers/language-provider.tsx";
 import {resetLocalStorageMemoryFallback} from "@coreModule/helpers/context/localStorage/localStorageProvider.ts";
 import {writeFromAnotherTab} from "./storageUtils.ts";
 
@@ -121,6 +121,48 @@ describe("LanguageProvider", () => {
         writeFromAnotherTab(LANGUAGE_STORAGE_KEY, "xx-XX");
         writeFromAnotherTab("unrelated", "de-CH");
         expect(store.getState().language.languageCode).toBe("it-IT");
+    });
+
+    // TD-B72: the default language stored on a first visit read the same as a visitor's choice.
+    it("stores a language as picked only when a picker chose it, the default included", () => {
+        const {store} = renderProvider();
+        expect(store.getState().language.picked).toBe(false);
+        expect(localStorage.getItem(LANGUAGE_PICKED_STORAGE_KEY)).toBeNull();
+
+        act(() => {
+            store.dispatch(changeLanguage("de-CH"));
+        });
+        expect(store.getState().language.picked).toBe(false);
+        expect(localStorage.getItem(LANGUAGE_PICKED_STORAGE_KEY)).toBeNull();
+
+        act(() => {
+            store.dispatch(pickLanguage(DEFAULT_LANGUAGE));
+        });
+        expect(store.getState().language).toEqual({languageCode: DEFAULT_LANGUAGE, picked: true});
+        expect(localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe(DEFAULT_LANGUAGE);
+        expect(localStorage.getItem(LANGUAGE_PICKED_STORAGE_KEY)).toBe("true");
+    });
+
+    it("restores whether the stored language was picked", () => {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, DEFAULT_LANGUAGE);
+        localStorage.setItem(LANGUAGE_PICKED_STORAGE_KEY, "true");
+        expect(renderProvider().store.getState().language).toEqual({languageCode: DEFAULT_LANGUAGE, picked: true});
+    });
+
+    it("restores a stored language without the flag as not picked", () => {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, "it-IT");
+        expect(renderProvider().store.getState().language).toEqual({languageCode: "it-IT", picked: false});
+    });
+
+    it("follows a language picked in another tab", () => {
+        const {store} = renderProvider();
+
+        act(() => {
+            localStorage.setItem(LANGUAGE_STORAGE_KEY, "fr-FR");
+        });
+        writeFromAnotherTab(LANGUAGE_PICKED_STORAGE_KEY, "true");
+
+        expect(store.getState().language).toEqual({languageCode: "fr-FR", picked: true});
     });
 
     it("renders with the default language when storage is unavailable", () => {

@@ -10,7 +10,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import mainConfig from "@coreModule/assets/languages/mainConfig.json";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
-import {changeLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import {pickLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 
 type SupportedLanguage = {
@@ -57,7 +57,7 @@ function LanguageSwitch({resolveLanguageKey, showTitles = false}: LanguageSwitch
                 </DropdownMenuLabel>
                 <DropdownMenuRadioGroup
                     value={languageCode}
-                    onValueChange={(next) => dispatch(changeLanguage(next))}
+                    onValueChange={(next) => dispatch(pickLanguage(next))}
                 >
                     {
                         supportedLanguages.map((language) => (
