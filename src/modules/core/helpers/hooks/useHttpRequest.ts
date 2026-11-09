@@ -1,7 +1,7 @@
 import {toast} from "sonner";
 import {useEffect, useRef, useState} from 'react';
-import axios from "axios";
 import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
+import {isRequestCancelled} from "@coreModule/helpers/apiClient/requestCancelled.ts";
 import {
     buildBody,
     buildHeaders,
@@ -187,7 +187,7 @@ export default function useHttpRequest<TData = unknown>(
                 settleToast("success", toastMessages.success?.(res.data));
                 currentProps.notifySuccess?.({data: res.data});
             } catch (err: unknown) {
-                if (!isCurrent() || controller.signal.aborted || axios.isCancel(err)) {
+                if (!isCurrent() || controller.signal.aborted || isRequestCancelled(err)) {
                     settleToast("error");
                     return;
                 }
