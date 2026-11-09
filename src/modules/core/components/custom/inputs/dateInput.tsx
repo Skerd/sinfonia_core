@@ -104,7 +104,12 @@ function applyTimeParts(
 }
 
 const HOURS = Array.from({ length: 24 }, (_, i) => i)
+/** `HOURS` plus 24, the end-of-day hour offered by `allowEndOfDay`. */
+const HOURS_WITH_END_OF_DAY = [...HOURS, 24]
+const END_OF_DAY_HOUR = 24
 const MINUTES_SECONDS = Array.from({ length: 60 }, (_, i) => i)
+/** At 24 the clock stops: only :00 (and :00 seconds) exist. */
+const ZERO_ONLY = [0]
 /** Rows travelled by PageUp/PageDown in a time column. */
 const TIME_PAGE_STEP = 5
 
@@ -220,6 +225,10 @@ type DateInputTimePanelProps = {
   onTimeChange: (hour: number, minute: number, second: number) => void
   /** When true, omit the left border (used for time-only popovers). */
   standalone?: boolean
+  /** Offer hour 24 after 23 (see `DateInput` `allowEndOfDay`). */
+  allowEndOfDay?: boolean
+  /** The current value is the end of the day (`24:00`), which a `Date` cannot hold. */
+  endOfDay?: boolean
 }
 
 function DateInputTimePanel({
@@ -231,11 +240,14 @@ function DateInputTimePanel({
   secondLabel,
   onTimeChange,
   standalone = false,
+  allowEndOfDay = false,
+  endOfDay = false,
 }: DateInputTimePanelProps) {
   const time = dateValue && isValid(dateValue) ? dateValue : undefined
-  const hour = time?.getHours() ?? 0
-  const minute = time?.getMinutes() ?? 0
-  const second = time?.getSeconds() ?? 0
+  const hour = endOfDay ? END_OF_DAY_HOUR : (time?.getHours() ?? 0)
+  const minute = endOfDay ? 0 : (time?.getMinutes() ?? 0)
+  const second = endOfDay ? 0 : (time?.getSeconds() ?? 0)
+  const subHourValues = endOfDay ? ZERO_ONLY : MINUTES_SECONDS
 
   return (
     <div
@@ -250,14 +262,14 @@ function DateInputTimePanel({
       <div className="flex shrink-0 gap-2 overflow-hidden">
         <TimeScrollColumn
           label={hourLabel}
-          values={HOURS}
+          values={allowEndOfDay ? HOURS_WITH_END_OF_DAY : HOURS}
           selected={hour}
           disabled={disabled}
           onSelect={(h) => onTimeChange(h, minute, second)}
         />
         <TimeScrollColumn
           label={minuteLabel}
-          values={MINUTES_SECONDS}
+          values={subHourValues}
           selected={minute}
           disabled={disabled}
           onSelect={(m) => onTimeChange(hour, m, second)}
@@ -265,7 +277,7 @@ function DateInputTimePanel({
         {withSeconds && (
           <TimeScrollColumn
             label={secondLabel}
-            values={MINUTES_SECONDS}
+            values={subHourValues}
             selected={second}
             disabled={disabled}
             onSelect={(s) => onTimeChange(hour, minute, s)}
@@ -375,6 +387,13 @@ type DateInputBase = Omit<
    */
   timeOnly?: boolean
   /**
+   * Time-only mode: offer `24:00` (`24:00:00` with seconds) after `23:59` as the end of the day,
+   * for the end of a window that runs until midnight (core `WeeklyHoursSlotDef` `endTime`). The
+   * value round-trips as that string, never as `00:00`. Leave it off for start times. Ignored
+   * outside `timeOnly`. ViewConfig: `widgetProps.allowEndOfDay: true` on a time-only `#DateInput`.
+   */
+  allowEndOfDay?: boolean
+  /**
    * IANA timezone for datetime (not date-only) values. Wall-clock pick/display use this
    * zone; the stored value is an ISO instant. Falls back to the runtime timezone.
    */
@@ -414,6 +433,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       value,
       onChange,
       timeOnly = false,
+      allowEndOfDay: allowEndOfDayProp = false,
       minDate,
       maxDate,
       minDateExclusive = false,
@@ -431,6 +451,10 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
     const timeFormat = resolvedValueFormat ?? displayFormatProp ?? ""
     const hasTime = timeOnly || formatIncludesTime(timeFormat)
     const withSeconds = formatIncludesSeconds(timeFormat)
+    const allowEndOfDay = timeOnly && allowEndOfDayProp
+    const endOfDayValue = withSeconds ? "24:00:00" : "24:00"
+    const isEndOfDay =
+      allowEndOfDay && typeof value === "string" && value.trim() === endOfDayValue
     // No pattern: a plain date shows as the localized long date.
     const displayFormat: string | undefined =
       displayFormatProp ??
@@ -458,6 +482,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
     const clearLabel = dictText(currentLanguage, "clear") ?? "Clear"
 
     const dateValue = React.useMemo(() => {
+      if (isEndOfDay) return undefined
       if (value instanceof Date) return isValid(value) ? value : undefined
       if (!resolvedValueFormat) return undefined
       const s = typeof value === "string" ? value.trim() : ""
@@ -489,7 +514,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       if (!isValid(iso)) return undefined
       if (!timeOnly && hasTime) return wallClockFromInstant(iso, timeZone) ?? iso
       return iso
-    }, [value, resolvedValueFormat, timeOnly, hasTime, timeZone])
+    }, [isEndOfDay, value, resolvedValueFormat, timeOnly, hasTime, timeZone])
 
     /** Emits in whichever shape this instance was configured for: formatted string, ISO instant, or `Date`. */
     const emitValue = React.useCallback(
@@ -512,11 +537,16 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
 
     const handleTimePartChange = React.useCallback(
       (hour: number, minute: number, second: number) => {
+        if (allowEndOfDay && hour === END_OF_DAY_HOUR) {
+          // Only string values reach here (time-only always has a `valueFormat`).
+          ;(onChange as ((v: string) => void) | undefined)?.(endOfDayValue)
+          return
+        }
         const base =
           dateValue && isValid(dateValue) ? new Date(dateValue) : new Date()
         emitValue(applyTimeParts(base, hour, minute, withSeconds ? second : 0))
       },
-      [dateValue, emitValue, withSeconds],
+      [allowEndOfDay, dateValue, emitValue, endOfDayValue, onChange, withSeconds],
     )
 
     const handleDaySelect = React.useCallback(
@@ -546,7 +576,9 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       [disabled, emitValue],
     )
 
-    const displayValue = !dateValue || !isValid(dateValue)
+    const displayValue = isEndOfDay
+      ? endOfDayValue
+      : !dateValue || !isValid(dateValue)
       ? ""
       : displayFormat
         ? safeFormat(dateValue, displayFormat)
@@ -673,6 +705,8 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
                 secondLabel={secondLabel}
                 onTimeChange={handleTimePartChange}
                 standalone={timeOnly}
+                allowEndOfDay={allowEndOfDay}
+                endOfDay={isEndOfDay}
               />
             )}
           </div>

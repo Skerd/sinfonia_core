@@ -190,6 +190,17 @@ describe("renderFormWidget: #DateInput", () => {
         props.onChange(null);
         expect(field.onChange).toHaveBeenCalledWith(null);
     });
+
+    /** TD-F42: the end-of-day option is a plain widgetProp, and its value reaches the form untouched. */
+    it("passes allowEndOfDay through and stores 24:00 as is", () => {
+        const {props, field} = mountScalar(
+            bind("#DateInput", {valueFormat: "HH:mm", timeOnly: true, allowEndOfDay: true}),
+            makeField("24:00"),
+        );
+        expect(props).toMatchObject({allowEndOfDay: true, timeOnly: true, value: "24:00"});
+        props.onChange("24:00");
+        expect(field.onChange).toHaveBeenCalledWith("24:00");
+    });
 });
 
 describe("renderFormWidget: other scalar widgets", () => {

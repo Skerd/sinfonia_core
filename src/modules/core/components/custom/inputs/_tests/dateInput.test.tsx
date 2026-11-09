@@ -177,3 +177,72 @@ describe("DateInput time panel", () => {
         expect(screen.queryByRole("grid")).not.toBeInTheDocument();
     });
 });
+
+/** TD-F42: a weekly window that runs until midnight ends at 24:00, which the picker could not offer. */
+describe("DateInput end of day (allowEndOfDay)", () => {
+    const openPanel = (ui: React.ReactElement) => {
+        render(ui);
+        fireEvent.click(dateBox());
+    };
+    const hourOptions = () => {
+        const hours = screen.getByRole("listbox", {name: "Hr"});
+        return screen.getAllByRole("option").filter((o) => hours.contains(o));
+    };
+    const minuteOptions = () => {
+        const minutes = screen.getByRole("listbox", {name: "Min"});
+        return screen.getAllByRole("option").filter((o) => minutes.contains(o));
+    };
+
+    it("does not offer 24 unless enabled", () => {
+        openPanel(<DateInput timeOnly valueFormat="HH:mm" value="09:30"/>);
+        expect(hourOptions().map((o) => o.textContent).at(-1)).toBe("23");
+    });
+
+    it("does not offer 24 outside time-only mode", () => {
+        openPanel(<DateInput valueFormat="YYYY-MM-DD HH:mm" value="2026-03-15 09:30" allowEndOfDay/>);
+        expect(hourOptions().map((o) => o.textContent).at(-1)).toBe("23");
+    });
+
+    it("offers 24 after 23 and emits the picked end of day as 24:00", () => {
+        const onChange = vi.fn();
+        openPanel(<DateInput timeOnly valueFormat="HH:mm" value="22:30" allowEndOfDay onChange={onChange}/>);
+        const last = hourOptions().at(-1)!;
+        expect(last.textContent).toBe("24");
+        fireEvent.click(last);
+        expect(onChange).toHaveBeenCalledWith("24:00");
+    });
+
+    it("reaches 24:00 from the keyboard too", () => {
+        const onChange = vi.fn();
+        openPanel(<DateInput timeOnly valueFormat="HH:mm" value="23:15" allowEndOfDay onChange={onChange}/>);
+        fireEvent.keyDown(screen.getByRole("listbox", {name: "Hr"}), {key: "End"});
+        expect(onChange).toHaveBeenCalledWith("24:00");
+    });
+
+    it("shows a stored 24:00 as 24:00 with hour 24 selected and only :00 minutes", () => {
+        render(<DateInput timeOnly valueFormat="HH:mm" value="24:00" allowEndOfDay/>);
+        expect(dateBox().value).toBe("24:00");
+        fireEvent.click(dateBox());
+        expect(screen.getByRole("option", {name: "24", selected: true})).toBeInTheDocument();
+        expect(minuteOptions().map((o) => o.textContent)).toEqual(["00"]);
+    });
+
+    it("leaves the end of day for an ordinary time when another hour is picked", () => {
+        const onChange = vi.fn();
+        openPanel(<DateInput timeOnly valueFormat="HH:mm" value="24:00" allowEndOfDay onChange={onChange}/>);
+        fireEvent.click(hourOptions().find((o) => o.textContent === "18")!);
+        expect(onChange).toHaveBeenCalledWith("18:00");
+    });
+
+    it("clears a stored 24:00", () => {
+        const onChange = vi.fn();
+        render(<DateInput timeOnly valueFormat="HH:mm" value="24:00" allowEndOfDay onChange={onChange}/>);
+        fireEvent.click(screen.getByRole("button", {name: "Clear"}));
+        expect(onChange).toHaveBeenCalledWith("");
+    });
+
+    it("does not show 24:00 when the option is off", () => {
+        render(<DateInput timeOnly valueFormat="HH:mm" value="24:00"/>);
+        expect(dateBox().value).toBe("");
+    });
+});
