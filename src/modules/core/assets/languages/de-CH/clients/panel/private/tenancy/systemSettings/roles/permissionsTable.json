@@ -179,7 +179,8 @@
       "users": "Benutzer",
       "join": "Website-Chat übernehmen",
       "release": "Chat an den Bot zurückgeben",
-      "close": "Website-Chat schliessen"
+      "close": "Website-Chat schliessen",
+      "answerWebsiteChats": "Website-Chats beantworten"
     },
     "Cities": {
       "cities": "Cities",
@@ -660,7 +661,13 @@
       "timezone": "Zeitzone",
       "updatedAt": "Aktualisiert am",
       "username": "Benutzername",
-      "users": "Benutzer"
+      "users": "Benutzer",
+      "unlockActivation": "Aktivierung entsperren",
+      "unlockPasswordReset": "Passwort-Zurücksetzung entsperren",
+      "unlockMfaDeactivation": "MFA-Deaktivierung entsperren",
+      "unlockInvitation": "Einladung entsperren",
+      "resendActivationEmail": "Aktivierungs-E-Mail erneut senden",
+      "resendInvitationEmail": "Einladungs-E-Mail erneut senden"
     },
     "Usersessions": {
       "createdAt": "Erstellt am",

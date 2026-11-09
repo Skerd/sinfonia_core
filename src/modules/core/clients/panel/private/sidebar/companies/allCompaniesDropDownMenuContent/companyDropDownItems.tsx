@@ -9,9 +9,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
 import NoData from "@coreModule/components/custom/noData.tsx";
 import InfiniteList, {type InfiniteListFilter} from "@coreModule/components/custom/infiniteList";
-import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {DropdownMenuLabel} from "@coreModule/components/ui/dropdown-menu.tsx";
 
@@ -37,7 +35,6 @@ function CompanyDropDownItems({
     resolveLanguageKey
 }: CompanyDropDownItemsProps) {
 
-    const {read} = useAccess("companies");
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchText, setSearchText] = useState("");
     const [appliedSearch, setAppliedSearch] = useState("");
@@ -74,9 +71,6 @@ function CompanyDropDownItems({
         {resolveLanguageKey},
     );
 
-    if( !read ){
-        return <HiddenElement />
-    }
 
     const searchPlaceholder = resolveLanguageKey("searchPlaceholder");
 

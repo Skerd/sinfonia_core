@@ -20,10 +20,20 @@ export function useCatalogItemHref(): (item: PortalCatalogItem) => string | null
     };
 }
 
+/**
+ * A card's price: whole units when the amount has none (a €250,000 home), otherwise the currency's own decimals
+ * (a €12.50 product, a €45.50 day rate): `formatCurrency` alone rounds to whole units.
+ */
+export function formatCatalogPrice(amount: number, currency: string): string {
+    return Number.isInteger(amount)
+        ? formatCurrency(amount, currency)
+        : formatCurrency(amount, currency, {maximumFractionDigits: undefined});
+}
+
 function CatalogCard({item, resolveLanguageKey}: WithLanguageType & {item: PortalCatalogItem}) {
     const href = useCatalogItemHref()(item);
     if (!href) return null;
-    const amount = item.price ? formatCurrency(item.price.amount, item.price.currency) : null;
+    const amount = item.price ? formatCatalogPrice(item.price.amount, item.price.currency) : null;
     const price = !item.price || !amount ? null
         : item.price.per === "day" ? resolveLanguageKey("pricePerDay").replace("{price}", amount)
         : item.price.from ? resolveLanguageKey("priceFrom").replace("{price}", amount)

@@ -1,5 +1,5 @@
 {
   "path": "src/modules/core/clients/panel/private/sidebar/companies/index.tsx",
-  "failTitle": "Firma konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis reload firma"
+  "failTitle": "Firma konnte nicht geladen werden",
+  "failTitleTooltip": "Klicken, um die Firma neu zu laden"
 }

@@ -179,7 +179,8 @@
       "users": "Përdoruesit",
       "join": "Bashkohu në bisedën e faqes",
       "release": "Kthe bisedën te boti",
-      "close": "Mbyll bisedën e faqes"
+      "close": "Mbyll bisedën e faqes",
+      "answerWebsiteChats": "Përgjigju bisedave të faqes"
     },
     "Cities": {
       "cities": "Cities",
@@ -660,7 +661,13 @@
       "timezone": "Zona kohore",
       "updatedAt": "UpdatedAt",
       "username": "Emri i përdoruesit",
-      "users": "Users"
+      "users": "Users",
+      "unlockActivation": "Zhblloko aktivizimin",
+      "unlockPasswordReset": "Zhblloko rivendosjen e fjalëkalimit",
+      "unlockMfaDeactivation": "Zhblloko çaktivizimin e MFA",
+      "unlockInvitation": "Zhblloko ftesën",
+      "resendActivationEmail": "Ridërgo emailin e aktivizimit",
+      "resendInvitationEmail": "Ridërgo emailin e ftesës"
     },
     "Usersessions": {
       "createdAt": "Krijuar në",

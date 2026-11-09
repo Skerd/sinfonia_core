@@ -179,7 +179,8 @@
       "users": "Utenti",
       "join": "Partecipa alla chat del sito",
       "release": "Restituisci la chat al bot",
-      "close": "Chiudi la chat del sito"
+      "close": "Chiudi la chat del sito",
+      "answerWebsiteChats": "Rispondi alle chat del sito"
     },
     "Cities": {
       "cities": "Città",
@@ -660,7 +661,13 @@
       "timezone": "Fuso orario",
       "updatedAt": "Aggiornato il",
       "username": "Nome utente",
-      "users": "Utenti"
+      "users": "Utenti",
+      "unlockActivation": "Sblocca l'attivazione",
+      "unlockPasswordReset": "Sblocca il ripristino della password",
+      "unlockMfaDeactivation": "Sblocca la disattivazione MFA",
+      "unlockInvitation": "Sblocca l'invito",
+      "resendActivationEmail": "Invia di nuovo l'email di attivazione",
+      "resendInvitationEmail": "Invia di nuovo l'email di invito"
     },
     "Usersessions": {
       "createdAt": "Creato il",

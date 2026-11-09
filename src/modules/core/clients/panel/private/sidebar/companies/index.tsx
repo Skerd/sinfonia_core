@@ -12,8 +12,6 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
-import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
-import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {useOnCompanyUpdated} from "@coreModule/clients/panel/private/sidebar/companies/companyUpdatedEvent.ts";
 
 type CompaniesSwitcherProps = WithLanguageType & WithAxiosType<BasicCompanyInfoFormResponseType> & {};
@@ -26,20 +24,16 @@ function CompaniesSwitcher({
     resolveLanguageKey
 }: CompaniesSwitcherProps) {
 
-    const {read} = useAccess("companies");
+    // Every member gets the switcher: the basic-info endpoints return a member's own companies whatever their role
+    // grants on the Company model, so it is not gated on `companies` access here.
     const [forceReload, setForceReload] = useState<number>(0);
     const [menuOpen, setMenuOpen] = useState(false);
     useOnCompanyUpdated(() => setForceReload(Date.now()));
 
     useEffect(() => {
-        if( !!read && Object.keys(read).length ){
-            onFilterChange({});
-        }
-    }, [forceReload, read]);
+        onFilterChange({});
+    }, [forceReload]);
 
-    if( !read ){
-        return <HiddenElement />
-    }
     if( loading ){
         return <Loader />
     }
@@ -67,33 +61,16 @@ function CompaniesSwitcher({
                             className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:cursor-pointer'
                         >
                             <div className='text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center'>
-                                <HiddenElement>
-                                    {
-                                        read.logo &&
-                                        <Avatar>
-                                            <AvatarImage src={`/api/auxiliary/media/${data.logo}`} alt={data.name + "photo"} />
-                                            <AvatarFallback className="text-foreground font-semibold">{data?.name.substring(0, 2)?.toUpperCase() ?? ""}</AvatarFallback>
-                                        </Avatar>
-                                    }
-                                </HiddenElement>
+                                <Avatar>
+                                    {data.logo ? <AvatarImage src={`/api/auxiliary/media/${data.logo}`} alt={data.name + "photo"} /> : null}
+                                    <AvatarFallback className="text-foreground font-semibold">{data.name.substring(0, 2).toUpperCase()}</AvatarFallback>
+                                </Avatar>
                             </div>
                             <div className='grid flex-1 text-start text-sm leading-tight'>
-                                <HiddenElement>
-                                    {
-                                        read.name &&
-                                        <span className='truncate font-semibold'>
-                                          {data.name}
-                                        </span>
-                                    }
-                                </HiddenElement>
-                                <HiddenElement>
-                                    {
-                                        read.description &&
-                                        <span className='truncate text-xs'>
-                                          {data.description}
-                                        </span>
-                                    }
-                                </HiddenElement>
+                                <span className='truncate font-semibold'>
+                                    {data.name}
+                                </span>
+                                {data.description ? <span className='truncate text-xs'>{data.description}</span> : null}
                             </div>
                             <div className="ms-auto">
                                 <IconSelector className="size-4" />
