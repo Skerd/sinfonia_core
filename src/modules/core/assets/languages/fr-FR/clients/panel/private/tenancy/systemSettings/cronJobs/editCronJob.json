@@ -1,7 +1,7 @@
 {
   "backToList": "Retour à la liste",
-  "description": "Mettez à jour les paramètres de planification, de portée et d’exécution.",
-  "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données du travail.",
+  "description": "Mettez à jour les paramètres de planification et d'exécution.",
+  "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données de la tâche.",
   "errorTitle": "Échec du chargement de l'action planifiée",
   "form": {
     "activeLabel": "Actif",
@@ -30,7 +30,7 @@
     "submit": "Enregistrer"
   },
   "formHeader": {
-    "description": "Mettez à jour les paramètres de planification, de portée et d’exécution.",
+    "description": "Mettez à jour les paramètres de planification et d'exécution.",
     "title": "Modifier l'action planifiée"
   },
   "noId": "Aucune action planifiée sélectionnée.",

@@ -13,7 +13,7 @@
   },
   "axiosOnFunction": {
     "startLeave": {
-      "title": "Uscire dalla chat",
+      "title": "Uscita dalla chat",
       "time": 3000
     },
     "startDelete": {

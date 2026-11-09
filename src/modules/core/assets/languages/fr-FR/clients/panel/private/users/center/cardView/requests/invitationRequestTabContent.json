@@ -1,13 +1,13 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/cardView/requests/invitationRequestTabContent.tsx",
   "invitedBy": "Invité par",
-  "invitedAt": "Invité à",
+  "invitedAt": "Invité le",
   "welcomeMessage": "Message d'invitation",
   "opened": "Ouvert",
   "attempts": "Tentatives",
-  "invitationExpiresAt": "Expire à",
+  "invitationExpiresAt": "Expire le",
   "accepted": "Accepté",
-  "acceptedAt": "Accepté à",
+  "acceptedAt": "Accepté le",
   "lockedUntil": "Verrouillé jusqu'à",
   "yes": "Oui",
   "no": "Non"

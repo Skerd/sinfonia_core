@@ -4,7 +4,7 @@
   "cancel": "Annuler",
   "axios": {
     "start": {
-      "title": "Mise à jour du courrier électronique",
+      "title": "Mise à jour de l'e-mail",
       "time": 3000
     },
     "success": {

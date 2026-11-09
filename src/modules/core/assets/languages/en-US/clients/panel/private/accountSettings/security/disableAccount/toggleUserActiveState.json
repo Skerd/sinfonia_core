@@ -2,8 +2,8 @@
   "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx",
   "titleActivate": "Activate user [!!!]?",
   "titleDeactivate": "Block user [!!!]?",
-  "descriptionActivate": "Are you sure you want to activate user [!!!]. The user can re-login into the system after the activation.",
-  "descriptionDeactivate": "Are you sure you want to block user [!!!]? The user can not access the system after blocking.",
+  "descriptionActivate": "Are you sure you want to activate user [!!!]? The user can log in to the system again after activation.",
+  "descriptionDeactivate": "Are you sure you want to block user [!!!]? The user cannot access the system after blocking.",
   "activate": "Activate",
   "deactivate": "Block",
   "axios": {

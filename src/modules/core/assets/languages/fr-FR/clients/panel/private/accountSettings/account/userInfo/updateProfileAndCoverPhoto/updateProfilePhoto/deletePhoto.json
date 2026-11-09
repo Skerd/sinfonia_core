@@ -5,7 +5,7 @@
   "deletePhoto": "Supprimer la photo",
   "axios": {
     "start": {
-      "title": "Supprimer une photo",
+      "title": "Suppression de la photo",
       "time": 3000
     },
     "success": {

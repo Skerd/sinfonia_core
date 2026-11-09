@@ -3,8 +3,8 @@
   "title": "Monedhat",
   "description": "Menaxhoni monedhat, simbolet dhe shifrat dhjetore",
   "help": {
-    "ariaLabel": "Rreth Monedhat",
-    "title": "Rreth Monedhat",
+    "ariaLabel": "Rreth monedhave",
+    "title": "Rreth monedhave",
     "overview": "Monedhat përcaktojnë si emërtohen dhe shfaqen çmimet dhe shitjet. Kërkohen emri, simboli, shkurtesa me tri shkronja dhe 0 deri në 8 shifra dhjetore.",
     "sections": [
       {

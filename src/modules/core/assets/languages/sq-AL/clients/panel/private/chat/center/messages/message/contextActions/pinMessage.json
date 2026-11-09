@@ -3,15 +3,15 @@
   "pin": "Fikso",
   "axios": {
     "start": {
-      "title": "Mesazhi po gozhdohet",
+      "title": "Mesazhi po fiksohet",
       "time": 3000
     },
     "success": {
-      "title": "Mesazhi u gozhdua me sukses",
+      "title": "Mesazhi u fiksua me sukses",
       "time": 3000
     },
     "error": {
-      "title": "Gozhdimi i mesazhit dështoi.",
+      "title": "Fiksimi i mesazhit dështoi.",
       "time": 3000
     }
   }

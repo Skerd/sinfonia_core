@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/addMembersToChannel.tsx",
-  "addToChat": "Shto në chat",
+  "addToChat": "Shto në bisedë",
   "cancel": "Anulo",
   "axios": {
     "start": {

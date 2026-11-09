@@ -2,8 +2,8 @@
   "path": "src/modules/core/clients/panel/private/websiteChats/left/index.tsx",
   "titleWaiting": "En attente",
   "helpWaiting": {
-    "ariaLabel": "À propos de En attente",
-    "title": "À propos de En attente",
+    "ariaLabel": "À propos de « En attente »",
+    "title": "À propos de « En attente »",
     "overview": "En attente contient les conversations de visiteurs du site public prêtes pour une intervention humaine, mais que vous n’avez pas encore prises.",
     "sections": [
       {
@@ -24,15 +24,15 @@
   },
   "titleMine": "Les miens",
   "helpMine": {
-    "ariaLabel": "À propos de Les miens",
-    "title": "À propos de Les miens",
+    "ariaLabel": "À propos de « Les miens »",
+    "title": "À propos de « Les miens »",
     "overview": "Les miens contient les conversations du site web que vous avez rejointes. En attente reste la file que vous n’avez pas prise.",
     "sections": [
       {
         "title": "Vos conversations",
         "items": [
           "Poursuivez ici l’échange avec le visiteur.",
-          "Rendez la conversation au robot ou fermez-la lorsqu’elle est terminée."
+          "Rendez la conversation au robot lorsqu’une intervention humaine n’est plus nécessaire, ou fermez-la une fois terminée."
         ]
       }
     ]

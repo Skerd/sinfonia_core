@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
   "title": "Actions planifiées",
-  "description": "Gérer les tâches cron et les tâches planifiées",
+  "description": "Exécutez, mettez en pause ou modifiez la planification des tâches créées par le serveur",
   "help": {
-    "ariaLabel": "À propos de Actions planifiées",
-    "title": "À propos de Actions planifiées",
+    "ariaLabel": "À propos des actions planifiées",
+    "title": "À propos des actions planifiées",
     "overview": "Les actions planifiées sont des tâches créées par le serveur. Cette page permet de piloter et régler les tâches existantes, mais pas d’en créer ni d’inventer leurs gestionnaires.",
     "sections": [
       {

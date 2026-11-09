@@ -2,9 +2,9 @@
   "path": "src/modules/core/clients/panel/private/chat/left/index.tsx",
   "title": "Kutia hyrëse",
   "help": {
-    "ariaLabel": "Rreth Inbox",
-    "title": "Rreth Inbox",
-    "overview": "Inbox është komunikimi i brendshëm mes stafit të kompanisë. Nuk është radha e bisedave me vizitorët e faqes publike.",
+    "ariaLabel": "Rreth kutisë hyrëse",
+    "title": "Rreth kutisë hyrëse",
+    "overview": "Kutia hyrëse është komunikimi i brendshëm mes stafit të kompanisë. Nuk është radha e bisedave me vizitorët e faqes publike.",
     "sections": [
       {
         "title": "Bisedat",

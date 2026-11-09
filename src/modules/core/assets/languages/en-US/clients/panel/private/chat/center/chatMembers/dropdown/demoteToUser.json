@@ -11,7 +11,7 @@
       "time": 3000
     },
     "error": {
-      "title": "Failed to demote user to user",
+      "title": "Failed to dismiss member as admin",
       "time": 3000
     }
   }

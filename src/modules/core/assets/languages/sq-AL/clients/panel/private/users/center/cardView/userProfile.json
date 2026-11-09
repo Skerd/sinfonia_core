@@ -5,16 +5,16 @@
   "about": "Rreth",
   "info": "Informacion",
   "email": "Emaili",
-  "emailVerified": "Email aktual i verifikuar",
+  "emailVerified": "Emaili aktual i verifikuar",
   "invitedUser": "Ju lutemi verifikoni emailin duke pranuar kërkesën për ftesë",
   "emailNotVerified": "Ju lutemi verifikoni emailin tuaj të ri duke klikuar në lidhjen e dërguar në kutinë tuaj hyrëse",
   "timezone": "Zona kohore",
-  "birthday": "ditëlindjen",
+  "birthday": "Ditëlindja",
   "phoneNumber": "Numri i telefonit",
   "registeredDate": "Data e regjistrimit",
   "registeredFrom": "Regjistruar nga",
-  "emailVerifiedAt": "Email i verifikuar në",
-  "lockedOutUntil": "I mbyllur deri në",
+  "emailVerifiedAt": "Emaili u verifikua më",
+  "lockedOutUntil": "I bllokuar deri më",
   "online": "Në linjë",
   "offline": "Jashtë linje",
   "createdBy": "Krijuar nga",
@@ -25,15 +25,15 @@
     "invited": "I ftuar"
   },
   "mfaStatuses": {
-    "active": "MPJ aktive",
-    "notActive": "MPJ jo aktive"
+    "active": "MFA aktive",
+    "notActive": "MFA jo aktive"
   },
   "roles": "Rolet",
-  "unsuccessfulLogins": "Identifikimi i pasuksesshëm",
+  "unsuccessfulLogins": "Hyrje të pasuksesshme",
   "lastLoginDate": "Hyrja e fundit",
   "requests": "Kërkesat",
-  "requestsInvitation": "Ftesë",
+  "requestsInvitation": "Ftesa",
   "requestsActivation": "Aktivizimi",
   "requestsPasswordReset": "Rivendosja e fjalëkalimit",
-  "requestsMfaDeactivation": "Çaktivizimi i MPJ-së"
+  "requestsMfaDeactivation": "Çaktivizimi i MFA-së"
 }

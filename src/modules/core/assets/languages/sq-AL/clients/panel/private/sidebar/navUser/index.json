@@ -9,7 +9,7 @@
   "signOut": "Dilni",
   "dialog": {
     "title": "Dilni",
-    "description": "Je i sigurt që dëshiron të dalësh? Ju do të duhet të identifikoheni përsëri për të hyrë në llogarinë tuaj.",
+    "description": "Jeni i sigurt që dëshironi të dilni? Do të duhet të identifikoheni përsëri për të hyrë në llogarinë tuaj.",
     "confirmText": "Dilni",
     "cancelText": "Anulo"
   }

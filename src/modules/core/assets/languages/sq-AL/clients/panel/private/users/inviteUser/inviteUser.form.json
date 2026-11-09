@@ -16,7 +16,7 @@
   "invite": "Fto",
   "axios": {
     "start": {
-      "title": "Përdorues ftues",
+      "title": "Po ftohet përdoruesi",
       "time": 3000
     },
     "success": {

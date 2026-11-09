@@ -3,8 +3,8 @@
   "title": "États / cantons",
   "description": "Gérer les états et le pays associé",
   "help": {
-    "ariaLabel": "À propos de États / cantons",
-    "title": "À propos de États / cantons",
+    "ariaLabel": "À propos des états / cantons",
+    "title": "À propos des états / cantons",
     "overview": "Les États, cantons ou provinces forment le niveau intermédiaire de la géographie des adresses. Chaque entrée exige un nom, un code et un pays.",
     "sections": [
       {

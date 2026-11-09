@@ -7,7 +7,7 @@
   "errorAcceptingInvitationTitle": "Failed to accept invitation",
   "errorAcceptingInvitationDescription": "Something unexpected happened while accepting the invitation. Please try again later!",
   "successAcceptingInvitationTitle": "Success",
-  "successAcceptingInvitationDescription": "Invitation accepted successfully. You can now log into your account using your password.",
+  "successAcceptingInvitationDescription": "Invitation accepted successfully. You can now log in to your account using your password.",
   "title": "Accept invitation",
   "description": "Set your password to accept the invitation",
   "form": {

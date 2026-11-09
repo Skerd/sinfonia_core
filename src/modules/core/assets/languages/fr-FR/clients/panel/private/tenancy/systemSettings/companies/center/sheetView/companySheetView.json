@@ -29,7 +29,7 @@
   "allowedDomains": "Domaines autorisés",
   "howToReach": "Coordonnées",
   "whoAreWe": "Qui sommes-nous",
-  "publicAiChat": "Chat IA publique",
+  "publicAiChat": "Chat IA public",
   "enabled": "Actif",
   "requireIdentification": "Exiger une identification",
   "humanHandoffEnabled": "Transfert à une personne",
@@ -43,11 +43,11 @@
   "createdBy": "Créé par",
   "deletedBy": "Supprimé par",
   "deletedAt": "Supprimé le",
-  "active": "Actif",
-  "notActive": "Pas actif",
+  "active": "Active",
+  "notActive": "Inactive",
   "status": {
-    "true": "Actif",
-    "false": "Pas actif"
+    "true": "Active",
+    "false": "Inactive"
   },
   "form": {
     "streetLabel": "Rue",

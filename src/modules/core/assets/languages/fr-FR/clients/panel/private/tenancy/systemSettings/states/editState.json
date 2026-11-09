@@ -9,7 +9,7 @@
     "nameLabel": "Nom",
     "namePlaceholder": "Nom de l'État",
     "codeLabel": "Code",
-    "codePlaceholder": "par ex. Californie",
+    "codePlaceholder": "par ex. CA",
     "countryLabel": "Pays",
     "countryPlaceholder": "Sélectionner le pays"
   },
@@ -17,7 +17,7 @@
   "backToList": "Retour à la liste",
   "axios": {
     "start": {
-      "title": "État de sauvegarde",
+      "title": "Enregistrement de l'état",
       "time": 3000
     },
     "success": {

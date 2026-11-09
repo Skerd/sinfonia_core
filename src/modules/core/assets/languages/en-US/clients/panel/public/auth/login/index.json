@@ -3,7 +3,7 @@
   "signInHeader": {
     "title": "Sign in",
     "descriptionOne": "Enter your email and password below to",
-    "descriptionTwo": "log into your account"
+    "descriptionTwo": "log in to your account"
   },
   "mfaHeader": {
     "title": "Two-factor Authentication",

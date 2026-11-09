@@ -1,17 +1,17 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/index.tsx",
   "title": "Qytetet",
-  "description": "Menaxhoni qytetet, shtetin dhe vendin përkatës",
+  "description": "Menaxhoni qytetet dhe rajonin e vendin ku bëjnë pjesë",
   "help": {
-    "ariaLabel": "Rreth Qytetet",
-    "title": "Rreth Qytetet",
-    "overview": "Qytetet përdoren në adresat e kompanive, ndërtesave dhe regjistrimeve të tjera. Emri dhe vendi janë të detyrueshëm; shteti ose kantoni është opsional.",
+    "ariaLabel": "Rreth qyteteve",
+    "title": "Rreth qyteteve",
+    "overview": "Qytetet përdoren në adresat e kompanive, ndërtesave dhe regjistrimeve të tjera. Emri dhe vendi janë të detyrueshëm; rajoni ose kantoni është opsional.",
     "sections": [
       {
         "title": "Menaxhimi i qyteteve",
         "items": [
-          "Krijoni ose ndryshoni emrin dhe vendin, dhe zgjidhni shtetin kur nevojitet.",
-          "Mbani të njëtrajtshme lidhjen mes vendit dhe shtetit.",
+          "Krijoni ose ndryshoni emrin dhe vendin, dhe zgjidhni rajonin kur nevojitet.",
+          "Mbani të njëtrajtshme lidhjen mes vendit dhe rajonit.",
           "Fshirja është e butë dhe qyteti mund të rikthehet."
         ]
       }
@@ -24,13 +24,13 @@
   "failDescription": "Ndodhi një gabim gjatë ngarkimit të qyteteve. Ju lutemi provoni përsëri.",
   "status": "Statusi",
   "name": "Emri",
-  "state": "Shtetit",
+  "state": "Rajoni",
   "country": "Vendi",
   "deleted": "Fshirë",
   "active": "Aktiv",
   "fields": {
     "name": "Emri",
-    "state": "Shtetit",
+    "state": "Rajoni",
     "country": "Vendi",
     "createdAt": "Krijuar më",
     "updatedAt": "Përditësuar më",

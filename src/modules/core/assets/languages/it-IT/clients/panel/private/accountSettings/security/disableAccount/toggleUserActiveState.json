@@ -5,7 +5,7 @@
   "descriptionActivate": "Sei sicuro di voler attivare l'utente [!!!]. L'utente può accedere nuovamente al sistema dopo l'attivazione.",
   "descriptionDeactivate": "Sei sicuro di voler bloccare l'utente [!!!]? L'utente non può accedere al sistema dopo il blocco.",
   "activate": "Attiva",
-  "deactivate": "Bloccare",
+  "deactivate": "Blocca",
   "axios": {
     "start": {
       "title": "Modifica dello stato dell'utente",

@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/index.tsx",
   "title": "Azioni pianificate",
-  "description": "Gestisci i lavori cron e le attività pianificate",
+  "description": "Avvia, metti in pausa o modifica la pianificazione dei processi creati dal server",
   "help": {
     "ariaLabel": "Informazioni su Azioni pianificate",
     "title": "Informazioni su Azioni pianificate",
@@ -34,7 +34,7 @@
   "fields": {
     "!enums": {
       "missedRunPolicy": {
-        "skip": "Salta il ritardo",
+        "skip": "Salta gli arretrati",
         "run_once": "Esegui una volta",
         "catch_up": "Recupera"
       }
@@ -61,7 +61,7 @@
     "deletedBy": "Eliminato da"
   },
   "metrics": {
-    "active": "Attività attive",
+    "active": "Processi attivi",
     "pausedCount": "{count} in pausa",
     "running": "In esecuzione",
     "succeeded24h": "Riuscite (24 h)",

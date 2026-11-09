@@ -3,21 +3,21 @@
   "title": "Kompania",
   "description": "Informacioni i kompanisë",
   "help": {
-    "ariaLabel": "Rreth Kompania",
-    "title": "Rreth Kompania",
-    "overview": "Kjo faqe menaxhon regjistrimin e kompanisë së qiramarrësit aktual, jo një listë kompanish. Ndrysho hap formularin e kompanisë.",
+    "ariaLabel": "Rreth kompanisë",
+    "title": "Rreth kompanisë",
+    "overview": "Kjo faqe menaxhon regjistrimin e kompanisë aktuale, jo një listë kompanish. Përdorni Redakto për të hapur formularin e kompanisë.",
     "sections": [
       {
         "title": "Të dhënat e kompanisë",
         "items": [
           "Emri dhe TVSH-ja janë të detyrueshme. Emaili, telefoni, faqja, rrjetet sociale, përshkrimi, logoja dhe domenet e lejuara janë opsionale.",
-          "Çdo adresë e re kërkon rrugën, kodin postar, qytetin, vendin dhe koordinatat e hartës; shteti është opsional."
+          "Çdo adresë e re kërkon rrugën, kodin postar, qytetin, vendin dhe koordinatat e hartës; rajoni ose kantoni është opsional."
         ]
       },
       {
         "title": "Biseda publike me AI",
         "items": [
-          "Aktivizoni botin për vizitorët dhe caktoni përshëndetjen dhe personazhin.",
+          "Aktivizoni ose çaktivizoni botin për vizitorët dhe caktoni përshëndetjen dhe personalitetin e tij.",
           "Zgjidhni nëse kërkohet identifikim dhe kalim te një person. Këto cilësime ushqejnë bisedat e faqes."
         ]
       },

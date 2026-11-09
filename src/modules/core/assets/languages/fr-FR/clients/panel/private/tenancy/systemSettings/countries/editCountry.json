@@ -5,12 +5,12 @@
   "errorTitle": "Échec du chargement des données du pays",
   "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données du pays",
   "form": {
-    "idLabel": "Numéro d'identification du pays",
+    "idLabel": "ID du pays",
     "nameLabel": "Nom",
     "namePlaceholder": "Nom du pays",
     "codeLabel": "Code",
     "codePlaceholder": "par ex. USA",
-    "phoneCodeLabel": "Code de téléphone",
+    "phoneCodeLabel": "Indicatif téléphonique",
     "phoneCodePlaceholder": "+1",
     "currencyLabel": "Devise",
     "currencyPlaceholder": "Sélectionner une devise"
@@ -19,7 +19,7 @@
   "backToList": "Retour à la liste",
   "axios": {
     "start": {
-      "title": "Pays qui sauve",
+      "title": "Enregistrement du pays",
       "time": 3000
     },
     "success": {

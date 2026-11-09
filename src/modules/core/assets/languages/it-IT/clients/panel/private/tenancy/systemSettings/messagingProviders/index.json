@@ -24,7 +24,7 @@
       }
     ]
   },
-  "createMessagingProvider": "Aggiungi fornitore di messaggistica",
+  "createMessagingProvider": "Aggiungi provider di messaggistica",
   "searchPlaceholder": "Cerca per nome o SID dell'account...",
   "noData": "Nessun provider di messaggistica configurato",
   "failTitle": "Impossibile caricare i provider di messaggistica",
@@ -51,7 +51,7 @@
     "fromPhone": "Mittente dell'SMS",
     "fromWhatsapp": "Mittente di WhatsApp",
     "active": "Attivo",
-    "lastTestedAt": "Ultimo testato",
+    "lastTestedAt": "Ultimo test",
     "lastTestStatus": "Ultima prova",
     "createdAt": "Creato il",
     "updatedAt": "Aggiornato il",

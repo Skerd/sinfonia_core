@@ -4,7 +4,7 @@
   "cancel": "Anulo",
   "axios": {
     "start": {
-      "title": "Po përditëson zonën kohore",
+      "title": "Po përditësohet zona kohore",
       "time": 3000
     },
     "success": {

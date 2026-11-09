@@ -4,15 +4,15 @@
   "cancel": "Anulo",
   "axios": {
     "start": {
-      "title": "Email-i po përditësohet",
+      "title": "Emaili po përditësohet",
       "time": 3000
     },
     "success": {
-      "title": "Email-i u përditësua me sukses. Ju lutemi verifikoni këtë email duke klikuar në lidhjen e dërguar në këtë email",
+      "title": "Emaili u përditësua me sukses. Ju lutemi verifikojeni duke klikuar në lidhjen e dërguar në këtë adresë emaili",
       "time": 3000
     },
     "error": {
-      "title": "Email-i nuk u përditësua",
+      "title": "Emaili nuk u përditësua",
       "time": 3000
     }
   }

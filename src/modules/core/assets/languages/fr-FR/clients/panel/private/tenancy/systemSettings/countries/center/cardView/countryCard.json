@@ -3,7 +3,7 @@
   "name": "Nom",
   "flag": "Drapeau",
   "code": "Code",
-  "phoneCode": "Code de téléphone",
+  "phoneCode": "Indicatif téléphonique",
   "currency": "Devise",
   "deleted": "Supprimé",
   "active": "Actif",

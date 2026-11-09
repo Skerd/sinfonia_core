@@ -5,15 +5,15 @@
   "updatePhoto": "Mettre à jour la photo",
   "axios": {
     "start": {
-      "title": "Téléchargement de la photo de couverture",
+      "title": "Importation de la photo de couverture",
       "time": 3000
     },
     "success": {
-      "title": "Photo de couverture téléchargée avec succès",
+      "title": "Photo de couverture importée avec succès",
       "time": 3000
     },
     "error": {
-      "title": "Échec du téléchargement de la photo de couverture",
+      "title": "Échec de l'importation de la photo de couverture",
       "time": 3000
     }
   }

@@ -1,27 +1,27 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/index.tsx",
-  "title": "Shtetet",
-  "description": "Menaxhoni shtetet dhe vendin përkatës",
+  "title": "Rajonet",
+  "description": "Menaxhoni rajonet dhe vendin përkatës",
   "help": {
-    "ariaLabel": "Rreth Shtetet",
-    "title": "Rreth Shtetet",
-    "overview": "Shtetet, kantonet ose provincat janë niveli i mesëm i gjeografisë së adresave. Çdo regjistrim kërkon emër dhe kod dhe duhet t’i përkasë një vendi.",
+    "ariaLabel": "Rreth rajoneve",
+    "title": "Rreth rajoneve",
+    "overview": "Rajonet, kantonet ose provincat janë niveli i mesëm i gjeografisë së adresave. Çdo regjistrim kërkon emër dhe kod dhe duhet t’i përkasë një vendi.",
     "sections": [
       {
-        "title": "Menaxhimi i shteteve",
+        "title": "Menaxhimi i rajoneve",
         "items": [
           "Krijoni ose ndryshoni emrin, kodin dhe vendin përkatës.",
-          "Një qytet mund t’i referohet një shteti, por kjo zgjedhje është opsionale.",
+          "Një qytet mund t’i referohet një rajoni, por kjo zgjedhje është opsionale.",
           "Fshirja është e butë dhe regjistrimi mund të rikthehet."
         ]
       }
     ]
   },
-  "createState": "Krijo shtet",
+  "createState": "Krijo rajon",
   "searchPlaceholder": "Kërko sipas emrit, kodit ose shto filtra...",
-  "noData": "Nuk u gjet asnjë shtet",
-  "failTitle": "Ngarkimi i gjendjeve dështoi",
-  "failDescription": "Ndodhi një gabim gjatë ngarkimit të gjendjeve. Ju lutemi provoni përsëri.",
+  "noData": "Nuk u gjet asnjë rajon",
+  "failTitle": "Ngarkimi i rajoneve dështoi",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit të rajoneve. Ju lutemi provoni përsëri.",
   "status": "Statusi",
   "name": "Emri",
   "code": "Kodi",

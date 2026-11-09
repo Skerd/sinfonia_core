@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/otp/deactivateOTP/deactivateOtp.form.tsx",
   "deactivateNow": "Jeni i sigurt që dëshironi të çaktivizoni 2FA?",
-  "deactivateNowDescription": "Pas çaktivizimit, përdoruesi mund të hyjë në sistem duke përdorur fjalëkalimin onlu",
+  "deactivateNowDescription": "Pas çaktivizimit, përdoruesi mund të hyjë në sistem vetëm me fjalëkalim",
   "withOTPCodeDescription": "Plotësoni kodin 2FA për ta çaktivizuar",
   "confirm": "Çaktivizo 2FA",
   "cancel": "Anulo",

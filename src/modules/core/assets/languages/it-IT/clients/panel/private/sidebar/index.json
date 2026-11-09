@@ -36,7 +36,7 @@
       }
     },
     "tenancy": {
-      "title": "Gestione tenant",
+      "title": "Gestione mandanti",
       "companies": {
         "title": "Aziende",
         "allCompanies": {
@@ -60,7 +60,7 @@
       },
       "systemSettings": {
         "smtpServers": {
-          "title": "Server mail"
+          "title": "Server di posta"
         },
         "cities": {
           "title": "Città"

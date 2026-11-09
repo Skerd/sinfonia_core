@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/login/disableOTP.form.tsx",
   "title": "Kërkesë për çaktivizimin 2FA",
-  "description": "Nëse nuk keni akses në aplikacionin tuaj të vërtetuesit, mund të kërkoni çaktivizimin e kësaj veçorie. Ju lutemi ndiqni të gjitha hapat që do të jepen në postën tuaj.",
+  "description": "Nëse nuk keni akses në aplikacionin tuaj të vërtetimit, mund të kërkoni çaktivizimin e kësaj veçorie. Ju lutemi ndiqni të gjitha hapat që do t'ju dërgohen me email.",
   "confirmTitle": "Çaktivizo 2FA",
   "cancelTitle": "Anulo",
   "axios": {
@@ -10,7 +10,7 @@
       "time": 3000
     },
     "success": {
-      "title": "Kërkesa 2FA për çaktivizimin u dërgua me sukses. Klikoni lidhjen e dërguar në email për të vazhduar.",
+      "title": "Kërkesa për çaktivizimin e 2FA u dërgua me sukses. Klikoni lidhjen e dërguar në email për të vazhduar.",
       "time": 3000
     },
     "error": {

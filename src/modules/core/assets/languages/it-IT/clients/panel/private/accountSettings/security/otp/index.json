@@ -6,12 +6,12 @@
   "failTitleTooltip": "Fai clic qui per riprovare a caricare lo stato 2FA",
   "otpDisabled": {
     "title": "2FA non attivato",
-    "description": "Il tuo account non è protetto 2FA (autenticazione a due fattori).",
+    "description": "Il tuo account non è protetto con 2FA (autenticazione a due fattori)",
     "button": "Attiva la 2FA"
   },
   "otpEnabled": {
     "title": "2FA attivato",
-    "description": "Il tuo account è protetto 2FA (autenticazione a due fattori).",
+    "description": "Il tuo account è protetto con 2FA (autenticazione a due fattori)",
     "button": "Disattiva 2FA"
   }
 }

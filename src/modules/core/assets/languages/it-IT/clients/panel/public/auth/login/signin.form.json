@@ -8,9 +8,9 @@
     "mfaCodeLabel": "Codice 2FA",
     "ipAddressLabel": "Indirizzo IP"
   },
-  "forgotPassword": "Ha dimenticato la password?",
+  "forgotPassword": "Password dimenticata?",
   "signInButtonLabel": "Accedi",
-  "verify": "Verificare",
+  "verify": "Verifica",
   "axios": {
     "start": {
       "title": "Accesso, attendere",

@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/typingIndicators.tsx",
-  "isTyping": "est en train de taper...",
-  "areTyping": "vous tapez...",
+  "isTyping": "est en train d'écrire...",
+  "areTyping": "sont en train d'écrire...",
   "and": "et",
   "others": "autres"
 }

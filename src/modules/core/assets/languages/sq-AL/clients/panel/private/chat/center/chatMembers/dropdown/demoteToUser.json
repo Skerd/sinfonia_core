@@ -3,15 +3,15 @@
   "removeFromAdmin": "Hiqe si administrator",
   "axios": {
     "start": {
-      "title": "Zhdukja e anëtarit në përdorues",
+      "title": "Anëtari po kthehet në përdorues",
       "time": 3000
     },
     "success": {
-      "title": "Anëtari u degradua me sukses në përdorues",
+      "title": "Anëtari u kthye me sukses në përdorues",
       "time": 3000
     },
     "error": {
-      "title": "Zhvendosja e përdoruesit në përdorues dështoi",
+      "title": "Kthimi i anëtarit në përdorues dështoi",
       "time": 3000
     }
   }

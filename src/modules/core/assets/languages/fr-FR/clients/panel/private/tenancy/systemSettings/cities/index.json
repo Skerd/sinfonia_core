@@ -3,8 +3,8 @@
   "title": "Villes",
   "description": "Gérer les villes ainsi que l’état et le pays associés",
   "help": {
-    "ariaLabel": "À propos de Villes",
-    "title": "À propos de Villes",
+    "ariaLabel": "À propos des villes",
+    "title": "À propos des villes",
     "overview": "Les villes sont utilisées dans les adresses d’entreprise, de bâtiment et autres. Le nom et le pays sont obligatoires ; l’État ou canton est facultatif.",
     "sections": [
       {

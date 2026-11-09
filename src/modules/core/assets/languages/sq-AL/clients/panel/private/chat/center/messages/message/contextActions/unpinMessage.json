@@ -1,17 +1,17 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/unpinMessage.tsx",
-  "unpin": "Zhgozhdoni",
+  "unpin": "Hiq fiksimin",
   "axios": {
     "start": {
-      "title": "Mesazhi po zhgozhdohet",
+      "title": "Po hiqet fiksimi i mesazhit",
       "time": 3000
     },
     "success": {
-      "title": "Mesazhi u zhgozhdua me sukses",
+      "title": "Fiksimi i mesazhit u hoq me sukses",
       "time": 3000
     },
     "error": {
-      "title": "Zhgozhdimi i mesazhit dështoi.",
+      "title": "Heqja e fiksimit të mesazhit dështoi.",
       "time": 3000
     }
   }

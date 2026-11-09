@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/editMessagingProvider.tsx",
   "title": "Ndrysho ofruesin e mesazheve",
-  "description": "Lini auth token bosh për të mbajtur tokenin aktual.",
+  "description": "Lëreni tokenin e autentikimit bosh për të mbajtur tokenin aktual.",
   "errorTitle": "Ngarkimi i ofruesit të mesazheve dështoi",
   "errorDescription": "Klikoni këtu për të provuar përsëri.",
   "noId": "Nuk është zgjedhur asnjë ofrues mesazhesh.",
@@ -15,7 +15,7 @@
     },
     "accountSidLabel": "Account SID",
     "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "authTokenEncryptedLabel": "Auth token (lini bosh për të mbajtur)",
+    "authTokenEncryptedLabel": "Tokeni i autentikimit (lëreni bosh për ta mbajtur)",
     "authTokenEncryptedPlaceholder": "••••••••",
     "fromPhoneLabel": "Dërgues SMS (E.164)",
     "fromPhonePlaceholder": "+355691234567",
@@ -24,7 +24,7 @@
   },
   "formHeader": {
     "title": "Ndrysho ofruesin e mesazheve",
-    "description": "Lini auth token bosh për të mbajtur tokenin aktual."
+    "description": "Lëreni tokenin e autentikimit bosh për të mbajtur tokenin aktual."
   },
   "formButtons": {
     "cancel": "Anulo",

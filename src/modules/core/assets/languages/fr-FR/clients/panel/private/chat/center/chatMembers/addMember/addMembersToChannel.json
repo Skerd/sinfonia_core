@@ -4,15 +4,15 @@
   "cancel": "Annuler",
   "axios": {
     "start": {
-      "title": "Ajouter des membres à la chaîne",
+      "title": "Ajout des membres au canal",
       "time": 3000
     },
     "success": {
-      "title": "Des membres ont été ajoutés avec succès à la chaîne !",
+      "title": "Des membres ont été ajoutés au canal avec succès !",
       "time": 3000
     },
     "error": {
-      "title": "Impossible d'ajouter des membres à la chaîne, veuillez réessayer !",
+      "title": "Impossible d'ajouter des membres au canal, veuillez réessayer !",
       "time": 3000
     }
   }

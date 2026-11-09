@@ -6,7 +6,7 @@
   "port": "Porta",
   "active": "Aktiv",
   "encryption": "Enkriptimi",
-  "fromEmail": "Email dërgues",
+  "fromEmail": "Emaili dërgues",
   "deleted": "Fshirë",
   "failedTitle": "Ngarkimi i serverit SMTP dështoi",
   "failedDescription": "Trokit për të riprovuar."

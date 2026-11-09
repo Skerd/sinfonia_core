@@ -5,7 +5,7 @@
   "filterOperator": "Opérateur",
   "removeFilter": "Supprimer",
   "yes": "vrai",
-  "no": "FAUX",
+  "no": "faux",
   "exists": "existe",
   "empty": "est vide",
   "chipOperators": {
@@ -20,7 +20,7 @@
     "lessThanOrEqual": "≤",
     "between": "entre",
     "in": "est l'un des",
-    "notIn": "n'est rien de",
+    "notIn": "n'est aucun de",
     "exists": "existe"
   },
   "operators": {
@@ -34,8 +34,8 @@
     "lessThan": "Inférieur à",
     "lessThanOrEqual": "Inférieur ou égal",
     "between": "Entre",
-    "in": "Dans",
-    "notIn": "Pas dans",
+    "in": "Parmi",
+    "notIn": "Pas parmi",
     "exists": "Existe"
   }
 }

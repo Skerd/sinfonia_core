@@ -7,8 +7,8 @@
     "namePlaceholder": "Emri i qytetit",
     "countryLabel": "Vendi",
     "countryPlaceholder": "Zgjidh shtetin",
-    "stateLabel": "Shtetit",
-    "statePlaceholder": "Zgjidhni gjendjen"
+    "stateLabel": "Rajoni",
+    "statePlaceholder": "Zgjidhni rajonin"
   },
   "formHeader": {
     "title": "Krijo qytet",

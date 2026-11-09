@@ -5,10 +5,10 @@
   "descriptionActivate": "Êtes-vous sûr de vouloir activer l'utilisateur [!!!]. L'utilisateur peut se reconnecter au système après l'activation.",
   "descriptionDeactivate": "Êtes-vous sûr de vouloir bloquer l'utilisateur [!!!] ? L'utilisateur ne peut pas accéder au système après le blocage.",
   "activate": "Activer",
-  "deactivate": "Bloc",
+  "deactivate": "Bloquer",
   "axios": {
     "start": {
-      "title": "Changer le statut de l'utilisateur",
+      "title": "Modification du statut de l'utilisateur",
       "time": 3000
     },
     "success": {

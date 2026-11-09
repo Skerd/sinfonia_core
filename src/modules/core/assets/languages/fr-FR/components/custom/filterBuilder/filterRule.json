@@ -13,8 +13,8 @@
     "lessThan": "Inférieur à",
     "lessThanOrEqual": "Inférieur ou égal",
     "between": "Entre",
-    "in": "Dans",
-    "notIn": "Pas dans",
+    "in": "Parmi",
+    "notIn": "Pas parmi",
     "exists": "Existe"
   },
   "filterField": "Sélectionnez un champ",

@@ -4,16 +4,16 @@
   "helloFallback": "Përshëndetje",
   "setupProgress": "Po konfigurohet sistemi {current}/{total}",
   "fetching": {
-    "auth": "Po verifikon seancën",
-    "access": "Po ngarkon lejet",
+    "auth": "Po verifikohet sesioni",
+    "access": "Po ngarkohen lejet",
     "websocket": "Po hapet lidhja e drejtpërdrejtë",
-    "siteRoom": "Po bashkohet me hapësirën e punës",
-    "table": "Po ngarkon konfigurimet e tabelës",
-    "view": "Po ngarkon paraqitjet e pamjes"
+    "siteRoom": "Po bashkoheni me hapësirën e punës",
+    "table": "Po ngarkohen konfigurimet e tabelës",
+    "view": "Po ngarkohen paraqitjet e pamjes"
   },
   "fail": {
     "auth": {
-      "title": "Seanca juaj ka skaduar",
+      "title": "Sesioni juaj ka skaduar",
       "description": "Do të dilni pas"
     },
     "access": {
@@ -31,7 +31,7 @@
     "view": {
       "title": "Paraqitjet e pamjes nuk mund të ngarkoheshin"
     },
-    "description": "Provo sërish. Nëse problemi vazhdon, rifresko faqen ose regjistrohu përsëri."
+    "description": "Provoni sërish. Nëse problemi vazhdon, rifreskoni faqen ose identifikohuni përsëri."
   },
   "retry": "Provo sërish",
   "signOut": "Dilni"

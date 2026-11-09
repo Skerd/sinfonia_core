@@ -5,7 +5,7 @@
   "help": {
     "ariaLabel": "Informazioni su Azienda",
     "title": "Informazioni su Azienda",
-    "overview": "Questa pagina gestisce il record aziendale del tenant corrente, non un elenco di aziende. Modifica apre il modulo dell’azienda.",
+    "overview": "Questa pagina gestisce i dati aziendali del mandante corrente, non un elenco di aziende. Modifica apre il modulo dell’azienda.",
     "sections": [
       {
         "title": "Dati aziendali",

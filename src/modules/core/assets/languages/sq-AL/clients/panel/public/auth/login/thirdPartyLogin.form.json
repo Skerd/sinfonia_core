@@ -2,7 +2,7 @@
   "path": "src/modules/core/clients/panel/public/auth/login/thirdPartyLogin.form.tsx",
   "axios": {
     "start": {
-      "title": "Po identifikohesh, ju lutemi prisni",
+      "title": "Po identifikoheni, ju lutemi prisni",
       "time": 3000
     },
     "error": {

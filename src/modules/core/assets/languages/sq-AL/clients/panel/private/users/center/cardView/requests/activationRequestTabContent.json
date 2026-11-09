@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/cardView/requests/activationRequestTabContent.tsx",
-  "activationEmail": "Email aktivizimi",
+  "activationEmail": "Emaili i aktivizimit",
   "attempts": "Përpjekjet",
   "date": "Data",
-  "lockedUntil": "I mbyllur deri në"
+  "lockedUntil": "I bllokuar deri më"
 }

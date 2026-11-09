@@ -15,7 +15,7 @@
     "userRolePlaceholder": "Ruolo"
   },
   "cancel": "Annulla",
-  "confirmButton": "Creare un account",
+  "confirmButton": "Crea account",
   "axios": {
     "start": {
       "title": "Creazione utente",

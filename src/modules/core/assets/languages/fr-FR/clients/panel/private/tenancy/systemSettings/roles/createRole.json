@@ -11,7 +11,7 @@
     "descriptionPlaceholder": "À quoi sert ce rôle",
     "templateLabel": "Modèle",
     "nameDescription": "Le nom d'affichage du rôle",
-    "descriptionHelp": "Affichée sur la carte du rôle"
+    "descriptionHelp": "Affichée sur la carte du rôle pour que les opérateurs sachent ce que ce rôle permet"
   },
   "formButtons": {
     "cancel": "Annuler",

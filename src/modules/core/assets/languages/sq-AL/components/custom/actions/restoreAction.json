@@ -13,11 +13,11 @@
       "time": 3000
     },
     "success": {
-      "title": "Artikulli u restaurua me sukses!",
+      "title": "Artikulli u rivendos me sukses!",
       "time": 3000
     },
     "error": {
-      "title": "Artikulli nuk mund të rikthehej, ju lutemi provoni përsëri!",
+      "title": "Artikulli nuk mund të rivendosej, ju lutemi provoni përsëri!",
       "time": 3000
     }
   }

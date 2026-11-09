@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/name/index.tsx",
   "form": {
-    "nameLabel": "Nom",
-    "nameDescription": "C'est le nom qui sera affiché dans le système."
+    "nameLabel": "Prénom",
+    "nameDescription": "C'est le prénom qui sera affiché dans le système."
   },
-  "failTitle": "Échec du chargement du nom",
-  "failTitleTooltip": "Cliquez pour réessayer de charger le nom",
+  "failTitle": "Échec du chargement du prénom",
+  "failTitleTooltip": "Cliquez pour réessayer de charger le prénom",
   "edit": "Modifier",
   "empty": "Rien n'a encore été ajouté."
 }

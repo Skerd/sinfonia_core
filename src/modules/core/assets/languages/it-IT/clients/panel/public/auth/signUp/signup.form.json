@@ -16,7 +16,7 @@
     "phoneNumberPrefixLabel": "Prefisso del numero di telefono",
     "phoneNumberPrefixPlaceholder": "Prefisso del numero di telefono"
   },
-  "signUpButtonLabel": "Creare un account",
+  "signUpButtonLabel": "Crea un account",
   "axios": {
     "start": {
       "title": "Creazione dell'account, attendere",

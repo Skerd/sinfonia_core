@@ -1,5 +1,5 @@
 {
   "path": "src/modules/core/components/custom/errors/errorViewWrapper.tsx",
-  "waitLimit": "Per favore attendi, puoi riprovare in: ",
-  "waitFinished": "Limite di tariffa sbloccato!"
+  "waitLimit": "Attendi, potrai riprovare tra: ",
+  "waitFinished": "Limite di frequenza sbloccato!"
 }

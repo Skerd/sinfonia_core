@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx",
   "failedTitle": "Impossibile caricare l'azione pianificata",
-  "failedDescription": "Qualcosa è andato storto durante il caricamento di questo lavoro. Fare clic per riprovare.",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento di questo processo. Fare clic per riprovare.",
   "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
   "overview": "Panoramica",
   "schedule": "Pianificazione",
@@ -21,7 +21,7 @@
   "timeoutSeconds": "Timeout (secondi)",
   "missedRunPolicy": "Politica delle esecuzioni mancate",
   "missedRunPolicyValues": {
-    "skip": "Salta il ritardo",
+    "skip": "Salta gli arretrati",
     "run_once": "Esegui una volta",
     "catch_up": "Recupera"
   },
@@ -38,7 +38,7 @@
     "title": "Storico esecuzioni",
     "refresh": "Aggiorna lo storico esecuzioni",
     "loading": "Caricamento delle esecuzioni...",
-    "empty": "Questa attività non è ancora stata eseguita.",
+    "empty": "Questo processo non è ancora stato eseguito.",
     "loadMore": "Mostra esecuzioni precedenti",
     "attempt": "Tentativo {attempt}",
     "nextRetryAt": "Nuovo tentativo previsto per {at}",

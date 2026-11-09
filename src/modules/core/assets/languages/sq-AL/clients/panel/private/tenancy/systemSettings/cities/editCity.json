@@ -9,8 +9,8 @@
     "namePlaceholder": "Emri i qytetit",
     "countryLabel": "Vendi",
     "countryPlaceholder": "Zgjidh shtetin",
-    "stateLabel": "Shtetit",
-    "statePlaceholder": "Zgjidhni gjendjen"
+    "stateLabel": "Rajoni",
+    "statePlaceholder": "Zgjidhni rajonin"
   },
   "noId": "Asnjë qytet i zgjedhur.",
   "backToList": "Kthehu në listë",

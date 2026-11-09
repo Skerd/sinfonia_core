@@ -2,7 +2,7 @@
   "description": "Collega un provider SMS o WhatsApp. Le credenziali vengono archiviate crittografate.",
   "form": {
     "accountSidLabel": "SID dell'account",
-    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
     "authTokenEncryptedLabel": "Token di autenticazione",
     "authTokenEncryptedPlaceholder": "••••••••",
     "fromPhoneLabel": "Mittente SMS (E.164)",
@@ -10,7 +10,7 @@
     "fromWhatsappLabel": "Mittente WhatsApp (E.164)",
     "fromWhatsappPlaceholder": "+15551234567",
     "nameLabel": "Nome",
-    "namePlaceholder": "per esempio. Twilio primario",
+    "namePlaceholder": "es. Twilio primario",
     "providerType": {
       "twilio": "Twilio"
     },
@@ -22,8 +22,8 @@
   },
   "formHeader": {
     "description": "Collega un provider SMS o WhatsApp. Le credenziali vengono archiviate crittografate.",
-    "title": "Aggiungi fornitore di messaggistica"
+    "title": "Aggiungi provider di messaggistica"
   },
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/createMessagingProvider.tsx",
-  "title": "Aggiungi fornitore di messaggistica"
+  "title": "Aggiungi provider di messaggistica"
 }

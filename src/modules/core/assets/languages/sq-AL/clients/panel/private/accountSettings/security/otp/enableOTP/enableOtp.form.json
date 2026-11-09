@@ -8,9 +8,9 @@
     "tokenPlaceholder": "Kodi i gjeneruar"
   },
   "steps": {
-    "one": "Skanoni kodin QR më poshtë me aplikacionin tuaj të preferuar të vërtetuesit",
+    "one": "Skanoni kodin QR më poshtë me aplikacionin tuaj të preferuar të vërtetimit",
     "two": "Fusni kodin e krijuar në fushën më poshtë",
-    "three": "Klikoni në '!!!' butonin për të aktivizuar 2FA"
+    "three": "Klikoni butonin '!!!' për të aktivizuar 2FA"
   },
   "axios": {
     "start": {

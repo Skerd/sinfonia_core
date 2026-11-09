@@ -6,7 +6,7 @@
     "nameLabel": "Nom",
     "namePlaceholder": "Nom de l'État",
     "codeLabel": "Code",
-    "codePlaceholder": "par ex. Californie",
+    "codePlaceholder": "par ex. CA",
     "countryLabel": "Pays",
     "countryPlaceholder": "Sélectionner le pays"
   },

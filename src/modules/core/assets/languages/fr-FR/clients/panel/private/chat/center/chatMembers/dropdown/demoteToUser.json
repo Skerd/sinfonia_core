@@ -1,9 +1,9 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/demoteToUser.tsx",
-  "removeFromAdmin": "Ignorer en tant qu'administrateur",
+  "removeFromAdmin": "Retirer les droits d'administrateur",
   "axios": {
     "start": {
-      "title": "Rétrograder un membre en utilisateur",
+      "title": "Rétrogradation du membre en utilisateur",
       "time": 3000
     },
     "success": {

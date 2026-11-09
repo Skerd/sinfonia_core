@@ -8,22 +8,22 @@
   "name": "Nom",
   "connection": "Connexion",
   "sender": "Expéditeur",
-  "lastTest": "Test de dernière connexion",
+  "lastTest": "Dernier test de connexion",
   "lifecycle": "Cycle de vie",
   "sequence": "Priorité",
   "active": "Actif",
   "port": "Port",
-  "encryption": "Cryptage",
+  "encryption": "Chiffrement",
   "authType": "Authentification",
   "username": "Nom d'utilisateur",
   "hasPassword": "Mot de passe enregistré",
-  "fromEmail": "À partir d'un e-mail",
-  "fromName": "Du nom",
+  "fromEmail": "E-mail de l'expéditeur",
+  "fromName": "Nom de l'expéditeur",
   "replyTo": "Répondre à",
   "yes": "Oui",
   "no": "Non",
-  "lastTestStatus": "Dernier essai",
-  "lastTestedAt": "Dernier testé",
+  "lastTestStatus": "Dernier test",
+  "lastTestedAt": "Dernier test le",
   "lastTestMessage": "Message de test",
   "createdAt": "Créé le",
   "updatedAt": "Mis à jour le",
@@ -33,14 +33,14 @@
   "encryptionValues": {
     "none": "Aucun",
     "ssl": "SSL",
-    "starttls": "DÉMARRAGES"
+    "starttls": "STARTTLS"
   },
   "authTypeValues": {
     "login": "Nom d'utilisateur/mot de passe",
     "none": "Aucun"
   },
   "lastTestStatusValues": {
-    "ok": "D'ACCORD",
-    "failed": "Échoué"
+    "ok": "OK",
+    "failed": "Échec"
   }
 }

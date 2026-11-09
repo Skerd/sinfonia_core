@@ -6,10 +6,10 @@
   "expand": "Agrandir l'image",
   "collapse": "Réduire l'image",
   "clear": "Effacer tous les points",
-  "revert": "Revenir au dernier point",
+  "revert": "Annuler le dernier point",
   "info": "Cliquez sur l'image pour ajouter des points. ⌘/Ctrl + Défilement pour zoomer et faites glisser l'image pour effectuer un panoramique.",
   "currentPolygon": "Polygone actuel :",
-  "point": "indiquer",
+  "point": "point",
   "points": "points",
   "clickToClose": "Cliquez sur le premier point pour fermer le polygone."
 }

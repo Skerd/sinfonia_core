@@ -7,8 +7,8 @@
   "failTitleTooltip": "Cliquez pour réessayer de charger les utilisateurs",
   "noDataTitle": "Aucun utilisateur trouvé",
   "form": {
-    "nameLabel": "Nom de la chaîne",
-    "namePlaceholder": "Entrez le nom de la chaîne"
+    "nameLabel": "Nom du canal",
+    "namePlaceholder": "Entrez le nom du canal"
   },
   "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx",
   "removeMember": "Retirer {name}"

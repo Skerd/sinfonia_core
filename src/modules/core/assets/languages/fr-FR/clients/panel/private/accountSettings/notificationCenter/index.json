@@ -2,7 +2,7 @@
   "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx",
   "title": "Centre de notifications",
   "description": "Afficher et gérer vos notifications",
-  "unreadOnly": "Non lu uniquement",
+  "unreadOnly": "Non lues uniquement",
   "failTitle": "Échec du chargement de la notification",
   "failDescription": "Cliquez ici pour réessayer de récupérer les notifications",
   "loading": "Chargement...",

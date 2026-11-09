@@ -3,9 +3,9 @@
   "title": "Entreprise",
   "description": "Informations sur l'entreprise",
   "help": {
-    "ariaLabel": "À propos de Entreprise",
-    "title": "À propos de Entreprise",
-    "overview": "Cette page gère la fiche de l’entreprise du tenant actuel, et non une liste d’entreprises. Modifier ouvre le formulaire.",
+    "ariaLabel": "À propos de l'entreprise",
+    "title": "À propos de l'entreprise",
+    "overview": "Cette page gère la fiche de l’entreprise du mandant actuel, et non une liste d’entreprises. Modifier ouvre le formulaire.",
     "sections": [
       {
         "title": "Informations de l’entreprise",
@@ -17,18 +17,18 @@
       {
         "title": "Chat IA public",
         "items": [
-          "Activez le robot visiteur et définissez son message d’accueil et sa personnalité.",
+          "Activez ou désactivez le robot des visiteurs et définissez son message d’accueil et sa personnalité.",
           "Choisissez l’identification obligatoire et le transfert à un humain. Ces réglages alimentent les chats du site web."
         ]
       },
       {
-        "title": "Statut",
+        "title": "Statut de l'entreprise",
         "items": [
-          "Activez ou désactivez cette entreprise uniquement lorsqu’elle possède une entreprise parente."
+          "Activez ou désactivez cette entreprise uniquement lorsqu’elle possède une société mère."
         ]
       }
     ]
   },
-  "failTitle": "Échec du chargement de la société",
+  "failTitle": "Échec du chargement de l'entreprise",
   "failTitleTooltip": "Cliquez pour réessayer de charger les informations sur l'entreprise"
 }

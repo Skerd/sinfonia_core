@@ -4,8 +4,8 @@
     "title": "Redakto rolin",
     "description": "Përditëso detajet e rolit"
   },
-  "errorTitle": "Ngarkimi i të dhënave të roleve dështoi",
-  "errorDescription": "Ju lutemi, klikoni këtu për të riprovuar marrjen e të dhënave të roleve",
+  "errorTitle": "Ngarkimi i të dhënave të rolit dështoi",
+  "errorDescription": "Ju lutemi, klikoni këtu për të riprovuar marrjen e të dhënave të rolit",
   "form": {
     "nameLabel": "Emri i rolit",
     "namePlaceholder": "Emri i rolit",
@@ -20,7 +20,7 @@
   },
   "axios": {
     "start": {
-      "title": "Roli ruajtës",
+      "title": "Po ruhet roli",
       "time": 3000
     },
     "success": {

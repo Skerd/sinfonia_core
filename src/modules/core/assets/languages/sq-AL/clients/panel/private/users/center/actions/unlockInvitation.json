@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/actions/unlockInvitation.tsx",
   "unlockInvitation": "Zhblloko ftesën",
-  "unlockInvitationConfirm": "Zhbllokohet kyçja e ftesës?",
+  "unlockInvitationConfirm": "Të zhbllokohet ftesa?",
   "unlockInvitationConfirmDesc": "Kjo do të pastrojë bllokimin e ftesës. Përdoruesi do të jetë në gjendje të marrë një email të ri ftese.",
-  "unlockInvitationResendEmail": "Ridërgo email-in e ftesës",
+  "unlockInvitationResendEmail": "Ridërgo emailin e ftesës",
   "unlockInvitationSuccess": "Bllokimi i ftesës u fshi me sukses",
-  "unlockInvitationError": "Dështoi në pastrimin e kyçit të ftesës",
+  "unlockInvitationError": "Heqja e bllokimit të ftesës dështoi",
   "axios": {
     "start": {
       "title": "Zhbllokimi i ftesës",
@@ -16,7 +16,7 @@
       "time": 3000
     },
     "error": {
-      "title": "Dështoi në pastrimin e kyçit të ftesës",
+      "title": "Heqja e bllokimit të ftesës dështoi",
       "time": 3000
     }
   }

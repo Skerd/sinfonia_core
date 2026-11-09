@@ -3,15 +3,15 @@
   "title": "Vendet",
   "description": "Menaxhoni vendet dhe cilësimet e konfigurimit",
   "help": {
-    "ariaLabel": "Rreth Vendet",
-    "title": "Rreth Vendet",
+    "ariaLabel": "Rreth vendeve",
+    "title": "Rreth vendeve",
     "overview": "Vendet janë rrënja e gjeografisë që përdoret në adresat e kompanive, ndërtesave dhe regjistrimeve të tjera. Kërkohen emri, kodi ISO me dy ose tre shkronja dhe prefiksi telefonik.",
     "sections": [
       {
         "title": "Në këtë faqe",
         "items": [
           "Krijoni ose ndryshoni një vend dhe mbani të saktë kodin ISO dhe prefiksin.",
-          "Nga menuja e rreshtit hapni Shtetet ose Qytetet të filtruara për atë vend.",
+          "Nga menuja e rreshtit hapni Rajonet ose Qytetet të filtruara për atë vend.",
           "Fshirja është e butë dhe vendi mund të rikthehet."
         ]
       },

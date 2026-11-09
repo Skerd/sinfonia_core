@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/surname/updateSurname.tsx",
-  "confirm": "Confirmer le changement de nom",
+  "confirm": "Confirmer le changement de nom de famille",
   "cancel": "Annuler",
   "axios": {
     "start": {

@@ -1,14 +1,14 @@
 {
   "path": "src/modules/core/clients/panel/private/users/index.tsx",
   "title": "Lista e përdoruesve",
-  "searchPlaceholder": "Kërko me emër, email ose shto filtra...",
+  "searchPlaceholder": "Kërko sipas emrit, emailit ose shto filtra...",
   "activeFilters": "aktive",
   "administrationTitle": "Lista e përdoruesve të administratës",
   "description": "Menaxho përdoruesit dhe rolet e tyre këtu.",
   "help": {
-    "ariaLabel": "Rreth Lista e përdoruesve",
-    "title": "Rreth Lista e përdoruesve",
-    "overview": "Kjo listë përmban anëtarët me role të paracaktuara për regjistrim, si dhe anëtarët pa role. Përdoruesi i kyçur aktualisht përjashtohet dhe kjo nuk është lista e Administratës.",
+    "ariaLabel": "Rreth listës së përdoruesve",
+    "title": "Rreth listës së përdoruesve",
+    "overview": "Kjo listë përmban anëtarët me role të paracaktuara për regjistrim, si dhe anëtarët pa role. Përdoruesi i kyçur aktualisht përjashtohet dhe kjo nuk është lista e Administrimit.",
     "sections": [
       {
         "title": "Shtimi dhe menaxhimi",
@@ -22,14 +22,14 @@
         "title": "Kush shfaqet këtu",
         "items": [
           "Rolet e paracaktuara për regjistrim i vendosin anëtarët në këtë listë.",
-          "Rolet e stafit dhe administratës që nuk janë të paracaktuara shfaqen te Administrata."
+          "Rolet e stafit dhe administratës që nuk janë të paracaktuara për regjistrim shfaqen te Administrimi."
         ]
       }
     ]
   },
   "administrationHelp": {
-    "ariaLabel": "Rreth Lista e përdoruesve të administratës",
-    "title": "Rreth Lista e përdoruesve të administratës",
+    "ariaLabel": "Rreth listës së përdoruesve të administratës",
+    "title": "Rreth listës së përdoruesve të administratës",
     "overview": "Kjo listë përmban përdoruesit me role stafi ose administrate që nuk janë të paracaktuara për regjistrim, si dhe përdoruesit bot. Përdoruesi i kyçur aktualisht përjashtohet.",
     "sections": [
       {
@@ -43,7 +43,7 @@
       {
         "title": "Ndarja nga Përdoruesit",
         "items": [
-          "Rolet që nuk janë të paracaktuara për regjistrim i vendosin personat te Administrata.",
+          "Rolet që nuk janë të paracaktuara për regjistrim i vendosin personat te Administrimi.",
           "Anëtarët e zakonshëm me role të paracaktuara shfaqen te Kompania → Përdoruesit."
         ]
       }
@@ -51,7 +51,7 @@
   },
   "administrationDescription": "Menaxho përdoruesit e administratës së kompanisë dhe rolet e tyre këtu.",
   "photo": "Foto",
-  "emailVerified": "Email aktual",
+  "emailVerified": "Emaili aktual",
   "invitedUser": "Ju lutemi verifikoni emailin duke pranuar kërkesën për ftesë",
   "emailNotVerified": "Ju lutemi verifikoni emailin tuaj të ri duke klikuar në lidhjen e dërguar në kutinë tuaj hyrëse",
   "statuses": {
@@ -78,31 +78,31 @@
     "name": "Emri",
     "surname": "Mbiemri",
     "timezone": "Zona kohore",
-    "birthday": "ditëlindjen",
+    "birthday": "Ditëlindja",
     "phoneNumber": "Numri i telefonit",
     "photo": "Foto",
-    "cover": "Mbulesë",
-    "isEmailVerified": "Email-i u verifikua",
-    "emailVerifiedAt": "Email i verifikuar në",
+    "cover": "Foto e kopertinës",
+    "isEmailVerified": "Emaili i verifikuar",
+    "emailVerifiedAt": "Emaili u verifikua më",
     "registeredFrom": "Regjistruar nga",
-    "registerDate": "U bashkua",
+    "registerDate": "U bashkua më",
     "online": "Në linjë",
     "createdAt": "Krijuar më",
     "updatedAt": "Përditësuar më",
     "roles": {
       "active": "Statusi",
-      "unsuccessfulLogins": "Identifikimi i pasuksesshëm",
-      "lockedOutUntil": "I mbyllur deri në",
+      "unsuccessfulLogins": "Hyrje të pasuksesshme",
+      "lockedOutUntil": "I bllokuar deri më",
       "lastLogin": "Hyrja e fundit",
       "roles": "Rolet"
     },
-    "mfaStatus": "Statusi i MPJ-së",
+    "mfaStatus": "Statusi i MFA-së",
     "requests": {
       "mfaDeactivation": {
-        "opened": "U hap çaktivizimi i MPJ-së",
-        "attempts": "Përpjekjet për çaktivizimin e MPJ-së",
-        "date": "Data e çaktivizimit të MPJ-së",
-        "lockedUntil": "Çaktivizimi i MPJ-së u kyç deri në"
+        "opened": "U hap çaktivizimi i MFA-së",
+        "attempts": "Përpjekjet për çaktivizimin e MFA-së",
+        "date": "Data e çaktivizimit të MFA-së",
+        "lockedUntil": "Çaktivizimi i MFA-së u kyç deri në"
       },
       "passwordReset": {
         "opened": "Rivendosja e fjalëkalimit u hap",
@@ -111,7 +111,7 @@
         "lockedUntil": "Rivendosja e fjalëkalimit u kyç deri në"
       },
       "activation": {
-        "email": "Email aktivizimi",
+        "email": "Emaili i aktivizimit",
         "attempts": "Përpjekjet për aktivizim",
         "date": "Data e aktivizimit",
         "lockedUntil": "Aktivizimi u kyç deri në"
@@ -122,10 +122,10 @@
         "date": "Data e ftesës",
         "lockedUntil": "Ftesa u kyç deri në",
         "invitedBy": "I ftuar nga",
-        "invitedAt": "I ftuar në",
-        "invitationExpiresAt": "Ftesa skadon në",
+        "invitedAt": "I ftuar më",
+        "invitationExpiresAt": "Ftesa skadon më",
         "accepted": "Pranuar",
-        "acceptedAt": "Pranuar në",
+        "acceptedAt": "Pranuar më",
         "welcomeMessage": "Mesazh mirëseardhjeje"
       }
     }

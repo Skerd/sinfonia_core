@@ -1,8 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/actions/unlockInvitation.tsx",
   "unlockInvitation": "Débloquer l'invitation",
-  "unlockInvitationConfirm": "Déverrouiller le verrouillage des invitations ?",
-  "unlockInvitationConfirmDesc": "Cela effacera le verrouillage de l'invitation. L'utilisateur pourra recevoir un nouvel email d'invitation.",
+  "unlockInvitationConfirm": "Lever le verrouillage de l'invitation ?",
+  "unlockInvitationConfirmDesc": "Cela effacera le verrouillage de l'invitation. L'utilisateur pourra recevoir un nouvel e-mail d'invitation.",
   "unlockInvitationResendEmail": "Renvoyer l'e-mail d'invitation",
   "unlockInvitationSuccess": "Le verrouillage des invitations a été supprimé avec succès",
   "unlockInvitationError": "Échec de la suppression du verrouillage de l'invitation",

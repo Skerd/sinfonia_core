@@ -3,8 +3,8 @@
   "title": "Fournisseurs de messagerie",
   "description": "Configurez les fournisseurs SMS et WhatsApp pour cette entreprise. Seuls les fournisseurs actifs sont utilisés pour les messages sortants.",
   "help": {
-    "ariaLabel": "À propos de Fournisseurs de messagerie",
-    "title": "À propos de Fournisseurs de messagerie",
+    "ariaLabel": "À propos des fournisseurs de messagerie",
+    "title": "À propos des fournisseurs de messagerie",
     "overview": "Les fournisseurs de messagerie envoient les SMS et messages WhatsApp de l’entreprise. Twilio est actuellement le seul fournisseur pris en charge et les nouveaux fournisseurs démarrent actifs.",
     "sections": [
       {
@@ -31,28 +31,28 @@
   "failDescription": "Une erreur s'est produite lors du chargement des fournisseurs de messagerie. Veuillez réessayer.",
   "name": "Nom",
   "providerType": "Fournisseur",
-  "accountSid": "Numéro de compte du compte",
+  "accountSid": "SID du compte",
   "fromPhone": "Expéditeur de SMS",
   "fromWhatsapp": "Expéditeur WhatsApp",
   "active": "Actif",
   "yes": "Oui",
   "no": "Non",
-  "lastTestStatus": "Dernier essai",
+  "lastTestStatus": "Dernier test",
   "fields": {
     "!enums": {
       "lastTestStatus": {
         "success": "Succès",
-        "failed": "Échoué"
+        "failed": "Échec"
       }
     },
     "name": "Nom",
     "providerType": "Fournisseur",
-    "accountSid": "Numéro de compte du compte",
+    "accountSid": "SID du compte",
     "fromPhone": "Expéditeur de SMS",
     "fromWhatsapp": "Expéditeur WhatsApp",
     "active": "Actif",
-    "lastTestedAt": "Dernier testé",
-    "lastTestStatus": "Dernier essai",
+    "lastTestedAt": "Dernier test le",
+    "lastTestStatus": "Dernier test",
     "createdAt": "Créé le",
     "updatedAt": "Mis à jour le",
     "createdBy": "Créé par",

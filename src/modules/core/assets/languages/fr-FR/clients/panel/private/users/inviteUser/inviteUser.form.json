@@ -3,10 +3,10 @@
   "form": {
     "emailLabel": "E-mail",
     "emailPlaceholder": "par exemple : email@exemple.com",
-    "nameLabel": "Nom",
+    "nameLabel": "Prénom",
     "namePlaceholder": "par exemple : Jean",
     "surnameLabel": "Nom",
-    "surnamePlaceholder": "par exemple : biche",
+    "surnamePlaceholder": "par exemple : Dupont",
     "userRoleLabel": "Rôle",
     "userRolePlaceholder": "Sélectionnez un rôle",
     "welcomeMessageLabel": "Message de bienvenue (facultatif)",
@@ -16,7 +16,7 @@
   "invite": "Inviter",
   "axios": {
     "start": {
-      "title": "Inviter un utilisateur",
+      "title": "Invitation de l'utilisateur",
       "time": 3000
     },
     "success": {

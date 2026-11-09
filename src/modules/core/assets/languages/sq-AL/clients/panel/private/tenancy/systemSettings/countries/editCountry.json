@@ -19,7 +19,7 @@
   "backToList": "Kthehu në listë",
   "axios": {
     "start": {
-      "title": "Vendi shpëtimtar",
+      "title": "Po ruhet shteti",
       "time": 3000
     },
     "success": {

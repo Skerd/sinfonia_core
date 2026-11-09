@@ -6,12 +6,12 @@
   "readingTime": "{minutes} min lexim",
   "publishedBy": "Publikuar nga",
   "visitSite": "Vizito faqen",
-  "visitSiteNamed": "Hap {name}",
+  "visitSiteNamed": "Vizito {name}",
   "copyLink": "Kopjo lidhjen",
   "linkCopied": "Lidhja u kopjua",
   "linkCopyFailed": "Lidhja nuk u kopjua",
   "backToBlog": "Kthehu te blogu",
   "moreStories": "Më shumë artikuj",
   "notFound": "Artikulli nuk u gjet",
-  "notFoundMessage": "Ky artikull mund të jetë zhvendosur ose çpublikuar."
+  "notFoundMessage": "Ky artikull mund të jetë zhvendosur ose hequr nga publikimi."
 }

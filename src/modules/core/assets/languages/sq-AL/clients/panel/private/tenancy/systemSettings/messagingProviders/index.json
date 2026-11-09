@@ -3,8 +3,8 @@
   "title": "Ofruesit e mesazheve",
   "description": "Konfiguroni ofruesit SMS dhe WhatsApp për këtë kompani. Përdoren vetëm ofruesit aktivë për mesazhet dalëse.",
   "help": {
-    "ariaLabel": "Rreth Ofruesit e mesazheve",
-    "title": "Rreth Ofruesit e mesazheve",
+    "ariaLabel": "Rreth ofruesve të mesazheve",
+    "title": "Rreth ofruesve të mesazheve",
     "overview": "Ofruesit e mesazheve dërgojnë SMS dhe mesazhe WhatsApp të kompanisë. Aktualisht mbështetet vetëm Twilio dhe ofruesit e rinj nisin aktivë.",
     "sections": [
       {

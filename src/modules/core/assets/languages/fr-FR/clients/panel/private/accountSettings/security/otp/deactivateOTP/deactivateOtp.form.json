@@ -8,7 +8,7 @@
   "twoParts": {
     "noOtpCode": {
       "0": "Vous n'avez pas de code 2FA ?",
-      "1": "Demander des instructions par courrier électronique"
+      "1": "Demander des instructions par e-mail"
     }
   },
   "checkEmail": "Vérifiez vos e-mails pour continuer la désactivation de 2FA",
@@ -19,7 +19,7 @@
   },
   "axios": {
     "start": {
-      "title": "Désactiver 2FA",
+      "title": "Désactivation de la 2FA",
       "time": 3000
     },
     "error": {

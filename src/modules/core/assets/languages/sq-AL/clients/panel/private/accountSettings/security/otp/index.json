@@ -6,12 +6,12 @@
   "failTitleTooltip": "Kliko këtu për të riprovuar ngarkimin e statusit 2FA",
   "otpDisabled": {
     "title": "2FA nuk është aktivizuar",
-    "description": "Llogaria juaj nuk është e mbrojtur me 2FA (Vërtetim me dy faktorë).",
+    "description": "Llogaria juaj nuk është e mbrojtur me 2FA (vërtetim me dy faktorë).",
     "button": "Aktivizoni 2FA"
   },
   "otpEnabled": {
     "title": "2FA u aktivizua",
-    "description": "Llogaria juaj është e mbrojtur 2FA (Vërtetimi me dy faktorë).",
+    "description": "Llogaria juaj është e mbrojtur me 2FA (vërtetim me dy faktorë).",
     "button": "Çaktivizo 2FA"
   }
 }

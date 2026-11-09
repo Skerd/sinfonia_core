@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
   "title": "Server di posta in uscita",
-  "description": "Configura i server SMTP per questa azienda. La sequenza inferiore viene provata per prima.",
+  "description": "Configura i server SMTP per questa azienda. Viene provato per primo il server con la sequenza più bassa.",
   "help": {
     "ariaLabel": "Informazioni su Server di posta in uscita",
     "title": "Informazioni su Server di posta in uscita",
@@ -31,12 +31,12 @@
   "failTitle": "Impossibile caricare i server SMTP",
   "failDescription": "Si è verificato un errore durante il caricamento dei server SMTP. Per favore riprova.",
   "name": "Nome",
-  "host": "Ospite",
+  "host": "Host",
   "sequence": "Priorità",
   "port": "Porta",
   "encryption": "Crittografia",
   "active": "Attivo",
-  "fromEmail": "Dall'e-mail",
+  "fromEmail": "E-mail mittente",
   "fields": {
     "!enums": {
       "lastTestStatus": {
@@ -47,12 +47,12 @@
     "name": "Nome",
     "sequence": "Priorità",
     "active": "Attivo",
-    "host": "Ospite",
+    "host": "Host",
     "port": "Porta",
     "encryption": "Crittografia",
     "authType": "Autenticazione",
-    "fromEmail": "Dall'e-mail",
-    "lastTestedAt": "Ultimo testato",
+    "fromEmail": "E-mail mittente",
+    "lastTestedAt": "Ultimo test",
     "lastTestStatus": "Ultima prova",
     "createdAt": "Creato il",
     "updatedAt": "Aggiornato il",

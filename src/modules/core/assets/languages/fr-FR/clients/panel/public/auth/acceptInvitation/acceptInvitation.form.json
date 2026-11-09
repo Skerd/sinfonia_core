@@ -18,7 +18,7 @@
   "confirm": "Accepter l'invitation",
   "axios": {
     "start": {
-      "title": "Accepter l'invitation",
+      "title": "Acceptation de l'invitation",
       "time": 3000
     },
     "success": {

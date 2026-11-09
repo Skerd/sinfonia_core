@@ -6,18 +6,18 @@
     "titleLeave": "Quitter le chat",
     "titleDelete": "Supprimer le chat",
     "descriptionLeave": "Êtes-vous sûr de vouloir quitter ce chat ?",
-    "descriptionDelete": "Etes-vous sûr de vouloir supprimer ce chat ?",
+    "descriptionDelete": "Êtes-vous sûr de vouloir supprimer ce chat ?",
     "confirmTextLeave": "Quitter",
     "confirmTextDelete": "Supprimer",
     "cancelText": "Annuler"
   },
   "axiosOnFunction": {
     "startLeave": {
-      "title": "Quitter le chat",
+      "title": "Départ du chat",
       "time": 3000
     },
     "startDelete": {
-      "title": "Supprimer le chat",
+      "title": "Suppression du chat",
       "time": 3000
     },
     "successLeave": {

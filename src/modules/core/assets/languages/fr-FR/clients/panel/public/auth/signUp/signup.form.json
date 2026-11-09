@@ -1,8 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/signUp/signup.form.tsx",
   "form": {
-    "nameLabel": "Nom",
-    "namePlaceholder": "Nom",
+    "nameLabel": "Prénom",
+    "namePlaceholder": "Prénom",
     "surnameLabel": "Nom",
     "surnamePlaceholder": "Nom",
     "emailLabel": "E-mail",
@@ -19,7 +19,7 @@
   "signUpButtonLabel": "Créer un compte",
   "axios": {
     "start": {
-      "title": "Création d'un compte, veuillez patienter",
+      "title": "Création du compte, veuillez patienter",
       "time": 3000
     },
     "success": {

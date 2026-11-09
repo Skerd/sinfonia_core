@@ -4,7 +4,7 @@
     "nameLabel": "Emri",
     "nameDescription": "Ky është emri që do të shfaqet në sistem."
   },
-  "failTitle": "Emri i ngarkimit dështoi",
+  "failTitle": "Ngarkimi i emrit dështoi",
   "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e emrit",
   "edit": "Modifiko",
   "empty": "Ende asgjë e shtuar."

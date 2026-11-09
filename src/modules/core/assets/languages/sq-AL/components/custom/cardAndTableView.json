@@ -5,12 +5,12 @@
   "showFilters": "Shfaq filtrat",
   "hideFilters": "Fshih filtrat",
   "showTableView": "Shfaq pamjen e tabelës",
-  "showCardView": "Shfaq pamjen e kartës",
+  "showCardView": "Shfaq pamjen me karta",
   "failTitle": "Ngarkimi i të dhënave dështoi",
   "failDescription": "Të dhënat nuk mund të ngarkoheshin. Ju lutemi klikoni këtu për të riprovuar.",
   "tooltipDescription": "Klikoni për të riprovuar marrjen e të dhënave",
   "failTableConfigTitle": "Ngarkimi i konfigurimit të tabelës dështoi",
   "failTableConfigDescription": "Konfigurimi i tabelës nuk mund të ngarkohej.",
-  "noData": "Nuk u gjetën rezultate, ju lutemi merrni parasysh ndryshimin e filtrave",
+  "noData": "Nuk u gjetën rezultate, provoni të ndryshoni filtrat",
   "loading": "Po ngarkohet..."
 }

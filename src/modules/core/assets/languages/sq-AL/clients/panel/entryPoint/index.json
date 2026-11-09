@@ -35,7 +35,7 @@
       }
     },
     "tenancy": {
-      "title": "Qiramarrja",
+      "title": "Administrimi i kompanive",
       "companies": {
         "title": "Të gjitha kompanitë"
       },
@@ -51,7 +51,7 @@
           "title": "Rolet"
         },
         "countries": {
-          "title": "Shtetet"
+          "title": "Vendet"
         },
         "states": {
           "title": "Rajonet"
@@ -69,7 +69,7 @@
           "title": "Posta dalëse"
         },
         "messagingProviders": {
-          "title": "Ofruesit e Mesazheve"
+          "title": "Ofruesit e mesazheve"
         },
         "cronJobs": {
           "title": "Veprime të planifikuara"
@@ -85,7 +85,7 @@
         "title": "Vështrim i përgjithshëm"
       },
       "administration": {
-        "title": "Administrata"
+        "title": "Administrimi"
       },
       "users": {
         "title": "Përdoruesit"
@@ -115,7 +115,7 @@
         "title": "Kompania"
       },
       "editCompany": {
-        "title": "Redaktoni kompaninë"
+        "title": "Redakto kompaninë"
       },
       "createCompany": {
         "title": "Krijo kompani"

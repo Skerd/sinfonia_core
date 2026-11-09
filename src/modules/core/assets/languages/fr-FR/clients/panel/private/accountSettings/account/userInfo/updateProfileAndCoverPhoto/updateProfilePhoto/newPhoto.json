@@ -5,15 +5,15 @@
   "updatePhoto": "Mettre à jour la photo",
   "axios": {
     "start": {
-      "title": "Téléchargement d'une photo",
+      "title": "Importation de la photo",
       "time": 3000
     },
     "success": {
-      "title": "Photo téléchargée avec succès",
+      "title": "Photo importée avec succès",
       "time": 3000
     },
     "error": {
-      "title": "Échec du téléchargement de la photo",
+      "title": "Échec de l'importation de la photo",
       "time": 3000
     }
   }

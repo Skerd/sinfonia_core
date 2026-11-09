@@ -1,8 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx",
-  "title": "Qendra e Njoftimeve",
+  "title": "Qendra e njoftimeve",
   "description": "Shikoni dhe menaxhoni njoftimet tuaja",
-  "unreadOnly": "Vetëm i palexuar",
+  "unreadOnly": "Vetëm të palexuarat",
   "failTitle": "Ngarkimi i njoftimit dështoi",
   "failDescription": "Kliko këtu për të riprovuar marrjen e njoftimeve",
   "loading": "Po ngarkohet...",

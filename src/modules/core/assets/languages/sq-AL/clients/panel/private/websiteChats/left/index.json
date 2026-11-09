@@ -2,8 +2,8 @@
   "path": "src/modules/core/clients/panel/private/websiteChats/left/index.tsx",
   "titleWaiting": "Në pritje",
   "helpWaiting": {
-    "ariaLabel": "Rreth Në pritje",
-    "title": "Rreth Në pritje",
+    "ariaLabel": "Rreth listës Në pritje",
+    "title": "Rreth listës Në pritje",
     "overview": "Në pritje përmban bisedat e vizitorëve të faqes publike që presin një person dhe që ende nuk i keni marrë.",
     "sections": [
       {
@@ -15,7 +15,7 @@
         ]
       },
       {
-        "title": "Boti dhe dorëzimi",
+        "title": "Boti dhe kalimi te një person",
         "items": [
           "Cilësimet e bisedës publike me AI te Kompania kontrollojnë përshëndetjen, sjelljen e botit, identifikimin dhe kalimin te një person."
         ]
@@ -24,8 +24,8 @@
   },
   "titleMine": "Të miat",
   "helpMine": {
-    "ariaLabel": "Rreth Të miat",
-    "title": "Rreth Të miat",
+    "ariaLabel": "Rreth listës Të miat",
+    "title": "Rreth listës Të miat",
     "overview": "Të miat përmban bisedat e faqes së internetit ku jeni bashkuar. Në pritje është radha që ende nuk e keni marrë.",
     "sections": [
       {

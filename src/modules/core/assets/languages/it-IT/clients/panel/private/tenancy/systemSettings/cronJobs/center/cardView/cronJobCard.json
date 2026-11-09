@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/cardView/cronJobCard.tsx",
   "failedTitle": "Impossibile caricare l'azione pianificata",
-  "failedDescription": "Qualcosa è andato storto durante il caricamento di questo lavoro. Fare clic per riprovare.",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento di questo processo. Fare clic per riprovare.",
   "name": "Nome",
   "code": "Codice",
   "handler": "Gestore",

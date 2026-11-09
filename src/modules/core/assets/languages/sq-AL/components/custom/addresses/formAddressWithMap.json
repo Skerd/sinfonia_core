@@ -1,12 +1,12 @@
 {
   "path": "src/modules/core/components/custom/addresses/formAddressWithMap.tsx",
-  "addAddress": "Shto adresën",
+  "addAddress": "Shto adresë",
   "remove": "Hiq adresën",
   "form": {
     "countryLabel": "Vendi",
     "countryPlaceholder": "Zgjidh shtetin",
-    "stateLabel": "Shtetit",
-    "statePlaceholder": "Zgjidhni gjendjen",
+    "stateLabel": "Rajoni",
+    "statePlaceholder": "Zgjidhni rajonin",
     "cityLabel": "Qyteti",
     "cityPlaceholder": "Zgjidhni qytetin",
     "streetLabel": "Rruga",

@@ -12,7 +12,7 @@
     "descriptionLabel": "Description",
     "descriptionPlaceholder": "À quoi sert ce rôle",
     "nameDescription": "Le nom d'affichage du rôle",
-    "descriptionHelp": "Affichée sur la carte du rôle"
+    "descriptionHelp": "Affichée sur la carte du rôle pour que les opérateurs sachent ce que ce rôle permet"
   },
   "formButtons": {
     "cancel": "Annuler",
@@ -20,7 +20,7 @@
   },
   "axios": {
     "start": {
-      "title": "Rôle de sauvegarde",
+      "title": "Enregistrement du rôle",
       "time": 3000
     },
     "success": {

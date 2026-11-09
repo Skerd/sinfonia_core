@@ -3,19 +3,19 @@
   "chat": "Commencez à discuter",
   "axios": {
     "start": {
-      "title": "Création d'une chaîne",
+      "title": "Création du canal",
       "time": 3000
     },
     "success": {
-      "title": "Chaîne créée avec succès !",
+      "title": "Canal créé avec succès !",
       "time": 3000
     },
     "successExists": {
-      "title": "La chaîne existe déjà !",
+      "title": "Le canal existe déjà !",
       "time": 3000
     },
     "error": {
-      "title": "La chaîne n'a pas pu être créée, veuillez réessayer !",
+      "title": "Le canal n'a pas pu être créé, veuillez réessayer !",
       "time": 3000
     }
   }

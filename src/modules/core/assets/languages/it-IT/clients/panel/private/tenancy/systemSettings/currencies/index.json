@@ -17,7 +17,7 @@
       {
         "title": "Importi storici",
         "items": [
-          "Cambiare in seguito i decimali non riscrive gli importi storici."
+          "Cambiare i decimali influisce sulla visualizzazione e sull'inserimento successivi; non riscrive gli importi storici."
         ]
       }
     ]

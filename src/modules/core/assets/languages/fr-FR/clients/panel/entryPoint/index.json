@@ -35,9 +35,9 @@
       }
     },
     "tenancy": {
-      "title": "Gestion des locataires",
+      "title": "Gestion des mandants",
       "companies": {
-        "title": "Toutes les sociétés"
+        "title": "Toutes les entreprises"
       },
       "serverPerformance": {
         "title": "Performance"
@@ -63,7 +63,7 @@
           "title": "Devises"
         },
         "companies": {
-          "title": "Sociétés"
+          "title": "Entreprises"
         },
         "smtpServers": {
           "title": "Serveurs mail"
@@ -115,10 +115,10 @@
         "title": "Entreprise"
       },
       "editCompany": {
-        "title": "Modifier la société"
+        "title": "Modifier l'entreprise"
       },
       "createCompany": {
-        "title": "Créer une société"
+        "title": "Créer une entreprise"
       }
     }
   },

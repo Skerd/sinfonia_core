@@ -36,16 +36,16 @@
       }
     },
     "tenancy": {
-      "title": "Gestion des locataires",
+      "title": "Gestion des mandants",
       "companies": {
-        "title": "Sociétés",
+        "title": "Entreprises",
         "allCompanies": {
-          "title": "Sociétés",
+          "title": "Entreprises",
           "editCompany": {
-            "title": "Modifier la société"
+            "title": "Modifier l'entreprise"
           },
           "createCompany": {
-            "title": "Créer une société"
+            "title": "Créer une entreprise"
           }
         }
       },
@@ -76,7 +76,7 @@
           "title": "Actions planifiées"
         },
         "core": {
-          "title": "Cœur"
+          "title": "Noyau"
         },
         "countries": {
           "title": "Pays"

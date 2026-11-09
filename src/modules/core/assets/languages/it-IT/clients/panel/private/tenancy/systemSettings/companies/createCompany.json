@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/createCompany.tsx",
   "title": "Crea azienda",
-  "description": "Creare una nuova società",
+  "description": "Crea una nuova azienda",
   "generalInfo": "Informazioni generali",
   "howToReach": "Come raggiungerci",
-  "whoAreWe": "Chi siamo noi",
+  "whoAreWe": "Chi siamo",
   "addAddress": "Aggiungi indirizzo",
   "address": "Indirizzo",
   "remove": "Rimuovi",
@@ -51,7 +51,7 @@
   },
   "axios": {
     "start": {
-      "title": "Creazione di società",
+      "title": "Creazione dell'azienda",
       "time": 3000
     },
     "success": {
@@ -59,13 +59,13 @@
       "time": 3000
     },
     "error": {
-      "title": "Impossibile creare la società, riprova!",
+      "title": "Impossibile creare l'azienda, riprova!",
       "time": 3000
     }
   },
   "formHeader": {
     "title": "Crea azienda",
-    "description": "Creare una nuova società"
+    "description": "Crea una nuova azienda"
   },
   "formButtons": {
     "cancel": "Annulla",

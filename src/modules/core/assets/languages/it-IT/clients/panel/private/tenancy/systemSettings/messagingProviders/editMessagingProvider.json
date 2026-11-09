@@ -1,20 +1,20 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/editMessagingProvider.tsx",
-  "title": "Modifica fornitore di messaggistica",
+  "title": "Modifica provider di messaggistica",
   "description": "Lascia vuoto il token di autenticazione per mantenere il token corrente.",
   "errorTitle": "Impossibile caricare il provider di messaggistica",
   "errorDescription": "Fare clic qui per riprovare a recuperare i dati del fornitore.",
-  "noId": "Nessun fornitore di messaggistica selezionato.",
+  "noId": "Nessun provider di messaggistica selezionato.",
   "backToList": "Torna all'elenco",
   "form": {
     "nameLabel": "Nome",
-    "namePlaceholder": "per esempio. Twilio primario",
+    "namePlaceholder": "es. Twilio primario",
     "providerTypeLabel": "Fornitore",
     "providerType": {
       "twilio": "Twilio"
     },
     "accountSidLabel": "SID dell'account",
-    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
     "authTokenEncryptedLabel": "Token di autenticazione (lascia vuoto per mantenerlo)",
     "authTokenEncryptedPlaceholder": "••••••••",
     "fromPhoneLabel": "Mittente SMS (E.164)",
@@ -23,7 +23,7 @@
     "fromWhatsappPlaceholder": "+15551234567"
   },
   "formHeader": {
-    "title": "Modifica fornitore di messaggistica",
+    "title": "Modifica provider di messaggistica",
     "description": "Lascia vuoto il token di autenticazione per mantenere il token corrente."
   },
   "formButtons": {

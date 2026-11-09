@@ -1,20 +1,20 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/pauseCronJobDialog.tsx",
-  "confirmTitle": "Mettere in pausa questo lavoro?",
-  "confirmDescription": "Lo scheduler ignorerà questo lavoro finché non lo riprendi.",
+  "confirmTitle": "Mettere in pausa questo processo?",
+  "confirmDescription": "Lo scheduler ignorerà questo processo finché non lo riprendi.",
   "cancel": "Annulla",
   "confirm": "Pausa",
   "axios": {
     "start": {
-      "title": "Pausa del lavoro…",
+      "title": "Messa in pausa del processo…",
       "time": 3000
     },
     "success": {
-      "title": "Lavoro in pausa",
+      "title": "Processo in pausa",
       "time": 3000
     },
     "error": {
-      "title": "Impossibile mettere in pausa il lavoro",
+      "title": "Impossibile mettere in pausa il processo",
       "time": 3000
     }
   }

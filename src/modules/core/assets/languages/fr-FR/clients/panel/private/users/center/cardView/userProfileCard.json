@@ -9,12 +9,12 @@
   "invitedUser": "Veuillez vérifier l'e-mail en acceptant la demande d'invitation",
   "emailNotVerified": "Veuillez vérifier votre nouvel e-mail en cliquant sur le lien envoyé dans votre boîte de réception",
   "timezone": "Fuseau horaire",
-  "birthday": "Anniversaire",
+  "birthday": "Date de naissance",
   "phoneNumber": "Numéro de téléphone",
   "registeredDate": "Date d'inscription",
-  "registeredFrom": "Inscrit depuis",
-  "emailVerifiedAt": "E-mail vérifié à",
-  "lockedOutUntil": "En lock-out jusqu'à",
+  "registeredFrom": "Inscrit via",
+  "emailVerifiedAt": "E-mail vérifié le",
+  "lockedOutUntil": "Bloqué jusqu'au",
   "online": "En ligne",
   "offline": "Hors ligne",
   "createdBy": "Créé par",
@@ -35,5 +35,5 @@
   "requestsInvitation": "Invitation",
   "requestsActivation": "Activation",
   "requestsPasswordReset": "Réinitialisation du mot de passe",
-  "requestsMfaDeactivation": "Désactivation de l'AMF"
+  "requestsMfaDeactivation": "Désactivation de la MFA"
 }

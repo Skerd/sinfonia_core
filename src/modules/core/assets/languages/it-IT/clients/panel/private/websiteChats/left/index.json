@@ -4,7 +4,7 @@
   "helpWaiting": {
     "ariaLabel": "Informazioni su In attesa",
     "title": "Informazioni su In attesa",
-    "overview": "In attesa contiene le conversazioni dei visitatori del sito pubblico pronte per un operatore ma non ancora prese da voi.",
+    "overview": "In attesa contiene le conversazioni dei visitatori del sito pubblico pronte per un operatore ma non ancora prese in carico da voi.",
     "sections": [
       {
         "title": "Gestire la coda",
@@ -26,7 +26,7 @@
   "helpMine": {
     "ariaLabel": "Informazioni su Mie",
     "title": "Informazioni su Mie",
-    "overview": "Mie contiene le conversazioni del sito web a cui avete partecipato. In attesa è la coda non ancora presa in carico.",
+    "overview": "Mie contiene le conversazioni del sito web a cui avete partecipato. In attesa è la coda delle conversazioni non ancora prese in carico.",
     "sections": [
       {
         "title": "Le vostre conversazioni",

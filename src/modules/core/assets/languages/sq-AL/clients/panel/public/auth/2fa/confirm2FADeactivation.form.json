@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/2fa/confirm2FADeactivation.form.tsx",
   "loading": "Çaktivizimi i 2FA",
-  "loadingDescription": "Çaktivizimi i 2FA për përdoruesin duke përdorur lidhjen çaktivizuese 2FA",
+  "loadingDescription": "Po çaktivizohet 2FA për përdoruesin përmes lidhjes së çaktivizimit",
   "fail": "Çaktivizimi i 2FA dështoi",
   "failDescription": "Lidhja e çaktivizimit 2FA nuk është e saktë",
   "success": "2FA është çaktivizuar",
@@ -12,7 +12,7 @@
       "time": 3000
     },
     "success": {
-      "title": "Çaktivizimi 2FA me sukses",
+      "title": "2FA u çaktivizua me sukses",
       "time": 3000
     },
     "error": {

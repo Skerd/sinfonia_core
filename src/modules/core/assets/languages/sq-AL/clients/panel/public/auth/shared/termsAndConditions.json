@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/shared/termsAndConditions.tsx",
-  "byClickingYouAgree": "Duke përdorur shërbimet tona, ju pajtoheni me tonën",
+  "byClickingYouAgree": "Duke përdorur shërbimet tona, ju pajtoheni me",
   "termsOfService": "Kushtet e Shërbimit",
   "and": "dhe",
   "privacyPolicy": "Politika e privatësisë",

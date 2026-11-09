@@ -13,7 +13,7 @@
   "lastRunAt": "Ekzekutimi i fundit",
   "maxRetries": "Riprovime maks.",
   "retryDelaySeconds": "Vonesa e riprovimit (sekonda)",
-  "timeoutSeconds": "Timeout (sekonda)",
+  "timeoutSeconds": "Koha maksimale (sekonda)",
   "missedRunPolicy": "Politika e ekzekutimeve të humbura",
   "active": "Aktiv",
   "paused": "Ndaluar",

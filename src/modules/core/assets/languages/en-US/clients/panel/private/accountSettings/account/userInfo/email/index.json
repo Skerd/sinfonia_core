@@ -2,7 +2,7 @@
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/email/index.tsx",
   "form": {
     "newEmailLabel": "Email",
-    "newEmailDescription": "This is the email that will be used to log into the system."
+    "newEmailDescription": "This is the email that will be used to log in to the system."
   },
   "failTitle": "Failed to load email",
   "failTitleTooltip": "Click to retry loading email",

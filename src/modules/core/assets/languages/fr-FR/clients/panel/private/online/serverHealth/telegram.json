@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/online/serverHealth/telegram.tsx",
-  "telegramServerTitle": "Serveur de télégramme",
+  "telegramServerTitle": "Serveur Telegram",
   "online": "En ligne",
   "offline": "Hors ligne",
   "messages": "Messages",
-  "failed": "Échoué",
+  "failed": "Échecs",
   "avgTime": "Temps moy.",
   "uptime": "Temps de disponibilité",
   "day": "jour",

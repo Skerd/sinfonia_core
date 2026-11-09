@@ -7,14 +7,14 @@
     "namePlaceholder": "Nom du pays",
     "codeLabel": "Code",
     "codePlaceholder": "par ex. USA",
-    "phoneCodeLabel": "Code de téléphone",
+    "phoneCodeLabel": "Indicatif téléphonique",
     "phoneCodePlaceholder": "+1",
     "currencyLabel": "Devise",
     "currencyPlaceholder": "Sélectionner une devise"
   },
   "axios": {
     "start": {
-      "title": "Pays créateur",
+      "title": "Création du pays",
       "time": 3000
     },
     "success": {

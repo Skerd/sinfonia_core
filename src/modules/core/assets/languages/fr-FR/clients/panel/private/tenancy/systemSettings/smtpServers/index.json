@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
   "title": "Serveurs de courrier sortant",
-  "description": "Configurez les serveurs SMTP pour cette entreprise. La séquence inférieure est essayée en premier.",
+  "description": "Configurez les serveurs SMTP pour cette entreprise. Le serveur dont la séquence est la plus basse est essayé en premier.",
   "help": {
-    "ariaLabel": "À propos de Serveurs de courrier sortant",
-    "title": "À propos de Serveurs de courrier sortant",
+    "ariaLabel": "À propos des serveurs de courrier sortant",
+    "title": "À propos des serveurs de courrier sortant",
     "overview": "Les serveurs de courrier sortant assurent l’envoi SMTP de cette entreprise. Un nouveau serveur est inactif et ne doit être activé qu’après un test de connexion réussi.",
     "sections": [
       {
@@ -34,14 +34,14 @@
   "host": "Hôte",
   "sequence": "Priorité",
   "port": "Port",
-  "encryption": "Cryptage",
+  "encryption": "Chiffrement",
   "active": "Actif",
-  "fromEmail": "À partir d'un e-mail",
+  "fromEmail": "E-mail de l'expéditeur",
   "fields": {
     "!enums": {
       "lastTestStatus": {
         "ok": "OK",
-        "failed": "Échoué"
+        "failed": "Échec"
       }
     },
     "name": "Nom",
@@ -49,11 +49,11 @@
     "active": "Actif",
     "host": "Hôte",
     "port": "Port",
-    "encryption": "Cryptage",
+    "encryption": "Chiffrement",
     "authType": "Authentification",
-    "fromEmail": "À partir d'un e-mail",
-    "lastTestedAt": "Dernier testé",
-    "lastTestStatus": "Dernier essai",
+    "fromEmail": "E-mail de l'expéditeur",
+    "lastTestedAt": "Dernier test le",
+    "lastTestStatus": "Dernier test",
     "createdAt": "Créé le",
     "updatedAt": "Mis à jour le",
     "createdBy": "Créé par",

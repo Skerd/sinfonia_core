@@ -3,15 +3,15 @@
   "pin": "Fissa",
   "axios": {
     "start": {
-      "title": "Appuntare il messaggio",
+      "title": "Fissaggio del messaggio",
       "time": 3000
     },
     "success": {
-      "title": "Messaggio bloccato con successo",
+      "title": "Messaggio fissato con successo",
       "time": 3000
     },
     "error": {
-      "title": "Impossibile bloccare il messaggio.",
+      "title": "Impossibile fissare il messaggio.",
       "time": 3000
     }
   }

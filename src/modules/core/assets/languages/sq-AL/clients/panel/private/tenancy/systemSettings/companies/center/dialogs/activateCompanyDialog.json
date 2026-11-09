@@ -1,12 +1,12 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/activateCompanyDialog.tsx",
-  "title": "Aktivizoni kompaninë",
+  "title": "Aktivizo kompaninë",
   "description": "Jeni i sigurt që dëshironi ta aktivizoni këtë kompani? Përdoruesit do të mund të hyjnë në sistem pas aktivizimit.",
-  "confirm": "Aktivizoni",
+  "confirm": "Aktivizo",
   "cancel": "Anulo",
   "axios": {
     "start": {
-      "title": "Kompania që aktivizon",
+      "title": "Po aktivizohet kompania",
       "time": 3000
     },
     "success": {

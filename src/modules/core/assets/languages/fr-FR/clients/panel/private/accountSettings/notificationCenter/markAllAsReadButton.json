@@ -7,7 +7,7 @@
   "confirm": "Marquer comme lu",
   "axios": {
     "start": {
-      "title": "Marquer tout comme lu",
+      "title": "Marquage de tout comme lu",
       "time": 3000
     },
     "success": {

@@ -1,8 +1,8 @@
 {
-  "description": "Connectez un fournisseur SMS ou WhatsApp. Les informations d'identification sont stockées cryptées.",
+  "description": "Connectez un fournisseur SMS ou WhatsApp. Les informations d'identification sont stockées chiffrées.",
   "form": {
-    "accountSidLabel": "Numéro de compte du compte",
-    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "accountSidLabel": "SID du compte",
+    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
     "authTokenEncryptedLabel": "Jeton d'authentification",
     "authTokenEncryptedPlaceholder": "••••••••",
     "fromPhoneLabel": "Expéditeur de SMS (E.164)",
@@ -10,7 +10,7 @@
     "fromWhatsappLabel": "Expéditeur WhatsApp (E.164)",
     "fromWhatsappPlaceholder": "+15551234567",
     "nameLabel": "Nom",
-    "namePlaceholder": "par ex. Twilio primaire",
+    "namePlaceholder": "par ex. Twilio principal",
     "providerType": {
       "twilio": "Twilio"
     },
@@ -21,7 +21,7 @@
     "submit": "Créer"
   },
   "formHeader": {
-    "description": "Connectez un fournisseur SMS ou WhatsApp. Les informations d'identification sont stockées cryptées.",
+    "description": "Connectez un fournisseur SMS ou WhatsApp. Les informations d'identification sont stockées chiffrées.",
     "title": "Ajouter un fournisseur de messagerie"
   },
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/createMessagingProvider.tsx",

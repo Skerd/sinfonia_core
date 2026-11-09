@@ -4,7 +4,7 @@
   "cancel": "Anulo",
   "axios": {
     "start": {
-      "title": "Po përditëson numrin e telefonit",
+      "title": "Po përditësohet numri i telefonit",
       "time": 3000
     },
     "success": {

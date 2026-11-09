@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/userFilters.tsx",
-  "filterSearch": "Recherche par nom, email, téléphone",
+  "filterSearch": "Rechercher par nom, e-mail, téléphone",
   "filterStatus": "Statut",
   "filterStatusAll": "Tous les statuts",
   "filterRoles": "Filtrer par rôle",

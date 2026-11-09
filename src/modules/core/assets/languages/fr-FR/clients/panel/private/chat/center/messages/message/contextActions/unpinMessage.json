@@ -3,7 +3,7 @@
   "unpin": "Désépingler",
   "axios": {
     "start": {
-      "title": "Désépingler le message",
+      "title": "Désépinglage du message",
       "time": 3000
     },
     "success": {
@@ -11,7 +11,7 @@
       "time": 3000
     },
     "error": {
-      "title": "Échec de la désépinglage du message.",
+      "title": "Échec du désépinglage du message.",
       "time": 3000
     }
   }

@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/createCompany.tsx",
-  "title": "Créer une société",
+  "title": "Créer une entreprise",
   "description": "Créer une nouvelle entreprise",
   "generalInfo": "Informations générales",
   "howToReach": "Coordonnées",
@@ -51,7 +51,7 @@
   },
   "axios": {
     "start": {
-      "title": "Création d'entreprise",
+      "title": "Création de l'entreprise",
       "time": 3000
     },
     "success": {
@@ -59,12 +59,12 @@
       "time": 3000
     },
     "error": {
-      "title": "La société n'a pas pu être créée, veuillez réessayer !",
+      "title": "L'entreprise n'a pas pu être créée, veuillez réessayer !",
       "time": 3000
     }
   },
   "formHeader": {
-    "title": "Créer une société",
+    "title": "Créer une entreprise",
     "description": "Créer une nouvelle entreprise"
   },
   "formButtons": {

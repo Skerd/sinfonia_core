@@ -8,9 +8,9 @@
     "nameLabel": "Nome",
     "namePlaceholder": "Nome della valuta",
     "symbolLabel": "Simbolo",
-    "symbolPlaceholder": "per esempio. $",
+    "symbolPlaceholder": "es. $",
     "abbreviationLabel": "Abbreviazione",
-    "abbreviationPlaceholder": "per esempio. Dollaro statunitense",
+    "abbreviationPlaceholder": "es. USD",
     "decimalPlacesLabel": "Posti decimali",
     "decimalPlacesPlaceholder": "2"
   },

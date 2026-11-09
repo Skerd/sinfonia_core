@@ -3,8 +3,8 @@
   "title": "Pays",
   "description": "Gérer les pays et les paramètres de configuration",
   "help": {
-    "ariaLabel": "À propos de Pays",
-    "title": "À propos de Pays",
+    "ariaLabel": "À propos des pays",
+    "title": "À propos des pays",
     "overview": "Les pays sont la racine de la géographie utilisée par les adresses d’entreprise, de bâtiment et autres. Le nom, un code ISO de deux ou trois lettres et l’indicatif téléphonique sont obligatoires.",
     "sections": [
       {
@@ -31,14 +31,14 @@
   "status": "Statut",
   "name": "Nom",
   "code": "Code",
-  "phoneCode": "Code de téléphone",
+  "phoneCode": "Indicatif téléphonique",
   "currency": "Devise",
   "deleted": "Supprimé",
   "active": "Actif",
   "fields": {
     "name": "Nom",
     "code": "Code",
-    "phoneCode": "Code de téléphone",
+    "phoneCode": "Indicatif téléphonique",
     "currency": "Devise",
     "createdAt": "Créé le",
     "updatedAt": "Mis à jour le",

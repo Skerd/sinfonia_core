@@ -7,18 +7,18 @@
   "name": "Nom",
   "credentials": "Informations d'identification",
   "senders": "Expéditeurs",
-  "lastTest": "Test de dernière connexion",
+  "lastTest": "Dernier test de connexion",
   "lifecycle": "Cycle de vie",
   "providerType": "Fournisseur",
   "active": "Actif",
-  "accountSid": "Numéro de compte du compte",
+  "accountSid": "SID du compte",
   "hasAuthToken": "Jeton d'authentification stocké",
   "fromPhone": "Expéditeur de SMS",
   "fromWhatsapp": "Expéditeur WhatsApp",
   "yes": "Oui",
   "no": "Non",
-  "lastTestStatus": "Dernier essai",
-  "lastTestedAt": "Dernier testé",
+  "lastTestStatus": "Dernier test",
+  "lastTestedAt": "Dernier test le",
   "lastTestMessage": "Message de test",
   "createdAt": "Créé le",
   "updatedAt": "Mis à jour le",
@@ -30,6 +30,6 @@
   },
   "lastTestStatusValues": {
     "success": "Succès",
-    "failed": "Échoué"
+    "failed": "Échec"
   }
 }

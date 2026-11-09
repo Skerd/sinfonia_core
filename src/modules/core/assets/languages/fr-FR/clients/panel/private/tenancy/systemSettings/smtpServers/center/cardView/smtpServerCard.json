@@ -5,8 +5,8 @@
   "sequence": "Priorité",
   "port": "Port",
   "active": "Actif",
-  "encryption": "Cryptage",
-  "fromEmail": "À partir d'un e-mail",
+  "encryption": "Chiffrement",
+  "fromEmail": "E-mail de l'expéditeur",
   "deleted": "Supprimé",
   "failedTitle": "Échec du chargement du serveur SMTP",
   "failedDescription": "Appuyez pour réessayer."

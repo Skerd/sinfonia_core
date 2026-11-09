@@ -2,7 +2,7 @@
   "path": "src/modules/core/components/custom/apiSelect/index.tsx",
   "search": "Cerca",
   "noResults": "Nessun risultato trovato",
-  "more": "Di più",
+  "more": "altri",
   "clear": "Cancella",
   "createNewModel": "Crea nuovo '{}'",
   "createNewUser": "Crea nuovo utente"

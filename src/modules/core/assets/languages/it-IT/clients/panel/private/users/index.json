@@ -83,9 +83,9 @@
     "photo": "Foto",
     "cover": "Copertina",
     "isEmailVerified": "E-mail verificata",
-    "emailVerifiedAt": "E-mail verificata su",
+    "emailVerifiedAt": "E-mail verificata il",
     "registeredFrom": "Registrato da",
-    "registerDate": "Iscritto",
+    "registerDate": "Iscritto il",
     "online": "Online",
     "createdAt": "Creato il",
     "updatedAt": "Aggiornato il",
@@ -96,12 +96,12 @@
       "lastLogin": "Ultimo accesso",
       "roles": "Ruoli"
     },
-    "mfaStatus": "Stato dell'AMF",
+    "mfaStatus": "Stato dell'MFA",
     "requests": {
       "mfaDeactivation": {
         "opened": "È stata aperta la disattivazione dell'MFA",
         "attempts": "Tentativi di disattivazione dell'MFA",
-        "date": "Data di disattivazione dell'AMF",
+        "date": "Data di disattivazione dell'MFA",
         "lockedUntil": "Disattivazione MFA bloccata fino al"
       },
       "passwordReset": {
@@ -122,10 +122,10 @@
         "date": "Data dell'invito",
         "lockedUntil": "Invito bloccato fino al",
         "invitedBy": "Invitato da",
-        "invitedAt": "Invitato a",
+        "invitedAt": "Invitato il",
         "invitationExpiresAt": "L'invito scade alle",
         "accepted": "Accettato",
-        "acceptedAt": "Accettato a",
+        "acceptedAt": "Accettato il",
         "welcomeMessage": "Messaggio di benvenuto"
       }
     }

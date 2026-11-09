@@ -6,7 +6,7 @@
   "cancel": "Annulla",
   "axios": {
     "start": {
-      "title": "Azienda attivatrice",
+      "title": "Attivazione dell'azienda",
       "time": 3000
     },
     "success": {

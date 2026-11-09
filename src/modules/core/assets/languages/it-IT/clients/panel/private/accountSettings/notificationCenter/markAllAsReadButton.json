@@ -7,7 +7,7 @@
   "confirm": "Segna come letto",
   "axios": {
     "start": {
-      "title": "Contrassegnare tutto come letto",
+      "title": "Contrassegno come letto in corso",
       "time": 3000
     },
     "success": {

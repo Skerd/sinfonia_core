@@ -5,7 +5,7 @@
   "deletePhoto": "Supprimer la photo",
   "axios": {
     "start": {
-      "title": "Supprimer la photo de couverture",
+      "title": "Suppression de la photo de couverture",
       "time": 3000
     },
     "success": {

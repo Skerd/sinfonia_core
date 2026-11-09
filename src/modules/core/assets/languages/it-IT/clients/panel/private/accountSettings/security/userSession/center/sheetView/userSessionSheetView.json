@@ -7,7 +7,7 @@
   "user": "Utente",
   "deviceId": "ID del dispositivo",
   "isActive": "Attivo",
-  "lastActiveAt": "Ultimo attivo",
+  "lastActiveAt": "Ultima attività",
   "ipAddress": "Indirizzo IP",
   "userAgent": "Agente utente",
   "expiresAt": "Scade",

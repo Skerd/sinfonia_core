@@ -5,7 +5,7 @@
   "showFilters": "Afficher les filtres",
   "hideFilters": "Masquer les filtres",
   "showTableView": "Afficher la vue tableau",
-  "showCardView": "Afficher la vue Carte",
+  "showCardView": "Afficher la vue cartes",
   "failTitle": "Échec du chargement des données",
   "failDescription": "Impossible de charger les données. Veuillez cliquer ici pour réessayer.",
   "tooltipDescription": "Cliquez pour réessayer de récupérer les données",

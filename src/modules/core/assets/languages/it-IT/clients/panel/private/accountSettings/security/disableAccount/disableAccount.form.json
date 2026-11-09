@@ -12,10 +12,10 @@
   "description": "Se desideri disattivare l'account, segui i passaggi seguenti.",
   "steps": {
     "one": "Inserisci la tua password",
-    "two": "Clicca su '!!!!' pulsante per disattivare il tuo account",
+    "two": "Clicca sul pulsante '!!!!' per disattivare il tuo account",
     "three": "Attenzione, se disattivi il tuo account, devi contattare l'amministratore di sistema per riattivarlo!"
   },
-  "deactivateButton": "Bloccare",
+  "deactivateButton": "Blocca",
   "axios": {
     "start": {
       "title": "Disattivazione dell'account",

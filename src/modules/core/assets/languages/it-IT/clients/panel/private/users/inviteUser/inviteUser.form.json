@@ -16,7 +16,7 @@
   "invite": "Invita",
   "axios": {
     "start": {
-      "title": "Utente invitante",
+      "title": "Invito dell'utente",
       "time": 3000
     },
     "success": {

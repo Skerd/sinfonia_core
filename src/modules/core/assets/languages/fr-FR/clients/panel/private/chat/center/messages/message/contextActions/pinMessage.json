@@ -3,7 +3,7 @@
   "pin": "Épingler",
   "axios": {
     "start": {
-      "title": "Épingler un message",
+      "title": "Épinglage du message",
       "time": 3000
     },
     "success": {

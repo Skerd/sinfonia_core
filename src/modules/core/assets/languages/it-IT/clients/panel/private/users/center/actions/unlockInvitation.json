@@ -8,7 +8,7 @@
   "unlockInvitationError": "Impossibile eliminare il blocco dell'invito",
   "axios": {
     "start": {
-      "title": "Invito di sblocco",
+      "title": "Sblocco dell'invito",
       "time": 3000
     },
     "success": {

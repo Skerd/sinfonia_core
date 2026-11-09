@@ -31,11 +31,11 @@
     "endsWith": "Përfundon me",
     "greaterThan": "Më e madhe se",
     "greaterThanOrEqual": "Më e madhe apo e barabartë",
-    "lessThan": "Më pak se",
-    "lessThanOrEqual": "Më pak ose e barabartë",
-    "between": "ndërmjet",
+    "lessThan": "Më e vogël se",
+    "lessThanOrEqual": "Më e vogël ose e barabartë",
+    "between": "Ndërmjet",
     "in": "Në",
     "notIn": "Jo në",
-    "exists": "ekziston"
+    "exists": "Ekziston"
   }
 }

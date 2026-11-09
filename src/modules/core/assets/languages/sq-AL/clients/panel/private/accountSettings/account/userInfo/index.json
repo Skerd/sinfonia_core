@@ -3,14 +3,14 @@
   "status": {
     "title": "Statusi: ",
     "active": "Aktiv",
-    "blocked": "E bllokuar",
+    "blocked": "I bllokuar",
     "invited": "I ftuar"
   },
   "registeredDate": "I regjistruar: ",
   "failTitle": "Ngarkimi i të dhënave dështoi",
   "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e të dhënave",
-  "requestsInvitation": "Ftesë",
+  "requestsInvitation": "Ftesa",
   "requestsActivation": "Aktivizimi",
   "requestsPasswordReset": "Rivendosja e fjalëkalimit",
-  "requestsMfaDeactivation": "Çaktivizimi i MPJ-së"
+  "requestsMfaDeactivation": "Çaktivizimi i MFA-së"
 }

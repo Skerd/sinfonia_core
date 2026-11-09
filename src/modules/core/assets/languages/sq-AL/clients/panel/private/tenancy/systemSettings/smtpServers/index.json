@@ -3,8 +3,8 @@
   "title": "Serverët SMTP",
   "description": "Konfiguroni serverët SMTP për këtë kompani. Sekuenca më e ulët provohet e para.",
   "help": {
-    "ariaLabel": "Rreth Serverët SMTP",
-    "title": "Rreth Serverët SMTP",
+    "ariaLabel": "Rreth serverëve SMTP",
+    "title": "Rreth serverëve SMTP",
     "overview": "Serverët e postës dalëse mundësojnë dërgimin SMTP për këtë kompani. Serverët e rinj nisin joaktivë dhe duhen aktivizuar vetëm pas një testi të suksesshëm.",
     "sections": [
       {
@@ -36,7 +36,7 @@
   "port": "Porta",
   "encryption": "Enkriptimi",
   "active": "Aktiv",
-  "fromEmail": "Email dërgues",
+  "fromEmail": "Emaili dërgues",
   "fields": {
     "!enums": {
       "lastTestStatus": {
@@ -51,7 +51,7 @@
     "port": "Porta",
     "encryption": "Enkriptimi",
     "authType": "Autentifikimi",
-    "fromEmail": "Email dërgues",
+    "fromEmail": "Emaili dërgues",
     "lastTestedAt": "Testuar më",
     "lastTestStatus": "Testi i fundit",
     "createdAt": "Krijuar më",

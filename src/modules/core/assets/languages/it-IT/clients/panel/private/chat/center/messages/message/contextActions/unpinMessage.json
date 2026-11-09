@@ -1,17 +1,17 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/unpinMessage.tsx",
-  "unpin": "Sblocca",
+  "unpin": "Rimuovi dai fissati",
   "axios": {
     "start": {
-      "title": "Sblocco del messaggio",
+      "title": "Rimozione dai fissati",
       "time": 3000
     },
     "success": {
-      "title": "Messaggio sbloccato correttamente",
+      "title": "Messaggio rimosso dai fissati",
       "time": 3000
     },
     "error": {
-      "title": "Impossibile sbloccare il messaggio.",
+      "title": "Impossibile rimuovere il messaggio dai fissati.",
       "time": 3000
     }
   }

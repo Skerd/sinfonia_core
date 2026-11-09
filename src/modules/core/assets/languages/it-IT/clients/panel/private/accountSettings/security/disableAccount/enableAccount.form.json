@@ -5,7 +5,7 @@
   "deactivateButton": "Attiva",
   "axios": {
     "start": {
-      "title": "Attivazione conto",
+      "title": "Attivazione dell'account",
       "time": 3000
     },
     "success": {

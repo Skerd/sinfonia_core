@@ -7,5 +7,5 @@
   "selectValues": "Sélectionnez des valeurs",
   "selectValue": "Sélectionner une valeur",
   "enterValue": "Entrez la valeur",
-  "inValuesPlaceholder": "abc..."
+  "inValuesPlaceholder": "a,b,c..."
 }

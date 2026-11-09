@@ -1,8 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/dialogs/testSmtpConnectionDialog.tsx",
-  "title": "Testare la connessione SMTP",
+  "title": "Verifica la connessione SMTP",
   "description": "Verifica il server e invia un'e-mail di prova all'indirizzo del tuo account.",
-  "confirm": "Testare la connessione",
+  "confirm": "Verifica la connessione",
   "cancel": "Annulla",
   "axios": {
     "start": {

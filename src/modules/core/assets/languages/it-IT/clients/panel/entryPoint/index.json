@@ -35,7 +35,7 @@
       }
     },
     "tenancy": {
-      "title": "Gestione tenant",
+      "title": "Gestione mandanti",
       "companies": {
         "title": "Tutte le aziende"
       },
@@ -66,7 +66,7 @@
           "title": "Aziende"
         },
         "smtpServers": {
-          "title": "Server mail"
+          "title": "Server di posta"
         },
         "messagingProviders": {
           "title": "Provider di messaggistica"

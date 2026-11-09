@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cronJobs/center/dialogs/runCronJobDialog.tsx",
   "confirmTitle": "Ta ekzekutojmë këtë punë tani?",
-  "confirmDescription": "Handler-i do të ekzekutohet menjëherë, edhe nëse koha e planifikuar nuk ka arritur.",
+  "confirmDescription": "Trajtuesi do të ekzekutohet menjëherë, edhe nëse koha e planifikuar nuk ka arritur.",
   "cancel": "Anulo",
   "confirm": "Ekzekuto tani",
   "axios": {

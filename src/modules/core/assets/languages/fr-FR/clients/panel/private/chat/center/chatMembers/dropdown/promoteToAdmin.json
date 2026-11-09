@@ -1,9 +1,9 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/promoteToAdmin.tsx",
-  "makeAdmin": "Devenir administrateur du groupe",
+  "makeAdmin": "Nommer administrateur du groupe",
   "axios": {
     "start": {
-      "title": "Promouvoir un membre en administrateur",
+      "title": "Promotion du membre en administrateur",
       "time": 3000
     },
     "success": {

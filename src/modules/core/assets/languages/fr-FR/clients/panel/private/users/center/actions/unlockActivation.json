@@ -1,14 +1,14 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/actions/unlockActivation.tsx",
   "unlockActivation": "Déverrouiller l'activation",
-  "unlockActivationConfirm": "Débloquer le verrouillage d'activation ?",
-  "unlockActivationConfirmDesc": "Cela effacera le verrouillage d’activation. L'utilisateur pourra demander un nouvel email d'activation.",
+  "unlockActivationConfirm": "Lever le verrouillage d'activation ?",
+  "unlockActivationConfirmDesc": "Cela effacera le verrouillage d’activation. L'utilisateur pourra demander un nouvel e-mail d'activation.",
   "unlockActivationResendEmail": "Renvoyer l'e-mail d'activation",
   "unlockActivationSuccess": "Le verrouillage d'activation a été effacé avec succès",
   "unlockActivationError": "Échec de la suppression du verrouillage d'activation",
   "axios": {
     "start": {
-      "title": "Activation de déverrouillage",
+      "title": "Déverrouillage de l'activation",
       "time": 3000
     },
     "success": {

@@ -3,15 +3,15 @@
   "title": "Të gjitha rolet",
   "description": "Shikoni dhe modifikoni rolet e kompanisë",
   "help": {
-    "ariaLabel": "Rreth Të gjitha rolet",
-    "title": "Rreth Të gjitha rolet",
-    "overview": "Rolet janë paketa lejesh që u caktohen përdoruesve të kompanisë. Opsioni «i paracaktuar për regjistrim» përcakton gjithashtu nëse personat shfaqen te Kompania → Përdoruesit apo Kompania → Administrata.",
+    "ariaLabel": "Rreth roleve",
+    "title": "Rreth roleve",
+    "overview": "Rolet janë paketa lejesh që u caktohen përdoruesve të kompanisë. Opsioni «i paracaktuar për regjistrim» përcakton gjithashtu nëse personat shfaqen te Kompania → Përdoruesit apo Kompania → Administrimi.",
     "sections": [
       {
         "title": "Menaxhimi i roleve",
         "items": [
           "Krijoni një rol dhe më pas ndryshoni matricën e lejeve për të kontrolluar qasjen.",
-          "Rolet e paracaktuara për regjistrim i vendosin përdoruesit te Përdoruesit; rolet e tjera te Administrata.",
+          "Rolet e paracaktuara për regjistrim i vendosin përdoruesit te Kompania → Përdoruesit; rolet e tjera te Kompania → Administrimi.",
           "Disa role të integruara nuk mund të ndryshohen ose të fshihen."
         ]
       },
@@ -35,7 +35,7 @@
     "isAdmin": "Roli i administratorit",
     "isSignupDefault": "Parazgjedhja për regjistrim",
     "canEdit": "Mund të modifikojë",
-    "canDelete": "Mund të fshihet",
+    "canDelete": "Mund të fshijë",
     "slug": "Slug",
     "company": "Kompania",
     "createdBy": "Krijuar nga",

@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/online/serverHealth/websocket.tsx",
-  "websocketServerTitle": "Serveri i uebit",
+  "websocketServerTitle": "Serveri WebSocket",
   "online": "Në linjë",
   "offline": "Jashtë linje",
   "uptime": "Koha e funksionimit",

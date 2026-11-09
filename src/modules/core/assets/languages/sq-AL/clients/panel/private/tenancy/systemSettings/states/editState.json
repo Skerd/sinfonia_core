@@ -1,37 +1,37 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/editState.tsx",
-  "title": "Redakto gjendjen",
-  "description": "Përditëso detajet e shtetit",
-  "errorTitle": "Ngarkimi i të dhënave të gjendjes dështoi",
-  "errorDescription": "Ju lutemi, klikoni këtu për të riprovuar marrjen e të dhënave të gjendjes",
+  "title": "Redakto rajonin",
+  "description": "Përditëso detajet e rajonit",
+  "errorTitle": "Ngarkimi i të dhënave të rajonit dështoi",
+  "errorDescription": "Ju lutemi, klikoni këtu për të riprovuar marrjen e të dhënave të rajonit",
   "form": {
-    "idLabel": "ID e shtetit",
+    "idLabel": "ID e rajonit",
     "nameLabel": "Emri",
-    "namePlaceholder": "Emri i shtetit",
+    "namePlaceholder": "Emri i rajonit",
     "codeLabel": "Kodi",
     "codePlaceholder": "p.sh. CA",
     "countryLabel": "Vendi",
     "countryPlaceholder": "Zgjidh shtetin"
   },
-  "noId": "Asnjë shtet i zgjedhur.",
+  "noId": "Asnjë rajon i zgjedhur.",
   "backToList": "Kthehu në listë",
   "axios": {
     "start": {
-      "title": "Gjendja e kursimit",
+      "title": "Po ruhet rajoni",
       "time": 3000
     },
     "success": {
-      "title": "Shteti u përditësua me sukses!",
+      "title": "Rajoni u përditësua me sukses!",
       "time": 3000
     },
     "error": {
-      "title": "Gjendja nuk mund të përditësohej, ju lutemi provoni përsëri!",
+      "title": "Rajoni nuk mund të përditësohej, ju lutemi provoni përsëri!",
       "time": 3000
     }
   },
   "formHeader": {
-    "title": "Redakto gjendjen",
-    "description": "Përditëso detajet e shtetit"
+    "title": "Redakto rajonin",
+    "description": "Përditëso detajet e rajonit"
   },
   "formButtons": {
     "cancel": "Anulo",

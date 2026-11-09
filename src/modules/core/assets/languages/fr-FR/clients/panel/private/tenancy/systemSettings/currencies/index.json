@@ -3,8 +3,8 @@
   "title": "Devises",
   "description": "Gérer les devises, symboles et décimales",
   "help": {
-    "ariaLabel": "À propos de Devises",
-    "title": "À propos de Devises",
+    "ariaLabel": "À propos des devises",
+    "title": "À propos des devises",
     "overview": "Les devises définissent le libellé et l’affichage des prix et ventes. Le nom, le symbole, l’abréviation à trois lettres et 0 à 8 décimales sont obligatoires.",
     "sections": [
       {
@@ -17,7 +17,7 @@
       {
         "title": "Montants historiques",
         "items": [
-          "Modifier ultérieurement les décimales ne réécrit pas les montants historiques."
+          "Modifier les décimales change l’affichage et la saisie à venir ; les montants historiques ne sont pas réécrits."
         ]
       }
     ]

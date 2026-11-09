@@ -1,13 +1,13 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/createSmtpServer.tsx",
   "title": "Aggiungi il server SMTP",
-  "description": "La posta in uscita viene inviata utilizzando i server attivi in ​​ordine di priorità (prima la sequenza più bassa).",
+  "description": "La posta in uscita viene inviata utilizzando i server attivi in ordine di priorità (prima la sequenza più bassa).",
   "form": {
     "nameLabel": "Nome",
-    "namePlaceholder": "per esempio. SMTP primario",
+    "namePlaceholder": "es. SMTP primario",
     "sequenceLabel": "Priorità (sequenza)",
     "sequencePlaceholder": "10",
-    "hostLabel": "Ospite SMTP",
+    "hostLabel": "Host SMTP",
     "hostPlaceholder": "smtp.esempio.com",
     "portLabel": "Porta",
     "portPlaceholder": "587",
@@ -17,9 +17,9 @@
     "usernamePlaceholder": "utente@esempio.com",
     "passwordEncryptedLabel": "Password",
     "passwordEncryptedPlaceholder": "••••••••",
-    "fromEmailLabel": "Dall'e-mail",
+    "fromEmailLabel": "E-mail mittente",
     "fromEmailPlaceholder": "noreply@esempio.com",
-    "fromNameLabel": "Dal nome",
+    "fromNameLabel": "Nome mittente",
     "fromNamePlaceholder": "La mia azienda",
     "replyToLabel": "Rispondi a",
     "replyToPlaceholder": "support@esempio.com",
@@ -35,7 +35,7 @@
   },
   "formHeader": {
     "title": "Aggiungi il server SMTP",
-    "description": "La posta in uscita viene inviata utilizzando i server attivi in ​​ordine di priorità (prima la sequenza più bassa)."
+    "description": "La posta in uscita viene inviata utilizzando i server attivi in ordine di priorità (prima la sequenza più bassa)."
   },
   "formButtons": {
     "cancel": "Annulla",

@@ -19,7 +19,7 @@
   "signUpButtonLabel": "Krijo një llogari",
   "axios": {
     "start": {
-      "title": "Po krijon llogari, ju lutemi prisni",
+      "title": "Po krijohet llogaria, ju lutemi prisni",
       "time": 3000
     },
     "success": {

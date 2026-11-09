@@ -1,8 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/users/createUser/createUser.form.tsx",
   "form": {
-    "nameLabel": "Nom",
-    "namePlaceholder": "Nom",
+    "nameLabel": "Prénom",
+    "namePlaceholder": "Prénom",
     "surnameLabel": "Nom",
     "surnamePlaceholder": "Nom",
     "emailLabel": "E-mail",

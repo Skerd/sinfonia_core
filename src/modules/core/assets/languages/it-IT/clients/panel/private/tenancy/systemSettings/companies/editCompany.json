@@ -6,8 +6,8 @@
   "editDescription": "Aggiorna le informazioni sull'azienda",
   "generalInfo": "Informazioni generali",
   "howToReach": "Come raggiungerci",
-  "whoAreWe": "Chi siamo noi",
-  "publicAiChat": "Chat AI pubblica",
+  "whoAreWe": "Chi siamo",
+  "publicAiChat": "Chat IA pubblica",
   "addAddress": "Aggiungi indirizzo",
   "address": "Indirizzo",
   "remove": "Rimuovi",
@@ -54,7 +54,7 @@
     "latitudePlaceholder": "Latitudine",
     "longitudeLabel": "Longitudine",
     "longitudePlaceholder": "Longitudine",
-    "enabledLabel": "Abilita la chat AI pubblica",
+    "enabledLabel": "Abilita la chat IA pubblica",
     "requireIdentificationLabel": "Richiedi identificazione",
     "humanHandoffEnabledLabel": "Consenti il passaggio a una persona",
     "greetingLabel": "Messaggio di benvenuto",
@@ -64,7 +64,7 @@
   },
   "axios": {
     "start": {
-      "title": "Azienda in aggiornamento",
+      "title": "Aggiornamento dell'azienda",
       "time": 3000
     },
     "success": {
@@ -72,7 +72,7 @@
       "time": 3000
     },
     "error": {
-      "title": "Impossibile aggiornare la società, riprova!",
+      "title": "Impossibile aggiornare l'azienda, riprova!",
       "time": 3000
     }
   },

@@ -9,8 +9,8 @@
     "notConnected": "Nuk është i lidhur"
   },
   "order": {
-    "ascending": "Në ngjitje",
-    "descending": "Duke zbritur"
+    "ascending": "Në rritje",
+    "descending": "Në zbritje"
   },
   "appsList": {
     "telegram": {

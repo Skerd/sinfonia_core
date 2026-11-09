@@ -2,7 +2,7 @@
   "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx",
   "titleActivate": "Të aktivizohet përdoruesi [!!!]?",
   "titleDeactivate": "Të bllokohet përdoruesi [!!!]?",
-  "descriptionActivate": "Jeni të sigurt që dëshironi të aktivizoni përdoruesin [!!!]. Përdoruesi mund të ri-logohet në sistem pas aktivizimit.",
+  "descriptionActivate": "Jeni i sigurt që dëshironi të aktivizoni përdoruesin [!!!]? Përdoruesi mund të hyjë sërish në sistem pas aktivizimit.",
   "descriptionDeactivate": "Jeni i sigurt që dëshironi të bllokoni përdoruesin [!!!]? Përdoruesi nuk mund të hyjë në sistem pas bllokimit.",
   "activate": "Aktivizoni",
   "deactivate": "Blloko",

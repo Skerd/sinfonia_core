@@ -3,7 +3,7 @@
   "failTitle": "Kanalet nuk mund të ngarkoheshin",
   "failTitleTooltip": "Trokit për të provuar të ngarkosh sërish kanalet.",
   "noDataTitle": "Nuk ka kanale të disponueshme.",
-  "forward": "Përpara",
+  "forward": "Përcill",
   "message": "Mesazh",
   "selectChannelsToForward": "Zgjidhni kanalet për të përcjellë këtë mesazh",
   "addComment": "Shto një koment (opsionale)",

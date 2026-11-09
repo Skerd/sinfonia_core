@@ -2,8 +2,8 @@
   "path": "src/modules/core/clients/panel/private/chat/left/index.tsx",
   "title": "Boîte de réception",
   "help": {
-    "ariaLabel": "À propos de Boîte de réception",
-    "title": "À propos de Boîte de réception",
+    "ariaLabel": "À propos de la boîte de réception",
+    "title": "À propos de la boîte de réception",
     "overview": "La boîte de réception sert à la messagerie interne entre les collaborateurs de l’entreprise. Elle ne contient pas les conversations des visiteurs du site public.",
     "sections": [
       {

@@ -1,7 +1,7 @@
 {
   "backToList": "Torna all'elenco",
-  "description": "Aggiorna la pianificazione, l'ambito e le impostazioni di esecuzione.",
-  "errorDescription": "Fare clic qui per riprovare a recuperare i dati del lavoro.",
+  "description": "Aggiorna la pianificazione e le impostazioni di esecuzione.",
+  "errorDescription": "Fare clic qui per riprovare a recuperare i dati del processo.",
   "errorTitle": "Impossibile caricare l'azione pianificata",
   "form": {
     "activeLabel": "Attivo",
@@ -11,7 +11,7 @@
     "cronExpressionLabel": "Espressione cron",
     "cronExpressionPlaceholder": "0 0 * * * *",
     "descriptionLabel": "Descrizione",
-    "descriptionPlaceholder": "Note facoltative su questo lavoro",
+    "descriptionPlaceholder": "Note facoltative su questo processo",
     "handlerLabel": "Gestore",
     "maxRetriesLabel": "Numero massimo di tentativi",
     "nameLabel": "Nome",
@@ -20,7 +20,7 @@
     "timeoutSecondsLabel": "Timeout (secondi)",
     "missedRunPolicyLabel": "Politica delle esecuzioni mancate",
     "missedRunPolicy": {
-      "skip": "Salta il ritardo",
+      "skip": "Salta gli arretrati",
       "run_once": "Esegui una volta",
       "catch_up": "Recupera"
     }
@@ -30,7 +30,7 @@
     "submit": "Salva"
   },
   "formHeader": {
-    "description": "Aggiorna la pianificazione, l'ambito e le impostazioni di esecuzione.",
+    "description": "Aggiorna la pianificazione e le impostazioni di esecuzione.",
     "title": "Modifica l'azione pianificata"
   },
   "noId": "Nessuna azione pianificata selezionata.",
@@ -38,6 +38,6 @@
   "title": "Modifica l'azione pianificata",
   "preview": {
     "title": "Prossime esecuzioni con questa espressione",
-    "never": "Questa espressione non viene mai eseguita. Controllatela prima di salvare."
+    "never": "Questa espressione non viene mai eseguita. Controllala prima di salvare."
   }
 }

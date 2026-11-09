@@ -12,13 +12,13 @@
   "description": "Nëse dëshironi të çaktivizoni llogarinë, ju lutemi ndiqni hapat e mëposhtëm.",
   "steps": {
     "one": "Plotësoni fjalëkalimin tuaj",
-    "two": "Klikoni në '!!!!' butonin për të çaktivizuar llogarinë tuaj",
+    "two": "Klikoni butonin '!!!!' për të çaktivizuar llogarinë tuaj",
     "three": "Kujdes, nëse çaktivizoni llogarinë tuaj, duhet të kontaktoni administratorin e sistemit për ta riaktivizuar atë!"
   },
   "deactivateButton": "Blloko",
   "axios": {
     "start": {
-      "title": "Po çaktivizon llogarinë",
+      "title": "Po çaktivizohet llogaria",
       "time": 3000
     },
     "success": {

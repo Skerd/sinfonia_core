@@ -10,11 +10,11 @@
   "steps": {
     "one": "Scannez le code QR ci-dessous avec votre application d'authentification préférée",
     "two": "Entrez le code généré dans le champ ci-dessous",
-    "three": "Cliquez sur '!!!' bouton pour activer 2FA"
+    "three": "Cliquez sur le bouton « !!! » pour activer la 2FA"
   },
   "axios": {
     "start": {
-      "title": "Activer 2FA",
+      "title": "Activation de la 2FA",
       "time": 3000
     },
     "success": {

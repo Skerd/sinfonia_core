@@ -4,7 +4,7 @@
     "newEmailLabel": "E-mail",
     "newEmailDescription": "Il s'agit de l'e-mail qui sera utilisé pour se connecter au système."
   },
-  "failTitle": "Échec du chargement du courrier électronique",
+  "failTitle": "Échec du chargement de l'e-mail",
   "failTitleTooltip": "Cliquez pour réessayer de charger l'e-mail",
   "emailVerified": "Adresse e-mail vérifiée actuelle",
   "invitedUser": "Veuillez vérifier l'e-mail en acceptant la demande d'invitation",

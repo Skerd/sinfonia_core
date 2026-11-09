@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/login/disableOTP.form.tsx",
   "title": "Richiesta di disattivazione 2FA",
-  "description": "Se non hai accesso alla tua app di autenticazione, puoi richiedere la disattivazione di questa funzionalità. Si prega di seguire tutti i passaggi che verranno forniti sulla posta.",
+  "description": "Se non hai accesso alla tua app di autenticazione, puoi richiedere la disattivazione di questa funzionalità. Segui tutti i passaggi che riceverai via e-mail.",
   "confirmTitle": "Disattiva 2FA",
   "cancelTitle": "Annulla",
   "axios": {

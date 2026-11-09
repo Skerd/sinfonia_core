@@ -36,13 +36,13 @@
       }
     },
     "tenancy": {
-      "title": "Qiramarrja",
+      "title": "Administrimi i kompanive",
       "companies": {
         "title": "Kompanitë",
         "allCompanies": {
           "title": "Kompanitë",
           "editCompany": {
-            "title": "Redaktoni kompaninë"
+            "title": "Redakto kompaninë"
           },
           "createCompany": {
             "title": "Krijo kompani"
@@ -66,11 +66,11 @@
           "title": "Qytetet"
         },
         "states": {
-          "title": "shtetet"
+          "title": "Rajonet"
         },
         "title": "Konfigurimet",
         "messagingProviders": {
-          "title": "Ofruesit e Mesazheve"
+          "title": "Ofruesit e mesazheve"
         },
         "cronJobs": {
           "title": "Veprime të planifikuara"
@@ -79,7 +79,7 @@
           "title": "Themelore"
         },
         "countries": {
-          "title": "shtetet"
+          "title": "Vendet"
         },
         "currencies": {
           "title": "Monedhat"
@@ -95,7 +95,7 @@
         "title": "Vështrim i përgjithshëm"
       },
       "administration": {
-        "title": "Administrata"
+        "title": "Administrimi"
       },
       "users": {
         "title": "Përdoruesit"

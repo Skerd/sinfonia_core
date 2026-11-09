@@ -12,7 +12,7 @@
   },
   "mfaFooter": {
     "forgot": "Non riesci ad accedere a 2FA?",
-    "reset": "Resettalo",
+    "reset": "Reimpostala",
     "or": "O",
     "goLogin": "Torna al login"
   }

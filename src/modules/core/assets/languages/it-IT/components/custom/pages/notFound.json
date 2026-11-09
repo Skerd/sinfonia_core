@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/components/custom/pages/notFound.tsx",
   "title": "Ops! Pagina non trovata!",
-  "description": "Sembra la pagina che stai cercando\nnon esiste o potrebbe essere stato rimosso.",
+  "description": "Sembra che la pagina che stai cercando\nnon esista o sia stata rimossa.",
   "backLabel": "Torna indietro",
-  "backHome": "Ritorno a casa"
+  "backHome": "Torna alla home"
 }

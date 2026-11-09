@@ -18,12 +18,12 @@
   "priority": "Prioriteti",
   "maxRetries": "Riprovime maks.",
   "retryDelaySeconds": "Vonesa e riprovimit (sekonda)",
-  "timeoutSeconds": "Timeout (sekonda)",
+  "timeoutSeconds": "Koha maksimale (sekonda)",
   "missedRunPolicy": "Politika e ekzekutimeve të humbura",
   "missedRunPolicyValues": {
-    "skip": "Anashkalo vonesën",
+    "skip": "Anashkalo të humburat",
     "run_once": "Ekzekuto një herë",
-    "catch_up": "Rimerr"
+    "catch_up": "Rikupero të gjitha"
   },
   "lifecycle": "Cikli i jetës",
   "createdAt": "Krijuar më",

@@ -1,17 +1,17 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/editCompany.tsx",
-  "title": "Modifier la société",
+  "title": "Modifier l'entreprise",
   "description": "Mettre à jour les détails de l'entreprise",
   "editTitle": "Mettre à jour l'entreprise",
   "editDescription": "Mettre à jour les informations sur l'entreprise",
   "generalInfo": "Informations générales",
   "howToReach": "Coordonnées",
   "whoAreWe": "Qui sommes-nous",
-  "publicAiChat": "Chat IA publique",
+  "publicAiChat": "Chat IA public",
   "addAddress": "Ajouter une adresse",
   "address": "Adresse",
   "remove": "Supprimer",
-  "errorTitle": "Échec du chargement de la société",
+  "errorTitle": "Échec du chargement de l'entreprise",
   "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données de l'entreprise",
   "form": {
     "nameLabel": "Nom",
@@ -60,11 +60,11 @@
     "greetingLabel": "Message d'accueil",
     "greetingPlaceholder": "Premier message envoyé par le bot lorsqu'un visiteur ouvre le chat",
     "personaLabel": "Persona",
-    "personaPlaceholder": "Instructions spécifiques à l'entreprise ajoutées au prompt public du bot"
+    "personaPlaceholder": "Instructions propres au mandant ajoutées au prompt public du bot"
   },
   "axios": {
     "start": {
-      "title": "Société de mise à jour",
+      "title": "Mise à jour de l'entreprise",
       "time": 3000
     },
     "success": {

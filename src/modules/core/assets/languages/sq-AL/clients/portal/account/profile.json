@@ -7,7 +7,7 @@
     "surnameLabel": "Mbiemri",
     "phoneLabel": "Telefoni",
     "emailLabel": "Emaili",
-    "newEmailLabel": "Email i ri"
+    "newEmailLabel": "Emaili i ri"
   },
   "saveProfile": "Ruaj profilin",
   "saving": "Duke ruajtur…",
@@ -15,10 +15,10 @@
   "profileSaveError": "Profili nuk u ruajt",
   "loadError": "Profili nuk u ngarkua",
   "emailHeading": "Emaili",
-  "currentEmail": "Email-i aktual",
+  "currentEmail": "Emaili aktual",
   "unverified": "i paverifikuar",
-  "pendingEmail": "Një konfirmim u dërgua te {email}. Email-i i hyrjes ndryshon pas asaj lidhjeje.",
+  "pendingEmail": "Një konfirmim u dërgua te {email}. Emaili i hyrjes ndryshon pasi të përdorni atë lidhje.",
   "saveEmail": "Dërgo konfirmimin",
-  "emailSaved": "Kontrolloni kutinë për të konfirmuar email-in e ri",
-  "emailSaveError": "Ndryshimi i email-it nuk nisi"
+  "emailSaved": "Kontrolloni kutinë për të konfirmuar emailin e ri",
+  "emailSaveError": "Ndryshimi i emailit nuk nisi"
 }

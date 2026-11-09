@@ -8,13 +8,13 @@
   "backToList": "Retour à la liste",
   "form": {
     "nameLabel": "Nom",
-    "namePlaceholder": "par ex. Twilio primaire",
+    "namePlaceholder": "par ex. Twilio principal",
     "providerTypeLabel": "Fournisseur",
     "providerType": {
       "twilio": "Twilio"
     },
-    "accountSidLabel": "Numéro de compte du compte",
-    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "accountSidLabel": "SID du compte",
+    "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
     "authTokenEncryptedLabel": "Jeton d'authentification (laisser vide pour conserver)",
     "authTokenEncryptedPlaceholder": "••••••••",
     "fromPhoneLabel": "Expéditeur de SMS (E.164)",

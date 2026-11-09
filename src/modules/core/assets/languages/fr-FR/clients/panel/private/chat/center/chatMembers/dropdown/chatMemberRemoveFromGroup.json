@@ -1,9 +1,9 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/chatMemberRemoveFromGroup.tsx",
-  "removeMember": "Supprimer du groupe",
+  "removeMember": "Retirer du groupe",
   "axios": {
     "start": {
-      "title": "Supprimer un membre",
+      "title": "Retrait du membre",
       "time": 3000
     },
     "success": {

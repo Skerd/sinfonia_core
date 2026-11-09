@@ -3,7 +3,7 @@
   "title": "Kompanitë",
   "description": "Menaxhoni kompanitë",
   "createCompany": "Krijo kompani",
-  "searchPlaceholder": "Kërko me emër, email ose shto filtra...",
+  "searchPlaceholder": "Kërko sipas emrit, emailit ose shto filtra...",
   "noData": "Nuk u gjet asnjë kompani",
   "failTitle": "Ngarkimi i kompanive dështoi",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit të kompanive. Ju lutemi provoni përsëri.",
@@ -25,7 +25,7 @@
     "isActive": "Statusi",
     "allowedDomains": "Domenet e lejuara",
     "createdBy": "Krijuar nga",
-    "deletedAt": "Fshirë në",
+    "deletedAt": "Fshirë më",
     "deletedBy": "Fshirë nga"
   }
 }

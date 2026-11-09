@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/otp/deactivateOTP/deactivateOtp.form.tsx",
   "deactivateNow": "Are you sure you want to deactivate 2FA?",
-  "deactivateNowDescription": "After deactivation, the user can log into the system using password onlu",
+  "deactivateNowDescription": "After deactivation, the user can log in to the system using only a password.",
   "withOTPCodeDescription": "Fill 2FA code to deactivate",
   "confirm": "Deactivate 2FA",
   "cancel": "Cancel",
