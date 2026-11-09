@@ -40,10 +40,10 @@
         "title": "Alle Firmen"
       },
       "serverPerformance": {
-        "title": "Performance"
+        "title": "Leistung"
       },
       "cronJobs": {
-        "title": "Scheduled massnahmen"
+        "title": "Geplante Aktionen"
       },
       "systemSettings": {
         "title": "Konfigurationen",

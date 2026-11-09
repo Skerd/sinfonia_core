@@ -1,33 +1,33 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/otp/deactivateOTP/deactivateOtp.form.tsx",
-  "deactivateNow": "Sind sie sicher sie want bis deaktivieren 2FA?",
-  "deactivateNowDescription": "After deactivation, die benutzer can log into die system using passwort onlu",
-  "withOTPCodeDescription": "Fill 2FA code bis deaktivieren",
-  "confirm": "Deaktivieren 2FA",
+  "deactivateNow": "Möchten Sie 2FA wirklich deaktivieren?",
+  "deactivateNowDescription": "Nach der Deaktivierung kann sich der Benutzer nur noch mit dem Passwort im System anmelden",
+  "withOTPCodeDescription": "2FA-Code eingeben, um zu deaktivieren",
+  "confirm": "2FA deaktivieren",
   "cancel": "Abbrechen",
   "twoParts": {
     "noOtpCode": {
-      "0": "Don't have 2FA code?",
-      "1": "Antrag e-Mail instructions"
+      "0": "Keinen 2FA-Code?",
+      "1": "Anleitung per E-Mail anfordern"
     }
   },
-  "checkEmail": "Check e-Mail bis weiter 2FA deactivation",
-  "disabled": "2FA erfolgreich deactivated!",
+  "checkEmail": "Prüfen Sie Ihre E-Mails, um die 2FA-Deaktivierung fortzusetzen",
+  "disabled": "2FA erfolgreich deaktiviert!",
   "form": {
     "mfaCodeLabel": "2FA code",
     "mfaCodePlaceholder": "2FA code"
   },
   "axios": {
     "start": {
-      "title": "Deactivating 2FA",
+      "title": "2FA wird deaktiviert",
       "time": 3000
     },
     "error": {
-      "title": "2FA deactivation fehlgeschlagen",
+      "title": "2FA-Deaktivierung fehlgeschlagen",
       "time": 3000
     },
     "success": {
-      "title": "Abgeschlossen erfolgreich",
+      "title": "Erfolgreich abgeschlossen",
       "time": 3000
     }
   }

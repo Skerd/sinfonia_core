@@ -1,20 +1,20 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/login/disableOTP.form.tsx",
-  "title": "2FA deactivation antrag",
-  "description": "If sie do nicht have zugriff bis ihr authenticator app, sie can antrag die deactivation von diese feature. Bitte follow alle steps that will werden provided on ihr mail.",
-  "confirmTitle": "Deaktivieren 2FA",
+  "title": "Anfrage zur 2FA-Deaktivierung",
+  "description": "Wenn Sie keinen Zugriff auf Ihre Authenticator-App haben, können Sie die Deaktivierung dieser Funktion anfordern. Bitte folgen Sie allen Schritten, die Sie per E-Mail erhalten.",
+  "confirmTitle": "2FA deaktivieren",
   "cancelTitle": "Abbrechen",
   "axios": {
     "start": {
-      "title": "Sending 2FA deactivation antrag",
+      "title": "Anfrage zur 2FA-Deaktivierung wird gesendet",
       "time": 3000
     },
     "success": {
-      "title": "2FA deactivation antrag was erfolgreich sent. Click die link sent in die e-Mail bis weiter.",
+      "title": "Die Anfrage zur 2FA-Deaktivierung wurde erfolgreich gesendet. Klicken Sie auf den Link in der E-Mail, um fortzufahren.",
       "time": 3000
     },
     "error": {
-      "title": "2FA deactivation antrag fehlgeschlagen bis werden sent",
+      "title": "Anfrage zur 2FA-Deaktivierung konnte nicht gesendet werden",
       "time": 3000
     }
   }

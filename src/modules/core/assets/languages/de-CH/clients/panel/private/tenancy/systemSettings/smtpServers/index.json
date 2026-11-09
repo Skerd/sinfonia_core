@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
-  "title": "Outgoing mail servers",
-  "description": "Configure SMTP servers für diese firma. Lower sequence ist tried vor.",
+  "title": "Postausgangsserver",
+  "description": "SMTP-Server für diese Firma konfigurieren. Die niedrigere Reihenfolge wird zuerst versucht.",
   "help": {
-    "ariaLabel": "Über Outgoing mail servers",
-    "title": "Über Outgoing mail servers",
+    "ariaLabel": "Über Postausgangsserver",
+    "title": "Über Postausgangsserver",
     "overview": "Server für ausgehende E-Mails übernehmen den SMTP-Versand dieser Firma. Neue Server sind zunächst inaktiv und sollten erst nach einem erfolgreichen Verbindungstest aktiviert werden.",
     "sections": [
       {
@@ -25,18 +25,18 @@
       }
     ]
   },
-  "createSmtpServer": "SMTP server hinzufügen",
-  "searchPlaceholder": "Suchen von name oder host...",
-  "noData": "Keine SMTP servers configured",
-  "failTitle": "SMTP servers konnten nicht geladen werden",
-  "failDescription": "Beim Laden von SMTP servers ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+  "createSmtpServer": "SMTP-Server hinzufügen",
+  "searchPlaceholder": "Nach Name oder Host suchen...",
+  "noData": "Keine SMTP-Server konfiguriert",
+  "failTitle": "SMTP-Server konnten nicht geladen werden",
+  "failDescription": "Beim Laden der SMTP-Server ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
   "name": "Name",
   "host": "Host",
-  "sequence": "Priority",
+  "sequence": "Priorität",
   "port": "Port",
-  "encryption": "Encryption",
+  "encryption": "Verschlüsselung",
   "active": "Aktiv",
-  "fromEmail": "Von e-Mail",
+  "fromEmail": "Absender-E-Mail",
   "fields": {
     "!enums": {
       "lastTestStatus": {
@@ -45,15 +45,15 @@
       }
     },
     "name": "Name",
-    "sequence": "Priority",
+    "sequence": "Priorität",
     "active": "Aktiv",
     "host": "Host",
     "port": "Port",
-    "encryption": "Encryption",
-    "authType": "Authentication",
-    "fromEmail": "Von e-Mail",
-    "lastTestedAt": "Nach tested",
-    "lastTestStatus": "Nach test",
+    "encryption": "Verschlüsselung",
+    "authType": "Authentifizierung",
+    "fromEmail": "Absender-E-Mail",
+    "lastTestedAt": "Zuletzt getestet",
+    "lastTestStatus": "Letzter Test",
     "createdAt": "Erstellt am",
     "updatedAt": "Aktualisiert am",
     "createdBy": "Erstellt von",

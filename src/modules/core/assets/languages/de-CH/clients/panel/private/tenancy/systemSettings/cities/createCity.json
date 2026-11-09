@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/createCity.tsx",
   "title": "Ort erstellen",
-  "description": "A neu ort hinzufügen",
+  "description": "Neue Stadt hinzufügen",
   "form": {
     "nameLabel": "Name",
-    "namePlaceholder": "Ort name",
+    "namePlaceholder": "Ortsname",
     "countryLabel": "Land",
     "countryPlaceholder": "Land auswählen",
     "stateLabel": "Kanton",
@@ -12,7 +12,7 @@
   },
   "formHeader": {
     "title": "Ort erstellen",
-    "description": "A neu ort hinzufügen"
+    "description": "Neue Stadt hinzufügen"
   },
   "formButtons": {
     "cancel": "Abbrechen",

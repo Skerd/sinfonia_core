@@ -1,6 +1,6 @@
 {
-  "backToList": "Zurück zu liste",
-  "description": "Aktualisieren terminplan, umfang, und execution einstellungen.",
+  "backToList": "Zurück zur Liste",
+  "description": "Zeitplan und Ausführungseinstellungen aktualisieren.",
   "errorDescription": "Klicken Sie hier, um die Jobdaten erneut zu laden.",
   "errorTitle": "Geplante Aktion konnte nicht geladen werden",
   "form": {
@@ -8,16 +8,16 @@
     "codeLabel": "Code",
     "companyLabel": "Firma",
     "companyPlaceholder": "Firma auswählen",
-    "cronExpressionLabel": "Cron expression",
+    "cronExpressionLabel": "Cron-Ausdruck",
     "cronExpressionPlaceholder": "0 0 * * * *",
     "descriptionLabel": "Beschreibung",
     "descriptionPlaceholder": "Optionale Notizen zu diesem Job",
     "handlerLabel": "Handler",
-    "maxRetriesLabel": "Max retries",
+    "maxRetriesLabel": "Max. Wiederholungen",
     "nameLabel": "Name",
-    "priorityLabel": "Priority",
+    "priorityLabel": "Priorität",
     "retryDelaySecondsLabel": "Wiederholungsverzögerung (Sekunden)",
-    "timeoutSecondsLabel": "Timeout (Sekunden)",
+    "timeoutSecondsLabel": "Zeitlimit (Sekunden)",
     "missedRunPolicyLabel": "Richtlinie für verpasste Ausführungen",
     "missedRunPolicy": {
       "skip": "Rückstand überspringen",
@@ -30,7 +30,7 @@
     "submit": "Speichern"
   },
   "formHeader": {
-    "description": "Aktualisieren terminplan, umfang, und execution einstellungen.",
+    "description": "Zeitplan und Ausführungseinstellungen aktualisieren.",
     "title": "Geplante Aktion bearbeiten"
   },
   "noId": "Keine geplante Aktion ausgewählt.",

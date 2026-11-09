@@ -1,17 +1,17 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/dropdown/demoteToUser.tsx",
-  "removeFromAdmin": "Dismiss as admin",
+  "removeFromAdmin": "Als Admin entfernen",
   "axios": {
     "start": {
-      "title": "Demoting mitglied bis benutzer",
+      "title": "Mitglied wird zum Benutzer herabgestuft",
       "time": 3000
     },
     "success": {
-      "title": "Mitglied erfolgreich demoted bis benutzer",
+      "title": "Mitglied erfolgreich zum Benutzer herabgestuft",
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis demote benutzer bis benutzer",
+      "title": "Benutzer konnte nicht herabgestuft werden",
       "time": 3000
     }
   }

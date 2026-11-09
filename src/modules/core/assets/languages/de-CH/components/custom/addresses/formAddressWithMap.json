@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/components/custom/addresses/formAddressWithMap.tsx",
   "addAddress": "Adresse hinzufügen",
-  "remove": "Entfernen adresse",
+  "remove": "Adresse entfernen",
   "form": {
     "countryLabel": "Land",
     "countryPlaceholder": "Land auswählen",

@@ -6,13 +6,13 @@
   "uptime": "Temps de disponibilité",
   "requests": "Demandes",
   "failed": "Échoué",
-  "avgTime": "Moy. Temps",
+  "avgTime": "Temps moy.",
   "day": "jour",
   "days": "jours",
   "hour": "heure",
   "hours": "heures",
   "minute": "minute",
   "minutes": "minutes",
-  "second": "deuxième",
+  "second": "seconde",
   "seconds": "secondes"
 }

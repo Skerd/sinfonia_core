@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/phoneNumber/index.tsx",
   "form": {
-    "phoneNumberNumberLabel": "Telefon nummer",
-    "phoneNumberNumberPlaceholder": "Telefon nummer"
+    "phoneNumberNumberLabel": "Telefonnummer",
+    "phoneNumberNumberPlaceholder": "Telefonnummer"
   },
-  "failTitle": "Telefon nummer konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis retry laden telefon nummer",
+  "failTitle": "Telefonnummer konnte nicht geladen werden",
+  "failTitleTooltip": "Klicken, um die Telefonnummer erneut zu laden",
   "edit": "Bearbeiten",
   "empty": "Noch nichts erfasst."
 }

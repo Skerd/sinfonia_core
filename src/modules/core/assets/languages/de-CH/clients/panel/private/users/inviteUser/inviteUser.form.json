@@ -2,29 +2,29 @@
   "path": "src/modules/core/clients/panel/private/users/inviteUser/inviteUser.form.tsx",
   "form": {
     "emailLabel": "E-Mail",
-    "emailPlaceholder": "Eg: e-Mail@example.com",
-    "nameLabel": "Name",
-    "namePlaceholder": "Eg: John",
-    "surnameLabel": "Surname",
-    "surnamePlaceholder": "Eg: Doe",
+    "emailPlaceholder": "z. B.: email@beispiel.ch",
+    "nameLabel": "Vorname",
+    "namePlaceholder": "z. B.: Hans",
+    "surnameLabel": "Nachname",
+    "surnamePlaceholder": "z. B.: Muster",
     "userRoleLabel": "Rolle",
-    "userRolePlaceholder": "A rolle auswählen",
-    "welcomeMessageLabel": "Welcome nachricht (optional)",
-    "welcomeMessagePlaceholder": "A personal note bis ihr einladung (optional) hinzufügen"
+    "userRolePlaceholder": "Rolle auswählen",
+    "welcomeMessageLabel": "Willkommensnachricht (optional)",
+    "welcomeMessagePlaceholder": "Fügen Sie Ihrer Einladung eine persönliche Notiz hinzu (optional)"
   },
   "cancel": "Abbrechen",
-  "invite": "Invite",
+  "invite": "Einladen",
   "axios": {
     "start": {
-      "title": "Inviting benutzer",
+      "title": "Benutzer wird eingeladen",
       "time": 3000
     },
     "success": {
-      "title": "Benutzer invited erfolgreich!",
+      "title": "Benutzer erfolgreich eingeladen!",
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis invite benutzer.",
+      "title": "Benutzer konnte nicht eingeladen werden.",
       "time": 3000
     }
   }

@@ -1,32 +1,32 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/acceptInvitation/acceptInvitation.form.tsx",
-  "verifyingInvitationCodeTitle": "Sicherheit check",
-  "verifyingInvitationCodeDescription": "Checking einladung code validity.",
-  "errorVerifyingInvitationCodeTitle": "Sicherheit check fehlgeschlagen",
-  "errorVerifyingInvitationCodeDescription": "Diese einladung code ist invalid oder has abgelaufen.",
-  "errorAcceptingInvitationTitle": "Fehlgeschlagen bis accept einladung",
-  "errorAcceptingInvitationDescription": "Something unexpected happened während accepting die einladung. Bitte versuchen erneut later!",
+  "verifyingInvitationCodeTitle": "Sicherheitsprüfung",
+  "verifyingInvitationCodeDescription": "Gültigkeit des Einladungscodes wird geprüft.",
+  "errorVerifyingInvitationCodeTitle": "Sicherheitsprüfung fehlgeschlagen",
+  "errorVerifyingInvitationCodeDescription": "Dieser Einladungscode ist ungültig oder abgelaufen.",
+  "errorAcceptingInvitationTitle": "Einladung konnte nicht angenommen werden",
+  "errorAcceptingInvitationDescription": "Beim Annehmen der Einladung ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später erneut!",
   "successAcceptingInvitationTitle": "Erfolg",
-  "successAcceptingInvitationDescription": "Einladung accepted erfolgreich. Sie can now log into ihr konto using ihr passwort.",
-  "title": "Accept einladung",
-  "description": "Set ihr passwort bis accept die einladung",
+  "successAcceptingInvitationDescription": "Einladung erfolgreich angenommen. Sie können sich jetzt mit Ihrem Passwort bei Ihrem Konto anmelden.",
+  "title": "Einladung annehmen",
+  "description": "Legen Sie Ihr Passwort fest, um die Einladung anzunehmen",
   "form": {
     "passwordLabel": "Passwort",
-    "passwordPlaceholder": "Ihr passwort eingeben",
-    "invitationCodeLabel": "Einladung code"
+    "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
+    "invitationCodeLabel": "Einladungscode"
   },
-  "confirm": "Accept einladung",
+  "confirm": "Einladung annehmen",
   "axios": {
     "start": {
-      "title": "Accepting einladung",
+      "title": "Einladung wird angenommen",
       "time": 3000
     },
     "success": {
-      "title": "Einladung accepted erfolgreich",
+      "title": "Einladung erfolgreich angenommen",
       "time": 3000
     },
     "error": {
-      "title": "Konnte nicht accept einladung",
+      "title": "Einladung konnte nicht angenommen werden",
       "time": 3000
     }
   }

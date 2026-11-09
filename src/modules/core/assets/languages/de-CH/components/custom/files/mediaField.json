@@ -1,13 +1,13 @@
 {
   "path": "src/modules/core/components/custom/files/mediaField.tsx",
-  "uploadImageHint": "Upload bild",
-  "uploadVideoHint": "Upload video",
-  "uploadFileHint": "Upload datei",
+  "uploadImageHint": "Bild hochladen",
+  "uploadVideoHint": "Video hochladen",
+  "uploadFileHint": "Datei hochladen",
   "uploadPdfHint": "PDF hochladen",
   "invalidFileType": "Dieser Dateityp ist nicht erlaubt",
   "invalidPdfType": "Bitte eine gültige PDF-Datei auswählen",
   "imageAlt": "Bild",
   "videoAlt": "Video",
   "fileAlt": "Datei",
-  "videoUnsupported": "Ihr browser does nicht support die video tag."
+  "videoUnsupported": "Ihr Browser unterstützt das Video-Tag nicht."
 }

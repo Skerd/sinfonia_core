@@ -6,7 +6,7 @@
     "nameLabel": "Emri",
     "surnameLabel": "Mbiemri",
     "phoneLabel": "Telefoni",
-    "emailLabel": "Email",
+    "emailLabel": "Emaili",
     "newEmailLabel": "Email i ri"
   },
   "saveProfile": "Ruaj profilin",
@@ -14,7 +14,7 @@
   "profileSaved": "Profili u përditësua",
   "profileSaveError": "Profili nuk u ruajt",
   "loadError": "Profili nuk u ngarkua",
-  "emailHeading": "Email",
+  "emailHeading": "Emaili",
   "currentEmail": "Email-i aktual",
   "unverified": "i paverifikuar",
   "pendingEmail": "Një konfirmim u dërgua te {email}. Email-i i hyrjes ndryshon pas asaj lidhjeje.",

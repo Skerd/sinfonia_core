@@ -1,17 +1,17 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/pinMessage.tsx",
-  "pin": "Pin",
+  "pin": "Anheften",
   "axios": {
     "start": {
-      "title": "Pinning nachricht",
+      "title": "Nachricht wird angeheftet",
       "time": 3000
     },
     "success": {
-      "title": "Nachricht erfolgreich pinned",
+      "title": "Nachricht erfolgreich angeheftet",
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis pin nachricht.",
+      "title": "Nachricht konnte nicht angeheftet werden.",
       "time": 3000
     }
   }

@@ -1,29 +1,29 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/chatInput/actions/forwardMessageDialog.tsx",
-  "failTitle": "Konnte nicht laden channels",
-  "failTitleTooltip": "Tap bis versuchen laden channels erneut.",
-  "noDataTitle": "Keine channels verfügbar.",
-  "forward": "Forward",
+  "failTitle": "Kanäle konnten nicht geladen werden",
+  "failTitleTooltip": "Tippen, um die Kanäle erneut zu laden.",
+  "noDataTitle": "Keine Kanäle verfügbar.",
+  "forward": "Weiterleiten",
   "message": "Nachricht",
-  "selectChannelsToForward": "Channels bis forward diese nachricht bis auswählen",
-  "addComment": "A kommentar (optional) hinzufügen",
-  "addCommentPlaceholder": "A kommentar... hinzufügen",
-  "selectChannels": "Channels auswählen",
+  "selectChannelsToForward": "Kanäle auswählen, an die diese Nachricht weitergeleitet werden soll",
+  "addComment": "Kommentar hinzufügen (optional)",
+  "addCommentPlaceholder": "Kommentar hinzufügen...",
+  "selectChannels": "Kanäle auswählen",
   "cancel": "Abbrechen",
-  "sending": "Sending...",
+  "sending": "Wird gesendet...",
   "axios": {
     "start": {
-      "title": "Forwarding nachricht",
+      "title": "Nachricht wird weitergeleitet",
       "time": 3000
     },
     "success": {
-      "title": "Nachricht erfolgreich forwarded",
+      "title": "Nachricht erfolgreich weitergeleitet",
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis forward nachricht",
+      "title": "Nachricht konnte nicht weitergeleitet werden",
       "time": 3000
     }
   },
-  "messageDeleted": "Nachricht Gelöscht"
+  "messageDeleted": "Nachricht gelöscht"
 }

@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/online/serverHealth/index.tsx",
   "serverHealthTitle": "Integrità del server",
-  "waitingForHealthData": "In attesa dei dati sanitari...",
+  "waitingForHealthData": "In attesa dei dati di stato...",
   "failTitle": "Impossibile caricare i dati sull'integrità del server",
   "failTitleTooltip": "Impossibile caricare i dati sullo stato del server, fai clic qui per riprovare",
-  "healthy": "Salutare",
+  "healthy": "Integro",
   "degraded": "Degradato",
   "error": "Errore",
   "notAvailable": "Non disponibile",

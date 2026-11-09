@@ -8,7 +8,7 @@
   "execution": "Ekzekutimi",
   "description": "Përshkrimi",
   "name": "Emri",
-  "handler": "Handler",
+  "handler": "Trajtuesi",
   "active": "Aktiv",
   "nextRunAt": "Ekzekutimi i radhës",
   "lastRunAt": "Ekzekutimi i fundit",

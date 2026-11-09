@@ -1,8 +1,8 @@
 {
   "path": "src/modules/core/clients/panel/private/users/inviteUser/index.tsx",
-  "title": "Invite Benutzer",
-  "administrationTitle": "Invite Benutzer",
-  "description": "Invite neu benutzer bis zugriff ihr baustelle von sending them ein e-Mail einladung. Assign a rolle bis define their zugriff level.",
-  "administrationDescription": "Invite neu benutzer bis join ihr team von sending them ein e-Mail einladung. Assign a rolle bis define their zugriff level.",
-  "inviteUser": "Invite Benutzer"
+  "title": "Benutzer einladen",
+  "administrationTitle": "Benutzer einladen",
+  "description": "Laden Sie einen neuen Benutzer per E-Mail-Einladung auf Ihre Website ein. Weisen Sie eine Rolle zu, um seine Zugriffsrechte festzulegen.",
+  "administrationDescription": "Laden Sie einen neuen Benutzer per E-Mail-Einladung in Ihr Team ein. Weisen Sie eine Rolle zu, um seine Zugriffsrechte festzulegen.",
+  "inviteUser": "Benutzer einladen"
 }

@@ -1,16 +1,16 @@
 {
   "path": "src/modules/core/clients/panel/private/users/createUser/createUser.form.tsx",
   "form": {
-    "nameLabel": "Name",
-    "namePlaceholder": "Name",
-    "surnameLabel": "Surname",
-    "surnamePlaceholder": "Surname",
+    "nameLabel": "Vorname",
+    "namePlaceholder": "Vorname",
+    "surnameLabel": "Nachname",
+    "surnamePlaceholder": "Nachname",
     "emailLabel": "E-Mail",
-    "emailPlaceholder": "e-Mail@example.com",
+    "emailPlaceholder": "email@beispiel.ch",
     "passwordLabel": "Passwort",
     "passwordPlaceholder": "Passwort",
-    "confirmPasswordLabel": "Confirm passwort",
-    "confirmPasswordPlaceholder": "Confirm passwort",
+    "confirmPasswordLabel": "Passwort bestätigen",
+    "confirmPasswordPlaceholder": "Passwort bestätigen",
     "userRoleLabel": "Rolle",
     "userRolePlaceholder": "Rolle"
   },
@@ -22,11 +22,11 @@
       "time": 3000
     },
     "success": {
-      "title": "Benutzer erfolgreich erstellt!",
+      "title": "Benutzer erfolgreich erstellt",
       "time": 3000
     },
     "error": {
-      "title": "Benutzer creation fehlgeschlagen",
+      "title": "Benutzer konnte nicht erstellt werden",
       "time": 3000
     }
   }

@@ -5,7 +5,7 @@
     "description": "Rollendetails aktualisieren"
   },
   "errorTitle": "Rollendaten konnten nicht geladen werden",
-  "errorDescription": "Hier klicken, um die Rollendaten erneut zu laden",
+  "errorDescription": "Bitte hier klicken, um die Rollendaten erneut zu laden",
   "form": {
     "nameLabel": "Rollenname",
     "namePlaceholder": "Rollenname",

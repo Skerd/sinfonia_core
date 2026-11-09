@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/email/index.tsx",
   "form": {
-    "newEmailLabel": "Email",
+    "newEmailLabel": "Emaili",
     "newEmailDescription": "Ky është emaili që do të përdoret për të hyrë në sistem."
   },
   "failTitle": "Ngarkimi i emailit dështoi",

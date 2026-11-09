@@ -5,7 +5,7 @@
   "form": {
     "nameLabel": "Name",
     "namePlaceholder": "Kategoriename",
-    "slugLabel": "Slug",
+    "slugLabel": "Webadressen-Name",
     "slugPlaceholder": "url-slug",
     "descriptionLabel": "Beschreibung",
     "descriptionPlaceholder": "Optionale Beschreibung"

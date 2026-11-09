@@ -1,18 +1,18 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/dialogs/testSmtpConnectionDialog.tsx",
-  "title": "Test SMTP connection",
-  "description": "Verifizieren die server und send a test e-Mail bis ihr konto adresse.",
-  "confirm": "Test connection",
+  "title": "SMTP-Verbindung testen",
+  "description": "Prüfen Sie den Server und senden Sie eine Test-E-Mail an die Adresse Ihres Kontos.",
+  "confirm": "Verbindung testen",
   "cancel": "Abbrechen",
   "axios": {
     "start": {
-      "title": "Testing SMTP connection…"
+      "title": "SMTP-Verbindung wird getestet…"
     },
     "success": {
-      "title": "SMTP connection test succeeded."
+      "title": "SMTP-Verbindungstest erfolgreich."
     },
     "error": {
-      "title": "SMTP connection test fehlgeschlagen"
+      "title": "SMTP-Verbindungstest fehlgeschlagen"
     }
   }
 }

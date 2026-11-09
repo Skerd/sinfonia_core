@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/myCompany/index.tsx",
   "title": "Firma",
-  "description": "Firma info",
+  "description": "Firmeninformationen",
   "help": {
-    "ariaLabel": "Über Firma",
-    "title": "Über Firma",
+    "ariaLabel": "Über die Firma",
+    "title": "Über die Firma",
     "overview": "Diese Seite verwaltet den Firmendatensatz des aktuellen Mandanten, nicht eine Firmenliste. Mit Bearbeiten öffnen Sie das Firmenformular.",
     "sections": [
       {
@@ -29,6 +29,6 @@
       }
     ]
   },
-  "failTitle": "Firma konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis retry laden firma info"
+  "failTitle": "Firma konnte nicht geladen werden",
+  "failTitleTooltip": "Klicken, um die Firmeninformationen erneut zu laden"
 }

@@ -15,7 +15,7 @@
   "collapse": "Kolapsi",
   "_id": "Id",
   "name": "Emri",
-  "email": "Email",
+  "email": "Emaili",
   "phone": "Telefoni",
   "phoneNumber": {
     "prefix": "Parashtesa",

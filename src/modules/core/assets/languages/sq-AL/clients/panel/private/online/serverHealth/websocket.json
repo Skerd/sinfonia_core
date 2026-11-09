@@ -1,18 +1,18 @@
 {
   "path": "src/modules/core/clients/panel/private/online/serverHealth/websocket.tsx",
   "websocketServerTitle": "Serveri i uebit",
-  "online": "Online",
+  "online": "Në linjë",
   "offline": "Jashtë linje",
   "uptime": "Koha e funksionimit",
   "jobs": "Punët",
   "failed": "Dështoi",
-  "avgTime": "Mesatar Koha",
+  "avgTime": "Koha mesatare",
   "day": "ditë",
   "days": "ditë",
   "hour": "orë",
   "hours": "orë",
   "minute": "minutë",
   "minutes": "minuta",
-  "second": "e dyta",
+  "second": "sekondë",
   "seconds": "sekonda"
 }

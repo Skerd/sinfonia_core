@@ -1,5 +1,5 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/index.tsx",
   "title": "Sicherheit",
-  "description": "Aktualisieren ihr passwort, two-faktor authentication, aktiv sitzungen, anmelden history, und konto status."
+  "description": "Aktualisieren Sie Ihr Passwort, die Zwei-Faktor-Authentifizierung, aktive Sitzungen, den Anmeldeverlauf und den Kontostatus."
 }

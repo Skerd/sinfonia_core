@@ -4,7 +4,7 @@
   "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të provuar përsëri.",
   "name": "Emri",
   "code": "Kodi",
-  "handler": "Handler",
+  "handler": "Trajtuesi",
   "cronExpression": "Shprehje cron",
   "description": "Përshkrimi",
   "priority": "Prioriteti",

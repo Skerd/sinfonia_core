@@ -1,16 +1,16 @@
 {
-  "description": "Connect ein SMS oder WhatsApp provider. Credentials sind stored encrypted.",
+  "description": "Verbinden Sie einen SMS- oder WhatsApp-Anbieter. Zugangsdaten werden verschlüsselt gespeichert.",
   "form": {
-    "accountSidLabel": "Konto SID",
+    "accountSidLabel": "Account SID",
     "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "authTokenEncryptedLabel": "Auth token",
+    "authTokenEncryptedLabel": "Auth-Token",
     "authTokenEncryptedPlaceholder": "••••••••",
-    "fromPhoneLabel": "SMS sender (E.164)",
+    "fromPhoneLabel": "SMS-Absender (E.164)",
     "fromPhonePlaceholder": "+15551234567",
-    "fromWhatsappLabel": "WhatsApp sender (E.164)",
+    "fromWhatsappLabel": "WhatsApp-Absender (E.164)",
     "fromWhatsappPlaceholder": "+15551234567",
     "nameLabel": "Name",
-    "namePlaceholder": "E.g. Primär Twilio",
+    "namePlaceholder": "z. B. Twilio primär",
     "providerType": {
       "twilio": "Twilio"
     },
@@ -21,9 +21,9 @@
     "submit": "Erstellen"
   },
   "formHeader": {
-    "description": "Connect ein SMS oder WhatsApp provider. Credentials sind stored encrypted.",
-    "title": "Messaging provider hinzufügen"
+    "description": "Verbinden Sie einen SMS- oder WhatsApp-Anbieter. Zugangsdaten werden verschlüsselt gespeichert.",
+    "title": "Messaging-Anbieter hinzufügen"
   },
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/createMessagingProvider.tsx",
-  "title": "Messaging provider hinzufügen"
+  "title": "Messaging-Anbieter hinzufügen"
 }

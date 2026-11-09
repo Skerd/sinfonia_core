@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/name/index.tsx",
   "form": {
-    "nameLabel": "Name",
-    "nameDescription": "Diese ist die name that will werden displayed in die system."
+    "nameLabel": "Vorname",
+    "nameDescription": "Dieser Vorname wird im System angezeigt."
   },
-  "failTitle": "Name konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis retry laden name",
+  "failTitle": "Vorname konnte nicht geladen werden",
+  "failTitleTooltip": "Klicken, um den Vornamen erneut zu laden",
   "edit": "Bearbeiten",
   "empty": "Noch nichts erfasst."
 }

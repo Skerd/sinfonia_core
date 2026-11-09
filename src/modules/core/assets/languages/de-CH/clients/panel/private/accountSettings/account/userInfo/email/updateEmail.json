@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/email/updateEmail.tsx",
-  "confirm": "Confirm e-Mail change",
+  "confirm": "E-Mail-Änderung bestätigen",
   "cancel": "Abbrechen",
   "axios": {
     "start": {
@@ -8,11 +8,11 @@
       "time": 3000
     },
     "success": {
-      "title": "E-Mail erfolgreich aktualisiert. Bitte verifizieren diese e-Mail von clicking on die link sent bis diese e-Mail",
+      "title": "E-Mail-Adresse erfolgreich aktualisiert. Bitte bestätigen Sie diese E-Mail-Adresse über den Link, der an diese Adresse gesendet wurde",
       "time": 3000
     },
     "error": {
-      "title": "E-Mail fehlgeschlagen bis werden aktualisiert",
+      "title": "E-Mail-Adresse konnte nicht aktualisiert werden",
       "time": 3000
     }
   }

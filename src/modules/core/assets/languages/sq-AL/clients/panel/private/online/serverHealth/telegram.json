@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/online/serverHealth/telegram.tsx",
   "telegramServerTitle": "Serveri i Telegramit",
-  "online": "Online",
+  "online": "Në linjë",
   "offline": "Jashtë linje",
   "messages": "Mesazhet",
   "failed": "Dështuar",

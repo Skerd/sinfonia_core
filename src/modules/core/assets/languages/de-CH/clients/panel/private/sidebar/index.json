@@ -2,10 +2,10 @@
   "path": "src/modules/core/clients/panel/private/sidebar/index.tsx",
   "home": {
     "title": "Apps",
-    "subtitle": "App auswählen zum Öffnen",
+    "subtitle": "App zum Öffnen auswählen",
     "searchPlaceholder": "Apps suchen…",
     "noResults": "Keine Apps entsprechen Ihrer Suche.",
-    "recent": "Zuletzt",
+    "recent": "Zuletzt verwendet",
     "greetingMorning": "Guten Morgen",
     "greetingAfternoon": "Guten Tag",
     "greetingEvening": "Guten Abend"
@@ -52,7 +52,7 @@
       "resources": {
         "title": "Ressourcen",
         "serverPerformance": {
-          "title": "Performance"
+          "title": "Leistung"
         },
         "cronJobs": {
           "title": "Geplante Aktionen"
@@ -76,7 +76,7 @@
           "title": "Geplante Aktionen"
         },
         "core": {
-          "title": "Core"
+          "title": "Kern"
         },
         "countries": {
           "title": "Länder"

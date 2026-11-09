@@ -33,7 +33,7 @@
   "modules": "Modules",
   "moduleNames": {
     "core": "Noyau",
-    "finance": "Finance",
+    "finance": "Finances",
     "eCommerce": "E-commerce",
     "propertyManagement": "Gestion immobilière",
     "propertyDevelopment": "Promotion immobilière",

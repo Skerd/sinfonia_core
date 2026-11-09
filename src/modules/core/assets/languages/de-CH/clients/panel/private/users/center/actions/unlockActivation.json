@@ -1,22 +1,22 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/actions/unlockActivation.tsx",
-  "unlockActivation": "Unlock activation",
-  "unlockActivationConfirm": "Unlock activation lock?",
-  "unlockActivationConfirmDesc": "Diese will leeren die activation lock. Die benutzer will werden able bis antrag a neu activation e-Mail.",
-  "unlockActivationResendEmail": "Resend activation e-Mail",
-  "unlockActivationSuccess": "Activation lock cleared erfolgreich",
-  "unlockActivationError": "Fehlgeschlagen bis leeren activation lock",
+  "unlockActivation": "Aktivierung entsperren",
+  "unlockActivationConfirm": "Aktivierungssperre aufheben?",
+  "unlockActivationConfirmDesc": "Dadurch wird die Aktivierungssperre aufgehoben. Der Benutzer kann eine neue Aktivierungs-E-Mail anfordern.",
+  "unlockActivationResendEmail": "Aktivierungs-E-Mail erneut senden",
+  "unlockActivationSuccess": "Aktivierungssperre erfolgreich aufgehoben",
+  "unlockActivationError": "Aktivierungssperre konnte nicht aufgehoben werden",
   "axios": {
     "start": {
-      "title": "Unlocking activation",
+      "title": "Aktivierung wird entsperrt",
       "time": 3000
     },
     "success": {
-      "title": "Activation lock cleared erfolgreich",
+      "title": "Aktivierungssperre erfolgreich aufgehoben",
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis leeren activation lock",
+      "title": "Aktivierungssperre konnte nicht aufgehoben werden",
       "time": 3000
     }
   }

@@ -1,4 +1,4 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateCoverPhoto/coverPhoto.tsx",
-  "tooltipTitle": "Click bis retry fetching cover foto"
+  "tooltipTitle": "Klicken, um das Titelbild erneut zu laden"
 }

@@ -3,7 +3,7 @@
   "form": {
     "accountSidLabel": "Account SID",
     "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "authTokenEncryptedLabel": "Auth token",
+    "authTokenEncryptedLabel": "Tokeni i autentikimit",
     "authTokenEncryptedPlaceholder": "••••••••",
     "fromPhoneLabel": "Dërgues SMS (E.164)",
     "fromPhonePlaceholder": "+355691234567",

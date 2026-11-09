@@ -1,13 +1,13 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/messages/message/actions/addReaction.tsx",
   "searchPlaceholder": "Suchen",
-  "suggested": "Frequently Used",
-  "smileys_people": "Smileys & People",
-  "animals_nature": "Animals & Nature",
-  "food_drink": "Food & Drink",
-  "travel_places": "Travel & Places",
-  "activities": "Activities",
-  "objects": "Objects",
-  "symbols": "Symbols",
-  "flags": "Flags"
+  "suggested": "Häufig verwendet",
+  "smileys_people": "Smileys & Personen",
+  "animals_nature": "Tiere & Natur",
+  "food_drink": "Essen & Trinken",
+  "travel_places": "Reisen & Orte",
+  "activities": "Aktivitäten",
+  "objects": "Objekte",
+  "symbols": "Symbole",
+  "flags": "Flaggen"
 }

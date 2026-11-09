@@ -1,39 +1,39 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/chatHeader/dropdown/leaveChannel.tsx",
-  "leaveGroup": "Leave group",
+  "leaveGroup": "Gruppe verlassen",
   "deleteChat": "Chat löschen",
   "dialog": {
-    "titleLeave": "Leave chat",
+    "titleLeave": "Chat verlassen",
     "titleDelete": "Chat löschen",
-    "descriptionLeave": "Sind sie sicher sie want bis leave diese chat?",
-    "descriptionDelete": "Sind sie sicher sie want bis löschen diese chat?",
-    "confirmTextLeave": "Leave",
+    "descriptionLeave": "Möchten Sie diesen Chat wirklich verlassen?",
+    "descriptionDelete": "Möchten Sie diesen Chat wirklich löschen?",
+    "confirmTextLeave": "Verlassen",
     "confirmTextDelete": "Löschen",
     "cancelText": "Abbrechen"
   },
   "axiosOnFunction": {
     "startLeave": {
-      "title": "Leaving chat",
+      "title": "Chat wird verlassen",
       "time": 3000
     },
     "startDelete": {
-      "title": "Deleting chat",
+      "title": "Chat wird gelöscht",
       "time": 3000
     },
     "successLeave": {
-      "title": "Erfolgreich left chat",
+      "title": "Chat erfolgreich verlassen",
       "time": 3000
     },
     "successDelete": {
-      "title": "Erfolgreich gelöscht chat",
+      "title": "Chat erfolgreich gelöscht",
       "time": 3000
     },
     "errorLeave": {
-      "title": "Fehlgeschlagen bis leave chat, bitte versuchen erneut!",
+      "title": "Chat konnte nicht verlassen werden, bitte versuchen Sie es erneut!",
       "time": 3000
     },
     "errorDelete": {
-      "title": "Fehlgeschlagen bis löschen chat, bitte versuchen erneut!",
+      "title": "Chat konnte nicht gelöscht werden, bitte versuchen Sie es erneut!",
       "time": 3000
     }
   }

@@ -1,30 +1,30 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/editMessagingProvider.tsx",
-  "title": "Messaging provider bearbeiten",
-  "description": "Leave auth token blank bis keep die current token.",
-  "errorTitle": "Messaging provider konnten nicht geladen werden",
-  "errorDescription": "Bitte click here bis retry fetching provider daten.",
-  "noId": "Keine messaging provider selected.",
-  "backToList": "Zurück zu liste",
+  "title": "Messaging-Anbieter bearbeiten",
+  "description": "Lassen Sie das Auth-Token leer, um das aktuelle Token zu behalten.",
+  "errorTitle": "Messaging-Anbieter konnte nicht geladen werden",
+  "errorDescription": "Bitte hier klicken, um die Anbieterdaten erneut zu laden.",
+  "noId": "Kein Messaging-Anbieter ausgewählt.",
+  "backToList": "Zurück zur Liste",
   "form": {
     "nameLabel": "Name",
-    "namePlaceholder": "E.g. Primär Twilio",
+    "namePlaceholder": "z. B. Twilio primär",
     "providerTypeLabel": "Anbieter",
     "providerType": {
       "twilio": "Twilio"
     },
-    "accountSidLabel": "Konto SID",
+    "accountSidLabel": "Account SID",
     "accountSidPlaceholder": "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "authTokenEncryptedLabel": "Auth token (leave blank bis keep)",
+    "authTokenEncryptedLabel": "Auth-Token (leer lassen, um es zu behalten)",
     "authTokenEncryptedPlaceholder": "••••••••",
-    "fromPhoneLabel": "SMS sender (E.164)",
+    "fromPhoneLabel": "SMS-Absender (E.164)",
     "fromPhonePlaceholder": "+15551234567",
-    "fromWhatsappLabel": "WhatsApp sender (E.164)",
+    "fromWhatsappLabel": "WhatsApp-Absender (E.164)",
     "fromWhatsappPlaceholder": "+15551234567"
   },
   "formHeader": {
-    "title": "Messaging provider bearbeiten",
-    "description": "Leave auth token blank bis keep die current token."
+    "title": "Messaging-Anbieter bearbeiten",
+    "description": "Lassen Sie das Auth-Token leer, um das aktuelle Token zu behalten."
   },
   "formButtons": {
     "cancel": "Abbrechen",

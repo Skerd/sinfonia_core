@@ -1,13 +1,13 @@
 {
   "path": "src/modules/core/clients/panel/private/users/index.tsx",
-  "title": "Benutzer liste",
-  "searchPlaceholder": "Suchen von name, e-Mail, oder hinzufügen filters...",
+  "title": "Benutzerliste",
+  "searchPlaceholder": "Nach Name, E-Mail suchen oder Filter hinzufügen...",
   "activeFilters": "aktiv",
-  "administrationTitle": "Administration users liste",
-  "description": "Ihr users und their rollen here. verwalten",
+  "administrationTitle": "Liste der Administrationsbenutzer",
+  "description": "Verwalten Sie hier Ihre Benutzer und deren Rollen.",
   "help": {
-    "ariaLabel": "Über Benutzer liste",
-    "title": "Über Benutzer liste",
+    "ariaLabel": "Über die Benutzerliste",
+    "title": "Über die Benutzerliste",
     "overview": "Diese Liste enthält Firmenmitglieder mit Rollen, die als Standard für die Registrierung markiert sind, sowie Mitglieder ohne Rollen. Der aktuell angemeldete Benutzer ist ausgeschlossen; dies ist nicht die Administrationsliste.",
     "sections": [
       {
@@ -28,12 +28,12 @@
     ]
   },
   "administrationHelp": {
-    "ariaLabel": "Über Administration users liste",
-    "title": "Über Administration users liste",
+    "ariaLabel": "Über die Liste der Administrationsbenutzer",
+    "title": "Über die Liste der Administrationsbenutzer",
     "overview": "Diese Liste enthält Benutzer mit Personal- oder Administrationsrollen, die nicht als Standard für die Registrierung markiert sind, sowie Bot-Benutzer. Der aktuell angemeldete Benutzer ist ausgeschlossen.",
     "sections": [
       {
-        "title": "Administratoren verwalten",
+        "title": "Administratoren hinzufügen",
         "items": [
           "Erstellen Sie einen Benutzer mit Passwort oder laden Sie eine Person per E-Mail ein; sie erhält eine Administrationsrolle.",
           "Bearbeiten Sie Konto und Rollen über das Zeilenmenü.",
@@ -49,11 +49,11 @@
       }
     ]
   },
-  "administrationDescription": "Firma administration users und their rollen here. verwalten",
+  "administrationDescription": "Verwalten Sie hier die Administrationsbenutzer der Firma und deren Rollen.",
   "photo": "Foto",
-  "emailVerified": "Current e-Mail",
-  "invitedUser": "Bitte verifizieren die e-Mail von accepting die einladung antrag",
-  "emailNotVerified": "Bitte verifizieren ihr neu e-Mail von clicking on die link sent bis ihr posteingang",
+  "emailVerified": "Aktuelle E-Mail-Adresse",
+  "invitedUser": "Bitte bestätigen Sie die E-Mail-Adresse, indem Sie die Einladung annehmen",
+  "emailNotVerified": "Bitte bestätigen Sie Ihre neue E-Mail-Adresse über den Link, den wir an Ihren Posteingang gesendet haben",
   "statuses": {
     "active": "Aktiv",
     "inactive": "Inaktiv",
@@ -75,58 +75,58 @@
       }
     },
     "username": "E-Mail",
-    "name": "Name",
-    "surname": "Surname",
+    "name": "Vorname",
+    "surname": "Nachname",
     "timezone": "Zeitzone",
-    "birthday": "Birthday",
-    "phoneNumber": "Telefon nummer",
+    "birthday": "Geburtstag",
+    "phoneNumber": "Telefonnummer",
     "photo": "Foto",
-    "cover": "Cover",
+    "cover": "Titelbild",
     "isEmailVerified": "E-Mail verifiziert",
     "emailVerifiedAt": "E-Mail verifiziert am",
-    "registeredFrom": "Registered von",
-    "registerDate": "Joined on",
+    "registeredFrom": "Registriert über",
+    "registerDate": "Beigetreten am",
     "online": "Online",
     "createdAt": "Erstellt am",
     "updatedAt": "Aktualisiert am",
     "roles": {
       "active": "Status",
-      "unsuccessfulLogins": "Unsuccessful logins",
-      "lockedOutUntil": "Locked out until",
-      "lastLogin": "Nach anmelden",
+      "unsuccessfulLogins": "Fehlgeschlagene Anmeldungen",
+      "lockedOutUntil": "Ausgesperrt bis",
+      "lastLogin": "Letzte Anmeldung",
       "roles": "Rollen"
     },
-    "mfaStatus": "MFA status",
+    "mfaStatus": "MFA-Status",
     "requests": {
       "mfaDeactivation": {
-        "opened": "MFA deactivation opened",
-        "attempts": "MFA deactivation attempts",
-        "date": "MFA deactivation datum",
-        "lockedUntil": "MFA deactivation locked until"
+        "opened": "MFA-Deaktivierung geöffnet",
+        "attempts": "MFA-Deaktivierungsversuche",
+        "date": "Datum der MFA-Deaktivierung",
+        "lockedUntil": "MFA-Deaktivierung gesperrt bis"
       },
       "passwordReset": {
-        "opened": "Passwort zurücksetzen opened",
-        "attempts": "Passwort zurücksetzen attempts",
-        "date": "Passwort zurücksetzen datum",
-        "lockedUntil": "Passwort zurücksetzen locked until"
+        "opened": "Passwortzurücksetzung geöffnet",
+        "attempts": "Versuche zur Passwortzurücksetzung",
+        "date": "Datum der Passwortzurücksetzung",
+        "lockedUntil": "Passwortzurücksetzung gesperrt bis"
       },
       "activation": {
-        "email": "Activation e-Mail",
-        "attempts": "Activation attempts",
-        "date": "Activation datum",
-        "lockedUntil": "Activation locked until"
+        "email": "Aktivierungs-E-Mail",
+        "attempts": "Aktivierungsversuche",
+        "date": "Aktivierungsdatum",
+        "lockedUntil": "Aktivierung gesperrt bis"
       },
       "invitation": {
-        "opened": "Einladung opened",
-        "attempts": "Einladung attempts",
-        "date": "Einladung datum",
-        "lockedUntil": "Einladung locked until",
-        "invitedBy": "Invited von",
-        "invitedAt": "Invited am",
-        "invitationExpiresAt": "Einladung expires am",
-        "accepted": "Accepted",
-        "acceptedAt": "Accepted am",
-        "welcomeMessage": "Welcome nachricht"
+        "opened": "Einladung geöffnet",
+        "attempts": "Einladungsversuche",
+        "date": "Einladungsdatum",
+        "lockedUntil": "Einladung gesperrt bis",
+        "invitedBy": "Eingeladen von",
+        "invitedAt": "Eingeladen am",
+        "invitationExpiresAt": "Einladung läuft ab am",
+        "accepted": "Angenommen",
+        "acceptedAt": "Angenommen am",
+        "welcomeMessage": "Willkommensnachricht"
       }
     }
   }

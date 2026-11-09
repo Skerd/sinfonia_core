@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/signUp/index.tsx",
   "title": "Registrieren",
-  "descriptionOne": "Ihr konto below. erstellen",
-  "descriptionTwo": "Then sign in mit ihr e-Mail und passwort."
+  "descriptionOne": "Erstellen Sie unten Ihr Konto.",
+  "descriptionTwo": "Melden Sie sich danach mit Ihrer E-Mail-Adresse und Ihrem Passwort an."
 }

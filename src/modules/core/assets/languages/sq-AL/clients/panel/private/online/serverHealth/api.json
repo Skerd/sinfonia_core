@@ -1,18 +1,18 @@
 {
   "path": "src/modules/core/clients/panel/private/online/serverHealth/api.tsx",
   "apiServerTitle": "Serveri API",
-  "online": "Online",
+  "online": "Në linjë",
   "offline": "Jashtë linje",
   "uptime": "Koha e funksionimit",
   "requests": "Kërkesat",
   "failed": "Dështoi",
-  "avgTime": "Mesatar Koha",
+  "avgTime": "Koha mesatare",
   "day": "ditë",
   "days": "ditë",
   "hour": "orë",
   "hours": "orë",
   "minute": "minutë",
   "minutes": "minuta",
-  "second": "e dyta",
+  "second": "sekondë",
   "seconds": "sekonda"
 }

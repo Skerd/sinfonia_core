@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/login/signin.form.tsx",
   "form": {
-    "emailLabel": "Email",
+    "emailLabel": "Emaili",
     "emailPlaceholder": "shembull@email.com",
     "passwordLabel": "Fjalëkalimi",
     "passwordPlaceholder": "********",

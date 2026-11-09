@@ -1,19 +1,19 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/center/dialogs/testMessagingProviderConnectionDialog.tsx",
-  "title": "Test messaging connection",
-  "description": "Send a test SMS oder WhatsApp nachricht bis verifizieren diese provider. Eingeben die recipient telefon nummer below.",
-  "testPhoneLabel": "Test recipient telefon",
-  "confirm": "Test connection",
+  "title": "Messaging-Verbindung testen",
+  "description": "Senden Sie eine Test-SMS oder WhatsApp-Testnachricht, um diesen Anbieter zu prüfen. Geben Sie unten die Telefonnummer des Empfängers ein.",
+  "testPhoneLabel": "Telefonnummer des Testempfängers",
+  "confirm": "Verbindung testen",
   "cancel": "Abbrechen",
   "axios": {
     "start": {
-      "title": "Testing messaging connection…"
+      "title": "Messaging-Verbindung wird getestet…"
     },
     "success": {
-      "title": "Messaging connection test succeeded."
+      "title": "Messaging-Verbindungstest erfolgreich."
     },
     "error": {
-      "title": "Messaging connection test fehlgeschlagen"
+      "title": "Messaging-Verbindungstest fehlgeschlagen"
     }
   }
 }

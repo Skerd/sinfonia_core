@@ -1,22 +1,22 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/toggleUserActiveState.tsx",
-  "titleActivate": "Aktivieren benutzer [!!!]?",
-  "titleDeactivate": "Block benutzer [!!!]?",
-  "descriptionActivate": "Sind sie sicher sie want bis aktivieren benutzer [!!!]. Die benutzer can re-anmelden into die system after die activation.",
-  "descriptionDeactivate": "Sind sie sicher sie want bis block benutzer [!!!]? Die benutzer can nicht zugriff die system after blocking.",
+  "titleActivate": "Benutzer [!!!] aktivieren?",
+  "titleDeactivate": "Benutzer [!!!] sperren?",
+  "descriptionActivate": "Möchten Sie Benutzer [!!!] wirklich aktivieren? Der Benutzer kann sich nach der Aktivierung wieder im System anmelden.",
+  "descriptionDeactivate": "Möchten Sie Benutzer [!!!] wirklich sperren? Der Benutzer kann nach der Sperrung nicht mehr auf das System zugreifen.",
   "activate": "Aktivieren",
-  "deactivate": "Block",
+  "deactivate": "Sperren",
   "axios": {
     "start": {
-      "title": "Changing benutzer status",
+      "title": "Benutzerstatus wird geändert",
       "time": 3000
     },
     "success": {
-      "title": "Benutzer status changed erfolgreich",
+      "title": "Benutzerstatus erfolgreich geändert",
       "time": 3000
     },
     "error": {
-      "title": "Benutzer status change fehlgeschlagen",
+      "title": "Änderung des Benutzerstatus fehlgeschlagen",
       "time": 3000
     }
   }

@@ -1,18 +1,18 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/addMembersToChannel.tsx",
-  "addToChat": "Bis chat hinzufügen",
+  "addToChat": "Zum Chat hinzufügen",
   "cancel": "Abbrechen",
   "axios": {
     "start": {
-      "title": "Adding mitglieder bis channel",
+      "title": "Mitglieder werden zum Kanal hinzugefügt",
       "time": 3000
     },
     "success": {
-      "title": "Erfolgreich added mitglieder bis channel!",
+      "title": "Mitglieder erfolgreich zum Kanal hinzugefügt!",
       "time": 3000
     },
     "error": {
-      "title": "Konnte nicht hinzufügen mitglieder bis channel, bitte versuchen erneut!",
+      "title": "Mitglieder konnten nicht zum Kanal hinzugefügt werden, bitte versuchen Sie es erneut!",
       "time": 3000
     }
   }

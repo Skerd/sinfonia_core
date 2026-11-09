@@ -7,7 +7,7 @@
   "description": "Përshkrimi",
   "company": "Kompania",
   "name": "Emri",
-  "email": "Email",
+  "email": "Emaili",
   "phone": "Telefoni",
   "website": "Faqja e internetit",
   "linkedin": "LinkedIn",
@@ -22,7 +22,7 @@
   "siteHostLastError": "Gabimi i fundit",
   "siteHostStatus": {
     "pending": "Në pritje",
-    "online": "Online",
+    "online": "Në linjë",
     "failed": "Dështoi"
   },
   "parentCompany": "Kompania mëmë",
@@ -34,7 +34,7 @@
   "requireIdentification": "Kërko identifikim",
   "humanHandoffEnabled": "Kalim te një person",
   "greeting": "Përshëndetja",
-  "persona": "Persona",
+  "persona": "Personaliteti",
   "yes": "Po",
   "no": "Jo",
   "lifecycle": "Cikli i jetës",
@@ -57,6 +57,6 @@
     "countryLabel": "Vendi",
     "latitudeLabel": "Gjerësia gjeografike",
     "longitudeLabel": "Gjatësia gjeografike",
-    "logoLabel": "Logo"
+    "logoLabel": "Logoja"
   }
 }

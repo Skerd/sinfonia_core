@@ -1,9 +1,9 @@
 {
   "path": "src/modules/core/components/custom/notifications/notificationBell.tsx",
   "title": "Benachrichtigungen",
-  "markAllRead": "Mark alle read",
-  "loading": "Laden...",
-  "noNotifications": "Keine benachrichtigungen",
+  "markAllRead": "Alle als gelesen markieren",
+  "loading": "Wird geladen...",
+  "noNotifications": "Keine Benachrichtigungen",
   "viewAll": "Alle anzeigen",
   "system": "System"
 }

@@ -6,7 +6,7 @@
   "uptime": "Temps de disponibilité",
   "jobs": "Emplois",
   "failed": "Échoué",
-  "avgTime": "Moy. Temps",
+  "avgTime": "Temps moy.",
   "consumers": "Consommateurs",
   "noConsumersRegistered": "Aucun consommateur enregistré",
   "deadLetters": "Lettres mortes",
@@ -17,6 +17,6 @@
   "hours": "heures",
   "minute": "minute",
   "minutes": "minutes",
-  "second": "deuxième",
+  "second": "seconde",
   "seconds": "secondes"
 }

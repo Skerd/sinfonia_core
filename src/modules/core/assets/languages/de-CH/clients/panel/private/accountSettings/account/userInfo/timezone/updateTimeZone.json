@@ -1,18 +1,18 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/timezone/updateTimeZone.tsx",
-  "confirm": "Confirm zeitzone change",
+  "confirm": "Zeitzonenänderung bestätigen",
   "cancel": "Abbrechen",
   "axios": {
     "start": {
-      "title": "Time zone wird aktualisiert",
+      "title": "Zeitzone wird aktualisiert",
       "time": 3000
     },
     "success": {
-      "title": "Time zone aktualisiert erfolgreich",
+      "title": "Zeitzone erfolgreich aktualisiert",
       "time": 3000
     },
     "error": {
-      "title": "Time zone fehlgeschlagen bis werden aktualisiert",
+      "title": "Zeitzone konnte nicht aktualisiert werden",
       "time": 3000
     }
   }

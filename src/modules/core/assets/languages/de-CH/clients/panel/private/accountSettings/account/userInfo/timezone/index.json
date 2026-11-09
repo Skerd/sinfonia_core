@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/timezone/index.tsx",
   "form": {
-    "newTimeZoneLabel": "Time zone",
-    "newTimeZoneDescription": "Diese ist die time zone that will werden used bis display time in die system."
+    "newTimeZoneLabel": "Zeitzone",
+    "newTimeZoneDescription": "Diese Zeitzone wird für die Anzeige von Zeiten im System verwendet."
   },
-  "failTitle": "Zeitzone konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis retry laden zeitzone",
+  "failTitle": "Zeitzone konnte nicht geladen werden",
+  "failTitleTooltip": "Klicken, um die Zeitzone erneut zu laden",
   "edit": "Bearbeiten",
   "empty": "Noch nichts erfasst."
 }

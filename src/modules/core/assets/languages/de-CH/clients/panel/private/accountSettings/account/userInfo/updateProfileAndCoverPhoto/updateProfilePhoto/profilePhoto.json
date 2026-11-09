@@ -1,4 +1,4 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/profilePhoto.tsx",
-  "tooltipTitle": "Click bis retry fetching profil foto"
+  "tooltipTitle": "Klicken, um das Profilfoto erneut zu laden"
 }

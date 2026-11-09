@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/pinMessage.tsx",
-  "pin": "Pin",
+  "pin": "Fikso",
   "axios": {
     "start": {
       "title": "Mesazhi po gozhdohet",

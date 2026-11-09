@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/createCompany.tsx",
   "title": "Firma erstellen",
-  "description": "A neu firma erstellen",
+  "description": "Neue Firma erstellen",
   "generalInfo": "Allgemeine Infos",
-  "howToReach": "How bis reach us",
-  "whoAreWe": "Who sind we",
-  "addAddress": "Neu adresse hinzufügen",
+  "howToReach": "So erreichen Sie uns",
+  "whoAreWe": "Wer wir sind",
+  "addAddress": "Neue Adresse hinzufügen",
   "address": "Adresse",
   "remove": "Entfernen",
   "form": {
@@ -17,8 +17,8 @@
     "timezonePlaceholder": "Europe/Zurich",
     "emailLabel": "E-Mail",
     "emailPlaceholder": "E-Mail",
-    "phoneNumberNumberLabel": "Telefon nummer",
-    "phoneNumberNumberPlaceholder": "Telefon nummer",
+    "phoneNumberNumberLabel": "Telefonnummer",
+    "phoneNumberNumberPlaceholder": "Telefonnummer",
     "descriptionLabel": "Beschreibung",
     "descriptionPlaceholder": "Beschreibung",
     "logoLabel": "Logo",
@@ -30,10 +30,10 @@
     "instagramPlaceholder": "https://instagram.com/...",
     "facebookLabel": "Facebook",
     "facebookPlaceholder": "https://facebook.com/...",
-    "vatLabel": "VAT",
-    "vatPlaceholder": "VAT",
-    "allowedDomainsLabel": "Allowed domains",
-    "allowedDomainsPlaceholder": "A domain hinzufügen",
+    "vatLabel": "MWST-Nr.",
+    "vatPlaceholder": "MWST-Nr.",
+    "allowedDomainsLabel": "Erlaubte Domains",
+    "allowedDomainsPlaceholder": "Domain hinzufügen",
     "streetLabel": "Strasse",
     "streetPlaceholder": "Strasse",
     "postalCodeLabel": "Postleitzahl",
@@ -65,7 +65,7 @@
   },
   "formHeader": {
     "title": "Firma erstellen",
-    "description": "A neu firma erstellen"
+    "description": "Neue Firma erstellen"
   },
   "formButtons": {
     "cancel": "Abbrechen",

@@ -1,21 +1,21 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/deactivateCompanyDialog.tsx",
-  "title": "Deaktivieren firma",
-  "description": "Sind sie sicher sie want bis deaktivieren diese firma? Users will nicht werden able bis zugriff die system after deactivating.",
+  "title": "Firma deaktivieren",
+  "description": "Möchten Sie diese Firma wirklich deaktivieren? Die Benutzer können nach der Deaktivierung nicht mehr auf das System zugreifen.",
   "confirm": "Deaktivieren",
-  "confirmNameLabel": "Typ die firma name bis confirm",
+  "confirmNameLabel": "Geben Sie zur Bestätigung den Firmennamen ein",
   "cancel": "Abbrechen",
   "axios": {
     "start": {
-      "title": "Deactivating firma",
+      "title": "Firma wird deaktiviert",
       "time": 3000
     },
     "success": {
-      "title": "Firma erfolgreich deactivated.",
+      "title": "Firma erfolgreich deaktiviert.",
       "time": 3000
     },
     "error": {
-      "title": "Firma fehlgeschlagen bis werden deactivated",
+      "title": "Firma konnte nicht deaktiviert werden",
       "time": 3000
     }
   }

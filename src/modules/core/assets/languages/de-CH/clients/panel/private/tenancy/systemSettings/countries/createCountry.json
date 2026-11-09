@@ -1,13 +1,13 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/createCountry.tsx",
   "title": "Land erstellen",
-  "description": "A neu land hinzufügen",
+  "description": "Neues Land hinzufügen",
   "form": {
     "nameLabel": "Name",
-    "namePlaceholder": "Land name",
+    "namePlaceholder": "Ländername",
     "codeLabel": "Code",
-    "codePlaceholder": "E.g. USA",
-    "phoneCodeLabel": "Telefon code",
+    "codePlaceholder": "z. B. CHE",
+    "phoneCodeLabel": "Telefonvorwahl",
     "phoneCodePlaceholder": "+1",
     "currencyLabel": "Währung",
     "currencyPlaceholder": "Währung auswählen"
@@ -18,7 +18,7 @@
       "time": 3000
     },
     "success": {
-      "title": "Land erstellt erfolgreich!",
+      "title": "Land erfolgreich erstellt!",
       "time": 3000
     },
     "error": {
@@ -28,7 +28,7 @@
   },
   "formHeader": {
     "title": "Land erstellen",
-    "description": "A neu land hinzufügen"
+    "description": "Neues Land hinzufügen"
   },
   "formButtons": {
     "cancel": "Abbrechen",

@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/userFilters.tsx",
-  "filterSearch": "Suchen von name, e-Mail, telefon",
+  "filterSearch": "Nach Name, E-Mail, Telefon suchen",
   "filterStatus": "Status",
-  "filterStatusAll": "Alle statuses",
-  "filterRoles": "Filter von rolle",
-  "clearFilters": "Leeren filters",
+  "filterStatusAll": "Alle Status",
+  "filterRoles": "Nach Rolle filtern",
+  "clearFilters": "Filter zurücksetzen",
   "statuses": {
     "active": "Aktiv",
     "inactive": "Inaktiv",

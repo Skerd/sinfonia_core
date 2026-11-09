@@ -42,7 +42,7 @@
     "code": "Kodi",
     "name": "Emri",
     "description": "Përshkrimi",
-    "handler": "Handler",
+    "handler": "Trajtuesi",
     "active": "Aktiv",
     "pausedAt": "Ndaluar më",
     "cronExpression": "Shprehje cron",

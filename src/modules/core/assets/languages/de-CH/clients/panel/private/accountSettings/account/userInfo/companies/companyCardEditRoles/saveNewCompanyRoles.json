@@ -1,19 +1,19 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles/saveNewCompanyRoles.tsx",
-  "confirm": "Confirm rollen change",
+  "confirm": "Rollenänderung bestätigen",
   "editRoles": "Rollen bearbeiten",
   "cancel": "Abbrechen",
   "axios": {
     "start": {
-      "title": "Rollen wird aktualisiert",
+      "title": "Rollen werden aktualisiert",
       "time": 3000
     },
     "success": {
-      "title": "Rollen aktualisiert erfolgreich",
+      "title": "Rollen erfolgreich aktualisiert",
       "time": 3000
     },
     "error": {
-      "title": "Rolle aktualisieren fehlgeschlagen",
+      "title": "Rollenaktualisierung fehlgeschlagen",
       "time": 3000
     }
   }

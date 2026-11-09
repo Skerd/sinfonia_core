@@ -5,15 +5,15 @@
   "deletePhoto": "Foto löschen",
   "axios": {
     "start": {
-      "title": "Deleting cover foto",
+      "title": "Titelbild wird gelöscht",
       "time": 3000
     },
     "success": {
-      "title": "Cover foto erfolgreich gelöscht",
+      "title": "Titelbild erfolgreich gelöscht",
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis löschen cover foto",
+      "title": "Titelbild konnte nicht gelöscht werden",
       "time": 3000
     }
   }

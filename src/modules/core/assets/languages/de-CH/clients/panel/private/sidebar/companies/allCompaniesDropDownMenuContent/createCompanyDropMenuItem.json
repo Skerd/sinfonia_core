@@ -2,5 +2,5 @@
   "path": "src/modules/core/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/createCompanyDropMenuItem.tsx",
   "addCompany": "Firma hinzufügen",
   "dialogTitle": "Firma erstellen",
-  "dialogDescription": "A neu firma using die form below. erstellen"
+  "dialogDescription": "Erstellen Sie mit dem folgenden Formular eine neue Firma."
 }

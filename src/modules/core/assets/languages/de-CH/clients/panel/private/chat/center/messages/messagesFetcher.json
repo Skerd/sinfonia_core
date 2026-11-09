@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/messages/messagesFetcher.tsx",
-  "noMessages": "Looks lonely in here",
-  "failTitle": "Channel nachrichten konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis reload channel nachrichten"
+  "noMessages": "Hier ist es noch ruhig",
+  "failTitle": "Kanalnachrichten konnten nicht geladen werden",
+  "failTitleTooltip": "Klicken, um die Kanalnachrichten neu zu laden"
 }

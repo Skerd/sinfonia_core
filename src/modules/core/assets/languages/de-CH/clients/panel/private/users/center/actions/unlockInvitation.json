@@ -1,22 +1,22 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/actions/unlockInvitation.tsx",
-  "unlockInvitation": "Unlock einladung",
-  "unlockInvitationConfirm": "Unlock einladung lock?",
-  "unlockInvitationConfirmDesc": "Diese will leeren die einladung lock. Die benutzer will werden able bis receive a neu einladung e-Mail.",
-  "unlockInvitationResendEmail": "Resend einladung e-Mail",
-  "unlockInvitationSuccess": "Einladung lock cleared erfolgreich",
-  "unlockInvitationError": "Fehlgeschlagen bis leeren einladung lock",
+  "unlockInvitation": "Einladung entsperren",
+  "unlockInvitationConfirm": "Einladungssperre aufheben?",
+  "unlockInvitationConfirmDesc": "Dadurch wird die Einladungssperre aufgehoben. Der Benutzer kann eine neue Einladungs-E-Mail erhalten.",
+  "unlockInvitationResendEmail": "Einladungs-E-Mail erneut senden",
+  "unlockInvitationSuccess": "Einladungssperre erfolgreich aufgehoben",
+  "unlockInvitationError": "Einladungssperre konnte nicht aufgehoben werden",
   "axios": {
     "start": {
-      "title": "Unlocking einladung",
+      "title": "Einladung wird entsperrt",
       "time": 3000
     },
     "success": {
-      "title": "Einladung lock cleared erfolgreich",
+      "title": "Einladungssperre erfolgreich aufgehoben",
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis leeren einladung lock",
+      "title": "Einladungssperre konnte nicht aufgehoben werden",
       "time": 3000
     }
   }

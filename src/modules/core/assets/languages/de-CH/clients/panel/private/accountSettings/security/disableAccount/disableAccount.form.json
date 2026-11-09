@@ -8,25 +8,25 @@
     "statusLabel": "Status",
     "statusPlaceholder": "Status"
   },
-  "title": "Benutzer konto ist aktiv",
-  "description": "If sie want bis deaktivieren die konto, bitte follow die steps below.",
+  "title": "Benutzerkonto ist aktiv",
+  "description": "Wenn Sie das Konto deaktivieren möchten, folgen Sie bitte den Schritten unten.",
   "steps": {
-    "one": "Fill in ihr passwort",
-    "two": "Click on die '!!!!' button bis deaktivieren ihr konto",
-    "three": "Warning, if sie deaktivieren ihr konto, sie need bis kontakt system administrator bis re-aktivieren it!"
+    "one": "Geben Sie Ihr Passwort ein",
+    "two": "Klicken Sie auf die Schaltfläche '!!!!', um Ihr Konto zu deaktivieren",
+    "three": "Achtung: Wenn Sie Ihr Konto deaktivieren, müssen Sie den Systemadministrator kontaktieren, um es wieder zu aktivieren!"
   },
-  "deactivateButton": "Block",
+  "deactivateButton": "Sperren",
   "axios": {
     "start": {
-      "title": "Deactivating konto",
+      "title": "Konto wird deaktiviert",
       "time": 3000
     },
     "success": {
-      "title": "Konto deactivated erfolgreich",
+      "title": "Konto erfolgreich deaktiviert",
       "time": 1000
     },
     "error": {
-      "title": "Konto deactivation fehlgeschlagen",
+      "title": "Kontodeaktivierung fehlgeschlagen",
       "time": 3000
     }
   }

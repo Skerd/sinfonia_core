@@ -13,7 +13,7 @@
   "lastRunAt": "Letzte Ausführung",
   "maxRetries": "Max. Wiederholungen",
   "retryDelaySeconds": "Wiederholungsverzögerung (Sekunden)",
-  "timeoutSeconds": "Timeout (Sekunden)",
+  "timeoutSeconds": "Zeitlimit (Sekunden)",
   "missedRunPolicy": "Richtlinie für verpasste Ausführungen",
   "active": "Aktiv",
   "paused": "Pausiert",

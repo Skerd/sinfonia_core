@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx",
-  "failedTitle": "Ort konnten nicht geladen werden",
+  "failedTitle": "Ort konnte nicht geladen werden",
   "failedDescription": "Beim Laden ist ein Fehler aufgetreten. Klicken Sie, um es erneut zu versuchen.",
   "failedTooltipDescription": "Klicken, um die Daten erneut zu laden.",
   "name": "Name",

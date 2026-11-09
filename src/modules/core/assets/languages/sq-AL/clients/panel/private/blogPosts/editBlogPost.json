@@ -8,7 +8,7 @@
     "categoryPlaceholder": "Zgjidh kategorinë",
     "titleLabel": "Titulli",
     "titlePlaceholder": "Titulli i artikullit",
-    "slugLabel": "Slug",
+    "slugLabel": "Emri i adresës web",
     "slugPlaceholder": "url-slug",
     "excerptLabel": "Përmbledhja",
     "excerptPlaceholder": "Tekst i shkurtër në kartën e listës",

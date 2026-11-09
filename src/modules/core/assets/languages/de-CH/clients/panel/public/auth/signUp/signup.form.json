@@ -1,33 +1,33 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/signUp/signup.form.tsx",
   "form": {
-    "nameLabel": "Name",
-    "namePlaceholder": "Name",
-    "surnameLabel": "Surname",
-    "surnamePlaceholder": "Surname",
+    "nameLabel": "Vorname",
+    "namePlaceholder": "Vorname",
+    "surnameLabel": "Nachname",
+    "surnamePlaceholder": "Nachname",
     "emailLabel": "E-Mail",
-    "emailPlaceholder": "example@e-Mail.com",
+    "emailPlaceholder": "beispiel@email.ch",
     "passwordLabel": "Passwort",
     "passwordPlaceholder": "Passwort",
-    "confirmPasswordLabel": "Confirm passwort",
-    "confirmPasswordPlaceholder": "Confirm passwort",
-    "phoneNumberLabel": "Telefon nummer",
-    "phoneNumberPlaceholder": "Telefon nummer",
-    "phoneNumberPrefixLabel": "Telefon nummer prefix",
-    "phoneNumberPrefixPlaceholder": "Telefon nummer prefix"
+    "confirmPasswordLabel": "Passwort bestätigen",
+    "confirmPasswordPlaceholder": "Passwort bestätigen",
+    "phoneNumberLabel": "Telefonnummer",
+    "phoneNumberPlaceholder": "Telefonnummer",
+    "phoneNumberPrefixLabel": "Telefonvorwahl",
+    "phoneNumberPrefixPlaceholder": "Telefonvorwahl"
   },
-  "signUpButtonLabel": "Ein konto erstellen",
+  "signUpButtonLabel": "Konto erstellen",
   "axios": {
     "start": {
-      "title": "Konto, bitte wait wird erstellt",
+      "title": "Konto wird erstellt, bitte warten",
       "time": 3000
     },
     "success": {
-      "title": "Ihr konto ist erfolgreich erstellt. Bitte follow die steps sent bis ihr e-Mail bis weiter.",
+      "title": "Ihr Konto wurde erfolgreich erstellt. Bitte folgen Sie den Schritten in der E-Mail, um fortzufahren.",
       "time": 3000
     },
     "error": {
-      "title": "Konto creation fehlgeschlagen",
+      "title": "Kontoerstellung fehlgeschlagen",
       "time": 3000
     }
   }

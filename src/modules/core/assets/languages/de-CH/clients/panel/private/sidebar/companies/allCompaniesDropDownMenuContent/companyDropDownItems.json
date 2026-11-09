@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/sidebar/companies/allCompaniesDropDownMenuContent/companyDropDownItems.tsx",
-  "failTitle": "Companies konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis reload companies",
+  "failTitle": "Firmen konnten nicht geladen werden",
+  "failTitleTooltip": "Klicken, um die Firmen neu zu laden",
   "noData": "Keine Ergebnisse",
-  "searchPlaceholder": "Unternehmen suchen"
+  "searchPlaceholder": "Firmen suchen"
 }

@@ -6,7 +6,7 @@
   "uptime": "Temps de disponibilité",
   "jobs": "Emplois",
   "failed": "Échoué",
-  "avgTime": "Moy. Temps",
+  "avgTime": "Temps moy.",
   "nodes": "Nœuds",
   "day": "jour",
   "days": "jours",
@@ -14,6 +14,6 @@
   "hours": "heures",
   "minute": "minute",
   "minutes": "minutes",
-  "second": "deuxième",
+  "second": "seconde",
   "seconds": "secondes"
 }

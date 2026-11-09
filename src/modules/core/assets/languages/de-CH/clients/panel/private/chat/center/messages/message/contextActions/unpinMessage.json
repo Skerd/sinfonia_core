@@ -1,17 +1,17 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/messages/message/contextActions/unpinMessage.tsx",
-  "unpin": "Unpin",
+  "unpin": "Lösen",
   "axios": {
     "start": {
-      "title": "Unpinning nachricht",
+      "title": "Nachricht wird gelöst",
       "time": 3000
     },
     "success": {
-      "title": "Nachricht erfolgreich unpinned",
+      "title": "Nachricht erfolgreich gelöst",
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis unpin nachricht.",
+      "title": "Nachricht konnte nicht gelöst werden.",
       "time": 3000
     }
   }

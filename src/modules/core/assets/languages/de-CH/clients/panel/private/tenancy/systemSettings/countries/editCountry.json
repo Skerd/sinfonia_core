@@ -1,29 +1,29 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/countries/editCountry.tsx",
   "title": "Land bearbeiten",
-  "description": "Aktualisieren land details",
-  "errorTitle": "Land daten konnten nicht geladen werden",
-  "errorDescription": "Bitte click here bis retry fetching land daten",
+  "description": "Länderdetails aktualisieren",
+  "errorTitle": "Länderdaten konnten nicht geladen werden",
+  "errorDescription": "Bitte hier klicken, um die Länderdaten erneut zu laden",
   "form": {
-    "idLabel": "Land ID",
+    "idLabel": "Länder-ID",
     "nameLabel": "Name",
-    "namePlaceholder": "Land name",
+    "namePlaceholder": "Ländername",
     "codeLabel": "Code",
-    "codePlaceholder": "E.g. USA",
-    "phoneCodeLabel": "Telefon code",
+    "codePlaceholder": "z. B. CHE",
+    "phoneCodeLabel": "Telefonvorwahl",
     "phoneCodePlaceholder": "+1",
     "currencyLabel": "Währung",
     "currencyPlaceholder": "Währung auswählen"
   },
-  "noId": "Keine land selected.",
-  "backToList": "Zurück zu liste",
+  "noId": "Kein Land ausgewählt.",
+  "backToList": "Zurück zur Liste",
   "axios": {
     "start": {
-      "title": "Saving land",
+      "title": "Land wird gespeichert",
       "time": 3000
     },
     "success": {
-      "title": "Land aktualisiert erfolgreich!",
+      "title": "Land erfolgreich aktualisiert!",
       "time": 3000
     },
     "error": {
@@ -33,7 +33,7 @@
   },
   "formHeader": {
     "title": "Land bearbeiten",
-    "description": "Aktualisieren land details"
+    "description": "Länderdetails aktualisieren"
   },
   "formButtons": {
     "cancel": "Abbrechen",

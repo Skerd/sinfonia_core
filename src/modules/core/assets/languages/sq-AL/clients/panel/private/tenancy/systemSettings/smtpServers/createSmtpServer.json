@@ -21,7 +21,7 @@
     "fromEmailPlaceholder": "noreply@example.com",
     "fromNameLabel": "Emri dërgues",
     "fromNamePlaceholder": "Kompania ime",
-    "replyToLabel": "Reply-To",
+    "replyToLabel": "Përgjigju te",
     "replyToPlaceholder": "support@example.com",
     "encryption": {
       "none": "Asnjë",

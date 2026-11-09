@@ -5,7 +5,7 @@
   "form": {
     "nameLabel": "Emri",
     "namePlaceholder": "Emri i kategorisë",
-    "slugLabel": "Slug",
+    "slugLabel": "Emri i adresës web",
     "slugPlaceholder": "url-slug",
     "descriptionLabel": "Përshkrimi",
     "descriptionPlaceholder": "Përshkrim opsional"

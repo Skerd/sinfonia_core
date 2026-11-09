@@ -1,22 +1,22 @@
 {
   "path": "src/modules/core/clients/panel/public/auth/2fa/confirm2FADeactivation.form.tsx",
-  "loading": "Deactivating 2FA",
-  "loadingDescription": "Deactivating 2FA für benutzer using 2FA deactivating link",
-  "fail": "2FA deactivation fehlgeschlagen",
-  "failDescription": "2FA deactivation link ist nicht correct",
+  "loading": "2FA wird deaktiviert",
+  "loadingDescription": "2FA wird über den Deaktivierungslink für den Benutzer deaktiviert",
+  "fail": "2FA-Deaktivierung fehlgeschlagen",
+  "failDescription": "Der 2FA-Deaktivierungslink ist ungültig",
   "success": "2FA deactivated",
-  "successDescription": "2FA deactivated erfolgreich, sie can now anmelden only using ihr passwort",
+  "successDescription": "2FA erfolgreich deaktiviert. Sie können sich jetzt nur noch mit Ihrem Passwort anmelden",
   "axios": {
     "start": {
-      "title": "Deactivating 2FA",
+      "title": "2FA wird deaktiviert",
       "time": 3000
     },
     "success": {
-      "title": "2FA deactivation successful",
+      "title": "2FA-Deaktivierung erfolgreich",
       "time": 3000
     },
     "error": {
-      "title": "2FA deactivation fehlgeschlagen",
+      "title": "2FA-Deaktivierung fehlgeschlagen",
       "time": 3000
     }
   }

@@ -26,7 +26,7 @@
     ]
   },
   "createCronJob": "Geplante Aktion erstellen",
-  "searchPlaceholder": "Suchen von name, code, oder handler...",
+  "searchPlaceholder": "Nach Name, Code oder Handler suchen...",
   "noData": "Keine geplanten Aktionen gefunden",
   "failTitle": "Geplante Aktionen konnten nicht geladen werden",
   "failDescription": "Beim Laden der geplanten Aktionen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
@@ -46,12 +46,12 @@
     "active": "Aktiv",
     "pausedAt": "Pausiert um",
     "cronExpression": "Cron-Ausdruck",
-    "priority": "Priority",
+    "priority": "Priorität",
     "nextRunAt": "Nächste Ausführung",
     "lastRunAt": "Letzte Ausführung",
     "maxRetries": "Max. Wiederholungen",
     "retryDelaySeconds": "Wiederholungsverzögerung (Sekunden)",
-    "timeoutSeconds": "Timeout (Sekunden)",
+    "timeoutSeconds": "Zeitlimit (Sekunden)",
     "missedRunPolicy": "Richtlinie für verpasste Ausführungen",
     "createdAt": "Erstellt am",
     "updatedAt": "Aktualisiert am",
@@ -63,7 +63,7 @@
   "metrics": {
     "active": "Aktive Jobs",
     "pausedCount": "{count} pausiert",
-    "running": "Laufen gerade",
+    "running": "Aktuell laufend",
     "succeeded24h": "Erfolgreich (24 Std.)",
     "failed24h": "Fehlgeschlagen (24 Std.)",
     "avgDuration24h": "Durchschnittliche Dauer (24 Std.)"

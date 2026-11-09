@@ -1,18 +1,18 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/surname/updateSurname.tsx",
-  "confirm": "Confirm surname change",
+  "confirm": "Nachnamensänderung bestätigen",
   "cancel": "Abbrechen",
   "axios": {
     "start": {
-      "title": "Surname wird aktualisiert",
+      "title": "Nachname wird aktualisiert",
       "time": 3000
     },
     "success": {
-      "title": "Surname erfolgreich aktualisiert.",
+      "title": "Nachname erfolgreich aktualisiert.",
       "time": 3000
     },
     "error": {
-      "title": "Surname fehlgeschlagen bis werden aktualisiert",
+      "title": "Nachname konnte nicht aktualisiert werden",
       "time": 3000
     }
   }

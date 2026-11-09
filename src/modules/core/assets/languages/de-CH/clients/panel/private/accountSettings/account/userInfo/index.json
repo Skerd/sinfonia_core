@@ -1,16 +1,16 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/index.tsx",
   "status": {
-    "title": "Status:",
+    "title": "Status: ",
     "active": "Aktiv",
-    "blocked": "Blocked",
+    "blocked": "Gesperrt",
     "invited": "Eingeladen"
   },
-  "registeredDate": "Registered:",
+  "registeredDate": "Registriert: ",
   "failTitle": "Daten konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis retry laden daten",
+  "failTitleTooltip": "Klicken, um die Daten erneut zu laden",
   "requestsInvitation": "Einladung",
-  "requestsActivation": "Activation",
+  "requestsActivation": "Aktivierung",
   "requestsPasswordReset": "Passwort zurücksetzen",
-  "requestsMfaDeactivation": "MFA deactivation"
+  "requestsMfaDeactivation": "MFA-Deaktivierung"
 }

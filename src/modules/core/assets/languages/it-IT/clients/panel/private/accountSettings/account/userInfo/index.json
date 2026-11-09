@@ -1,12 +1,12 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/index.tsx",
   "status": {
-    "title": "Stato:",
+    "title": "Stato: ",
     "active": "Attivo",
     "blocked": "Bloccato",
     "invited": "Invitato"
   },
-  "registeredDate": "Registrato:",
+  "registeredDate": "Registrato: ",
   "failTitle": "Impossibile caricare i dati",
   "failTitleTooltip": "Fare clic per riprovare a caricare i dati",
   "requestsInvitation": "Invito",

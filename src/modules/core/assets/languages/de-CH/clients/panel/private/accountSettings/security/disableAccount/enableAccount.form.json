@@ -1,19 +1,19 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/security/disableAccount/enableAccount.form.tsx",
-  "title": "Benutzer konto ist nicht aktiv",
-  "description": "If sie want bis aktivieren, click die button below",
+  "title": "Benutzerkonto ist nicht aktiv",
+  "description": "Wenn Sie aktivieren möchten, klicken Sie auf die Schaltfläche unten",
   "deactivateButton": "Aktivieren",
   "axios": {
     "start": {
-      "title": "Activating konto",
+      "title": "Konto wird aktiviert",
       "time": 3000
     },
     "success": {
-      "title": "Konto activation erfolgreich abgeschlossen",
+      "title": "Kontoaktivierung erfolgreich abgeschlossen",
       "time": 1000
     },
     "error": {
-      "title": "Konto activation fehlgeschlagen",
+      "title": "Kontoaktivierung fehlgeschlagen",
       "time": 3000
     }
   }

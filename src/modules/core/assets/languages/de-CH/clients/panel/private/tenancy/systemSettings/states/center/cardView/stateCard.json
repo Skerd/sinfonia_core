@@ -5,6 +5,6 @@
   "country": "Land",
   "deleted": "Gelöscht",
   "active": "Aktiv",
-  "failedTitle": "Kanton konnten nicht geladen werden",
-  "failedDescription": "Tap bis retry."
+  "failedTitle": "Kanton / Bundesland konnte nicht geladen werden",
+  "failedDescription": "Tippen, um es erneut zu versuchen."
 }

@@ -1,14 +1,14 @@
 {
-  "title": "Neu mitglieder",
+  "title": "Neue Mitglieder",
   "to": "Hinzufügen",
-  "searchPeople": "Suchen people",
-  "noPeopleFound": "Keine people gefunden.",
+  "searchPeople": "Personen suchen",
+  "noPeopleFound": "Keine Personen gefunden.",
   "failTitle": "Benutzer konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis retry laden users",
-  "noDataTitle": "Keine benutzer gefunden",
+  "failTitleTooltip": "Klicken, um die Benutzer erneut zu laden",
+  "noDataTitle": "Keine Benutzer gefunden",
   "form": {
-    "nameLabel": "Channel Name",
-    "namePlaceholder": "Channel name eingeben"
+    "nameLabel": "Kanalname",
+    "namePlaceholder": "Kanalnamen eingeben"
   },
   "path": "src/modules/core/clients/panel/private/chat/center/chatMembers/addMember/newMembers.tsx",
   "removeMember": "{name} entfernen"

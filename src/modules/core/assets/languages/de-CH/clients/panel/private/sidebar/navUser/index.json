@@ -9,7 +9,7 @@
   "signOut": "Abmelden",
   "dialog": {
     "title": "Abmelden",
-    "description": "Sind sie sicher sie want bis sign out? Sie will need bis sign in erneut bis zugriff ihr konto.",
+    "description": "Möchten Sie sich wirklich abmelden? Sie müssen sich erneut anmelden, um auf Ihr Konto zuzugreifen.",
     "confirmText": "Abmelden",
     "cancelText": "Abbrechen"
   }

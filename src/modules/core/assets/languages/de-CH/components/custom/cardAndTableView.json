@@ -1,16 +1,16 @@
 {
   "path": "src/modules/core/components/custom/cardAndTableView.tsx",
   "error": "Fehler",
-  "filterLoadError": "Tabelle konfiguration konnten nicht geladen werden",
-  "showFilters": "Anzeigen filters",
-  "hideFilters": "Ausblenden filters",
-  "showTableView": "Anzeigen Tabelle Anzeigen",
-  "showCardView": "Anzeigen Karte Anzeigen",
+  "filterLoadError": "Tabellenkonfiguration konnte nicht geladen werden",
+  "showFilters": "Filter anzeigen",
+  "hideFilters": "Filter ausblenden",
+  "showTableView": "Tabellenansicht anzeigen",
+  "showCardView": "Kartenansicht anzeigen",
   "failTitle": "Daten konnten nicht geladen werden",
-  "failDescription": "Konnte nicht laden daten. Bitte click here bis retry.",
-  "tooltipDescription": "Click bis retry fetching daten",
-  "failTableConfigTitle": "Tabelle konfiguration konnten nicht geladen werden",
-  "failTableConfigDescription": "Konnte nicht laden tabelle konfiguration.",
-  "noData": "Keine results gefunden, bitte consider changing filters",
-  "loading": "Laden..."
+  "failDescription": "Daten konnten nicht geladen werden. Bitte hier klicken, um es erneut zu versuchen.",
+  "tooltipDescription": "Klicken, um die Daten erneut zu laden",
+  "failTableConfigTitle": "Tabellenkonfiguration konnte nicht geladen werden",
+  "failTableConfigDescription": "Tabellenkonfiguration konnte nicht geladen werden.",
+  "noData": "Keine Ergebnisse gefunden, bitte passen Sie die Filter an",
+  "loading": "Wird geladen..."
 }

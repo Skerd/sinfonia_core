@@ -1,21 +1,21 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/actions/resendInvitation.tsx",
-  "resendInvitationEmail": "Resend einladung e-Mail",
-  "resendInvitationEmailConfirm": "Resend einladung e-Mail?",
-  "resendInvitationEmailConfirmDesc": "A neu einladung e-Mail will werden sent bis die benutzer.",
-  "resendInvitationEmailSuccess": "Einladung e-Mail sent erfolgreich",
-  "resendInvitationEmailError": "Fehlgeschlagen bis send einladung e-Mail",
+  "resendInvitationEmail": "Einladungs-E-Mail erneut senden",
+  "resendInvitationEmailConfirm": "Einladungs-E-Mail erneut senden?",
+  "resendInvitationEmailConfirmDesc": "Der Benutzer erhält eine neue Einladungs-E-Mail.",
+  "resendInvitationEmailSuccess": "Einladungs-E-Mail erfolgreich gesendet",
+  "resendInvitationEmailError": "Einladungs-E-Mail konnte nicht gesendet werden",
   "axios": {
     "start": {
-      "title": "Sending einladung e-Mail",
+      "title": "Einladungs-E-Mail wird gesendet",
       "time": 3000
     },
     "success": {
-      "title": "Einladung e-Mail sent erfolgreich",
+      "title": "Einladungs-E-Mail erfolgreich gesendet",
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis send einladung e-Mail",
+      "title": "Einladungs-E-Mail konnte nicht gesendet werden",
       "time": 3000
     }
   }

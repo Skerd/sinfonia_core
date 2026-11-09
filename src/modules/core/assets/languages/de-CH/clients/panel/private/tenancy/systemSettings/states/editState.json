@@ -1,27 +1,27 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/states/editState.tsx",
   "title": "Kanton bearbeiten",
-  "description": "Aktualisieren kanton details",
-  "errorTitle": "Kanton daten konnten nicht geladen werden",
-  "errorDescription": "Bitte click here bis retry fetching kanton daten",
+  "description": "Details des Kantons / Bundeslands aktualisieren",
+  "errorTitle": "Daten des Kantons / Bundeslands konnten nicht geladen werden",
+  "errorDescription": "Bitte hier klicken, um die Daten des Kantons / Bundeslands erneut zu laden",
   "form": {
-    "idLabel": "Kanton ID",
+    "idLabel": "Kantons-ID",
     "nameLabel": "Name",
-    "namePlaceholder": "Kanton name",
+    "namePlaceholder": "Name des Kantons / Bundeslands",
     "codeLabel": "Code",
-    "codePlaceholder": "E.g. CA",
+    "codePlaceholder": "z. B. ZH",
     "countryLabel": "Land",
     "countryPlaceholder": "Land auswählen"
   },
-  "noId": "Keine kanton selected.",
-  "backToList": "Zurück zu liste",
+  "noId": "Kein Kanton / Bundesland ausgewählt.",
+  "backToList": "Zurück zur Liste",
   "axios": {
     "start": {
-      "title": "Saving kanton",
+      "title": "Kanton / Bundesland wird gespeichert",
       "time": 3000
     },
     "success": {
-      "title": "Kanton aktualisiert erfolgreich!",
+      "title": "Kanton / Bundesland erfolgreich aktualisiert!",
       "time": 3000
     },
     "error": {
@@ -31,7 +31,7 @@
   },
   "formHeader": {
     "title": "Kanton bearbeiten",
-    "description": "Aktualisieren kanton details"
+    "description": "Details des Kantons / Bundeslands aktualisieren"
   },
   "formButtons": {
     "cancel": "Abbrechen",

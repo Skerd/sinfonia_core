@@ -12,7 +12,7 @@
     "cronExpressionPlaceholder": "0 0 * * * *",
     "descriptionLabel": "Përshkrimi",
     "descriptionPlaceholder": "Shënime opsionale për këtë veprim",
-    "handlerLabel": "Handler",
+    "handlerLabel": "Trajtuesi",
     "maxRetriesLabel": "Riprovime maks.",
     "nameLabel": "Emri",
     "priorityLabel": "Prioriteti",

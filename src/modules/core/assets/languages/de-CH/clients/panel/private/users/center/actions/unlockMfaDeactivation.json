@@ -1,22 +1,22 @@
 {
   "path": "src/modules/core/clients/panel/private/users/center/actions/unlockMfaDeactivation.tsx",
-  "unlockMfaDeactivation": "Unlock MFA deactivation",
-  "unlockMfaDeactivationConfirm": "Unlock MFA deactivation lock?",
-  "unlockMfaDeactivationConfirmDesc": "Diese will leeren die MFA deactivation lock. Die benutzer will werden able bis antrag a neu MFA deactivation code.",
-  "unlockMfaDeactivationResendEmail": "Resend MFA deactivation e-Mail",
-  "unlockMfaDeactivationSuccess": "MFA deactivation lock cleared erfolgreich",
-  "unlockMfaDeactivationError": "Fehlgeschlagen bis leeren MFA deactivation lock",
+  "unlockMfaDeactivation": "MFA-Deaktivierung entsperren",
+  "unlockMfaDeactivationConfirm": "MFA-Deaktivierungssperre aufheben?",
+  "unlockMfaDeactivationConfirmDesc": "Dadurch wird die MFA-Deaktivierungssperre aufgehoben. Der Benutzer kann einen neuen MFA-Deaktivierungscode anfordern.",
+  "unlockMfaDeactivationResendEmail": "MFA-Deaktivierungs-E-Mail erneut senden",
+  "unlockMfaDeactivationSuccess": "MFA-Deaktivierungssperre erfolgreich aufgehoben",
+  "unlockMfaDeactivationError": "MFA-Deaktivierungssperre konnte nicht aufgehoben werden",
   "axios": {
     "start": {
-      "title": "Unlocking MFA deactivation",
+      "title": "MFA-Deaktivierung wird entsperrt",
       "time": 3000
     },
     "success": {
-      "title": "MFA deactivation lock cleared erfolgreich",
+      "title": "MFA-Deaktivierungssperre erfolgreich aufgehoben",
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis leeren MFA deactivation lock",
+      "title": "MFA-Deaktivierungssperre konnte nicht aufgehoben werden",
       "time": 3000
     }
   }

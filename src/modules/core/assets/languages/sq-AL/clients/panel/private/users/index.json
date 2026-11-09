@@ -74,7 +74,7 @@
         "notActive": "Jo aktiv"
       }
     },
-    "username": "Email",
+    "username": "Emaili",
     "name": "Emri",
     "surname": "Mbiemri",
     "timezone": "Zona kohore",
@@ -86,7 +86,7 @@
     "emailVerifiedAt": "Email i verifikuar në",
     "registeredFrom": "Regjistruar nga",
     "registerDate": "U bashkua",
-    "online": "Online",
+    "online": "Në linjë",
     "createdAt": "Krijuar më",
     "updatedAt": "Përditësuar më",
     "roles": {

@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/roles/index.tsx",
-  "title": "Alle rollen",
-  "description": "Und bearbeiten firma rollen anzeigen",
+  "title": "Alle Rollen",
+  "description": "Firmenrollen anzeigen und bearbeiten",
   "help": {
-    "ariaLabel": "Über Alle rollen",
-    "title": "Über Alle rollen",
+    "ariaLabel": "Über alle Rollen",
+    "title": "Über alle Rollen",
     "overview": "Rollen sind Berechtigungspakete, die Benutzern der Firma zugewiesen werden. Die Einstellung «Standard für die Registrierung» bestimmt zudem, ob Personen unter Firma → Benutzer oder Firma → Administration erscheinen.",
     "sections": [
       {
@@ -26,16 +26,16 @@
   },
   "searchPlaceholder": "Nach Name oder Beschreibung suchen, oder Filter hinzufügen...",
   "failTitle": "Rollen konnten nicht geladen werden",
-  "failTitleTooltip": "Click here bis retry laden rollen",
+  "failTitleTooltip": "Hier klicken, um die Rollen erneut zu laden",
   "create": "Rolle erstellen",
   "fields": {
     "name": "Name",
     "description": "Beschreibung",
     "permissions": "Berechtigungen",
-    "isAdmin": "Admin rolle",
-    "isSignupDefault": "Default für signup",
-    "canEdit": "Can bearbeiten",
-    "canDelete": "Can löschen",
+    "isAdmin": "Admin-Rolle",
+    "isSignupDefault": "Standard bei Registrierung",
+    "canEdit": "Darf bearbeiten",
+    "canDelete": "Darf löschen",
     "slug": "Slug",
     "company": "Firma",
     "createdBy": "Erstellt von",

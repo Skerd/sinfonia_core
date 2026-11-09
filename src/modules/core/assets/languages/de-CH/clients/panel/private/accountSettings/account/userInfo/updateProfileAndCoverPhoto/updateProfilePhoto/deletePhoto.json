@@ -5,7 +5,7 @@
   "deletePhoto": "Foto löschen",
   "axios": {
     "start": {
-      "title": "Deleting foto",
+      "title": "Foto wird gelöscht",
       "time": 3000
     },
     "success": {
@@ -13,7 +13,7 @@
       "time": 3000
     },
     "error": {
-      "title": "Fehlgeschlagen bis löschen foto",
+      "title": "Foto konnte nicht gelöscht werden",
       "time": 3000
     }
   }

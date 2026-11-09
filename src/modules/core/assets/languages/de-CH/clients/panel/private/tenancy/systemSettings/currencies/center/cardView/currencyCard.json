@@ -2,10 +2,10 @@
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/currencies/center/cardView/currencyCard.tsx",
   "name": "Name",
   "symbol": "Symbol",
-  "abbreviation": "Abbreviation",
-  "decimalPlaces": "Decimal places",
+  "abbreviation": "Abkürzung",
+  "decimalPlaces": "Dezimalstellen",
   "deleted": "Gelöscht",
   "active": "Aktiv",
-  "failedTitle": "Währung konnten nicht geladen werden",
-  "failedDescription": "Tap bis retry."
+  "failedTitle": "Währung konnte nicht geladen werden",
+  "failedDescription": "Tippen, um es erneut zu versuchen."
 }

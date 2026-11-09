@@ -1,22 +1,22 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/cities/editCity.tsx",
   "title": "Ort bearbeiten",
-  "description": "Aktualisieren ort details",
-  "errorTitle": "Ort daten konnten nicht geladen werden",
-  "errorDescription": "Bitte click here bis retry fetching ort daten",
+  "description": "Stadtdetails aktualisieren",
+  "errorTitle": "Stadtdaten konnten nicht geladen werden",
+  "errorDescription": "Bitte hier klicken, um die Stadtdaten erneut zu laden",
   "form": {
     "nameLabel": "Name",
-    "namePlaceholder": "Ort name",
+    "namePlaceholder": "Ortsname",
     "countryLabel": "Land",
     "countryPlaceholder": "Land auswählen",
     "stateLabel": "Kanton",
     "statePlaceholder": "Kanton auswählen"
   },
-  "noId": "Keine ort selected.",
-  "backToList": "Zurück zu liste",
+  "noId": "Keine Stadt ausgewählt.",
+  "backToList": "Zurück zur Liste",
   "formHeader": {
     "title": "Ort bearbeiten",
-    "description": "Aktualisieren ort details"
+    "description": "Stadtdetails aktualisieren"
   },
   "formButtons": {
     "cancel": "Abbrechen",

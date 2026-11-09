@@ -1,13 +1,13 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/searchChatUsers/newChat.tsx",
   "members": "Mitglieder",
-  "searchPeople": "Suchen people",
+  "searchPeople": "Personen suchen",
   "failTitle": "Benutzer konnten nicht geladen werden",
-  "failTitleTooltip": "Click bis retry laden users",
-  "noDataTitle": "Keine people gefunden.",
+  "failTitleTooltip": "Klicken, um die Benutzer erneut zu laden",
+  "noDataTitle": "Keine Personen gefunden.",
   "form": {
-    "nameLabel": "Group name",
-    "namePlaceholder": "Group name"
+    "nameLabel": "Gruppenname",
+    "namePlaceholder": "Gruppenname"
   },
   "removeMember": "{name} entfernen"
 }

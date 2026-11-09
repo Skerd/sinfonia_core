@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/chat/center/typingIndicators.tsx",
-  "isTyping": "Ist typing...",
-  "areTyping": "Sind typing...",
+  "isTyping": "tippt...",
+  "areTyping": "tippen...",
   "and": "und",
-  "others": "others"
+  "others": "weitere"
 }
