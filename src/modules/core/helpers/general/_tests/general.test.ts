@@ -1,5 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {
+    calendarDaysUntil,
     calendarDayUtc,
     formatDate,
     formatDurationInDaysHoursOrMinutes,
@@ -39,6 +40,23 @@ describe("calendarDayUtc", () => {
 
     it("uses the date prefix of a naive ISO datetime", () => {
         expect(calendarDayUtc("2026-03-15T09:30:00")).toBe("2026-03-15");
+    });
+});
+
+describe("calendarDaysUntil (D116)", () => {
+    // 00:30 on 2 March in Zurich, still 1 March in UTC.
+    const now = new Date("2026-03-01T23:30:00Z");
+
+    it("counts from today in the company's zone, for a day stored at midnight UTC or as a local string", () => {
+        expect(calendarDaysUntil("2026-03-02T00:00:00.000Z", "Europe/Zurich", now)).toBe(0);
+        expect(calendarDaysUntil("2026-03-02T00:00:00.000Z", "UTC", now)).toBe(1);
+        expect(calendarDaysUntil("2026-03-01", "Europe/Zurich", now)).toBe(-1);
+        expect(calendarDaysUntil("2026-03-05", "Europe/Zurich", now)).toBe(3);
+    });
+
+    it("is null without a date", () => {
+        expect(calendarDaysUntil(undefined, "Europe/Zurich", now)).toBeNull();
+        expect(calendarDaysUntil("not a date", "Europe/Zurich", now)).toBeNull();
     });
 });
 

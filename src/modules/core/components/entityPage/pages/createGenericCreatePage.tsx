@@ -11,12 +11,15 @@ import type {FieldValues, UseFormReturn} from "react-hook-form";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import {resolveEntityPageKeys} from "@coreModule/helpers/general/entityPage.ts";
+import {useCompanyTimeZone} from "@coreModule/helpers/hooks/useCompanyTimeZone.ts";
+import type {ValidationContext} from "armonia/src/modules/core/helpers/zodBuilder.ts";
 
 type GenericCreatePageConfig<TForm extends FieldValues> = {
     languagePath: string;
     model?: string;
     apiUrl: string;
-    schema: (languageCode: string, form: unknown) => any;
+    /** Armonia factory; it receives the session company's {@link ValidationContext} as its 5th argument (D116). */
+    schema: (languageCode: string, form: unknown, writeFields?: Record<string, unknown>, readFields?: Record<string, unknown>, context?: ValidationContext) => any;
     /** Static values, or a builder that reads the URL (e.g. `?projectId=` prefill). */
     defaultValues?: Partial<TForm> | ((params: URLSearchParams) => Partial<TForm>);
     submitIcon?: ReactNode;
@@ -64,9 +67,10 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
         const {create} = useAccess(accessKey);
         const {config: viewConfig, loading: viewConfigLoading} = useViewConfigState(viewCollectionKey, "form:create");
 
+        const timeZone = useCompanyTimeZone();
         const formSchema = useMemo(
-            () => config.schema(languageCode, resolveLanguageKey("form")),
-            [languageCode, resolveLanguageKey],
+            () => config.schema(languageCode, resolveLanguageKey("form"), undefined, undefined, {timeZone}),
+            [languageCode, resolveLanguageKey, timeZone],
         );
 
         // Keyed by the query string so URL-driven builders re-run only when the URL actually changes.

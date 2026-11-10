@@ -145,6 +145,18 @@ export function calendarDayUtc(value: Date | string | number | null | undefined)
     return Number.isNaN(date.getTime()) ? "" : utcYmd(date);
 }
 
+/**
+ * Whole calendar days from today in `timeZone` to the date-only `day` (read like {@link calendarDayUtc}):
+ * 0 = it is today, negative = it is over. Pass the session company's zone (`useCompanyTimeZone`, D116), the
+ * zone the server's checks and crons count in. `null` when `day` is not a date.
+ */
+export function calendarDaysUntil(day: Date | string | null | undefined, timeZone: string, now: Date = new Date()): number | null {
+    const target = calendarDayUtc(day);
+    const today = zonedParts(now, timeZone);
+    if (!target || !today) return null;
+    return Math.round((Date.parse(target) - Date.UTC(today.year, today.month - 1, today.day)) / 86400000);
+}
+
 function readZonedParts(date: Date, timeZone: string | undefined): ZonedDateTimeParts | null {
     try {
         const parts = new Intl.DateTimeFormat("en-US", {...ZONED_PARTS_FORMAT, timeZone: timeZone || undefined}).formatToParts(date);

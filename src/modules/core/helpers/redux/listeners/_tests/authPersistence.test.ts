@@ -31,7 +31,7 @@ const USER: ValidateTokenFormResponseType = {
     maxClearance: 1,
     isPlatformAdmin: false,
     canErasePeople: false,
-    company: {_id: "c1", name: "Company", modules: ["core"], isPlatformOwner: false},
+    company: {_id: "c1", name: "Company", modules: ["core"], isPlatformOwner: false, timezone: "Europe/Zurich"},
 };
 
 const createStore = () => configureStore({

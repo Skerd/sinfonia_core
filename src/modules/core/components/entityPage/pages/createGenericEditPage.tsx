@@ -14,12 +14,15 @@ import {useViewConfigState} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import type {FieldValues, UseFormReturn} from "react-hook-form";
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import {resolveEntityPageKeys} from "@coreModule/helpers/general/entityPage.ts";
+import {useCompanyTimeZone} from "@coreModule/helpers/hooks/useCompanyTimeZone.ts";
+import type {ValidationContext} from "armonia/src/modules/core/helpers/zodBuilder.ts";
 
 type GenericEditPageConfig<TDto, TForm extends FieldValues> = {
     languagePath: string;
     model?: string;
     apiUrl: string;
-    schema: (languageCode: string, form: unknown, writeFields: Record<string, unknown>, readFields: Record<string, unknown>) => any;
+    /** Armonia factory; it receives the session company's {@link ValidationContext} as its 5th argument (D116). */
+    schema: (languageCode: string, form: unknown, writeFields: Record<string, unknown>, readFields: Record<string, unknown>, context?: ValidationContext) => any;
     mapEntityData?: (dto: TDto) => Record<string, unknown>;
     submitIcon?: ReactNode;
     buildExtraTitles?: (params: URLSearchParams, entityName?: string | null) => string[];
@@ -155,9 +158,10 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
         const entityError = usesRequest ? !!entityLoad.error : fetchError;
 
         const {config: viewConfig, loading: viewConfigLoading} = useViewConfigState(viewCollectionKey, "form:edit");
+        const timeZone = useCompanyTimeZone();
         const formSchema = useMemo(
-            () => config.schema(languageCode, resolveLanguageKey("form"), writeFields, readFields),
-            [languageCode, resolveLanguageKey, writeFields, readFields],
+            () => config.schema(languageCode, resolveLanguageKey("form"), writeFields, readFields, {timeZone}),
+            [languageCode, resolveLanguageKey, writeFields, readFields, timeZone],
         );
 
         useEffect(() => {
