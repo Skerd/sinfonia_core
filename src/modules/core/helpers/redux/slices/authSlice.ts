@@ -1,6 +1,7 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import {LoginFormResponseType} from "armonia/src/modules/core/api/user/public/login/login.form.response.type.ts";
 import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/public/validateToken/validateToken.form.response.type.ts";
+import type {SupportedLocale} from "armonia/src/modules/core/constants/index.ts";
 import {getRefreshToken, getToken, getUser} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 
 /**
@@ -140,6 +141,12 @@ export const authenticationSlice = createSlice({
             state.user.timezone = action.payload;
         },
         /**
+         * Updates the stored preferred language (server-rendered notices, D128) after it was saved.
+         */
+        updatePreferredLanguage: (state, action: PayloadAction<SupportedLocale>) => {
+            state.user.preferredLanguage = action.payload;
+        },
+        /**
          * Patches a single editable profile field.
          */
         updateUserValue: (state, action: PayloadAction<{field: EditableUserField, value: string}>) => {
@@ -170,6 +177,7 @@ export const {
     logIn,
     signOut,
     updateTimezone,
+    updatePreferredLanguage,
     updateUserData,
     updateToken,
     updateRefreshToken,

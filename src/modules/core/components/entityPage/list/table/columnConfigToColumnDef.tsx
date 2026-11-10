@@ -28,6 +28,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import SheetMediaAvatar from "@coreModule/components/viewEngine/sheet/widgets/sheetMediaAvatar.tsx";
 import CountryFlag from "@coreModule/components/viewEngine/widgets/display/countryFlag.tsx";
 import {enumLabel} from "@coreModule/components/entityPage/filters/filterBuilder/filterValueInput.tsx";
+import {translateDefaultRole} from "@coreModule/helpers/moduleContributions/loadRolesPermissionsContributions.ts";
 import {
     DateCell,
     EmptyCell,
@@ -253,7 +254,7 @@ export function useColumnConfigToColumnDef<T>(columns: TableColumnConfig[], opti
      * The one hook in this function: it must stay unconditional and at the top, because
      * the caller invokes `useColumnConfigToColumnDef` inline during its own render.
      */
-    const {currentLanguage} = useSelectedLanguage("src/modules/core/helpers/mappers/columnConfigToColumnDef.tsx");
+    const {currentLanguage, languageCode} = useSelectedLanguage("src/modules/core/helpers/mappers/columnConfigToColumnDef.tsx");
 
     const moreLabel = translate(currentLanguage, "more", "more");
     const yesLabel = translate(currentLanguage, "yes", "Yes");
@@ -300,7 +301,9 @@ export function useColumnConfigToColumnDef<T>(columns: TableColumnConfig[], opti
                     const x = findFromObject(item, f);
                     return x == null || typeof x === "object" ? "" : String(x).trim();
                 });
-                return parts.filter((p) => p !== "").join(hasLiteral ? "" : " ");
+                const text = parts.filter((p) => p !== "").join(hasLiteral ? "" : " ");
+                // A role ref carries its slug: a default role's name is shown translated (D118), as in role selects.
+                return typeof item.slug === "string" && text !== "" ? translateDefaultRole({slug: item.slug, name: text}, languageCode).name : text;
             };
             /* A media id on the ref itself (`createdBy.photo`), populated or not. */
             const resolveMediaId = (item: Record<string, unknown>): string | null => {

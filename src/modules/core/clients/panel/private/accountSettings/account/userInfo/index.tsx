@@ -10,6 +10,7 @@ import AccountProfileSurname from "@coreModule/clients/panel/private/accountSett
 import AccountProfilePhoneNumber from "@coreModule/clients/panel/private/accountSettings/account/userInfo/phoneNumber";
 import AccountProfileAndCoverPhoto from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto";
 import AccountProfileTimeZone from "@coreModule/clients/panel/private/accountSettings/account/userInfo/timezone";
+import AccountProfileLanguage from "@coreModule/clients/panel/private/accountSettings/account/userInfo/language";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
@@ -18,6 +19,7 @@ import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import AccountCompaniesCardEditRoles from "@coreModule/clients/panel/private/accountSettings/account/userInfo/companies/companyCardEditRoles";
 import {RequestsSection, hasRequestsData} from "@coreModule/clients/panel/private/users/center/cardView/userProfileCard.tsx";
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
+import type {SupportedLocale} from "armonia/src/modules/core/constants/index.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {updateUserValue} from "@coreModule/helpers/redux/slices/authSlice.ts";
@@ -204,6 +206,15 @@ function UserAccountProfileUserInfo({
                     setCurrentTimeZone(timezone);
                     updateRow?.(specificUserId ?? id, { timezone });
                 }}
+            />
+            ) : (
+                <HiddenElement />
+            )}
+            {read.preferredLanguage && !locked ? (
+            <AccountProfileLanguage
+                defaultValue={data?.preferredLanguage}
+                specificUserId={specificUserId}
+                onUpdate={(preferredLanguage: SupportedLocale) => updateRow?.(specificUserId ?? id, {preferredLanguage})}
             />
             ) : (
                 <HiddenElement />

@@ -38,6 +38,17 @@ describe("real module contributions", () => {
         expect(listed).not.toContain("MFA_DISABLED");
     });
 
+    // TD-B173: the role notice showed the stored (English) default-role name.
+    it("translate default role names in role notices and keep custom names", () => {
+        const notice = {
+            code: "ROLE_ASSIGNED",
+            params: {assigner: "Ada", role: "General Administrator, Night shift", roleSlugs: "acme:reserved:general_administrator,acme:night-shift"},
+        };
+        expect(notificationMessage(notice, "de-CH")).toBe("Ada hat Ihnen die Rolle zugewiesen: Hauptadministrator, Night shift");
+        expect(notificationMessage({...notice, params: {...notice.params, roleSlugs: "acme:reserved:general_administrator"}}, "de-CH"))
+            .toBe("Ada hat Ihnen die Rolle zugewiesen: General Administrator, Night shift");
+    });
+
     it("parse, and have unique ids per kind", () => {
         expectUniqueIds(getSortedSidebarContributions());
         expectUniqueIds(getSortedWidgetContributions());

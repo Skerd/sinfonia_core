@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/language/index.tsx",
+  "title": "Gjuha",
+  "description": "Mesazhet SMS dhe njoftimet WhatsApp e Telegram ju dërgohen në këtë gjuhë. Ndryshimi i saj ndryshon edhe gjuhën e panelit.",
+  "empty": "Ende nuk është zgjedhur asnjë gjuhë.",
+  "edit": "Ndrysho",
+  "confirm": "Konfirmo ndryshimin e gjuhës",
+  "cancel": "Anulo",
+  "axios": {
+    "start": {
+      "title": "Po përditësohet gjuha",
+      "time": 3000
+    },
+    "success": {
+      "title": "Gjuha u përditësua me sukses",
+      "time": 3000
+    },
+    "error": {
+      "title": "Gjuha nuk u përditësua dot",
+      "time": 3000
+    }
+  }
+}

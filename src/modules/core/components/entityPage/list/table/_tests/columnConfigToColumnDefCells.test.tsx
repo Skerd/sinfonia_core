@@ -11,7 +11,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import {MemoryRouter} from "react-router-dom";
 import type {ReactNode} from "react";
 import type {ColumnDef, Row} from "@tanstack/react-table";
-import languageReducer from "@coreModule/helpers/redux/slices/languageSlice.ts";
+import languageReducer, {changeLanguage, resetLanguage} from "@coreModule/helpers/redux/slices/languageSlice.ts";
 import type {TableColumnConfig} from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type.ts";
 import {useColumnConfigToColumnDef} from "@coreModule/components/entityPage/list/table/columnConfigToColumnDef.tsx";
 
@@ -198,6 +198,24 @@ describe("multi-value collapsing", () => {
     it("renders an em dash when every entry is empty", () => {
         const col = column({id: "trades", cellType: "objectId", meta: {refDisplayKey: ["name"]}});
         expect(renderCell(col, {trades: []}).textContent).toBe("—");
+    });
+});
+
+// TD-B173: the users table's roles column showed the stored English names of default roles.
+describe("role refs", () => {
+    it("shows a default role's name in the reader's language and a custom role's stored name", () => {
+        store.dispatch(changeLanguage("de-CH"));
+        try {
+            const col = column({id: "roles", cellType: "objectId", meta: {refDisplayKey: ["name"], maxInlineItems: 3}});
+            const cell = renderCell(col, {roles: [
+                {_id: "1", name: "General Administrator", slug: "acme:reserved:general_administrator"},
+                {_id: "2", name: "Night shift", slug: "acme:night-shift"},
+            ]});
+            expect(cell.textContent).toContain("Hauptadministrator");
+            expect(cell.textContent).toContain("Night shift");
+        } finally {
+            store.dispatch(resetLanguage());
+        }
     });
 });
 

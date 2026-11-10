@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/language/index.tsx",
+  "title": "Language",
+  "description": "Text messages, WhatsApp and Telegram notices are sent to you in this language. Changing it also switches the panel.",
+  "empty": "No language chosen yet.",
+  "edit": "Edit",
+  "confirm": "Confirm language change",
+  "cancel": "Cancel",
+  "axios": {
+    "start": {
+      "title": "Updating language",
+      "time": 3000
+    },
+    "success": {
+      "title": "Language updated successfully",
+      "time": 3000
+    },
+    "error": {
+      "title": "Language failed to be updated",
+      "time": 3000
+    }
+  }
+}

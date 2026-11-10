@@ -72,12 +72,20 @@
       "mfaStatus": {
         "active": "Attivo",
         "notActive": "Non attivo"
+      },
+      "preferredLanguage": {
+        "en-US": "Inglese",
+        "it-IT": "Italiano",
+        "de-CH": "Tedesco (Svizzera)",
+        "fr-FR": "Francese",
+        "sq-AL": "Albanese"
       }
     },
     "username": "E-mail",
     "name": "Nome",
     "surname": "Cognome",
     "timezone": "Fuso orario",
+    "preferredLanguage": "Lingua",
     "birthday": "Compleanno",
     "phoneNumber": "Numero di telefono",
     "photo": "Foto",

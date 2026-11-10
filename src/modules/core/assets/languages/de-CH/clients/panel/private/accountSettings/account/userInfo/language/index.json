@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/account/userInfo/language/index.tsx",
+  "title": "Sprache",
+  "description": "SMS-, WhatsApp- und Telegram-Mitteilungen erhalten Sie in dieser Sprache. Eine Änderung stellt auch das Panel um.",
+  "empty": "Noch keine Sprache gewählt.",
+  "edit": "Bearbeiten",
+  "confirm": "Sprachänderung bestätigen",
+  "cancel": "Abbrechen",
+  "axios": {
+    "start": {
+      "title": "Sprache wird aktualisiert",
+      "time": 3000
+    },
+    "success": {
+      "title": "Sprache erfolgreich aktualisiert",
+      "time": 3000
+    },
+    "error": {
+      "title": "Sprache konnte nicht aktualisiert werden",
+      "time": 3000
+    }
+  }
+}

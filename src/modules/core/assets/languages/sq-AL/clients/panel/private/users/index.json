@@ -72,12 +72,20 @@
       "mfaStatus": {
         "active": "Aktiv",
         "notActive": "Jo aktiv"
+      },
+      "preferredLanguage": {
+        "en-US": "Anglisht",
+        "it-IT": "Italisht",
+        "de-CH": "Gjermanisht (Zvicër)",
+        "fr-FR": "Frëngjisht",
+        "sq-AL": "Shqip"
       }
     },
     "username": "Emaili",
     "name": "Emri",
     "surname": "Mbiemri",
     "timezone": "Zona kohore",
+    "preferredLanguage": "Gjuha",
     "birthday": "Ditëlindja",
     "phoneNumber": "Numri i telefonit",
     "photo": "Foto",

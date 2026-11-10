@@ -7,6 +7,7 @@ import {ValidateTokenFormResponseType} from "armonia/src/modules/core/api/user/p
 import {SessionSetupScreen, SESSION_SETUP_TOTAL_STEPS} from "@coreModule/components/custom/sessionSetupScreen.tsx";
 import {useNavigate} from "react-router-dom";
 import {setCompanyModules} from "@coreModule/helpers/modules/enabledModules.ts";
+import {usePreferredLanguageSync} from "@coreModule/helpers/hooks/usePreferredLanguageSync.ts";
 
 type AuthenticationProviderProps = {
     children: ReactNode;
@@ -30,6 +31,7 @@ export function AuthenticationProvider({
     const [retryToken, setRetryToken] = useState(0);
     const loginToken = useSelector((state: RootState) => state.authentication.token);
     const sessionExpired = useSelector((state: RootState) => state.authentication.sessionExpired);
+    usePreferredLanguageSync(isHydrated && !error);
 
     function goToLogin() {
         setCompanyModules(null);
