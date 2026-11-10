@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notifications/notificationTypePreferences.tsx",
+  "title": "Benachrichtigungsarten",
+  "description": "Schalten Sie die Mitteilungen aus, die Sie nicht brauchen. Eine ausgeschaltete Art wird weder hier angezeigt noch per E-Mail gesendet. Sicherheitsmitteilungen werden immer gesendet.",
+  "loading": "Wird geladen…",
+  "loadFailed": "Ihre Benachrichtigungseinstellungen konnten nicht geladen werden.",
+  "saved": "Benachrichtigungseinstellungen gespeichert.",
+  "saveFailed": "Ihre Änderung konnte nicht gespeichert werden."
+}

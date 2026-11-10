@@ -13,6 +13,7 @@ import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@cor
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger}from "@coreModule/components/ui/dropdown-menu.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
 
 const CURRENT_REVOKE_REQUEST = {method: "post" as const, url: "/api/user/userSession/currentRevoke", data: {}};
 
@@ -34,6 +35,8 @@ function NavUser({
     // Local logout completes either way: the network or the session may already be gone.
     useHttpRequest(CURRENT_REVOKE_REQUEST, {}, signOutCount, true, {success: finishSignOut, error: finishSignOut});
     const {name, surname, email, photo} = useSelector((state: RootState) => state.authentication.user);
+    // A user without a photo shows the initials; requesting `/media/undefined` answered 400 on every page (TD-B154).
+    const photoUrl = photo ? `${MEDIA_BASE_URL}${photo}` : undefined;
     function getAvatarFallbackName() {
         const first = name?.trim();
         const last = surname?.trim();
@@ -58,7 +61,7 @@ function NavUser({
                                 className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
                             >
                                 <Avatar className='h-8 w-8 rounded-lg'>
-                                    <AvatarImage src={`/api/auxiliary/media/${photo}`} alt={name + "_photo"} />
+                                    {photoUrl ? <AvatarImage src={photoUrl} alt={name + "_photo"} /> : null}
                                     <AvatarFallback className='rounded-lg uppercase'>{getAvatarFallbackName()}</AvatarFallback>
                                 </Avatar>
                                 <div className='grid flex-1 text-start text-sm leading-tight'>
@@ -77,7 +80,7 @@ function NavUser({
                             <DropdownMenuLabel className='p-0 font-normal'>
                                 <div className='flex items-center gap-2 px-1 py-1.5 text-start text-sm'>
                                     <Avatar className='h-8 w-8 rounded-lg'>
-                                        <AvatarImage src={`/api/auxiliary/media/${photo}`} alt={name + "_photo"} />
+                                        {photoUrl ? <AvatarImage src={photoUrl} alt={name + "_photo"} /> : null}
                                         <AvatarFallback className='rounded-lg uppercase'>{getAvatarFallbackName()}</AvatarFallback>
                                     </Avatar>
                                     <div className='grid flex-1 text-start text-sm leading-tight'>

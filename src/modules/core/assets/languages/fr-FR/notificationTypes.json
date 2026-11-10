@@ -1,0 +1,63 @@
+{
+  "core": {
+    "title": "Compte et entreprise",
+    "codes": {
+      "MESSAGE_MENTIONED": {
+        "title": "Mention dans un chat",
+        "message": "{sender} vous a mentionné dans {channel}"
+      },
+      "ROLE_ASSIGNED": {
+        "title": "Rôle attribué",
+        "message": "{assigner} vous a attribué le rôle : {role}"
+      },
+      "INVITATION_RECEIVED": {
+        "title": "Invitation reçue",
+        "message": "{inviter} vous a invité à rejoindre {company}"
+      },
+      "ACCOUNT_ACTIVATED": {
+        "title": "Compte activé",
+        "message": "Votre adresse e-mail a été vérifiée et votre compte est actif",
+        "variants": {
+          "email": "Votre adresse e-mail a été vérifiée et votre compte est actif",
+          "invitation": "Votre compte est maintenant actif. Vous pouvez vous connecter."
+        }
+      },
+      "COMPANY_UPDATED": {
+        "title": "Profil de l'entreprise mis à jour",
+        "message": "{user} a mis à jour le profil de l'entreprise {company}"
+      },
+      "PUBLIC_CHAT_HANDOFF_REQUESTED": {
+        "title": "Visiteur du site en attente",
+        "message": "Un visiteur du site attend de parler à quelqu'un"
+      },
+      "USER_LOGGED_IN": {
+        "message": "Nouvelle connexion à votre compte depuis {source} ({ip})"
+      },
+      "USER_LOGGED_IN_NEW_DEVICE": {
+        "message": "Votre compte a été utilisé pour se connecter depuis un nouvel appareil"
+      },
+      "MFA_DISABLED": {
+        "message": "L'authentification multifacteur a été désactivée sur votre compte"
+      },
+      "MFA_ENABLED": {
+        "message": "L'authentification multifacteur a été activée sur votre compte"
+      },
+      "TELEGRAM_LINKED": {
+        "message": "Telegram a été associé à votre compte"
+      },
+      "TELEGRAM_UNLINKED": {
+        "message": "Telegram a été dissocié de votre compte"
+      },
+      "ACCOUNT_SELF_DEACTIVATED": {
+        "message": "Vous avez désactivé votre compte pour cette entreprise"
+      },
+      "ACCOUNT_STATUS_CHANGED_BY_ADMIN": {
+        "message": "{actor} a modifié le statut de votre compte pour cette entreprise",
+        "variants": {
+          "activated": "{actor} a activé votre compte pour cette entreprise",
+          "deactivated": "{actor} a désactivé votre compte pour cette entreprise"
+        }
+      }
+    }
+  }
+}

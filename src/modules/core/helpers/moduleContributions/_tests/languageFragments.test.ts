@@ -79,6 +79,19 @@ describe("createLanguageFragmentMerger", () => {
         expect(getMerged("de-CH")).toEqual({finance: {title: "Finanzen"}, shop: {title: "Laden"}});
     });
 
+    it("merges core too when asked (includeCore)", () => {
+        const getMerged = createLanguageFragmentMerger({
+            fileName: "menus.json",
+            glob: {
+                [file("core", "de-CH")]: {core: {title: "Kern"}},
+                [file("shop", "de-CH")]: {shop: {title: "Laden"}},
+            },
+            fallbackLocales: ["en-US"],
+            includeCore: true,
+        });
+        expect(getMerged("de-CH")).toEqual({core: {title: "Kern"}, shop: {title: "Laden"}});
+    });
+
     it("skips only the `core` package, not packages whose name starts with core", () => {
         const getMerged = merger({[file("coreExtras", "en-US")]: {extra: 1}});
         expect(getMerged("en-US")).toEqual({extra: 1});

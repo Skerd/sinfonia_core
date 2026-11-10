@@ -20,7 +20,7 @@
         "publicDev": "export NODE_ENV=development VITE_SINFONIA_APP=public && vite --host",
         "portal": "export NODE_ENV=development VITE_SINFONIA_APP=portal && vite --host",
         "dyeus": "export NODE_ENV=development VITE_SINFONIA_APP=dyeus && vite --host",
-        "studio": "export NODE_ENV=development VITE_SINFONIA_APP=studio && vite --host",
+        "studio": "export NODE_ENV=development VITE_SINFONIA_APP=studio VITE_PANEL_URL=${VITE_PANEL_URL:-http://localhost:5173} && vite --host",
         "runXAndY": "export NODE_ENV=development VITE_ENABLED_MODULES=x,y && vite --host",
         "propertyManagement": "export NODE_ENV=development VITE_ENABLED_MODULES=propertyManagement && vite --host",
         "coreOnly": "export NODE_ENV=development VITE_ENABLED_MODULES=core,eCommerce,carRental,dentalClinic && vite --host",

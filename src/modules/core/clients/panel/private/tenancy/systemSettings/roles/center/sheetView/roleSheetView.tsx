@@ -7,6 +7,7 @@ import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import {CompanyRole as CompanyRoleType} from "armonia/src/modules/core/api/company/private/roles/role.dto.ts";
 import {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import PermissionsTable from "@coreModule/clients/panel/private/tenancy/systemSettings/roles/permissionsTable.tsx";
+import {translateDefaultRole} from "@coreModule/helpers/moduleContributions/loadRolesPermissionsContributions.ts";
 
 export type RoleSheetViewOwnProps = {
     open: boolean;
@@ -17,10 +18,11 @@ export type RoleSheetViewOwnProps = {
     onRestore?: () => void;
 };
 
-function roleEditPath(role: CompanyRoleType) {
+/** `roleName` only titles the edit page, so it carries the translated name; the form edits the stored one. */
+function roleEditPath(role: CompanyRoleType, name: string) {
     const params = new URLSearchParams();
     params.set("roleId", role._id);
-    if (role.name) params.set("roleName", role.name);
+    if (name) params.set("roleName", name);
     return `/tenancy/systemSettings/roles/edit?${params.toString()}`;
 }
 
@@ -29,6 +31,7 @@ function RoleSheetView({
     onOpenChange,
     role,
     resolveLanguageKey,
+    languageCode,
     hideActions = false,
     onDelete = () => {},
     onRestore = () => {},
@@ -39,17 +42,19 @@ function RoleSheetView({
     if (!viewConfig) {
         return null;
     }
+    // Display copy only: the sheet shows a default role in the user's language (D118).
+    const shown = {...role, ...translateDefaultRole(role, languageCode)};
 
     return (
         <SheetViewRenderer
             config={viewConfig}
-            data={role}
+            data={shown}
             open={open}
             onOpenChange={onOpenChange}
             resolveLanguageKey={resolveLanguageKey}
             access={access}
             hideActions={hideActions}
-            editPath={roleEditPath(role)}
+            editPath={roleEditPath(role, shown.name)}
             hideEdit={!role.canEdit}
             hideDelete={!role.canDelete}
             onDelete={onDelete}

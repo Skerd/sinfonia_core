@@ -4,6 +4,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import CustomDateDisplayer from "@coreModule/components/custom/customDateDisplayer.tsx";
+import {notificationMessage} from "@coreModule/helpers/moduleContributions/loadNotificationTypesContributions.ts";
 
 export type NotificationListItemProps = {
     notification: NotificationType;
@@ -14,12 +15,16 @@ export type NotificationListItemProps = {
 /**
  * Shared row for bell popover and notification center: sender + relative date on one line,
  * body clamped below. Unread rows get a primary accent and a leading status dot.
+ *
+ * The body is the code's message in the reader's language, filled with the stored params (D117); a code no module
+ * declares (core and not-yet-converted modules) shows the stored English description.
  */
 export function NotificationRow({notification, resolveLanguageKey, className}: NotificationListItemProps) {
     const unread = !notification.readOn;
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
+    const languageCode = useSelector((state: RootState) => state.language.languageCode);
     const sender = notification.sender?.username ?? resolveLanguageKey("system");
-    const body = notification.description ?? notification.code;
+    const body = notificationMessage(notification, languageCode) || notification.description || notification.code;
 
     return (
         <article

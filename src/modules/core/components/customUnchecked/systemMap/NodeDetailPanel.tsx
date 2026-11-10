@@ -2,6 +2,8 @@ import {useMemo} from "react";
 import type {SystemMapModelNode} from "./systemMap.types.ts";
 import {CLUSTER_META} from "./clusterMeta.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {env} from "@coreModule/helpers/environment/env.ts";
+import {panelLink} from "./panelLink.ts";
 
 type NodeDetailPanelProps = {
     node: SystemMapModelNode | null;
@@ -10,6 +12,7 @@ type NodeDetailPanelProps = {
 
 export function NodeDetailPanel({node, onClose}: NodeDetailPanelProps) {
     const meta = useMemo(() => (node ? CLUSTER_META[node.cluster] : null), [node]);
+    const link = node?.panelRoute ? panelLink(node.panelRoute, env.VITE_PANEL_URL) : null;
 
     if (!node || !meta) {
         return (
@@ -90,7 +93,8 @@ export function NodeDetailPanel({node, onClose}: NodeDetailPanelProps) {
                             Panel
                         </h4>
                         <a
-                            href={node.panelRoute}
+                            href={link?.href}
+                            {...(link?.external ? {target: "_blank", rel: "noopener noreferrer"} : {})}
                             className="text-xs text-info hover:underline break-all"
                         >
                             {node.panelRoute}

@@ -102,6 +102,14 @@ describe("value pipeline", () => {
         expect(card({s: "open"}, "s", {languageKeyCategory: "st", type: "enum"}).value).toBe("open");
     });
 
+    it("a value with no key under languageKeyCategory shows as stored, never as ---key--- (D126)", () => {
+        expect(card({s: "SMTP 550 mailbox full"}, "s", {languageKeyCategory: "missingReasons"}).value).toBe("SMTP 550 mailbox full");
+        expect(card({b: true}, "b", {languageKeyCategory: "missingYn"}).value).toBe(true);
+        const data = {status: "free text", kind: {code: "k1"}};
+        const p = card(data, "x", {valuePath: ["status", "kind.code"], languageKeyCategoriesByPath: {status: "missingStatuses", kind: "kinds"}});
+        expect(p.value).toBe("free text t:kinds.k1");
+    });
+
     it("valueType boolean maps to yes/no", () => {
         expect(card({b: true}, "b", {valueType: "boolean"}).value).toBe("t:yes");
         expect(card({b: "false"}, "b", {valueType: "boolean"}).value).toBe("t:no");

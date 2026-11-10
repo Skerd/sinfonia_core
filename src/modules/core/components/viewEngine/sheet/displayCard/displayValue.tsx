@@ -38,7 +38,7 @@ function valueFromPaths(wp: WidgetProps, ctx: ViewRendererContext, data: Record<
         let part: unknown = resolvePath(parent, path);
         const category = categories?.[path] ?? categories?.[path.split(".")[0]];
         if (category && typeof part === "string" && part.length > 0) {
-            part = ctx.resolveLanguageKey(`${category}.${part}`);
+            part = translatedOr(ctx, `${category}.${part}`, part);
         }
         if (wp.format === "locale" && typeof part === "number") {
             part = formatNumber(part);
@@ -79,6 +79,15 @@ function rawValue(
 }
 
 const isPlain = (v: unknown): v is string | number => typeof v === "string" || typeof v === "number";
+
+/**
+ * `category.token` in the sheet's dictionary, else `fallback`: a value with no key (a free-text
+ * reason next to known codes) shows as stored instead of `---category.token---` (D126).
+ */
+function translatedOr(ctx: ViewRendererContext, key: string, fallback: unknown): unknown {
+    const translated = ctx.resolveLanguageKey(key, true);
+    return typeof translated === "string" && translated.length > 0 ? translated : fallback;
+}
 
 function temporalTypeFromWidget(wp: WidgetProps): "date" | "dateTime" | undefined {
     const format = wp.format;
@@ -132,9 +141,9 @@ export function resolveDisplayCardValue(
     const category = wpText(wp, "languageKeyCategory");
     if (category && displayType !== "enum") {
         if (typeof value === "string" && value.length > 0) {
-            value = t(`${category}.${value}`);
+            value = translatedOr(ctx, `${category}.${value}`, value);
         } else if (typeof value === "boolean") {
-            value = t(`${category}.${value ? "true" : "false"}`);
+            value = translatedOr(ctx, `${category}.${value ? "true" : "false"}`, value);
         }
     }
 

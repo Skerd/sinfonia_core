@@ -17,6 +17,8 @@ import {getAccountSettingsNotificationSections} from "../loadAccountSettingsCont
 import {getMergedModuleMenus} from "../loadMenuLanguageContributions.ts";
 import {getMergedModuleRolesPermissions} from "../loadRolesPermissionsContributions.ts";
 import {CORE_AUTH_PANEL_KEYS} from "../coreAuthPanelKeys.ts";
+import {getStudioPages} from "../loadStudioRouteContributions.ts";
+import {getNotificationTypeGroups, notificationMessage} from "../loadNotificationTypesContributions.ts";
 
 const resolve = ((key: string) => key) as ResolveLanguageKey;
 const itIf = (moduleName: string) => (isModuleEnabled(moduleName) ? it : it.skip);
@@ -26,6 +28,16 @@ const expectUniqueIds = (entries: readonly {id?: string}[]) => {
 };
 
 describe("real module contributions", () => {
+    // TD-B173: core notices are translated; security notices cannot be turned off, so they are not listed.
+    it("translate core notices and list only the ones a user may turn off", () => {
+        expect(notificationMessage({code: "ACCOUNT_STATUS_CHANGED_BY_ADMIN", params: {actor: "Ada", variant: "activated"}}, "de-CH"))
+            .toBe("Ada hat Ihr Konto für diese Firma aktiviert");
+        const listed = getNotificationTypeGroups("en-US").flatMap((group) => group.types.map((type) => type.code));
+        expect(listed).toContain("MESSAGE_MENTIONED");
+        expect(listed).not.toContain("USER_LOGGED_IN");
+        expect(listed).not.toContain("MFA_DISABLED");
+    });
+
     it("parse, and have unique ids per kind", () => {
         expectUniqueIds(getSortedSidebarContributions());
         expectUniqueIds(getSortedWidgetContributions());
@@ -34,6 +46,22 @@ describe("real module contributions", () => {
         expect(() => getAuthPanelComponents()).not.toThrow();
         expect(() => getContributedPathRoomOverrides()).not.toThrow();
         expect(() => getAccountSettingsNotificationSections({})).not.toThrow();
+        expect(() => getStudioPages()).not.toThrow();
+    });
+
+    itIf("propertyDevelopment")("serve the property development system map and workflow in the Studio, not the panel", () => {
+        expect(getStudioPages().map((page) => page.path)).toEqual(
+            expect.arrayContaining(["propertyDevelopment/systemMap", "propertyDevelopment/workflow"]),
+        );
+        for (const subview of ["systemmap", "workflow"]) {
+            expect(runRouteConfigContributions({
+                menu: "propertyDevelopment",
+                subview,
+                segments: ["propertyDevelopment", subview],
+                searchParams: new URLSearchParams(),
+                resolveLanguageKey: resolve,
+            })).toBeUndefined();
+        }
     });
 
     it("give account-settings notification sections unique ids", () => {

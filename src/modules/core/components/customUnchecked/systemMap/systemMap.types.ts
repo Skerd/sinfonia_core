@@ -18,6 +18,7 @@ export type SystemMapModule =
     | "eCommerceMarketplace"
     | "finance"
     | "propertyManagement"
+    | "propertyDevelopment"
     | "shared";
 
 export type SystemMapModelNode = {

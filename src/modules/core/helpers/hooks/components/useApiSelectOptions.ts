@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import {handleError, isAbortError} from "@coreModule/helpers/general/errors.ts";
+import {translateDefaultRole} from "@coreModule/helpers/moduleContributions/loadRolesPermissionsContributions.ts";
 
 export type SelectOption = {
     label: string;
@@ -37,6 +38,8 @@ type ApiSelectListItem = {
     name?: string;
     label?: string;
     photo?: string;
+    /** A role's slug: a default role's label is shown translated (D118). */
+    slug?: string;
 };
 
 type ApiListResponse = {data?: ApiSelectListItem[]; total?: number};
@@ -49,10 +52,11 @@ function parseListResponse(raw: unknown): {data: ApiSelectListItem[]; total: num
     };
 }
 
-function toSelectOption(item: ApiSelectListItem): SelectOption {
+function toSelectOption(item: ApiSelectListItem, languageCode: string | undefined): SelectOption {
+    const label = item.name ?? item.label ?? "";
     return {
         value: item._id ?? item.value ?? item.id ?? "",
-        label: item.name ?? item.label ?? "",
+        label: item.slug && languageCode ? translateDefaultRole({slug: item.slug, name: label}, languageCode).name : label,
         photo: item.photo,
     };
 }
@@ -69,6 +73,8 @@ export type UseApiSelectOptionsArgs = {
     value?: string | string[];
     multiple: boolean;
     defaultOptions: SelectOption[];
+    /** The reader's language: default-role labels are translated into it (D118); without it they stay as stored. */
+    languageCode?: string;
 };
 
 /**
@@ -92,6 +98,7 @@ export function useApiSelectOptions({
     value,
     multiple,
     defaultOptions: defaultOptionsProp,
+    languageCode,
 }: UseApiSelectOptionsArgs) {
     const defaultOptions = defaultOptionsProp.length > 0 ? defaultOptionsProp : EMPTY_DEFAULT_OPTIONS;
     const [options, setOptions] = useState<SelectOption[]>([]);
@@ -112,11 +119,13 @@ export function useApiSelectOptions({
     const postBodyRef = useRef(postBody);
     const openRef = useRef(open);
     const searchTextRef = useRef(searchText);
+    const languageCodeRef = useRef(languageCode);
     useEffect(() => {
         postBodyRef.current = postBody;
         openRef.current = open;
         searchTextRef.current = searchText;
-    }, [postBody, open, searchText]);
+        languageCodeRef.current = languageCode;
+    }, [postBody, open, searchText, languageCode]);
 
     const applyOptions = useCallback((next: SelectOption[]) => {
         optionsRef.current = next;
@@ -152,7 +161,7 @@ export function useApiSelectOptions({
                 fetchedPagesRef.current.add(pageNum);
 
                 const {data: responseData, total: responseTotal} = parseListResponse(response.data);
-                const newOptions: SelectOption[] = responseData.map(toSelectOption);
+                const newOptions: SelectOption[] = responseData.map((item) => toSelectOption(item, languageCodeRef.current));
                 const cacheKey = search || EMPTY_SEARCH_KEY;
 
                 if (isFirstPage) {

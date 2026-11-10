@@ -6,7 +6,6 @@ import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/ava
 import "leaflet/dist/leaflet.css";
 import {RefObject, useCallback, useRef, useState, lazy, memo, Suspense} from "react";
 import {useReactToPrint} from "react-to-print";
-import {cn} from "@coreModule/components/lib/utils.ts";
 import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
@@ -98,6 +97,7 @@ const CompanyCard = memo(function CompanyCard({
         <div
             ref={contentRef}
             id={"company_" + company._id}
+            className={single ? "w-full max-w-6xl" : undefined}
             onContextMenu={openActionMenuFromContextMenu}
         >
             <EntityCard
@@ -120,9 +120,9 @@ const CompanyCard = memo(function CompanyCard({
                 titlePath="name"
                 innerRef={innerRef}
                 shellClassName={() =>
-                    cn(
-                        "relative overflow-hidden border-l max-w-6xl"
-                    )
+                    single
+                        ? "w-full max-w-none gap-2 rounded-lg border bg-transparent p-4 shadow-none ring-0 hover:z-auto hover:!shadow-none hover:ring-0 [&>div>div]:p-0"
+                        : "relative overflow-hidden border-l max-w-6xl"
                 }
                 sheetProps={({entity: row}) => ({
                     hideEdit,

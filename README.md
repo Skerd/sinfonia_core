@@ -147,6 +147,8 @@ npm test                     # vitest
 npm run lint                 # ESLint
 ```
 
+The studio links system-map nodes to their panel pages on `VITE_PANEL_URL` (default `http://localhost:5173`); set it when the panel runs on another port.
+
 Limit modules at dev time:
 
 ```bash

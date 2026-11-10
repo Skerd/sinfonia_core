@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notifications/notificationTypePreferences.tsx",
+  "title": "Llojet e njoftimeve",
+  "description": "Çaktivizoni njoftimet që nuk ju duhen. Një lloj i çaktivizuar nuk shfaqet këtu dhe nuk ju dërgohet me email. Njoftimet e sigurisë dërgohen gjithmonë.",
+  "loading": "Duke u ngarkuar…",
+  "loadFailed": "Cilësimet e njoftimeve nuk u ngarkuan.",
+  "saved": "Cilësimet e njoftimeve u ruajtën.",
+  "saveFailed": "Ndryshimi juaj nuk u ruajt."
+}

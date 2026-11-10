@@ -33,6 +33,19 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers());
 
 describe("useApiSelectOptions", () => {
+    // TD-B173: role selects showed the stored English name of a default role.
+    it("shows a default role's label in the reader's language and keeps other labels as stored", async () => {
+        post.mockResolvedValue({data: {data: [
+            {value: "r1", label: "Web Client", slug: "acme:default:webclient"},
+            {value: "r2", label: "Front desk", slug: "acme:front desk"},
+            {value: "r3", label: "Renamed", slug: "acme:default:webclient"},
+        ], total: 3}});
+        const {result} = renderHook(() => useApiSelectOptions(args({pageSize: 3, languageCode: "de-CH"})));
+        await waitFor(() => expect(result.current.options).toHaveLength(3));
+        // A default role an administrator renamed keeps its name.
+        expect(result.current.options.map((o) => o.label)).toEqual(["Webkunde", "Front desk", "Renamed"]);
+    });
+
     it("loads the first page when opened", async () => {
         post.mockResolvedValue(page(["a", "b"], 2));
         const {result} = renderHook(() => useApiSelectOptions(args()));

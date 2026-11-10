@@ -8,6 +8,7 @@ import {
     IconInfoCircle,
     IconAlertTriangle,
     IconLayoutGrid,
+    IconFiles,
 } from "@tabler/icons-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -26,6 +27,13 @@ import {draftCount} from "../draft/studioDraftStore.ts";
 import ViewEditor from "../view/viewEditor.tsx";
 import TableEditor from "../table/tableEditor.tsx";
 import {isTableTarget, TABLE_TARGET, type StudioTarget} from "../studioTarget.ts";
+import {getStudioPages} from "@coreModule/helpers/moduleContributions/loadStudioRouteContributions.ts";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@coreModule/components/ui/dropdown-menu.tsx";
 
 const MODEL_PARAM = "model";
 const VIEW_PARAM = "view";
@@ -80,6 +88,8 @@ export default function StudioShell() {
     }, [drafts]);
 
     const pending = draftCount(drafts);
+    /* Internal pages the modules contribute (D124), e.g. architecture maps. */
+    const modulePages = getStudioPages();
     const entry = target ? catalog.byCollection[target.collection] : undefined;
 
     return (
@@ -154,6 +164,23 @@ export default function StudioShell() {
                             </Link>
                         </Button>
                     </TooltipDisplayer>
+                    {modulePages.length > 0 && (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="sm">
+                                    <IconFiles />
+                                    Pages
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                {modulePages.map((page) => (
+                                    <DropdownMenuItem key={page.path} asChild>
+                                        <Link to={`/${page.path}`}>{page.title}</Link>
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    )}
                     <ThemeSwitch />
                 </div>
             </header>
@@ -177,6 +204,11 @@ export default function StudioShell() {
                 onSelect={selectTarget}
                 actions={[
                     {id: "gallery", label: "Open widget gallery", run: () => navigate("/gallery")},
+                    ...modulePages.map((page) => ({
+                        id: `page:${page.path}`,
+                        label: `Open ${page.title}`,
+                        run: () => navigate(`/${page.path}`),
+                    })),
                     {id: "undo", label: "Undo", run: undo},
                     {id: "redo", label: "Redo", run: redo},
                     {

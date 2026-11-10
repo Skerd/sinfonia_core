@@ -1,0 +1,63 @@
+{
+  "core": {
+    "title": "Account e azienda",
+    "codes": {
+      "MESSAGE_MENTIONED": {
+        "title": "Menzione in chat",
+        "message": "{sender} ti ha menzionato in {channel}"
+      },
+      "ROLE_ASSIGNED": {
+        "title": "Ruolo assegnato",
+        "message": "{assigner} ti ha assegnato il ruolo: {role}"
+      },
+      "INVITATION_RECEIVED": {
+        "title": "Invito ricevuto",
+        "message": "{inviter} ti ha invitato a unirti a {company}"
+      },
+      "ACCOUNT_ACTIVATED": {
+        "title": "Account attivato",
+        "message": "La tua email è stata verificata e il tuo account è attivo",
+        "variants": {
+          "email": "La tua email è stata verificata e il tuo account è attivo",
+          "invitation": "Il tuo account è ora attivo. Puoi accedere."
+        }
+      },
+      "COMPANY_UPDATED": {
+        "title": "Profilo aziendale aggiornato",
+        "message": "{user} ha aggiornato il profilo aziendale di {company}"
+      },
+      "PUBLIC_CHAT_HANDOFF_REQUESTED": {
+        "title": "Visitatore del sito in attesa",
+        "message": "Un visitatore del sito attende di parlare con qualcuno"
+      },
+      "USER_LOGGED_IN": {
+        "message": "Nuovo accesso al tuo account da {source} ({ip})"
+      },
+      "USER_LOGGED_IN_NEW_DEVICE": {
+        "message": "Il tuo account è stato usato per accedere da un nuovo dispositivo"
+      },
+      "MFA_DISABLED": {
+        "message": "L'autenticazione a più fattori è stata disattivata sul tuo account"
+      },
+      "MFA_ENABLED": {
+        "message": "L'autenticazione a più fattori è stata attivata sul tuo account"
+      },
+      "TELEGRAM_LINKED": {
+        "message": "Telegram è stato collegato al tuo account"
+      },
+      "TELEGRAM_UNLINKED": {
+        "message": "Telegram è stato scollegato dal tuo account"
+      },
+      "ACCOUNT_SELF_DEACTIVATED": {
+        "message": "Hai disattivato il tuo account per questa azienda"
+      },
+      "ACCOUNT_STATUS_CHANGED_BY_ADMIN": {
+        "message": "{actor} ha modificato lo stato del tuo account per questa azienda",
+        "variants": {
+          "activated": "{actor} ha attivato il tuo account per questa azienda",
+          "deactivated": "{actor} ha disattivato il tuo account per questa azienda"
+        }
+      }
+    }
+  }
+}

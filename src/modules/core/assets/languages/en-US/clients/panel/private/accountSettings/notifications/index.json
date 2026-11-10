@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/notifications/index.tsx",
   "title": "Notifications",
-  "description": "Choose what we email you about.",
+  "description": "Choose which notifications and emails you receive.",
   "empty": "There are no notification preferences to configure.",
   "otherUserUnavailable": "Notification preferences can only be changed by the account holder."
 }

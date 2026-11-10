@@ -11,6 +11,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {Progress} from "@coreModule/components/ui/progress.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import {Countdown} from "@coreModule/components/custom/countdown.tsx";
+import {fillTemplate} from "@coreModule/helpers/general/template.ts";
 
 const CURRENT_REVOKE_REQUEST = {method: "post" as const, url: "/api/user/userSession/currentRevoke", data: {}};
 
@@ -27,13 +28,6 @@ type SessionSetupScreenProps = {
     error: boolean;
     onRetry: () => void;
 } & WithLanguageType;
-
-function interpolate(template: string, vars: Record<string, string | number>): string {
-    return template.replace(/\{(\w+)\}/g, (whole, key: string) => {
-        const value = vars[key];
-        return value == null ? whole : String(value);
-    });
-}
 
 function displayNameFromUser(name: string, surname: string): string {
     return [name, surname].map((part) => part.trim()).filter(Boolean).join(" ");
@@ -63,9 +57,9 @@ function SessionSetupScreenComponent({
     const isSessionExpiredError = error && sessionExpired;
 
     const hello = displayName
-        ? interpolate(String(resolveLanguageKey("hello")), {name: displayName})
+        ? fillTemplate(String(resolveLanguageKey("hello")), {name: displayName})
         : String(resolveLanguageKey("helloFallback"));
-    const setupProgress = interpolate(String(resolveLanguageKey("setupProgress")), {
+    const setupProgress = fillTemplate(String(resolveLanguageKey("setupProgress")), {
         current: step,
         total,
     });

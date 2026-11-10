@@ -372,6 +372,7 @@ function ApiSelectCore({
     forceLoad,
     'aria-invalid': ariaInvalid,
     resolveLanguageKey,
+    languageCode,
     forTable = false,
     defaultOptions = EMPTY_DEFAULT_OPTIONS,
     searchDebounceMs = DEFAULT_SEARCH_DEBOUNCE_MS,
@@ -427,6 +428,7 @@ function ApiSelectCore({
         value,
         multiple,
         defaultOptions,
+        languageCode,
     });
 
     // Latest-value ref so the notify effects below can call the newest handler without

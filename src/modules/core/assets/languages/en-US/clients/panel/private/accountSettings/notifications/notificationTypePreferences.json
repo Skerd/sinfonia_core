@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notifications/notificationTypePreferences.tsx",
+  "title": "Notification types",
+  "description": "Turn off the notices you do not need. A type you turn off is neither shown here nor emailed to you. Security notices are always sent.",
+  "loading": "Loading…",
+  "loadFailed": "Your notification settings could not be loaded.",
+  "saved": "Notification settings saved.",
+  "saveFailed": "Your change could not be saved."
+}

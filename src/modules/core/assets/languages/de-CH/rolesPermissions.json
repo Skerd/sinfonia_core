@@ -1,0 +1,16 @@
+{
+  "roles": {
+    "sys_admin": {
+      "name": "Systemadministrator",
+      "description": "Voller Systemzugriff über alle Module. Reserviert – kann nicht bearbeitet oder gelöscht werden."
+    },
+    "general_administrator": {
+      "name": "Hauptadministrator",
+      "description": "Vollständige Verwaltung des Unternehmens. Reserviert – kann nicht bearbeitet oder gelöscht werden."
+    },
+    "webclient": {
+      "name": "Webkunde",
+      "description": "Wird bei der öffentlichen Registrierung zugewiesen. Hat keine Panel-Berechtigungen, bis ein Administrator sie erteilt."
+    }
+  }
+}

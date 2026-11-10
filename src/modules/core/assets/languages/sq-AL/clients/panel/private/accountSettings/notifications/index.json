@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/notifications/index.tsx",
   "title": "Njoftimet",
-  "description": "Zgjidhni për çfarë t'ju dërgojmë email.",
+  "description": "Zgjidhni cilat njoftime dhe email-e merrni.",
   "empty": "Nuk ka preferenca njoftimesh për të konfiguruar.",
   "otherUserUnavailable": "Preferencat e njoftimeve mund të ndryshohen vetëm nga zotëruesi i llogarisë."
 }

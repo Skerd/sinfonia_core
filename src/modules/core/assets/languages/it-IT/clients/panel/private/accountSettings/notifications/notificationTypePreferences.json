@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notifications/notificationTypePreferences.tsx",
+  "title": "Tipi di notifica",
+  "description": "Disattiva gli avvisi che non ti servono. Un tipo disattivato non viene mostrato qui né inviato via email. Gli avvisi di sicurezza vengono sempre inviati.",
+  "loading": "Caricamento…",
+  "loadFailed": "Non è stato possibile caricare le impostazioni delle notifiche.",
+  "saved": "Impostazioni delle notifiche salvate.",
+  "saveFailed": "Non è stato possibile salvare la modifica."
+}

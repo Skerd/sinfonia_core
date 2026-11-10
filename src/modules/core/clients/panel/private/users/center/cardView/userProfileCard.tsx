@@ -27,6 +27,7 @@ import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
+import {translateDefaultRole} from "@coreModule/helpers/moduleContributions/loadRolesPermissionsContributions.ts";
 
 export type UserProfileData = CompanyUserType;
 
@@ -163,6 +164,7 @@ export function RequestsSection({data, resolveLanguageKey, timezone, specificUse
 function UserProfileCardInner({
     data,
     resolveLanguageKey,
+    languageCode,
     specificUserId,
 }: UserProfileCardProps) {
 
@@ -497,7 +499,7 @@ function UserProfileCardInner({
                                                 {
                                                     visibleRoles.map((r) => (
                                                         <Badge key={r._id} variant="outline" className="capitalize">
-                                                            {r.name}
+                                                            {translateDefaultRole(r, languageCode).name}
                                                         </Badge>
                                                     ))
                                                 }
@@ -510,7 +512,7 @@ function UserProfileCardInner({
                                                                 {
                                                                     remainingRoles.map((r) => (
                                                                         <Badge key={r._id} variant="outline" className="capitalize">
-                                                                            {r.name}
+                                                                            {translateDefaultRole(r, languageCode).name}
                                                                         </Badge>
                                                                     ))
                                                                 }

@@ -12,6 +12,8 @@ import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {StudioDraftProvider} from "@coreModule/clients/studio/draft/studioDraftProvider.tsx";
 import {ensureDeviceId} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 import {TooltipProvider} from "@coreModule/components/ui/tooltip.tsx";
+import {getStudioPages} from "@coreModule/helpers/moduleContributions/loadStudioRouteContributions.ts";
+import StudioPageFrame from "@coreModule/clients/studio/layout/studioPageFrame.tsx";
 
 const StudioGuard = lazy(() => import("@coreModule/clients/studio/studioGuard.tsx"));
 const StudioShell = lazy(() => import("@coreModule/clients/studio/layout/studioShell.tsx"));
@@ -37,6 +39,9 @@ function ToasterContainer() {
  * `AuthenticationProvider` sends unauthenticated users to `/authenticate/login` via
  * `window.location`, so this app has to serve that route itself — it is the same core
  * page the panel uses.
+ *
+ * Modules add internal pages through `clients/studio/routeConfigContribution.tsx` (D124); each is mounted at its
+ * own path, behind the same guard as the editor.
  */
 function StudioApp() {
 
@@ -69,6 +74,19 @@ function StudioApp() {
                                                         </ErrorBoundary>
                                                     }
                                                 />
+                                                {getStudioPages().map(({path, title, Page}) => (
+                                                    <Route
+                                                        key={path}
+                                                        path={`/${path}`}
+                                                        element={
+                                                            <ErrorBoundary>
+                                                                <StudioPageFrame title={title}>
+                                                                    <Page />
+                                                                </StudioPageFrame>
+                                                            </ErrorBoundary>
+                                                        }
+                                                    />
+                                                ))}
                                                 <Route
                                                     path="/*"
                                                     element={

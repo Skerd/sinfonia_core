@@ -1,0 +1,63 @@
+{
+  "core": {
+    "title": "Account and company",
+    "codes": {
+      "MESSAGE_MENTIONED": {
+        "title": "Mentioned in a chat",
+        "message": "{sender} mentioned you in {channel}"
+      },
+      "ROLE_ASSIGNED": {
+        "title": "Role assigned",
+        "message": "{assigner} assigned you the role: {role}"
+      },
+      "INVITATION_RECEIVED": {
+        "title": "Invitation received",
+        "message": "{inviter} invited you to join {company}"
+      },
+      "ACCOUNT_ACTIVATED": {
+        "title": "Account activated",
+        "message": "Your email was verified and your account is active",
+        "variants": {
+          "email": "Your email was verified and your account is active",
+          "invitation": "Your account is now active. You can sign in."
+        }
+      },
+      "COMPANY_UPDATED": {
+        "title": "Company profile updated",
+        "message": "{user} updated the company profile of {company}"
+      },
+      "PUBLIC_CHAT_HANDOFF_REQUESTED": {
+        "title": "Website visitor waiting",
+        "message": "A website visitor is waiting to talk to someone"
+      },
+      "USER_LOGGED_IN": {
+        "message": "New sign-in to your account from {source} ({ip})"
+      },
+      "USER_LOGGED_IN_NEW_DEVICE": {
+        "message": "Your account was used to sign in from a new device"
+      },
+      "MFA_DISABLED": {
+        "message": "Multi-factor authentication was disabled on your account"
+      },
+      "MFA_ENABLED": {
+        "message": "Multi-factor authentication was enabled on your account"
+      },
+      "TELEGRAM_LINKED": {
+        "message": "Telegram was linked to your account"
+      },
+      "TELEGRAM_UNLINKED": {
+        "message": "Telegram was unlinked from your account"
+      },
+      "ACCOUNT_SELF_DEACTIVATED": {
+        "message": "You deactivated your account for this company"
+      },
+      "ACCOUNT_STATUS_CHANGED_BY_ADMIN": {
+        "message": "{actor} changed the status of your account for this company",
+        "variants": {
+          "activated": "{actor} activated your account for this company",
+          "deactivated": "{actor} deactivated your account for this company"
+        }
+      }
+    }
+  }
+}

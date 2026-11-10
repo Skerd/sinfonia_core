@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/notifications/index.tsx",
   "title": "Benachrichtigungen",
-  "description": "Wählen Sie, worüber wir Sie per E-Mail informieren.",
+  "description": "Wählen Sie, welche Benachrichtigungen und E-Mails Sie erhalten.",
   "empty": "Es gibt keine Benachrichtigungseinstellungen zu konfigurieren.",
   "otherUserUnavailable": "Benachrichtigungseinstellungen können nur von der Kontoinhaberin oder dem Kontoinhaber geändert werden."
 }

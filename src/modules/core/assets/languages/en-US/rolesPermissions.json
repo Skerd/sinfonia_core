@@ -1,0 +1,16 @@
+{
+  "roles": {
+    "sys_admin": {
+      "name": "SysAdmin",
+      "description": "Full system access across every module. Reserved — cannot be edited or deleted."
+    },
+    "general_administrator": {
+      "name": "General Administrator",
+      "description": "Full company administration. Reserved — cannot be edited or deleted."
+    },
+    "webclient": {
+      "name": "Web Client",
+      "description": "Assigned on public signup. Starts with no panel permissions until an administrator grants them."
+    }
+  }
+}

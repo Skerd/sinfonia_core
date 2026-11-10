@@ -16,6 +16,7 @@ import {AccessibleRolesFormResponseType} from "armonia/src/modules/core/api/user
 import {CompanyUserType} from "armonia/src/modules/core/api/company/private/users/companyUser.dto.ts";
 import type {ApiSelectDatum} from "armonia/src/modules/core/types/shared.types.ts";
 import {useTableUpdate} from "@coreModule/helpers/hooks/useTableUpdate.ts";
+import {translateDefaultRole} from "@coreModule/helpers/moduleContributions/loadRolesPermissionsContributions.ts";
 
 export type ToggledUserRole = ApiSelectDatum & { newValue: boolean, canEdit: boolean }
 type AccountCompaniesCardEditRolesProps = WithLanguageType & WithAxiosType<AccessibleRolesFormResponseType> & {
@@ -32,6 +33,7 @@ function AccountCompaniesCardEditRoles({
     specificUserId,
     overrideCompanyId,
     resolveLanguageKey,
+    languageCode,
     onFilterChange,
     loading,
     error,
@@ -85,6 +87,7 @@ function AccountCompaniesCardEditRoles({
                     newAllCompanyRoles.push({
                         value: role._id,
                         label: role.name,
+                        slug: role.slug,
                         active: true,
                         newValue: true,
                         canEdit: false
@@ -107,6 +110,7 @@ function AccountCompaniesCardEditRoles({
                 return {
                     value: role.value,
                     label: role.label,
+                    slug: role.slug,
                     active: false
                 }
             }) || []);
@@ -139,7 +143,7 @@ function AccountCompaniesCardEditRoles({
                         roles.map((role: any, index: number) => {
                             return (
                                 <Badge key={`badge_for_${role._id}_${role.label}_${index}`} className="hover:cursor-pointer">
-                                    {role.name}
+                                    {translateDefaultRole(role, languageCode).name}
                                 </Badge>
                             )
                         })
@@ -169,6 +173,7 @@ function AccountCompaniesCardEditRoles({
                                     return {
                                         name: role.label,
                                         label: role.label,
+                                        slug: role.slug,
                                         _id: role.value
                                     }
                                 });
@@ -189,7 +194,7 @@ function AccountCompaniesCardEditRoles({
                             activeRoles?.map((role: any, index: number) => {
                                 return (
                                     <Badge key={`badge_for_${role._id}_${role.label}_${index}`} className="hover:cursor-pointer">
-                                        {role.name}
+                                        {translateDefaultRole(role, languageCode).name}
                                     </Badge>
                                 )
                             })
@@ -213,7 +218,7 @@ function AccountCompaniesCardEditRoles({
                                             toggleRole(role.value, !role.newValue);
                                         }}
                                     >
-                                        {role.label}
+                                        {translateDefaultRole({slug: role.slug, name: role.label}, languageCode).name}
                                     </Badge>
                                 )
                             })

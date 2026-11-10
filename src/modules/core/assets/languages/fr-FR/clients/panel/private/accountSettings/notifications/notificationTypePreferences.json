@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/notifications/notificationTypePreferences.tsx",
+  "title": "Types de notifications",
+  "description": "Désactivez les avis dont vous n'avez pas besoin. Un type désactivé n'est ni affiché ici ni envoyé par e-mail. Les avis de sécurité sont toujours envoyés.",
+  "loading": "Chargement…",
+  "loadFailed": "Vos paramètres de notification n'ont pas pu être chargés.",
+  "saved": "Paramètres de notification enregistrés.",
+  "saveFailed": "Votre modification n'a pas pu être enregistrée."
+}

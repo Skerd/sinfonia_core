@@ -16,11 +16,14 @@ import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
 import type {RefObject} from "react";
+import {translateDefaultRole} from "@coreModule/helpers/moduleContributions/loadRolesPermissionsContributions.ts";
 
-function roleEditPath(role: CompanyRoleType) {
+/** `roleName` only titles the edit page, so it carries the translated name; the form edits the stored one. */
+function roleEditPath(role: CompanyRoleType, languageCode: string) {
     const params = new URLSearchParams();
     params.set("roleId", role._id);
-    if (role.name) params.set("roleName", role.name);
+    const {name} = translateDefaultRole(role, languageCode);
+    if (name) params.set("roleName", name);
     return `/tenancy/systemSettings/roles/edit?${params.toString()}`;
 }
 
@@ -37,6 +40,7 @@ type RoleCardProps = WithLanguageType & {
 const RoleCard = React.memo(function RoleCard({
     role,
     resolveLanguageKey,
+    languageCode,
     fetchId,
     hideActions,
     onDelete,
@@ -56,7 +60,7 @@ const RoleCard = React.memo(function RoleCard({
             onRestore={onRestore}
             hideActions={hideActions}
             sheetOnly={sheetOnly}
-            editPath={roleEditPath}
+            editPath={(row) => roleEditPath(row, languageCode)}
             Sheet={RoleSheetView}
             sheetEntityProp="role"
             deleteUrl="/api/company/roles"
@@ -73,6 +77,7 @@ const RoleCard = React.memo(function RoleCard({
             {({entity: row, read}) => {
                 const canReadPermissions = accessFieldPathExists(read, "permissions");
                 const canReadDescription = accessFieldPathExists(read, "description");
+                const {name, description} = translateDefaultRole(row, languageCode);
                 const permissionsTable =
                     row.permissions && canReadPermissions
                         ? <PermissionsTable permissions={row.permissions} />
@@ -83,12 +88,12 @@ const RoleCard = React.memo(function RoleCard({
                             <div className="min-w-0 flex-1">
                                 <EntityCard.Header
                                     titlePath="name"
-                                    title={row.name ? row.name : <ValueNotSet />}
+                                    title={name ? name : <ValueNotSet />}
                                 />
-                                {canReadDescription && !!row.description && (
+                                {canReadDescription && !!description && (
                                     <HiddenElement>
                                         <p className="mt-1 text-sm leading-snug text-muted-foreground">
-                                            {row.description}
+                                            {description}
                                         </p>
                                     </HiddenElement>
                                 )}
