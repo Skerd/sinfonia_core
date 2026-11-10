@@ -3,7 +3,13 @@ import {
     createLanguageFragmentMerger,
     deepMergeDictionaries,
     isDictionary,
+    MODULE_LANGUAGE_FALLBACKS,
 } from "@coreModule/helpers/moduleContributions/languageFragments.ts";
+import {
+    createDefaultRoleLabels,
+    type DefaultRoleCandidate,
+    type DefaultRoleText,
+} from "armonia/src/modules/core/helpers/defaultRoleLabels.ts";
 
 /**
  * Module-owned roles/permissions labels:
@@ -13,9 +19,8 @@ import {
  * deep-merged into the permissions table language so core never lists feature-module model/field
  * copy. UI chrome (`read`, `write`, filters, …) stays in core's permissionsTable.json.
  *
- * A third section, `roles: { "<definition slug>": { "name": "…", "description": "…" } }`, labels the
- * default roles each package registers (maestro `*.role.defaults.ts`); core's own default roles are in
- * core's file. It is read by {@link translateDefaultRole}, not merged into any dictionary (D118).
+ * Default-role names and descriptions are not here: they live in armonia so the server translates them too (D129),
+ * read by {@link translateDefaultRole}.
  *
  * This glob is not filtered by `VITE_ENABLED_MODULES`. The roles API returns the whole permission
  * catalog from the database, including models from modules that are not enabled in this build.
@@ -23,72 +28,12 @@ import {
  */
 const SECTIONS = ["groups", "permissions"] as const;
 
-/** The locale whose `roles` text equals what maestro stores (en-US is the reference, FE-08). */
-const REFERENCE_LOCALE = "en-US";
-
-/**
- * Same rule as maestro `DEFAULT_ROLE_SLUG_PATTERN`: a default role's slug is
- * `<company name>:reserved|default:<definition slug>`; custom roles are `<company>:<name>`.
- */
-const DEFAULT_ROLE_SLUG = /:(?:reserved|default):([^:]+)$/;
-
-/** The role fields the panel shows; `slug` tells a default role from a custom one. */
-export type DefaultRoleCandidate = {
-    slug?: string;
-    name: string;
-    description?: string;
-};
-
-export type DefaultRoleText = {
-    name: string;
-    description?: string;
-};
-
-/** The definition slug of a default role (`acme:default:re_sales_agent` → `re_sales_agent`), else `null`. */
-export function defaultRoleBaseSlug(slug: string | undefined): string | null {
-    return slug ? DEFAULT_ROLE_SLUG.exec(slug)?.[1] ?? null : null;
-}
-
-function roleLabel(fragment: LanguageDictionary, slug: string, field: keyof DefaultRoleText): string | null {
-    const roles = fragment.roles;
-    const entry = isDictionary(roles) ? roles[slug] : undefined;
-    const value = isDictionary(entry) ? entry[field] : undefined;
-    return typeof value === "string" && value !== "" ? value : null;
-}
-
 export function createRolesPermissionsContributions(glob: Record<string, unknown>, fallbackLocales?: readonly string[]) {
     const getMergedModuleRolesPermissions = createLanguageFragmentMerger({
         fileName: "rolesPermissions.json",
         glob,
         fallbackLocales,
     });
-    // Default-role labels include core's own roles (SysAdmin, General Administrator, Web Client).
-    const getMergedRoleLabels = createLanguageFragmentMerger({
-        fileName: "rolesPermissions.json",
-        glob,
-        fallbackLocales,
-        includeCore: true,
-    });
-
-    /**
-     * A role's name and description in `locale`. Only a default role (slug suffix `:reserved:` / `:default:`)
-     * is translated, and each field only while it still holds the text maestro stored from the definition: a
-     * default role an administrator renamed, and every custom role, keeps its stored text. A field with no
-     * translation keeps its stored text too.
-     */
-    const translateDefaultRole = (role: DefaultRoleCandidate, locale: string): DefaultRoleText => {
-        const slug = defaultRoleBaseSlug(role.slug);
-        if (!slug) {
-            return {name: role.name, description: role.description};
-        }
-        const reference = getMergedRoleLabels(REFERENCE_LOCALE);
-        const translated = getMergedRoleLabels(locale);
-        const pick = (field: keyof DefaultRoleText, stored: string | undefined): string | undefined =>
-            stored && stored === roleLabel(reference, slug, field)
-                ? roleLabel(translated, slug, field) ?? stored
-                : stored;
-        return {name: pick("name", role.name) ?? role.name, description: pick("description", role.description)};
-    };
 
     /**
      * Deep-merges module labels under `groups` and `permissions`. Only dictionaries that already
@@ -115,12 +60,18 @@ export function createRolesPermissionsContributions(glob: Record<string, unknown
         return next ?? language;
     };
 
-    return {getMergedModuleRolesPermissions, applyModuleRolesPermissionsContributions, translateDefaultRole};
+    return {getMergedModuleRolesPermissions, applyModuleRolesPermissionsContributions};
 }
 
 const rolesPermissionsContributions = createRolesPermissionsContributions(
     import.meta.glob("@/modules/*/assets/languages/*/rolesPermissions.json", {eager: true, import: "default"}),
 );
+
+// Every package's labels, enabled or not, for the same reason as the permissions glob above: stored roles can name them.
+const defaultRoleLabels = createDefaultRoleLabels({
+    files: import.meta.glob("armonia/src/modules/*/helpers/static/defaultRoles/*.json", {eager: true, import: "default"}),
+    fallbackLocales: MODULE_LANGUAGE_FALLBACKS,
+});
 
 /** Merged `groups` + `permissions` fragments for a locale from every module. */
 export function getMergedModuleRolesPermissions(locale: string): LanguageDictionary {
@@ -134,11 +85,19 @@ export function applyModuleRolesPermissionsContributions(language: LanguageDicti
 
 /**
  * Seam (D118): a role's name and description in the user's language. Default roles are translated by their
- * definition slug from each package's `rolesPermissions.json` `roles` section; renamed default roles and custom
+ * definition slug from armonia's `defaultRoles` files (D129); renamed default roles and custom
  * roles show their stored text, which also stays the fallback for a missing translation.
  *
  * @example const {name, description} = translateDefaultRole(role, languageCode);
  */
 export function translateDefaultRole(role: DefaultRoleCandidate, locale: string): DefaultRoleText {
-    return rolesPermissionsContributions.translateDefaultRole(role, locale);
+    return defaultRoleLabels.translateDefaultRole(role, locale);
+}
+
+/**
+ * A role notice's params with each default role's name in `locale` (D118): `role` holds the stored names, `roleSlugs`
+ * their slugs in the same order. The server renders SMS/Telegram notices the same way (D129).
+ */
+export function translateRoleParams<P extends Record<string, string | number>>(params: P | undefined, locale: string): P | undefined {
+    return defaultRoleLabels.translateRoleParams(params, locale);
 }

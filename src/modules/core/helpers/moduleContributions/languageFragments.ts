@@ -60,15 +60,10 @@ export type LanguageFragmentMergerOptions = {
     /** `import.meta.glob(…, {eager: true, import: "default"})`: path → parsed JSON. */
     glob: Record<string, unknown>;
     fallbackLocales?: readonly string[];
-    /**
-     * Merge core's own file too. Off by default: core's copy normally lives in its shell dictionaries. On for
-     * fragments core has no shell dictionary for, such as its default-role labels (D118).
-     */
-    includeCore?: boolean;
 };
 
 /**
- * Returns `locale → merged fragment` over every non-core module (core too with `includeCore`). For each module, keys missing
+ * Returns `locale → merged fragment` over every non-core module. For each module, keys missing
  * from the requested locale come from the fallback locales, so a partially translated module
  * never shows raw keys. Within a locale, modules merge in name order (later wins); any
  * requested-locale value beats every fallback value. Results are cached and deeply frozen.
@@ -77,7 +72,6 @@ export function createLanguageFragmentMerger({
     fileName,
     glob,
     fallbackLocales = MODULE_LANGUAGE_FALLBACKS,
-    includeCore = false,
 }: LanguageFragmentMergerOptions): (locale: string) => LanguageDictionary {
     const filesByModule = new Map<string, Map<string, LanguageDictionary>>();
     for (const [path, dictionary] of Object.entries(glob)) {
@@ -86,8 +80,8 @@ export function createLanguageFragmentMerger({
             continue;
         }
         const [, moduleName, locale] = match;
-        // Core's own copy lives in its shell dictionaries, unless the caller merges core too.
-        if (moduleName === "core" && !includeCore) {
+        // Core's own copy lives in its shell dictionaries.
+        if (moduleName === "core") {
             continue;
         }
         let files = filesByModule.get(moduleName);
