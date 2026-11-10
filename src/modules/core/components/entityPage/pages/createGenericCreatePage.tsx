@@ -14,14 +14,23 @@ import {resolveEntityPageKeys} from "@coreModule/helpers/general/entityPage.ts";
 import {useCompanyTimeZone} from "@coreModule/helpers/hooks/useCompanyTimeZone.ts";
 import type {ValidationContext} from "armonia/src/modules/core/helpers/zodBuilder.ts";
 
+/** What a `defaultValues` builder may read besides the URL. */
+export type CreateDefaultsContext = {
+    /** The session company's IANA zone (`useCompanyTimeZone`); pass it to `companyToday` for a "today" default. */
+    timeZone: string;
+};
+
 type GenericCreatePageConfig<TForm extends FieldValues> = {
     languagePath: string;
     model?: string;
     apiUrl: string;
     /** Armonia factory; it receives the session company's {@link ValidationContext} as its 5th argument (D116). */
     schema: (languageCode: string, form: unknown, writeFields?: Record<string, unknown>, readFields?: Record<string, unknown>, context?: ValidationContext) => any;
-    /** Static values, or a builder that reads the URL (e.g. `?projectId=` prefill). */
-    defaultValues?: Partial<TForm> | ((params: URLSearchParams) => Partial<TForm>);
+    /**
+     * Static values, or a builder that reads the URL (e.g. `?projectId=` prefill) and the session company's
+     * {@link CreateDefaultsContext} (a calendar-day default is "today" in the company's zone, GLB-09, D116).
+     */
+    defaultValues?: Partial<TForm> | ((params: URLSearchParams, context: CreateDefaultsContext) => Partial<TForm>);
     submitIcon?: ReactNode;
     buildExtraTitles?: (params: URLSearchParams) => string[];
 
@@ -77,9 +86,9 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
         const paramsKey = params.toString();
         const defaultValues = useMemo(() => {
             const source = config.defaultValues;
-            return (typeof source === "function" ? source(params) : source) ?? {};
+            return (typeof source === "function" ? source(params, {timeZone}) : source) ?? {};
             // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [paramsKey]);
+        }, [paramsKey, timeZone]);
         const formExtras = useMemo(
             () => config.buildFormExtras?.(params),
             // eslint-disable-next-line react-hooks/exhaustive-deps

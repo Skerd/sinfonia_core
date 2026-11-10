@@ -1,7 +1,10 @@
 import {describe, expect, it} from "vitest";
 import {
+    addCalendarDays,
     calendarDaysUntil,
     calendarDayUtc,
+    calendarMonthOf,
+    companyToday,
     formatDate,
     formatDurationInDaysHoursOrMinutes,
     formatRelativeToNow,
@@ -57,6 +60,28 @@ describe("calendarDaysUntil (D116)", () => {
     it("is null without a date", () => {
         expect(calendarDaysUntil(undefined, "Europe/Zurich", now)).toBeNull();
         expect(calendarDaysUntil("not a date", "Europe/Zurich", now)).toBeNull();
+    });
+});
+
+describe("company calendar days (D115, D116)", () => {
+    it("takes today where the company is: 00:30 in Zurich is already the next day", () => {
+        const now = new Date("2026-02-28T23:30:00Z");
+        expect(companyToday("Europe/Zurich", now)).toBe("2026-03-01");
+        expect(companyToday("UTC", now)).toBe("2026-02-28");
+    });
+
+    it("steps whole days across a DST change and month ends", () => {
+        // Zurich springs forward on 2026-03-29; a day is still one day.
+        expect(addCalendarDays("2026-03-28", 1)).toBe("2026-03-29");
+        expect(addCalendarDays("2026-03-29", 1)).toBe("2026-03-30");
+        expect(addCalendarDays("2026-02-28", 1)).toBe("2026-03-01");
+        expect(addCalendarDays("2026-03-01", -1)).toBe("2026-02-28");
+        expect(addCalendarDays("2026-12-31", 1)).toBe("2027-01-01");
+    });
+
+    it("bounds the month a day falls in", () => {
+        expect(calendarMonthOf("2026-02-14")).toEqual({from: "2026-02-01", to: "2026-02-28"});
+        expect(calendarMonthOf("2028-02-14")).toEqual({from: "2028-02-01", to: "2028-02-29"});
     });
 });
 

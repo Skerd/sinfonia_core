@@ -157,6 +157,30 @@ export function calendarDaysUntil(day: Date | string | null | undefined, timeZon
     return Math.round((Date.parse(target) - Date.UTC(today.year, today.month - 1, today.day)) / 86400000);
 }
 
+/**
+ * The company's calendar day `YYYY-MM-DD` at `now`, in `timeZone`: pass `useCompanyTimeZone()` (D116) so a default,
+ * preset or filter means the same "today" as the server's checks and crons (GLB-09). Falls back to the UTC day when
+ * `now` is not a date.
+ */
+export function companyToday(timeZone: string, now: Date = new Date()): string {
+    const parts = zonedParts(now, timeZone);
+    if (!parts) return now.toISOString().slice(0, 10);
+    return `${parts.year}-${pad2(parts.month)}-${pad2(parts.day)}`;
+}
+
+/** The calendar day `days` days after `day` (both `YYYY-MM-DD`; negative goes back). No timezone and no DST hour is involved. */
+export function addCalendarDays(day: string, days: number): string {
+    const [year, month, date] = day.split("-").map(Number);
+    return utcYmd(new Date(Date.UTC(year, month - 1, date + days)));
+}
+
+/** The first and last calendar day of the month `day` (`YYYY-MM-DD`) falls in. */
+export function calendarMonthOf(day: string): {from: string; to: string} {
+    const [year, month] = day.split("-").map(Number);
+    const prefix = day.slice(0, 7);
+    return {from: `${prefix}-01`, to: `${prefix}-${pad2(new Date(Date.UTC(year, month, 0)).getUTCDate())}`};
+}
+
 function readZonedParts(date: Date, timeZone: string | undefined): ZonedDateTimeParts | null {
     try {
         const parts = new Intl.DateTimeFormat("en-US", {...ZONED_PARTS_FORMAT, timeZone: timeZone || undefined}).formatToParts(date);
