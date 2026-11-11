@@ -400,7 +400,13 @@ function SheetEmbeddedItemsList({
             <div
                 className={cn(
                     "max-h-[350px] overflow-y-auto",
-                    useEntityCards ? undefined : "flex flex-col gap-2 gap-y-2",
+                    /*
+                     * Entity cards paint a 1px ring (and a small shadow) outside their box.
+                     * This scroller clips that ink, so the outer edges of the first row, the
+                     * last row, and the left column look cut off. `p-1` is the ring's room,
+                     * same as `GRID_KPI`.
+                     */
+                    useEntityCards ? "p-1" : "flex flex-col gap-2 gap-y-2",
                     listClassName,
                 )}
             >
