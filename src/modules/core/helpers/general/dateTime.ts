@@ -334,3 +334,20 @@ export function formatDurationInDaysHoursOrMinutes(ms: number, resolveLanguageKe
     if (totalMinutes > 0) return unit(totalMinutes, "minute", "minutes");
     return unit(totalSeconds, "second", "seconds");
 }
+
+const RANGE_DAY: Intl.DateTimeFormatOptions = {weekday: "short", day: "numeric", month: "short"};
+const RANGE_TIME: Intl.DateTimeFormatOptions = {hour: "2-digit", minute: "2-digit"};
+
+/**
+ * A stretch of time as people say it (UX-08): "Mon 16 Nov, 13:00–17:00" on one day,
+ * "Mon 16 Nov, 13:00 – Wed 18 Nov, 09:00" across days. Days are judged in `timeZone`.
+ */
+export function formatTimeRange(start: string | Date, end: string | Date, timeZone: string): string {
+    const from = new Date(start);
+    const to = new Date(end);
+    const startText = formatDate(from, {timeZone, format: {...RANGE_DAY, ...RANGE_TIME}});
+    if (companyToday(timeZone, from) === companyToday(timeZone, to)) {
+        return `${startText}–${formatDate(to, {timeZone, format: RANGE_TIME})}`;
+    }
+    return `${startText} – ${formatDate(to, {timeZone, format: {...RANGE_DAY, ...RANGE_TIME}})}`;
+}
