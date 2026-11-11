@@ -8,5 +8,11 @@
   "home": "Kreu",
   "blog": "Blogu",
   "accountMenu": "Llogaria",
-  "searchPlaceholder": "Kërko produkte, trajtime, makina, shtëpi…"
+  "searchPlaceholder": "Kërko produkte, trajtime, makina, shtëpi…",
+  "searchPlaceholderBy": {
+    "dentalClinic": "Kërko trajtime…",
+    "carRental": "Kërko makina…",
+    "shop": "Kërko produkte…",
+    "properties": "Kërko banesa dhe projekte…"
+  }
 }

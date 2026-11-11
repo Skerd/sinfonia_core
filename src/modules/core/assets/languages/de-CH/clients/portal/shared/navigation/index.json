@@ -8,5 +8,11 @@
   "home": "Startseite",
   "blog": "Blog",
   "accountMenu": "Konto",
-  "searchPlaceholder": "Produkte, Behandlungen, Autos, Immobilien suchen…"
+  "searchPlaceholder": "Produkte, Behandlungen, Autos, Immobilien suchen…",
+  "searchPlaceholderBy": {
+    "dentalClinic": "Behandlungen suchen…",
+    "carRental": "Autos suchen…",
+    "shop": "Produkte suchen…",
+    "properties": "Wohnungen und Projekte suchen…"
+  }
 }

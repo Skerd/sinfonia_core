@@ -11,5 +11,11 @@
   "search": "Suchen",
   "call": "Anrufen",
   "email": "E-Mail",
-  "website": "Website"
+  "website": "Website",
+  "whatPlaceholderBy": {
+    "dentalClinic": "Behandlung, z. B. Implantat oder Bleaching…",
+    "carRental": "Fahrzeugklasse oder Modell…",
+    "shop": "Produkt…",
+    "properties": "Projekt oder Wohnung…"
+  }
 }

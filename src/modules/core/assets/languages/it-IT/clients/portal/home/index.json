@@ -11,5 +11,11 @@
   "search": "Cerca",
   "call": "Chiama",
   "email": "Email",
-  "website": "Sito web"
+  "website": "Sito web",
+  "whatPlaceholderBy": {
+    "dentalClinic": "Trattamento, ad es. impianto o sbiancamento…",
+    "carRental": "Categoria o modello di auto…",
+    "shop": "Prodotto…",
+    "properties": "Progetto o casa…"
+  }
 }

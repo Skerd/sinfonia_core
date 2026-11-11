@@ -10,6 +10,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {InputGroup, InputGroupAddon, InputGroupInput} from "@coreModule/components/ui/input-group.tsx";
 import type {PortalSiteCompany} from "armonia/src/modules/core/api/portal/public/portal/portal.dto.ts";
 import {usePortalSite} from "../shared/portalSiteContext.tsx";
+import {searchPlaceholder} from "../shared/searchPlaceholder.ts";
 import {SectionBaseProvider} from "../shared/sectionBase.tsx";
 import {BlogSection} from "../blog/index.tsx";
 import Catalog from "./catalog.tsx";
@@ -60,6 +61,7 @@ function CatalogSearchForm({
     resolveLanguageKey: ResolveLanguageKey;
     onSearch: (query: string, city: string) => void;
 }) {
+    const {sections} = usePortalSite();
     const options = initialCity && !cities.includes(initialCity) ? [initialCity, ...cities] : cities;
     const [draft, setDraft] = useState(initialCity);
     const [cityQuery, setCityQuery] = useState("");
@@ -98,7 +100,7 @@ function CatalogSearchForm({
         >
             <InputGroup className="h-12 border-0 shadow-none dark:bg-transparent">
                 <InputGroupAddon><IconSearch aria-hidden /></InputGroupAddon>
-                <InputGroupInput name="q" defaultValue={query} placeholder={resolveLanguageKey("whatPlaceholder")} aria-label={resolveLanguageKey("what")} />
+                <InputGroupInput name="q" defaultValue={query} placeholder={searchPlaceholder(resolveLanguageKey, "whatPlaceholder", sections)} aria-label={resolveLanguageKey("what")} />
             </InputGroup>
             <InputGroup
                 className="h-12 border-0 shadow-none sm:border-l sm:rounded-none dark:bg-transparent"

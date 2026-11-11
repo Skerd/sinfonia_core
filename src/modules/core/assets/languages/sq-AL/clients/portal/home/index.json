@@ -11,5 +11,11 @@
   "search": "Kërko",
   "call": "Telefono",
   "email": "Emaili",
-  "website": "Faqja"
+  "website": "Faqja",
+  "whatPlaceholderBy": {
+    "dentalClinic": "Trajtim, p.sh. implant ose zbardhim…",
+    "carRental": "Kategori ose model makine…",
+    "shop": "Produkt…",
+    "properties": "Projekt ose banesë…"
+  }
 }

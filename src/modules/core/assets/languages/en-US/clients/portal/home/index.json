@@ -11,5 +11,11 @@
   "search": "Search",
   "call": "Call",
   "email": "Email",
-  "website": "Website"
+  "website": "Website",
+  "whatPlaceholderBy": {
+    "dentalClinic": "Treatment, e.g. implant or whitening…",
+    "carRental": "Car class or model…",
+    "shop": "Product…",
+    "properties": "Project or home…"
+  }
 }

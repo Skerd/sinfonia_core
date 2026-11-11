@@ -22,6 +22,7 @@ import {cn} from "@coreModule/components/lib/utils.ts";
 import PortalSectionName from "../portalSectionName.tsx";
 import {usePortalSite} from "../portalSiteContext.tsx";
 import {SectionBaseProvider, sectionHref} from "../sectionBase.tsx";
+import {searchPlaceholder} from "../searchPlaceholder.ts";
 import type {PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
 
 /** A section is current on its own pages, and on the home catalog while one of its kinds is chosen. */
@@ -50,7 +51,9 @@ function Brand() {
 /** One query across every section; the home page narrows it down. */
 function NavigationSearch({resolveLanguageKey}: Pick<WithLanguageType, "resolveLanguageKey">) {
     const navigate = useNavigate();
+    const {sections} = usePortalSite();
     const [query, setQuery] = useState("");
+    const placeholder = searchPlaceholder(resolveLanguageKey, "searchPlaceholder", sections);
 
     return (
         <form
@@ -66,8 +69,8 @@ function NavigationSearch({resolveLanguageKey}: Pick<WithLanguageType, "resolveL
                 <InputGroupInput
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
-                    placeholder={resolveLanguageKey("searchPlaceholder")}
-                    aria-label={resolveLanguageKey("searchPlaceholder")}
+                    placeholder={placeholder}
+                    aria-label={placeholder}
                 />
             </InputGroup>
         </form>
