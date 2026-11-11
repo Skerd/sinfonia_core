@@ -4,6 +4,10 @@
     "title": "Negozio",
     "description": "I prodotti di tutti i negozi, un solo carrello e un solo pagamento."
   },
+  "services": {
+    "title": "Servizi",
+    "description": "Affida un lavoro a fornitori della zona, oppure pubblica una richiesta e confronta le offerte."
+  },
   "carRental": {
     "title": "Noleggio auto",
     "description": "Confronta i noleggiatori e prenota un'auto per le tue date."

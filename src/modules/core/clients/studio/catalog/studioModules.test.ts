@@ -24,13 +24,12 @@ describe("moduleForModel", () => {
         expect(moduleForModel("currencies", "/api/finance/currency")).toBe("finance");
     });
 
-    it("does not confuse eCommerce with eCommerceMarketplace", () => {
-        /* Two distinct namespaces, read exactly rather than by prefix... */
+    it("keeps eCommerce and the marketplace apart (D142)", () => {
+        /* Two distinct namespaces, read exactly rather than by prefix, each its own module. */
         expect(apiNamespace("/api/eCommerce/product")).toBe("eCommerce");
-        expect(apiNamespace("/api/eCommerceMarketplace/listing")).toBe("eCommerceMarketplace");
-        /* ...that both belong to the eCommerce module (maestro/modules/eCommerce/api/eCommerceMarketplace). */
+        expect(apiNamespace("/api/marketplace/listing")).toBe("marketplace");
         expect(moduleForModel("products", "/api/eCommerce/product")).toBe("eCommerce");
-        expect(moduleForModel("listings", "/api/eCommerceMarketplace/listing")).toBe("eCommerce");
+        expect(moduleForModel("listings", "/api/marketplace/listing")).toBe("marketplace");
     });
 
     it("falls back to the collection map for models with no views", () => {

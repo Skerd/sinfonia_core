@@ -35,6 +35,7 @@
     "core": "Core",
     "finance": "Finance",
     "eCommerce": "eCommerce",
+    "marketplace": "Marketplace",
     "propertyManagement": "Property management",
     "propertyDevelopment": "Property development",
     "swissOutreach": "Swiss outreach",

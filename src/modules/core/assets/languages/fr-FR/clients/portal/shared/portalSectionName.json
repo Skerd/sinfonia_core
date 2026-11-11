@@ -4,6 +4,10 @@
     "title": "Boutique",
     "description": "Les produits de toutes les boutiques, un seul panier et un seul paiement."
   },
+  "services": {
+    "title": "Services",
+    "description": "Engagez des prestataires près de chez vous, ou publiez une demande et comparez leurs offres."
+  },
   "carRental": {
     "title": "Location de voitures",
     "description": "Comparez les loueurs et réservez une voiture pour vos dates."

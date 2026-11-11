@@ -13,6 +13,11 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@co
 
 export const CATALOG_FILTER_PREFIX = "f.";
 
+/** One filter option per slug: sellers on the apex can share a category name, and an ambiguous slug matches nothing. */
+export function uniqueBySlug<Category extends {slug: string}>(categories: readonly Category[]): Category[] {
+    return [...new Map(categories.map((category) => [category.slug, category])).values()];
+}
+
 /** One of the kind's filters: its value in the URL, and a setter that starts the results over at page one. */
 export function useCatalogFilter(name: string): [string, (value: string) => void] {
     const [params, setParams] = useSearchParams();

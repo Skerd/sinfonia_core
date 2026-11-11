@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalSellerCard.tsx",
+  "soldBy": "Sold by",
+  "offeredBy": "Offered by",
+  "publishedBy": "Published by",
+  "visitSiteNamed": "Visit {name}",
+  "visitSite": "Visit site"
+}

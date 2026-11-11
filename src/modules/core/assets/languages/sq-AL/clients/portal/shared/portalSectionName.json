@@ -4,6 +4,10 @@
     "title": "Dyqani",
     "description": "Produktet e të gjitha dyqaneve, një shportë dhe një pagesë."
   },
+  "services": {
+    "title": "Shërbime",
+    "description": "Angazhoni ofrues pranë jush, ose publikoni një punë dhe krahasoni ofertat e tyre."
+  },
   "carRental": {
     "title": "Qiraja e makinave",
     "description": "Krahasoni kompanitë e qirasë dhe rezervoni një makinë për datat tuaja."

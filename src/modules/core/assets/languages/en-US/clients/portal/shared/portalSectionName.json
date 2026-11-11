@@ -4,6 +4,10 @@
     "title": "Shop",
     "description": "Products from every shop, one cart and one checkout."
   },
+  "services": {
+    "title": "Services",
+    "description": "Hire local providers for a job, or post one and compare their bids."
+  },
   "carRental": {
     "title": "Car rental",
     "description": "Compare rental companies and book a car for your dates."

@@ -16,6 +16,7 @@
     "dentalClinic": "Treatment, e.g. implant or whitening…",
     "carRental": "Car class or model…",
     "shop": "Product…",
+    "services": "Service, e.g. logo design…",
     "properties": "Project or home…"
   }
 }

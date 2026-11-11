@@ -2,7 +2,7 @@ import type {ModuleCapabilities} from "./systemMap.types.ts";
 
 const MODULE_COLORS: Record<string, string> = {
     eCommerce: "var(--chart-4)",
-    eCommerceMarketplace: "var(--chart-3)",
+    marketplace: "var(--chart-3)",
     propertyManagement: "var(--chart-5)",
     shared: "var(--muted-foreground)",
 };

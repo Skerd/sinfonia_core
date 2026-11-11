@@ -4,6 +4,10 @@
     "title": "Shop",
     "description": "Produkte aus allen Shops, ein Warenkorb, ein Checkout."
   },
+  "services": {
+    "title": "Dienstleistungen",
+    "description": "Beauftragen Sie Anbieter aus der Nähe oder schreiben Sie einen Auftrag aus und vergleichen Sie die Angebote."
+  },
   "carRental": {
     "title": "Autovermietung",
     "description": "Vergleichen Sie Vermieter und buchen Sie ein Auto für Ihre Daten."
