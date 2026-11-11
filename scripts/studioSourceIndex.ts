@@ -106,6 +106,7 @@ const MAESTRO_ALIASES: Record<string, string> = {
     "@eCommerceModule/": "modules/eCommerce/",
     "@financeModule/": "modules/finance/",
     "@swissOutreachModule/": "modules/swissOutreach/",
+    "@marketplaceModule/": "modules/marketplace/",
 };
 
 /** Resolves an import specifier to a file on disk, or null when it leaves maestro. */
