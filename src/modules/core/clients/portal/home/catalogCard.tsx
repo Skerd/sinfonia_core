@@ -53,6 +53,8 @@ function CatalogCard({item, resolveLanguageKey}: WithLanguageType & {item: Porta
             </div>
             <div className="flex min-w-0 flex-col gap-0.5">
                 <p className="line-clamp-2 font-medium leading-snug">{item.title}</p>
+                {/* What sets the item apart, from its provider (a car's seats and gearbox, a project's place). */}
+                {item.subtitle ? <p className="truncate text-sm">{item.subtitle}</p> : null}
                 <p className="truncate text-sm text-muted-foreground">{[item.company.name, item.city].filter(Boolean).join(" · ")}</p>
                 {price ? <p className="mt-1 font-display font-semibold tabular-nums">{price}</p> : null}
             </div>

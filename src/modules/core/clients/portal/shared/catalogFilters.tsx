@@ -2,6 +2,7 @@ import {useCallback, useId, type ReactNode} from "react";
 import {useSearchParams} from "react-router-dom";
 import {Field, FieldLabel} from "@coreModule/components/ui/field.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
+import {DateInput} from "@coreModule/components/custom/inputs/dateInput.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@coreModule/components/ui/select.tsx";
 
 /*
@@ -90,16 +91,20 @@ type CatalogFilterInputProps = {
     type: "date" | "time" | "number";
 };
 
-/** A kind's filter typed in: a date, a time or a minimum. */
+/**
+ * A kind's filter typed in: a minimum, or a day or time picked on the shared date picker (UX-08, not the browser's
+ * own); days travel as `YYYY-MM-DD` and times as `HH:mm`, as before.
+ */
 export function CatalogFilterInput({name, label, type}: CatalogFilterInputProps) {
     const [value, setValue] = useCatalogFilter(name);
     return (
         <CatalogFilterField label={label}>
-            {(id) => type === "number" ? (
-                <CatalogNumberInput id={id} value={value} onCommit={setValue} />
-            ) : (
-                <Input id={id} type={type} value={value} onChange={(event) => setValue(event.target.value)} />
-            )}
+            {(id) => {
+                if (type === "number") return <CatalogNumberInput id={id} value={value} onCommit={setValue} />;
+                return type === "time"
+                    ? <DateInput id={id} timeOnly valueFormat="HH:mm" value={value} onChange={setValue} />
+                    : <DateInput id={id} valueFormat="YYYY-MM-DD" value={value} onChange={setValue} />;
+            }}
         </CatalogFilterField>
     );
 }
