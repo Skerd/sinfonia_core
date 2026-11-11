@@ -346,19 +346,15 @@ describe("against the real maestro corpus", () => {
 
     /* Detection itself is pinned by the fixture suite above. The corpus count is not asserted: VC-02 (separate
        typed create/edit node consts) removes shared arrays by design, so the real number only goes down. */
-    it.runIf(available)("still finds create/edit sharing in the real corpus", () => {
+    it.runIf(available)("groups whatever create/edit sharing is left in the real corpus", () => {
         const index = buildSourceIndex(maestroRoot);
-        const createEditPairs = index.sharedGroups.filter(
-            (group) =>
-                group.some((key) => key.endsWith(":form:create")) &&
-                group.some((key) => key.endsWith(":form:edit")),
-        );
-        expect(createEditPairs.length).toBeGreaterThan(0);
+        // Every reported group links at least two views; zero groups is the VC-02 goal, not a failure.
+        for (const group of index.sharedGroups) expect(group.length, group.join(", ")).toBeGreaterThan(1);
     });
 
     it.runIf(available)("resolves a known node to the line that actually declares it", () => {
         const index = buildSourceIndex(maestroRoot);
-        const ref = index.resolve("warehouses:sheet", "0.0.0");
+        const ref = index.resolve("countries:sheet", "0.0.0");
         expect(ref).not.toBeNull();
         const text = fs.readFileSync(ref!.file, "utf8").slice(ref!.start, ref!.end);
         expect(text).toContain("#DisplayCard");
