@@ -22,6 +22,8 @@ interface SinglePinMapProps {
     onPinChange?: (coords: { lat: number; lng: number } | null) => void;
     latitude: number,
     longitude: number
+    /** False when `latitude`/`longitude` only centre the map and no pin is placed yet; clicking places one. */
+    showPin?: boolean
     readOnly?: boolean
     onExpand?: () => void
     onClose?: () => void
@@ -42,7 +44,11 @@ function MapClickHandler({onPinSet, latitude, longitude}: {onPinSet: (latitude: 
     return null;
 }
 
-function PinMapCanvas({ onPinChange, latitude, longitude, readOnly, onExpand, onClose }: SinglePinMapProps) {
+function PinMapCanvas({ onPinChange, latitude, longitude, showPin = true, readOnly, onExpand, onClose }: SinglePinMapProps) {
+    const [placed, setPlaced] = useState<boolean>(showPin);
+    useEffect(() => {
+        setPlaced(showPin);
+    }, [showPin]);
 
     const [lat, setLat] = useState<number>(latitude); // Default: Tirana, Albania
     const [lng, setLng] = useState<number>(longitude); // Default: Tirana, Albania
@@ -89,10 +95,11 @@ function PinMapCanvas({ onPinChange, latitude, longitude, readOnly, onExpand, on
                         if( readOnly ) return;
                         setLat(latitude);
                         setLng(longitude);
+                        setPlaced(true);
                         onPinChange?.({ lat: latitude, lng: longitude });
                     }}
                 />
-                {(lat && lng) && <Marker position={[lat, lng]} />}
+                {placed && lat && lng ? <Marker position={[lat, lng]} /> : null}
                 <SyncMapSize />
                 {onExpand ? <ExpandMapControl onExpand={onExpand} /> : null}
                 {onClose ? <CloseMapControl onClose={onClose} /> : null}
@@ -110,6 +117,7 @@ const SinglePinMap: React.FC<SinglePinMapProps> = (props) => {
                 <PinMapCanvas
                     latitude={props.latitude}
                     longitude={props.longitude}
+                    showPin={props.showPin}
                     readOnly={props.readOnly}
                     onPinChange={props.onPinChange}
                     onClose={() => setOpen(false)}

@@ -3,7 +3,7 @@ import type {FieldBinding} from "armonia/src/modules/core/api/auxiliary/private/
 import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
 import {MdiIcon} from "@coreModule/components/custom/mdiIcons/mdiIcon.tsx";
 import {filterAccessibleValuePath} from "../../engine/access.ts";
-import {affix, currencyStubFromValuePath, currencyStubText, formatTemporal} from "../../engine/format.ts";
+import {affix, applyValueTemplate, currencyStubFromValuePath, currencyStubText, formatTemporal} from "../../engine/format.ts";
 import {resolvePath} from "../../engine/refs.ts";
 import type {ViewRendererContext, WidgetProps} from "../../engine/types.ts";
 import {wpRecord, wpText} from "../../engine/widgetProps.ts";
@@ -100,7 +100,7 @@ function temporalTypeFromWidget(wp: WidgetProps): "date" | "dateTime" | undefine
 
 /**
  * The value a `#DisplayCard` shows, in pipeline order:
- * raw value → `bodyWidget` → number/date format → language category → yes/no → prefix/suffix
+ * raw value → `bodyWidget` → number/date format → language category → yes/no → value template → prefix/suffix
  * → currency stub text.
  *
  * A display `type` or a `bodyWidget` owns formatting, so the pre-format steps are skipped for
@@ -150,6 +150,11 @@ export function resolveDisplayCardValue(
     if (!skipPreFormat && wp.valueType === "boolean") {
         if (typeof value === "boolean") value = t(value ? "yes" : "no");
         else if (value === "true" || value === "false") value = t(value === "true" ? "yes" : "no");
+    }
+
+    const templateKey = wpText(wp, "valueTemplateKey");
+    if (!skipPreFormat && templateKey && (typeof value === "number" || (typeof value === "string" && value !== ""))) {
+        value = applyValueTemplate(t, templateKey, value, typeof document !== "undefined" ? document.documentElement.lang || undefined : undefined);
     }
 
     if (!skipPreFormat && isPlain(value) && (wp.prefix || wp.suffix)) {

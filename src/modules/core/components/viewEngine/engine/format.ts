@@ -7,7 +7,7 @@ export function formatTemporal(value: unknown, mode: "date" | "dateTime"): strin
     if (value == null || value === "") return null;
     const formatted = formatDate(value instanceof Date || typeof value === "string" || typeof value === "number" ? value : null, {
         timeZone: mode === "date" ? "UTC" : undefined,
-        format: mode === "dateTime" ? DATE_FORMATS.dateTime : DATE_FORMATS.date,
+        format: mode === "dateTime" ? DATE_FORMATS.mediumDateTime : DATE_FORMATS.mediumDate,
     });
     if (formatted) return formatted;
     return value == null ? null : String(value);
@@ -85,4 +85,25 @@ export function affix(text: string, prefix?: unknown, suffix?: unknown): string 
 
 function asAffix(v: unknown): string {
     return typeof v === "string" || (typeof v === "number" && v !== 0) ? String(v) : "";
+}
+
+/**
+ * A display value through a translated template (`valueTemplateKey`, e.g. "{value} days"), so a unit reads naturally
+ * in every language (TD-F62, UX-08). Numbers pick the language's plural form: `<key>.one` / `<key>.other` (any
+ * `Intl.PluralRules` category), else the plain `<key>`. Without a template the value is shown as it is.
+ */
+export function applyValueTemplate(
+    resolveLanguageKey: (key: string, returnUndefinedIfNeeded?: boolean) => unknown,
+    key: string,
+    value: string | number,
+    locale?: string,
+): string {
+    const amount = typeof value === "number" ? value : Number(String(value).replace(/[^0-9.-]/g, ""));
+    const form = Number.isFinite(amount) ? new Intl.PluralRules(locale).select(amount) : "other";
+    const pick = (candidate: string) => {
+        const text = resolveLanguageKey(candidate, true);
+        return typeof text === "string" && text.includes("{value}") ? text : undefined;
+    };
+    const template = pick(`${key}.${form}`) ?? pick(`${key}.other`) ?? pick(key);
+    return template ? template.replace("{value}", String(value)) : String(value);
 }

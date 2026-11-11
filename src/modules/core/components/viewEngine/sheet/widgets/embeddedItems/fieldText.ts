@@ -1,6 +1,7 @@
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import { resolvePath } from "../../../engine/refs.ts";
 import { formatTemporal } from "../../../engine/format.ts";
+import { formatNumber } from "@coreModule/helpers/general/numbers.ts";
 
 /*
  * Text and value logic for `#SheetEmbeddedItemsList` fields: what each configured field
@@ -25,7 +26,7 @@ export type EmbeddedItemFieldConfig = {
     labelKey?: string;
     /**
      * Dot-path to a currency object on the item (`{symbol?, abbreviation?}`).
-     * When set, the field value is shown as e.g. `€12.5` / `12.5 EUR`.
+     * When set, the field value is shown as e.g. `€ 12.50` (the currency's decimals; symbol, else its code).
      */
     currencyField?: string;
     /** Linked-sheet wiring when `type` is `"linkedRef"`. */
@@ -54,16 +55,20 @@ export function hrefForText(text: string, asUrlField: boolean): string | null {
     return null;
 }
 
-function formatAmountWithCurrency(amountText: string, currency: unknown): string {
-    const amount = amountText.trim();
-    if (!amount) return "";
-    if (!currency || typeof currency !== "object") return amount;
-    const c = currency as {symbol?: unknown; abbreviation?: unknown};
-    const symbol = typeof c.symbol === "string" ? c.symbol.trim() : "";
-    const abbreviation = typeof c.abbreviation === "string" ? c.abbreviation.trim() : "";
-    if (symbol) return `${symbol}${amount}`;
-    if (abbreviation) return `${amount} ${abbreviation}`;
-    return amount;
+/**
+ * "€ 12.50": the amount at its currency's decimals (default 2), with the symbol (else the code) in front, the way
+ * sheet cards show money (UX-07). A value that isn't a number is shown as it is.
+ */
+function formatAmountWithCurrency(raw: unknown, currency: unknown): string {
+    const text = String(raw ?? "").trim();
+    if (!text) return "";
+    const amount = typeof raw === "number" ? raw : Number(text);
+    if (!Number.isFinite(amount)) return text;
+    const c = currency && typeof currency === "object" ? (currency as {symbol?: unknown; abbreviation?: unknown; decimalPlaces?: unknown}) : {};
+    const decimals = typeof c.decimalPlaces === "number" ? c.decimalPlaces : 2;
+    const formatted = formatNumber(amount, {minimumFractionDigits: decimals, maximumFractionDigits: decimals});
+    const label = (typeof c.symbol === "string" && c.symbol.trim()) || (typeof c.abbreviation === "string" && c.abbreviation.trim()) || "";
+    return label ? `${label} ${formatted}` : formatted;
 }
 
 export function resolveEmbeddedFieldText(
@@ -101,11 +106,10 @@ export function resolveEmbeddedFieldText(
         return formatTemporal(raw, field.format) ?? "";
     }
 
-    const text = String(raw ?? "").trim();
     if (field.currencyField) {
-        return formatAmountWithCurrency(text, resolvePath(item, field.currencyField));
+        return formatAmountWithCurrency(raw, resolvePath(item, field.currencyField));
     }
-    return text;
+    return String(raw ?? "").trim();
 }
 
 export function resolveLinkedRefStub(item: Record<string, any>, field: EmbeddedItemFieldConfig): Record<string, any> | null {

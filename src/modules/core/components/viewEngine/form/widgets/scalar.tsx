@@ -150,15 +150,22 @@ function dateBound(staticValue: unknown, fieldPath: string | undefined, watched:
 /** `#DateInput` with optional `minDateField` / `maxDateField` watching sibling form paths. */
 const FormBoundDateInput = forwardRef<HTMLInputElement, Omit<ScalarArgs, "binding" | "resolveLanguageKey">>(
     function FormBoundDateInput({Widget, field, wp, placeholder, extra, ...slotProps}, ref) {
-        const rest = omitProps(wp, "minDateField", "maxDateField", "minDateExclusive", "maxDateExclusive", "minDate", "maxDate");
+        const rest = omitProps(wp, "minDateField", "maxDateField", "minDateExclusive", "maxDateExclusive", "minDate", "maxDate", "timeZoneField", "companyTimeZone");
         const minPath = wpText(wp, "minDateField");
         const maxPath = wpText(wp, "maxDateField");
+        const zonePath = wpText(wp, "timeZoneField");
         // Hooks cannot be conditional; unused watches fall back to harmless default paths.
         const watchedMin = useWatch({name: minPath ?? "startDate"});
         const watchedMax = useWatch({name: maxPath ?? "endDate"});
+        const watchedZone = useWatch({name: zonePath ?? "timeZone"});
         const profileTimeZone = useSelector((state: RootState) => state.authentication.user?.timezone);
+        const companyZone = useSelector((state: RootState) => state.authentication.user?.company?.timezone);
+        // The record's own zone (`timeZoneField`, e.g. a booking's) beats a fixed `timeZone`, then the company's when
+        // asked (`companyTimeZone`), then the viewer's (TD-F61).
         const timeZone =
+            (zonePath && typeof watchedZone === "string" && watchedZone) ||
             (typeof rest.timeZone === "string" && rest.timeZone) ||
+            (wp.companyTimeZone === true && companyZone) ||
             profileTimeZone ||
             Intl.DateTimeFormat().resolvedOptions().timeZone;
         return (

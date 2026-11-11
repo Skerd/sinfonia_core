@@ -7,17 +7,17 @@ const UTC_MIDNIGHT = "2026-03-15T00:00:00.000Z";
 describe("engine formatTemporal", () => {
     it("formats calendar dates in UTC so a New York viewer still sees the 15th", () => {
         expect(formatTemporal(UTC_MIDNIGHT, "date")).toBe(
-            formatDate(UTC_MIDNIGHT, {timeZone: "UTC", format: DATE_FORMATS.date}),
+            formatDate(UTC_MIDNIGHT, {timeZone: "UTC", format: DATE_FORMATS.mediumDate}),
         );
         expect(formatTemporal(UTC_MIDNIGHT, "date")).not.toBe(
-            formatDate(UTC_MIDNIGHT, {timeZone: "America/New_York", format: DATE_FORMATS.date}),
+            formatDate(UTC_MIDNIGHT, {timeZone: "America/New_York", format: DATE_FORMATS.mediumDate}),
         );
     });
 
     it("formats datetimes with a clock, not as a UTC calendar day", () => {
         const asDateTime = formatTemporal(UTC_MIDNIGHT, "dateTime");
         expect(asDateTime).toBe(
-            formatDate(UTC_MIDNIGHT, {format: DATE_FORMATS.dateTime}),
+            formatDate(UTC_MIDNIGHT, {format: DATE_FORMATS.mediumDateTime}),
         );
         expect(asDateTime).not.toBe(formatTemporal(UTC_MIDNIGHT, "date"));
     });

@@ -60,6 +60,8 @@ export const DATE_FORMATS = {
     longDate: {day: "numeric", month: "long", year: "numeric"},
     /** "5 Nov 2026" (order and words follow the locale). */
     mediumDate: {day: "numeric", month: "short", year: "numeric"},
+    /** "5 Nov 2026, 13:00": the panel's one date-and-time format on cards, sheets and sheet item lists (UX-08). */
+    mediumDateTime: {day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"},
 } satisfies Record<string, Intl.DateTimeFormatOptions>;
 
 export interface FormatDateOptions {

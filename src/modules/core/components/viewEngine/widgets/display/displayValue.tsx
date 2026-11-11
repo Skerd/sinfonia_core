@@ -12,7 +12,7 @@ import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import SheetMediaFilesStrip from "@coreModule/components/viewEngine/sheet/widgets/sheetMediaFilesStrip.tsx";
 import type {Media} from "armonia/src/modules/core/types";
 import {useAccessFieldsRead} from "./accessFields.tsx";
-import {formatDate} from "@coreModule/helpers/general/dateTime.ts";
+import {DATE_FORMATS, formatDate} from "@coreModule/helpers/general/dateTime.ts";
 import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
@@ -91,17 +91,8 @@ const FLAG_HEIGHT = 18;
 const ICON_SIZE = 18;
 const AVATAR_SIZE = 48;
 
-const DATE_FORMAT: Intl.DateTimeFormatOptions = {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-};
-
-const DATE_TIME_FORMAT: Intl.DateTimeFormatOptions = {
-    ...DATE_FORMAT,
-    hour: "2-digit",
-    minute: "2-digit",
-};
+const DATE_FORMAT = DATE_FORMATS.mediumDate;
+const DATE_TIME_FORMAT = DATE_FORMATS.mediumDateTime;
 
 function isEmptyValue(value: unknown): boolean {
     return value === null || value === undefined || value === "";

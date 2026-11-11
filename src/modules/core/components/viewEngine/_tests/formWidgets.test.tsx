@@ -19,8 +19,8 @@ vi.mock("@coreModule/helpers/hocs/withLanguage.tsx", async (importOriginal) => (
 }));
 vi.mock("@coreModule/helpers/hocs/withDebug.tsx", () => ({default: () => (c: unknown) => c}));
 vi.mock("react-redux", () => ({
-    useSelector: (selector: (state: {authentication: {user?: {timezone?: string}}}) => unknown) =>
-        selector({authentication: {user: {timezone: "Europe/Berlin"}}}),
+    useSelector: (selector: (state: {authentication: {user?: {timezone?: string; company?: {timezone?: string}}}}) => unknown) =>
+        selector({authentication: {user: {timezone: "Europe/Berlin", company: {timezone: "Europe/Tirane"}}}}),
 }));
 
 const {renderFormWidget, renderCompoundWidget, isCompoundFormWidget} = await import("../renderFormWidget.tsx");
@@ -189,6 +189,16 @@ describe("renderFormWidget: #DateInput", () => {
         expect(props.maxDate).toBeUndefined();
         props.onChange(null);
         expect(field.onChange).toHaveBeenCalledWith(null);
+    });
+
+    /** TD-F61: a record's own zone from the form, else the company's when asked, else the viewer's. */
+    it("picks times in the record's zone, then the company's, then the viewer's", () => {
+        const own = mountScalar(bind("#DateInput", {timeZoneField: "timezone", companyTimeZone: true}), makeField(), {}, {timezone: "America/New_York"});
+        expect(own.props.timeZone).toBe("America/New_York");
+        expect("timeZoneField" in own.props).toBe(false);
+        expect("companyTimeZone" in own.props).toBe(false);
+        expect(mountScalar(bind("#DateInput", {timeZoneField: "timezone", companyTimeZone: true}), makeField()).props.timeZone).toBe("Europe/Tirane");
+        expect(mountScalar(bind("#DateInput"), makeField()).props.timeZone).toBe("Europe/Berlin");
     });
 
     /** TD-F42: the end-of-day option is a plain widgetProp, and its value reaches the form untouched. */
