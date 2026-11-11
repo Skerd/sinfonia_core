@@ -36,6 +36,7 @@
       "@dentalClinicModule/*": ["./src/modules/dentalClinic/*"],
       "@eCommerceModule/*": ["./src/modules/eCommerce/*"],
       "@financeModule/*": ["./src/modules/finance/*"],
+      "@marketplaceModule/*": ["./src/modules/marketplace/*"],
       "@propertyDevelopmentModule/*": ["./src/modules/propertyDevelopment/*"],
       "@propertyManagementModule/*": ["./src/modules/propertyManagement/*"],
       "@swissOutreachModule/*": ["./src/modules/swissOutreach/*"],
