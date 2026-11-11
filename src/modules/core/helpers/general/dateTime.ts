@@ -3,7 +3,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/de-ch";
 import "dayjs/locale/fr";
 import "dayjs/locale/it";
-import "dayjs/locale/sq";
+import sqLocale from "dayjs/locale/sq";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 
 /**
@@ -72,15 +72,60 @@ export interface FormatDateOptions {
 /** Same reasoning as the number formatter cache: date cells and chat rows format on every render. */
 const dateFormatterCache = new Map<string, Intl.DateTimeFormat>();
 
-function getDateFormatter(timeZone: string | undefined, format: Intl.DateTimeFormatOptions): Intl.DateTimeFormat {
-    const key = JSON.stringify([timeZone, format]);
+/**
+ * The language the user picked in the app (the language provider writes it to `<html lang>`), so month and weekday
+ * names follow the app and not the browser. Undefined outside a page (tests, workers) falls back to the runtime locale.
+ */
+function appLocale(): string | undefined {
+    return (typeof document !== "undefined" && document.documentElement.lang) || undefined;
+}
+
+/** Our language codes → dayjs locale names (en is built in). */
+const DAYJS_LOCALES: Record<string, string> = {"de-CH": "de-ch", "fr-FR": "fr", "it-IT": "it", "sq-AL": "sq"};
+
+/**
+ * Some browsers ship without date data for a language (Chrome without Albanian prints `sq-AL` dates in English).
+ * Such a date is laid out day-month-year (`en-GB`) and its month and weekday names come from dayjs's locale.
+ */
+const NAMES_ONLY_STRUCTURE = "en-GB";
+
+function intlSupports(locale: string): boolean {
+    try {
+        return Intl.DateTimeFormat.supportedLocalesOf([locale]).length > 0;
+    } catch {
+        return false;
+    }
+}
+
+/**
+ * Languages a browser may ship without date data, with dayjs's names for them. The locale object is read directly:
+ * the bundler can register `dayjs/locale/*` on another dayjs copy than ours, so `dayjs.Ls` is not reliable here.
+ */
+const NAME_LOCALES: Record<string, typeof sqLocale> = {"sq-AL": sqLocale};
+
+/** The dayjs names for a language the browser cannot format, else `null` (Intl handles it). */
+function fallbackNames(locale: string | undefined): {months: string[]; monthsShort: string[]; weekdays: string[]; weekdaysShort: string[]} | null {
+    if (!locale || intlSupports(locale)) return null;
+    const data = NAME_LOCALES[locale];
+    if (!data?.months || !data.weekdays) return null;
+    return {
+        months: data.months,
+        monthsShort: data.monthsShort ?? data.months,
+        weekdays: data.weekdays,
+        weekdaysShort: data.weekdaysShort ?? data.weekdays,
+    };
+}
+
+function getDateFormatter(timeZone: string | undefined, format: Intl.DateTimeFormatOptions, localeOverride?: string): Intl.DateTimeFormat {
+    const locale = localeOverride ?? appLocale();
+    const key = JSON.stringify([locale, timeZone, format]);
     let formatter = dateFormatterCache.get(key);
     if (!formatter) {
         try {
-            formatter = new Intl.DateTimeFormat(undefined, {timeZone, hourCycle: "h23", ...format});
+            formatter = new Intl.DateTimeFormat(locale, {timeZone, hourCycle: "h23", ...format});
         } catch {
             // An invalid timezone (e.g. a user profile with a stale value) must not break rendering.
-            formatter = new Intl.DateTimeFormat(undefined, {hourCycle: "h23", ...format});
+            formatter = new Intl.DateTimeFormat(locale, {hourCycle: "h23", ...format});
         }
         dateFormatterCache.set(key, formatter);
     }
@@ -88,7 +133,7 @@ function getDateFormatter(timeZone: string | undefined, format: Intl.DateTimeFor
 }
 
 /**
- * Formats a date in the runtime locale.
+ * Formats a date in the app's language (see {@link appLocale}), on a 24h clock.
  *
  * @param date - Date instance, ISO string, or timestamp.
  * @param options
@@ -98,11 +143,28 @@ export function formatDate(date: Date | string | number | null | undefined, opti
     if (!date) return "";
     const value = new Date(date);
     if (Number.isNaN(value.getTime())) return "";
-    return getDateFormatter(options.timeZone || undefined, options.format ?? DEFAULT_DATE_FORMAT).format(value);
+    const timeZone = options.timeZone || undefined;
+    const format = options.format ?? DEFAULT_DATE_FORMAT;
+    const names = fallbackNames(appLocale());
+    if (!names) return getDateFormatter(timeZone, format).format(value);
+
+    const wall = zonedParts(value, timeZone);
+    if (!wall) return getDateFormatter(timeZone, format, NAMES_ONLY_STRUCTURE).format(value);
+    const weekday = new Date(Date.UTC(wall.year, wall.month - 1, wall.day)).getUTCDay();
+    return getDateFormatter(timeZone, format, NAMES_ONLY_STRUCTURE)
+        .formatToParts(value)
+        .map((part) => {
+            if (part.type === "month" && (format.month === "long" || format.month === "short")) {
+                return (format.month === "long" ? names.months : names.monthsShort)[wall.month - 1] ?? part.value;
+            }
+            if (part.type === "weekday") {
+                return (format.weekday === "long" ? names.weekdays : names.weekdaysShort)[weekday] ?? part.value;
+            }
+            return part.value;
+        })
+        .join("");
 }
 
-/** Our language codes → dayjs locale names (en is built in). */
-const RELATIVE_TIME_LOCALES: Record<string, string> = {"de-CH": "de-ch", "fr-FR": "fr", "it-IT": "it", "sq-AL": "sq"};
 
 /**
  * "3 hours ago", "in 2 days" in the user's language.
@@ -113,7 +175,7 @@ export function formatRelativeToNow(date: Date | string | number | null | undefi
     if (!date) return "";
     const value = dayjs(date);
     if (!value.isValid()) return "";
-    return value.locale(RELATIVE_TIME_LOCALES[languageCode ?? ""] ?? "en").fromNow();
+    return value.locale(DAYJS_LOCALES[languageCode ?? ""] ?? "en").fromNow();
 }
 
 function pad2(n: number): string {

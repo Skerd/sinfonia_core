@@ -1,4 +1,4 @@
-import {describe, expect, it} from "vitest";
+import {describe, expect, it, vi} from "vitest";
 import {
     addCalendarDays,
     calendarDaysUntil,
@@ -111,6 +111,31 @@ describe("zoned wall clock", () => {
 
 describe("formatDate", () => {
     const date = "2026-03-05T14:07:00Z";
+
+    it("names the month in the app's language, not the browser's", () => {
+        const before = document.documentElement.lang;
+        try {
+            document.documentElement.lang = "de-CH";
+            expect(formatDate(date, {timeZone: "UTC", format: {month: "long"}})).toBe("März");
+            document.documentElement.lang = "it-IT";
+            expect(formatDate(date, {timeZone: "UTC", format: {month: "long"}})).toBe("marzo");
+        } finally {
+            document.documentElement.lang = before;
+        }
+    });
+
+    it("uses the app's own month and weekday names when the browser has no data for its language", () => {
+        const before = document.documentElement.lang;
+        const supported = vi.spyOn(Intl.DateTimeFormat, "supportedLocalesOf").mockReturnValue([]);
+        try {
+            document.documentElement.lang = "sq-AL";
+            expect(formatDate(date, {timeZone: "UTC", format: {day: "numeric", month: "long", year: "numeric"}})).toBe("5 Mars 2026");
+            expect(formatDate(date, {timeZone: "UTC", format: {weekday: "short", day: "numeric", month: "short"}})).toBe("Enj 5 Mar");
+        } finally {
+            supported.mockRestore();
+            document.documentElement.lang = before;
+        }
+    });
 
     it("returns an empty string for empty or invalid dates", () => {
         expect(formatDate("")).toBe("");

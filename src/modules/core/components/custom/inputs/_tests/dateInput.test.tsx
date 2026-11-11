@@ -91,6 +91,11 @@ describe("DateInput clearing", () => {
         expect(screen.queryByRole("button", {name: "Clear"})).not.toBeInTheDocument();
     });
 
+    it("shows no clear control when clearing is turned off, even with a value", () => {
+        render(<DateInput valueFormat="YYYY-MM-DD" value="2026-03-15" clearable={false}/>);
+        expect(screen.queryByRole("button", {name: "Clear"})).not.toBeInTheDocument();
+    });
+
     it("emits an empty string and is reachable as a real button", () => {
         const onChange = vi.fn();
         render(<DateInput valueFormat="YYYY-MM-DD" value="2026-03-15" onChange={onChange}/>);

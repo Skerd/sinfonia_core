@@ -404,6 +404,11 @@ type DateInputBase = Omit<
   maxDate?: string
   minDateExclusive?: boolean
   maxDateExclusive?: boolean
+  /**
+   * Show the clear (×) button once a value is set (default `true`). Turn it off where a value is always
+   * required and an empty one is ignored (a day picker that must show some day), so no control does nothing.
+   */
+  clearable?: boolean
 }
 
 /** `Date` values (default). */
@@ -439,6 +444,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       minDateExclusive = false,
       maxDateExclusive = false,
       timeZone,
+      clearable = true,
       // View-engine field links — consumed by FormBoundDateInput; strip so they never hit the DOM.
       minDateField: _minDateField,
       maxDateField: _maxDateField,
@@ -583,7 +589,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       : displayFormat
         ? safeFormat(dateValue, displayFormat)
         : formatDate(dateValue, { format: DATE_FORMATS.longDate })
-    const canClear = displayValue.length > 0
+    const canClear = clearable && displayValue.length > 0
 
     const rangeCalendarProps = React.useMemo(() => {
       const minBound = parseIsoDayLocal(minDate)
