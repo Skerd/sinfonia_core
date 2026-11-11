@@ -374,6 +374,15 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
         widgetProps: [{name: "nameField", type: "string", default: "name", suggest: "readPath"}],
     },
     "#SheetEmbeddedItemsList": {modes: SHEET, bindsField: true},
+    "#WeeklyHours": {
+        modes: SHEET,
+        bindsField: true,
+        docs: "A week of `{dayOfWeek, startTime, endTime}` rows as one compact table, Monday first; days without rows read `closedKey`.",
+        widgetProps: [
+            {name: "placePath", type: "string"},
+            {name: "closedKey", type: "string", default: "closed"},
+        ],
+    },
     "#SheetLocationMap": {modes: SHEET, bindsField: true},
     "#EmbeddedAddressCard": {modes: SHEET, bindsField: true},
     "#ExpandableText": {modes: SHEET, bindsField: true},

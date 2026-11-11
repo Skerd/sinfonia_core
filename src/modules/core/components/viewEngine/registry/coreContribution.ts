@@ -36,6 +36,7 @@ import {FormGrid} from "@coreModule/components/viewEngine/widgets/layout/form/gr
 import {SheetGroup} from "@coreModule/components/viewEngine/widgets/layout/sheet/group.tsx";
 import SheetMediaFilesStrip from "../sheet/widgets/sheetMediaFilesStrip.tsx";
 import SheetMediaAvatar from "../sheet/widgets/sheetMediaAvatar.tsx";
+import WeeklyHours from "../sheet/widgets/weeklyHours.tsx";
 import SheetEmbeddedItemsList from "../sheet/widgets/embeddedItems/sheetEmbeddedItemsList.tsx";
 import SheetEmbeddedAddressCard from "../sheet/widgets/addresses/sheetEmbeddedAddressCard.tsx";
 import {ReferencesViewModeScope} from "../sheet/widgets/references/referencesViewModeContext.tsx";
@@ -94,6 +95,7 @@ export function getCoreWidgetContribution(): WidgetContribution {
             "#SheetEmbeddedItemsList": SheetEmbeddedItemsList,
             /** Sheet read-only: logo-style `Avatar` for a single media id (string or populated `{ _id }`). */
             "#SheetMediaAvatar": SheetMediaAvatar,
+            "#WeeklyHours": WeeklyHours,
             /** `#ReferencesRender` card for a single embedded address (non-compact/cards mode). */
             "#EmbeddedAddressCard": SheetEmbeddedAddressCard,
             "#TitleWithCollapse": TitleWithCollapse,

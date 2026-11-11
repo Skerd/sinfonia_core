@@ -77,7 +77,25 @@ const badge: SheetFieldRenderer = ({binding, ctx, index, Component}) => {
     return createElement(Component, {...omitProps(wp, "children"), key: index}, label);
 };
 
+/** Rows `{dayOfWeek, startTime, endTime}` at `field.name`; `widgetProps.placePath` names a row field shown beside its hours,
+ * `widgetProps.closedKey` the sheet language key for a day without hours (default `closed`). */
+const weeklyHours: SheetFieldRenderer = ({binding, ctx, index, Component}) => {
+    if (!Component || !ctx.data) return null;
+    const wp = binding.widgetProps ?? {};
+    const raw = resolvePath(ctx.data, binding.name);
+    const placePath = wpText(wp, "placePath");
+    const rows = (Array.isArray(raw) ? raw : [])
+        .filter((row): row is Record<string, unknown> => !!row && typeof row === "object")
+        .filter((row) => typeof row.dayOfWeek === "number" && typeof row.startTime === "string" && typeof row.endTime === "string")
+        .map((row) => {
+            const place = placePath ? resolvePath(row, placePath) : undefined;
+            return {dayOfWeek: row.dayOfWeek, startTime: row.startTime, endTime: row.endTime, place: typeof place === "string" ? place : undefined};
+        });
+    return createElement(Component, {key: index, rows, closedLabel: String(ctx.resolveLanguageKey(wpText(wp, "closedKey") ?? "closed"))});
+};
+
 export const simpleRenderers: Record<string, SheetFieldRenderer> = {
+    "#WeeklyHours": weeklyHours,
     "#ExpandableText": expandable,
     "#SheetLocationMap": locationMap,
     "#CountryFlag": countryFlag,
