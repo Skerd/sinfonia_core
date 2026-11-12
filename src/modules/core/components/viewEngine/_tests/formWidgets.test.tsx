@@ -169,6 +169,27 @@ describe("renderFormWidget: selects", () => {
     });
 });
 
+describe("renderFormWidget: #Select with optionsFromFormArray (TD-F58)", () => {
+    it("offers the rows of another repeater by number and title, and stores the number", () => {
+        const {props, field} = mountScalar(
+            bind("#Select", {optionsFromFormArray: {arrayField: "phases", labelField: "title"}}),
+            makeField(2),
+            {editMode: true},
+            {phases: [{title: "Implants"}, {title: ""}, {title: "Crowns"}]},
+        );
+        expect(props.options).toEqual([
+            {value: "1", label: "1. Implants"},
+            {value: "2", label: "2"},
+            {value: "3", label: "3. Crowns"},
+        ]);
+        expect(props.value).toBe("2");
+        props.onValueChange("3");
+        expect(field.onChange).toHaveBeenLastCalledWith(3);
+        props.onValueChange("");
+        expect(field.onChange).toHaveBeenLastCalledWith(null);
+    });
+});
+
 describe("renderFormWidget: #DateInput", () => {
     it("binds min/max from sibling fields and strips its own props", () => {
         const {props, field} = mountScalar(

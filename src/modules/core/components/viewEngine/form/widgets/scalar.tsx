@@ -104,8 +104,36 @@ function simpleSelectValue(value: unknown, multiple: boolean): string | string[]
     return String(value);
 }
 
+/**
+ * `#Select` with `optionsFromFormArray: {arrayField, labelField?}`: the options are the rows of another repeater in the
+ * same form, e.g. a quote line picking one of the quote's phases (TD-F58, VC-03). The value is the row's 1-based number,
+ * stored as a number; the label reads "2. Whitening" (just "2" when the row has no `labelField` text yet).
+ */
+function FormArrayRowSelect({Widget, field, extra, wp, placeholder}: Omit<ScalarArgs, "binding" | "resolveLanguageKey">) {
+    const source = wp.optionsFromFormArray as {arrayField: string; labelField?: string};
+    const rows: unknown = useWatch({name: source.arrayField});
+    const options = (Array.isArray(rows) ? rows : []).map((row, index) => {
+        const number = String(index + 1);
+        const text = source.labelField && row && typeof row === "object" ? String((row as Record<string, unknown>)[source.labelField] ?? "").trim() : "";
+        return {value: number, label: text ? `${number}. ${text}` : number};
+    });
+    return (
+        <Widget
+            options={options}
+            value={simpleSelectValue(field.value, false)}
+            onValueChange={(v: string) => field.onChange(v === "" || v == null ? orCleared(v, extra) : Number(v))}
+            placeholder={placeholder}
+            disabled={field.disabled || wp.disabled}
+            className={wp.className}
+        />
+    );
+}
+
 /** `#SimpleSelect` / `#Select`. Option labels containing a dot are language keys. */
 const simpleSelect: ScalarAdapter = ({Widget, field, resolveLanguageKey: t, extra, wp, placeholder}) => {
+    if (wp.optionsFromFormArray) {
+        return <FormArrayRowSelect Widget={Widget} field={field} extra={extra} wp={wp} placeholder={placeholder} />;
+    }
     const multiple = wp.multiple === true;
     const options = ((wp.options ?? []) as {value: unknown; label: unknown}[]).map((o) => {
         const raw = typeof o.label === "string" ? o.label : String(o.label ?? o.value ?? "");

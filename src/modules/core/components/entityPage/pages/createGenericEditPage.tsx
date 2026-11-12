@@ -53,6 +53,11 @@ type GenericEditPageConfig<TDto, TForm extends FieldValues> = {
     /** Route (or history delta) to go to after a save; defaults to `navigate(-1)`, as in `createGenericCreatePage`. */
     successPath?: string | number;
     /**
+     * Stay on the page after a save instead of going back. For settings split into one page per section: going back
+     * would land on whichever section was open before, not the one just saved (TD-F56, UX-12).
+     */
+    stayAfterSave?: boolean;
+    /**
      * Dynamic headers merged into the PATCH (`addToHeader` on `HttpRequest`).
      * Values are read from serialized component props (e.g. `{ whatToGet: "entityId", whereToPut: "x-company-id" }`).
      */
@@ -227,6 +232,8 @@ export function createGenericEditPage<TDto, TForm extends FieldValues>(config: G
 
         const handleSuccess = () => {
             config.afterSuccess?.();
+            // The page's `axios.success` toast still confirms the save.
+            if (config.stayAfterSave) return;
             if (config.successPath === undefined) navigate(-1);
             else if (typeof config.successPath === "number") navigate(config.successPath);
             else navigate(config.successPath);
