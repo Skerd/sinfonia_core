@@ -1,4 +1,5 @@
-import {IconMail, IconPower, IconServer} from "@tabler/icons-react";
+import {IconMail, IconServer} from "@tabler/icons-react";
+import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {compose} from "redux";
 import {memo, type RefObject} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -92,7 +93,12 @@ const SmtpServerCard = memo(function SmtpServerCard({
         >
             {({entity, read, setAction}) => (
                 <>
-                    <EntityCard.Header titlePath="name" title={entity.name}>
+                    <EntityCard.Header
+                        titlePath="name"
+                        title={entity.name}
+                        // Only the exception shows (UX-02): an active server is the normal case.
+                        badges={!entity.active ? <Badge variant="secondary" className="text-xs">{resolveLanguageKey("inactive")}</Badge> : undefined}
+                    >
                         <TestSmtpConnection onAction={setAction} />
                         <ActivateSmtpServer smtpServer={entity} onAction={setAction} />
                         <DeactivateSmtpServer smtpServer={entity} onAction={setAction} />
@@ -112,14 +118,6 @@ const SmtpServerCard = memo(function SmtpServerCard({
                                     <DisplayValue path="port" type="number" value={entity.port} />
                                 </span>
                             }
-                        />
-                        <EntityCardRow
-                            icon={IconPower}
-                            label={resolveLanguageKey("active")}
-                            tooltip={resolveLanguageKey("active")}
-                            path="active"
-                            type="boolean"
-                            value={entity.active}
                         />
                         <EntityCardRow
                             icon={IconMail}

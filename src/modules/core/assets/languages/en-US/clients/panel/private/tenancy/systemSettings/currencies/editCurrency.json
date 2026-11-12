@@ -12,7 +12,8 @@
     "abbreviationLabel": "Abbreviation",
     "abbreviationPlaceholder": "e.g. USD",
     "decimalPlacesLabel": "Decimal places",
-    "decimalPlacesPlaceholder": "2"
+    "decimalPlacesPlaceholder": "2",
+    "detailsSectionTitle": "Details"
   },
   "noId": "No currency selected.",
   "backToList": "Back to list",

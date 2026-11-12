@@ -697,5 +697,13 @@
       "usersessions": "Sessioni utente",
       "revoke": "Revoca la sessione"
     }
+  },
+  "commonFields": {
+    "createdAt": "Creato il",
+    "updatedAt": "Aggiornato il",
+    "createdBy": "Creato da",
+    "updatedBy": "Aggiornato da",
+    "deletedAt": "Eliminato il",
+    "deletedBy": "Eliminato da"
   }
 }

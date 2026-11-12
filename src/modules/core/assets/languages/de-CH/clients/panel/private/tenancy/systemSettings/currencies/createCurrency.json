@@ -10,7 +10,8 @@
     "abbreviationLabel": "Abkürzung",
     "abbreviationPlaceholder": "z. B. CHF",
     "decimalPlacesLabel": "Dezimalstellen",
-    "decimalPlacesPlaceholder": "2"
+    "decimalPlacesPlaceholder": "2",
+    "detailsSectionTitle": "Angaben"
   },
   "formHeader": {
     "title": "Währung erstellen",

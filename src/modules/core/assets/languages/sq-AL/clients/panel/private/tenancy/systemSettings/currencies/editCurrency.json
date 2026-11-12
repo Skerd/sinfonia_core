@@ -12,7 +12,8 @@
     "abbreviationLabel": "Shkurtesa",
     "abbreviationPlaceholder": "p.sh. USD",
     "decimalPlacesLabel": "Vendet dhjetore",
-    "decimalPlacesPlaceholder": "2"
+    "decimalPlacesPlaceholder": "2",
+    "detailsSectionTitle": "Të dhënat"
   },
   "noId": "Asnjë monedhë e zgjedhur.",
   "backToList": "Kthehu në listë",

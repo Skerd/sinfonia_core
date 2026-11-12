@@ -35,7 +35,9 @@
     "authType": {
       "login": "Përdorues / fjalëkalim",
       "none": "Asnjë"
-    }
+    },
+    "connectionSectionTitle": "Lidhja",
+    "senderSectionTitle": "Dërguesi"
   },
   "formHeader": {
     "title": "Ndrysho serverin SMTP",

@@ -8,7 +8,8 @@
     "countryLabel": "Country",
     "countryPlaceholder": "Select country",
     "stateLabel": "State",
-    "statePlaceholder": "Select state"
+    "statePlaceholder": "Select state",
+    "detailsSectionTitle": "Details"
   },
   "formHeader": {
     "title": "Create city",

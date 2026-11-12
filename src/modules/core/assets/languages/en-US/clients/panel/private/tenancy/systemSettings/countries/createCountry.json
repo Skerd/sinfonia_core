@@ -10,7 +10,8 @@
     "phoneCodeLabel": "Phone code",
     "phoneCodePlaceholder": "+1",
     "currencyLabel": "Currency",
-    "currencyPlaceholder": "Select currency"
+    "currencyPlaceholder": "Select currency",
+    "detailsSectionTitle": "Details"
   },
   "axios": {
     "start": {

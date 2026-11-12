@@ -13,7 +13,8 @@
     "phoneCodeLabel": "Kodi i telefonit",
     "phoneCodePlaceholder": "+1",
     "currencyLabel": "Monedha",
-    "currencyPlaceholder": "Zgjidhni monedhën"
+    "currencyPlaceholder": "Zgjidhni monedhën",
+    "detailsSectionTitle": "Të dhënat"
   },
   "noId": "Asnjë shtet i zgjedhur.",
   "backToList": "Kthehu në listë",

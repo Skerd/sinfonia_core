@@ -12,5 +12,6 @@
   },
   "deleted": "Fshirë",
   "failedTitle": "Ngarkimi i ofruesit të mesazheve dështoi",
-  "failedDescription": "Prekni për të provuar përsëri."
+  "failedDescription": "Prekni për të provuar përsëri.",
+  "inactive": "Joaktiv"
 }

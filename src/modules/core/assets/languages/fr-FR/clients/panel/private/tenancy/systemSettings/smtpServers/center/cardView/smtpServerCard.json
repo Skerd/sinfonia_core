@@ -9,5 +9,6 @@
   "fromEmail": "E-mail de l'expéditeur",
   "deleted": "Supprimé",
   "failedTitle": "Échec du chargement du serveur SMTP",
-  "failedDescription": "Appuyez pour réessayer."
+  "failedDescription": "Appuyez pour réessayer.",
+  "inactive": "Inactif"
 }

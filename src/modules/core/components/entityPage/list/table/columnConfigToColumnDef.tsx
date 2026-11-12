@@ -17,6 +17,7 @@ import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/tr
 import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
 import {formatAmountWithCurrency} from "@coreModule/components/viewEngine/engine/format.ts";
 import {findFromLanguage, findFromObject} from "@coreModule/helpers/general/objectPath.ts";
+import {humanizeKey as humanize} from "@coreModule/helpers/general/names.ts";
 import {TranslationValue} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import TableAvatar from "@coreModule/components/entityPage/list/tableAvatar.tsx";
 import SingleFile from "@coreModule/components/viewEngine/widgets/media/singleFile.tsx";
@@ -98,18 +99,6 @@ function translate(dictionary: TranslationValue, key: string, fallback: string):
     return typeof value === "string" && value !== key ? value : fallback;
 }
 
-/** `submissionDeadline` → `Submission Deadline`; the last resort when nothing is translated. */
-function humanize(key: string): string {
-    const leaf = key.split(".").pop() ?? key;
-    return leaf
-        .replace(/[_-]+/g, " ")
-        .replace(/([a-z\d])([A-Z])/g, "$1 $2")
-        .replace(/\s+/g, " ")
-        .trim()
-        /* Title-cases every word, so the fallback reads right on its own rather than
-           leaning on a `capitalize` class the popover copy of the badge might not have. */
-        .replace(/(^|\s)\S/g, (c) => c.toUpperCase());
-}
 
 function labelFromFields(fields: TranslationValue, labelKey: string): string {
     return translate(fields, labelKey, humanize(labelKey));

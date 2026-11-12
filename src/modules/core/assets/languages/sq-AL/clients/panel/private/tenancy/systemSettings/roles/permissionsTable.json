@@ -697,5 +697,13 @@
       "usersessions": "Sesionet e përdoruesve",
       "revoke": "Revoko sesionin"
     }
+  },
+  "commonFields": {
+    "createdAt": "Krijuar më",
+    "updatedAt": "Përditësuar më",
+    "createdBy": "Krijuar nga",
+    "updatedBy": "Përditësuar nga",
+    "deletedAt": "Fshirë më",
+    "deletedBy": "Fshirë nga"
   }
 }

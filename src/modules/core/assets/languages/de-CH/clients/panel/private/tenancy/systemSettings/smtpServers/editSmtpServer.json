@@ -35,7 +35,9 @@
     "authType": {
       "login": "Benutzername / Passwort",
       "none": "Keine"
-    }
+    },
+    "connectionSectionTitle": "Verbindung",
+    "senderSectionTitle": "Absender"
   },
   "formHeader": {
     "title": "SMTP-Server bearbeiten",

@@ -1,4 +1,5 @@
-import {IconMessage, IconPhone, IconPower} from "@tabler/icons-react";
+import {IconMessage, IconPhone} from "@tabler/icons-react";
+import {Badge} from "@coreModule/components/ui/badge.tsx";
 import {compose} from "redux";
 import {memo, type RefObject} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -92,7 +93,12 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
         >
             {({entity, setAction}) => (
                 <>
-                    <EntityCard.Header titlePath="name" title={entity.name}>
+                    <EntityCard.Header
+                        titlePath="name"
+                        title={entity.name}
+                        // Only the exception shows (UX-02): an active server is the normal case.
+                        badges={!entity.active ? <Badge variant="secondary" className="text-xs">{resolveLanguageKey("inactive")}</Badge> : undefined}
+                    >
                         <TestMessagingProviderConnection onAction={setAction} />
                         <ActivateMessagingProvider messagingProvider={entity} onAction={setAction} />
                         <DeactivateMessagingProvider messagingProvider={entity} onAction={setAction} />
@@ -106,14 +112,6 @@ const MessagingProviderCard = memo(function MessagingProviderCard({
                             type="enum"
                             languageKeyCategory="providerTypeValues"
                             value={entity.providerType}
-                        />
-                        <EntityCardRow
-                            icon={IconPower}
-                            label={resolveLanguageKey("active")}
-                            tooltip={resolveLanguageKey("active")}
-                            path="active"
-                            type="boolean"
-                            value={entity.active}
                         />
                         <EntityCardRow
                             icon={IconPhone}

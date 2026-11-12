@@ -12,5 +12,6 @@
   },
   "deleted": "Eliminato",
   "failedTitle": "Impossibile caricare il provider di messaggistica",
-  "failedDescription": "Tocca per riprovare."
+  "failedDescription": "Tocca per riprovare.",
+  "inactive": "Inattivo"
 }

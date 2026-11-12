@@ -10,7 +10,8 @@
     "countryLabel": "Country",
     "countryPlaceholder": "Select country",
     "stateLabel": "State",
-    "statePlaceholder": "Select state"
+    "statePlaceholder": "Select state",
+    "detailsSectionTitle": "Details"
   },
   "noId": "No city selected.",
   "backToList": "Back to list",

@@ -8,7 +8,8 @@
     "countryLabel": "Vendi",
     "countryPlaceholder": "Zgjidh shtetin",
     "stateLabel": "Rajoni",
-    "statePlaceholder": "Zgjidhni rajonin"
+    "statePlaceholder": "Zgjidhni rajonin",
+    "detailsSectionTitle": "Të dhënat"
   },
   "formHeader": {
     "title": "Krijo qytet",

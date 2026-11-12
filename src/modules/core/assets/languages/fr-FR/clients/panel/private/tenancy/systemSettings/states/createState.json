@@ -8,7 +8,8 @@
     "codeLabel": "Code",
     "codePlaceholder": "par ex. CA",
     "countryLabel": "Pays",
-    "countryPlaceholder": "Sélectionner le pays"
+    "countryPlaceholder": "Sélectionner le pays",
+    "detailsSectionTitle": "Informations"
   },
   "axios": {
     "start": {

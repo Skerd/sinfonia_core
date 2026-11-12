@@ -31,7 +31,9 @@
     "authType": {
       "login": "Nom d'utilisateur/mot de passe",
       "none": "Aucun"
-    }
+    },
+    "connectionSectionTitle": "Connexion",
+    "senderSectionTitle": "Expéditeur"
   },
   "formHeader": {
     "title": "Ajouter un serveur SMTP",

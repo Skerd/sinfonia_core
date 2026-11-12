@@ -14,7 +14,8 @@
     "providerType": {
       "twilio": "Twilio"
     },
-    "providerTypeLabel": "Provider"
+    "providerTypeLabel": "Provider",
+    "providerSectionTitle": "Provider"
   },
   "formButtons": {
     "cancel": "Cancel",

@@ -10,7 +10,8 @@
     "countryLabel": "Land",
     "countryPlaceholder": "Land auswählen",
     "stateLabel": "Kanton",
-    "statePlaceholder": "Kanton auswählen"
+    "statePlaceholder": "Kanton auswählen",
+    "detailsSectionTitle": "Angaben"
   },
   "noId": "Keine Stadt ausgewählt.",
   "backToList": "Zurück zur Liste",

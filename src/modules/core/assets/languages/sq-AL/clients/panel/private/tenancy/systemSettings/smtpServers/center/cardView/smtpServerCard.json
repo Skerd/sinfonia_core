@@ -9,5 +9,6 @@
   "fromEmail": "Emaili dërgues",
   "deleted": "Fshirë",
   "failedTitle": "Ngarkimi i serverit SMTP dështoi",
-  "failedDescription": "Trokit për të riprovuar."
+  "failedDescription": "Trokit për të riprovuar.",
+  "inactive": "Joaktiv"
 }

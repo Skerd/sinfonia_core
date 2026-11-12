@@ -13,7 +13,8 @@
     "phoneCodeLabel": "Codice telefonico",
     "phoneCodePlaceholder": "+1",
     "currencyLabel": "Valuta",
-    "currencyPlaceholder": "Seleziona valuta"
+    "currencyPlaceholder": "Seleziona valuta",
+    "detailsSectionTitle": "Dettagli"
   },
   "noId": "Nessun paese selezionato.",
   "backToList": "Torna all'elenco",

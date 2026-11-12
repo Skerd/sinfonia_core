@@ -697,5 +697,13 @@
       "usersessions": "Benutzersitzungen",
       "revoke": "Sitzung beenden"
     }
+  },
+  "commonFields": {
+    "createdAt": "Erstellt am",
+    "updatedAt": "Aktualisiert am",
+    "createdBy": "Erstellt von",
+    "updatedBy": "Aktualisiert von",
+    "deletedAt": "Gelöscht am",
+    "deletedBy": "Gelöscht von"
   }
 }

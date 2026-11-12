@@ -11,7 +11,8 @@
     "codeLabel": "Code",
     "codePlaceholder": "par ex. CA",
     "countryLabel": "Pays",
-    "countryPlaceholder": "Sélectionner le pays"
+    "countryPlaceholder": "Sélectionner le pays",
+    "detailsSectionTitle": "Informations"
   },
   "noId": "Aucun état sélectionné.",
   "backToList": "Retour à la liste",

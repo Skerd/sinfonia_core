@@ -11,7 +11,8 @@
     "codeLabel": "Kodi",
     "codePlaceholder": "p.sh. CA",
     "countryLabel": "Vendi",
-    "countryPlaceholder": "Zgjidh shtetin"
+    "countryPlaceholder": "Zgjidh shtetin",
+    "detailsSectionTitle": "Të dhënat"
   },
   "noId": "Asnjë rajon i zgjedhur.",
   "backToList": "Kthehu në listë",

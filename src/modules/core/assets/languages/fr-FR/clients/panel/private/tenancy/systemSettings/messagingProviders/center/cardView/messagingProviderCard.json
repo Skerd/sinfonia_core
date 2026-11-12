@@ -12,5 +12,6 @@
   },
   "deleted": "Supprimé",
   "failedTitle": "Échec du chargement du fournisseur de messagerie",
-  "failedDescription": "Appuyez pour réessayer."
+  "failedDescription": "Appuyez pour réessayer.",
+  "inactive": "Inactif"
 }

@@ -10,7 +10,8 @@
     "phoneCodeLabel": "Kodi i telefonit",
     "phoneCodePlaceholder": "+1",
     "currencyLabel": "Monedha",
-    "currencyPlaceholder": "Zgjidhni monedhën"
+    "currencyPlaceholder": "Zgjidhni monedhën",
+    "detailsSectionTitle": "Të dhënat"
   },
   "axios": {
     "start": {

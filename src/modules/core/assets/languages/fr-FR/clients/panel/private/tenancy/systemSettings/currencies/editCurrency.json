@@ -12,7 +12,8 @@
     "abbreviationLabel": "Abréviation",
     "abbreviationPlaceholder": "par ex. USD",
     "decimalPlacesLabel": "Décimales",
-    "decimalPlacesPlaceholder": "2"
+    "decimalPlacesPlaceholder": "2",
+    "detailsSectionTitle": "Informations"
   },
   "noId": "Aucune devise sélectionnée.",
   "backToList": "Retour à la liste",

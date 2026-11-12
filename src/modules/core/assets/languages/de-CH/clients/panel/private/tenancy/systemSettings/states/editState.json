@@ -11,7 +11,8 @@
     "codeLabel": "Code",
     "codePlaceholder": "z. B. ZH",
     "countryLabel": "Land",
-    "countryPlaceholder": "Land auswählen"
+    "countryPlaceholder": "Land auswählen",
+    "detailsSectionTitle": "Angaben"
   },
   "noId": "Kein Kanton / Bundesland ausgewählt.",
   "backToList": "Zurück zur Liste",

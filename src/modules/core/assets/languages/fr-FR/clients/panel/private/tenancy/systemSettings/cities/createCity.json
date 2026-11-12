@@ -8,7 +8,8 @@
     "countryLabel": "Pays",
     "countryPlaceholder": "Sélectionner le pays",
     "stateLabel": "Canton / État",
-    "statePlaceholder": "Sélectionner le canton"
+    "statePlaceholder": "Sélectionner le canton",
+    "detailsSectionTitle": "Informations"
   },
   "formHeader": {
     "title": "Créer une ville",

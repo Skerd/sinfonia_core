@@ -1,4 +1,5 @@
 import {IconCheck} from "@tabler/icons-react";
+import {humanizeKey} from "@coreModule/helpers/general/names.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {compose} from "redux";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -78,6 +79,16 @@ function parsePermissionTag(tag: string): { action: string; path: string } | nul
 }
 
 /**
+ * A permission's field label: the model's own label, else the shared one for lifecycle fields every model has, else
+ * the path made readable, so a field no dictionary names yet never shows a `---key---` placeholder (UX-09).
+ */
+function fieldLabel(group: string, path: string, resolveLanguageKey: WithLanguageType["resolveLanguageKey"]): string {
+    return resolveLanguageKey(`permissions.${group}.${path}`, true)
+        ?? resolveLanguageKey(`commonFields.${path}`, true)
+        ?? humanizeKey(path.replace(/[.:]/g, " "));
+}
+
+/**
  * Aggregates permissions by (model, scope, pathRaw). One row per unique group,
  * with read/write/create/delete/restore OR-ed from all permissions in that group.
  */
@@ -97,7 +108,7 @@ export function flattenPermissionsToRows(
                 const pathRaw = parsed.path;
                 const pathKey = pathRaw || group;
                 const rowKey = `${group}::${scope}::${pathKey}`;
-                const groupDisplayName = pathRaw ? resolveLanguageKey(`permissions.${group}.${pathRaw}`) : resolveLanguageKey(`groups.${group}`);
+                const groupDisplayName = pathRaw ? fieldLabel(group, pathRaw, resolveLanguageKey) : resolveLanguageKey(`groups.${group}`);
 
                 const existing = aggregated.get(rowKey);
                 if (existing) {
@@ -280,7 +291,7 @@ function PermissionsTable({
             {
                 accessorKey: "model",
                 header: () => resolveLanguageKey("model"),
-                cell: ({row}) => row.original.model,
+                cell: ({row}) => resolveLanguageKey(`groups.${row.original.model}`, true) ?? row.original.model,
             },
             {
                 accessorKey: "groupDisplayName",

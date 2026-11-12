@@ -13,7 +13,8 @@
     "phoneCodeLabel": "Indicatif téléphonique",
     "phoneCodePlaceholder": "+1",
     "currencyLabel": "Devise",
-    "currencyPlaceholder": "Sélectionner une devise"
+    "currencyPlaceholder": "Sélectionner une devise",
+    "detailsSectionTitle": "Informations"
   },
   "noId": "Aucun pays sélectionné.",
   "backToList": "Retour à la liste",

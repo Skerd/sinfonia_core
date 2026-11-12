@@ -20,7 +20,8 @@
     "fromPhoneLabel": "Expéditeur de SMS (E.164)",
     "fromPhonePlaceholder": "+15551234567",
     "fromWhatsappLabel": "Expéditeur WhatsApp (E.164)",
-    "fromWhatsappPlaceholder": "+15551234567"
+    "fromWhatsappPlaceholder": "+15551234567",
+    "providerSectionTitle": "Fournisseur"
   },
   "formHeader": {
     "title": "Modifier le fournisseur de messagerie",

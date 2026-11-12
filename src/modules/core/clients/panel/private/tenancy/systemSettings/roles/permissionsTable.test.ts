@@ -19,4 +19,19 @@ describe("flattenPermissionsToRows", () => {
         expect(cancel).toMatchObject({action: true, actionActive: true, actionIds: ["p1"], create: false, scope: "global"});
         expect(rows.find((row) => row.create)).toMatchObject({action: false, createIds: ["p2"]});
     });
+
+    it("labels a field from the model, then the shared lifecycle labels, then its readable path (UX-09)", () => {
+        const dictionary: Record<string, string> = {
+            "permissions.Leases.monthlyRent": "Monthly rent",
+            "commonFields.createdAt": "Created at",
+        };
+        const resolve = ((key: string, returnUndefinedIfNeeded?: boolean) => dictionary[key] ?? (returnUndefinedIfNeeded ? null : `---${key}---`)) as Parameters<typeof flattenPermissionsToRows>[1];
+        const tags = ["leases[read:monthlyRent]", "leases[read:createdAt]", "leases[read:businessAccount]", "leases[read:address.country]"];
+        const rows = flattenPermissionsToRows({
+            Leases: {self: tags.map((tag, i) => ({_id: `p${i}`, tag, group: "Leases", active: false})), others: []},
+        }, resolve);
+
+        expect(rows.map((row) => row.groupDisplayName).sort()).toEqual(["Address Country", "Business Account", "Created at", "Monthly rent"]);
+    });
 });
+

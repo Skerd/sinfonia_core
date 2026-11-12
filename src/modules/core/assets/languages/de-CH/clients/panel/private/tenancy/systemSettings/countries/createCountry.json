@@ -10,7 +10,8 @@
     "phoneCodeLabel": "Telefonvorwahl",
     "phoneCodePlaceholder": "+1",
     "currencyLabel": "Währung",
-    "currencyPlaceholder": "Währung auswählen"
+    "currencyPlaceholder": "Währung auswählen",
+    "detailsSectionTitle": "Angaben"
   },
   "axios": {
     "start": {

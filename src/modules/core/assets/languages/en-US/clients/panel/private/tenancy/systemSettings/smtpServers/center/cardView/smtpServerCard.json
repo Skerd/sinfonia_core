@@ -9,5 +9,6 @@
   "fromEmail": "From email",
   "deleted": "Deleted",
   "failedTitle": "Failed to load SMTP server",
-  "failedDescription": "Tap to retry."
+  "failedDescription": "Tap to retry.",
+  "inactive": "Inactive"
 }

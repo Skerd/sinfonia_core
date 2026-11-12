@@ -143,14 +143,16 @@ function CronJobCard({job, resolveLanguageKey, onDelete, onRestore, onModifySucc
                             type="dateTime"
                             value={entity.nextRunAt}
                         />
-                        <EntityCardRow
-                            icon={IconHistory}
-                            label={resolveLanguageKey("lastRunAt")}
-                            tooltip={resolveLanguageKey("lastRunAt")}
-                            path="lastRunAt"
-                            type="dateTime"
-                            value={entity.lastRunAt}
-                        />
+                        {entity.lastRunAt ? (
+                            <EntityCardRow
+                                icon={IconHistory}
+                                label={resolveLanguageKey("lastRunAt")}
+                                tooltip={resolveLanguageKey("lastRunAt")}
+                                path="lastRunAt"
+                                type="dateTime"
+                                value={entity.lastRunAt}
+                            />
+                        ) : null}
                     </EntityCard.Body>
                 </>
             )}
