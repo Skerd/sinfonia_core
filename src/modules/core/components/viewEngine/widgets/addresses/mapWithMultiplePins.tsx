@@ -1,6 +1,6 @@
 import {IconExternalLink} from "@tabler/icons-react";
 import {useEffect, useState} from "react";
-import {MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
+import {Circle, MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
 import L, {type LatLngBoundsExpression, type LatLngExpression} from "leaflet";
 import {CloseMapControl, ExpandMapControl, MapDialog, SyncMapSize} from "@coreModule/components/viewEngine/widgets/addresses/mapChrome.tsx";
 
@@ -60,12 +60,25 @@ type MapWithMultiplePinsProps = {
     addresses: MapAddress[];
     openInGoogleMaps?: string;
     openInAppleMaps?: string;
+    /**
+     * Shows each point as a shaded area of this radius (metres) instead of a pin: an approximate place whose exact
+     * spot is private (a job before its award, D143). The point is already the approximate centre.
+     */
+    areaRadiusM?: number;
+}
+
+/** The corners of a circle around a point, so the map fits the whole area. */
+function areaBounds(latitude: number, longitude: number, radiusM: number): [number, number][] {
+    const dLat = radiusM / 111320;
+    const dLng = radiusM / (111320 * Math.cos((latitude * Math.PI) / 180));
+    return [[latitude - dLat, longitude - dLng], [latitude + dLat, longitude + dLng]];
 }
 
 function MapCanvas({
     addresses,
     openInGoogleMaps,
     openInAppleMaps,
+    areaRadiusM,
     onExpand,
     onClose,
 }: MapWithMultiplePinsProps & { onExpand?: () => void; onClose?: () => void }) {
@@ -78,7 +91,9 @@ function MapCanvas({
                 address.latitude != null &&
                 address.longitude != null,
         )
-        .map((address) => [address.latitude!, address.longitude!] as [number, number]);
+        .flatMap((address) => areaRadiusM
+            ? areaBounds(address.latitude!, address.longitude!, areaRadiusM)
+            : [[address.latitude!, address.longitude!] as [number, number]]);
     const mapCenter: LatLngExpression = bounds.length > 0 ? bounds[0]! : [0, 0];
 
     return (
@@ -95,6 +110,17 @@ function MapCanvas({
                     list.map((address, index) => {
                         if (address == null || typeof address !== "object") return null;
                         if (address.latitude == null || address.longitude == null) return null;
+                        if (areaRadiusM) {
+                            return (
+                                <Circle
+                                    key={address._id ?? `area-${index}`}
+                                    center={[address.latitude, address.longitude]}
+                                    radius={areaRadiusM}
+                                    className="fill-primary stroke-primary"
+                                    pathOptions={{fillOpacity: 0.18, weight: 2}}
+                                />
+                            );
+                        }
                         const hasAddress = !!address.street || !!address.postalCode || address.city || address.country || address.state;
                         let fullAddress = "";
                         if( hasAddress ){
