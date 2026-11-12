@@ -14,6 +14,7 @@ import type {Relevance} from "../inspector/fieldRelevance.ts";
  *  - `refDisplayKey` — read in the `objectId` branch and again in the `address` branch.
  *  - `maxInlineItems`, `hrefTemplate`, `avatarPath` — read **only** in the `objectId` branch. The enum
  *    branch hardcodes its own inline limit and never consults `maxInlineItems`.
+ *  - `currencyPath` — read in the `number` branch (money columns, D149). Set on the schema; it has no editor here.
  *  - `className` — applied to every column's header/cell meta, whatever the type.
  *  - `badgeMapping`, `dateFormat`, `timezonePath`, `componentKey`, `refPath` — read
  *    nowhere. The `badge` / `badgeMulti` branches that once used `badgeMapping` are

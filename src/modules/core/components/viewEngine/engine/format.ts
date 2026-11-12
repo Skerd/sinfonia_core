@@ -73,6 +73,23 @@ export function currencyStubText(stub: unknown): string | null {
     return label ? `${label} ${amount}` : amount;
 }
 
+/**
+ * "€ 12.50": the amount at its currency's decimals (default 2), with the symbol (else the code) in front, the way
+ * sheet cards show money (UX-07). Shared by sheet item lists and money table columns (D149). A value that isn't a
+ * number is shown as it is.
+ */
+export function formatAmountWithCurrency(raw: unknown, currency: unknown): string {
+    const text = String(raw ?? "").trim();
+    if (!text) return "";
+    const amount = typeof raw === "number" ? raw : Number(text);
+    if (!Number.isFinite(amount)) return text;
+    const c = currency && typeof currency === "object" ? (currency as {symbol?: unknown; abbreviation?: unknown; decimalPlaces?: unknown}) : {};
+    const decimals = typeof c.decimalPlaces === "number" ? c.decimalPlaces : 2;
+    const formatted = formatNumber(amount, {minimumFractionDigits: decimals, maximumFractionDigits: decimals});
+    const label = (typeof c.symbol === "string" && c.symbol.trim()) || (typeof c.abbreviation === "string" && c.abbreviation.trim()) || "";
+    return label ? `${label} ${formatted}` : formatted;
+}
+
 /** Adds `prefix` / `suffix` unless the text already contains them. */
 export function affix(text: string, prefix?: unknown, suffix?: unknown): string {
     const pre = asAffix(prefix);

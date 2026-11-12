@@ -122,6 +122,16 @@ describe("numbers", () => {
         const col = column({id: "share", cellType: "percentage"});
         expect(renderCell(col, {share: 12.5}).textContent).toBe("12.5%");
     });
+
+    it("shows a money column with the row's currency at its decimals, like sheet cards (D149)", () => {
+        const col = column({id: "price", cellType: "number", meta: {currencyPath: "priceCurrency"}});
+        expect(renderCell(col, {price: 1234.5, priceCurrency: {symbol: "€", abbreviation: "EUR", decimalPlaces: 2}}).textContent).toBe("€ 1,234.50");
+        cleanup();
+        expect(renderCell(col, {price: 1500, priceCurrency: {abbreviation: "JPY", decimalPlaces: 0}}).textContent).toBe("JPY 1,500");
+        cleanup();
+        // The role cannot read the currency: the amount alone, still at two decimals.
+        expect(renderCell(col, {price: 17.6}).textContent).toBe("17.60");
+    });
 });
 
 describe("enums", () => {

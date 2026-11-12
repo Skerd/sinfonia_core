@@ -15,6 +15,7 @@ import type {EnumTone, TableColumnConfig} from "armonia/src/modules/core/api/com
 import DataTableColumnHeader from "@coreModule/components/ui/table/column-header.tsx";
 import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
+import {formatAmountWithCurrency} from "@coreModule/components/viewEngine/engine/format.ts";
 import {findFromLanguage, findFromObject} from "@coreModule/helpers/general/objectPath.ts";
 import {TranslationValue} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import TableAvatar from "@coreModule/components/entityPage/list/tableAvatar.tsx";
@@ -523,6 +524,7 @@ export function useColumnConfigToColumnDef<T>(columns: TableColumnConfig[], opti
 
         if (cellType === "number" || cellType === "percentage") {
             const suffix = cellType === "percentage" ? "%" : "";
+            const currencyPath = col.meta?.currencyPath;
             return {
                 ...base,
                 cell: ({row}) => {
@@ -530,12 +532,15 @@ export function useColumnConfigToColumnDef<T>(columns: TableColumnConfig[], opti
                     if (raw == null || raw === "") return <EmptyCell />;
                     const values = (Array.isArray(raw) ? raw : [raw]).filter((value) => value != null && value !== "");
                     if (values.length === 0) return <EmptyCell />;
+                    // A money column reads like sheet cards: "€ 12.50" at the row currency's decimals (UX-07, D149).
+                    const currency = currencyPath ? findFromObject(row.original, currencyPath) : undefined;
+                    const text = (value: unknown) => (currencyPath ? formatAmountWithCurrency(value, currency) : `${formatCellNumber(value)}${suffix}`);
                     if (values.length === 1) {
-                        return <span className="tabular-nums">{`${formatCellNumber(values[0])}${suffix}`}</span>;
+                        return <span className="tabular-nums">{text(values[0])}</span>;
                     }
                     const items = values.map((value, index) => ({
                         key: `${String(value)}-${index}`,
-                        node: <TextBadge label={`${formatCellNumber(value)}${suffix}`} className="tabular-nums" />,
+                        node: <TextBadge label={text(value)} className="tabular-nums" />,
                     }));
                     return (
                         <div className="flex justify-end">

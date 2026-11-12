@@ -1,7 +1,6 @@
 import type { ResolveLanguageKey } from "@coreModule/helpers/hocs/withLanguage.tsx";
 import { resolvePath } from "../../../engine/refs.ts";
-import { formatTemporal } from "../../../engine/format.ts";
-import { formatNumber } from "@coreModule/helpers/general/numbers.ts";
+import { formatAmountWithCurrency, formatTemporal } from "../../../engine/format.ts";
 
 /*
  * Text and value logic for `#SheetEmbeddedItemsList` fields: what each configured field
@@ -53,22 +52,6 @@ export function hrefForText(text: string, asUrlField: boolean): string | null {
     if (asUrlField) return normalizeExternalHref(trimmed);
     if (/^https?:\/\//i.test(trimmed) || /^www\./i.test(trimmed)) return normalizeExternalHref(trimmed);
     return null;
-}
-
-/**
- * "€ 12.50": the amount at its currency's decimals (default 2), with the symbol (else the code) in front, the way
- * sheet cards show money (UX-07). A value that isn't a number is shown as it is.
- */
-function formatAmountWithCurrency(raw: unknown, currency: unknown): string {
-    const text = String(raw ?? "").trim();
-    if (!text) return "";
-    const amount = typeof raw === "number" ? raw : Number(text);
-    if (!Number.isFinite(amount)) return text;
-    const c = currency && typeof currency === "object" ? (currency as {symbol?: unknown; abbreviation?: unknown; decimalPlaces?: unknown}) : {};
-    const decimals = typeof c.decimalPlaces === "number" ? c.decimalPlaces : 2;
-    const formatted = formatNumber(amount, {minimumFractionDigits: decimals, maximumFractionDigits: decimals});
-    const label = (typeof c.symbol === "string" && c.symbol.trim()) || (typeof c.abbreviation === "string" && c.abbreviation.trim()) || "";
-    return label ? `${label} ${formatted}` : formatted;
 }
 
 export function resolveEmbeddedFieldText(
