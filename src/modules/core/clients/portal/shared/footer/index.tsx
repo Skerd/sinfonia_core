@@ -45,7 +45,7 @@ function PortalFooter({resolveLanguageKey}: WithLanguageType) {
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-3">
                         {company.logo
-                            ? <img src={company.logo} alt={company.name} className="h-10 w-auto self-start object-contain" />
+                            ? <img src={company.logo} alt={company.name} className="h-10 w-auto self-start rounded-sm object-contain" />
                             : <p className="font-display text-2xl font-bold tracking-tight">{company.name}</p>}
                         <p className="text-sm leading-relaxed text-muted-foreground">
                             {site.scope === "company" ? company.description : resolveLanguageKey("footer")}

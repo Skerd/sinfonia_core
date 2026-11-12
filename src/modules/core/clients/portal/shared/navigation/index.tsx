@@ -44,7 +44,7 @@ function Brand() {
     const {site} = usePortalSite();
     if (!site) return null;
     return site.company.logo
-        ? <img src={site.company.logo} alt={site.company.name} className="h-8 w-auto max-w-40 object-contain" />
+        ? <img src={site.company.logo} alt={site.company.name} className="h-8 w-auto max-w-40 rounded-sm object-contain" />
         : <span className="truncate font-display text-lg font-bold tracking-tight">{site.company.name}</span>;
 }
 
