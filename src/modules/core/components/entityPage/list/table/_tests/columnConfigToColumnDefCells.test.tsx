@@ -132,6 +132,11 @@ describe("numbers", () => {
         // The role cannot read the currency: the amount alone, still at two decimals.
         expect(renderCell(col, {price: 17.6}).textContent).toBe("17.60");
     });
+
+    it("never shows a percentage column as money", () => {
+        const col = column({id: "discount", cellType: "percentage", meta: {currencyPath: "currency"}});
+        expect(renderCell(col, {discount: 1, currency: {symbol: "€", decimalPlaces: 2}}).textContent).toBe("1%");
+    });
 });
 
 describe("enums", () => {

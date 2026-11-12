@@ -524,7 +524,8 @@ export function useColumnConfigToColumnDef<T>(columns: TableColumnConfig[], opti
 
         if (cellType === "number" || cellType === "percentage") {
             const suffix = cellType === "percentage" ? "%" : "";
-            const currencyPath = col.meta?.currencyPath;
+            // A percentage is never money, whatever its config says.
+            const currencyPath = cellType === "number" ? col.meta?.currencyPath : undefined;
             return {
                 ...base,
                 cell: ({row}) => {
