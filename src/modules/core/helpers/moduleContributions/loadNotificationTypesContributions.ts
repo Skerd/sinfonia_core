@@ -39,3 +39,8 @@ export function notificationMessage(notification: TranslatableNotification, loca
     // A role notice names its roles by their stored text; a default role's name is shown translated (D118).
     return notificationTypes.notificationMessage({...notification, params: translateRoleParams(notification.params, locale)}, locale);
 }
+
+/** The panel page a stored notification opens, or `null` when its code declares none (D145). */
+export function notificationLink(notification: {code: string; content?: unknown}, locale: string): string | null {
+    return notificationTypes.notificationLink(notification, locale);
+}

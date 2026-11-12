@@ -134,6 +134,7 @@ function NotificationBell({resolveLanguageKey}: WithLanguageType) {
                                 key={notification._id}
                                 notification={notification}
                                 resolveLanguageKey={resolveLanguageKey}
+                                onOpen={() => setOpen(false)}
                             />
                         ))
                     )}
