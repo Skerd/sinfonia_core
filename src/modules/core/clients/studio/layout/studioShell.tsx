@@ -97,7 +97,7 @@ export default function StudioShell() {
         <div className="flex h-svh max-h-svh min-h-0 flex-col overflow-hidden">
             <header className="flex shrink-0 items-center gap-3 border-b px-3 py-2">
                 <div className="flex items-baseline gap-2">
-                    <span className="text-sm font-semibold">Arpeggio Studio</span>
+                    <span className="text-sm font-semibold">Kudoo Studio</span>
                     <span className="text-3xs text-muted-foreground">view &amp; table config editor</span>
                 </div>
                 <StudioCompanySwitcher />
