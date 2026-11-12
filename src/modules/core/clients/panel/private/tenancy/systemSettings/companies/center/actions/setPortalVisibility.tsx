@@ -17,6 +17,8 @@ function SetPortalVisibility({company, resolveLanguageKey, onAction}: SetPortalV
     const isPlatformAdmin = useSelector((state: RootState) => state.authentication.user.isPlatformAdmin);
 
     if (!isPlatformAdmin) return <></>;
+    // A protected company can be shown again, never hidden.
+    if (company.isProtected && !company.hiddenFromPortal) return <></>;
 
     return (
         <DropdownMenuItem onClick={() => {onAction("setPortalVisibility");}}>

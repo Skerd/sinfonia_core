@@ -76,14 +76,18 @@ function ManageModulesForm({
                 <div className="flex flex-col gap-3">
                     {modulesCatalog.map((module) => {
                         const dependents = selectedDependentsOf(module.name, selected, modulesCatalog);
-                        const locked = module.required || !module.installed || dependents.length > 0;
+                        // A protected company keeps every module it has (D143); the server refuses a removal.
+                        const kept = company.isProtected && (company.modules ?? []).includes(module.name);
+                        const locked = module.required || !module.installed || dependents.length > 0 || kept;
                         const note = module.required
                             ? resolveLanguageKey("required")
                             : !module.installed
                                 ? resolveLanguageKey("notInstalled")
                                 : dependents.length > 0
                                     ? `${resolveLanguageKey("requiredBy")} ${dependents.map(moduleLabel).join(", ")}`
-                                    : module.description;
+                                    : kept
+                                        ? resolveLanguageKey("protectedModule")
+                                        : module.description;
                         const id = `company_module_${module.name}`;
                         return (
                             <div key={module.name} className="flex items-start gap-3">

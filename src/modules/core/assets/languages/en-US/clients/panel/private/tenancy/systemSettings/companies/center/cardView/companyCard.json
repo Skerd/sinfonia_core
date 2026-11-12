@@ -42,5 +42,7 @@
     "carRental": "Car rental",
     "dentalClinic": "Dental clinic"
   },
-  "hiddenFromPortal": "Hidden from portal"
+  "hiddenFromPortal": "Hidden from portal",
+  "protected": "Protected",
+  "protectedHint": "The platform needs this company: it cannot be deactivated, hidden from the portal or lose a module."
 }

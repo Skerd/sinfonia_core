@@ -42,5 +42,7 @@
     "carRental": "Noleggio auto",
     "dentalClinic": "Studio dentistico"
   },
-  "hiddenFromPortal": "Nascosta dal portale"
+  "hiddenFromPortal": "Nascosta dal portale",
+  "protected": "Protetta",
+  "protectedHint": "La piattaforma ha bisogno di questa azienda: non può essere disattivata, nascosta dal portale o perdere un modulo."
 }

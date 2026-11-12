@@ -17,6 +17,7 @@ function DeactivateCompany({company, resolveLanguageKey, onAction}: DeactivateCo
     if (!write?.isActive) return <></>;
     if (!company.parentCompany) return <></>;
     if (!company.isActive) return <></>;
+    if (company.isProtected) return <></>;
 
     return (
         <DropdownMenuItem onClick={() => {onAction("deactivateCompany");}}>

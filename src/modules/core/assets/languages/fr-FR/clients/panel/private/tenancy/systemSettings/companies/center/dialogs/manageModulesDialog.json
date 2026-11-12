@@ -5,6 +5,7 @@
   "required": "Toujours actif",
   "notInstalled": "Non installé sur ce serveur",
   "requiredBy": "Requis par",
+  "protectedModule": "Conservé : cette entreprise est protégée",
   "cancel": "Annuler",
   "confirm": "Enregistrer les modules",
   "moduleNames": {

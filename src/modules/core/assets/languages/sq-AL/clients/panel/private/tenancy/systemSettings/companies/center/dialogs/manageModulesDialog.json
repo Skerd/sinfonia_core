@@ -5,6 +5,7 @@
   "required": "Gjithmonë aktiv",
   "notInstalled": "Nuk është instaluar në këtë server",
   "requiredBy": "I nevojshëm për",
+  "protectedModule": "Mbetet: kjo kompani është e mbrojtur",
   "cancel": "Anulo",
   "confirm": "Ruaj modulet",
   "moduleNames": {

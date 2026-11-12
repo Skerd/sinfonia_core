@@ -42,5 +42,7 @@
     "carRental": "Qiraja e makinave",
     "dentalClinic": "Klinika dentare"
   },
-  "hiddenFromPortal": "E fshehur nga portali"
+  "hiddenFromPortal": "E fshehur nga portali",
+  "protected": "E mbrojtur",
+  "protectedHint": "Platforma ka nevojë për këtë kompani: nuk mund të çaktivizohet, të fshihet nga portali ose të humbasë një modul."
 }

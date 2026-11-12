@@ -1,4 +1,4 @@
-import {IconBlocks, IconChecks, IconFileText, IconWorld, IconMail, IconPhone, IconPhotoDown, IconArrowsMaximize, IconArrowsMinimize} from "@tabler/icons-react";
+import {IconBlocks, IconChecks, IconFileText, IconWorld, IconMail, IconPhone, IconPhotoDown, IconArrowsMaximize, IconArrowsMinimize, IconShieldLock} from "@tabler/icons-react";
 import {compose} from "redux";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -297,6 +297,12 @@ const CompanyCard = memo(function CompanyCard({
                                                 <div className="flex flex-wrap items-center gap-1">
                                                     {row.hiddenFromPortal ? (
                                                         <Badge variant="destructive">{resolveLanguageKey("hiddenFromPortal")}</Badge>
+                                                    ) : null}
+                                                    {row.isProtected ? (
+                                                        <Badge variant="secondary" title={resolveLanguageKey("protectedHint")}>
+                                                            <IconShieldLock aria-hidden />
+                                                            {resolveLanguageKey("protected")}
+                                                        </Badge>
                                                     ) : null}
                                                     {row.modules.map((name) => (
                                                         <Badge key={"company_module_" + name} variant="outline" className="text-muted-foreground">

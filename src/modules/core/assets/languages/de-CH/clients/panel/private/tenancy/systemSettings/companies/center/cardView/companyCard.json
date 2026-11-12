@@ -42,5 +42,7 @@
     "carRental": "Autovermietung",
     "dentalClinic": "Zahnarztpraxis"
   },
-  "hiddenFromPortal": "Im Portal ausgeblendet"
+  "hiddenFromPortal": "Im Portal ausgeblendet",
+  "protected": "Geschützt",
+  "protectedHint": "Die Plattform braucht diese Firma: Sie kann nicht deaktiviert, auf dem Portal verborgen oder um ein Modul gekürzt werden."
 }
