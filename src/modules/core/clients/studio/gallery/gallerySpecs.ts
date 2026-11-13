@@ -234,7 +234,6 @@ function widgetPropsFor(token: string): Record<string, unknown> | undefined {
         case "#ObjectIdChipsInput":
             return {
                 apiUrl: `${GALLERY_API_URL}/select`,
-                method: "POST",
                 placeholderKey: "Select",
                 removeTooltipKey: "Remove",
                 selectPageSizeCreate: 50,

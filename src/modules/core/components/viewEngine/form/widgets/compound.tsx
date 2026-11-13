@@ -201,7 +201,6 @@ export const coreCompoundFormWidgetRenderers: Record<string, CompoundFormWidgetR
                 {...formState(args)}
                 name={binding.name}
                 apiUrl={wp.apiUrl}
-                method={wp.method ?? "POST"}
                 postBody={wp.postBody}
                 placeholderKey={wp.placeholderKey}
                 removeTooltipKey={wp.removeTooltipKey}

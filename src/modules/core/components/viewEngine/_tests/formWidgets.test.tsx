@@ -351,8 +351,10 @@ describe("renderCompoundWidget", () => {
         expect(mountCompound(bind("#FormMapPinPicker", {latField: "lat"}))).toMatchObject({fieldPrefix: "f", latField: "lat", loading: false});
     });
 
-    it("#ObjectIdChipsInput defaults its method", () => {
-        expect(mountCompound(bind("#ObjectIdChipsInput", {apiUrl: "/x"}))).toMatchObject({name: "f", apiUrl: "/x", method: "POST"});
+    it("#ObjectIdChipsInput gets its field and select url, and no request method (ApiSelect always POSTs)", () => {
+        const props = mountCompound(bind("#ObjectIdChipsInput", {apiUrl: "/x", method: "GET"}));
+        expect(props).toMatchObject({name: "f", apiUrl: "/x"});
+        expect(props).not.toHaveProperty("method");
     });
 
     it("module-contributed renderers get the widget, binding, translator and form state", () => {

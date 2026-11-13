@@ -23,7 +23,6 @@ export type ObjectIdChipsInputProps = {
     /** RHF field name (array of string ids). */
     name: string;
     apiUrl: string;
-    method?: string;
     /** Extra select params, e.g. `{administration: true}` for staff only. */
     postBody?: Record<string, unknown>;
     placeholderKey: string;
@@ -88,7 +87,6 @@ export function ObjectIdChipsInput({
     editMode = false,
     name,
     apiUrl,
-    method = "POST",
     postBody,
     placeholderKey,
     removeTooltipKey,
@@ -175,7 +173,6 @@ export function ObjectIdChipsInput({
                     <FormControl>
                         <ApiSelect
                             apiUrl={apiUrl}
-                            method={method}
                             postBody={postBody}
                             markedValues={ids}
                             onValueChange={addId}
