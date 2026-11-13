@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/components/ui/pagination.tsx",
+  "pagination": "Pagination",
+  "previous": "Previous",
+  "next": "Next",
+  "previousPage": "Go to the previous page",
+  "nextPage": "Go to the next page",
+  "morePages": "More pages"
+}

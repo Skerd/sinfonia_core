@@ -6,6 +6,10 @@ import useEmblaCarousel, {
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button } from "@coreModule/components/ui/button.tsx"
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react"
+import { UiTexts } from "@coreModule/components/ui/ui-texts.tsx"
+
+const LANGUAGE_PATH = "src/modules/core/components/ui/carousel.tsx"
+const ENGLISH = { previousSlide: "Previous slide", nextSlide: "Next slide" } as const
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -195,7 +199,7 @@ function CarouselPrevious({
       {...props}
     >
       <IconChevronLeft />
-      <span className="sr-only">Previous slide</span>
+      <span className="sr-only"><UiTexts path={LANGUAGE_PATH} english={ENGLISH}>{(text) => text("previousSlide")}</UiTexts></span>
     </Button>
   )
 }
@@ -226,7 +230,7 @@ function CarouselNext({
       {...props}
     >
       <IconChevronRight />
-      <span className="sr-only">Next slide</span>
+      <span className="sr-only"><UiTexts path={LANGUAGE_PATH} english={ENGLISH}>{(text) => text("nextSlide")}</UiTexts></span>
     </Button>
   )
 }

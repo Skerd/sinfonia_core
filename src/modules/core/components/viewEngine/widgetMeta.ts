@@ -197,7 +197,6 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
         docs: "Async select. Cross-field behaviour is configured entirely through widgetProps.",
         widgetProps: [
             {name: "apiUrl", type: "string", required: true, suggest: "apiUrl"},
-            {name: "method", type: "enum", enum: ["GET", "POST"], default: "POST"},
             {name: "pageSize", type: "number", default: 50},
             {
                 name: "cascadeClearFormFields",

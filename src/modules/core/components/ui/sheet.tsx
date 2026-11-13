@@ -4,6 +4,10 @@ import { Dialog as SheetPrimitive } from "radix-ui"
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button } from "@coreModule/components/ui/button.tsx"
 import { IconX } from "@tabler/icons-react"
+import { UiTexts } from "@coreModule/components/ui/ui-texts.tsx"
+
+const LANGUAGE_PATH = "src/modules/core/components/ui/sheet.tsx"
+const ENGLISH = { close: "Close" } as const
 
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
@@ -94,7 +98,7 @@ function SheetContent({
             >
               <IconX
               />
-              <span className="sr-only">Close</span>
+              <span className="sr-only"><UiTexts path={LANGUAGE_PATH} english={ENGLISH}>{(text) => text("close")}</UiTexts></span>
             </Button>
           </SheetPrimitive.Close>
         )}

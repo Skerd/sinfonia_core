@@ -4,30 +4,14 @@ import { Dialog as DialogPrimitive } from "radix-ui"
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button } from "@coreModule/components/ui/button.tsx"
 import { IconX } from "@tabler/icons-react"
-import { ReactReduxContext } from "react-redux"
-import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.ts"
+import { UiTexts } from "@coreModule/components/ui/ui-texts.tsx"
 
 const LANGUAGE_PATH = "src/modules/core/components/ui/dialog.tsx"
-const ENGLISH_CLOSE = "Close"
+const ENGLISH = { close: "Close" } as const
 
-function TranslatedCloseLabel() {
-  const { currentLanguage } = useSelectedLanguage(LANGUAGE_PATH)
-  const close = currentLanguage?.close
-  return <>{typeof close === "string" && close !== "" ? close : ENGLISH_CLOSE}</>
-}
-
-/** Whether the app store holds the language: a store-less page or a test's minimal store has none. */
-function hasLanguageState(state: unknown): boolean {
-  return state != null && typeof state === "object" && "language" in state
-}
-
-/**
- * The close button's text in the app language (TD-F85). A dialog can render where no app store with a language
- * exists (a standalone page, a component test), so it falls back to English there instead of failing.
- */
+/** The close button's text in the app language (TD-F85). */
 function CloseLabel() {
-  const redux = React.useContext(ReactReduxContext)
-  return redux && hasLanguageState(redux.store.getState()) ? <TranslatedCloseLabel /> : <>{ENGLISH_CLOSE}</>
+  return <UiTexts path={LANGUAGE_PATH} english={ENGLISH}>{(text) => text("close")}</UiTexts>
 }
 
 const DISMISS_GUARD_MS = 500

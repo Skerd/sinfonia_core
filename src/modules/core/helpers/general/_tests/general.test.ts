@@ -5,6 +5,7 @@ import {
     calendarDayUtc,
     calendarMonthOf,
     companyToday,
+    firstDayOfWeek,
     formatDate,
     formatDurationInDaysHoursOrMinutes,
     formatRelativeToNow,
@@ -159,6 +160,15 @@ describe("formatDate", () => {
         const format = {year: "numeric"} as const;
         expect(formatDate(date, {timeZone: "", format})).toBe("2026");
         expect(formatDate(date, {timeZone: "Mars/Olympus", format})).toBe("2026");
+    });
+});
+
+describe("firstDayOfWeek (TD-F93)", () => {
+    it("is Monday in the European languages and Sunday in American English or without data", () => {
+        for (const code of ["de-CH", "fr-FR", "it-IT", "sq-AL"]) expect(firstDayOfWeek(code)).toBe(1);
+        expect(firstDayOfWeek("en-US")).toBe(0);
+        expect(firstDayOfWeek("xx-XX")).toBe(0);
+        expect(firstDayOfWeek(undefined)).toBe(0);
     });
 });
 

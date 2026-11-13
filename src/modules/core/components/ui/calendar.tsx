@@ -13,7 +13,7 @@ import { Button, buttonVariants } from "@coreModule/components/ui/button.tsx"
 import { IconChevronLeft, IconChevronRight, IconChevronDown } from "@tabler/icons-react"
 import { useOutsideClick } from "@coreModule/helpers/hooks/useOutsideClick.ts"
 import useSelectedLanguage, { type LanguageDictionary } from "@coreModule/helpers/hooks/useSelectedLanguage.ts"
-import { formatDate } from "@coreModule/helpers/general/dateTime.ts"
+import { firstDayOfWeek, formatDate } from "@coreModule/helpers/general/dateTime.ts"
 
 const LANGUAGE_PATH = "src/modules/core/components/ui/calendar.tsx"
 
@@ -401,6 +401,8 @@ function Calendar({
       )}
       captionLayout={captionLayout}
       locale={resolvedLocale}
+      // The app language's first weekday (Monday in de/fr/it/sq); a caller's own locale or `weekStartsOn` wins.
+      weekStartsOn={locale ? undefined : firstDayOfWeek(languageCode)}
       labels={resolvedLabels}
       formatters={resolvedFormatters}
       startMonth={startMonth ?? dropdownNavBounds.startMonth}

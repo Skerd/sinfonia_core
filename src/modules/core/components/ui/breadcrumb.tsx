@@ -3,15 +3,23 @@ import { Slot } from "radix-ui"
 
 import { cn } from "@coreModule/components/lib/utils.ts"
 import { IconChevronRight, IconDots } from "@tabler/icons-react"
+import { UiTexts } from "@coreModule/components/ui/ui-texts.tsx"
+
+const LANGUAGE_PATH = "src/modules/core/components/ui/breadcrumb.tsx"
+const ENGLISH = { breadcrumb: "Breadcrumb", more: "More" } as const
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return (
-    <nav
-      aria-label="breadcrumb"
-      data-slot="breadcrumb"
-      className={cn(className)}
-      {...props}
-    />
+    <UiTexts path={LANGUAGE_PATH} english={ENGLISH}>
+      {(text) => (
+        <nav
+          aria-label={text("breadcrumb")}
+          data-slot="breadcrumb"
+          className={cn(className)}
+          {...props}
+        />
+      )}
+    </UiTexts>
   )
 }
 
@@ -106,7 +114,7 @@ function BreadcrumbEllipsis({
     >
       <IconDots
       />
-      <span className="sr-only">More</span>
+      <span className="sr-only"><UiTexts path={LANGUAGE_PATH} english={ENGLISH}>{(text) => text("more")}</UiTexts></span>
     </span>
   )
 }

@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/components/ui/pagination.tsx",
+  "pagination": "Navigimi i faqeve",
+  "previous": "E mëparshmja",
+  "next": "Tjetra",
+  "previousPage": "Shko te faqja e mëparshme",
+  "nextPage": "Shko te faqja tjetër",
+  "morePages": "Më shumë faqe"
+}

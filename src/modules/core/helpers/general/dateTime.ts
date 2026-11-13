@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import "dayjs/locale/de-ch";
-import "dayjs/locale/fr";
-import "dayjs/locale/it";
+import deChLocale from "dayjs/locale/de-ch";
+import frLocale from "dayjs/locale/fr";
+import itLocale from "dayjs/locale/it";
 import sqLocale from "dayjs/locale/sq";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 
@@ -104,6 +104,23 @@ function intlSupports(locale: string): boolean {
  * the bundler can register `dayjs/locale/*` on another dayjs copy than ours, so `dayjs.Ls` is not reliable here.
  */
 const NAME_LOCALES: Record<string, typeof sqLocale> = {"sq-AL": sqLocale};
+
+/** dayjs's locale data per app language; English (built in) starts the week on Sunday. */
+const WEEK_LOCALES: Record<string, {weekStart?: number}> = {"de-CH": deChLocale, "fr-FR": frLocale, "it-IT": itLocale, "sq-AL": sqLocale};
+
+/**
+ * The first day of the week in a language (0 = Sunday … 6 = Saturday), from dayjs's locale data (TD-F93): Monday in
+ * de/fr/it/sq, Sunday in en-US and in any language without data.
+ */
+export function firstDayOfWeek(languageCode: string | undefined): 0 | 1 | 2 | 3 | 4 | 5 | 6 {
+    const weekStart = WEEK_LOCALES[languageCode ?? ""]?.weekStart ?? 0;
+    switch (weekStart) {
+        case 1: case 2: case 3: case 4: case 5: case 6:
+            return weekStart;
+        default:
+            return 0;
+    }
+}
 
 /** The dayjs names for a language the browser cannot format, else `null` (Intl handles it). */
 function fallbackNames(locale: string | undefined): {months: string[]; monthsShort: string[]; weekdays: string[]; weekdaysShort: string[]} | null {

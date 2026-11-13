@@ -3,6 +3,7 @@ import {useEffect, useLayoutEffect, useState} from "react";
 import {Circle, MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
 import L, {type LatLngBoundsExpression, type LatLngExpression} from "leaflet";
 import {CloseMapControl, ExpandMapControl, MapDialog, SyncMapSize} from "@coreModule/components/viewEngine/widgets/addresses/mapChrome.tsx";
+import {settleMapAnimations} from "@coreModule/components/viewEngine/widgets/addresses/mapTeardown.ts";
 
 import iconUrl from "leaflet/dist/images/marker-icon.png";
 import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
@@ -58,9 +59,9 @@ function FitBounds({ bounds }: { bounds: [number, number][] }) {
         if (points.length === 0) return;
         map.fitBounds(points as LatLngBoundsExpression, { padding: [40, 40], maxZoom: 14, animate: false });
     }, [map, boundsKey]);
-    // Layout cleanups run before react-leaflet removes the map: stop a pan still running.
+    // Layout cleanups run before react-leaflet removes the map: settle a pan, wheel zoom or zoom animation still running.
     useLayoutEffect(() => () => {
-        map.stop();
+        settleMapAnimations(map);
     }, [map]);
     return null;
 }

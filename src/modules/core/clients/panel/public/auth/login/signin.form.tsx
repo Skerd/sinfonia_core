@@ -10,7 +10,7 @@ import {getClientConfig} from "@coreModule/helpers/general/config.ts";
 import { zodResolver } from '@hookform/resolvers/zod';
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import { PasswordInput } from '@coreModule/components/custom/inputs/passwordInput.tsx';
-import {HTMLAttributes, useEffect, useImperativeHandle, useState} from 'react';
+import {useEffect, useImperativeHandle, useState} from 'react';
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Link, useNavigate} from "react-router-dom";
 import {LoginFormType} from "armonia/src/modules/core/api/user/public/login/login.form.type.ts";
@@ -28,7 +28,9 @@ const EMPTY_FORM_VALUES: LoginFormType = {
     mfaCode: undefined,
 };
 
-interface SignInFormProps extends HTMLAttributes<HTMLFormElement>, WithLanguageType, WithAxiosType<LoginFormResponseType & MFAEnabledLoginFormResponseType, LoginFormType> {
+// No HTML attributes are spread onto the form: the props also carry withLanguage/withAxios helpers (TD-F95).
+interface SignInFormProps extends WithLanguageType, WithAxiosType<LoginFormResponseType & MFAEnabledLoginFormResponseType, LoginFormType> {
+    className?: string,
     onMfa: Function,
     openDisable: number,
     goLogin: number,
@@ -46,7 +48,6 @@ function SignInForm({
     openDisable,
     goLogin,
     oauthLoading = false,
-    ...props
 }: SignInFormProps) {
 
     const config = getClientConfig();
@@ -119,7 +120,6 @@ function SignInForm({
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
                         className={cn('grid gap-2', className)}
-                        {...props}
                     >
                         <FormField
                             control={form.control}
@@ -162,7 +162,6 @@ function SignInForm({
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className={cn('grid gap-3', className)}
-                {...props}
             >
                 <FormField
                     control={form.control}
