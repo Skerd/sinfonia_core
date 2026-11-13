@@ -226,7 +226,22 @@
       "publicAiChat_requireIdentification": "Require identification",
       "updatedAt": "Updated at",
       "vat": "VAT",
-      "website": "Website"
+      "website": "Website",
+      "hiddenFromPortal": "Hidden from portal",
+      "isPlatformOwner": "Platform owner",
+      "isProtected": "Protected",
+      "modules": "Granted modules",
+      "shopListedOnPortal": "Shop listed on portal",
+      "siteHost": "Website host",
+      "siteProvision": "Website setup",
+      "siteProvision_checkedAt": "Website setup: checked at",
+      "siteProvision_lastError": "Website setup: last error",
+      "siteProvision_status": "Website setup: status",
+      "siteProvision_steps_domain": "Website setup: domain",
+      "siteProvision_steps_reachable": "Website setup: reachable",
+      "siteProvision_steps_slug": "Website setup: address name",
+      "siteSlug": "Website address name",
+      "timezone": "Timezone"
     },
     "Countries": {
       "code": "Code",
@@ -389,7 +404,9 @@
       "type": "Type",
       "updatedAt": "Updated at",
       "uploadedAt": "Uploaded at",
-      "url": "URL"
+      "url": "URL",
+      "encrypted": "Encrypted",
+      "sharedWithCompanies": "Shared with companies"
     },
     "Messages": {
       "createdAt": "Created at",
@@ -455,7 +472,8 @@
       "receiver": "Receiver",
       "sender": "Sender",
       "status": "Status",
-      "updatedAt": "Updated at"
+      "updatedAt": "Updated at",
+      "params": "Message values"
     },
     "Rolepermissions": {
       "alwaysActive": "Default permission",
@@ -463,7 +481,9 @@
       "group": "Group",
       "name": "Name",
       "tag": "Tag",
-      "updatedAt": "Updated at"
+      "updatedAt": "Updated at",
+      "module": "Module",
+      "sensitivity": "Sensitivity"
     },
     "Roles": {
       "createdAt": "Created at",
@@ -667,7 +687,9 @@
       "unlockMfaDeactivation": "Unlock MFA deactivation",
       "unlockInvitation": "Unlock invitation",
       "resendActivationEmail": "Resend activation email",
-      "resendInvitationEmail": "Resend invitation email"
+      "resendInvitationEmail": "Resend invitation email",
+      "mfaSecret": "2FA secret",
+      "preferredLanguage": "Preferred language"
     },
     "Usersessions": {
       "createdAt": "Created at",

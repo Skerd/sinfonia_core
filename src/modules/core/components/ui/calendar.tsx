@@ -12,6 +12,57 @@ import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button, buttonVariants } from "@coreModule/components/ui/button.tsx"
 import { IconChevronLeft, IconChevronRight, IconChevronDown } from "@tabler/icons-react"
 import { useOutsideClick } from "@coreModule/helpers/hooks/useOutsideClick.ts"
+import useSelectedLanguage, { type LanguageDictionary } from "@coreModule/helpers/hooks/useSelectedLanguage.ts"
+import { formatDate } from "@coreModule/helpers/general/dateTime.ts"
+
+const LANGUAGE_PATH = "src/modules/core/components/ui/calendar.tsx"
+
+/** The picker's own default wording, used until (or when) the dictionary has a text. */
+const ENGLISH_LABELS = {
+  previousMonth: "Go to the previous month",
+  nextMonth: "Go to the next month",
+  chooseMonth: "Choose the month",
+  chooseYear: "Choose the year",
+  today: "Today, {date}",
+  selected: "{date}, selected",
+  week: "Week {week}",
+  weekNumber: "Week number",
+} as const
+
+type CalendarLabels = NonNullable<React.ComponentProps<typeof DayPicker>["labels"]>
+
+/**
+ * Screen-reader labels in the app language (TD-F85): the texts come from the calendar's dictionary, the dates from
+ * the core `formatDate` (the app language's month and weekday names), so no label stays in English.
+ */
+function calendarLabels(dictionary: LanguageDictionary | null): CalendarLabels {
+  const text = (key: keyof typeof ENGLISH_LABELS): string => {
+    const value = dictionary?.[key]
+    return typeof value === "string" && value !== "" ? value : ENGLISH_LABELS[key]
+  }
+  const longDay = (date: Date) =>
+    formatDate(date, { format: { weekday: "long", day: "numeric", month: "long", year: "numeric" } })
+  return {
+    labelPrevious: () => text("previousMonth"),
+    labelNext: () => text("nextMonth"),
+    labelMonthDropdown: () => text("chooseMonth"),
+    labelYearDropdown: () => text("chooseYear"),
+    labelWeekNumber: (week) => text("week").replace("{week}", String(week)),
+    labelWeekNumberHeader: () => text("weekNumber"),
+    labelGrid: (month) => formatDate(month, { format: { month: "long", year: "numeric" } }),
+    labelWeekday: (weekday) => formatDate(weekday, { format: { weekday: "long" } }),
+    labelDayButton: (date, modifiers) => {
+      let label = longDay(date)
+      if (modifiers.today) label = text("today").replace("{date}", label)
+      if (modifiers.selected) label = text("selected").replace("{date}", label)
+      return label
+    },
+    labelGridcell: (date, modifiers) => {
+      const label = longDay(date)
+      return modifiers?.today ? text("today").replace("{date}", label) : label
+    },
+  }
+}
 
 /** Year dropdown span when callers do not set explicit navigation bounds. */
 export const CALENDAR_DROPDOWN_YEARS_BACK = 100
@@ -205,6 +256,7 @@ function Calendar({
   captionLayout = "label",
   buttonVariant = "ghost",
   locale,
+  labels,
   formatters,
   components,
   monthNames,
@@ -224,6 +276,16 @@ function Calendar({
   weekdayNames?: readonly string[]
 }) {
   const defaultClassNames = getDefaultClassNames()
+  const { languageCode, currentLanguage } = useSelectedLanguage(LANGUAGE_PATH)
+  // The app language, unless the caller brings its own locale: it is the grid's `lang` and names the month dropdown.
+  const resolvedLocale = React.useMemo(
+    () => locale ?? (languageCode ? { code: languageCode } : undefined),
+    [locale, languageCode],
+  )
+  const resolvedLabels = React.useMemo(
+    () => ({ ...calendarLabels(currentLanguage), ...labels }),
+    [currentLanguage, labels],
+  )
   const dropdownNavBounds = resolveDropdownNavBounds({
     captionLayout,
     startMonth,
@@ -256,7 +318,7 @@ function Calendar({
           }
         : {
             formatMonthDropdown: (month: Date) =>
-              month.toLocaleString(locale?.code, { month: "short" }),
+              month.toLocaleString(resolvedLocale?.code, { month: "short" }),
           }
 
     if (weekdayNames?.length === 7) {
@@ -272,7 +334,7 @@ function Calendar({
     }
 
     return { ...fromLanguage, ...formatters }
-  }, [captionLayout, monthNames, weekdayNames, locale?.code, formatters])
+  }, [captionLayout, monthNames, weekdayNames, resolvedLocale?.code, formatters])
 
   const mergedComponents = React.useMemo(
     () => ({
@@ -308,7 +370,7 @@ function Calendar({
       DayButton:
         components?.DayButton ??
         ((dayButtonProps) => (
-          <CalendarDayButton locale={locale} {...dayButtonProps} />
+          <CalendarDayButton locale={resolvedLocale} {...dayButtonProps} />
         )),
       WeekNumber:
         components?.WeekNumber ??
@@ -321,7 +383,7 @@ function Calendar({
         )),
       Dropdown: components?.Dropdown ?? CompactDropdown,
     }),
-    [components, locale?.code],
+    [components, resolvedLocale],
   )
 
   const { components: _ignoredComponents, ...dayPickerProps } = props as typeof props & {
@@ -338,7 +400,8 @@ function Calendar({
         className
       )}
       captionLayout={captionLayout}
-      locale={locale}
+      locale={resolvedLocale}
+      labels={resolvedLabels}
       formatters={resolvedFormatters}
       startMonth={startMonth ?? dropdownNavBounds.startMonth}
       endMonth={endMonth ?? dropdownNavBounds.endMonth}

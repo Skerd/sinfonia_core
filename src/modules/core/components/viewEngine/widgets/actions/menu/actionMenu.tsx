@@ -5,6 +5,7 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTr
 import {Button} from "@coreModule/components/ui/button.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
+import useSelectedLanguage from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
 import DeleteDropdown from "@coreModule/components/viewEngine/widgets/actions/dropdowns/deleteDropdown.tsx";
 import RestoreDropdown from "@coreModule/components/viewEngine/widgets/actions/dropdowns/restoreDropdown.tsx";
 import EditDropdown from "@coreModule/components/viewEngine/widgets/actions/dropdowns/editDropdown.tsx";
@@ -53,6 +54,9 @@ function ActionMenu({
 }: ActionMenuProps){
 
     const navigate = useNavigate();
+    // The "⋮" trigger shows only an icon, so screen readers need its name (TD-F85, FE-09).
+    const {currentLanguage} = useSelectedLanguage("src/modules/core/components/viewEngine/widgets/actions/menu/actionMenu.tsx");
+    const triggerLabel = typeof currentLanguage?.actions === "string" && currentLanguage.actions !== "" ? currentLanguage.actions : "Actions";
     const dismissSheetIfHosted = useDismissSheetBeforeMenuNavigate();
     const {read, write, delete: deleteModel, restore} = useAccess(accessModel);
     const effectiveDelete = deleteModel && !hideDelete;
@@ -164,6 +168,7 @@ function ActionMenu({
                     <Button
                         variant="ghost"
                         size="icon-sm"
+                        aria-label={triggerLabel}
                         onPointerDown={(e) => {
                             if (e.button === 0) setContextPointer(null);
                         }}

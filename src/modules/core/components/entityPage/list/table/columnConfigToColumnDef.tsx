@@ -133,6 +133,20 @@ export function toneClass(tone: EnumTone | undefined): string | undefined {
     return tone ? TONE_CLASSES[tone] : undefined;
 }
 
+/** Solid fills for a tone, for small status swatches (a schedule strip) that carry no text. */
+const TONE_SWATCH_CLASSES: Record<EnumTone, string> = {
+    success: "bg-success",
+    warning: "bg-warning",
+    danger: "bg-destructive",
+    info: "bg-info",
+    neutral: "bg-muted-foreground/40",
+};
+
+/** The swatch fill for a tone; a value without one is a faint neutral. */
+export function toneSwatchClass(tone: EnumTone | undefined): string {
+    return tone ? TONE_SWATCH_CLASSES[tone] : "bg-muted-foreground/20";
+}
+
 /* ── column widths ────────────────────────────────────────────────────────── */
 
 /**

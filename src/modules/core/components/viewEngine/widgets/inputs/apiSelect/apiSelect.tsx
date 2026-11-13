@@ -36,6 +36,7 @@ import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {findFromObject} from "@coreModule/helpers/general/objectPath.ts";
+import {clearedCascadeValue} from "@coreModule/components/viewEngine/form/widgets/emptyValue.ts";
 
 /** Optional: only inside `<Form>` (react-hook-form). Enables project→edifice style cascades from view `widgetProps`. */
 type ApiSelectFormDependencyProps = {
@@ -233,7 +234,7 @@ function ApiSelectFormDependencyBridge({
             // Empty → value does not clear: a prefilled child must survive the parent's first paint.
             if (previous && current !== previous) {
                 for (const target of cascadeClearFormFields) {
-                    form.setValue(target as keyof FieldValues, "" as never, {shouldValidate: false});
+                    form.setValue(target as keyof FieldValues, clearedCascadeValue(form.getValues(target)) as never, {shouldValidate: false});
                 }
             }
             writeCascadePrevious(form.control, formFieldName, current);
@@ -408,6 +409,7 @@ function ApiSelectCore({
 
     const {
         options,
+        resolvedOptions,
         loading,
         loadingMore,
         page,
@@ -454,12 +456,19 @@ function ApiSelectCore({
         setOpen(nextOpen);
     }, [disabled]);
 
+    // Rows known before their page loads: the caller's `defaultOptions`, then stored values labelled by id.
+    const seededOptions = useMemo(() => {
+        if (resolvedOptions.length === 0) return defaultOptions;
+        const given = new Set(defaultOptions.map((o) => o.value));
+        return [...defaultOptions, ...resolvedOptions.filter((o) => !given.has(o.value))];
+    }, [defaultOptions, resolvedOptions]);
+
     const allOptions = useMemo(() => {
-        // Prefer fetched options; keep defaultOptions only for ids not yet loaded.
+        // Prefer fetched options; keep seeded ones only for ids not yet loaded.
         const fetchedIds = new Set(options.map((o) => o.value));
-        const orphans = defaultOptions.filter((o) => !fetchedIds.has(o.value));
+        const orphans = seededOptions.filter((o) => !fetchedIds.has(o.value));
         return [...options, ...orphans];
-    }, [options, defaultOptions]);
+    }, [options, seededOptions]);
 
     const searchLower = useMemo(
         () => searchText.trim().toLowerCase(),
@@ -471,13 +480,13 @@ function ApiSelectCore({
     const filteredDefaultOptions = useMemo(() => {
         const fetchedIds = new Set(options.map((o) => o.value));
         const current = !multiple && typeof value === "string" ? value : "";
-        return defaultOptions.filter((opt) => {
+        return seededOptions.filter((opt) => {
             if (fetchedIds.has(opt.value)) return false;
             if (searchLower && !opt.label.toLowerCase().includes(searchLower)) return false;
             if (!multiple && opt.value !== current) return false;
             return true;
         });
-    }, [defaultOptions, options, searchLower, multiple, value]);
+    }, [seededOptions, options, searchLower, multiple, value]);
 
     const selectedValuesSet = useMemo(
         () => new Set(selectedValues),

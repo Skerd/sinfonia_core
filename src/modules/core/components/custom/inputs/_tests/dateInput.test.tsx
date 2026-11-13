@@ -79,6 +79,19 @@ describe("DateInput value handling", () => {
     });
 
 
+    // TD-F87: a date-and-time value without a display pattern showed its raw value ("2026-11-16T00:00").
+    it("shows a date and time in the panel's date-and-time format when no display pattern is given", () => {
+        render(<DateInput valueFormat="YYYY-MM-DD[T]HH:mm" timeZone="Europe/Berlin" value="2026-11-16T00:00"/>);
+        const expected = formatDate(new Date(2026, 10, 16, 0, 0), {format: DATE_FORMATS.mediumDateTime});
+        expect(dateBox().value).toBe(expected);
+        expect(dateBox().value).not.toContain("T");
+    });
+
+    it("keeps a time-only value in its own pattern", () => {
+        render(<DateInput timeOnly valueFormat="HH:mm" value="08:30"/>);
+        expect(dateBox().value).toBe("08:30");
+    });
+
     it("keeps an unparseable value out of the field", () => {
         render(<DateInput valueFormat="YYYY-MM-DD" value="not a date"/>);
         expect(dateBox().value).toBe("");

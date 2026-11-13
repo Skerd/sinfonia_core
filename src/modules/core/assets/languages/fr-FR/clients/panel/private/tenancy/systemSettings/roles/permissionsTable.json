@@ -226,7 +226,22 @@
       "publicAiChat_requireIdentification": "Identification requise",
       "updatedAt": "Mis à jour le",
       "vat": "TVA",
-      "website": "Site web"
+      "website": "Site web",
+      "hiddenFromPortal": "Masquée sur le portail",
+      "isPlatformOwner": "Propriétaire de la plateforme",
+      "isProtected": "Protégée",
+      "modules": "Modules accordés",
+      "shopListedOnPortal": "Boutique listée sur le portail",
+      "siteHost": "Hôte du site",
+      "siteProvision": "Configuration du site",
+      "siteProvision_checkedAt": "Configuration du site : vérifiée le",
+      "siteProvision_lastError": "Configuration du site : dernière erreur",
+      "siteProvision_status": "Configuration du site : statut",
+      "siteProvision_steps_domain": "Configuration du site : domaine",
+      "siteProvision_steps_reachable": "Configuration du site : accessible",
+      "siteProvision_steps_slug": "Configuration du site : nom d'adresse web",
+      "siteSlug": "Nom d'adresse web",
+      "timezone": "Fuseau horaire"
     },
     "Countries": {
       "code": "Code",
@@ -389,7 +404,9 @@
       "type": "Type",
       "updatedAt": "Mis à jour le",
       "uploadedAt": "Importé le",
-      "url": "URL"
+      "url": "URL",
+      "encrypted": "Chiffré",
+      "sharedWithCompanies": "Partagé avec les entreprises"
     },
     "Messages": {
       "createdAt": "Créé le",
@@ -455,7 +472,8 @@
       "receiver": "Destinataire",
       "sender": "Expéditeur",
       "status": "Statut",
-      "updatedAt": "Mis à jour le"
+      "updatedAt": "Mis à jour le",
+      "params": "Valeurs du message"
     },
     "Rolepermissions": {
       "alwaysActive": "Autorisation par défaut",
@@ -463,7 +481,9 @@
       "group": "Groupe",
       "name": "Nom",
       "tag": "Étiquette",
-      "updatedAt": "Mis à jour le"
+      "updatedAt": "Mis à jour le",
+      "module": "Module de la plateforme",
+      "sensitivity": "Sensibilité"
     },
     "Roles": {
       "createdAt": "Créé le",
@@ -667,7 +687,9 @@
       "unlockMfaDeactivation": "Débloquer la désactivation MFA",
       "unlockInvitation": "Débloquer l'invitation",
       "resendActivationEmail": "Renvoyer l'e-mail d'activation",
-      "resendInvitationEmail": "Renvoyer l'e-mail d'invitation"
+      "resendInvitationEmail": "Renvoyer l'e-mail d'invitation",
+      "mfaSecret": "Secret 2FA",
+      "preferredLanguage": "Langue préférée"
     },
     "Usersessions": {
       "createdAt": "Créé le",

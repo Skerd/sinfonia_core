@@ -155,6 +155,41 @@ describe("useApiSelectOptions", () => {
         await waitFor(() => expect(result.current.pendingValue).toBe("missing-id"));
     });
 
+    // TD-F70: a disabled select (a locked currency) showed its placeholder instead of the stored record.
+    it("labels a disabled select's value by id without loading its list", async () => {
+        post.mockResolvedValue({data: {data: [{_id: "eur", name: "Euro"}], total: 1}});
+        const {result} = renderHook(() => useApiSelectOptions(args({disabled: true, open: false, value: "eur", postBody: {kind: "x"}})));
+        await waitFor(() => expect(result.current.resolvedOptions).toEqual([{value: "eur", label: "Euro", photo: undefined}]));
+        expect(post).toHaveBeenCalledTimes(1);
+        expect(post.mock.calls[0][1]).toEqual({kind: "x", name: "", page: 1, limit: 2, ids: ["eur"]});
+        expect(result.current.options).toEqual([]);
+        expect(result.current.pendingValue).toBeUndefined();
+    });
+
+    // TD-F71: a preset value beyond the first page showed its raw id.
+    it("labels a closed select's value that is not on the first page", async () => {
+        post.mockImplementation((_url, body) => {
+            const ids = (body as {ids?: string[]}).ids;
+            return Promise.resolve(ids ? {data: {data: [{_id: "z", name: "Zulu"}], total: 1}} : page(["a", "b"], 30));
+        });
+        const {result} = renderHook(() => useApiSelectOptions(args({open: false, value: "z"})));
+        await waitFor(() => expect(result.current.resolvedOptions.map((o) => o.label)).toEqual(["Zulu"]));
+        expect(result.current.pendingValue).toBeUndefined();
+        expect(post.mock.calls.every((call) => (call[1] as {ids?: string[]}).ids?.[0] === "z")).toBe(true);
+    });
+
+    it("asks for a label it could not find only once", async () => {
+        post.mockResolvedValue(page(["a"], 1));
+        const {result, rerender} = renderHook((p: UseApiSelectOptionsArgs) => useApiSelectOptions(p), {
+            initialProps: args({open: false, value: "gone"}),
+        });
+        await waitFor(() => expect(post).toHaveBeenCalledTimes(1));
+        rerender(args({open: false, value: "gone", defaultOptions: []}));
+        await act(async () => {await Promise.resolve();});
+        expect(post).toHaveBeenCalledTimes(1);
+        expect(result.current.pendingValue).toBe("gone");
+    });
+
     it("treats a value present in defaultOptions as already resolved", async () => {
         post.mockResolvedValue(page(["a"], 1));
         const {result} = renderHook(() =>

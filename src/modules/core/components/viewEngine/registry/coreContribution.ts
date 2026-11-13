@@ -1,4 +1,4 @@
-import {lazy} from "react";
+import {createElement, lazy} from "react";
 import type {WidgetContribution} from "@coreModule/helpers/types/widgetContribution.types.ts";
 import {Input} from "@coreModule/components/ui/input.tsx";
 import {Textarea} from "@coreModule/components/ui/textarea.tsx";
@@ -32,6 +32,7 @@ import SheetLocationMap from "@coreModule/components/viewEngine/widgets/addresse
 import {FormWhenFieldValueIn} from "@coreModule/components/viewEngine/widgets/layout/form/whenFieldValueIn.tsx";
 import {SheetGrid} from "@coreModule/components/viewEngine/widgets/layout/sheet/grid.tsx";
 import {FormAlert} from "@coreModule/components/viewEngine/widgets/layout/form/alert.tsx";
+import {FormTotal} from "@coreModule/components/viewEngine/widgets/layout/form/total.tsx";
 import {FormGrid} from "@coreModule/components/viewEngine/widgets/layout/form/grid.tsx";
 import {SheetGroup} from "@coreModule/components/viewEngine/widgets/layout/sheet/group.tsx";
 import SheetMediaFilesStrip from "../sheet/widgets/sheetMediaFilesStrip.tsx";
@@ -43,6 +44,9 @@ import {ReferencesViewModeScope} from "../sheet/widgets/references/referencesVie
 import ReferencesViewModeToggle from "../sheet/widgets/references/referencesViewModeToggle.tsx";
 import {CORE_WIDGET_META} from "../widgetMeta.ts";
 import {CORE_DEFAULT_COMPOUND_FORM_WIDGETS, coreCompoundFormWidgetRenderers} from "../form/widgets/compound.tsx";
+import {sheetFieldVisible} from "../engine/nodeGates.ts";
+import CronJobRuns from "@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobRuns.tsx";
+import type {CronJob} from "armonia/src/modules/core/api/auxiliary/private/cronJob/cronJob.dto.ts";
 
 const CurrencySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx"));
 const CountrySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx"));
@@ -71,6 +75,8 @@ export function getCoreWidgetContribution(): WidgetContribution {
             "#SheetGrid": SheetGrid,
             "#FormGrid": FormGrid,
             "#FormAlert": FormAlert,
+            /** Form display: a total built from other fields as they are typed, in its record's currency (TD-F74). */
+            "#FormTotal": FormTotal,
             "#SheetGroup": SheetGroup,
             "#Input": Input,
             "#Textarea": Textarea,
@@ -123,6 +129,14 @@ export function getCoreWidgetContribution(): WidgetContribution {
             /** `#ReferencesRender` card for state stubs (pairs with `#StateSheetView`). */
             "#StateCard": StateCardLazy,
             "#CitySheetView": CitySheetViewLazy,
+        },
+        sheetFieldRenderers: {
+            /** The scheduled action's next runs and run history, placed by the view above Lifecycle (UX-03, TD-F67). */
+            "#CronJobRuns": ({node, ctx, index}) => {
+                const {data} = ctx;
+                if (!data || typeof data._id !== "string" || !sheetFieldVisible(node, ctx)) return null;
+                return createElement(CronJobRuns, {key: index, job: data as CronJob, resolveLanguageKey: ctx.resolveLanguageKey});
+            },
         },
         widgetMeta: CORE_WIDGET_META,
         compoundFormWidgets: CORE_DEFAULT_COMPOUND_FORM_WIDGETS,

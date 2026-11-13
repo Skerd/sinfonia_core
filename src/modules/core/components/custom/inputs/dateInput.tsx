@@ -375,7 +375,10 @@ type DateInputBase = Omit<
   React.ComponentProps<typeof Input>,
   "type" | "value" | "onChange" | "readOnly"
 > & {
-  /** dayjs pattern for the visible text (defaults to `valueFormat` when it includes time, else the localized long date). */
+  /**
+   * dayjs pattern for the visible text. Without it a date shows as the localized long date and a date and time as
+   * `DATE_FORMATS.mediumDateTime` ("16 Nov 2026, 00:00"), both in the app language; a time-only value shows its pattern.
+   */
   displayFormat?: string
   calendarProps?: Omit<
     React.ComponentProps<typeof Calendar>,
@@ -461,14 +464,10 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
     const endOfDayValue = withSeconds ? "24:00:00" : "24:00"
     const isEndOfDay =
       allowEndOfDay && typeof value === "string" && value.trim() === endOfDayValue
-    // No pattern: a plain date shows as the localized long date.
+    // No pattern: a plain date shows as the localized long date, a date and time as the panel's one date-and-time
+    // format (UX-08, TD-F87), both in the app language; only a time-only value shows its own pattern.
     const displayFormat: string | undefined =
-      displayFormatProp ??
-      (resolvedValueFormat && hasTime
-        ? resolvedValueFormat
-        : timeOnly
-          ? "HH:mm"
-          : undefined)
+      displayFormatProp ?? (timeOnly ? (resolvedValueFormat ?? "HH:mm") : undefined)
 
     const [open, setOpen] = React.useState(false)
     const drawerPortalContainer = useDrawerPortalContainer()
@@ -588,7 +587,7 @@ export const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       ? ""
       : displayFormat
         ? safeFormat(dateValue, displayFormat)
-        : formatDate(dateValue, { format: DATE_FORMATS.longDate })
+        : formatDate(dateValue, { format: hasTime ? DATE_FORMATS.mediumDateTime : DATE_FORMATS.longDate })
     const canClear = clearable && displayValue.length > 0
 
     const rangeCalendarProps = React.useMemo(() => {

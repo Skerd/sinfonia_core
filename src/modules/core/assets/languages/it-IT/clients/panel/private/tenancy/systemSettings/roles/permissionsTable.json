@@ -226,7 +226,22 @@
       "publicAiChat_requireIdentification": "Identificazione richiesta",
       "updatedAt": "Aggiornato il",
       "vat": "IVA",
-      "website": "Sito web"
+      "website": "Sito web",
+      "hiddenFromPortal": "Nascosta nel portale",
+      "isPlatformOwner": "Proprietario della piattaforma",
+      "isProtected": "Protetta",
+      "modules": "Moduli concessi",
+      "shopListedOnPortal": "Negozio elencato sul portale",
+      "siteHost": "Host del sito",
+      "siteProvision": "Configurazione del sito",
+      "siteProvision_checkedAt": "Configurazione del sito: verificata il",
+      "siteProvision_lastError": "Configurazione del sito: ultimo errore",
+      "siteProvision_status": "Configurazione del sito: stato",
+      "siteProvision_steps_domain": "Configurazione del sito: dominio",
+      "siteProvision_steps_reachable": "Configurazione del sito: raggiungibile",
+      "siteProvision_steps_slug": "Configurazione del sito: nome per l'indirizzo web",
+      "siteSlug": "Nome per l'indirizzo web",
+      "timezone": "Fuso orario"
     },
     "Countries": {
       "code": "Codice",
@@ -389,7 +404,9 @@
       "type": "Tipo",
       "updatedAt": "Aggiornato il",
       "uploadedAt": "Caricato il",
-      "url": "URL"
+      "url": "URL",
+      "encrypted": "Crittografato",
+      "sharedWithCompanies": "Condiviso con le aziende"
     },
     "Messages": {
       "createdAt": "Creato il",
@@ -455,7 +472,8 @@
       "receiver": "Destinatario",
       "sender": "Mittente",
       "status": "Stato",
-      "updatedAt": "Aggiornato il"
+      "updatedAt": "Aggiornato il",
+      "params": "Valori del messaggio"
     },
     "Rolepermissions": {
       "alwaysActive": "Autorizzazione predefinita",
@@ -463,7 +481,9 @@
       "group": "Gruppo",
       "name": "Nome",
       "tag": "Etichetta",
-      "updatedAt": "Aggiornato il"
+      "updatedAt": "Aggiornato il",
+      "module": "Modulo",
+      "sensitivity": "Sensibilità"
     },
     "Roles": {
       "createdAt": "Creato il",
@@ -667,7 +687,9 @@
       "unlockMfaDeactivation": "Sblocca la disattivazione MFA",
       "unlockInvitation": "Sblocca l'invito",
       "resendActivationEmail": "Invia di nuovo l'email di attivazione",
-      "resendInvitationEmail": "Invia di nuovo l'email di invito"
+      "resendInvitationEmail": "Invia di nuovo l'email di invito",
+      "mfaSecret": "Segreto 2FA",
+      "preferredLanguage": "Lingua preferita"
     },
     "Usersessions": {
       "createdAt": "Creato il",

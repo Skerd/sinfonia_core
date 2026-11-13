@@ -80,7 +80,7 @@ describe("renderFormWidget: #ApiSelect", () => {
         );
         expect(props).toMatchObject({
             apiUrl: "/api/x/select",
-            value: "o1",
+            value: ["o1"],
             placeholder: "t:ph",
             inlineCreateEntityLabel: "t:entity.label",
             postBody: {a: 1, project: "p1", fixed: 7},
@@ -121,6 +121,29 @@ describe("renderFormWidget: #ApiSelect", () => {
         expect(plain.field.onChange).toHaveBeenCalledWith("");
         plain.props.onValueChange(["a"], ["A"]);
         expect(plain.field.onChange).toHaveBeenCalledWith(["a"]);
+    });
+
+    // TD-F76: a multi-select with normalizeEmptyToUndefined showed "a,b" and saved a string.
+    it("keeps a multi-select's array with normalizeEmptyToUndefined", () => {
+        const picked = mountScalar(bind("#ApiSelect", {multiple: true, normalizeEmptyToUndefined: true}), makeField(["a", {_id: "b"}]));
+        expect(picked.props.value).toEqual(["a", "b"]);
+        picked.props.onValueChange(["a", "b", "c"], ["A", "B", "C"]);
+        expect(picked.field.onChange).toHaveBeenCalledWith(["a", "b", "c"]);
+        picked.props.onValueChange([], []);
+        expect(picked.field.onChange).toHaveBeenCalledWith([]);
+
+        const empty = mountScalar(bind("#ApiSelect", {multiple: true, normalizeEmptyToUndefined: true}), makeField(""));
+        expect(empty.props.value).toEqual([]);
+    });
+});
+
+describe("clearedCascadeValue (TD-F76)", () => {
+    it("clears a multi-select to an empty list and a single select to a blank", async () => {
+        const {clearedCascadeValue} = await import("../form/widgets/emptyValue.ts");
+        expect(clearedCascadeValue(["a", "b"])).toEqual([]);
+        expect(clearedCascadeValue([])).toEqual([]);
+        expect(clearedCascadeValue("x")).toBe("");
+        expect(clearedCascadeValue(undefined)).toBe("");
     });
 });
 

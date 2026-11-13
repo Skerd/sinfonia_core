@@ -1,5 +1,5 @@
 import {IconExternalLink} from "@tabler/icons-react";
-import {useEffect, useState} from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import {Circle, MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
 import L, {type LatLngBoundsExpression, type LatLngExpression} from "leaflet";
 import {CloseMapControl, ExpandMapControl, MapDialog, SyncMapSize} from "@coreModule/components/viewEngine/widgets/addresses/mapChrome.tsx";
@@ -49,10 +49,19 @@ export type MapAddress = {
 
 function FitBounds({ bounds }: { bounds: [number, number][] }) {
     const map = useMap();
+    // Refit only when the points change (`bounds` is a new array on every render), and without a zoom animation: a
+    // fit's zoom transition ends on a timer that Leaflet does not cancel, so a sheet closed during it hit the removed
+    // map (`_leaflet_pos` of undefined, TD-F68). The map opens already framed instead.
+    const boundsKey = JSON.stringify(bounds);
     useEffect(() => {
-        if (!bounds || bounds.length === 0) return;
-        map.fitBounds(bounds as LatLngBoundsExpression, { padding: [40, 40], maxZoom: 14, animate: true });
-    }, [map, bounds]);
+        const points = JSON.parse(boundsKey) as [number, number][];
+        if (points.length === 0) return;
+        map.fitBounds(points as LatLngBoundsExpression, { padding: [40, 40], maxZoom: 14, animate: false });
+    }, [map, boundsKey]);
+    // Layout cleanups run before react-leaflet removes the map: stop a pan still running.
+    useLayoutEffect(() => () => {
+        map.stop();
+    }, [map]);
     return null;
 }
 

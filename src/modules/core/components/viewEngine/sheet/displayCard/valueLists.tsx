@@ -2,7 +2,8 @@ import type {ReactNode} from "react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import ValueNotSet from "@coreModule/components/custom/valueNotSet.tsx";
-import {formatNumber} from "@coreModule/helpers/general/numbers.ts";
+import {DEFAULT_DECIMAL_PLACES, roundToCurrency} from "armonia/src/modules/core/helpers/money.ts";
+import {formatAmountWithCurrency} from "../../engine/format.ts";
 import type {WidgetProps} from "../../engine/types.ts";
 
 const BADGE_ROW = "flex flex-wrap gap-y-1 gap-x-1 mt-0.5";
@@ -55,11 +56,20 @@ export function stringBadgeList(
     );
 }
 
-type CurrencyAmount = {value?: number; currency?: {abbreviation?: string; symbol?: string; name?: string}};
+type CurrencyAmount = {value?: number; currency?: {abbreviation?: string; symbol?: string; name?: string; decimalPlaces?: number}};
+
+/** One amount at its currency's decimals, rounded once by the money helper (GLB-08, TD-F75): "€ 1,376,503.90". */
+export function currencyListItemText(item: CurrencyAmount): string {
+    const currency = item.currency;
+    const decimals = typeof currency?.decimalPlaces === "number" ? currency.decimalPlaces : DEFAULT_DECIMAL_PLACES;
+    const amount = formatAmountWithCurrency(roundToCurrency(item.value ?? 0, decimals), currency);
+    // A currency known only by name still names it.
+    return currency?.symbol?.trim() || currency?.abbreviation?.trim() || !currency?.name ? amount : `${currency.name} ${amount}`;
+}
 
 /**
  * `valueType: "currencyList"` — `[{value, currency}]` (or one such object) as
- * "EUR 10 and $ 5"; `widgetProps.andKey` overrides the joiner key.
+ * "€ 10.00 and $ 5.00"; `widgetProps.andKey` overrides the joiner key.
  */
 export function currencyList(raw: unknown, wp: WidgetProps, resolveLanguageKey: ResolveLanguageKey): ReactNode {
     const list: CurrencyAmount[] = Array.isArray(raw)
@@ -79,14 +89,11 @@ export function currencyList(raw: unknown, wp: WidgetProps, resolveLanguageKey: 
     return (
         <div className="text-success flex flex-wrap gap-x-1">
             {list.map((item, i) => {
-                const currency = item.currency;
-                const currencyName = currency?.abbreviation ?? currency?.symbol ?? currency?.name ?? "";
                 const isLastOfMany = list.length > 1 && i === list.length - 1;
                 return (
                     <div className="flex items-center gap-x-0.5" key={i}>
                         {isLastOfMany && <span> {resolveLanguageKey(andKey)} </span>}
-                        <p>{String(currencyName)}</p>
-                        <p>{formatNumber(item.value ?? 0)}</p>
+                        <p>{currencyListItemText(item)}</p>
                     </div>
                 );
             })}

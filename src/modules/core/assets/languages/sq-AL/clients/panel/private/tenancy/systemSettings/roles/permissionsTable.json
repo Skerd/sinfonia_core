@@ -226,7 +226,22 @@
       "publicAiChat_requireIdentification": "Kërkohet identifikimi",
       "updatedAt": "Përditësuar më",
       "vat": "TVSH",
-      "website": "Faqja e internetit"
+      "website": "Faqja e internetit",
+      "hiddenFromPortal": "E fshehur nga portali",
+      "isPlatformOwner": "Pronari i platformës",
+      "isProtected": "E mbrojtur",
+      "modules": "Modulet e dhëna",
+      "shopListedOnPortal": "Dyqani i listuar në portal",
+      "siteHost": "Hosti i faqes",
+      "siteProvision": "Konfigurimi i faqes",
+      "siteProvision_checkedAt": "Konfigurimi i faqes: kontrolluar më",
+      "siteProvision_lastError": "Konfigurimi i faqes: gabimi i fundit",
+      "siteProvision_status": "Konfigurimi i faqes: statusi",
+      "siteProvision_steps_domain": "Konfigurimi i faqes: domeni",
+      "siteProvision_steps_reachable": "Konfigurimi i faqes: i arritshëm",
+      "siteProvision_steps_slug": "Konfigurimi i faqes: emri i adresës web",
+      "siteSlug": "Emri i adresës web",
+      "timezone": "Zona kohore"
     },
     "Countries": {
       "code": "Kodi",
@@ -389,7 +404,9 @@
       "type": "Lloji",
       "updatedAt": "Përditësuar më",
       "uploadedAt": "Ngarkuar më",
-      "url": "URL"
+      "url": "URL",
+      "encrypted": "I enkriptuar",
+      "sharedWithCompanies": "Ndarë me kompanitë"
     },
     "Messages": {
       "createdAt": "Krijuar më",
@@ -455,7 +472,8 @@
       "receiver": "Marrësi",
       "sender": "Dërguesi",
       "status": "Statusi",
-      "updatedAt": "Përditësuar më"
+      "updatedAt": "Përditësuar më",
+      "params": "Vlerat e mesazhit"
     },
     "Rolepermissions": {
       "alwaysActive": "Leja e parazgjedhur",
@@ -463,7 +481,9 @@
       "group": "Grupi",
       "name": "Emri",
       "tag": "Etiketë",
-      "updatedAt": "Përditësuar më"
+      "updatedAt": "Përditësuar më",
+      "module": "Moduli",
+      "sensitivity": "Ndjeshmëria"
     },
     "Roles": {
       "createdAt": "Krijuar më",
@@ -667,7 +687,9 @@
       "unlockMfaDeactivation": "Zhblloko çaktivizimin e MFA",
       "unlockInvitation": "Zhblloko ftesën",
       "resendActivationEmail": "Ridërgo emailin e aktivizimit",
-      "resendInvitationEmail": "Ridërgo emailin e ftesës"
+      "resendInvitationEmail": "Ridërgo emailin e ftesës",
+      "mfaSecret": "Sekreti i 2FA",
+      "preferredLanguage": "Gjuha e preferuar"
     },
     "Usersessions": {
       "createdAt": "Krijuar më",

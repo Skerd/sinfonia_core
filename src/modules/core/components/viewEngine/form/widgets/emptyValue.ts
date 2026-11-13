@@ -12,3 +12,11 @@ export function clearedValue(extra: FormWidgetExtra | undefined): null | undefin
 export function orCleared<T>(v: T | "" | null | undefined, extra: FormWidgetExtra | undefined): T | null | undefined {
     return v === "" || v == null ? clearedValue(extra) : v;
 }
+
+/**
+ * What an `#ApiSelect` cascade clears a child field to: an empty list for a multi-select (TD-F76), else `""` (a
+ * cleared prefilled select must stay blank, see the `#ApiSelect` scalar adapter).
+ */
+export function clearedCascadeValue(current: unknown): string | never[] {
+    return Array.isArray(current) ? [] : "";
+}

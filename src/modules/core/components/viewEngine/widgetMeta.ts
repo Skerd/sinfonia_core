@@ -161,6 +161,22 @@ export const CORE_WIDGET_META: Record<string, WidgetMeta> = {
         modes: FORM,
         props: [{name: "message", type: "string", required: true, suggest: "languageKey"}],
     },
+    "#FormTotal": {
+        modes: FORM,
+        docs: "A total built from other fields as they are typed (UX-07), in the currency of the record it belongs to. Display only: the server computes it on save (D151).",
+        props: [
+            {name: "multiply", type: "string[]", suggest: "writePath", docs: "`[amountField, factorField]`: unit price × quantity."},
+            {name: "add", type: "string[]", suggest: "writePath", docs: "Fields added up, e.g. net + VAT."},
+            {
+                name: "currencyFrom",
+                type: "json",
+                required: true,
+                docs: "`{field, url, path?}`: the form field holding the currency or a record with one, its `single` route, and the currency's path on it.",
+            },
+            {name: "label", type: "string", suggest: "languageKey", docs: "Language key; \"Total\" when omitted."},
+            {name: "className", type: "string"},
+        ],
+    },
     "#ReferencesViewModeToggle": {modes: SHEET},
 
     // -----------------------------------------------------------------------

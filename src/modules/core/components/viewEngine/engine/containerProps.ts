@@ -57,6 +57,7 @@ const CONTAINER_PROPS: Record<string, PropsTransform> = {
     "#SheetGroup": sheetGroup,
     "#TitleWithCollapse": translate("title"),
     "#FormAlert": (props, ctx) => (typeof props.message === "string" ? translate("message")(props, ctx) : props),
+    "#FormTotal": translate("label"),
 };
 
 /** `node.props` as the registered component should receive them. */

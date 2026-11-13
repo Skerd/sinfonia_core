@@ -11,6 +11,8 @@ export type SelectOption = {
 
 const EMPTY_SEARCH_KEY = "__empty__";
 const CACHE_MAX_KEYS = 20;
+/** The select route's page cap (`validateSelectForm`). */
+const MAX_SELECT_LIMIT = 200;
 /** Stable fallback so `defaultOptions = []` at the call site does not re-trigger hydrate every render. */
 const EMPTY_DEFAULT_OPTIONS: SelectOption[] = [];
 
@@ -249,24 +251,73 @@ export function useApiSelectOptions({
         [value, multiple],
     );
 
-    // A value may arrive before the page holding its label: restore the cache, else fetch page 1.
-    // Never do this while the user is typing a search — restoring the empty-search cache marks
-    // page 1 as fetched, so the debounced search for the query no-ops and the list looks unfiltered.
+    /**
+     * Labels of stored values loaded by id (`ids` on the select route), so a value past the first page or in a disabled
+     * select shows its name instead of its id or the placeholder (TD-F70, TD-F71). Kept apart from `options`: they are
+     * not a page of the list.
+     */
+    const [resolvedOptions, setResolvedOptions] = useState<SelectOption[]>([]);
+    const resolvedRef = useRef<SelectOption[]>([]);
+    /** Ids already asked for, so a value the route cannot label (deleted, not readable) is asked once. */
+    const askedIdsRef = useRef<Set<string>>(new Set());
+    const resolveAbortRef = useRef<AbortController | null>(null);
+
+    const resolveByIds = useCallback(
+        async (ids: string[]) => {
+            if (!apiUrl) return;
+            resolveAbortRef.current?.abort();
+            const controller = new AbortController();
+            resolveAbortRef.current = controller;
+            // A route with its own select handler may ignore `ids`; it then answers with its first page, which is
+            // what the label lookup used before, so the limit stays the page size.
+            const limit = Math.min(MAX_SELECT_LIMIT, Math.max(ids.length, pageSize));
+            const body = {...(postBodyRef.current as object), name: "", page: 1, limit, ids};
+            try {
+                const response = await apiClient.post(apiUrl, body, {signal: controller.signal});
+                if (controller.signal.aborted) return;
+                const wanted = new Set(ids);
+                const found = parseListResponse(response.data)
+                    .data.map((item) => toSelectOption(item, languageCodeRef.current))
+                    .filter((option) => wanted.has(option.value));
+                if (found.length === 0) return;
+                const known = new Set(found.map((option) => option.value));
+                const next = [...resolvedRef.current.filter((option) => !known.has(option.value)), ...found];
+                resolvedRef.current = next;
+                setResolvedOptions(next);
+            } catch (err: unknown) {
+                if (isAbortError(err, controller.signal)) return;
+                handleError(err, {context: "ApiSelect"});
+            } finally {
+                if (resolveAbortRef.current === controller) resolveAbortRef.current = null;
+            }
+        },
+        [apiUrl, pageSize],
+    );
+
+    // A value may arrive before the page holding its label: restore the cache, else load its label by id. A disabled
+    // select never loads its list, so it always asks by id. Never do this while the user is typing a search —
+    // restoring the empty-search cache marks page 1 as fetched, so the debounced search for the query no-ops and the
+    // list looks unfiltered.
     useEffect(() => {
-        if (disabled || valuesToHydrate.length === 0) return;
+        if (valuesToHydrate.length === 0) return;
         if (searchText.trim()) return;
 
         const isKnown = (v: string) =>
-            optionsRef.current.some((opt) => opt.value === v) || defaultOptions.some((opt) => opt.value === v);
+            optionsRef.current.some((opt) => opt.value === v) ||
+            defaultOptions.some((opt) => opt.value === v) ||
+            resolvedRef.current.some((opt) => opt.value === v);
         if (valuesToHydrate.every(isKnown)) return;
 
-        const cached = cacheRef.current.get(EMPTY_SEARCH_KEY);
+        const cached = disabled ? undefined : cacheRef.current.get(EMPTY_SEARCH_KEY);
         if (cached) {
             restoreFromCache(cached);
             if (valuesToHydrate.every(isKnown)) return;
         }
-        if (!fetchedPagesRef.current.has(1)) fetchPageRef.current?.(1, "");
-    }, [valuesToHydrate, disabled, defaultOptions, restoreFromCache, searchText]);
+        const missing = valuesToHydrate.filter((v) => !isKnown(v) && !askedIdsRef.current.has(v));
+        if (missing.length === 0) return;
+        for (const id of missing) askedIdsRef.current.add(id);
+        void resolveByIds(missing);
+    }, [valuesToHydrate, disabled, defaultOptions, restoreFromCache, searchText, resolveByIds]);
 
     /**
      * The single selected value whose label has not been loaded yet, so the trigger can show the
@@ -275,11 +326,14 @@ export function useApiSelectOptions({
      * as a flash of the id after the list has loaded.
      */
     const pendingValue = useMemo(() => {
-        if (disabled || multiple || valuesToHydrate.length === 0) return undefined;
+        if (multiple || valuesToHydrate.length === 0) return undefined;
         return valuesToHydrate.find(
-            (v) => !options.some((opt) => opt.value === v) && !defaultOptions.some((opt) => opt.value === v),
+            (v) =>
+                !options.some((opt) => opt.value === v) &&
+                !defaultOptions.some((opt) => opt.value === v) &&
+                !resolvedOptions.some((opt) => opt.value === v),
         );
-    }, [disabled, multiple, valuesToHydrate, options, defaultOptions]);
+    }, [multiple, valuesToHydrate, options, defaultOptions, resolvedOptions]);
 
     // Opening (or typing) serves from cache when possible, else debounces a fresh first page.
     useEffect(() => {
@@ -316,7 +370,13 @@ export function useApiSelectOptions({
     }, [page, open, disabled, hasMore, searchText]);
 
     // Abandon any in-flight request when the select goes away.
-    useEffect(() => () => abortControllerRef.current?.abort(), []);
+    useEffect(
+        () => () => {
+            abortControllerRef.current?.abort();
+            resolveAbortRef.current?.abort();
+        },
+        [],
+    );
 
     /** Put a just-created option at the top of the list and of the cache entry it belongs to. */
     const prependCreatedOption = useCallback(
@@ -337,5 +397,5 @@ export function useApiSelectOptions({
 
     const loadMore = useCallback(() => setPage((current) => current + 1), []);
 
-    return {options, loading, loadingMore, page, total, hasMore, pendingValue, loadMore, prependCreatedOption};
+    return {options, resolvedOptions, loading, loadingMore, page, total, hasMore, pendingValue, loadMore, prependCreatedOption};
 }

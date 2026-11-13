@@ -164,13 +164,29 @@ describe("value pipeline", () => {
     it("currencyList renders each amount and the `and` joiner; empty renders `none`", () => {
         const p = card({budget: [{currency: {abbreviation: "EUR"}, value: 1}, {currency: {symbol: "$"}, value: 2}]}, "budget", {valueType: "currencyList"});
         render(<>{p.value}</>);
-        expect(screen.getByText("EUR")).toBeInTheDocument();
-        expect(screen.getByText("$")).toBeInTheDocument();
+        expect(screen.getByText(`EUR ${formatNumber(1, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`)).toBeInTheDocument();
+        expect(screen.getByText(`$ ${formatNumber(2, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`)).toBeInTheDocument();
         expect(screen.getByText("t:and")).toBeInTheDocument();
 
         const empty = card({budget: []}, "budget", {valueType: "currencyList"});
         render(<>{empty.value}</>);
         expect(screen.getByText("t:none")).toBeInTheDocument();
+    });
+
+    // TD-F75: amounts showed with formatNumber ("EUR 1,376,503.9") instead of the currency's decimals.
+    it("currencyList shows each amount at its currency's decimals, rounded once", () => {
+        const p = card({totals: [{currency: {symbol: "€", decimalPlaces: 2}, value: 1376503.9}, {currency: {symbol: "¥", decimalPlaces: 0}, value: 1234.5}]}, "totals", {valueType: "currencyList"});
+        render(<>{p.value}</>);
+        expect(screen.getByText(`€ ${formatNumber(1376503.9, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`)).toBeInTheDocument();
+        expect(screen.getByText(`¥ ${formatNumber(1235, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`)).toBeInTheDocument();
+    });
+
+    // TD-F75: `type: "currency"` beside a list value type made the card render nothing.
+    it("a list value type keeps its rendered list when the card also sets a display type", () => {
+        const p = card({totals: [{currency: {symbol: "€"}, value: 5}]}, "totals", {valueType: "currencyList", type: "currency"});
+        expect(p.type).toBeUndefined();
+        render(<>{p.value}</>);
+        expect(screen.getByText(`€ ${formatNumber(5, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`)).toBeInTheDocument();
     });
 
     it("bodyWidget replaces the value with the contributed renderer output", () => {

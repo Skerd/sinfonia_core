@@ -1,0 +1,11 @@
+{
+  "path": "src/modules/core/components/ui/calendar.tsx",
+  "previousMonth": "Zum vorherigen Monat",
+  "nextMonth": "Zum nächsten Monat",
+  "chooseMonth": "Monat wählen",
+  "chooseYear": "Jahr wählen",
+  "today": "Heute, {date}",
+  "selected": "{date}, ausgewählt",
+  "week": "Woche {week}",
+  "weekNumber": "Kalenderwoche"
+}

@@ -122,6 +122,12 @@ export function resolveDisplayCardValue(
     const skipPreFormat = !!displayType || !!bodyWidget;
     const t = ctx.resolveLanguageKey;
 
+    // A list value type renders its own items; a display `type` beside it (`currency`) would make DisplayValue reject
+    // the rendered list and show nothing (TD-F75).
+    if (wp.valueType === "currencyList" || wp.valueType === "stringBadgeList") {
+        return {value: rawValue(binding, ctx, undefined, true), type: undefined};
+    }
+
     let value = rawValue(binding, ctx, displayType, skipPreFormat);
 
     if (bodyWidget) {

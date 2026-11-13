@@ -36,6 +36,19 @@ type OnValueChangeFull = (value: string | string[], label?: string | string[]) =
 const refId = (v: unknown) => (v != null && typeof v === "object" ? ((v as {_id?: string})._id ?? v) : v);
 
 /**
+ * The value an `#ApiSelect` shows: ids, never populated refs. A `multiple` select keeps its array even with
+ * `normalizeEmptyToUndefined` (`String(["a", "b"])` is `"a,b"`, which matches no option and fails the save, TD-F76).
+ */
+export function apiSelectValue(raw: unknown, multiple: boolean, normalizeEmptyToUndefined: boolean): unknown {
+    if (multiple) {
+        const items = Array.isArray(raw) ? raw : raw == null || raw === "" ? [] : [raw];
+        return items.map((item) => String(refId(item))).filter((id) => id !== "");
+    }
+    if (!normalizeEmptyToUndefined) return refId(raw);
+    return raw == null || raw === "" ? "" : String(refId(raw));
+}
+
+/**
  * `#ApiSelect`. `postBodyFormExtrasMerge` maps post-body keys to form-extras keys (or literal
  * values); `defaultOptionsFormExtraKey` reads preloaded options from form extras. Repeater-only
  * props are stripped; `__onValueChangeFull` (injected by the repeater) also receives the label.
@@ -71,9 +84,7 @@ const apiSelect: ScalarAdapter = ({Widget, binding, field, resolveLanguageKey: t
         (onValueChangeFull as OnValueChangeFull | undefined)?.(value, label);
     };
 
-    const value = normalizeEmptyToUndefined
-        ? field.value == null || field.value === "" ? "" : String(refId(field.value))
-        : refId(field.value);
+    const value = apiSelectValue(field.value, wp.multiple === true, normalizeEmptyToUndefined === true);
 
     return (
         <Widget

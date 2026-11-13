@@ -226,7 +226,22 @@
       "publicAiChat_requireIdentification": "Identifikation erforderlich",
       "updatedAt": "Aktualisiert am",
       "vat": "MWST-Nr.",
-      "website": "Website"
+      "website": "Website",
+      "hiddenFromPortal": "Im Portal ausgeblendet",
+      "isPlatformOwner": "Plattformbetreiber",
+      "isProtected": "Geschützt",
+      "modules": "Freigeschaltete Module",
+      "shopListedOnPortal": "Shop im Portal gelistet",
+      "siteHost": "Website-Host",
+      "siteProvision": "Website-Einrichtung",
+      "siteProvision_checkedAt": "Website-Einrichtung: Geprüft am",
+      "siteProvision_lastError": "Website-Einrichtung: Letzter Fehler",
+      "siteProvision_status": "Website-Einrichtung: Status",
+      "siteProvision_steps_domain": "Website-Einrichtung: Domain",
+      "siteProvision_steps_reachable": "Website-Einrichtung: Erreichbar",
+      "siteProvision_steps_slug": "Website-Einrichtung: Webadressen-Name",
+      "siteSlug": "Webadressen-Name",
+      "timezone": "Zeitzone"
     },
     "Countries": {
       "code": "Code",
@@ -389,7 +404,9 @@
       "type": "Typ",
       "updatedAt": "Aktualisiert am",
       "uploadedAt": "Hochgeladen am",
-      "url": "URL"
+      "url": "URL",
+      "encrypted": "Verschlüsselt",
+      "sharedWithCompanies": "Geteilt mit Firmen"
     },
     "Messages": {
       "createdAt": "Erstellt am",
@@ -455,7 +472,8 @@
       "receiver": "Empfänger",
       "sender": "Absender",
       "status": "Status",
-      "updatedAt": "Aktualisiert am"
+      "updatedAt": "Aktualisiert am",
+      "params": "Nachrichtenwerte"
     },
     "Rolepermissions": {
       "alwaysActive": "Standardberechtigung",
@@ -463,7 +481,9 @@
       "group": "Gruppe",
       "name": "Name",
       "tag": "Schlagwort",
-      "updatedAt": "Aktualisiert am"
+      "updatedAt": "Aktualisiert am",
+      "module": "Modul",
+      "sensitivity": "Sensibilität"
     },
     "Roles": {
       "createdAt": "Erstellt am",
@@ -667,7 +687,9 @@
       "unlockMfaDeactivation": "MFA-Deaktivierung entsperren",
       "unlockInvitation": "Einladung entsperren",
       "resendActivationEmail": "Aktivierungs-E-Mail erneut senden",
-      "resendInvitationEmail": "Einladungs-E-Mail erneut senden"
+      "resendInvitationEmail": "Einladungs-E-Mail erneut senden",
+      "mfaSecret": "2FA-Geheimnis",
+      "preferredLanguage": "Bevorzugte Sprache"
     },
     "Usersessions": {
       "createdAt": "Erstellt am",
