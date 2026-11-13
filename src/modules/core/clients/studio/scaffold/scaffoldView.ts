@@ -58,7 +58,7 @@ export function widgetPropsForPath(
     if (mode !== "form") return undefined;
 
     if (entry.cellType === COLUMN_TYPE.OBJECT_ID && entry.apiUrl) {
-        return {apiUrl: entry.apiUrl, method: "POST", pageSize: 50};
+        return {apiUrl: entry.apiUrl, pageSize: 50};
     }
     if (entry.cellType === COLUMN_TYPE.ENUM && entry.enumValues?.length) {
         return {options: entry.enumValues.map((value) => ({value, label: value}))};

@@ -230,7 +230,7 @@ function widgetPropsFor(token: string): Record<string, unknown> | undefined {
         case "#Select":
             return {options: SAMPLE_OPTIONS};
         case "#ApiSelect":
-            return {apiUrl: `${GALLERY_API_URL}/select`, method: "POST", pageSize: 50};
+            return {apiUrl: `${GALLERY_API_URL}/select`, pageSize: 50};
         case "#ObjectIdChipsInput":
             return {
                 apiUrl: `${GALLERY_API_URL}/select`,

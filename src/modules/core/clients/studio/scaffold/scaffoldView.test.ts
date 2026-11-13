@@ -137,7 +137,6 @@ describe("widgetPropsForPath", () => {
         );
         expect(props).toEqual({
             apiUrl: "/api/auxiliary/country/select",
-            method: "POST",
             pageSize: 50,
         });
     });

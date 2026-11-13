@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {MapContainer, TileLayer, Marker, useMapEvents, useMap} from 'react-leaflet';
 import L, {LeafletMouseEvent} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {CloseMapControl, ExpandMapControl, MapDialog, SyncMapSize} from '@coreModule/components/viewEngine/widgets/addresses/mapChrome.tsx';
+import {settleMapAnimations} from '@coreModule/components/viewEngine/widgets/addresses/mapTeardown.ts';
 
 const OSM_TILE_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
@@ -41,6 +42,10 @@ function MapClickHandler({onPinSet, latitude, longitude}: {onPinSet: (latitude: 
     useEffect(() => {
         map.setView({lat: latitude, lng: longitude}, map.getZoom(), { animate: true });
     }, [latitude, longitude]);
+    // Layout cleanups run before react-leaflet removes the map: settle a pan, wheel zoom or zoom animation still running (TD-F99).
+    useLayoutEffect(() => () => {
+        settleMapAnimations(map);
+    }, [map]);
     return null;
 }
 
