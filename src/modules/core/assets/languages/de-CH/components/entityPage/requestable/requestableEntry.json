@@ -1,0 +1,20 @@
+{
+  "approve": "Genehmigen",
+  "reject": "Ablehnen",
+  "withdraw": "Anfrage zurückziehen",
+  "requestStatus": "Anfragestatus",
+  "requestStatusValues": {
+    "requested": "Angefragt",
+    "approved": "Genehmigt",
+    "rejected": "Abgelehnt",
+    "withdrawn": "Zurückgezogen"
+  },
+  "requestedByCompanyName": "Anfragendes Unternehmen",
+  "requestedAt": "Angefragt am",
+  "decidedAt": "Entschieden am",
+  "requestDetails": "Anfragedetails",
+  "requestApproval": "Anfrage & Genehmigung",
+  "decisionNotes": "Begründung",
+  "requestEntry": "Eintrag anfragen",
+  "managedByPlatform": "Von der Plattform für alle Unternehmen gepflegt. Fehlt ein Eintrag? Fragen Sie ihn an, die Plattform fügt ihn für alle hinzu."
+}

@@ -14,5 +14,19 @@
   "updatedAt": "Përditësuar më",
   "createdBy": "Krijuar nga",
   "deletedAt": "Fshirë më",
-  "deletedBy": "Fshirë nga"
+  "deletedBy": "Fshirë nga",
+  "requestStatus": "Statusi i kërkesës",
+  "requestedAt": "Kërkuar më",
+  "requestedBy": "Kërkuar nga",
+  "requestedByCompanyName": "Kompania kërkuese",
+  "decidedAt": "Vendosur më",
+  "decidedBy": "Vendosur nga",
+  "decisionNotes": "Arsyeja",
+  "requestStatusValues": {
+    "requested": "E kërkuar",
+    "approved": "E miratuar",
+    "rejected": "E refuzuar",
+    "withdrawn": "E tërhequr"
+  },
+  "requestApproval": "Kërkesa dhe miratimi"
 }

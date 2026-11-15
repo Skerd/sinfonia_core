@@ -9,8 +9,7 @@ export default createGenericCreatePage<CreateCityFormType>({
     accessModel: "cities",
     apiUrl: "/api/auxiliary/city",
     schema: createCityFormSchema,
-    defaultValues: () => {
-        const params = new URLSearchParams();
+    defaultValues: (params) => {
         const countryId = params.get("countryId");
         const stateId = params.get("stateId");
         return ({

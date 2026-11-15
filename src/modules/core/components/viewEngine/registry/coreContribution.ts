@@ -50,6 +50,7 @@ import type {CronJob} from "armonia/src/modules/core/api/auxiliary/private/cronJ
 
 const CurrencySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/currencies/center/sheetView/currencySheetView.tsx"));
 const CountrySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/sheetView/countrySheetView.tsx"));
+const CompanySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx"));
 const CountryCardLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/center/cardView/countryCard.tsx"));
 const StateSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx"));
 const StateCardLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx"));
@@ -129,6 +130,8 @@ export function getCoreWidgetContribution(): WidgetContribution {
             /** `#ReferencesRender` card for state stubs (pairs with `#StateSheetView`). */
             "#StateCard": StateCardLazy,
             "#CitySheetView": CitySheetViewLazy,
+            /** A company opened from a reference (who requested a platform list entry); loads through `/api/companies/single`. */
+            "#CompanySheetView": CompanySheetViewLazy,
         },
         sheetFieldRenderers: {
             /** The scheduled action's next runs and run history, placed by the view above Lifecycle (UX-03, TD-F67). */

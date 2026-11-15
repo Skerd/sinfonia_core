@@ -1,0 +1,19 @@
+{
+  "approve": {
+    "title": "Approvare «{name}»?",
+    "description": "Tutte le aziende potranno usare questa voce.",
+    "confirm": "Approva"
+  },
+  "reject": {
+    "title": "Rifiutare «{name}»?",
+    "description": "La voce viene eliminata e l'azienda che l'ha richiesta riceve il tuo motivo.",
+    "confirm": "Rifiuta"
+  },
+  "withdraw": {
+    "title": "Ritirare «{name}»?",
+    "description": "La tua richiesta viene annullata e la voce eliminata.",
+    "confirm": "Ritira"
+  },
+  "reasonLabel": "Motivo",
+  "reasonPlaceholder": "Spiega al richiedente il perché"
+}

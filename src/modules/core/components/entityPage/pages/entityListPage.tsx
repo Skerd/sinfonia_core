@@ -23,7 +23,7 @@ import RestoreAction from "@coreModule/components/viewEngine/widgets/actions/res
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
 import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import {useDynamicLanguage} from "@coreModule/helpers/hooks/useDynamicLanguage.ts";
-import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {LanguageResolveContext, type ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type {DeletedData, TableResponse} from "armonia/src/modules/core/types/shared.types.ts";
 import type {FilterGroup, FilterValue} from "armonia/src/modules/core/database/filter";
 import {generateUUID} from "@coreModule/helpers/general/uuid.ts";
@@ -36,6 +36,16 @@ import QuickFilterBar, {
 } from "@coreModule/components/entityPage/filters/quickFilterBar.tsx";
 import {GRID_TRANSACTIONAL} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
 import {PageTitle} from "@coreModule/helpers/types/pageTitle.types.ts";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
+import {useOpenRecord} from "@coreModule/helpers/hooks/useOpenParam.ts";
+import {EntityListRowContext, type EntityListRowContextValue} from "@coreModule/components/entityPage/list/entityListRowContext.ts";
+import {
+    isRequestDecision,
+    RequestableEntryMenu,
+    RequestEntryButton,
+    useRequestStatusQuickFilter,
+} from "@coreModule/components/entityPage/requestable/requestableEntry.tsx";
+import RequestableEntryDialog from "@coreModule/components/entityPage/requestable/requestableEntryDialog.tsx";
 
 export type {QuickFilterDef};
 
@@ -105,7 +115,9 @@ function AutoSheetView({
 
     if (!viewConfig) return null;
 
+    // Like `withLanguage`, so widgets that read the sheet's dictionary themselves (enum labels) find it.
     return (
+        <LanguageResolveContext value={resolveLanguageKey}>
         <SheetViewRenderer
             config={viewConfig}
             data={sheetData}
@@ -125,6 +137,7 @@ function AutoSheetView({
             onSheetRowPatched={onSheetRowPatched}
             deleteRestoreConfirmLabel={deleteRestoreConfirmLabel}
         />
+        </LanguageResolveContext>
     );
 }
 
@@ -187,6 +200,11 @@ export type EntityListHeaderContext = {
     resolveLanguageKey: ResolveLanguageKey;
     /** The viewer's create grant on the page's `accessModel`, read with the page's access perspective. */
     canCreate: boolean;
+    /**
+     * No create grant, but the model is a requestable platform list (D160) and the viewer holds its `request`
+     * permission: {@link EntityListCreateButton} offers "Request an entry" on the same create page.
+     */
+    canRequest: boolean;
 };
 
 type EntityListHeaderProps = {
@@ -231,10 +249,13 @@ type EntityListCreateButtonProps = {
     labelKey?: string;
 };
 
-/** Navigates to the create page; renders nothing when the viewer lacks the create grant. */
+/**
+ * Navigates to the create page; renders nothing when the viewer lacks the create grant, or "Request an entry" on a
+ * requestable platform list the viewer may request on (the create page then sends a request, D160).
+ */
 export function EntityListCreateButton({ctx, path, icon, labelKey = "create"}: EntityListCreateButtonProps) {
     const navigate = useNavigate();
-    if (!ctx.canCreate) return null;
+    if (!ctx.canCreate) return ctx.canRequest ? <RequestEntryButton path={path} /> : null;
     return (
         <Button type="button" onClick={(e) => {navigate(path); e.stopPropagation(); e.preventDefault();}}>
             {icon}
@@ -370,7 +391,11 @@ export default function EntityListPage<T extends BaseEntity>({
     listApiRef,
 }: EntityListPageProps<T>) {
     const access = useAccess(accessModel, selfAccess ? "self" : "others");
-    const {create, read} = access;
+    const {create, read, requestable = false} = access;
+    // A requestable platform list (D160): request status filter, decisions in the menus, request instead of create.
+    const canRequest = useActionAccess(accessModel, "request") && requestable && !create;
+    const requestStatusFilter = useRequestStatusQuickFilter(requestable);
+    const effectiveQuickFilters = requestable ? [...(quickFilters ?? []), ...requestStatusFilter] : quickFilters;
     const hasSheet = !!(renderSheet || sheetLanguagePath);
     const readFields = (read && typeof read === "object" ? read : undefined) as Record<string, unknown> | undefined;
 
@@ -378,11 +403,11 @@ export default function EntityListPage<T extends BaseEntity>({
     // object every render. The DSL built from them is a fetch dependency of CardAndTableView
     // and carries fresh UUIDs, so key the memos by content to avoid refetching on every render.
     const extraFiltersKey = JSON.stringify(extraFilters ?? null);
-    const quickFiltersKey = JSON.stringify(quickFilters ?? null);
+    const quickFiltersKey = JSON.stringify(effectiveQuickFilters ?? null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const extraFiltersDSL = useMemo(() => buildExtraFiltersDSL(extraFilters), [extraFiltersKey]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const stableQuickFilters = useMemo(() => quickFilters ?? [], [quickFiltersKey]);
+    const stableQuickFilters = useMemo(() => effectiveQuickFilters ?? [], [quickFiltersKey]);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const quickFilterFields = useMemo(() => stableQuickFilters.map((d) => d.field), [stableQuickFilters]);
@@ -510,10 +535,18 @@ export default function EntityListPage<T extends BaseEntity>({
         setAction(actionName);
         setSheetEntity(entity);
     };
+    // `?open=<id>` opens that record's sheet: the target of a notification's link (D145).
+    const opened = useOpenRecord<T>(apiUrl, hasSheet);
     const closeAction = () => {
         setAction("");
         setSheetEntity(null);
+        if (opened.openId) opened.close();
     };
+    useEffect(() => {
+        if (!opened.record) return;
+        setSheetEntity(opened.record);
+        setAction("view");
+    }, [opened.record]);
 
     /** Patch a row in the list and, when it is the one open in the sheet/modal, there too. */
     const patchRow = (id: string, patch: EntityRowPatch<T>) => {
@@ -548,12 +581,16 @@ export default function EntityListPage<T extends BaseEntity>({
         typeof flag === "function" ? flag(entity) : !!flag;
 
     const listHelpers = {replaceRow};
-    const headerContext: EntityListHeaderContext = {resolveLanguageKey, canCreate: !!create};
+    const headerContext: EntityListHeaderContext = {resolveLanguageKey, canCreate: !!create, canRequest};
+    // Cards and sheets that change their entity on their own (request decisions) keep the list's row in step.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const rowContext = useMemo<EntityListRowContextValue>(() => ({patchRow: (id, patch) => patchRow(id, patch as EntityRowPatch<T>)}), [listRef]);
     if (read === false) {
         return <Forbidden />;
     }
 
     return (
+        <EntityListRowContext value={rowContext}>
         <div className="min-w-0 flex-full gap-4">
             {header === undefined ? <EntityListHeader ctx={headerContext} /> : header && header(headerContext)}
 
@@ -568,7 +605,7 @@ export default function EntityListPage<T extends BaseEntity>({
                     toolbarFilterDSL={combinedToolbarDSL}
                     aboveToolbar={aboveToolbar}
                     quickFilterBar={
-                        quickFilters?.length ? (
+                        stableQuickFilters.length ? (
                             <QuickFilterBar
                                 defs={stableQuickFilters}
                                 values={quickFilterValues}
@@ -613,8 +650,11 @@ export default function EntityListPage<T extends BaseEntity>({
                                 hideView={rowActionMenu?.hideView}
                                 hideDelete={resolveRowFlag(rowActionMenu?.hideDelete, entity)}
                                 hideRestore={rowActionMenu?.hideRestore}
-                                allowMenuForCustomChildren={rowActionMenu?.allowMenuForCustomChildren}
+                                allowMenuForCustomChildren={rowActionMenu?.allowMenuForCustomChildren || requestable}
                             >
+                                {requestable ? (
+                                    <RequestableEntryMenu entry={entity} collection={accessModel} onAction={(a) => openAction(entity, a)} />
+                                ) : null}
                                 {renderActionMenuChildren?.(
                                     entity,
                                     (a) => openAction(entity, a),
@@ -691,7 +731,16 @@ export default function EntityListPage<T extends BaseEntity>({
                             url={`${apiUrl}/restore`}
                         />
                     )}
-                    {action !== "view" && action !== "delete" && action !== "restore" &&
+                    {requestable && isRequestDecision(action) && (
+                        <RequestableEntryDialog
+                            decision={action}
+                            entry={sheetEntity}
+                            apiUrl={apiUrl}
+                            onClose={closeAction}
+                            onDecided={(decided) => replaceRow({...sheetEntity, ...decided})}
+                        />
+                    )}
+                    {action !== "view" && action !== "delete" && action !== "restore" && !isRequestDecision(action) &&
                         renderFloatingModals?.({
                             action,
                             entity: sheetEntity,
@@ -701,5 +750,6 @@ export default function EntityListPage<T extends BaseEntity>({
                 </>
             }
         </div>
+        </EntityListRowContext>
     );
 }

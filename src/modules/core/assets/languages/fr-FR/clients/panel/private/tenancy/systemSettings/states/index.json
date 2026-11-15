@@ -10,7 +10,7 @@
       {
         "title": "Gérer les États et cantons",
         "items": [
-          "Créez ou modifiez le nom, le code et le pays associé.",
+          "Cette liste est partagée par toutes les entreprises et tenue par l'entreprise de la plateforme. S'il manque une région à votre entreprise, demandez-la ; la plateforme l'ajoute pour tous.",
           "Une ville peut référencer un État ou canton, mais ce choix reste facultatif.",
           "La suppression est logique et l’entrée peut être restaurée."
         ]
@@ -37,6 +37,21 @@
     "createdBy": "Créé par",
     "company": "Entreprise",
     "deletedAt": "Supprimé le",
-    "deletedBy": "Supprimé par"
+    "deletedBy": "Supprimé par",
+    "requestStatus": "Statut de la demande",
+    "requestedAt": "Demandée le",
+    "requestedBy": "Demandée par",
+    "requestedByCompanyName": "Entreprise demandeuse",
+    "decidedAt": "Décidée le",
+    "decidedBy": "Décidée par",
+    "decisionNotes": "Motif",
+    "!enums": {
+      "requestStatus": {
+        "requested": "Demandée",
+        "approved": "Approuvée",
+        "rejected": "Refusée",
+        "withdrawn": "Retirée"
+      }
+    }
   }
 }

@@ -1,0 +1,19 @@
+{
+  "approve": {
+    "title": "Approuver « {name} » ?",
+    "description": "Toutes les entreprises pourront utiliser cette entrée.",
+    "confirm": "Approuver"
+  },
+  "reject": {
+    "title": "Refuser « {name} » ?",
+    "description": "L'entrée est supprimée et l'entreprise qui l'a demandée reçoit votre motif.",
+    "confirm": "Refuser"
+  },
+  "withdraw": {
+    "title": "Retirer « {name} » ?",
+    "description": "Votre demande est annulée et l'entrée est supprimée.",
+    "confirm": "Retirer"
+  },
+  "reasonLabel": "Motif",
+  "reasonPlaceholder": "Expliquez au demandeur pourquoi"
+}

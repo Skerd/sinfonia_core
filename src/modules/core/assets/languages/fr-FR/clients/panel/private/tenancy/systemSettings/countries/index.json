@@ -10,7 +10,7 @@
       {
         "title": "Sur cette page",
         "items": [
-          "Créez ou modifiez un pays et maintenez son code ISO et son indicatif exacts.",
+          "Cette liste est partagée par toutes les entreprises et tenue par l'entreprise de la plateforme. S'il manque un pays à votre entreprise, demandez-le ; la plateforme l'ajoute pour tous.",
           "Le menu de ligne ouvre les États / cantons ou les villes déjà limités à ce pays.",
           "La suppression est logique et le pays peut être restauré."
         ]
@@ -45,6 +45,21 @@
     "createdBy": "Créé par",
     "company": "Entreprise",
     "deletedAt": "Supprimé le",
-    "deletedBy": "Supprimé par"
+    "deletedBy": "Supprimé par",
+    "requestStatus": "Statut de la demande",
+    "requestedAt": "Demandée le",
+    "requestedBy": "Demandée par",
+    "requestedByCompanyName": "Entreprise demandeuse",
+    "decidedAt": "Décidée le",
+    "decidedBy": "Décidée par",
+    "decisionNotes": "Motif",
+    "!enums": {
+      "requestStatus": {
+        "requested": "Demandée",
+        "approved": "Approuvée",
+        "rejected": "Refusée",
+        "withdrawn": "Retirée"
+      }
+    }
   }
 }

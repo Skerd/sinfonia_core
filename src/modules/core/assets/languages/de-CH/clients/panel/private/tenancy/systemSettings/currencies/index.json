@@ -10,7 +10,7 @@
       {
         "title": "Währungen verwalten",
         "items": [
-          "Erstellen oder bearbeiten Sie Anzeigename, Symbol, Abkürzung und Dezimalgenauigkeit.",
+          "Diese Liste wird von allen Unternehmen gemeinsam genutzt und vom Plattformunternehmen gepflegt. Fehlt Ihrem Unternehmen eine Währung, fragen Sie sie an; die Plattform fügt sie für alle hinzu.",
           "Das Löschen ist ein Soft-Delete und kann rückgängig gemacht werden."
         ]
       },
@@ -44,6 +44,21 @@
     "createdBy": "Erstellt von",
     "company": "Firma",
     "deletedAt": "Gelöscht am",
-    "deletedBy": "Gelöscht von"
+    "deletedBy": "Gelöscht von",
+    "requestStatus": "Anfragestatus",
+    "requestedAt": "Angefragt am",
+    "requestedBy": "Angefragt von",
+    "requestedByCompanyName": "Anfragendes Unternehmen",
+    "decidedAt": "Entschieden am",
+    "decidedBy": "Entschieden von",
+    "decisionNotes": "Begründung",
+    "!enums": {
+      "requestStatus": {
+        "requested": "Angefragt",
+        "approved": "Genehmigt",
+        "rejected": "Abgelehnt",
+        "withdrawn": "Zurückgezogen"
+      }
+    }
   }
 }

@@ -10,7 +10,7 @@
       {
         "title": "Manage cities",
         "items": [
-          "Create or edit the city name and country assignment, and select a state when applicable.",
+          "This list is shared by every company and kept by the platform company. If your company misses a city, request it; the platform adds it for everyone.",
           "Keep the country and state combination consistent so address choices remain clear.",
           "Deleting a city is a soft delete and it can be restored."
         ]
@@ -37,6 +37,21 @@
     "createdBy": "Created by",
     "company": "Company",
     "deletedAt": "Deleted at",
-    "deletedBy": "Deleted by"
+    "deletedBy": "Deleted by",
+    "requestStatus": "Request status",
+    "requestedAt": "Requested at",
+    "requestedBy": "Requested by",
+    "requestedByCompanyName": "Requested by company",
+    "decidedAt": "Decided at",
+    "decidedBy": "Decided by",
+    "decisionNotes": "Reason",
+    "!enums": {
+      "requestStatus": {
+        "requested": "Requested",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "withdrawn": "Withdrawn"
+      }
+    }
   }
 }

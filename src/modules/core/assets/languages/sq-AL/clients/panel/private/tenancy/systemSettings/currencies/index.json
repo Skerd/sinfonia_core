@@ -10,7 +10,7 @@
       {
         "title": "Menaxhimi i monedhave",
         "items": [
-          "Krijoni ose ndryshoni emrin, simbolin, shkurtesën dhe saktësinë dhjetore.",
+          "Kjo listë ndahet nga të gjitha kompanitë dhe mbahet nga kompania e platformës. Nëse kompanisë suaj i mungon një monedhë, kërkojeni; platforma e shton për të gjithë.",
           "Fshirja është e butë dhe monedha mund të rikthehet."
         ]
       },
@@ -44,6 +44,21 @@
     "createdBy": "Krijuar nga",
     "company": "Kompania",
     "deletedAt": "Fshirë më",
-    "deletedBy": "Fshirë nga"
+    "deletedBy": "Fshirë nga",
+    "requestStatus": "Statusi i kërkesës",
+    "requestedAt": "Kërkuar më",
+    "requestedBy": "Kërkuar nga",
+    "requestedByCompanyName": "Kompania kërkuese",
+    "decidedAt": "Vendosur më",
+    "decidedBy": "Vendosur nga",
+    "decisionNotes": "Arsyeja",
+    "!enums": {
+      "requestStatus": {
+        "requested": "E kërkuar",
+        "approved": "E miratuar",
+        "rejected": "E refuzuar",
+        "withdrawn": "E tërhequr"
+      }
+    }
   }
 }

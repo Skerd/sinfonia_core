@@ -9,6 +9,7 @@ import {
 } from "@coreModule/components/ui/collapsible.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import type {EnumTone} from "armonia/src/modules/core/api/company/private/users/tableConfig.form.response.type.ts";
 
 type SheetGroupProps = {
     title?: string;
@@ -31,6 +32,20 @@ type SheetGroupProps = {
     className?: string;
     /** Merged onto the title. Use to drop section-header casing for nested groups. */
     titleClassName?: string;
+    /**
+     * Marks a section that is about managing the record rather than its own data (lifecycle, a request's approval):
+     * a coloured left rule, a light tint and the title and icon in that tone, so it never reads as a model field.
+     */
+    accent?: EnumTone;
+};
+
+/** Theme tokens only, so Tailwind generates them from this file whatever view config asks for them. */
+const ACCENTS: Record<EnumTone, {box: string; title: string}> = {
+    success: {box: "border-l-success bg-success/5", title: "text-success"},
+    warning: {box: "border-l-warning bg-warning/5", title: "text-warning"},
+    danger: {box: "border-l-destructive bg-destructive/5", title: "text-destructive"},
+    info: {box: "border-l-info bg-info/5", title: "text-info"},
+    neutral: {box: "border-l-muted-foreground/40 bg-muted/30", title: "text-muted-foreground"},
 };
 
 const STORAGE_PREFIX = "sheetGroupCollapse:";
@@ -73,7 +88,10 @@ export function SheetGroup({
     collapsible = true,
     className,
     titleClassName,
+    accent,
 }: SheetGroupProps) {
+    const tone = accent ? ACCENTS[accent] : undefined;
+    const rootClassName = cn("flex flex-col gap-y-2", tone && cn("rounded-md border-l-4 py-2 pl-3 pr-2", tone.box), className);
     const label = resolveLanguageKey && title ? String(resolveLanguageKey(title)) : title;
     const canCollapse = collapsible && !!label;
 
@@ -91,11 +109,12 @@ export function SheetGroup({
     const headerLeading = (
         <>
             {titleIcon != null ? (
-                <div className="shrink-0 rounded-md bg-background p-1">{titleIcon}</div>
+                <div className={cn("shrink-0 rounded-md bg-background p-1", tone?.title)}>{titleIcon}</div>
             ) : null}
             <p
                 className={cn(
                     "text-base font-semibold uppercase tracking-wide text-muted-foreground transition-colors group-hover/sheet-group:text-foreground",
+                    tone?.title,
                     titleClassName,
                 )}
             >
@@ -163,7 +182,7 @@ export function SheetGroup({
 
     if (!canCollapse) {
         return (
-            <div className={cn("flex flex-col gap-y-2", className)}>
+            <div className={rootClassName}>
                 {label ? headerRow() : null}
                 {children}
             </div>
@@ -171,7 +190,7 @@ export function SheetGroup({
     }
 
     return (
-        <Collapsible open={open} onOpenChange={onOpenChange} className={cn("flex flex-col gap-y-2", className)}>
+        <Collapsible open={open} onOpenChange={onOpenChange} className={rootClassName}>
             {headerRow({collapsible: true})}
             <CollapsibleContent className="flex flex-col gap-y-2">
                 {children}

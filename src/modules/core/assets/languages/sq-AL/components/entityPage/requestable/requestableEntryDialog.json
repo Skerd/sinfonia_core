@@ -1,0 +1,19 @@
+{
+  "approve": {
+    "title": "Ta miratoni „{name}“?",
+    "description": "Të gjitha kompanitë do të mund ta përdorin këtë zë.",
+    "confirm": "Mirato"
+  },
+  "reject": {
+    "title": "Ta refuzoni „{name}“?",
+    "description": "Zëri fshihet dhe kompania që e kërkoi merr arsyen tuaj.",
+    "confirm": "Refuzo"
+  },
+  "withdraw": {
+    "title": "Ta tërhiqni „{name}“?",
+    "description": "Kërkesa juaj anulohet dhe zëri fshihet.",
+    "confirm": "Tërhiq"
+  },
+  "reasonLabel": "Arsyeja",
+  "reasonPlaceholder": "Shpjegojini kërkuesit pse"
+}

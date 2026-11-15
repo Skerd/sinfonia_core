@@ -10,7 +10,7 @@
       {
         "title": "Menaxhimi i rajoneve",
         "items": [
-          "Krijoni ose ndryshoni emrin, kodin dhe vendin përkatës.",
+          "Kjo listë ndahet nga të gjitha kompanitë dhe mbahet nga kompania e platformës. Nëse kompanisë suaj i mungon një rajon, kërkojeni; platforma e shton për të gjithë.",
           "Një qytet mund t’i referohet një rajoni, por kjo zgjedhje është opsionale.",
           "Fshirja është e butë dhe regjistrimi mund të rikthehet."
         ]
@@ -37,6 +37,21 @@
     "createdBy": "Krijuar nga",
     "company": "Kompania",
     "deletedAt": "Fshirë më",
-    "deletedBy": "Fshirë nga"
+    "deletedBy": "Fshirë nga",
+    "requestStatus": "Statusi i kërkesës",
+    "requestedAt": "Kërkuar më",
+    "requestedBy": "Kërkuar nga",
+    "requestedByCompanyName": "Kompania kërkuese",
+    "decidedAt": "Vendosur më",
+    "decidedBy": "Vendosur nga",
+    "decisionNotes": "Arsyeja",
+    "!enums": {
+      "requestStatus": {
+        "requested": "E kërkuar",
+        "approved": "E miratuar",
+        "rejected": "E refuzuar",
+        "withdrawn": "E tërhequr"
+      }
+    }
   }
 }

@@ -1,0 +1,20 @@
+{
+  "approve": "Approve",
+  "reject": "Reject",
+  "withdraw": "Withdraw request",
+  "requestStatus": "Request status",
+  "requestStatusValues": {
+    "requested": "Requested",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "withdrawn": "Withdrawn"
+  },
+  "requestedByCompanyName": "Requested by company",
+  "requestedAt": "Requested at",
+  "decidedAt": "Decided at",
+  "requestDetails": "Request details",
+  "requestApproval": "Request & approval",
+  "decisionNotes": "Reason",
+  "requestEntry": "Request an entry",
+  "managedByPlatform": "Kept by the platform for every company. Missing an entry? Request it and the platform adds it for everyone."
+}

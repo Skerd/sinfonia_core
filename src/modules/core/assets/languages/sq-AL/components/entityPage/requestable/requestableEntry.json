@@ -1,0 +1,20 @@
+{
+  "approve": "Mirato",
+  "reject": "Refuzo",
+  "withdraw": "Tërhiq kërkesën",
+  "requestStatus": "Statusi i kërkesës",
+  "requestStatusValues": {
+    "requested": "E kërkuar",
+    "approved": "E miratuar",
+    "rejected": "E refuzuar",
+    "withdrawn": "E tërhequr"
+  },
+  "requestedByCompanyName": "Kompania kërkuese",
+  "requestedAt": "Kërkuar më",
+  "decidedAt": "Vendosur më",
+  "requestDetails": "Detajet e kërkesës",
+  "requestApproval": "Kërkesa dhe miratimi",
+  "decisionNotes": "Arsyeja",
+  "requestEntry": "Kërko një zë",
+  "managedByPlatform": "Mbahet nga platforma për të gjitha kompanitë. Mungon një zë? Kërkojeni dhe platforma e shton për të gjithë."
+}

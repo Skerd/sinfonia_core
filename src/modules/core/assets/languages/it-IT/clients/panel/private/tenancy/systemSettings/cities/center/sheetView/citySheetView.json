@@ -13,5 +13,19 @@
   "updatedAt": "Aggiornato il",
   "createdBy": "Creato da",
   "deletedAt": "Eliminato il",
-  "deletedBy": "Eliminato da"
+  "deletedBy": "Eliminato da",
+  "requestStatus": "Stato della richiesta",
+  "requestedAt": "Richiesta il",
+  "requestedBy": "Richiesta da",
+  "requestedByCompanyName": "Azienda richiedente",
+  "decidedAt": "Decisa il",
+  "decidedBy": "Decisa da",
+  "decisionNotes": "Motivo",
+  "requestStatusValues": {
+    "requested": "Richiesta",
+    "approved": "Approvata",
+    "rejected": "Rifiutata",
+    "withdrawn": "Ritirata"
+  },
+  "requestApproval": "Richiesta e approvazione"
 }

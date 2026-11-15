@@ -10,7 +10,7 @@
       {
         "title": "Menaxhimi i qyteteve",
         "items": [
-          "Krijoni ose ndryshoni emrin dhe vendin, dhe zgjidhni rajonin kur nevojitet.",
+          "Kjo listë ndahet nga të gjitha kompanitë dhe mbahet nga kompania e platformës. Nëse kompanisë suaj i mungon një qytet, kërkojeni; platforma e shton për të gjithë.",
           "Mbani të njëtrajtshme lidhjen mes vendit dhe rajonit.",
           "Fshirja është e butë dhe qyteti mund të rikthehet."
         ]
@@ -37,6 +37,21 @@
     "createdBy": "Krijuar nga",
     "company": "Kompania",
     "deletedAt": "Fshirë më",
-    "deletedBy": "Fshirë nga"
+    "deletedBy": "Fshirë nga",
+    "requestStatus": "Statusi i kërkesës",
+    "requestedAt": "Kërkuar më",
+    "requestedBy": "Kërkuar nga",
+    "requestedByCompanyName": "Kompania kërkuese",
+    "decidedAt": "Vendosur më",
+    "decidedBy": "Vendosur nga",
+    "decisionNotes": "Arsyeja",
+    "!enums": {
+      "requestStatus": {
+        "requested": "E kërkuar",
+        "approved": "E miratuar",
+        "rejected": "E refuzuar",
+        "withdrawn": "E tërhequr"
+      }
+    }
   }
 }

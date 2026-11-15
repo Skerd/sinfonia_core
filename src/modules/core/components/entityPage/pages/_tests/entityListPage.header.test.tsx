@@ -9,6 +9,10 @@ const helpKeys: (string | undefined)[] = [];
 vi.mock("@coreModule/helpers/hooks/useAccess.ts", () => ({
     useAccess: () => ({create: access.create, read: {name: {}}, update: true, delete: true}),
 }));
+// A list page asks whether the viewer may request on a requestable platform list (D160); these lists are not.
+vi.mock("@coreModule/helpers/hooks/useActionAccess.ts", () => ({
+    useActionAccess: () => false,
+}));
 vi.mock("@coreModule/components/custom/header.tsx", () => ({
     default: ({title, description, children}: {title: string; description?: string; children?: ReactNode}) => (
         <header>

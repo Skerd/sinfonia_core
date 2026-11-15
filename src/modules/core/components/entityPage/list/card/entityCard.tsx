@@ -28,6 +28,9 @@ import {isDialogDismissGuarded} from "@coreModule/components/ui/dialog.tsx";
 import {EntityCardHeader as EntityTextCardHeader} from "@coreModule/components/entityPage/list/card/entityCardHeader.tsx";
 import {useEntityCardFetch} from "@coreModule/helpers/hooks/useEntityCardFetch.ts";
 import {findFromObject} from "@coreModule/helpers/general/objectPath.ts";
+import {isRequestDecision, RequestableEntryMenu, RequestFooter} from "@coreModule/components/entityPage/requestable/requestableEntry.tsx";
+import RequestableEntryDialog from "@coreModule/components/entityPage/requestable/requestableEntryDialog.tsx";
+import {useEntityListRow} from "@coreModule/components/entityPage/list/entityListRowContext.ts";
 
 const CARD_CONTENT_CLASS =
     "flex w-full min-w-0 flex-col gap-(--density-pad) p-(--density-pad) [&>[data-slot=gallery-carousel]]:-mx-(--density-pad) [&>[data-slot=gallery-carousel]]:-mt-(--density-pad) [&>[data-slot=gallery-carousel]]:w-[calc(100%+2*var(--density-pad))]";
@@ -73,6 +76,8 @@ type EntityCardContextValue = {
     hideDelete?: boolean;
     hideRestore?: boolean;
     hideEdit?: boolean;
+    /** A requestable platform list (D160): the menu carries the request decisions. */
+    requestable: boolean;
     setAction: (action: string) => void;
     editPath: (entity: SoftDeletable) => string;
     /** A list means the title falls back across these fields. */
@@ -156,6 +161,7 @@ function EntityCardHeader({
         hideDelete,
         hideRestore,
         hideEdit,
+        requestable,
         setAction,
         editPath,
         titlePath: hostTitlePath,
@@ -163,7 +169,7 @@ function EntityCardHeader({
     const titlePath = titlePathProp ?? hostTitlePath;
     const titlePaths = Array.isArray(titlePath) ? titlePath : [titlePath];
     const titleReadable = titlePaths.some((p) => accessFieldPathExists(read, p));
-    const hasMenuChildren = children != null && children !== false;
+    const hasMenuChildren = (children != null && children !== false) || requestable;
 
     /* `show` overrides DisplayValue's own path gate, so it has to carry the ACL answer itself. */
     return (
@@ -190,6 +196,7 @@ function EntityCardHeader({
                     hideRestore={hideRestore}
                     hideEdit={hideEdit}
                 >
+                    {requestable ? <RequestableEntryMenu entry={entity} collection={resource} onAction={setAction} /> : null}
                     {children}
                 </ActionMenu>
             }
@@ -266,7 +273,8 @@ function EntityCardRoot<T extends SoftDeletable>({
         [setEntity],
     );
 
-    const {read, restore} = useAccess(resource, accessPerspective);
+    const {read, restore, requestable = false} = useAccess(resource, accessPerspective);
+    const listRow = useEntityListRow();
     const isDeleted = !!entity.deletedAt || !!entity.deletedBy;
 
     const resolvedHideEdit = typeof hideEdit === "function" ? hideEdit(entity) : hideEdit;
@@ -287,6 +295,7 @@ function EntityCardRoot<T extends SoftDeletable>({
             hideDelete: resolvedHideDelete,
             hideRestore: resolvedHideRestore,
             hideEdit: resolvedHideEdit,
+            requestable,
             setAction,
             editPath: editPath as (row: SoftDeletable) => string,
             titlePath,
@@ -299,6 +308,7 @@ function EntityCardRoot<T extends SoftDeletable>({
             resolvedHideDelete,
             resolvedHideRestore,
             resolvedHideEdit,
+            requestable,
             setAction,
             editPath,
             titlePath,
@@ -369,6 +379,7 @@ function EntityCardRoot<T extends SoftDeletable>({
                                 )}
                                 <div className={CARD_CONTENT_CLASS}>
                                     {children({entity, read, setAction, setEntity})}
+                                    {requestable ? <RequestFooter entry={entity} collection={resource} /> : null}
                                 </div>
                             </div>
                         </EntityCardShell>
@@ -410,6 +421,18 @@ function EntityCardRoot<T extends SoftDeletable>({
                             onSuccess={onRestore}
                             onCancel={() => setAction("")}
                             url={restoreUrl}
+                        />
+                    )}
+                    {requestable && isRequestDecision(action) && (
+                        <RequestableEntryDialog
+                            decision={action}
+                            entry={entity}
+                            apiUrl={deleteUrl}
+                            onClose={() => setAction("")}
+                            onDecided={(decided) => {
+                                setEntity({...entity, ...decided});
+                                listRow?.patchRow(entity._id, decided);
+                            }}
                         />
                     )}
                     {extraDialogs?.({action, setAction, entity, setEntity, retry})}

@@ -12,6 +12,10 @@ vi.mock("@coreModule/helpers/hooks/useAccess.ts", () => ({
         delete: true,
     }),
 }));
+// A list page asks whether the viewer may request on a requestable platform list (D160); these lists are not.
+vi.mock("@coreModule/helpers/hooks/useActionAccess.ts", () => ({
+    useActionAccess: () => false,
+}));
 vi.mock("@coreModule/components/custom/header.tsx", () => ({
     default: () => <div>header</div>,
 }));

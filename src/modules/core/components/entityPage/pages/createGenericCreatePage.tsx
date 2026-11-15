@@ -5,6 +5,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 import FormViewRenderer from "@coreModule/components/viewEngine/FormViewRenderer.tsx";
 import {useViewConfigState} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import type {FieldValues, UseFormReturn} from "react-hook-form";
@@ -73,7 +74,10 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
     }: CreateProps) {
         const [params] = useSearchParams();
         const navigate = useNavigate();
-        const {create} = useAccess(accessKey);
+        const {create, requestable} = useAccess(accessKey);
+        // A requestable platform list (D160): the `request` permission also opens the form, and the server stores the
+        // new row as a request for the platform to approve.
+        const canRequest = useActionAccess(accessKey, "request");
         const {config: viewConfig, loading: viewConfigLoading} = useViewConfigState(viewCollectionKey, "form:create");
 
         const timeZone = useCompanyTimeZone();
@@ -100,7 +104,7 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
             [paramsKey],
         );
 
-        if (!create) return <Forbidden />;
+        if (!create && !(requestable && canRequest)) return <Forbidden />;
         if (!viewConfig) return viewConfigLoading ? <Loader /> : <Forbidden />;
 
         const close = () => {

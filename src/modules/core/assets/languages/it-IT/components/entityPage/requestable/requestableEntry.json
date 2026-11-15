@@ -1,0 +1,20 @@
+{
+  "approve": "Approva",
+  "reject": "Rifiuta",
+  "withdraw": "Ritira richiesta",
+  "requestStatus": "Stato della richiesta",
+  "requestStatusValues": {
+    "requested": "Richiesta",
+    "approved": "Approvata",
+    "rejected": "Rifiutata",
+    "withdrawn": "Ritirata"
+  },
+  "requestedByCompanyName": "Azienda richiedente",
+  "requestedAt": "Richiesta il",
+  "decidedAt": "Decisa il",
+  "requestDetails": "Dettagli della richiesta",
+  "requestApproval": "Richiesta e approvazione",
+  "decisionNotes": "Motivo",
+  "requestEntry": "Richiedi una voce",
+  "managedByPlatform": "Gestita dalla piattaforma per tutte le aziende. Manca una voce? Richiedila e la piattaforma la aggiunge per tutti."
+}

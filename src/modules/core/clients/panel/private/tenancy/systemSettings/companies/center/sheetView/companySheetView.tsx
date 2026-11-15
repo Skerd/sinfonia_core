@@ -14,7 +14,10 @@ import {Company} from "armonia/src/modules/core/api/company/private/company/comp
 export type CompanySheetViewOwnProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    company: Company;
+    /** The full row, or the stub a linked reference seeds while `/single` loads. */
+    company?: Company;
+    /** Opened from a reference (e.g. who requested a platform list entry): the sheet loads the company itself. */
+    fetchId?: string;
     hideActions?: boolean;
     hideEdit?: boolean;
     onActivateSuccess?: () => void;
@@ -31,7 +34,8 @@ function companyEditPath(c: Company) {
 function CompanySheetView({
     open,
     onOpenChange,
-    company,
+    company: companyProp,
+    fetchId,
     resolveLanguageKey,
     hideActions = false,
     hideEdit = false,
@@ -41,6 +45,11 @@ function CompanySheetView({
     const access = useAccess("companies");
     const viewConfig = useViewConfig("companies", "sheet");
     const [action, setAction] = useState("");
+    const [sheetData, setSheetData] = useState<Record<string, unknown>>(companyProp ?? {_id: fetchId});
+
+    useEffect(() => {
+        if (companyProp) setSheetData(companyProp);
+    }, [companyProp]);
 
     useEffect(() => {
         if (!open) {
@@ -49,12 +58,16 @@ function CompanySheetView({
     }, [open]);
 
     if (!viewConfig) return null;
+    const company = sheetData as Company;
 
     return (
         <>
             <SheetViewRenderer
                 config={viewConfig}
-                data={company}
+                data={sheetData}
+                url={fetchId ? "/api/companies/single" : undefined}
+                fetchId={fetchId}
+                onDataFetched={(data) => setSheetData(data)}
                 open={open}
                 onOpenChange={onOpenChange}
                 resolveLanguageKey={resolveLanguageKey}

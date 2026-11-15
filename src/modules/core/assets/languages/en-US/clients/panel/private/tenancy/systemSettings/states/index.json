@@ -10,7 +10,7 @@
       {
         "title": "Manage states",
         "items": [
-          "Create or edit the name, code, and country assignment.",
+          "This list is shared by every company and kept by the platform company. If your company misses a state, request it; the platform adds it for everyone.",
           "Cities may reference a state, but that state selection is optional.",
           "Deleting a state is a soft delete and it can be restored."
         ]
@@ -37,6 +37,21 @@
     "createdBy": "Created by",
     "company": "Company",
     "deletedAt": "Deleted at",
-    "deletedBy": "Deleted by"
+    "deletedBy": "Deleted by",
+    "requestStatus": "Request status",
+    "requestedAt": "Requested at",
+    "requestedBy": "Requested by",
+    "requestedByCompanyName": "Requested by company",
+    "decidedAt": "Decided at",
+    "decidedBy": "Decided by",
+    "decisionNotes": "Reason",
+    "!enums": {
+      "requestStatus": {
+        "requested": "Requested",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "withdrawn": "Withdrawn"
+      }
+    }
   }
 }

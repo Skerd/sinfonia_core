@@ -1,0 +1,20 @@
+{
+  "approve": "Approuver",
+  "reject": "Refuser",
+  "withdraw": "Retirer la demande",
+  "requestStatus": "Statut de la demande",
+  "requestStatusValues": {
+    "requested": "Demandée",
+    "approved": "Approuvée",
+    "rejected": "Refusée",
+    "withdrawn": "Retirée"
+  },
+  "requestedByCompanyName": "Entreprise demandeuse",
+  "requestedAt": "Demandée le",
+  "decidedAt": "Décidée le",
+  "requestDetails": "Détails de la demande",
+  "requestApproval": "Demande et approbation",
+  "decisionNotes": "Motif",
+  "requestEntry": "Demander une entrée",
+  "managedByPlatform": "Tenue par la plateforme pour toutes les entreprises. Une entrée manque ? Demandez-la et la plateforme l'ajoute pour tous."
+}

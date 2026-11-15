@@ -10,7 +10,7 @@
       {
         "title": "In questa pagina",
         "items": [
-          "Create o modificate un paese mantenendo corretti codice ISO e prefisso.",
+          "Questo elenco è condiviso da tutte le aziende e gestito dall'azienda della piattaforma. Se alla tua azienda manca un paese, richiedilo; la piattaforma lo aggiunge per tutti.",
           "Dal menu riga aprite Stati / cantoni o Città già filtrati per quel paese.",
           "L’eliminazione è logica e il paese può essere ripristinato."
         ]
@@ -45,6 +45,21 @@
     "createdBy": "Creato da",
     "company": "Azienda",
     "deletedAt": "Eliminato il",
-    "deletedBy": "Eliminato da"
+    "deletedBy": "Eliminato da",
+    "requestStatus": "Stato della richiesta",
+    "requestedAt": "Richiesta il",
+    "requestedBy": "Richiesta da",
+    "requestedByCompanyName": "Azienda richiedente",
+    "decidedAt": "Decisa il",
+    "decidedBy": "Decisa da",
+    "decisionNotes": "Motivo",
+    "!enums": {
+      "requestStatus": {
+        "requested": "Richiesta",
+        "approved": "Approvata",
+        "rejected": "Rifiutata",
+        "withdrawn": "Ritirata"
+      }
+    }
   }
 }

@@ -14,5 +14,19 @@
   "updatedAt": "Updated at",
   "createdBy": "Created by",
   "deletedAt": "Deleted at",
-  "deletedBy": "Deleted by"
+  "deletedBy": "Deleted by",
+  "requestStatus": "Request status",
+  "requestedAt": "Requested at",
+  "requestedBy": "Requested by",
+  "requestedByCompanyName": "Requested by company",
+  "decidedAt": "Decided at",
+  "decidedBy": "Decided by",
+  "decisionNotes": "Reason",
+  "requestStatusValues": {
+    "requested": "Requested",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "withdrawn": "Withdrawn"
+  },
+  "requestApproval": "Request & approval"
 }

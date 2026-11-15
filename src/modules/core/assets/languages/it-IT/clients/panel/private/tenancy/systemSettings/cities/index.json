@@ -10,7 +10,7 @@
       {
         "title": "Gestire le città",
         "items": [
-          "Create o modificate nome e paese, selezionando uno stato o cantone quando serve.",
+          "Questo elenco è condiviso da tutte le aziende e gestito dall'azienda della piattaforma. Se alla tua azienda manca una città, richiedila; la piattaforma la aggiunge per tutti.",
           "Mantenete coerente la combinazione tra paese e stato.",
           "L’eliminazione è logica e la città può essere ripristinata."
         ]
@@ -37,6 +37,21 @@
     "createdBy": "Creato da",
     "company": "Azienda",
     "deletedAt": "Eliminato il",
-    "deletedBy": "Eliminato da"
+    "deletedBy": "Eliminato da",
+    "requestStatus": "Stato della richiesta",
+    "requestedAt": "Richiesta il",
+    "requestedBy": "Richiesta da",
+    "requestedByCompanyName": "Azienda richiedente",
+    "decidedAt": "Decisa il",
+    "decidedBy": "Decisa da",
+    "decisionNotes": "Motivo",
+    "!enums": {
+      "requestStatus": {
+        "requested": "Richiesta",
+        "approved": "Approvata",
+        "rejected": "Rifiutata",
+        "withdrawn": "Ritirata"
+      }
+    }
   }
 }

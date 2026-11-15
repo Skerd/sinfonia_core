@@ -10,7 +10,7 @@
       {
         "title": "Auf dieser Seite",
         "items": [
-          "Erstellen oder bearbeiten Sie ein Land und halten Sie ISO-Code und Telefonvorwahl korrekt.",
+          "Diese Liste wird von allen Unternehmen gemeinsam genutzt und vom Plattformunternehmen gepflegt. Fehlt Ihrem Unternehmen ein Land, fragen Sie es an; die Plattform fügt es für alle hinzu.",
           "Öffnen Sie im Zeilenmenü Kantone / Bundesländer oder Städte, bereits auf dieses Land eingeschränkt.",
           "Das Löschen ist ein Soft-Delete und kann rückgängig gemacht werden."
         ]
@@ -45,6 +45,21 @@
     "createdBy": "Erstellt von",
     "company": "Firma",
     "deletedAt": "Gelöscht am",
-    "deletedBy": "Gelöscht von"
+    "deletedBy": "Gelöscht von",
+    "requestStatus": "Anfragestatus",
+    "requestedAt": "Angefragt am",
+    "requestedBy": "Angefragt von",
+    "requestedByCompanyName": "Anfragendes Unternehmen",
+    "decidedAt": "Entschieden am",
+    "decidedBy": "Entschieden von",
+    "decisionNotes": "Begründung",
+    "!enums": {
+      "requestStatus": {
+        "requested": "Angefragt",
+        "approved": "Genehmigt",
+        "rejected": "Abgelehnt",
+        "withdrawn": "Zurückgezogen"
+      }
+    }
   }
 }

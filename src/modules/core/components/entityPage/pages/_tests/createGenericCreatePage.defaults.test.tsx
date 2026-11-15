@@ -14,8 +14,15 @@ vi.mock("@coreModule/helpers/hocs/withAxios.tsx", () => ({
 vi.mock("@coreModule/helpers/hocs/withDebug.tsx", () => ({
     default: () => (Inner: ComponentType) => Inner,
 }));
+const access = vi.hoisted(() => ({create: true, request: false, requestable: false}));
 vi.mock("@coreModule/helpers/hooks/useAccess.ts", () => ({
-    useAccess: () => ({create: true}),
+    useAccess: () => ({create: access.create, requestable: access.requestable}),
+}));
+vi.mock("@coreModule/helpers/hooks/useActionAccess.ts", () => ({
+    useActionAccess: (_collection: string, action: string) => action === "request" && access.request,
+}));
+vi.mock("@coreModule/components/custom/pages/forbidden.tsx", () => ({
+    default: () => <p data-testid="forbidden" />,
 }));
 vi.mock("@coreModule/helpers/hooks/useViewConfig.ts", () => ({
     useViewConfigState: () => ({config: {nodes: []}, loading: false}),
@@ -45,6 +52,9 @@ describe("createGenericCreatePage defaultValues (GLB-09, D116)", () => {
     });
     afterEach(() => {
         vi.useRealTimers();
+        access.create = true;
+        access.request = false;
+        access.requestable = false;
     });
 
     it("hands a builder the URL and the company's zone, so a day default is the company's today", () => {
@@ -64,5 +74,19 @@ describe("createGenericCreatePage defaultValues (GLB-09, D116)", () => {
     it("gives an empty object when the page has no defaults", () => {
         const None = createGenericCreatePage<{title: string}>(base);
         expect(renderDefaults(None)).toEqual({});
+    });
+
+    it("opens a requestable list's form with the request permission alone (D160), and no other model's", () => {
+        // The access map flags the model requestable (no create grant there): the request permission opens the form.
+        access.create = false;
+        access.request = true;
+        access.requestable = true;
+        expect(renderDefaults(createGenericCreatePage<{title: string}>(base))).toEqual({});
+
+        // Any other model without the create grant stays closed, request permission or not.
+        access.requestable = false;
+        const Plain = createGenericCreatePage<{title: string}>(base);
+        render(<MemoryRouter><Plain /></MemoryRouter>);
+        expect(screen.getByTestId("forbidden")).toBeTruthy();
     });
 });

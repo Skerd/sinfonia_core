@@ -1,0 +1,19 @@
+{
+  "approve": {
+    "title": "„{name}“ genehmigen?",
+    "description": "Alle Unternehmen können diesen Eintrag dann verwenden.",
+    "confirm": "Genehmigen"
+  },
+  "reject": {
+    "title": "„{name}“ ablehnen?",
+    "description": "Der Eintrag wird gelöscht, und das anfragende Unternehmen erhält Ihre Begründung.",
+    "confirm": "Ablehnen"
+  },
+  "withdraw": {
+    "title": "„{name}“ zurückziehen?",
+    "description": "Ihre Anfrage wird zurückgenommen und der Eintrag gelöscht.",
+    "confirm": "Zurückziehen"
+  },
+  "reasonLabel": "Begründung",
+  "reasonPlaceholder": "Sagen Sie der anfragenden Firma, warum"
+}

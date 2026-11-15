@@ -10,7 +10,7 @@
       {
         "title": "Gérer les devises",
         "items": [
-          "Créez ou modifiez le nom, le symbole, l’abréviation et la précision décimale.",
+          "Cette liste est partagée par toutes les entreprises et tenue par l'entreprise de la plateforme. S'il manque une devise à votre entreprise, demandez-la ; la plateforme l'ajoute pour tous.",
           "La suppression est logique et la devise peut être restaurée."
         ]
       },
@@ -44,6 +44,21 @@
     "createdBy": "Créé par",
     "company": "Entreprise",
     "deletedAt": "Supprimé le",
-    "deletedBy": "Supprimé par"
+    "deletedBy": "Supprimé par",
+    "requestStatus": "Statut de la demande",
+    "requestedAt": "Demandée le",
+    "requestedBy": "Demandée par",
+    "requestedByCompanyName": "Entreprise demandeuse",
+    "decidedAt": "Décidée le",
+    "decidedBy": "Décidée par",
+    "decisionNotes": "Motif",
+    "!enums": {
+      "requestStatus": {
+        "requested": "Demandée",
+        "approved": "Approuvée",
+        "rejected": "Refusée",
+        "withdrawn": "Retirée"
+      }
+    }
   }
 }

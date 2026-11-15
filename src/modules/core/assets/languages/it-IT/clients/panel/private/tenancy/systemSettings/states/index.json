@@ -10,7 +10,7 @@
       {
         "title": "Gestire stati e cantoni",
         "items": [
-          "Create o modificate nome, codice e paese associato.",
+          "Questo elenco è condiviso da tutte le aziende e gestito dall'azienda della piattaforma. Se alla tua azienda manca una regione, richiedila; la piattaforma la aggiunge per tutti.",
           "Una città può riferirsi facoltativamente a uno stato o cantone.",
           "L’eliminazione è logica e il record può essere ripristinato."
         ]
@@ -37,6 +37,21 @@
     "createdBy": "Creato da",
     "company": "Azienda",
     "deletedAt": "Eliminato il",
-    "deletedBy": "Eliminato da"
+    "deletedBy": "Eliminato da",
+    "requestStatus": "Stato della richiesta",
+    "requestedAt": "Richiesta il",
+    "requestedBy": "Richiesta da",
+    "requestedByCompanyName": "Azienda richiedente",
+    "decidedAt": "Decisa il",
+    "decidedBy": "Decisa da",
+    "decisionNotes": "Motivo",
+    "!enums": {
+      "requestStatus": {
+        "requested": "Richiesta",
+        "approved": "Approvata",
+        "rejected": "Rifiutata",
+        "withdrawn": "Ritirata"
+      }
+    }
   }
 }

@@ -1,0 +1,19 @@
+{
+  "approve": {
+    "title": "Approve “{name}”?",
+    "description": "Every company will be able to use this entry.",
+    "confirm": "Approve"
+  },
+  "reject": {
+    "title": "Reject “{name}”?",
+    "description": "The entry is deleted, and the company that requested it receives your reason.",
+    "confirm": "Reject"
+  },
+  "withdraw": {
+    "title": "Withdraw “{name}”?",
+    "description": "Your request is taken back and the entry is deleted.",
+    "confirm": "Withdraw"
+  },
+  "reasonLabel": "Reason",
+  "reasonPlaceholder": "Tell the requester why"
+}

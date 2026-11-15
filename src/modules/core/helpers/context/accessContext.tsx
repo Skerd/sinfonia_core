@@ -23,6 +23,8 @@ export type AccessObject = {
     create: boolean;
     delete: boolean;
     restore: boolean;
+    /** A platform list whose missing entries other companies request (D160); see `AccessFormResponseType.requestable`. */
+    requestable?: boolean;
     resourceId: string;
     renderComponentOnError: boolean;
     ifProp: string;
@@ -85,7 +87,7 @@ export const AccessDebugOverrideContext = createContext<AccessDebugOverrideConte
 
 function makeAccessObject(
     resourceId: string,
-    permissions: Pick<AccessObject, "read" | "write" | AccessFlag>,
+    permissions: Pick<AccessObject, "read" | "write" | AccessFlag | "requestable">,
 ): AccessObject {
     return {
         ...permissions,
@@ -103,6 +105,7 @@ function accessFormToAccessObject(resourceId: string, form: AccessFormResponseTy
         create: form.create ?? false,
         delete: form.delete ?? false,
         restore: form.restore ?? false,
+        requestable: form.requestable ?? false,
     });
 }
 

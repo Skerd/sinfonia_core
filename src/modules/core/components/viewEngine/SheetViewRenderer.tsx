@@ -17,6 +17,15 @@ import ActionMenu from "@coreModule/components/viewEngine/widgets/actions/menu/a
 import DeleteAction from "@coreModule/components/viewEngine/widgets/actions/deleteAction.tsx";
 import RestoreAction from "@coreModule/components/viewEngine/widgets/actions/restoreAction.tsx";
 import ViewRenderer, {type ViewRendererContext} from "./ViewRenderer.tsx";
+import {
+    isRequestDecision,
+    type RequestableEntry,
+    RequestableEntryMenu,
+    type RequestDecision,
+    RequestStatusBadge,
+} from "@coreModule/components/entityPage/requestable/requestableEntry.tsx";
+import RequestableEntryDialog from "@coreModule/components/entityPage/requestable/requestableEntryDialog.tsx";
+import {useEntityListRow} from "@coreModule/components/entityPage/list/entityListRowContext.ts";
 import SheetAuditHistoryDrawer, {SheetAuditHistoryMenuLabel} from "./audit/sheetAuditHistory.tsx";
 import {collectAuditFieldHintsFromViewNodes, collectFieldLabelsFromViewNodes} from "./audit/auditFieldHints.ts";
 import {SheetDescriptionBlock, SheetTitleBlock} from "./sheet/shell/sheetHeaderBlocks.tsx";
@@ -138,7 +147,10 @@ export function SheetViewRenderer({
 }: SheetViewRendererProps) {
     const {row: data, setRow, unlinkRefPath, unlinkListItem} = useSheetRow(dataProps, onSheetRowPatched);
     const {present, handleOpenChange, dismissNow} = useSheetPresence(open, onOpenChange);
-    const [action, setAction] = useState<"" | "delete" | "restore">("");
+    const [action, setAction] = useState<"" | "delete" | "restore" | RequestDecision>("");
+    // A requestable platform list (D160): the request decisions join the standard actions.
+    const requestable = access?.requestable === true;
+    const listRow = useEntityListRow();
     const [reloadCount, setReloadCount] = useState(0);
     const [auditHistoryOpen, setAuditHistoryOpen] = useState(false);
 
@@ -233,6 +245,7 @@ export function SheetViewRenderer({
                                     <div className="min-w-0">
                                         <SheetTitleBlock {...headerProps} override={headerTitle} />
                                         <SheetDescriptionBlock {...headerProps} override={headerDescription} />
+                                        {requestable ? <RequestStatusBadge entry={data as RequestableEntry} collection={config.model} /> : null}
                                     </div>
                                     <div className="flex items-center gap-1 shrink-0">
                                         {!hideActions && ready && (
@@ -245,7 +258,7 @@ export function SheetViewRenderer({
                                                 }}
                                                 editPath={editPath ?? ""}
                                                 hideView={!showViewInActionMenu}
-                                                allowMenuForCustomChildren={actionMenuAllowCustomChildren}
+                                                allowMenuForCustomChildren={actionMenuAllowCustomChildren || requestable}
                                                 hideEdit={hideEdit}
                                                 hideDelete={hideDelete}
                                                 hideRestore={hideRestore}
@@ -263,6 +276,9 @@ export function SheetViewRenderer({
                                                     ) : null
                                                 }
                                             >
+                                                {requestable ? (
+                                                    <RequestableEntryMenu entry={data as RequestableEntry} collection={config.accessModel} onAction={setAction} />
+                                                ) : null}
                                                 {actionMenuChildren}
                                             </ActionMenu>
                                         )}
@@ -291,6 +307,20 @@ export function SheetViewRenderer({
                         onSuccess={onDelete}
                         onCancel={() => setAction("")}
                         url={config.apiUrl}
+                    />
+                )}
+                {ready && requestable && isRequestDecision(action) && (
+                    <RequestableEntryDialog
+                        decision={action}
+                        entry={data as RequestableEntry}
+                        apiUrl={config.apiUrl ?? ""}
+                        onClose={() => setAction("")}
+                        onDecided={(decided) => {
+                            const next = {...data, ...decided};
+                            setRow(next);
+                            onDataFetched?.(next);
+                            listRow?.patchRow(String(data._id), decided);
+                        }}
                     />
                 )}
                 {ready && action === "restore" && !hideRestore && (
