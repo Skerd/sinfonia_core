@@ -18,5 +18,27 @@
   "formButtons": {
     "cancel": "Abbrechen",
     "submit": "Erstellen"
+  },
+  "request": {
+    "title": "Stadt anfragen",
+    "description": "Bitten Sie die Plattform, eine fehlende Stadt hinzuzufügen. Nach der Genehmigung steht sie allen Unternehmen zur Verfügung.",
+    "formHeader": {
+      "title": "Stadt anfragen",
+      "description": "Bitten Sie die Plattform, eine fehlende Stadt hinzuzufügen. Nach der Genehmigung steht sie allen Unternehmen zur Verfügung."
+    },
+    "formButtons": {
+      "submit": "Anfrage senden"
+    },
+    "axios": {
+      "start": {
+        "title": "Stadtanfrage wird gesendet"
+      },
+      "success": {
+        "title": "Stadt angefragt. Die Plattform prüft die Anfrage."
+      },
+      "error": {
+        "title": "Die Stadt konnte nicht angefragt werden, bitte versuchen Sie es erneut!"
+      }
+    }
   }
 }

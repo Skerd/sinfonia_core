@@ -18,5 +18,27 @@
   "formButtons": {
     "cancel": "Annuler",
     "submit": "Créer"
+  },
+  "request": {
+    "title": "Demander une ville",
+    "description": "Demandez à la plateforme d'ajouter une ville manquante. Elle sera disponible pour toutes les entreprises une fois approuvée.",
+    "formHeader": {
+      "title": "Demander une ville",
+      "description": "Demandez à la plateforme d'ajouter une ville manquante. Elle sera disponible pour toutes les entreprises une fois approuvée."
+    },
+    "formButtons": {
+      "submit": "Envoyer la demande"
+    },
+    "axios": {
+      "start": {
+        "title": "Envoi de la demande de ville"
+      },
+      "success": {
+        "title": "Ville demandée. La plateforme va examiner la demande."
+      },
+      "error": {
+        "title": "La ville n'a pas pu être demandée, veuillez réessayer !"
+      }
+    }
   }
 }

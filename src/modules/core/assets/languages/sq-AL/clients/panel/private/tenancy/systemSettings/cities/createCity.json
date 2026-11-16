@@ -18,5 +18,27 @@
   "formButtons": {
     "cancel": "Anulo",
     "submit": "Krijo"
+  },
+  "request": {
+    "title": "Kërko një qytet",
+    "description": "Kërkojini platformës të shtojë një qytet që mungon. Pas miratimit do të jetë i disponueshëm për të gjitha kompanitë.",
+    "formHeader": {
+      "title": "Kërko një qytet",
+      "description": "Kërkojini platformës të shtojë një qytet që mungon. Pas miratimit do të jetë i disponueshëm për të gjitha kompanitë."
+    },
+    "formButtons": {
+      "submit": "Dërgo kërkesën"
+    },
+    "axios": {
+      "start": {
+        "title": "Po dërgohet kërkesa për qytetin"
+      },
+      "success": {
+        "title": "Qyteti u kërkua. Platforma do ta shqyrtojë kërkesën."
+      },
+      "error": {
+        "title": "Qyteti nuk mund të kërkohej, ju lutemi provoni përsëri!"
+      }
+    }
   }
 }

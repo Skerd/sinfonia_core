@@ -32,5 +32,30 @@
   "formButtons": {
     "cancel": "Annuler",
     "submit": "Créer"
+  },
+  "request": {
+    "title": "Demander un état / canton",
+    "description": "Demandez à la plateforme d'ajouter un état ou canton manquant. Il sera disponible pour toutes les entreprises une fois approuvé.",
+    "formHeader": {
+      "title": "Demander un état / canton",
+      "description": "Demandez à la plateforme d'ajouter un état ou canton manquant. Il sera disponible pour toutes les entreprises une fois approuvé."
+    },
+    "formButtons": {
+      "submit": "Envoyer la demande"
+    },
+    "axios": {
+      "start": {
+        "title": "Envoi de la demande",
+        "time": 3000
+      },
+      "success": {
+        "title": "État / canton demandé. La plateforme va examiner la demande.",
+        "time": 3000
+      },
+      "error": {
+        "title": "L'état / canton n'a pas pu être demandé, veuillez réessayer !",
+        "time": 3000
+      }
+    }
   }
 }

@@ -20,5 +20,27 @@
   "formButtons": {
     "cancel": "Annulla",
     "submit": "Crea"
+  },
+  "request": {
+    "title": "Richiedi una valuta",
+    "description": "Chiedi alla piattaforma di aggiungere una valuta mancante. Sarà disponibile per tutte le aziende dopo l'approvazione.",
+    "formHeader": {
+      "title": "Richiedi una valuta",
+      "description": "Chiedi alla piattaforma di aggiungere una valuta mancante. Sarà disponibile per tutte le aziende dopo l'approvazione."
+    },
+    "formButtons": {
+      "submit": "Invia richiesta"
+    },
+    "axios": {
+      "start": {
+        "title": "Invio della richiesta della valuta"
+      },
+      "success": {
+        "title": "Valuta richiesta. La piattaforma esaminerà la richiesta."
+      },
+      "error": {
+        "title": "Non è stato possibile richiedere la valuta, riprova!"
+      }
+    }
   }
 }

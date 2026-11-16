@@ -34,5 +34,30 @@
   "formButtons": {
     "cancel": "Annuler",
     "submit": "Créer"
+  },
+  "request": {
+    "title": "Demander un pays",
+    "description": "Demandez à la plateforme d'ajouter un pays manquant. Il sera disponible pour toutes les entreprises une fois approuvé.",
+    "formHeader": {
+      "title": "Demander un pays",
+      "description": "Demandez à la plateforme d'ajouter un pays manquant. Il sera disponible pour toutes les entreprises une fois approuvé."
+    },
+    "formButtons": {
+      "submit": "Envoyer la demande"
+    },
+    "axios": {
+      "start": {
+        "title": "Envoi de la demande de pays",
+        "time": 3000
+      },
+      "success": {
+        "title": "Pays demandé. La plateforme va examiner la demande.",
+        "time": 3000
+      },
+      "error": {
+        "title": "Le pays n'a pas pu être demandé, veuillez réessayer !",
+        "time": 3000
+      }
+    }
   }
 }

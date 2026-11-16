@@ -32,5 +32,30 @@
   "formButtons": {
     "cancel": "Anulo",
     "submit": "Krijo"
+  },
+  "request": {
+    "title": "Kërko një rajon",
+    "description": "Kërkojini platformës të shtojë një rajon që mungon. Pas miratimit do të jetë i disponueshëm për të gjitha kompanitë.",
+    "formHeader": {
+      "title": "Kërko një rajon",
+      "description": "Kërkojini platformës të shtojë një rajon që mungon. Pas miratimit do të jetë i disponueshëm për të gjitha kompanitë."
+    },
+    "formButtons": {
+      "submit": "Dërgo kërkesën"
+    },
+    "axios": {
+      "start": {
+        "title": "Po dërgohet kërkesa për rajonin",
+        "time": 3000
+      },
+      "success": {
+        "title": "Rajoni u kërkua. Platforma do ta shqyrtojë kërkesën.",
+        "time": 3000
+      },
+      "error": {
+        "title": "Rajoni nuk mund të kërkohej, ju lutemi provoni përsëri!",
+        "time": 3000
+      }
+    }
   }
 }

@@ -34,5 +34,30 @@
   "formButtons": {
     "cancel": "Cancel",
     "submit": "Create"
+  },
+  "request": {
+    "title": "Request a country",
+    "description": "Ask the platform to add a missing country. It becomes available to every company once the platform approves it.",
+    "formHeader": {
+      "title": "Request a country",
+      "description": "Ask the platform to add a missing country. It becomes available to every company once the platform approves it."
+    },
+    "formButtons": {
+      "submit": "Send request"
+    },
+    "axios": {
+      "start": {
+        "title": "Sending country request",
+        "time": 3000
+      },
+      "success": {
+        "title": "Country requested. The platform will review it.",
+        "time": 3000
+      },
+      "error": {
+        "title": "The country could not be requested, please try again!",
+        "time": 3000
+      }
+    }
   }
 }

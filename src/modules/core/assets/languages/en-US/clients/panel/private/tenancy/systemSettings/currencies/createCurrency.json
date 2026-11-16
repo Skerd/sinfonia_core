@@ -20,5 +20,27 @@
   "formButtons": {
     "cancel": "Cancel",
     "submit": "Create"
+  },
+  "request": {
+    "title": "Request a currency",
+    "description": "Ask the platform to add a missing currency. It becomes available to every company once the platform approves it.",
+    "formHeader": {
+      "title": "Request a currency",
+      "description": "Ask the platform to add a missing currency. It becomes available to every company once the platform approves it."
+    },
+    "formButtons": {
+      "submit": "Send request"
+    },
+    "axios": {
+      "start": {
+        "title": "Sending currency request"
+      },
+      "success": {
+        "title": "Currency requested. The platform will review it."
+      },
+      "error": {
+        "title": "The currency could not be requested, please try again!"
+      }
+    }
   }
 }

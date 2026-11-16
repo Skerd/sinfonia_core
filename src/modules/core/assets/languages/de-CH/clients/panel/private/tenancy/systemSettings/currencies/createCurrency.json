@@ -20,5 +20,27 @@
   "formButtons": {
     "cancel": "Abbrechen",
     "submit": "Erstellen"
+  },
+  "request": {
+    "title": "Währung anfragen",
+    "description": "Bitten Sie die Plattform, eine fehlende Währung hinzuzufügen. Nach der Genehmigung steht sie allen Unternehmen zur Verfügung.",
+    "formHeader": {
+      "title": "Währung anfragen",
+      "description": "Bitten Sie die Plattform, eine fehlende Währung hinzuzufügen. Nach der Genehmigung steht sie allen Unternehmen zur Verfügung."
+    },
+    "formButtons": {
+      "submit": "Anfrage senden"
+    },
+    "axios": {
+      "start": {
+        "title": "Währungsanfrage wird gesendet"
+      },
+      "success": {
+        "title": "Währung angefragt. Die Plattform prüft die Anfrage."
+      },
+      "error": {
+        "title": "Die Währung konnte nicht angefragt werden, bitte versuchen Sie es erneut!"
+      }
+    }
   }
 }

@@ -32,5 +32,30 @@
   "formButtons": {
     "cancel": "Annulla",
     "submit": "Crea"
+  },
+  "request": {
+    "title": "Richiedi uno stato / cantone",
+    "description": "Chiedi alla piattaforma di aggiungere uno stato o cantone mancante. Sarà disponibile per tutte le aziende dopo l'approvazione.",
+    "formHeader": {
+      "title": "Richiedi uno stato / cantone",
+      "description": "Chiedi alla piattaforma di aggiungere uno stato o cantone mancante. Sarà disponibile per tutte le aziende dopo l'approvazione."
+    },
+    "formButtons": {
+      "submit": "Invia richiesta"
+    },
+    "axios": {
+      "start": {
+        "title": "Invio della richiesta",
+        "time": 3000
+      },
+      "success": {
+        "title": "Stato / cantone richiesto. La piattaforma esaminerà la richiesta.",
+        "time": 3000
+      },
+      "error": {
+        "title": "Non è stato possibile richiedere lo stato / cantone, riprova!",
+        "time": 3000
+      }
+    }
   }
 }

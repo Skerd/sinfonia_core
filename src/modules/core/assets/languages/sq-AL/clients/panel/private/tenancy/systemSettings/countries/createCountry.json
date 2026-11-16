@@ -34,5 +34,30 @@
   "formButtons": {
     "cancel": "Anulo",
     "submit": "Krijo"
+  },
+  "request": {
+    "title": "Kërko një shtet",
+    "description": "Kërkojini platformës të shtojë një shtet që mungon. Pas miratimit do të jetë i disponueshëm për të gjitha kompanitë.",
+    "formHeader": {
+      "title": "Kërko një shtet",
+      "description": "Kërkojini platformës të shtojë një shtet që mungon. Pas miratimit do të jetë i disponueshëm për të gjitha kompanitë."
+    },
+    "formButtons": {
+      "submit": "Dërgo kërkesën"
+    },
+    "axios": {
+      "start": {
+        "title": "Po dërgohet kërkesa për shtetin",
+        "time": 3000
+      },
+      "success": {
+        "title": "Shteti u kërkua. Platforma do ta shqyrtojë kërkesën.",
+        "time": 3000
+      },
+      "error": {
+        "title": "Shteti nuk mund të kërkohej, ju lutemi provoni përsëri!",
+        "time": 3000
+      }
+    }
   }
 }

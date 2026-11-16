@@ -2,6 +2,7 @@ import {compose} from "redux";
 import {useMemo, type ComponentType, type ReactNode} from "react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withRequestWording from "@coreModule/helpers/hocs/withRequestWording.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -149,6 +150,7 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
 
     return compose(
         withLanguage(config.languagePath),
+        withRequestWording(accessKey),
         withAxios<unknown, TForm>({url: config.apiUrl, method: "PUT", data: {}}, true),
         withDebug(true, true, accessKey),
     )(GenericCreateInner) as ComponentType<GenericCreateSurfaceProps>;

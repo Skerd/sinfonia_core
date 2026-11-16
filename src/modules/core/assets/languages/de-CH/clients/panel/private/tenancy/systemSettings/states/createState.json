@@ -32,5 +32,30 @@
   "formButtons": {
     "cancel": "Abbrechen",
     "submit": "Erstellen"
+  },
+  "request": {
+    "title": "Kanton / Bundesland anfragen",
+    "description": "Bitten Sie die Plattform, einen fehlenden Kanton oder ein Bundesland hinzuzufügen. Nach der Genehmigung steht er allen Unternehmen zur Verfügung.",
+    "formHeader": {
+      "title": "Kanton / Bundesland anfragen",
+      "description": "Bitten Sie die Plattform, einen fehlenden Kanton oder ein Bundesland hinzuzufügen. Nach der Genehmigung steht er allen Unternehmen zur Verfügung."
+    },
+    "formButtons": {
+      "submit": "Anfrage senden"
+    },
+    "axios": {
+      "start": {
+        "title": "Anfrage wird gesendet",
+        "time": 3000
+      },
+      "success": {
+        "title": "Kanton / Bundesland angefragt. Die Plattform prüft die Anfrage.",
+        "time": 3000
+      },
+      "error": {
+        "title": "Der Kanton / das Bundesland konnte nicht angefragt werden, bitte versuchen Sie es erneut!",
+        "time": 3000
+      }
+    }
   }
 }

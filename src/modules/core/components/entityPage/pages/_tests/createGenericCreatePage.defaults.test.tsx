@@ -32,7 +32,12 @@ vi.mock("@coreModule/helpers/hooks/useCompanyTimeZone.ts", () => ({
     useCompanyTimeZone: () => "Pacific/Kiritimati",
 }));
 vi.mock("@coreModule/components/viewEngine/FormViewRenderer.tsx", () => ({
-    default: ({defaultValues}: {defaultValues: unknown}) => <pre data-testid="defaults">{JSON.stringify(defaultValues)}</pre>,
+    default: ({defaultValues, resolveLanguageKey}: {defaultValues: unknown; resolveLanguageKey: (key: string) => string}) => (
+        <>
+            <pre data-testid="defaults">{JSON.stringify(defaultValues)}</pre>
+            <p data-testid="submit">{resolveLanguageKey("formButtons.submit")}</p>
+        </>
+    ),
 }));
 
 import {createGenericCreatePage} from "../createGenericCreatePage.tsx";
@@ -89,4 +94,20 @@ describe("createGenericCreatePage defaultValues (GLB-09, D116)", () => {
         render(<MemoryRouter><Plain /></MemoryRouter>);
         expect(screen.getByTestId("forbidden")).toBeTruthy();
     });
+
+    it("keeps the create wording on an ordinary create (D160)", () => {
+        // The language mock resolves every key to itself, so the key the form asked for is what renders.
+        render(<MemoryRouter><Creating /></MemoryRouter>);
+        expect(screen.getByTestId("submit").textContent).toBe("formButtons.submit");
+    });
+
+    it("uses the request wording when a company without the create grant requests on a requestable list", () => {
+        access.create = false;
+        access.request = true;
+        access.requestable = true;
+        render(<MemoryRouter><Creating /></MemoryRouter>);
+        expect(screen.getByTestId("submit").textContent).toBe("request.formButtons.submit");
+    });
 });
+
+const Creating = createGenericCreatePage<{title: string}>(base);

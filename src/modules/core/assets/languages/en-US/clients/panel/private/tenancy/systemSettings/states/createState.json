@@ -32,5 +32,30 @@
   "formButtons": {
     "cancel": "Cancel",
     "submit": "Create"
+  },
+  "request": {
+    "title": "Request a state",
+    "description": "Ask the platform to add a missing state or canton. It becomes available to every company once the platform approves it.",
+    "formHeader": {
+      "title": "Request a state",
+      "description": "Ask the platform to add a missing state or canton. It becomes available to every company once the platform approves it."
+    },
+    "formButtons": {
+      "submit": "Send request"
+    },
+    "axios": {
+      "start": {
+        "title": "Sending state request",
+        "time": 3000
+      },
+      "success": {
+        "title": "State requested. The platform will review it.",
+        "time": 3000
+      },
+      "error": {
+        "title": "The state could not be requested, please try again!",
+        "time": 3000
+      }
+    }
   }
 }

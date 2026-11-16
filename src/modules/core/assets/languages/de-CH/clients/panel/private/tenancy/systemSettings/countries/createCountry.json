@@ -34,5 +34,30 @@
   "formButtons": {
     "cancel": "Abbrechen",
     "submit": "Erstellen"
+  },
+  "request": {
+    "title": "Land anfragen",
+    "description": "Bitten Sie die Plattform, ein fehlendes Land hinzuzufügen. Nach der Genehmigung steht es allen Unternehmen zur Verfügung.",
+    "formHeader": {
+      "title": "Land anfragen",
+      "description": "Bitten Sie die Plattform, ein fehlendes Land hinzuzufügen. Nach der Genehmigung steht es allen Unternehmen zur Verfügung."
+    },
+    "formButtons": {
+      "submit": "Anfrage senden"
+    },
+    "axios": {
+      "start": {
+        "title": "Landanfrage wird gesendet",
+        "time": 3000
+      },
+      "success": {
+        "title": "Land angefragt. Die Plattform prüft die Anfrage.",
+        "time": 3000
+      },
+      "error": {
+        "title": "Das Land konnte nicht angefragt werden, bitte versuchen Sie es erneut!",
+        "time": 3000
+      }
+    }
   }
 }

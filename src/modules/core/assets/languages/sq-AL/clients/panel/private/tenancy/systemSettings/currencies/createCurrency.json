@@ -20,5 +20,27 @@
   "formButtons": {
     "cancel": "Anulo",
     "submit": "Krijo"
+  },
+  "request": {
+    "title": "Kërko një monedhë",
+    "description": "Kërkojini platformës të shtojë një monedhë që mungon. Pas miratimit do të jetë e disponueshme për të gjitha kompanitë.",
+    "formHeader": {
+      "title": "Kërko një monedhë",
+      "description": "Kërkojini platformës të shtojë një monedhë që mungon. Pas miratimit do të jetë e disponueshme për të gjitha kompanitë."
+    },
+    "formButtons": {
+      "submit": "Dërgo kërkesën"
+    },
+    "axios": {
+      "start": {
+        "title": "Po dërgohet kërkesa për monedhën"
+      },
+      "success": {
+        "title": "Monedha u kërkua. Platforma do ta shqyrtojë kërkesën."
+      },
+      "error": {
+        "title": "Monedha nuk mund të kërkohej, ju lutemi provoni përsëri!"
+      }
+    }
   }
 }

@@ -20,5 +20,27 @@
   "formButtons": {
     "cancel": "Annuler",
     "submit": "Créer"
+  },
+  "request": {
+    "title": "Demander une devise",
+    "description": "Demandez à la plateforme d'ajouter une devise manquante. Elle sera disponible pour toutes les entreprises une fois approuvée.",
+    "formHeader": {
+      "title": "Demander une devise",
+      "description": "Demandez à la plateforme d'ajouter une devise manquante. Elle sera disponible pour toutes les entreprises une fois approuvée."
+    },
+    "formButtons": {
+      "submit": "Envoyer la demande"
+    },
+    "axios": {
+      "start": {
+        "title": "Envoi de la demande de devise"
+      },
+      "success": {
+        "title": "Devise demandée. La plateforme va examiner la demande."
+      },
+      "error": {
+        "title": "La devise n'a pas pu être demandée, veuillez réessayer !"
+      }
+    }
   }
 }
