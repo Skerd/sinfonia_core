@@ -98,6 +98,8 @@ export type TestEntity = DeletedData & {
     _id: string;
     name?: string;
     code?: string;
+    /** A requestable platform list's status (D160). */
+    requestStatus?: string;
 };
 
 export function entity(overrides: Partial<TestEntity> = {}): TestEntity {

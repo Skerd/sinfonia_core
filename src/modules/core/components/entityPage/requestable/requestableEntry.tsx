@@ -31,6 +31,15 @@ export type RequestDecision = "approve" | "reject" | "withdraw";
 
 const REQUEST_DECISIONS: readonly RequestDecision[] = ["approve", "reject", "withdraw"];
 
+/**
+ * A request that was turned down or taken back: the entry is deleted, yet its requester (and the platform) still see it,
+ * with its status and reason, even without the restore grant every other deleted record needs (D160).
+ */
+export function isClosedRequest(entry: object): boolean {
+    const status = "requestStatus" in entry ? entry.requestStatus : undefined;
+    return status === "rejected" || status === "withdrawn";
+}
+
 /** A row or card action that is a decision on a requested entry. */
 export function isRequestDecision(action: string): action is RequestDecision {
     return REQUEST_DECISIONS.some((decision) => decision === action);

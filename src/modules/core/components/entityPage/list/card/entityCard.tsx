@@ -28,7 +28,7 @@ import {isDialogDismissGuarded} from "@coreModule/components/ui/dialog.tsx";
 import {EntityCardHeader as EntityTextCardHeader} from "@coreModule/components/entityPage/list/card/entityCardHeader.tsx";
 import {useEntityCardFetch} from "@coreModule/helpers/hooks/useEntityCardFetch.ts";
 import {findFromObject} from "@coreModule/helpers/general/objectPath.ts";
-import {isRequestDecision, RequestableEntryMenu, RequestFooter} from "@coreModule/components/entityPage/requestable/requestableEntry.tsx";
+import {isClosedRequest, isRequestDecision, RequestableEntryMenu, RequestFooter} from "@coreModule/components/entityPage/requestable/requestableEntry.tsx";
 import RequestableEntryDialog from "@coreModule/components/entityPage/requestable/requestableEntryDialog.tsx";
 import {useEntityListRow} from "@coreModule/components/entityPage/list/entityListRowContext.ts";
 
@@ -315,7 +315,9 @@ function EntityCardRoot<T extends SoftDeletable>({
         ],
     );
 
-    if (hideAfterDeletion || (isDeleted && !restore)) {
+    // A deleted record needs the restore grant to show, except a closed request on a requestable list: the server sends
+    // those only to their requester and the platform, which keep seeing them with their status and reason (no Restore).
+    if (hideAfterDeletion || (isDeleted && !restore && !(requestable && isClosedRequest(entity)))) {
         return <></>;
     }
     if (!hasCardRead(read)) {

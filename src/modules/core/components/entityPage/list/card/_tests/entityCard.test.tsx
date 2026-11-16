@@ -110,6 +110,27 @@ describe("EntityCard access gating", () => {
         expect(propsOf("HiddenElement")).toHaveLength(0);
     });
 
+    it("still renders a closed request (rejected or withdrawn) of a requestable list without the restore grant (D160)", () => {
+        for (const requestStatus of ["rejected", "withdrawn"]) {
+            const {unmount} = renderWithCardEnv(
+                <EntityCard {...baseCardProps({entity: makeEntity({deletedAt: new Date("2026-01-01"), requestStatus})})}>
+                    {() => <div data-testid="body">body</div>}
+                </EntityCard>,
+                {access: accessMap("widgets", {restore: false, requestable: true})},
+            );
+            expect(screen.getByTestId("body")).toBeInTheDocument();
+            unmount();
+        }
+        // Any other deleted entry of that list (approved, then deleted by the platform) stays hidden.
+        renderWithCardEnv(
+            <EntityCard {...baseCardProps({entity: makeEntity({deletedAt: new Date("2026-01-01"), requestStatus: "approved"})})}>
+                {() => <div data-testid="body">body</div>}
+            </EntityCard>,
+            {access: accessMap("widgets", {restore: false, requestable: true})},
+        );
+        expect(screen.queryByTestId("body")).not.toBeInTheDocument();
+    });
+
     it("still renders a deleted entity when the user can restore it", () => {
         renderWithCardEnv(
             <EntityCard {...baseCardProps({entity: makeEntity({deletedAt: new Date("2026-01-01")})})}>
