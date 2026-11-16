@@ -40,8 +40,10 @@ import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 import {useOpenRecord} from "@coreModule/helpers/hooks/useOpenParam.ts";
 import {EntityListRowContext, type EntityListRowContextValue} from "@coreModule/components/entityPage/list/entityListRowContext.ts";
 import {
+    isClosedRequest,
     isRequestDecision,
     RequestableEntryMenu,
+    RequestableStandardMenuLabel,
     RequestEntryButton,
     useRequestStatusQuickFilter,
 } from "@coreModule/components/entityPage/requestable/requestableEntry.tsx";
@@ -646,15 +648,18 @@ export default function EntityListPage<T extends BaseEntity>({
                                 deletedData={entity}
                                 onAction={(a: string) => openAction(entity, a)}
                                 editPath={buildEditPath(entity)}
-                                hideEdit={resolveRowFlag(rowActionMenu?.hideEdit, entity)}
+                                hideEdit={resolveRowFlag(rowActionMenu?.hideEdit, entity) || (requestable && isClosedRequest(entity))}
                                 hideView={rowActionMenu?.hideView}
                                 hideDelete={resolveRowFlag(rowActionMenu?.hideDelete, entity)}
-                                hideRestore={rowActionMenu?.hideRestore}
-                                allowMenuForCustomChildren={rowActionMenu?.allowMenuForCustomChildren || requestable}
+                                hideRestore={rowActionMenu?.hideRestore || (requestable && isClosedRequest(entity))}
+                                allowMenuForCustomChildren={rowActionMenu?.allowMenuForCustomChildren}
+                                standardMenuLabel={requestable ? <RequestableStandardMenuLabel entry={entity} collection={accessModel} /> : null}
+                                afterStandardMenuChildren={
+                                    requestable ? (
+                                        <RequestableEntryMenu entry={entity} collection={accessModel} onAction={(a) => openAction(entity, a)} />
+                                    ) : null
+                                }
                             >
-                                {requestable ? (
-                                    <RequestableEntryMenu entry={entity} collection={accessModel} onAction={(a) => openAction(entity, a)} />
-                                ) : null}
                                 {renderActionMenuChildren?.(
                                     entity,
                                     (a) => openAction(entity, a),

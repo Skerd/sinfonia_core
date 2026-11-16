@@ -28,6 +28,13 @@ type ActionMenuProps = {
      * Use for sheet “Activity” so it stays above the standard actions and does not mix with domain-specific menu items.
      */
     beforeViewMenuChildren?: ReactNode,
+    /** A heading over View / Edit / Delete / Restore, for a menu that also ends in a titled group (`afterStandardMenuChildren`). */
+    standardMenuLabel?: ReactNode,
+    /**
+     * Rendered last, after View / Edit / Delete / Restore: a group about the record's workflow rather than its data
+     * (e.g. a request's Approve / Reject / Withdraw under its own heading, D160). It brings its own separator and label.
+     */
+    afterStandardMenuChildren?: ReactNode,
     onAction?: (action: string) => void,
     hideView?: boolean,
     /** Show menu for custom `children` even without write/delete (e.g. edifice row with floors-only actions). */
@@ -44,6 +51,8 @@ function ActionMenu({
     editPath,
     children,
     beforeViewMenuChildren,
+    standardMenuLabel,
+    afterStandardMenuChildren,
     onAction,
     hideView,
     allowMenuForCustomChildren,
@@ -67,7 +76,7 @@ function ActionMenu({
 
     const shouldRenderMenu = !!(
         write || effectiveDelete || effectiveRestore || !children || !read
-        || (allowMenuForCustomChildren && !!children) || !!beforeViewMenuChildren
+        || (allowMenuForCustomChildren && !!children) || !!beforeViewMenuChildren || !!afterStandardMenuChildren
     );
 
     const rootRef = useRef<HTMLDivElement>(null);
@@ -198,6 +207,8 @@ function ActionMenu({
 
                     {beforeViewMenuChildren && hasStandardTrailing && <DropdownMenuSeparator />}
 
+                    {hasStandardTrailing && standardMenuLabel}
+
                     {!!read && !hideView && <ViewDropdown onAction={onAction} accessModel={accessModel} />}
 
                     {(!!write || effectiveDelete || effectiveRestore) && (
@@ -219,6 +230,8 @@ function ActionMenu({
                             )}
                         </>
                     )}
+
+                    {afterStandardMenuChildren}
 
                 </DropdownMenuContent>
             </DropdownMenu>

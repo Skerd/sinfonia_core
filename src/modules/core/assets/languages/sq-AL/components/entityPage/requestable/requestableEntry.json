@@ -16,5 +16,6 @@
   "requestApproval": "Kërkesa dhe miratimi",
   "decisionNotes": "Arsyeja",
   "requestEntry": "Kërko një zë",
-  "managedByPlatform": "Mbahet nga platforma për të gjitha kompanitë. Mungon një zë? Kërkojeni dhe platforma e shton për të gjithë."
+  "managedByPlatform": "Mbahet nga platforma për të gjitha kompanitë. Mungon një zë? Kërkojeni dhe platforma e shton për të gjithë.",
+  "entryActions": "Regjistrimi"
 }

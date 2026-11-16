@@ -16,5 +16,6 @@
   "requestApproval": "Anfrage & Genehmigung",
   "decisionNotes": "Begründung",
   "requestEntry": "Eintrag anfragen",
-  "managedByPlatform": "Von der Plattform für alle Unternehmen gepflegt. Fehlt ein Eintrag? Fragen Sie ihn an, die Plattform fügt ihn für alle hinzu."
+  "managedByPlatform": "Von der Plattform für alle Unternehmen gepflegt. Fehlt ein Eintrag? Fragen Sie ihn an, die Plattform fügt ihn für alle hinzu.",
+  "entryActions": "Eintrag"
 }

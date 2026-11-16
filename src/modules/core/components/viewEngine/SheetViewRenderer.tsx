@@ -18,9 +18,11 @@ import DeleteAction from "@coreModule/components/viewEngine/widgets/actions/dele
 import RestoreAction from "@coreModule/components/viewEngine/widgets/actions/restoreAction.tsx";
 import ViewRenderer, {type ViewRendererContext} from "./ViewRenderer.tsx";
 import {
+    isClosedRequest,
     isRequestDecision,
     type RequestableEntry,
     RequestableEntryMenu,
+    RequestableStandardMenuLabel,
     type RequestDecision,
     RequestStatusBadge,
 } from "@coreModule/components/entityPage/requestable/requestableEntry.tsx";
@@ -150,6 +152,9 @@ export function SheetViewRenderer({
     const [action, setAction] = useState<"" | "delete" | "restore" | RequestDecision>("");
     // A requestable platform list (D160): the request decisions join the standard actions.
     const requestable = access?.requestable === true;
+    // A closed request (rejected or withdrawn) is final: no Edit or Restore, it is requested again (D160).
+    const closedRequest = requestable && isClosedRequest(data);
+    const restoreHidden = hideRestore || closedRequest;
     const listRow = useEntityListRow();
     const [reloadCount, setReloadCount] = useState(0);
     const [auditHistoryOpen, setAuditHistoryOpen] = useState(false);
@@ -258,11 +263,19 @@ export function SheetViewRenderer({
                                                 }}
                                                 editPath={editPath ?? ""}
                                                 hideView={!showViewInActionMenu}
-                                                allowMenuForCustomChildren={actionMenuAllowCustomChildren || requestable}
-                                                hideEdit={hideEdit}
+                                                allowMenuForCustomChildren={actionMenuAllowCustomChildren}
+                                                hideEdit={hideEdit || closedRequest}
                                                 hideDelete={hideDelete}
-                                                hideRestore={hideRestore}
+                                                hideRestore={restoreHidden}
                                                 alwaysShowDropDownMenuTrigger={true}
+                                                standardMenuLabel={
+                                                    requestable ? <RequestableStandardMenuLabel entry={data as RequestableEntry} collection={config.accessModel} /> : null
+                                                }
+                                                afterStandardMenuChildren={
+                                                    requestable ? (
+                                                        <RequestableEntryMenu entry={data as RequestableEntry} collection={config.accessModel} onAction={setAction} />
+                                                    ) : null
+                                                }
                                                 beforeViewMenuChildren={
                                                     canSeeAuditTrail ? (
                                                         <DropdownMenuItem
@@ -276,9 +289,6 @@ export function SheetViewRenderer({
                                                     ) : null
                                                 }
                                             >
-                                                {requestable ? (
-                                                    <RequestableEntryMenu entry={data as RequestableEntry} collection={config.accessModel} onAction={setAction} />
-                                                ) : null}
                                                 {actionMenuChildren}
                                             </ActionMenu>
                                         )}
@@ -323,7 +333,7 @@ export function SheetViewRenderer({
                         }}
                     />
                 )}
-                {ready && action === "restore" && !hideRestore && (
+                {ready && action === "restore" && !restoreHidden && (
                     <RestoreAction
                         accessModel={config.accessModel}
                         deleteId={data._id}

@@ -232,6 +232,21 @@ describe("EntityCard actions", () => {
         expect(lastProps("RestoreAction").url).toBe("/api/widget/restore");
     });
 
+    it("offers no Restore for a closed request of a requestable list, even with the restore grant (D160)", () => {
+        renderWithCardEnv(
+            <EntityCard {...baseCardProps({entity: makeEntity({deletedAt: new Date("2026-01-01"), requestStatus: "rejected"})})}>
+                {({setAction}) => (
+                    <button data-testid="open" onClick={() => setAction("restore")}>
+                        open
+                    </button>
+                )}
+            </EntityCard>,
+            {access: accessMap("widgets", {restore: true, requestable: true})},
+        );
+        fireEvent.click(screen.getByTestId("open"));
+        expect(propsOf("RestoreAction")).toHaveLength(0);
+    });
+
     it("suppresses the delete dialog when hideDelete resolves true for the entity", () => {
         openAction("delete", {hideDelete: () => true});
         expect(propsOf("DeleteAction")).toHaveLength(0);

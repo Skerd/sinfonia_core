@@ -2,7 +2,7 @@ import {useMemo} from "react";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {IconArrowBackUp, IconBuilding, IconCalendar, IconCalendarCheck, IconCircleCheck, IconCircleDot, IconCircleX, IconInfoCircle, IconNotes, IconSend} from "@tabler/icons-react";
-import {DropdownMenuItem} from "@coreModule/components/ui/dropdown-menu.tsx";
+import {DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator} from "@coreModule/components/ui/dropdown-menu.tsx";
 import StatusBadge from "@coreModule/components/entityPage/sheet/statusBadge.tsx";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import {InfoRowGroup} from "@coreModule/components/custom/infoRowGroup.tsx";
@@ -52,26 +52,43 @@ type MenuProps = {
     onAction: (decision: RequestDecision) => void;
 };
 
+function useOfferedDecisions(entry: RequestableEntry, collection: string): RequestDecision[] {
+    const sessionCompanyId = useSelector((state: RootState) => state.authentication.user.company._id);
+    const isPlatformCompany = useIsPlatformCompany();
+    const canDecide = useActionAccess(collection, "decideRequest");
+    const canRequest = useActionAccess(collection, "request");
+    if (entry.deletedAt || entry.requestStatus !== "requested") return [];
+    return REQUEST_DECISIONS.filter((decision) => decision === "withdraw"
+        ? canRequest && entry.requestedByCompany === sessionCompanyId
+        : canDecide && isPlatformCompany);
+}
+
+/**
+ * The heading over View / Edit / Delete / Restore (ActionMenu `standardMenuLabel`), shown only when the menu also ends in
+ * the "Request & approval" group, so the entry's own actions and the request's read as two titled groups.
+ */
+export function RequestableStandardMenuLabel({entry, collection}: Omit<MenuProps, "onAction">) {
+    const {resolveLanguageKey} = useDynamicLanguage(LANGUAGE_PATH);
+    if (useOfferedDecisions(entry, collection).length === 0) return null;
+    return <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">{resolveLanguageKey("entryActions")}</DropdownMenuLabel>;
+}
+
 /**
  * The decisions on a requested entry, as menu items: approve and reject inside the platform company (the server refuses
  * them anywhere else), withdraw for the company that requested it. Each also needs its action permission.
  */
 export function RequestableEntryMenu({entry, collection, onAction}: MenuProps) {
     const {resolveLanguageKey} = useDynamicLanguage(LANGUAGE_PATH);
-    const sessionCompanyId = useSelector((state: RootState) => state.authentication.user.company._id);
-    const isPlatformCompany = useIsPlatformCompany();
-    const canDecide = useActionAccess(collection, "decideRequest");
-    const canRequest = useActionAccess(collection, "request");
-    if (entry.deletedAt || entry.requestStatus !== "requested") return null;
-
-    const offered = REQUEST_DECISIONS.filter((decision) => decision === "withdraw"
-        ? canRequest && entry.requestedByCompany === sessionCompanyId
-        : canDecide && isPlatformCompany);
+    const offered = useOfferedDecisions(entry, collection);
     const icons = {approve: IconCircleCheck, reject: IconCircleX, withdraw: IconArrowBackUp};
     const tones = {approve: "text-success", reject: "text-destructive", withdraw: "text-muted-foreground"};
 
+    if (offered.length === 0) return null;
+    // Last in the menu, under its own heading: the request's workflow, not the entry's data (`afterStandardMenuChildren`).
     return (
         <>
+            <DropdownMenuSeparator />
+            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">{resolveLanguageKey("requestApproval")}</DropdownMenuLabel>
             {offered.map((decision) => {
                 const Icon = icons[decision];
                 return (

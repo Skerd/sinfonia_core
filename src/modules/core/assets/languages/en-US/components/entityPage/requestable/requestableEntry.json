@@ -16,5 +16,6 @@
   "requestApproval": "Request & approval",
   "decisionNotes": "Reason",
   "requestEntry": "Request an entry",
-  "managedByPlatform": "Kept by the platform for every company. Missing an entry? Request it and the platform adds it for everyone."
+  "managedByPlatform": "Kept by the platform for every company. Missing an entry? Request it and the platform adds it for everyone.",
+  "entryActions": "Entry"
 }

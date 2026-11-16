@@ -28,7 +28,7 @@ import {isDialogDismissGuarded} from "@coreModule/components/ui/dialog.tsx";
 import {EntityCardHeader as EntityTextCardHeader} from "@coreModule/components/entityPage/list/card/entityCardHeader.tsx";
 import {useEntityCardFetch} from "@coreModule/helpers/hooks/useEntityCardFetch.ts";
 import {findFromObject} from "@coreModule/helpers/general/objectPath.ts";
-import {isClosedRequest, isRequestDecision, RequestableEntryMenu, RequestFooter} from "@coreModule/components/entityPage/requestable/requestableEntry.tsx";
+import {isClosedRequest, isRequestDecision, RequestableEntryMenu, RequestableStandardMenuLabel, RequestFooter} from "@coreModule/components/entityPage/requestable/requestableEntry.tsx";
 import RequestableEntryDialog from "@coreModule/components/entityPage/requestable/requestableEntryDialog.tsx";
 import {useEntityListRow} from "@coreModule/components/entityPage/list/entityListRowContext.ts";
 
@@ -169,7 +169,7 @@ function EntityCardHeader({
     const titlePath = titlePathProp ?? hostTitlePath;
     const titlePaths = Array.isArray(titlePath) ? titlePath : [titlePath];
     const titleReadable = titlePaths.some((p) => accessFieldPathExists(read, p));
-    const hasMenuChildren = (children != null && children !== false) || requestable;
+    const hasMenuChildren = children != null && children !== false;
 
     /* `show` overrides DisplayValue's own path gate, so it has to carry the ACL answer itself. */
     return (
@@ -195,8 +195,11 @@ function EntityCardHeader({
                     hideDelete={hideDelete}
                     hideRestore={hideRestore}
                     hideEdit={hideEdit}
+                    standardMenuLabel={requestable ? <RequestableStandardMenuLabel entry={entity} collection={resource} /> : null}
+                    afterStandardMenuChildren={
+                        requestable ? <RequestableEntryMenu entry={entity} collection={resource} onAction={setAction} /> : null
+                    }
                 >
-                    {requestable ? <RequestableEntryMenu entry={entity} collection={resource} onAction={setAction} /> : null}
                     {children}
                 </ActionMenu>
             }
@@ -277,9 +280,11 @@ function EntityCardRoot<T extends SoftDeletable>({
     const listRow = useEntityListRow();
     const isDeleted = !!entity.deletedAt || !!entity.deletedBy;
 
-    const resolvedHideEdit = typeof hideEdit === "function" ? hideEdit(entity) : hideEdit;
+    const closedRequest = requestable && isClosedRequest(entity);
+    const resolvedHideEdit = (typeof hideEdit === "function" ? hideEdit(entity) : hideEdit) || closedRequest;
     const resolvedHideDelete = typeof hideDelete === "function" ? hideDelete(entity) : hideDelete;
-    const resolvedHideRestore = typeof hideRestore === "function" ? hideRestore(entity) : hideRestore;
+    // A closed request (rejected or withdrawn) on a requestable list is final: no Edit or Restore, it is requested again (D160).
+    const resolvedHideRestore = (typeof hideRestore === "function" ? hideRestore(entity) : hideRestore) || closedRequest;
 
     /*
      * Memoized, and computed above the early returns so the hook order is unconditional. An

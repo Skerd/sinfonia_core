@@ -16,5 +16,6 @@
   "requestApproval": "Richiesta e approvazione",
   "decisionNotes": "Motivo",
   "requestEntry": "Richiedi una voce",
-  "managedByPlatform": "Gestita dalla piattaforma per tutte le aziende. Manca una voce? Richiedila e la piattaforma la aggiunge per tutti."
+  "managedByPlatform": "Gestita dalla piattaforma per tutte le aziende. Manca una voce? Richiedila e la piattaforma la aggiunge per tutti.",
+  "entryActions": "Voce"
 }

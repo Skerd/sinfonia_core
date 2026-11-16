@@ -16,5 +16,6 @@
   "requestApproval": "Demande et approbation",
   "decisionNotes": "Motif",
   "requestEntry": "Demander une entrée",
-  "managedByPlatform": "Tenue par la plateforme pour toutes les entreprises. Une entrée manque ? Demandez-la et la plateforme l'ajoute pour tous."
+  "managedByPlatform": "Tenue par la plateforme pour toutes les entreprises. Une entrée manque ? Demandez-la et la plateforme l'ajoute pour tous.",
+  "entryActions": "Entrée"
 }
