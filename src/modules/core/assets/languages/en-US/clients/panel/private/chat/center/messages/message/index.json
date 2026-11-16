@@ -26,5 +26,6 @@
   "receiptWaitingDelivery": "Not delivered yet",
   "receiptDelivered": "Delivered",
   "receiptRead": "Read",
-  "attachments": "Attachments"
+  "attachments": "Attachments",
+  "originalNotLoaded": "The original message is further up. Scroll up to load it."
 }

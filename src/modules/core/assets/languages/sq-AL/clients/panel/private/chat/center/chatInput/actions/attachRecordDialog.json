@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/actions/attachRecordDialog.tsx",
+  "title": "Ndaj një regjistrim",
+  "description": "Zgjidhni një regjistrim që mund ta hapni; shfaqet si kartë në mesazhin tuaj.",
+  "type": "Lloji",
+  "chooseType": "Zgjidhni një lloj",
+  "chooseTypeFirst": "Zgjidhni një lloj për të parë regjistrimet e tij.",
+  "search": "Kërko",
+  "searchPlaceholder": "Kërko sipas emrit…",
+  "results": "Regjistrimet",
+  "noResults": "Nuk u gjet asnjë regjistrim",
+  "searchType": "Kërko një lloj…"
+}

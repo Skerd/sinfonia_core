@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/actions/attachRecordDialog.tsx",
+  "title": "Datensatz teilen",
+  "description": "Wählen Sie einen Datensatz, den Sie öffnen können; er erscheint als Karte in Ihrer Nachricht.",
+  "type": "Typ",
+  "chooseType": "Typ wählen",
+  "chooseTypeFirst": "Wählen Sie einen Typ, um seine Datensätze zu sehen.",
+  "search": "Suchen",
+  "searchPlaceholder": "Nach Namen suchen…",
+  "results": "Datensätze",
+  "noResults": "Keine Datensätze gefunden",
+  "searchType": "Typen suchen…"
+}

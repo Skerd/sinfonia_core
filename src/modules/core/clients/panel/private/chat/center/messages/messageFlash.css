@@ -1,0 +1,18 @@
+/* A message jumped to (a reply quote's original) pulses twice so the eye finds it; `jumpToMessage` sets the attribute. */
+@keyframes chatMessageFlash {
+    0%, 100% { background-color: transparent; }
+    25%, 75% { background-color: color-mix(in oklch, var(--primary) 18%, transparent); }
+    50% { background-color: color-mix(in oklch, var(--primary) 6%, transparent); }
+}
+
+[id^="message-"][data-flash="true"] {
+    border-radius: var(--radius-lg);
+    animation: chatMessageFlash 1.6s ease-in-out 0.3s 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [id^="message-"][data-flash="true"] {
+        animation: none;
+        background-color: color-mix(in oklch, var(--primary) 14%, transparent);
+    }
+}

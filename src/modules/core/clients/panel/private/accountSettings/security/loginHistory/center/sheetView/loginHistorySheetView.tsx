@@ -10,9 +10,11 @@ import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 export type LoginHistorySheetViewOwnProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    entry: LoginHistory;
-    /** Same as the list (`self` vs `others`). */
-    viewingSelf: boolean;
+    /** The entry; omitted when only `fetchId` is known (an entry shared in chat, D162), loaded through `/single`. */
+    entry?: LoginHistory;
+    fetchId?: string;
+    /** Same as the list (`self` vs `others`); `others` when opened outside the list. */
+    viewingSelf?: boolean;
     onDelete?: (data: DeletedData) => void;
     onRestore?: () => void;
     onActionMenuAction?: (action: string) => void;
@@ -22,7 +24,8 @@ function LoginHistorySheetView({
     open,
     onOpenChange,
     entry,
-    viewingSelf,
+    fetchId,
+    viewingSelf = false,
     onDelete,
     onRestore,
     onActionMenuAction,
@@ -30,15 +33,18 @@ function LoginHistorySheetView({
 }: LoginHistorySheetViewOwnProps & WithLanguageType) {
     const access = useAccess("loginHistories", viewingSelf ? "self" : "others");
     const viewConfig = useViewConfig("loginhistories", "sheet");
+    const entryId = entry?._id ?? fetchId;
 
-    if (!viewConfig) {
+    if (!viewConfig || !entryId) {
         return null;
     }
 
     return (
         <SheetViewRenderer
             config={viewConfig}
-            data={entry}
+            data={entry ?? {_id: entryId}}
+            url={fetchId ? `${viewConfig.apiUrl}/single` : undefined}
+            fetchId={fetchId}
             open={open}
             onOpenChange={onOpenChange}
             resolveLanguageKey={resolveLanguageKey}

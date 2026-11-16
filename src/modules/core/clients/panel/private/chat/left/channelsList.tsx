@@ -18,6 +18,7 @@ import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import type {SimpleUser} from "armonia/src/modules/core/dto/user.dto";
 import {MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
+import {useRecordLabel} from "@coreModule/helpers/chat/chatRecords.tsx";
 import {IconAi, IconInfoCircle, IconUsers} from "@tabler/icons-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 
@@ -33,6 +34,7 @@ function ChannelInfo({
 
     const {read} = useAccess("channels");
     const dispatch = useDispatch();
+    const recordLabel = useRecordLabel();
     const ref = useRef<HTMLButtonElement>(null);
     const user = useSelector((state: RootState) => state.authentication.user);
     const channel = useSelector((state: RootState) => state.chat.channels[channelId]);
@@ -88,7 +90,8 @@ function ChannelInfo({
             message.message,
             message.mentionedUsers,
             channel?.users,
-            resolveLanguageKey("unknown")
+            resolveLanguageKey("unknown"),
+            recordLabel,
         );
     }
 

@@ -1,4 +1,6 @@
 import {IconArrowForwardUp, IconCircleOff, IconPin, IconUser, IconCalendar, IconCheck, IconChecks} from "@tabler/icons-react";
+import {toast} from "sonner";
+import {jumpToMessage} from "@coreModule/clients/panel/private/chat/center/messages/jumpToMessage.ts";
 import {buttonLike} from "@coreModule/helpers/general/a11y.ts";
 import {CSSProperties, ReactNode, useEffect, useRef, useState} from "react";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -37,8 +39,16 @@ import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {recordRefKey, splitChatText} from "armonia/src/modules/core/helpers/chatTokens";
+import {useRecordLabel} from "@coreModule/helpers/chat/chatRecords.tsx";
+import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
+import {MessageRecordCards, RecordChip} from "@coreModule/clients/panel/private/chat/center/messages/message/records/messageRecords.tsx";
 
 const MAX_FILES = 2;
+
+function truncatePreview(text: string, length: number): string {
+    return text.length > length ? `${text.substring(0, length)}...` : text;
+}
 const RECEIPT_MEDIA_BASE = "/api/auxiliary/media/";
 
 type MessageProps = WithLanguageType & {
@@ -74,6 +84,7 @@ function Message({
 }: MessageProps){
     const ref = useRef<HTMLDivElement>(null);
     const {read = {}} = useAccess("messages") || {};
+    const recordLabel = useRecordLabel();
     const dispatch = useDispatch();
     const [contextOpened, setContextOpened] = useState<boolean>(false);
     const [reactionPickerOpened, setReactionPickerOpened] = useState<boolean>(false);
@@ -125,28 +136,26 @@ function Message({
         }
     }, [ref]);
 
+    /** The text with each mention as its user and each shared record as a chip (D162). */
     function renderMessageWithMentions(text: string): ReactNode[] {
-        const mentionRegex = /@([a-fA-F0-9]{24})(?![a-fA-F0-9])/g;
-        const nodes: ReactNode[] = [];
         const mentionedUsers = message.mentionedUsers || [];
+        const kept = new Set((message.records ?? []).map(recordRefKey));
 
-        let lastIndex = 0;
-        let match: RegExpExecArray | null;
-
-        while ((match = mentionRegex.exec(text)) !== null) {
-            const start = match.index;
-            const end = mentionRegex.lastIndex;
-            const userId = match[1];
-            const foundMention = mentionedUsers.find((mention) => mention._id === userId);
-
-            // Plain text before mention
-            if (start > lastIndex) {
-                nodes.push(text.slice(lastIndex, start));
+        return splitChatText(text ?? "").map((part, index) => {
+            if (part.kind === "text") return part.text;
+            if (part.kind === "record") {
+                return (
+                    <RecordChip
+                        key={`record-${index}`}
+                        record={part.ref}
+                        kept={kept.has(recordRefKey(part.ref))}
+                        owner={message.sender?._id === user.id}
+                    />
+                );
             }
-
-            // Mention with popover
-            nodes.push(
-                <Popover key={`mention-${start}`}>
+            const foundMention = mentionedUsers.find((mention) => mention._id === part.userId);
+            return (
+                <Popover key={`mention-${index}`}>
                     <PopoverTrigger asChild>
                         <span className={cn(
                             "font-medium cursor-pointer hover:underline",
@@ -182,16 +191,7 @@ function Message({
                     </PopoverContent>
                 </Popover>
             );
-
-            lastIndex = end;
-        }
-
-        // Remaining text
-        if (lastIndex < text?.length) {
-            nodes.push(text?.slice(lastIndex));
-        }
-
-        return nodes;
+        });
     }
 
     if( !read ){
@@ -510,11 +510,8 @@ function Message({
                     {...buttonLike((e) => {
                         e.stopPropagation();
                         e.preventDefault();
-                        if( message.replyTo?._id ) {
-                            let found = document.getElementById(`message-${message.replyTo._id}`);
-                            if( found ){
-                                found.scrollIntoView({behavior: "smooth"});
-                            }
+                        if( message.replyTo?._id && !jumpToMessage(message.replyTo._id) ) {
+                            toast.info(resolveLanguageKey("originalNotLoaded"));
                         }
                     })}
                 >
@@ -539,7 +536,7 @@ function Message({
                                     {
                                         message?.replyTo?.text &&
                                         <p>
-                                            {message.replyTo.status === "deleted" ? resolveLanguageKey("messageDeleted") : `${(message.replyTo.text).substring(0, 30)}${message.replyTo.text.length > 30 ? "..." : ""}`}
+                                            {message.replyTo.status === "deleted" ? resolveLanguageKey("messageDeleted") : truncatePreview(wireTextWithResolvedMentions(message.replyTo.text, undefined, openedChannel.users, resolveLanguageKey("unknown"), recordLabel), 30)}
                                         </p>
                                     }
                                 </>
@@ -563,8 +560,8 @@ function Message({
                             <IconArrowForwardUp size={12} className="mr-1 inline" />
                             <p>{resolveLanguageKey("forwarded")}</p>
                         </div>
-                        <p>
-                            {message.forwardedMessage}
+                        <p className="whitespace-pre-wrap wrap-break-word">
+                            {renderMessageWithMentions(message.forwardedMessage)}
                         </p>
                     </div>
                 </div>
@@ -662,6 +659,7 @@ function Message({
                             }
                         </HiddenElement>
                     }
+                    {read.records && <MessageRecordCards records={message.records} owner={owner} />}
                 </div>
                 {
                     !hasText && hasAttachments &&

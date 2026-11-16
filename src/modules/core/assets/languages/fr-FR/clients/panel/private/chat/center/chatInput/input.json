@@ -6,6 +6,7 @@
   "noLongerMember": "Vous ne pouvez pas envoyer de messages à ce groupe car vous n'en êtes plus membre.",
   "messageDeleted": "Message supprimé",
   "fileTooLarge": "Un ou plusieurs fichiers dépassent la limite de 50 Mo et n'ont pas été ajoutés.",
-  "mentionSuggestions": "Mentionner un membre du canal",
-  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/input.tsx"
+  "mentionSuggestions": "Mentionner un membre du canal ou partager un enregistrement",
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/input.tsx",
+  "shareRecord": "Partager un enregistrement"
 }

@@ -26,5 +26,6 @@
   "receiptWaitingDelivery": "Non ancora consegnato",
   "receiptDelivered": "Consegnato",
   "receiptRead": "Letto",
-  "attachments": "Allegati"
+  "attachments": "Allegati",
+  "originalNotLoaded": "Il messaggio originale è più in alto. Scorri verso l'alto per caricarlo."
 }

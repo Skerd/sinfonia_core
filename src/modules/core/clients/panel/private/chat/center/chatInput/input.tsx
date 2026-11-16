@@ -1,9 +1,9 @@
-import {IconPaperclip, IconArrowBackUp, IconRotateClockwise, IconSend, IconX} from "@tabler/icons-react";
+import {IconPaperclip, IconArrowBackUp, IconRotateClockwise, IconSend, IconX, IconCards} from "@tabler/icons-react";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
-import {useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
+import {useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {Mention, MentionsInput} from "react-mentions";
 import SingleFile from "@coreModule/components/viewEngine/widgets/media/singleFile.tsx";
 import {useDispatch, useSelector} from "react-redux";
@@ -29,10 +29,27 @@ import {
     mentionsMarkupToPlainDisplay,
     mentionsMarkupToWire,
     REACT_MENTIONS_MARKUP,
-    wireTextToMentionsMarkup
+    RECORD_MENTIONS_MARKUP,
+    recordMentionDisplay,
+    recordMentionId,
+    recordRefOfMentionId,
+    wireTextToMentionsMarkup,
+    wireTextWithResolvedMentions
 } from "./mentionWire.ts";
+import {
+    useChatRecordSearch,
+    useRecordLabel,
+    useRecordTypeLabel,
+    type ChatRecordSuggestion
+} from "@coreModule/helpers/chat/chatRecords.tsx";
+import {MediaAvatar} from "@coreModule/components/viewEngine/widgets/display/mediaAvatar.tsx";
+import AttachRecordDialog from "@coreModule/clients/panel/private/chat/center/chatInput/actions/attachRecordDialog.tsx";
 import "./chatMentionsInput.css";
 import {Input} from "@coreModule/components/ui/input.tsx";
+
+function truncatePreview(text: string, length: number): string {
+    return text.length > length ? `${text.substring(0, length)}...` : text;
+}
 
 type ChatInputAllProps = WithLanguageType & WithAxiosType<MessageTypeWithParticipants, NewMessageFormType> &  {
     specificUserId: string
@@ -68,6 +85,14 @@ function ChatInputAll({
     const [messagePlain, setMessagePlain] = useState<string>("");
     const [fireUpdate, setFireUpdate] = useState<number>(0);
     const [selectedFiles, setSelectedFiles] = useState<{id: string, file: File}[]>([]);
+    const [attachRecordOpen, setAttachRecordOpen] = useState<boolean>(false);
+    /** A website visitor holds no permissions here: their chat shares no records (D162). */
+    const recordsAllowed = !openedChannel?.metaData?.isPublicChat;
+    const recordLabel = useRecordLabel();
+    const recordTypeLabel = useRecordTypeLabel();
+    const searchRecords = useChatRecordSearch();
+    /** The last `@` record suggestions, by react-mentions id: their photo and kind for the list (D162). */
+    const recordSuggestions = useRef(new Map<string, ChatRecordSuggestion>());
 
     function sendMessage(){
         if( !create ) return;
@@ -187,7 +212,8 @@ function ChatInputAll({
             const markup = wireTextToMentionsMarkup(
                 actionMessage.message?.message || "",
                 actionMessage.message?.mentionedUsers,
-                openedChannel?.users
+                openedChannel?.users,
+                recordLabel
             );
             setMessage(markup);
             setMessagePlain(mentionsMarkupToPlainDisplay(markup));
@@ -207,6 +233,23 @@ function ChatInputAll({
     }, [openedChannel?.users]);
 
     const mentionData = useMemo(() => (openedChannel?.users ?? []).map((u) => ({id: u._id, display: getName(u)})), [openedChannel?.users]);
+
+    /** Records matching the `@` query, every kind the user may read; channel members are already under People. */
+    const recordData = useCallback((query: string, callback: (results: {id: string, display: string}[]) => void) => {
+        searchRecords(query, (suggestions) => {
+            const results = suggestions.filter((record) => !(record.collection === "users" && usersById.has(record.id)));
+            recordSuggestions.current = new Map(results.map((record) => [recordMentionId(record), record]));
+            callback(results.map((record) => ({id: recordMentionId(record), display: recordMentionDisplay(record.label)})));
+        });
+    }, [searchRecords, usersById]);
+
+    function insertRecord(record: ChatRecordSuggestion) {
+        const display = recordMentionDisplay(record.label);
+        const glue = (text: string) => (text && !/\s$/.test(text) ? " " : "");
+        setMessage((current) => `${current}${glue(current)}@{${recordMentionId(record)}|${display}} `);
+        setMessagePlain((current) => `${current}${glue(current)}@${display} `);
+        setTimeout(() => ref.current?.focus(), 10);
+    }
 
     /** Overrides react-mentions default `backgroundColor: white` on suggestions; uses design tokens for light/dark */
     const chatMentionsThemeStyle = useMemo(() => ({
@@ -273,7 +316,7 @@ function ChatInputAll({
                                                 actionMessage.message.status === "deleted" ?
                                                 resolveLanguageKey("messageDeleted")
                                                 :
-                                                `${(actionMessage.message.message).substring(0, 50)}${actionMessage.message.message.length > 50 ? "..." : ""}`
+                                                truncatePreview(wireTextWithResolvedMentions(actionMessage.message.message, actionMessage.message.mentionedUsers, openedChannel.users, undefined, recordLabel), 50)
                                             }
                                         </p>
                                     </div>
@@ -380,6 +423,22 @@ function ChatInputAll({
                     </div>
                 </TooltipDisplayer>
 
+                {recordsAllowed && <TooltipDisplayer tooltip={resolveLanguageKey("shareRecord")}>
+                    <div className="bg-card rounded-full flex items-center justify-center md:p-1">
+                        <Button
+                            size='icon'
+                            type='button'
+                            variant='ghost'
+                            disabled={loading}
+                            aria-label={resolveLanguageKey("shareRecord")}
+                            onClick={() => setAttachRecordOpen(true)}
+                        >
+                            <IconCards className='stroke-muted-foreground' />
+                        </Button>
+                    </div>
+                </TooltipDisplayer>}
+                {recordsAllowed && <AttachRecordDialog open={attachRecordOpen} onOpenChange={setAttachRecordOpen} onPick={insertRecord} />}
+
                 <div className="min-w-0 flex-1 bg-card rounded-2xl shadow-md">
                     <MentionsInput
                         id="message_inputer"
@@ -413,7 +472,7 @@ function ChatInputAll({
                             }}
                             data={mentionData}
                             appendSpaceOnAdd={true}
-                            className="font-medium text-success"
+                            className="text-success"
                             renderSuggestion={(entry, _search, highlightedDisplay, _index, focused) => {
                                 const user = usersById.get(String(entry.id));
                                 return (
@@ -424,6 +483,26 @@ function ChatInputAll({
                                 );
                             }}
                         />
+                        {recordsAllowed && <Mention
+                            trigger="@"
+                            markup={RECORD_MENTIONS_MARKUP}
+                            displayTransform={(_id, display) => `@${display?.trim() || _id}`}
+                            data={recordData}
+                            appendSpaceOnAdd={true}
+                            className="text-success"
+                            renderSuggestion={(entry, _search, highlightedDisplay, _index, focused) => {
+                                const id = String(entry.id);
+                                const record = recordSuggestions.current.get(id);
+                                const collection = recordRefOfMentionId(id)?.collection ?? "";
+                                return (
+                                    <div className={cn("flex items-center gap-2 px-2 py-1.5 text-sm text-popover-foreground", focused && "bg-muted text-foreground")}>
+                                        <MediaAvatar mediaId={record?.photo} alt="" className="size-7 shrink-0 rounded-md" fallback={(record?.label ?? "").charAt(0).toUpperCase()} />
+                                        <span className="min-w-0 flex-1 truncate">{record?.label ?? highlightedDisplay}</span>
+                                        <span className="shrink-0 text-xs text-muted-foreground">{recordTypeLabel(collection)}</span>
+                                    </div>
+                                );
+                            }}
+                        />}
                     </MentionsInput>
                 </div>
 

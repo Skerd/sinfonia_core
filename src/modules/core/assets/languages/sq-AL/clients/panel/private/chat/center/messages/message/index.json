@@ -26,5 +26,6 @@
   "receiptWaitingDelivery": "Ende i padorëzuar",
   "receiptDelivered": "Dorëzuar",
   "receiptRead": "Lexuar",
-  "attachments": "Bashkëngjitjet"
+  "attachments": "Bashkëngjitjet",
+  "originalNotLoaded": "Mesazhi origjinal është më lart. Lëvizni lart për ta ngarkuar."
 }

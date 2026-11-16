@@ -11,12 +11,15 @@ import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 export type UserSessionSheetViewOwnProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    session: UserSession;
-    /** Same perspective as the list (`self` vs `others`). */
-    viewingSelf: boolean;
+    /** The session; omitted when only `fetchId` is known (a session shared in chat, D162), loaded through `/single`. */
+    session?: UserSession;
+    fetchId?: string;
+    /** Same perspective as the list (`self` vs `others`); `others` when opened outside the list. */
+    viewingSelf?: boolean;
     currentDeviceId?: string | null;
-    revoking: boolean;
-    onRevoke: (s: UserSession) => void;
+    revoking?: boolean;
+    /** Without it (outside the sessions list) the sheet offers no Revoke. */
+    onRevoke?: (s: UserSession) => void;
     onDelete?: (data: DeletedData) => void;
     onRestore?: () => void;
     /** Optional: e.g. ignore "view" when the sheet is already open. */
@@ -27,9 +30,10 @@ function UserSessionSheetView({
     open,
     onOpenChange,
     session,
-    viewingSelf,
+    fetchId,
+    viewingSelf = false,
     currentDeviceId,
-    revoking,
+    revoking = false,
     onRevoke,
     onDelete,
     onRestore,
@@ -38,16 +42,19 @@ function UserSessionSheetView({
 }: UserSessionSheetViewOwnProps & WithLanguageType) {
     const access = useAccess("userSessions", viewingSelf ? "self" : "others");
     const viewConfig = useViewConfig("usersessions", "sheet");
-    const isCurrentDevice = !!currentDeviceId && session.deviceId === currentDeviceId;
+    const isCurrentDevice = !!currentDeviceId && session?.deviceId === currentDeviceId;
+    const sessionId = session?._id ?? fetchId;
 
-    if (!viewConfig) {
+    if (!viewConfig || !sessionId) {
         return null;
     }
 
     return (
         <SheetViewRenderer
             config={viewConfig}
-            data={session}
+            data={session ?? {_id: sessionId}}
+            url={fetchId ? `${viewConfig.apiUrl}/single` : undefined}
+            fetchId={fetchId}
             open={open}
             onOpenChange={onOpenChange}
             resolveLanguageKey={resolveLanguageKey}
@@ -59,16 +66,18 @@ function UserSessionSheetView({
             onRestore={onRestore}
             editPath=""
             showViewInActionMenu
-            actionMenuAllowCustomChildren
+            actionMenuAllowCustomChildren={!!session && !!onRevoke}
             onActionMenuAction={onActionMenuAction}
             actionMenuChildren={
-                <UserSessionRevokeMenuItem
-                    session={session}
-                    currentDeviceId={currentDeviceId}
-                    revoking={revoking}
-                    onRevoke={onRevoke}
-                    resolveLanguageKey={resolveLanguageKey}
-                />
+                session && onRevoke ? (
+                    <UserSessionRevokeMenuItem
+                        session={session}
+                        currentDeviceId={currentDeviceId}
+                        revoking={revoking}
+                        onRevoke={onRevoke}
+                        resolveLanguageKey={resolveLanguageKey}
+                    />
+                ) : undefined
             }
         />
     );

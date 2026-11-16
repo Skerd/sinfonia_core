@@ -1,4 +1,6 @@
 import {IconArrowForwardUp} from "@tabler/icons-react";
+import {useRecordLabel} from "@coreModule/helpers/chat/chatRecords.tsx";
+import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
 import {useState, useEffect, useImperativeHandle, type ComponentType} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -115,6 +117,7 @@ function ForwardMessageDialog({
     const user = useSelector((state: RootState) => state.authentication.user);
     const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
     const [forwardText, setForwardText] = useState<string>("");
+    const recordLabel = useRecordLabel();
 
     useEffect(() => {
         if (open && message) {
@@ -179,8 +182,10 @@ function ForwardMessageDialog({
                         <div className="text-xs text-muted-foreground mb-1">
                             {message.sender.name} {message.sender.surname}
                         </div>
-                        <div className="text-sm">
-                            {message.status === "deleted" ? resolveLanguageKey("messageDeleted") : message.message}
+                        <div className="text-sm whitespace-pre-wrap wrap-break-word">
+                            {message.status === "deleted"
+                                ? resolveLanguageKey("messageDeleted")
+                                : wireTextWithResolvedMentions(message.message, message.mentionedUsers, undefined, undefined, recordLabel)}
                         </div>
                     </div>
 

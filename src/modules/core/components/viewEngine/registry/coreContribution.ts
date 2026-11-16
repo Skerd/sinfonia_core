@@ -68,11 +68,29 @@ const CURRENCY_SINGLE = {url: "/api/finance/currency/single", labelFields: ["nam
  * A function, not a constant: the registry calls it on first use, after every import in
  * the card → sheet → renderer → registry cycle has finished evaluating.
  */
+/** Sheets a record shared in chat opens by token, named by each sheet view's `sheetWidget` (D162). */
+const RoleSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/roles/center/sheetView/roleSheetView.tsx"));
+const BlogCategorySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/blogCategories/center/sheetView/blogCategorySheetView.tsx"));
+const CronJobSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx"));
+const SmtpServerSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx"));
+const UserSessionSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/accountSettings/security/userSession/center/sheetView/userSessionSheetView.tsx"));
+const LoginHistorySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/accountSettings/security/loginHistory/center/sheetView/loginHistorySheetView.tsx"));
+const MessagingProviderSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx"));
+const BlogPostSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/blogPosts/center/sheetView/blogPostSheetView.tsx"));
+
 export function getCoreWidgetContribution(): WidgetContribution {
     return {
         id: "core",
         order: 0,
         widgets: {
+            "#RoleSheetView": RoleSheetViewLazy,
+            "#BlogCategorySheetView": BlogCategorySheetViewLazy,
+            "#CronJobSheetView": CronJobSheetViewLazy,
+            "#SmtpServerSheetView": SmtpServerSheetViewLazy,
+            "#UserSessionSheetView": UserSessionSheetViewLazy,
+            "#LoginHistorySheetView": LoginHistorySheetViewLazy,
+            "#MessagingProviderSheetView": MessagingProviderSheetViewLazy,
+            "#BlogPostSheetView": BlogPostSheetViewLazy,
             "#SheetGrid": SheetGrid,
             "#FormGrid": FormGrid,
             "#FormAlert": FormAlert,

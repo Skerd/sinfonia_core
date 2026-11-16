@@ -21,6 +21,7 @@ import LeftWebsiteChatPanel from "@coreModule/clients/panel/private/websiteChats
 import WebsiteChatHeader from "@coreModule/clients/panel/private/websiteChats/center/chatHeader.tsx";
 import PeekComposerBar from "@coreModule/clients/panel/private/websiteChats/center/peekComposerBar.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import {ChatRecordsProvider} from "@coreModule/helpers/chat/chatRecords.tsx";
 import {GetChannelSingleFormResponseType} from "armonia/src/modules/core/api/user/private/chats/channels/getChannelSingle.form.response.type.ts";
 
 const CHANNEL_SINGLE_REQUEST = {method: "post" as const, url: "/api/user/chats/channels/single", data: {}};
@@ -145,6 +146,7 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
         : <LeftChatPanel />;
 
     return (
+        <ChatRecordsProvider>
         <div className="flex-full flex-row">
             {
                 isMobile ?
@@ -169,6 +171,7 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
                 </div>
             }
         </div>
+        </ChatRecordsProvider>
     )
 }
 

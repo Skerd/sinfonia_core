@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/actions/attachRecordDialog.tsx",
+  "title": "Partager un enregistrement",
+  "description": "Choisissez un enregistrement que vous pouvez ouvrir ; il apparaît sous forme de carte dans votre message.",
+  "type": "Type",
+  "chooseType": "Choisir un type",
+  "chooseTypeFirst": "Choisissez un type pour voir ses enregistrements.",
+  "search": "Rechercher",
+  "searchPlaceholder": "Rechercher par nom…",
+  "results": "Enregistrements",
+  "noResults": "Aucun enregistrement trouvé",
+  "searchType": "Rechercher un type…"
+}

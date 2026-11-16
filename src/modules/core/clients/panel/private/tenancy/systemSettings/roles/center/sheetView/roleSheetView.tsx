@@ -1,4 +1,5 @@
 import {compose} from "redux";
+import {useEffect, useState} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -12,16 +13,18 @@ import {translateDefaultRole} from "@coreModule/helpers/moduleContributions/load
 export type RoleSheetViewOwnProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    role: CompanyRoleType;
+    /** The role, or a stub while `/single` loads it (`fetchId`, a role shared in chat: D162). */
+    role?: CompanyRoleType;
+    fetchId?: string;
     hideActions?: boolean;
     onDelete?: (response?: DeletedData) => void;
     onRestore?: () => void;
 };
 
 /** `roleName` only titles the edit page, so it carries the translated name; the form edits the stored one. */
-function roleEditPath(role: CompanyRoleType, name: string) {
+function roleEditPath(roleId: string, name: string) {
     const params = new URLSearchParams();
-    params.set("roleId", role._id);
+    params.set("roleId", roleId);
     if (name) params.set("roleName", name);
     return `/tenancy/systemSettings/roles/edit?${params.toString()}`;
 }
@@ -29,7 +32,8 @@ function roleEditPath(role: CompanyRoleType, name: string) {
 function RoleSheetView({
     open,
     onOpenChange,
-    role,
+    role: roleProp,
+    fetchId,
     resolveLanguageKey,
     languageCode,
     hideActions = false,
@@ -38,29 +42,38 @@ function RoleSheetView({
 }: RoleSheetViewOwnProps & WithLanguageType) {
     const access = useAccess("roles");
     const viewConfig = useViewConfig("roles", "sheet");
+    const [role, setRole] = useState<CompanyRoleType | undefined>(roleProp);
 
-    if (!viewConfig) {
+    useEffect(() => {
+        if (roleProp) setRole(roleProp);
+    }, [roleProp]);
+
+    const roleId = roleProp?._id ?? fetchId;
+    if (!viewConfig || !roleId) {
         return null;
     }
     // Display copy only: the sheet shows a default role in the user's language (D118).
-    const shown = {...role, ...translateDefaultRole(role, languageCode)};
+    const shown = role ? {...role, ...translateDefaultRole(role, languageCode)} : undefined;
 
     return (
         <SheetViewRenderer
             config={viewConfig}
-            data={shown}
+            data={shown ?? {_id: roleId}}
+            url={fetchId ? `${viewConfig.apiUrl}/single` : undefined}
+            fetchId={fetchId}
+            onDataFetched={(data: CompanyRoleType) => setRole(data)}
             open={open}
             onOpenChange={onOpenChange}
             resolveLanguageKey={resolveLanguageKey}
             access={access}
             hideActions={hideActions}
-            editPath={roleEditPath(role, shown.name)}
-            hideEdit={!role.canEdit}
-            hideDelete={!role.canDelete}
+            editPath={roleEditPath(roleId, shown?.name ?? "")}
+            hideEdit={!role?.canEdit}
+            hideDelete={!role?.canDelete}
             onDelete={onDelete}
             onRestore={onRestore}
         >
-            <PermissionsTable permissions={role.permissions} />
+            {role ? <PermissionsTable permissions={role.permissions} /> : null}
         </SheetViewRenderer>
     );
 }

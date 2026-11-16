@@ -26,5 +26,6 @@
   "receiptWaitingDelivery": "Pas encore distribué",
   "receiptDelivered": "Distribué",
   "receiptRead": "Lu",
-  "attachments": "Pièces jointes"
+  "attachments": "Pièces jointes",
+  "originalNotLoaded": "Le message d'origine est plus haut. Faites défiler vers le haut pour le charger."
 }

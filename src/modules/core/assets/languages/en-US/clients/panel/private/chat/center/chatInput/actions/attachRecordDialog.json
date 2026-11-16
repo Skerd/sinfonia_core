@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/actions/attachRecordDialog.tsx",
+  "title": "Share a record",
+  "description": "Pick any record you can open; it shows as a card in your message.",
+  "type": "Type",
+  "chooseType": "Choose a type",
+  "chooseTypeFirst": "Choose a type to see its records.",
+  "search": "Search",
+  "searchPlaceholder": "Search by name…",
+  "results": "Records",
+  "noResults": "No records found",
+  "searchType": "Search types…"
+}

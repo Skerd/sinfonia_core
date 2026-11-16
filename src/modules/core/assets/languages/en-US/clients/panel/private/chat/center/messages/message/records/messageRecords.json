@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/records/messageRecords.tsx",
+  "noAccess": "You don't have access to this record",
+  "unavailable": "This record is no longer available",
+  "open": "Open {}",
+  "more": "+{} more"
+}

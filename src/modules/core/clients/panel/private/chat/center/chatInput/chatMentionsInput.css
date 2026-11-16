@@ -22,12 +22,13 @@
     line-height: inherit;
     border: 1px solid transparent;
     box-sizing: border-box;
-    font-weight: 500;
 }
 
-/* Highlighter above input: plain text shows through hidden spans; colored <strong> covers textarea glyphs */
+/* Highlighter above input: plain text shows through hidden spans; colored <strong> covers textarea glyphs. It keeps the
+   textarea's weight: a bolder overlay is wider, drifts off the text under it and garbles long names (shared records). */
 .chatMentions__highlighter strong {
     background-color: var(--card);
+    font-weight: inherit;
 }
 
 .chatMentions__input {

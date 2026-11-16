@@ -1,4 +1,6 @@
 import {IconPencil, IconX} from "@tabler/icons-react";
+import {useRecordLabel} from "@coreModule/helpers/chat/chatRecords.tsx";
+import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import {useEffect, useImperativeHandle} from "react";
 import {useDispatch} from "react-redux";
@@ -21,6 +23,10 @@ type EditMessageProps = WithAxiosType<EditMessageFormResponseType, EditMessageFo
     onSuccess: Function,
 }
 
+function truncatePreview(text: string, length: number): string {
+    return text.length > length ? `${text.substring(0, length)}...` : text;
+}
+
 function EditMessage({
     editMessage,
     newMessage,
@@ -30,6 +36,7 @@ function EditMessage({
     loading,
     innerRef
 }: EditMessageProps){
+    const recordLabel = useRecordLabel();
 
     const {write} = useAccess("messages");
     const dispatch = useDispatch();
@@ -69,7 +76,7 @@ function EditMessage({
                     </div>
                     <div className="text-xs text-muted-foreground truncate">
                         <p>
-                            {`${(editMessage.message).substring(0, 50)}${editMessage.message.length > 50 ? "..." : ""}`}
+                            {truncatePreview(wireTextWithResolvedMentions(editMessage.message, editMessage.mentionedUsers, undefined, undefined, recordLabel), 50)}
                         </p>
                     </div>
                 </div>

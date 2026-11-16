@@ -18,6 +18,7 @@ import {getName} from "@coreModule/helpers/general/names.ts";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {MessageType} from "armonia/src/modules/core/api/user/private/chats/messages/messages.form.response.type.ts";
 import {wireTextWithResolvedMentions} from "@coreModule/clients/panel/private/chat/center/chatInput/mentionWire.ts";
+import {useRecordLabel} from "@coreModule/helpers/chat/chatRecords.tsx";
 import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/private/chats/channels/channels.constants.ts";
 import WebsiteChannelsFetcher from "@coreModule/clients/panel/private/websiteChats/left/channelsFetcher.tsx";
 import {useJoinPublicChat} from "@coreModule/clients/panel/private/websiteChats/center/useJoinPublicChat.ts";
@@ -36,6 +37,7 @@ function WebsiteChannelInfo({
     websiteChannels,
     resolveLanguageKey,
 }: ChannelProps) {
+    const recordLabel = useRecordLabel();
     const {read} = useAccess("channels");
     // Joining, releasing and closing a website chat are one permission (D71), not a write on channel members.
     const canTakeOver = useActionAccess("channels", "answerWebsiteChats");
@@ -66,6 +68,7 @@ function WebsiteChannelInfo({
             message.mentionedUsers,
             channel?.users,
             resolveLanguageKey("unknown"),
+            recordLabel,
         );
     }
 

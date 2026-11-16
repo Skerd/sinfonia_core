@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/messages/message/records/messageRecords.tsx",
+  "noAccess": "Nuk keni qasje në këtë regjistrim",
+  "unavailable": "Ky regjistrim nuk është më i disponueshëm",
+  "open": "Hap {}",
+  "more": "+{} të tjera"
+}

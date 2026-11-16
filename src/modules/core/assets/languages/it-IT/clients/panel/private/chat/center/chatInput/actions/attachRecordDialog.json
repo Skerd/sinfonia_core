@@ -1,0 +1,13 @@
+{
+  "path": "src/modules/core/clients/panel/private/chat/center/chatInput/actions/attachRecordDialog.tsx",
+  "title": "Condividi un record",
+  "description": "Scegli un record che puoi aprire; appare come scheda nel tuo messaggio.",
+  "type": "Tipo",
+  "chooseType": "Scegli un tipo",
+  "chooseTypeFirst": "Scegli un tipo per vederne i record.",
+  "search": "Cerca",
+  "searchPlaceholder": "Cerca per nome…",
+  "results": "Record",
+  "noResults": "Nessun record trovato",
+  "searchType": "Cerca un tipo…"
+}
