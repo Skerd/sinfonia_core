@@ -16,6 +16,7 @@ import { Badge } from '@coreModule/components/ui/badge.tsx';
 import { Separator } from '@coreModule/components/ui/separator.tsx';
 import { cn } from '@coreModule/components/lib/utils.ts';
 import {buttonLike} from '@coreModule/helpers/general/a11y.ts';
+import {rankByLabel} from '@coreModule/helpers/general/searchRank.ts';
 import withLanguage, { WithLanguageType } from '@coreModule/helpers/hocs/withLanguage.tsx';
 import SelectOptionLabel from '@coreModule/components/custom/selectOptionLabel.tsx';
 
@@ -84,7 +85,9 @@ function SimpleSelectRender({
 
     const filteredOptions = useMemo(() => {
         if (!searchLower) return options;
-        return options.filter((opt) => (filterOption ?? DEFAULT_FILTER)(opt, searchText));
+        // An option found through its value alone ("roles.status" for "rol") goes below one named by the text (TD-F110).
+        const matches = options.filter((opt) => (filterOption ?? DEFAULT_FILTER)(opt, searchText));
+        return rankByLabel(matches, searchText, (opt) => String(opt.label ?? ""));
     }, [options, searchLower, searchText, filterOption]);
 
     const selectedValuesSet = useMemo(() => new Set(selectedValues), [selectedValues]);

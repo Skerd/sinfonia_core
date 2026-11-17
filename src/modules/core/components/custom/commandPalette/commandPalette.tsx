@@ -15,6 +15,11 @@ import {flattenPanelNavLinks} from "@coreModule/helpers/navigation/flattenPanelN
 import {filterNavGroups} from "@coreModule/helpers/navigation/filterNavByAccess.ts";
 import {useAccessHydrated, useAccessMap} from "@coreModule/helpers/context/accessContext.tsx";
 import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {commandItemScore} from "@coreModule/helpers/general/searchRank.ts";
+
+/** Items carry `[title, group, address]` as keywords; the title decides the rank (TD-F110). */
+const scorePage = (value: string, search: string, keywords?: string[]) =>
+    commandItemScore(keywords?.[0] ?? value, search, keywords?.slice(1));
 
 type CommandPaletteProps = WithLanguageType & {
     open?: boolean;
@@ -90,6 +95,7 @@ function CommandPalette({resolveLanguageKey, open: openProp, onOpenChange}: Comm
             onOpenChange={setOpen}
             title={resolveLanguageKey("commandPalette.title")}
             description={resolveLanguageKey("commandPalette.description")}
+            filter={scorePage}
         >
             <CommandInput placeholder={resolveLanguageKey("commandPalette.placeholder")}/>
             <CommandList>
@@ -102,6 +108,7 @@ function CommandPalette({resolveLanguageKey, open: openProp, onOpenChange}: Comm
                                 <CommandItem
                                     key={link.url}
                                     value={`${link.groupTitle} ${link.title} ${link.url}`}
+                                    keywords={[link.title, link.groupTitle, link.url]}
                                     onSelect={() => {
                                         setOpen(false);
                                         navigate(link.url);

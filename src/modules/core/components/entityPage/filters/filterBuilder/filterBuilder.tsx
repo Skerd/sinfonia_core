@@ -10,6 +10,7 @@ import { classifyUrlFilterParam, hasDraftRules, isCompleteRule, isDraftRule, sea
 import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterDSL, FilterRule, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import {
+    collectObjectIdValuesFromDsl,
     decodeFilterFromUrl,
     decodeFilterLabelsFromUrl,
     encodeFilterLabelsToUrl,
@@ -18,6 +19,7 @@ import {
     FILTER_URL_PARAM,
     pruneFilterLabelsToDsl,
 } from "@coreModule/helpers/filter/filterUrl.ts";
+import { fetchSelectLabels } from "@coreModule/helpers/hooks/components/useApiSelectOptions.ts";
 import { LIST_PAGE_PARAM } from "@coreModule/helpers/hooks/useListUrlState.ts";
 import withLanguage, {TranslationValue, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
@@ -65,11 +67,12 @@ function FilterBuilderInner({
     setFilters,
     extraParams,
     resolveLanguageKey,
+    languageCode,
     configuration,
     listPageParam = LIST_PAGE_PARAM,
 }: Omit<FilterBuilderProps, "resourceUrl" | "resolveLanguageValue">) {
 
-    const { fields, refLabelsByFieldPath, replaceRefLabels } = useFilterBuilder();
+    const { fields, refLabelsByFieldPath, mergeRefLabels, replaceRefLabels } = useFilterBuilder();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const filterParam = searchParams.get(FILTER_URL_PARAM);
@@ -222,6 +225,31 @@ function FilterBuilderInner({
     const rulesWithGroups = useMemo(() => collectRulesWithGroups(root, fields), [root, fields]);
     const appliedDsl = useMemo(() => serialize(), [serialize]);
     const appliedKey = useMemo(() => JSON.stringify(appliedDsl ?? null), [appliedDsl]);
+
+    // A link with `filter` but no `filterLabels` (shared, bookmarked, a drill-down) would name ref values by their id:
+    // ask each field's select route for the missing labels by `ids`, as a select does for a stored value (TD-F108).
+    // Each id is asked once; requests end only with the builder, so a change mid-request never loses an answer.
+    const askedLabelsRef = useRef<Set<string>>(new Set());
+    const labelRequestsRef = useRef<AbortController>(new AbortController());
+    useEffect(() => () => labelRequestsRef.current.abort(), []);
+    useEffect(() => {
+        for (const [fieldPath, ids] of Object.entries(collectObjectIdValuesFromDsl(appliedDsl))) {
+            const field = fields.find((candidate) => candidate.path === fieldPath);
+            if (field?.type !== "objectId" || !field.apiUrl) continue;
+            const missing = [...ids].filter((id) =>
+                !refLabelsByFieldPath[fieldPath]?.[id] && !askedLabelsRef.current.has(`${fieldPath}:${id}`));
+            if (missing.length === 0) continue;
+            missing.forEach((id) => askedLabelsRef.current.add(`${fieldPath}:${id}`));
+            const postBody = Object.fromEntries((field.postBodyKeys ?? []).map((key) => [key, extraParams?.[key]]));
+            fetchSelectLabels(field.apiUrl, postBody, missing, languageCode, labelRequestsRef.current.signal)
+                .then((options) => {
+                    if (options.length === 0) return;
+                    mergeRefLabels(fieldPath, Object.fromEntries(options.map((option) => [option.value, option.label])));
+                })
+                // A failed lookup may be asked again; the chip keeps showing the id meanwhile.
+                .catch(() => missing.forEach((id) => askedLabelsRef.current.delete(`${fieldPath}:${id}`)));
+        }
+    }, [appliedDsl, fields, refLabelsByFieldPath, extraParams, languageCode, mergeRefLabels]);
 
     // Auto-apply when complete rules change (chip edit/remove, or draft → badge).
     // Debounce so typing a value does not replace `?filter=` on every keystroke —

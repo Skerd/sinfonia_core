@@ -37,12 +37,15 @@ function CommandDialog({
   children,
   className,
   showCloseButton = false,
+  filter,
   ...props
 }: React.ComponentProps<typeof Dialog> & {
   title?: string
   description?: string
   className?: string
   showCloseButton?: boolean
+  /** cmdk's item score (0 hides an item); cmdk's fuzzy score when omitted. */
+  filter?: React.ComponentProps<typeof CommandPrimitive>["filter"]
 }) {
   return (
     <Dialog {...props}>
@@ -62,7 +65,7 @@ function CommandDialog({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <Command className="max-h-[min(70vh,28rem)]">{children}</Command>
+        <Command className="max-h-[min(70vh,28rem)]" filter={filter}>{children}</Command>
       </DialogContent>
     </Dialog>
   )

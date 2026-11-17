@@ -63,6 +63,26 @@ function toSelectOption(item: ApiSelectListItem, languageCode: string | undefine
     };
 }
 
+/**
+ * The labels of stored ids, asked from a select route with `ids` (TD-F70, TD-F71). Only the asked ids come back: a
+ * route with its own select handler may ignore `ids` and answer with its first page.
+ */
+export async function fetchSelectLabels(
+    apiUrl: string,
+    postBody: object,
+    ids: string[],
+    languageCode: string | undefined,
+    signal?: AbortSignal,
+    pageSize = ids.length,
+): Promise<SelectOption[]> {
+    const limit = Math.min(MAX_SELECT_LIMIT, Math.max(ids.length, pageSize));
+    const response = await apiClient.post(apiUrl, {...postBody, name: "", page: 1, limit, ids}, {signal});
+    const wanted = new Set(ids);
+    return parseListResponse(response.data)
+        .data.map((item) => toSelectOption(item, languageCode))
+        .filter((option) => wanted.has(option.value));
+}
+
 export type UseApiSelectOptionsArgs = {
     apiUrl: string;
     disabled: boolean;
@@ -268,17 +288,13 @@ export function useApiSelectOptions({
             resolveAbortRef.current?.abort();
             const controller = new AbortController();
             resolveAbortRef.current = controller;
-            // A route with its own select handler may ignore `ids`; it then answers with its first page, which is
-            // what the label lookup used before, so the limit stays the page size.
-            const limit = Math.min(MAX_SELECT_LIMIT, Math.max(ids.length, pageSize));
-            const body = {...(postBodyRef.current as object), name: "", page: 1, limit, ids};
             try {
-                const response = await apiClient.post(apiUrl, body, {signal: controller.signal});
+                // A route with its own select handler may ignore `ids`; it then answers with its first page, which is
+                // what the label lookup used before, so the limit stays the page size.
+                const found = await fetchSelectLabels(
+                    apiUrl, postBodyRef.current as object, ids, languageCodeRef.current, controller.signal, pageSize,
+                );
                 if (controller.signal.aborted) return;
-                const wanted = new Set(ids);
-                const found = parseListResponse(response.data)
-                    .data.map((item) => toSelectOption(item, languageCodeRef.current))
-                    .filter((option) => wanted.has(option.value));
                 if (found.length === 0) return;
                 const known = new Set(found.map((option) => option.value));
                 const next = [...resolvedRef.current.filter((option) => !known.has(option.value)), ...found];
