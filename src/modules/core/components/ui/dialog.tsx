@@ -31,16 +31,19 @@ function isOverlayInterior(target: EventTarget | null) {
  */
 function armDialogDismissGuard() {
   dismissGuardUntil = performance.now() + DISMISS_GUARD_MS
+  // The timer outlives the dialog; it removes the listener from the document it was added to, which stays reachable
+  // even once the page (or a test's jsdom) has gone (TD-F132).
+  const doc = document
   const swallow = (event: Event) => {
     if (isOverlayInterior(event.target)) return
     event.preventDefault()
     event.stopPropagation()
     event.stopImmediatePropagation()
-    document.removeEventListener("click", swallow, true)
+    doc.removeEventListener("click", swallow, true)
   }
-  document.addEventListener("click", swallow, true)
+  doc.addEventListener("click", swallow, true)
   window.setTimeout(() => {
-    document.removeEventListener("click", swallow, true)
+    doc.removeEventListener("click", swallow, true)
   }, DISMISS_GUARD_MS)
 }
 
