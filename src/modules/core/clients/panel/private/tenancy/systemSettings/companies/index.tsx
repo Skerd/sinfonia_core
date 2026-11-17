@@ -106,7 +106,7 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
                     hideEdit
                     onActivateSuccess={() => listRef.current?.updateRow?.(entity._id, {isActive: true})}
                     onDeactivateSuccess={() => listRef.current?.updateRow?.(entity._id, {isActive: false})}
-                    onCompanyPatched={(patch) => listRef.current?.updateRow?.(entity._id, patch)}
+                    onCompanyPatched={(patch: Partial<Company>) => listRef.current?.updateRow?.(entity._id, patch)}
                 />
             )}
         />
