@@ -10,6 +10,7 @@ import {UserSessionRevokeMenuItem} from "@coreModule/clients/panel/private/accou
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
+import {fillTemplate} from "armonia/src/modules/core/helpers/template.ts";
 
 function sessionLocation(session: UserSession) {
     const latest = session.geolocation?.[session.geolocation.length - 1];
@@ -73,11 +74,15 @@ export default function UserSessionCard({
                 const canReadIp = accessFieldPathExists(read, "ipAddress");
                 const location = canReadGeolocation ? sessionLocation(row) : "";
                 const ip = canReadIp ? row.ipAddress : "";
-                const title = canReadDeviceId
-                    ? (row.deviceId || resolveLanguageKey("unknownDevice"))
-                    : canReadSessionId
-                        ? row.sessionId
-                        : resolveLanguageKey("unknownDevice");
+                // Named by the browser and system ("Chrome on macOS"), not a session UUID (TD-F119); both come from the
+                // user agent, so they follow its permission.
+                const browserAndOs = accessFieldPathExists(read, "userAgent") && row.browser
+                    ? (row.os ? fillTemplate(String(resolveLanguageKey("deviceLabel")), {browser: row.browser, os: row.os}) : row.browser)
+                    : "";
+                const title = browserAndOs
+                    || (canReadDeviceId && row.deviceId)
+                    || (canReadSessionId && row.sessionId)
+                    || resolveLanguageKey("unknownDevice");
 
                 return (
                     <>
@@ -126,39 +131,26 @@ export default function UserSessionCard({
                                 type="dateTime"
                                 value={row.lastActiveAt}
                             />
-                            <EntityCardRow
-                                icon={IconWorld}
-                                label={resolveLanguageKey("location")}
-                                tooltip={resolveLanguageKey("location")}
-                                show={canReadIp || canReadGeolocation}
-                                value={location || ip || resolveLanguageKey("unknownLocation")}
-                            />
-                            <EntityCardRow
-                                icon={IconDeviceDesktop}
-                                label={resolveLanguageKey("sessionId")}
-                                tooltip={resolveLanguageKey("sessionId")}
-                                path={"sessionId"}
-                                value={row.sessionId}
-                            >
-                                {(formatted) => (
-                                    <span className="line-clamp-1 font-mono text-3xs" title={row.sessionId}>
-                                        {formatted}
-                                    </span>
-                                )}
-                            </EntityCardRow>
-                            <EntityCardRow
-                                icon={IconDeviceDesktop}
-                                label={resolveLanguageKey("userAgent")}
-                                tooltip={resolveLanguageKey("userAgent")}
-                                path={"userAgent"}
-                                value={row.userAgent || resolveLanguageKey("unknown")}
-                            >
-                                {(formatted) => (
-                                    <span className="line-clamp-1 text-3xs" title={row.userAgent || undefined}>
-                                        {formatted}
-                                    </span>
-                                )}
-                            </EntityCardRow>
+                            {/* A place only when one is known; the IP is its own fact, and the session ID and raw user
+                                agent stay on the sheet (TD-F119: "Location: ::1"). */}
+                            {location ? (
+                                <EntityCardRow
+                                    icon={IconWorld}
+                                    label={resolveLanguageKey("location")}
+                                    tooltip={resolveLanguageKey("location")}
+                                    show={canReadGeolocation}
+                                    value={location}
+                                />
+                            ) : null}
+                            {ip ? (
+                                <EntityCardRow
+                                    icon={IconDeviceDesktop}
+                                    label={resolveLanguageKey("ipAddress")}
+                                    tooltip={resolveLanguageKey("ipAddress")}
+                                    show={canReadIp}
+                                    value={ip}
+                                />
+                            ) : null}
                             <EntityCardRow
                                 icon={IconClock}
                                 label={resolveLanguageKey("expiresAt")}

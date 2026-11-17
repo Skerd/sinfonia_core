@@ -1,4 +1,4 @@
-import {IconBlocks, IconChecks, IconFileText, IconWorld, IconMail, IconPhone, IconPhotoDown, IconArrowsMaximize, IconArrowsMinimize, IconShieldLock} from "@tabler/icons-react";
+import {IconBlocks, IconChecks, IconFileText, IconWorld, IconMail, IconMapPin, IconPhone, IconPhotoDown, IconArrowsMaximize, IconArrowsMinimize, IconShieldLock} from "@tabler/icons-react";
 import {compose} from "redux";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -31,7 +31,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 
 const CompanyMap = lazy(() => import("@coreModule/components/viewEngine/widgets/addresses/mapWithMultiplePins.tsx"));
 
-function companyEditPath(c: Company) {
+export function companyEditPath(c: Company) {
     const params = new URLSearchParams();
     params.set("companyId", c._id);
     if (c.name) params.set("companyName", c.name);
@@ -64,6 +64,8 @@ const CompanyCard = memo(function CompanyCard({
     innerRef,
 }: CompanyCardProps) {
     const [expanded, setExpanded] = useState(!!single);
+    // A list mounts no live maps until one is asked for (TD-F127: nine maps on one page); one company shows its map.
+    const [mapShown, setMapShown] = useState(!!single);
     const contentRef = useRef<HTMLDivElement>(null);
     const companyInfoRef = useRef<HTMLDivElement>(null);
 
@@ -394,13 +396,25 @@ const CompanyCard = memo(function CompanyCard({
                                         !!row.addresses &&
                                         row.addresses.filter((a) => a?.longitude && a?.latitude).length > 0 && (
                                             <div role="presentation" className="h-full min-h-32 w-full" onClick={(e) => e.stopPropagation()}>
-                                                <Suspense fallback={<div className="w-full animate-pulse rounded-md border bg-muted" />}>
-                                                    <CompanyMap
-                                                        openInGoogleMaps={resolveLanguageKey("openInGoogleMaps")}
-                                                        openInAppleMaps={resolveLanguageKey("openInAppleMaps")}
-                                                        addresses={row.addresses}
-                                                    />
-                                                </Suspense>
+                                                {mapShown ? (
+                                                    <Suspense fallback={<div className="w-full animate-pulse rounded-md border bg-muted" />}>
+                                                        <CompanyMap
+                                                            openInGoogleMaps={resolveLanguageKey("openInGoogleMaps")}
+                                                            openInAppleMaps={resolveLanguageKey("openInAppleMaps")}
+                                                            addresses={row.addresses}
+                                                        />
+                                                    </Suspense>
+                                                ) : (
+                                                    <Button
+                                                        variant="bare"
+                                                        type="button"
+                                                        onClick={() => setMapShown(true)}
+                                                        className="flex h-full min-h-32 w-full items-center justify-center gap-2 rounded-md border border-dashed bg-muted/30 text-sm text-muted-foreground transition-colors hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                                                    >
+                                                        <IconMapPin className="size-4" aria-hidden />
+                                                        {resolveLanguageKey("showMap")}
+                                                    </Button>
+                                                )}
                                             </div>
                                         )}
                                 </HiddenElement>

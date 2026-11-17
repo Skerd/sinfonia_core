@@ -373,6 +373,7 @@ function UserProfileCardInner({
                         </TabsList>
 
                         <TabsContent value="about" className="rounded-md border bg-muted/30 p-3 text-sm">
+                            {/* A fact the person has no value for is left off rather than shown empty (TD-F115). */}
                             <InfoRowGroup layout="stack">
                                 {!data.isBot && <>
                                 <EntityCardRow
@@ -438,15 +439,17 @@ function UserProfileCardInner({
                                     value={data.timezone}
                                 />
                                 </>}
-                                <EntityCardRow
-                                    icon={IconMailCheck}
-                                    label={resolveLanguageKey("emailVerifiedAt")}
-                                    tooltip={resolveLanguageKey("emailVerifiedAt")}
-                                    show={!!read.emailVerifiedAt}
-                                    type="dateTime"
-                                    format={{dateStyle: "long", timeStyle: "short"}}
-                                    value={data.emailVerifiedAt}
-                                />
+                                {data.emailVerifiedAt ? (
+                                    <EntityCardRow
+                                        icon={IconMailCheck}
+                                        label={resolveLanguageKey("emailVerifiedAt")}
+                                        tooltip={resolveLanguageKey("emailVerifiedAt")}
+                                        show={!!read.emailVerifiedAt}
+                                        type="dateTime"
+                                        format={{dateStyle: "long", timeStyle: "short"}}
+                                        value={data.emailVerifiedAt}
+                                    />
+                                ) : null}
                                 <EntityCardRow
                                     iconReplacement={
                                         <HiddenElement>
@@ -542,32 +545,38 @@ function UserProfileCardInner({
                                     format={{dateStyle: "long", timeStyle: "short"}}
                                     value={data.registerDate}
                                 />
-                                <EntityCardRow
-                                    icon={IconUserPlus}
-                                    label={resolveLanguageKey("registeredFrom")}
-                                    tooltip={resolveLanguageKey("registeredFrom")}
-                                    show={!!read.registeredFrom}
-                                    type="user"
-                                    value={data.registeredFrom}
-                                />
-                                <EntityCardRow
-                                    icon={IconCalendar}
-                                    label={resolveLanguageKey("birthday")}
-                                    tooltip={resolveLanguageKey("birthday")}
-                                    show={!!read.birthday}
-                                    type="date"
-                                    format={{dateStyle: "long"}}
-                                    value={data.birthday}
-                                />
-                                <EntityCardRow
-                                    icon={IconKey}
-                                    label={resolveLanguageKey("lastLoginDate")}
-                                    tooltip={resolveLanguageKey("lastLoginDate")}
-                                    show={!!read.roles?.keys?.lastLogin}
-                                    type="dateTime"
-                                    format={{dateStyle: "long", timeStyle: "medium"}}
-                                    value={data.lastLogin}
-                                />
+                                {data.registeredFrom ? (
+                                    <EntityCardRow
+                                        icon={IconUserPlus}
+                                        label={resolveLanguageKey("registeredFrom")}
+                                        tooltip={resolveLanguageKey("registeredFrom")}
+                                        show={!!read.registeredFrom}
+                                        type="user"
+                                        value={data.registeredFrom}
+                                    />
+                                ) : null}
+                                {data.birthday ? (
+                                    <EntityCardRow
+                                        icon={IconCalendar}
+                                        label={resolveLanguageKey("birthday")}
+                                        tooltip={resolveLanguageKey("birthday")}
+                                        show={!!read.birthday}
+                                        type="date"
+                                        format={{dateStyle: "long"}}
+                                        value={data.birthday}
+                                    />
+                                ) : null}
+                                {data.lastLogin ? (
+                                    <EntityCardRow
+                                        icon={IconKey}
+                                        label={resolveLanguageKey("lastLoginDate")}
+                                        tooltip={resolveLanguageKey("lastLoginDate")}
+                                        show={!!read.roles?.keys?.lastLogin}
+                                        type="dateTime"
+                                        format={{dateStyle: "long", timeStyle: "medium"}}
+                                        value={data.lastLogin}
+                                    />
+                                ) : null}
                                 <EntityCardRow
                                     icon={IconCircleOff}
                                     label={resolveLanguageKey("unsuccessfulLogins")}
@@ -576,15 +585,17 @@ function UserProfileCardInner({
                                     type="number"
                                     value={data.unsuccessfulLogins}
                                 />
-                                <EntityCardRow
-                                    icon={IconLock}
-                                    label={resolveLanguageKey("lockedOutUntil")}
-                                    tooltip={resolveLanguageKey("lockedOutUntil")}
-                                    show={!!read.roles?.keys?.lockedOutUntil}
-                                    type="dateTime"
-                                    format={{dateStyle: "long", timeStyle: "short"}}
-                                    value={data.lockedOutUntil}
-                                />
+                                {data.lockedOutUntil ? (
+                                    <EntityCardRow
+                                        icon={IconLock}
+                                        label={resolveLanguageKey("lockedOutUntil")}
+                                        tooltip={resolveLanguageKey("lockedOutUntil")}
+                                        show={!!read.roles?.keys?.lockedOutUntil}
+                                        type="dateTime"
+                                        format={{dateStyle: "long", timeStyle: "short"}}
+                                        value={data.lockedOutUntil}
+                                    />
+                                ) : null}
                             </InfoRowGroup>
                         </TabsContent>
                         {

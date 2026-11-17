@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
   "title": "Fournisseurs de messagerie",
-  "description": "Configurez les fournisseurs SMS et WhatsApp pour cette entreprise. Seuls les fournisseurs actifs sont utilisés pour les messages sortants.",
+  "description": "Configurez les fournisseurs SMS et WhatsApp de la plateforme. Seuls les fournisseurs actifs sont utilisés pour les messages sortants.",
   "help": {
     "ariaLabel": "À propos des fournisseurs de messagerie",
     "title": "À propos des fournisseurs de messagerie",

@@ -46,7 +46,8 @@ export const displayCardRenderer: SheetFieldRenderer = (args) => {
         ...iconSlot(wp, ctx, value, label),
         value,
         variant: cardVariant(wp, binding, ctx.data),
-        dontRenderValue: !!wp.dontRenderValue || !!externalHref,
+        // A link shows its address as well as its link badge (TD-F127: website and social links read as bare icons).
+        dontRenderValue: !!wp.dontRenderValue,
         externalHref,
         internalHref,
         linkedReferenceSheet: cardLinkedSheet(wp, ctx, value),

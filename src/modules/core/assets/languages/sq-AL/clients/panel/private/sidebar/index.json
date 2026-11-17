@@ -63,7 +63,7 @@
       },
       "systemSettings": {
         "smtpServers": {
-          "title": "Posta dalëse"
+          "title": "Serverët e postës"
         },
         "cities": {
           "title": "Qytetet"

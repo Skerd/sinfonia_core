@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
   "title": "Messaging providers",
-  "description": "Configure SMS and WhatsApp providers for this company. Only active providers are used for outbound messages.",
+  "description": "Configure the platform's SMS and WhatsApp providers. Only active providers are used for outbound messages.",
   "help": {
     "ariaLabel": "About Messaging providers",
     "title": "About Messaging providers",

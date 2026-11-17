@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
-  "title": "Outgoing mail servers",
+  "title": "Mail servers",
   "description": "The platform's servers send every company's mail, under that company's name, with replies going to it. A lower priority is tried first.",
   "ownServersDescription": "Your own servers send this company's campaigns from your address. All other mail goes through the platform's servers, under your company's name.",
   "help": {
-    "ariaLabel": "About Outgoing mail servers",
-    "title": "About Outgoing mail servers",
+    "ariaLabel": "About mail servers",
+    "title": "About mail servers",
     "overview": "These servers deliver every company's mail: notifications, order and invoice mail, password resets. A company's mail goes out as \"Company name <your From address>\", with Reply-To set to the company, so people answer the company, not the platform. New servers start inactive; activate one only after a successful connection test.",
     "sections": [
       {
@@ -27,8 +27,8 @@
     ]
   },
   "ownServersHelp": {
-    "ariaLabel": "About Outgoing mail servers",
-    "title": "About Outgoing mail servers",
+    "ariaLabel": "About mail servers",
+    "title": "About mail servers",
     "overview": "Servers you add here send this company's campaigns, from your own address. Everyday mail (notifications, invoices, password resets) always goes through the platform's servers under your company's name, with replies to your company. If none of your servers is active, campaigns go through the platform's servers too. New servers start inactive; activate one only after a successful connection test.",
     "sections": [
       {
@@ -49,11 +49,11 @@
       }
     ]
   },
-  "createSmtpServer": "Add SMTP server",
+  "createSmtpServer": "Add mail server",
   "searchPlaceholder": "Search by name or host...",
-  "noData": "No SMTP servers configured",
-  "failTitle": "Failed to load SMTP servers",
-  "failDescription": "An error occurred while loading SMTP servers. Please try again.",
+  "noData": "No mail servers configured",
+  "failTitle": "Failed to load mail servers",
+  "failDescription": "An error occurred while loading mail servers. Please try again.",
   "name": "Name",
   "host": "Host",
   "sequence": "Priority",

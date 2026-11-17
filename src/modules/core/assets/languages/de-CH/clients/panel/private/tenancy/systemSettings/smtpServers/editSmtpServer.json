@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/editSmtpServer.tsx",
-  "title": "SMTP-Server bearbeiten",
+  "title": "Mailserver bearbeiten",
   "description": "Lassen Sie das Passwort leer, um das aktuelle Passwort zu behalten.",
-  "errorTitle": "SMTP-Server konnte nicht geladen werden",
+  "errorTitle": "Mailserver konnte nicht geladen werden",
   "errorDescription": "Bitte hier klicken, um die Serverdaten erneut zu laden.",
-  "noId": "Kein SMTP-Server ausgewählt.",
+  "noId": "Kein Mailserver ausgewählt.",
   "backToList": "Zurück zur Liste",
   "form": {
     "nameLabel": "Name",
@@ -40,7 +40,7 @@
     "senderSectionTitle": "Absender"
   },
   "formHeader": {
-    "title": "SMTP-Server bearbeiten",
+    "title": "Mailserver bearbeiten",
     "description": "Lassen Sie das Passwort leer, um das aktuelle Passwort zu behalten."
   },
   "formButtons": {

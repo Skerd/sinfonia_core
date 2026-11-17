@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/apps/index.tsx",
-  "title": "Intégrations d'applications",
-  "description": "Voici la liste de vos applications disponibles pour l'intégration.",
+  "title": "Applications connectées",
+  "description": "Applications connectées à votre compte",
   "filterApps": "Filtrer les applications",
   "dropDown": {
     "allApps": "Toutes les applications",

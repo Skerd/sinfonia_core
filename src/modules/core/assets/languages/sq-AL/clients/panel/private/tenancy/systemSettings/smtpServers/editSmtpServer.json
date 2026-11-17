@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/editSmtpServer.tsx",
-  "title": "Ndrysho serverin SMTP",
+  "title": "Ndrysho serverin e postës",
   "description": "Lëreni fjalëkalimin bosh për ta mbajtur atë aktual.",
-  "errorTitle": "Ngarkimi i serverit SMTP dështoi",
+  "errorTitle": "Ngarkimi i serverit të postës dështoi",
   "errorDescription": "Klikoni këtu për të riprovuar marrjen e të dhënave.",
-  "noId": "Asnjë server SMTP i zgjedhur.",
+  "noId": "Asnjë server poste i zgjedhur.",
   "backToList": "Kthehu te lista",
   "form": {
     "nameLabel": "Emri",
@@ -40,7 +40,7 @@
     "senderSectionTitle": "Dërguesi"
   },
   "formHeader": {
-    "title": "Ndrysho serverin SMTP",
+    "title": "Ndrysho serverin e postës",
     "description": "Lëreni fjalëkalimin bosh për ta mbajtur atë aktual."
   },
   "formButtons": {

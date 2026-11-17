@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
   "title": "Messaging-Anbieter",
-  "description": "SMS- und WhatsApp-Anbieter für diese Firma konfigurieren. Für ausgehende Nachrichten werden nur aktive Anbieter verwendet.",
+  "description": "SMS- und WhatsApp-Anbieter der Plattform konfigurieren. Für ausgehende Nachrichten werden nur aktive Anbieter verwendet.",
   "help": {
     "ariaLabel": "Über Messaging-Anbieter",
     "title": "Über Messaging-Anbieter",

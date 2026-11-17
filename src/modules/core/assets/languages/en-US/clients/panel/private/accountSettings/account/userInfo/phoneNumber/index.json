@@ -7,5 +7,6 @@
   "failTitle": "Failed to load phone number",
   "failTitleTooltip": "Click to retry loading phone number",
   "edit": "Edit",
-  "empty": "Nothing added yet."
+  "empty": "Nothing added yet.",
+  "description": "Text messages and WhatsApp notices go to this number."
 }

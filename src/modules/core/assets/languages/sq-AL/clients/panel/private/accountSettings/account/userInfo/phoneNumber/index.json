@@ -7,5 +7,6 @@
   "failTitle": "Ngarkimi i numrit të telefonit dështoi",
   "failTitleTooltip": "Klikoni për të riprovuar ngarkimin e numrit të telefonit",
   "edit": "Modifiko",
-  "empty": "Ende asgjë e shtuar."
+  "empty": "Ende asgjë e shtuar.",
+  "description": "Mesazhet SMS dhe njoftimet në WhatsApp dërgohen në këtë numër."
 }

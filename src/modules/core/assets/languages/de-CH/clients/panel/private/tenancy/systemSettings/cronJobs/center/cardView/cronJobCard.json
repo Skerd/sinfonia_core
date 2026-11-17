@@ -6,6 +6,18 @@
   "code": "Code",
   "handler": "Handler",
   "cronExpression": "Cron-Ausdruck",
+  "schedule": "Zeitplan",
+  "scheduleText": {
+    "everyNSeconds": "Alle {n} Sekunden",
+    "everyMinute": "Jede Minute",
+    "everyNMinutes": "Alle {n} Minuten",
+    "hourly": "Stündlich um :{minute}",
+    "everyNHours": "Alle {n} Stunden um :{minute}",
+    "daily": "Täglich um {time}",
+    "weekdays": "Werktags um {time}",
+    "weekly": "Jeden {weekday} um {time}",
+    "monthly": "Monatlich am {day}. um {time}"
+  },
   "description": "Beschreibung",
   "priority": "Priorität",
   "pausedAt": "Pausiert um",

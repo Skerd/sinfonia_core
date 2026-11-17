@@ -15,6 +15,7 @@
   "all": "Global",
   "global": "Global",
   "selectAll": "Select all",
+  "grantedOnly": "Granted only",
   "filterByAnyColumn": "Filter by name, model, group...",
   "filterByName": "Filter by name…",
   "filterByModel": "Filter by model…",

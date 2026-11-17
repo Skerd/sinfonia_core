@@ -41,6 +41,8 @@ type TooltipData = {
 type GlobalTooltipContextType = {
   showTooltip: (data: TooltipData) => void;
   hideTooltip: () => void;
+  /** Drops a show still waiting for its delay, if it is this trigger's. */
+  cancelPending: (id: string) => void;
   hideImmediate: () => void;
   notifyContentEnter: () => void;
   notifyContentLeave: () => void;
@@ -135,9 +137,21 @@ function TooltipProvider({
   const contentHoverRef = React.useRef(false);
   const floatingElRef = React.useRef<HTMLElement | null>(null);
 
+  // The trigger whose show waits for the open delay: a trigger that is pressed or unmounts before it fires cancels it,
+  // or the tooltip opens for an element that is gone and sits in the top-left corner (TD-F126: inline edit "Cancel").
+  const pendingIdRef = React.useRef<string | null>(null);
+
+  const cancelPending = React.useCallback((id: string) => {
+    if (pendingIdRef.current !== id) return;
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = null;
+    pendingIdRef.current = null;
+  }, []);
+
   const showTooltip = React.useCallback(
     (data: TooltipData) => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      pendingIdRef.current = null;
       const active = currentTooltipRef.current;
       if (active !== null) {
         if (isSameOpenTooltip(active, data)) return;
@@ -147,8 +161,10 @@ function TooltipProvider({
       }
       const now = Date.now();
       const delay = now - lastCloseTimeRef.current < closeDelay ? 0 : openDelay;
+      pendingIdRef.current = data.id;
       timeoutRef.current = window.setTimeout(() => {
         timeoutRef.current = null;
+        pendingIdRef.current = null;
         currentTooltipRef.current = data;
         setCurrentTooltip(data);
       }, delay);
@@ -158,6 +174,7 @@ function TooltipProvider({
 
   const hideTooltip = React.useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    pendingIdRef.current = null;
     timeoutRef.current = window.setTimeout(() => {
       if (contentHoverRef.current) return;
       currentTooltipRef.current = null;
@@ -168,6 +185,7 @@ function TooltipProvider({
 
   const hideImmediate = React.useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    pendingIdRef.current = null;
     contentHoverRef.current = false;
     currentTooltipRef.current = null;
     setCurrentTooltip(null);
@@ -221,6 +239,7 @@ function TooltipProvider({
         value={{
           showTooltip,
           hideTooltip,
+          cancelPending,
           hideImmediate,
           notifyContentEnter,
           notifyContentLeave,
@@ -547,6 +566,7 @@ function TooltipTrigger({
   const {
     showTooltip,
     hideTooltip,
+    cancelPending,
     hideImmediate,
     currentTooltip,
     setReferenceEl,
@@ -599,14 +619,17 @@ function TooltipTrigger({
 
   React.useEffect(() => {
     return () => {
+      cancelPending(id);
       if (currentTooltipIdRef.current === id) hideImmediate();
     };
-  }, [id, hideImmediate]);
+  }, [id, hideImmediate, cancelPending]);
 
   const handlePointerDown = React.useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
       onPointerDown?.(e);
       if (isControlled) return;
+      // Pressed before its tooltip appeared: it should not appear afterwards.
+      cancelPending(id);
       if (currentTooltip?.id === id) {
         suppressNextFocusRef.current = true;
         hideImmediate();
@@ -615,7 +638,7 @@ function TooltipTrigger({
         });
       }
     },
-    [onPointerDown, isControlled, currentTooltip?.id, id, hideImmediate],
+    [onPointerDown, isControlled, currentTooltip?.id, id, hideImmediate, cancelPending],
   );
 
   const handleMouseEnter = React.useCallback(

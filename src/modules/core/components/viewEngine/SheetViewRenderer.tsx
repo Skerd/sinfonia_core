@@ -35,6 +35,7 @@ import {useSheetPresence} from "./sheet/shell/useSheetPresence.ts";
 import {useSheetRow} from "./sheet/shell/useSheetRow.ts";
 import {SheetMenuNavigateDismissProvider} from "./sheet/widgets/sheetMenuNavigateDismiss.tsx";
 import {ENTITY_SHEET_WIDTH_CLASS, FLOATING_SHEET_CONTENT_CLASS} from "./sheet/widgets/sheetFloatingChrome.ts";
+import {findFromObject} from "@coreModule/helpers/general/objectPath.ts";
 
 export type SheetViewRendererProps = WithAxiosType<any, SingleForm> & {
     config: ViewConfig;
@@ -161,7 +162,13 @@ export function SheetViewRenderer({
 
     const header = config.header;
     const readAccess = access.read && typeof access.read === "object" ? access.read : {};
-    const deleteRestoreName = deleteRestoreConfirmLabel ?? (readAccess.name && data.name ? data.name : undefined);
+    // The record's own name for the delete and restore dialogs: its `name`, else the field the sheet is titled by
+    // (a blog post's title), so a dialog never reads "Delete item" (TD-F120).
+    const titleField = header?.titleField;
+    const titleValue = titleField && readAccess[titleField] ? findFromObject(data, titleField) : undefined;
+    const deleteRestoreName = deleteRestoreConfirmLabel
+        ?? (readAccess.name && data.name ? data.name : undefined)
+        ?? (typeof titleValue === "string" && titleValue.trim() ? titleValue : undefined);
 
     useImperativeHandle(innerRef, () => ({
         success: (newData: any) => {

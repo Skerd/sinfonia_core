@@ -58,7 +58,7 @@ export default function CronJobRunsPreview({form, jobId, resolveLanguageKey}: Cr
             </p>
             <ol className="flex flex-col gap-1 text-sm tabular-nums text-muted-foreground">
                 {preview.nextRunsPreview.map((run) => (
-                    <li key={run}>{formatDate(run, {timeZone: timezone, format: DATE_FORMATS.dateTime})}</li>
+                    <li key={run}>{formatDate(run, {timeZone: timezone, format: DATE_FORMATS.mediumDateTime})}</li>
                 ))}
             </ol>
         </div>

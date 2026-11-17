@@ -5,5 +5,13 @@
   "loading": "Po ngarkohet...",
   "noNotifications": "Nuk ka njoftime",
   "viewAll": "Shiko të gjitha",
-  "system": "Sistemi"
+  "system": "Sistemi",
+  "categories": {
+    "financial": "Pagesa",
+    "social": "Sociale",
+    "system": "Sistemi",
+    "security": "Siguria",
+    "company": "Kompania",
+    "chat": "Biseda"
+  }
 }

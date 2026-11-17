@@ -6,7 +6,7 @@
   "editDescription": "Mettre à jour les informations sur l'entreprise",
   "generalInfo": "Informations générales",
   "howToReach": "Coordonnées",
-  "whoAreWe": "Qui sommes-nous",
+  "whoAreWe": "À propos de l'entreprise",
   "publicAiChat": "Chat IA public",
   "addAddress": "Ajouter une adresse",
   "address": "Adresse",
@@ -59,8 +59,8 @@
     "humanHandoffEnabledLabel": "Autoriser le transfert à une personne",
     "greetingLabel": "Message d'accueil",
     "greetingPlaceholder": "Premier message envoyé par le bot lorsqu'un visiteur ouvre le chat",
-    "personaLabel": "Persona",
-    "personaPlaceholder": "Instructions propres au mandant ajoutées au prompt public du bot"
+    "personaLabel": "Consignes de l'assistant de chat",
+    "personaPlaceholder": "Comment l'assistant de chat du site doit s'exprimer, p. ex. le ton ou les sujets à éviter"
   },
   "axios": {
     "start": {

@@ -9,6 +9,7 @@
   "searchPlaceholder": "Kërko sipas sesionit, pajisjes ose vendndodhjes",
   "unknown": "E panjohur",
   "unknownDevice": "Pajisja e panjohur",
+  "deviceLabel": "{browser} në {os}",
   "unknownLocation": "Vendndodhja e panjohur",
   "location": "Vendndodhja",
   "sessionId": "ID e sesionit",

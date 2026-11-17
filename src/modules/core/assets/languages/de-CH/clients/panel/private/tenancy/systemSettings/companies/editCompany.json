@@ -6,7 +6,7 @@
   "editDescription": "Firmeninformationen aktualisieren",
   "generalInfo": "Allgemeine Infos",
   "howToReach": "So erreichen Sie uns",
-  "whoAreWe": "Wer wir sind",
+  "whoAreWe": "Über die Firma",
   "publicAiChat": "Öffentlicher KI-Chat",
   "addAddress": "Neue Adresse hinzufügen",
   "address": "Adresse",
@@ -59,8 +59,8 @@
     "humanHandoffEnabledLabel": "Übergabe an eine Person erlauben",
     "greetingLabel": "Begrüssung",
     "greetingPlaceholder": "Erste Nachricht, die der Bot sendet, wenn ein Besucher den Chat öffnet",
-    "personaLabel": "Persona",
-    "personaPlaceholder": "Firmenspezifische Anweisungen, die dem öffentlichen Bot-Prompt angehängt werden"
+    "personaLabel": "Anweisungen für den Chat-Assistenten",
+    "personaPlaceholder": "Wie der Chat-Assistent der Website sprechen soll, z. B. Ton oder Themen, die er meidet"
   },
   "axios": {
     "start": {

@@ -49,5 +49,6 @@
       "timeout": "Délai dépassé",
       "cancelled": "Annulée"
     }
-  }
+  },
+  "scheduledAction": "Action planifiée"
 }

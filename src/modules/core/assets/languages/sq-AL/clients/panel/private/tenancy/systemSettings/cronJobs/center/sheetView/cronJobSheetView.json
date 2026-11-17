@@ -49,5 +49,6 @@
       "timeout": "Koha mbaroi",
       "cancelled": "I anuluar"
     }
-  }
+  },
+  "scheduledAction": "Veprim i planifikuar"
 }

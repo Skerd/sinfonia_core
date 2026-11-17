@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx",
-  "title": "Centro notifiche",
+  "title": "Attività",
   "description": "Visualizza e gestisci le tue notifiche",
   "unreadOnly": "Solo non letti",
   "failTitle": "Impossibile caricare la notifica",
@@ -9,5 +9,13 @@
   "noNotifications": "Nessuna notifica",
   "error": "Impossibile caricare le notifiche",
   "loadMore": "Carica altro",
-  "system": "Sistema"
+  "system": "Sistema",
+  "categories": {
+    "financial": "Pagamenti",
+    "social": "Social",
+    "system": "Sistema",
+    "security": "Sicurezza",
+    "company": "Azienda",
+    "chat": "Chat"
+  }
 }

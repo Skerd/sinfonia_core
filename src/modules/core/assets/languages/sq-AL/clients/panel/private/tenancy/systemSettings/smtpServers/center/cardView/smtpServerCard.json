@@ -8,7 +8,7 @@
   "encryption": "Enkriptimi",
   "fromEmail": "Emaili dërgues",
   "deleted": "Fshirë",
-  "failedTitle": "Ngarkimi i serverit SMTP dështoi",
+  "failedTitle": "Ngarkimi i serverit të postës dështoi",
   "failedDescription": "Trokit për të riprovuar.",
   "inactive": "Joaktiv"
 }

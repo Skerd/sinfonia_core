@@ -32,6 +32,15 @@
       },
       "apps": {
         "title": "Verbundene Apps"
+      },
+      "addresses": {
+        "title": "Adressen"
+      },
+      "savedsearches": {
+        "title": "Gespeicherte Suchen"
+      },
+      "providerprofile": {
+        "title": "Anbieterprofil"
       }
     },
     "tenancy": {

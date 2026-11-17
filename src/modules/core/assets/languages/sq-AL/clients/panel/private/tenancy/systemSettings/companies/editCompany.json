@@ -6,7 +6,7 @@
   "editDescription": "Përditësoni informacionin e kompanisë",
   "generalInfo": "Informacione të përgjithshme",
   "howToReach": "Si të arrini tek ne",
-  "whoAreWe": "Kush jemi ne",
+  "whoAreWe": "Rreth kompanisë",
   "publicAiChat": "Biseda publike me AI",
   "addAddress": "Shto adresë të re",
   "address": "Adresa",
@@ -59,8 +59,8 @@
     "humanHandoffEnabledLabel": "Lejo kalimin te një person",
     "greetingLabel": "Përshëndetja",
     "greetingPlaceholder": "Mesazhi i parë që boti dërgon kur një vizitor hap bisedën",
-    "personaLabel": "Personaliteti",
-    "personaPlaceholder": "Udhëzime specifike të kompanisë që u shtohen udhëzimeve të botit publik"
+    "personaLabel": "Udhëzime për asistentin e bisedës",
+    "personaPlaceholder": "Si duhet të flasë asistenti i bisedës në faqe, p.sh. toni ose temat që duhen shmangur"
   },
   "axios": {
     "start": {

@@ -14,6 +14,7 @@ import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings
 import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
 import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
 import type {ReactNode, RefObject} from "react";
+import {countryDisplayName} from "@coreModule/helpers/general/countryName.ts";
 
 function countryEditPath(country: Country) {
     const params = new URLSearchParams();
@@ -66,7 +67,7 @@ function CountryCard({
                 <>
                     <EntityCard.Header
                         titlePath="name"
-                        title={entity.name}
+                        title={countryDisplayName(entity.code, entity.name)}
                         icon={
                             <DisplayValue path="code" type="flag" value={entity.code}>
                                 {(formatted: ReactNode) => (
@@ -77,8 +78,8 @@ function CountryCard({
                             </DisplayValue>
                         }
                     >
-                        <ViewStates countryId={entity._id} countryName={entity.name} />
-                        <ViewCities countryId={entity._id} countryName={entity.name} />
+                        <ViewStates countryId={entity._id} countryName={countryDisplayName(entity.code, entity.name)} />
+                        <ViewCities countryId={entity._id} countryName={countryDisplayName(entity.code, entity.name)} />
                     </EntityCard.Header>
                     <EntityCard.Body>
                         <EntityCardRow

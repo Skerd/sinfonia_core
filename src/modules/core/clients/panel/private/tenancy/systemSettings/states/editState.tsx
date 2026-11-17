@@ -15,8 +15,5 @@ export default createGenericEditPage<State, EditStateFormType>({
         code: writeFields.code ? data.code : undefined,
         country: writeFields.country ? data.country?._id : undefined,
     }),
-    buildExtraTitles: (params) => {
-        const countryName = params.get("countryName");
-        const stateName = params.get("stateName");
-        return [countryName ?? "", stateName ?? ""]
-    },});
+    // The page is titled by the state itself (the default), not the country it came from (TD-F119).
+});

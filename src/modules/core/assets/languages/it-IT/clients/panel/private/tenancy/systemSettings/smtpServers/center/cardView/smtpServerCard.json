@@ -8,7 +8,7 @@
   "encryption": "Crittografia",
   "fromEmail": "E-mail mittente",
   "deleted": "Eliminato",
-  "failedTitle": "Impossibile caricare il server SMTP",
+  "failedTitle": "Impossibile caricare il server di posta",
   "failedDescription": "Tocca per riprovare.",
   "inactive": "Inattivo"
 }

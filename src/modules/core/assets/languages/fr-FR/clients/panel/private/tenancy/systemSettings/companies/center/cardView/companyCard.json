@@ -44,5 +44,6 @@
   },
   "hiddenFromPortal": "Masquée du portail",
   "protected": "Protégée",
-  "protectedHint": "La plateforme a besoin de cette entreprise : elle ne peut pas être désactivée, masquée du portail ni perdre un module."
+  "protectedHint": "La plateforme a besoin de cette entreprise : elle ne peut pas être désactivée, masquée du portail ni perdre un module.",
+  "showMap": "Afficher la carte"
 }

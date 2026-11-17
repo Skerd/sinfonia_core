@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx",
-  "title": "Benachrichtigungscenter",
+  "title": "Aktivität",
   "description": "Benachrichtigungen anzeigen und verwalten",
   "unreadOnly": "Nur ungelesene",
   "failTitle": "Benachrichtigung konnte nicht geladen werden",
@@ -9,5 +9,13 @@
   "noNotifications": "Keine Benachrichtigungen",
   "error": "Benachrichtigungen konnten nicht geladen werden",
   "loadMore": "Mehr laden",
-  "system": "System"
+  "system": "System",
+  "categories": {
+    "financial": "Zahlungen",
+    "social": "Soziales",
+    "system": "System",
+    "security": "Sicherheit",
+    "company": "Firma",
+    "chat": "Chat"
+  }
 }

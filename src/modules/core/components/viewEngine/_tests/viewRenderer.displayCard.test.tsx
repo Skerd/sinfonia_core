@@ -258,8 +258,9 @@ describe("decorations", () => {
         expect(card({r: 2, score: 9}, "r", {...wp, variantFromRatingPath: "score"}).variant).toBe("success");
     });
 
-    it("externalLink turns a string value into an external href", () => {
-        expect(card({url: " https://x.io "}, "url", {externalLink: true})).toMatchObject({externalHref: "https://x.io", dontRenderValue: true});
+    // TD-F127: the address shows next to its link badge (it was hidden, so links read as bare icons).
+    it("externalLink turns a string value into an external href and keeps the address visible", () => {
+        expect(card({url: " https://x.io "}, "url", {externalLink: true})).toMatchObject({externalHref: "https://x.io", dontRenderValue: false});
         expect(card({url: ""}, "url", {externalLink: true}).externalHref).toBeUndefined();
     });
 

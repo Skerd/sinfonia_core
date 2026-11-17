@@ -30,6 +30,7 @@ import {useEffect, useMemo, useState} from "react";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 import PageController from "@coreModule/components/custom/paginator";
 import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
+import {Switch} from "@coreModule/components/ui/switch.tsx";
 
 export type PermissionTableRow = {
     id: string;
@@ -185,6 +186,49 @@ export function flattenPermissionsToRows(
     );
 }
 
+const PERMISSION_ACTIONS = ["read", "write", "create", "delete", "restore", "action"] as const;
+type PermissionAction = typeof PERMISSION_ACTIONS[number];
+
+/** The permission ids `rows` carry for `actions`, and whether every one of them is granted. */
+export function permissionState(rows: PermissionTableRow[], actions: readonly PermissionAction[] = PERMISSION_ACTIONS): {ids: string[]; granted: boolean} {
+    const ids: string[] = [];
+    let granted = true;
+    for (const row of rows) {
+        for (const action of actions) {
+            if (!row[action]) continue;
+            ids.push(...row[`${action}Ids`]);
+            if (!row[`${action}Active`]) granted = false;
+        }
+    }
+    return {ids, granted: granted && ids.length > 0};
+}
+
+/** Whether the role holds any permission of the row. */
+export function isGrantedRow(row: PermissionTableRow): boolean {
+    return PERMISSION_ACTIONS.some((action) => row[action] && row[`${action}Active`]);
+}
+
+type ToggleAllProps = {
+    rows: PermissionTableRow[];
+    actions?: readonly PermissionAction[];
+    label: string;
+    parentLoading?: boolean;
+    onPermissionsSelect: (permissionIds: string[], selected: boolean) => void;
+};
+
+/** Grants or clears every permission `rows` carry for `actions` at once (TD-F111: a role took hundreds of clicks). */
+function ToggleAll({rows, actions, label, parentLoading, onPermissionsSelect}: ToggleAllProps) {
+    const {ids, granted} = permissionState(rows, actions);
+    return (
+        <Checkbox
+            aria-label={label}
+            disabled={parentLoading || ids.length === 0}
+            checked={granted}
+            onCheckedChange={(checked) => onPermissionsSelect(ids, !!checked)}
+        />
+    );
+}
+
 type ActionCellProps = {
     hasPermission: boolean;
     checked: boolean;
@@ -192,21 +236,18 @@ type ActionCellProps = {
     ids: string[];
     editable?: boolean;
     parentLoading?: boolean;
-    onPermissionSelect?: (permissionId: string, selected: boolean) => void;
+    onPermissionsSelect?: (permissionIds: string[], selected: boolean) => void;
 };
 
-function ActionCell({hasPermission, checked, tags, ids, editable, parentLoading, onPermissionSelect}: ActionCellProps) {
+function ActionCell({hasPermission, checked, tags, ids, editable, parentLoading, onPermissionsSelect}: ActionCellProps) {
     if (!hasPermission) return <span className="text-muted-foreground">—</span>;
-    if (editable && ids.length > 0 && onPermissionSelect) {
+    if (editable && ids.length > 0 && onPermissionsSelect) {
         return (
             <div className="flex items-center" style={{border: "0px solid red"}}>
                 <Checkbox
                     disabled={parentLoading}
                     checked={Boolean(checked)}
-                    onCheckedChange={(e) => {
-                        const selected = !!e;
-                        ids.forEach((id) => onPermissionSelect(id, selected));
-                    }}
+                    onCheckedChange={(e) => onPermissionsSelect(ids, !!e)}
                     aria-label={tags.length ? tags.join(", ") : undefined}
                 />
             </div>
@@ -231,7 +272,8 @@ export type PermissionsTableProps = WithLanguageType & {
     editable?: boolean;
     parentLoading?: boolean;
     forNewRole?: boolean;
-    onPermissionSelect?: (permissionId: string, selected: boolean) => void;
+    /** Grants (`selected`) or clears the permissions with these ids, in one change. */
+    onPermissionsSelect?: (permissionIds: string[], selected: boolean) => void;
 };
 
 function PermissionsTable({
@@ -240,12 +282,14 @@ function PermissionsTable({
     editable = false,
     parentLoading = false,
     forNewRole = false,
-    onPermissionSelect
+    onPermissionsSelect
 }: PermissionsTableProps) {
     const {read, create} = useAccess("roles");
     const [modelFilter, setModelFilter] = useState<string[]>([]);
     const [groupFilter, setGroupFilter] = useState("");
     const [targetFilter, setTargetFilter] = useState<"" | "self" | "others" | "all" | "global">("");
+    // Viewing a role shows what it grants; editing shows the whole catalog to choose from (TD-F111).
+    const [grantedOnly, setGrantedOnly] = useState(!editable);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 20 });
 
@@ -271,13 +315,13 @@ function PermissionsTable({
             const modelMatch = modelFilter.length === 0 || modelFilter.includes(row.model);
             const groupMatch = !groupFilter || row.groupDisplayName.toLowerCase().includes(groupFilter.toLowerCase());
             const scopeMatch = !targetFilter || targetFilter === "all" ? true : row.scope === targetFilter;
-            return modelMatch && groupMatch && scopeMatch;
+            return modelMatch && groupMatch && scopeMatch && (!grantedOnly || isGrantedRow(row));
         });
-    }, [data, modelFilter, groupFilter, targetFilter]);
+    }, [data, modelFilter, groupFilter, targetFilter, grantedOnly]);
 
     useEffect(() => {
         setPagination((p) => (p.pageIndex === 0 ? p : { ...p, pageIndex: 0 }));
-    }, [modelFilter, groupFilter, targetFilter]);
+    }, [modelFilter, groupFilter, targetFilter, grantedOnly]);
 
     useEffect(() => {
         const maxPage = Math.max(0, Math.ceil(filteredData.length / pagination.pageSize) - 1);
@@ -286,8 +330,28 @@ function PermissionsTable({
         }
     }, [filteredData.length, pagination.pageSize, pagination.pageIndex]);
 
+    const toggles = editable && onPermissionsSelect ? onPermissionsSelect : undefined;
     const columns = useMemo<ColumnDef<PermissionTableRow>[]>(
-        () => [
+        () => {
+            /** An action's header; while editing, its checkbox grants or clears that action on every shown row. */
+            const actionHeader = (action: PermissionAction) => !toggles ? resolveLanguageKey(action) : (
+                <div className="flex items-center gap-2">
+                    <ToggleAll rows={filteredData} actions={[action]} label={`${resolveLanguageKey("selectAll")}: ${resolveLanguageKey(action)}`}
+                        parentLoading={parentLoading} onPermissionsSelect={toggles}/>
+                    {resolveLanguageKey(action)}
+                </div>
+            );
+            // While editing, the first column grants or clears a whole row, or (header) every shown row: filter by a
+            // model first to grant that model at once.
+            const allColumn: ColumnDef<PermissionTableRow>[] = !toggles ? [] : [{
+                id: "all",
+                enableSorting: false,
+                header: () => <ToggleAll rows={filteredData} label={resolveLanguageKey("selectAll")} parentLoading={parentLoading} onPermissionsSelect={toggles}/>,
+                cell: ({row}) => <ToggleAll rows={[row.original]} label={`${resolveLanguageKey("selectAll")}: ${row.original.groupDisplayName}`}
+                    parentLoading={parentLoading} onPermissionsSelect={toggles}/>,
+            }];
+            return [
+            ...allColumn,
             {
                 accessorKey: "model",
                 header: () => resolveLanguageKey("model"),
@@ -305,7 +369,7 @@ function PermissionsTable({
             },
             {
                 accessorKey: "read",
-                header: () => resolveLanguageKey("read"),
+                header: () => actionHeader("read"),
                 cell: ({row}) => (
                     <ActionCell
                         hasPermission={row.original.read}
@@ -314,13 +378,13 @@ function PermissionsTable({
                         ids={row.original.readIds}
                         editable={editable}
                         parentLoading={parentLoading}
-                        onPermissionSelect={onPermissionSelect}
+                        onPermissionsSelect={onPermissionsSelect}
                     />
                 ),
             },
             {
                 accessorKey: "write",
-                header: () => resolveLanguageKey("write"),
+                header: () => actionHeader("write"),
                 cell: ({row}) => (
                     <ActionCell
                         hasPermission={row.original.write}
@@ -329,13 +393,13 @@ function PermissionsTable({
                         ids={row.original.writeIds}
                         editable={editable}
                         parentLoading={parentLoading}
-                        onPermissionSelect={onPermissionSelect}
+                        onPermissionsSelect={onPermissionsSelect}
                     />
                 ),
             },
             {
                 accessorKey: "create",
-                header: () => resolveLanguageKey("create"),
+                header: () => actionHeader("create"),
                 cell: ({row}) => (
                     <ActionCell
                         hasPermission={row.original.create}
@@ -344,13 +408,13 @@ function PermissionsTable({
                         ids={row.original.createIds}
                         editable={editable}
                         parentLoading={parentLoading}
-                        onPermissionSelect={onPermissionSelect}
+                        onPermissionsSelect={onPermissionsSelect}
                     />
                 ),
             },
             {
                 accessorKey: "delete",
-                header: () => resolveLanguageKey("delete"),
+                header: () => actionHeader("delete"),
                 cell: ({row}) => (
                     <ActionCell
                         hasPermission={row.original.delete}
@@ -359,13 +423,13 @@ function PermissionsTable({
                         ids={row.original.deleteIds}
                         editable={editable}
                         parentLoading={parentLoading}
-                        onPermissionSelect={onPermissionSelect}
+                        onPermissionsSelect={onPermissionsSelect}
                     />
                 ),
             },
             {
                 accessorKey: "restore",
-                header: () => resolveLanguageKey("restore"),
+                header: () => actionHeader("restore"),
                 cell: ({row}) => (
                     <ActionCell
                         hasPermission={row.original.restore}
@@ -374,13 +438,13 @@ function PermissionsTable({
                         ids={row.original.restoreIds}
                         editable={editable}
                         parentLoading={parentLoading}
-                        onPermissionSelect={onPermissionSelect}
+                        onPermissionsSelect={onPermissionsSelect}
                     />
                 ),
             },
             {
                 accessorKey: "action",
-                header: () => resolveLanguageKey("action"),
+                header: () => actionHeader("action"),
                 cell: ({row}) => (
                     <ActionCell
                         hasPermission={row.original.action}
@@ -389,12 +453,13 @@ function PermissionsTable({
                         ids={row.original.actionIds}
                         editable={editable}
                         parentLoading={parentLoading}
-                        onPermissionSelect={onPermissionSelect}
+                        onPermissionsSelect={onPermissionsSelect}
                     />
                 ),
             },
-        ],
-        [resolveLanguageKey, editable, parentLoading]
+        ];
+        },
+        [resolveLanguageKey, editable, parentLoading, toggles, filteredData]
     );
 
     const table = useReactTable({
@@ -443,6 +508,10 @@ function PermissionsTable({
                         onChange={(e) => setGroupFilter(e.target.value)}
                         className="max-w-[180px]"
                     />
+                    <label className="flex items-center gap-2 text-sm whitespace-nowrap">
+                        <Switch checked={grantedOnly} onCheckedChange={setGrantedOnly}/>
+                        {resolveLanguageKey("grantedOnly")}
+                    </label>
                     <div className="min-w-[180px]">
                         <SimpleSelect
                             options={[

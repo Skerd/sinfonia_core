@@ -14,12 +14,17 @@ import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import {resolveEntityPageKeys} from "@coreModule/helpers/general/entityPage.ts";
 import {useCompanyTimeZone} from "@coreModule/helpers/hooks/useCompanyTimeZone.ts";
+import {useSelector} from "react-redux";
+import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
+import type {AuthUser} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import type {ValidationContext} from "armonia/src/modules/core/helpers/zodBuilder.ts";
 
 /** What a `defaultValues` builder may read besides the URL. */
 export type CreateDefaultsContext = {
     /** The session company's IANA zone (`useCompanyTimeZone`); pass it to `companyToday` for a "today" default. */
     timeZone: string;
+    /** The signed-in user and their session company, e.g. to start a form with their own name (TD-F114). */
+    user: AuthUser;
 };
 
 type GenericCreatePageConfig<TForm extends FieldValues> = {
@@ -82,6 +87,7 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
         const {config: viewConfig, loading: viewConfigLoading} = useViewConfigState(viewCollectionKey, "form:create");
 
         const timeZone = useCompanyTimeZone();
+        const user = useSelector((state: RootState) => state.authentication.user);
         const formSchema = useMemo(
             () => config.schema(languageCode, resolveLanguageKey("form"), undefined, undefined, {timeZone}),
             [languageCode, resolveLanguageKey, timeZone],
@@ -91,9 +97,9 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
         const paramsKey = params.toString();
         const defaultValues = useMemo(() => {
             const source = config.defaultValues;
-            return (typeof source === "function" ? source(params, {timeZone}) : source) ?? {};
+            return (typeof source === "function" ? source(params, {timeZone, user}) : source) ?? {};
             // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [paramsKey, timeZone]);
+        }, [paramsKey, timeZone, user.id]);
         const formExtras = useMemo(
             () => config.buildFormExtras?.(params),
             // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -30,5 +30,6 @@
     ]
   },
   "failTitle": "Failed to load company",
-  "failTitleTooltip": "Click to retry loading company info"
+  "failTitleTooltip": "Click to retry loading company info",
+  "edit": "Edit"
 }

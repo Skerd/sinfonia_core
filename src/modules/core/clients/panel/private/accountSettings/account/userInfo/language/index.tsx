@@ -140,7 +140,8 @@ function AccountProfileLanguage({
                     {currentLabel
                         ? <p className="text-base font-medium text-foreground">{currentLabel}</p>
                         : <p className="text-sm text-muted-foreground">{resolveLanguageKey("empty")}</p>}
-                    <p className="text-sm text-muted-foreground">{resolveLanguageKey("description")}</p>
+                    {/* Only the person changes their language; an admin viewing them reads about them, not "you" (TD-F126). */}
+                    <p className="text-sm text-muted-foreground">{resolveLanguageKey(specificUserId ? "descriptionOthers" : "description")}</p>
                 </div>
             )}
         </section>

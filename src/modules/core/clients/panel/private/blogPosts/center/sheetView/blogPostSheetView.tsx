@@ -10,6 +10,7 @@ import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import PublishBlogPost, {PUBLISH_BLOG_POST_ACTION} from "@coreModule/clients/panel/private/blogPosts/center/actions/publishBlogPost.tsx";
 import UnpublishBlogPost, {UNPUBLISH_BLOG_POST_ACTION} from "@coreModule/clients/panel/private/blogPosts/center/actions/unpublishBlogPost.tsx";
 import SetBlogPostPublishedDialog from "@coreModule/clients/panel/private/blogPosts/center/dialogs/setBlogPostPublishedDialog.tsx";
+import {BlogPostPublishedBadge} from "@coreModule/clients/panel/private/blogPosts/center/cardView/blogPostCard.tsx";
 
 export type BlogPostSheetViewOwnProps = {
     open: boolean;
@@ -77,6 +78,7 @@ function BlogPostSheetView({
                 onRestore={onRestore}
                 editPath={buildEditPath(asBlogPost)}
                 onSheetRowPatched={onSheetRowPatched}
+                headerDescription={<BlogPostPublishedBadge entity={asBlogPost} resolveLanguageKey={resolveLanguageKey} />}
                 actionMenuAllowCustomChildren
                 actionMenuChildren={
                     <>

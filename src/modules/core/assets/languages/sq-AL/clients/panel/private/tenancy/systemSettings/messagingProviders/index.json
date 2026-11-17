@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
   "title": "Ofruesit e mesazheve",
-  "description": "Konfiguroni ofruesit SMS dhe WhatsApp për këtë kompani. Përdoren vetëm ofruesit aktivë për mesazhet dalëse.",
+  "description": "Konfiguroni ofruesit SMS dhe WhatsApp të platformës. Përdoren vetëm ofruesit aktivë për mesazhet dalëse.",
   "help": {
     "ariaLabel": "Rreth ofruesve të mesazheve",
     "title": "Rreth ofruesve të mesazheve",

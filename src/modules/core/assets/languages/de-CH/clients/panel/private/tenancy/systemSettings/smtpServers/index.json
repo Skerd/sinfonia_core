@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
-  "title": "Postausgangsserver",
+  "title": "Mailserver",
   "description": "Die Server der Plattform versenden die E-Mails aller Firmen, unter dem Namen der jeweiligen Firma, Antworten gehen an sie. Eine tiefere Priorität wird zuerst versucht.",
   "ownServersDescription": "Ihre eigenen Server versenden die Kampagnen dieser Firma von Ihrer Adresse. Alle anderen E-Mails gehen über die Server der Plattform, unter dem Namen Ihrer Firma.",
   "help": {
-    "ariaLabel": "Über Postausgangsserver",
-    "title": "Über Postausgangsserver",
+    "ariaLabel": "Über Mailserver",
+    "title": "Über Mailserver",
     "overview": "Diese Server stellen die E-Mails aller Firmen zu: Benachrichtigungen, Bestell- und Rechnungsmails, Passwort-Zurücksetzungen. Die E-Mail einer Firma geht als «Firmenname <Ihre Absenderadresse>» hinaus, mit Antwort-an der Firma, damit man der Firma antwortet, nicht der Plattform. Neue Server sind zuerst inaktiv; aktivieren Sie einen erst nach einem erfolgreichen Verbindungstest.",
     "sections": [
       {
@@ -27,8 +27,8 @@
     ]
   },
   "ownServersHelp": {
-    "ariaLabel": "Über Postausgangsserver",
-    "title": "Über Postausgangsserver",
+    "ariaLabel": "Über Mailserver",
+    "title": "Über Mailserver",
     "overview": "Server, die Sie hier hinzufügen, versenden die Kampagnen dieser Firma von Ihrer eigenen Adresse. Alltägliche E-Mails (Benachrichtigungen, Rechnungen, Passwort-Zurücksetzungen) gehen immer über die Server der Plattform, unter dem Namen Ihrer Firma, Antworten an Ihre Firma. Ist keiner Ihrer Server aktiv, gehen auch die Kampagnen über die Server der Plattform. Neue Server sind zuerst inaktiv; aktivieren Sie einen erst nach einem erfolgreichen Verbindungstest.",
     "sections": [
       {
@@ -49,11 +49,11 @@
       }
     ]
   },
-  "createSmtpServer": "SMTP-Server hinzufügen",
+  "createSmtpServer": "Mailserver hinzufügen",
   "searchPlaceholder": "Nach Name oder Host suchen...",
-  "noData": "Keine SMTP-Server konfiguriert",
-  "failTitle": "SMTP-Server konnten nicht geladen werden",
-  "failDescription": "Beim Laden der SMTP-Server ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+  "noData": "Keine Mailserver konfiguriert",
+  "failTitle": "Mailserver konnten nicht geladen werden",
+  "failDescription": "Beim Laden der Mailserver ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
   "name": "Name",
   "host": "Host",
   "sequence": "Priorität",

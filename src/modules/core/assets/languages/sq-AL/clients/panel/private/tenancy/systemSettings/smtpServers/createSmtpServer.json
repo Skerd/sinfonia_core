@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/createSmtpServer.tsx",
-  "title": "Shto server SMTP",
+  "title": "Shto server poste",
   "description": "Posta dërgohet përmes serverëve aktivë sipas prioritetit (sekuenca më e ulët e para).",
   "form": {
     "nameLabel": "Emri",
@@ -36,7 +36,7 @@
     "senderSectionTitle": "Dërguesi"
   },
   "formHeader": {
-    "title": "Shto server SMTP",
+    "title": "Shto server poste",
     "description": "Posta dërgohet përmes serverëve aktivë sipas prioritetit (sekuenca më e ulët e para)."
   },
   "formButtons": {

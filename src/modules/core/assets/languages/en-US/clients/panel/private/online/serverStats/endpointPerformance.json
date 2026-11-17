@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/online/serverStats/endpointPerformance.tsx",
-  "lastUpdated": " Last updated:",
+  "lastUpdated": "Last updated",
   "endpointPerformanceTitle": "Endpoint Performance",
   "waitingForPerformanceData": "Waiting for performance data...",
   "endpointsTracked": "Endpoints Tracked",

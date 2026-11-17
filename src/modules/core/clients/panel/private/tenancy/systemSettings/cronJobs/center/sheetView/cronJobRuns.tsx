@@ -31,7 +31,7 @@ export default function CronJobRuns({job, resolveLanguageKey}: CronJobRunsProps)
                 <SheetGroup title="nextRuns" resolveLanguageKey={resolveLanguageKey} collapseStorageKey="cronjobs:nextRuns">
                     <ol className="flex flex-col gap-1 text-sm tabular-nums">
                         {job.nextRunsPreview?.map((run) => (
-                            <li key={run}>{formatDate(run, {timeZone: timezone, format: DATE_FORMATS.dateTime})}</li>
+                            <li key={run}>{formatDate(run, {timeZone: timezone, format: DATE_FORMATS.mediumDateTime})}</li>
                         ))}
                     </ol>
                 </SheetGroup>

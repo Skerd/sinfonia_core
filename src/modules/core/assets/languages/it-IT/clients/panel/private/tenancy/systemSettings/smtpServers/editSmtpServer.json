@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/editSmtpServer.tsx",
-  "title": "Modifica server SMTP",
+  "title": "Modifica server di posta",
   "description": "Lasciare vuota la password per mantenere la password corrente.",
-  "errorTitle": "Impossibile caricare il server SMTP",
+  "errorTitle": "Impossibile caricare il server di posta",
   "errorDescription": "Fare clic qui per riprovare a recuperare i dati del server.",
-  "noId": "Nessun server SMTP selezionato.",
+  "noId": "Nessun server di posta selezionato.",
   "backToList": "Torna all'elenco",
   "form": {
     "nameLabel": "Nome",
@@ -40,7 +40,7 @@
     "senderSectionTitle": "Mittente"
   },
   "formHeader": {
-    "title": "Modifica server SMTP",
+    "title": "Modifica server di posta",
     "description": "Lasciare vuota la password per mantenere la password corrente."
   },
   "formButtons": {

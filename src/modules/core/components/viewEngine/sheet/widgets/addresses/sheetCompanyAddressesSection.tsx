@@ -7,6 +7,7 @@ import { cn } from "@coreModule/components/lib/utils.ts";
 import {Card, CardContent} from "@coreModule/components/ui/card.tsx";
 import {bootstrapLinkedSheetData, normalizeObjectIdRef, resolvePath} from "../../../engine/refs.ts";
 import {linkedReferenceSheet, type LinkedReferenceSheet} from "../../linkedSheet/linkedSheetHost.tsx";
+import {countryDisplayName} from "@coreModule/helpers/general/countryName.ts";
 
 /** Nested tenancy sheet for the country / state / city ref at `path` of an address. */
 function addressRefSheet(
@@ -77,7 +78,11 @@ export default function SheetCompanyAddressesSection({
     return (
         <div className={multipleAddresses ? "flex flex-col gap-3" : "flex flex-col gap-4"}>
             {rows.map((row: any, idx: number) => {
-                const countryName = resolvePath(row, "country.name");
+                const storedCountryName = resolvePath(row, "country.name");
+                // In the app's language from the country's code (TD-F122).
+                const countryName = typeof storedCountryName === "string"
+                    ? countryDisplayName(resolvePath(row, "country.code"), storedCountryName)
+                    : storedCountryName;
                 const stateName = resolvePath(row, "state.name");
                 const cityName = resolvePath(row, "city.name");
                 const street = row.street;
@@ -122,14 +127,17 @@ export default function SheetCompanyAddressesSection({
                                             value={countryName ?? null}
                                             linkedReferenceSheet={addressRefSheet(row, "country", "countries", "#CountrySheetView", "country", countryName)}
                                         />
-                                        <DisplayCard
-                                            show={show}
-                                            title={String(resolveLanguageKey("form.stateLabel"))}
-                                            tooltip={String(resolveLanguageKey("form.stateLabel"))}
-                                            Icon={IconMapPin ?? undefined}
-                                            value={stateName ?? null}
-                                            linkedReferenceSheet={addressRefSheet(row, "state", "states", "#StateSheetView", "state", stateName)}
-                                        />
+                                        {/* Optional parts of an address show only when set (TD-F115). */}
+                                        {stateName ? (
+                                            <DisplayCard
+                                                show={show}
+                                                title={String(resolveLanguageKey("form.stateLabel"))}
+                                                tooltip={String(resolveLanguageKey("form.stateLabel"))}
+                                                Icon={IconMapPin ?? undefined}
+                                                value={stateName}
+                                                linkedReferenceSheet={addressRefSheet(row, "state", "states", "#StateSheetView", "state", stateName)}
+                                            />
+                                        ) : null}
                                         <DisplayCard
                                             show={show}
                                             title={String(resolveLanguageKey("form.cityLabel"))}
@@ -138,13 +146,15 @@ export default function SheetCompanyAddressesSection({
                                             value={cityName ?? null}
                                             linkedReferenceSheet={addressRefSheet(row, "city", "cities", "#CitySheetView", "city", cityName)}
                                         />
-                                        <DisplayCard
-                                            show={show}
-                                            title={String(resolveLanguageKey("form.postalCodeLabel"))}
-                                            tooltip={String(resolveLanguageKey("form.postalCodeLabel"))}
-                                            Icon={IconMail ?? undefined}
-                                            value={postalCode ?? null}
-                                        />
+                                        {postalCode ? (
+                                            <DisplayCard
+                                                show={show}
+                                                title={String(resolveLanguageKey("form.postalCodeLabel"))}
+                                                tooltip={String(resolveLanguageKey("form.postalCodeLabel"))}
+                                                Icon={IconMail ?? undefined}
+                                                value={postalCode}
+                                            />
+                                        ) : null}
 
                                         <DisplayCard
                                             show={show}

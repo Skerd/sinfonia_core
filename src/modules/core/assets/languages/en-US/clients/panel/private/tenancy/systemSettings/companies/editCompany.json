@@ -6,7 +6,7 @@
   "editDescription": "Update company info",
   "generalInfo": "General info",
   "howToReach": "How to reach us",
-  "whoAreWe": "Who are we",
+  "whoAreWe": "About the company",
   "publicAiChat": "Public AI chat",
   "addAddress": "Add new address",
   "address": "Address",
@@ -59,8 +59,8 @@
     "humanHandoffEnabledLabel": "Allow human handoff",
     "greetingLabel": "Greeting",
     "greetingPlaceholder": "First message the bot sends when a visitor opens chat",
-    "personaLabel": "Persona",
-    "personaPlaceholder": "Tenant-specific instructions appended to the public bot prompt"
+    "personaLabel": "Chat assistant instructions",
+    "personaPlaceholder": "How the website chat assistant should talk, e.g. tone or topics to avoid"
   },
   "axios": {
     "start": {

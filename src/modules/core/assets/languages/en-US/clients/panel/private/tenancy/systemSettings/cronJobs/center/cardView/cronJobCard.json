@@ -6,6 +6,18 @@
   "code": "Code",
   "handler": "Handler",
   "cronExpression": "Cron expression",
+  "schedule": "Schedule",
+  "scheduleText": {
+    "everyNSeconds": "Every {n} seconds",
+    "everyMinute": "Every minute",
+    "everyNMinutes": "Every {n} minutes",
+    "hourly": "Hourly at :{minute}",
+    "everyNHours": "Every {n} hours at :{minute}",
+    "daily": "Daily at {time}",
+    "weekdays": "Weekdays at {time}",
+    "weekly": "Every {weekday} at {time}",
+    "monthly": "Monthly on day {day} at {time}"
+  },
   "description": "Description",
   "priority": "Priority",
   "pausedAt": "Paused at",

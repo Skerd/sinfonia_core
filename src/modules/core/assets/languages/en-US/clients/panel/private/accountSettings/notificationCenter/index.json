@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx",
-  "title": "Notification Center",
+  "title": "Activity",
   "description": "View and manage your notifications",
   "unreadOnly": "Unread only",
   "failTitle": "Failed to load notification",
@@ -9,5 +9,13 @@
   "noNotifications": "No notifications",
   "error": "Failed to load notifications",
   "loadMore": "Load more",
-  "system": "System"
+  "system": "System",
+  "categories": {
+    "financial": "Payments",
+    "social": "Social",
+    "system": "System",
+    "security": "Security",
+    "company": "Company",
+    "chat": "Chat"
+  }
 }

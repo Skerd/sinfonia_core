@@ -8,7 +8,7 @@
   "encryption": "Chiffrement",
   "fromEmail": "E-mail de l'expéditeur",
   "deleted": "Supprimé",
-  "failedTitle": "Échec du chargement du serveur SMTP",
+  "failedTitle": "Échec du chargement du serveur mail",
   "failedDescription": "Appuyez pour réessayer.",
   "inactive": "Inactif"
 }

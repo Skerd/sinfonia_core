@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/editSmtpServer.tsx",
-  "title": "Edit SMTP server",
+  "title": "Edit mail server",
   "description": "Leave password blank to keep the current password.",
-  "errorTitle": "Failed to load SMTP server",
+  "errorTitle": "Failed to load mail server",
   "errorDescription": "Please click here to retry fetching server data.",
-  "noId": "No SMTP server selected.",
+  "noId": "No mail server selected.",
   "backToList": "Back to list",
   "form": {
     "nameLabel": "Name",
@@ -40,7 +40,7 @@
     "senderSectionTitle": "Sender"
   },
   "formHeader": {
-    "title": "Edit SMTP server",
+    "title": "Edit mail server",
     "description": "Leave password blank to keep the current password."
   },
   "formButtons": {

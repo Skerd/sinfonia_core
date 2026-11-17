@@ -7,5 +7,6 @@
   "failTitle": "Telefonnummer konnte nicht geladen werden",
   "failTitleTooltip": "Klicken, um die Telefonnummer erneut zu laden",
   "edit": "Bearbeiten",
-  "empty": "Noch nichts erfasst."
+  "empty": "Noch nichts erfasst.",
+  "description": "SMS und WhatsApp-Mitteilungen gehen an diese Nummer."
 }

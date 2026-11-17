@@ -2,7 +2,10 @@ import {compose} from "redux";
 import {useEffect, useState} from "react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import CompanyCard from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/cardView/companyCard.tsx";
+import CompanyCard, {companyEditPath} from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/cardView/companyCard.tsx";
+import {Link} from "react-router-dom";
+import {IconEdit} from "@tabler/icons-react";
+import {Button} from "@coreModule/components/ui/button.tsx";
 import CompanyModulesList from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/myCompany/companyModulesList.tsx";
 import ErasePersonSection from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/myCompany/erasePersonSection.tsx";
 import {useSelector} from "react-redux";
@@ -27,7 +30,7 @@ function MyCompany({
     resolveLanguageKey
 }: MyCompanyProps){
 
-    const {read} = useAccess("companies");
+    const {read, write} = useAccess("companies");
     // Only for this company's admins, and only when one of its modules can erase a person (D57); the server checks too.
     const canErasePeople = useSelector((state: RootState) => state.authentication.user.canErasePeople);
 
@@ -61,7 +64,14 @@ function MyCompany({
                 title={resolveLanguageKey("title")}
                 description={resolveLanguageKey("description")}
                 help={readPageHelp(resolveLanguageKey)}
-            />
+            >
+                {/* Edit in plain sight, not only behind the card's hover menu (TD-F127). */}
+                {write ? (
+                    <Button asChild variant="outline" size="sm">
+                        <Link to={companyEditPath(data)}><IconEdit className="size-4" aria-hidden />{resolveLanguageKey("edit")}</Link>
+                    </Button>
+                ) : null}
+            </Header>
             <div className="flex w-full flex-col items-center justify-center gap-4 pt-1">
                 <CompanyCard single={true} company={data} overrideCompanyId={data._id} />
                 {data.modules ? <CompanyModulesList modules={data.modules} /> : null}

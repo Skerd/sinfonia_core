@@ -32,6 +32,15 @@
       },
       "apps": {
         "title": "Applications connectées"
+      },
+      "addresses": {
+        "title": "Adresses"
+      },
+      "savedsearches": {
+        "title": "Recherches enregistrées"
+      },
+      "providerprofile": {
+        "title": "Profil de prestataire"
       }
     },
     "tenancy": {

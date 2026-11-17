@@ -44,5 +44,6 @@
   },
   "hiddenFromPortal": "E fshehur nga portali",
   "protected": "E mbrojtur",
-  "protectedHint": "Platforma ka nevojë për këtë kompani: nuk mund të çaktivizohet, të fshihet nga portali ose të humbasë një modul."
+  "protectedHint": "Platforma ka nevojë për këtë kompani: nuk mund të çaktivizohet, të fshihet nga portali ose të humbasë një modul.",
+  "showMap": "Shfaq hartën"
 }

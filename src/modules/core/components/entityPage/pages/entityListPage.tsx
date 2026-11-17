@@ -1,4 +1,5 @@
 import {useEffect, useMemo, useRef, useState, type ReactNode, type RefObject} from "react";
+import {findFromObject} from "@coreModule/helpers/general/objectPath.ts";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {
     clearQuickFilterParams,
@@ -575,9 +576,15 @@ export default function EntityListPage<T extends BaseEntity>({
 
     const sheetActionMenuChildren = renderSheetActionMenuChildren ?? renderActionMenuChildren;
 
+    // A record without a `name` is named by its `title` (blog posts), so a dialog never reads "Delete item" (TD-F120).
+    const titleOf = (entity: T) => {
+        const title = findFromObject(entity, "title");
+        return typeof title === "string" && title.trim() ? title : undefined;
+    };
     const resolveDeleteLabel = (entity: T) =>
         buildDeleteConfirmLabel?.(entity, readFields) ??
-        (readFields?.name && entity.name ? String(entity.name) : undefined);
+        (readFields?.name && entity.name ? String(entity.name) : undefined) ??
+        (readFields?.title ? titleOf(entity) : undefined);
 
     const resolveRowFlag = (flag: boolean | ((entity: T) => boolean) | undefined, entity: T) =>
         typeof flag === "function" ? flag(entity) : !!flag;

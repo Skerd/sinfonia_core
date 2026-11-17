@@ -346,9 +346,9 @@ function MediaField({
                 items.push({ type: "existing", id: item, index });
             }
         });
-        const placeholdersNeeded = maxCount - items.length;
-        for (let i = 0; i < placeholdersNeeded; i++) {
-            items.push({ type: "placeholder", index: items.length + i });
+        // One "add" tile while there is room, not one per free slot (TD-F125: a gallery showed 20 empty tiles).
+        if (items.length < maxCount) {
+            items.push({ type: "placeholder", index: items.length });
         }
     }
 
@@ -412,7 +412,8 @@ function MediaField({
 
     const placeholderSlot = (item: Item, slotIndex: number) => {
         const isFirstPlaceholder = !isSingle && item.type === "placeholder" && items.findIndex((i) => i.type === "placeholder") === items.indexOf(item);
-        const slotLabel = isSingle ? uploadHint : `${slotIndex + 1}/${maxCount}`;
+        // How many are chosen of how many fit; a single file says only what to upload (it said it twice).
+        const slotLabel = isSingle ? uploadHint : `${slotIndex}/${maxCount}`;
         return (
             <div key={`placeholder-${slotIndex}`} className="relative">
                 <Button variant="bare"
@@ -429,9 +430,11 @@ function MediaField({
                         <p className="text-xs text-muted-foreground px-2">
                             {uploadHint}
                         </p>
-                        <p className="text-xs text-muted-foreground px-2">
-                            {slotLabel}
-                        </p>
+                        {!isSingle && (
+                            <p className="text-xs text-muted-foreground px-2">
+                                {slotLabel}
+                            </p>
+                        )}
                     </div>
                 </Button>
                 {

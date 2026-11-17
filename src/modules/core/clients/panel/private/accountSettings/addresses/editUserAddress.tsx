@@ -3,6 +3,7 @@ import {createGenericEditPage} from "@coreModule/components/entityPage/pages/cre
 import {editUserAddressFormSchema} from "armonia/src/modules/core/api/user/private/userAddress/editUserAddress.form.validator.ts";
 import type {EditUserAddressFormType} from "armonia/src/modules/core/api/user/private/userAddress/userAddress.schema-def.ts";
 import type {UserAddress} from "armonia/src/modules/core/api/user/private/userAddress/userAddress.dto.ts";
+import {PlaceFromCity} from "./placeFromCity.tsx";
 
 export default createGenericEditPage<UserAddress, EditUserAddressFormType>({
     languagePath: "src/modules/core/clients/panel/private/accountSettings/addresses/editUserAddress.tsx",
@@ -17,5 +18,6 @@ export default createGenericEditPage<UserAddress, EditUserAddressFormType>({
         state: data.state?._id ?? data.state,
         city: data.city?._id ?? data.city,
     }),
+    renderChildren: (form) => <PlaceFromCity form={form}/>,
     submitIcon: <IconDeviceFloppy />,
 });

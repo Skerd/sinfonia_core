@@ -91,7 +91,8 @@ function AccountProfilePhoneNumber({
             {currentPhoneNumber
                 ? <p className="text-base font-medium text-foreground">{currentPhoneNumber}</p>
                 : <p className="text-sm text-muted-foreground">{resolveLanguageKey("empty")}</p>}
-            <p className="text-sm text-muted-foreground">{resolveLanguageKey("form.phoneNumberNumberPlaceholder")}</p>
+            {/* What the number is for; it used to repeat the label (TD-F126). */}
+            <p className="text-sm text-muted-foreground">{resolveLanguageKey("description")}</p>
         </div>
     );
 

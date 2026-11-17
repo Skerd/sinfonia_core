@@ -15,6 +15,7 @@
   "all": "Globale",
   "global": "Globale",
   "selectAll": "Zgjidh të gjitha",
+  "grantedOnly": "Vetëm të dhëna",
   "filterByAnyColumn": "Filtro sipas emrit, modelit, grupit...",
   "filterByName": "Filtro sipas emrit…",
   "filterByModel": "Filtro sipas modelit…",

@@ -49,5 +49,6 @@
       "timeout": "Zeitüberschreitung",
       "cancelled": "Abgebrochen"
     }
-  }
+  },
+  "scheduledAction": "Geplante Aktion"
 }

@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/online/serverStats/userActivity.tsx",
-  "lastUpdated": " Ultimo aggiornamento:",
+  "lastUpdated": "Ultimo aggiornamento",
   "userActivityTitle": "Attività dell'utente",
   "waitingForActivityData": "In attesa dei dati sull'attività...",
   "live": "In tempo reale",

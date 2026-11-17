@@ -1,7 +1,7 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/messagingProviders/index.tsx",
   "title": "Provider di messaggistica",
-  "description": "Configura i provider SMS e WhatsApp per questa azienda. Per i messaggi in uscita vengono utilizzati solo i provider attivi.",
+  "description": "Configura i provider SMS e WhatsApp della piattaforma. Per i messaggi in uscita vengono utilizzati solo i provider attivi.",
   "help": {
     "ariaLabel": "Informazioni su Provider di messaggistica",
     "title": "Informazioni su Provider di messaggistica",

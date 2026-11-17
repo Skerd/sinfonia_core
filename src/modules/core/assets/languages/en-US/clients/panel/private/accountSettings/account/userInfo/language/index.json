@@ -19,5 +19,6 @@
       "title": "Language failed to be updated",
       "time": 3000
     }
-  }
+  },
+  "descriptionOthers": "Text messages, WhatsApp and Telegram notices are sent to this person in this language. Only they can change it."
 }

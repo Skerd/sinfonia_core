@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/online/serverStats/endpointPerformance.tsx",
-  "lastUpdated": " Përditësimi i fundit:",
+  "lastUpdated": "Përditësimi i fundit",
   "endpointPerformanceTitle": "Performanca e pikës fundore",
   "waitingForPerformanceData": "Në pritje të të dhënave të performancës...",
   "endpointsTracked": "Pikat fundore të gjurmuara",

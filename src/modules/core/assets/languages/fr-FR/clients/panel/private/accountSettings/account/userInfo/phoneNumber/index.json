@@ -7,5 +7,6 @@
   "failTitle": "Échec du chargement du numéro de téléphone",
   "failTitleTooltip": "Cliquez pour réessayer de charger le numéro de téléphone",
   "edit": "Modifier",
-  "empty": "Rien n'a encore été ajouté."
+  "empty": "Rien n'a encore été ajouté.",
+  "description": "Les SMS et les notifications WhatsApp sont envoyés à ce numéro."
 }

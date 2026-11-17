@@ -30,5 +30,6 @@
     ]
   },
   "failTitle": "Échec du chargement de l'entreprise",
-  "failTitleTooltip": "Cliquez pour réessayer de charger les informations sur l'entreprise"
+  "failTitleTooltip": "Cliquez pour réessayer de charger les informations sur l'entreprise",
+  "edit": "Modifier"
 }

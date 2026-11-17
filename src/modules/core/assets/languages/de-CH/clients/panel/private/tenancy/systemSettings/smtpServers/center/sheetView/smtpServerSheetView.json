@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx",
-  "failedTitle": "SMTP-Server konnte nicht geladen werden",
+  "failedTitle": "Mailserver konnte nicht geladen werden",
   "failedDescription": "Beim Laden dieses Servers ist ein Fehler aufgetreten. Klicken, um es erneut zu versuchen.",
   "failedTooltipDescription": "Klicken, um die Daten erneut zu laden.",
   "host": "Host",
@@ -42,5 +42,6 @@
   "lastTestStatusValues": {
     "ok": "OK",
     "failed": "Fehlgeschlagen"
-  }
+  },
+  "mailServer": "Mailserver"
 }

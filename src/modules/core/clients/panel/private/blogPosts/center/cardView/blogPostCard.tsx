@@ -4,7 +4,7 @@ import withLanguage, {type ResolveLanguageKey, WithLanguageType} from "@coreModu
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import type {BlogPost} from "armonia/src/modules/core/api/auxiliary/private/blogPost/blogPost.dto.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
-import {IconCalendar, IconHash, IconTag} from "@tabler/icons-react";
+import {IconCalendar, IconTag} from "@tabler/icons-react";
 import BlogPostSheetView from "@coreModule/clients/panel/private/blogPosts/center/sheetView/blogPostSheetView.tsx";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
@@ -16,8 +16,10 @@ import PublishBlogPost, {PUBLISH_BLOG_POST_ACTION} from "@coreModule/clients/pan
 import UnpublishBlogPost, {UNPUBLISH_BLOG_POST_ACTION} from "@coreModule/clients/panel/private/blogPosts/center/actions/unpublishBlogPost.tsx";
 import SetBlogPostPublishedDialog from "@coreModule/clients/panel/private/blogPosts/center/dialogs/setBlogPostPublishedDialog.tsx";
 import type {WithAxiosLifecycleRef} from "@coreModule/helpers/hocs/withAxios.tsx";
+import {AccessGatedGalleryCarousel} from "@coreModule/components/viewEngine/widgets/gallery/galleryCarousel.tsx";
 
-function BlogPostPublishedBadge({
+/** Published or not, as the card's and the sheet's badge (TD-F125: the sheet had a "Published: Yes" row). */
+export function BlogPostPublishedBadge({
     entity,
     resolveLanguageKey,
 }: {
@@ -108,8 +110,19 @@ function BlogPostCard({
                 </>
             )}
         >
-            {({entity, setAction}) => (
+            {({entity, read, setAction}) => (
                 <>
+                    {/* The cover leads the card; the slug stays on the edit form (TD-F125). */}
+                    {entity.mainImage ? (
+                        <AccessGatedGalleryCarousel
+                            read={read}
+                            mainImage={entity.mainImage}
+                            imageGallery={[]}
+                            showThumbnails={false}
+                            allowFullScreen={false}
+                            coverAfterFirst
+                        />
+                    ) : null}
                     <EntityCard.Header
                         titlePath="title"
                         title={entity.title}
@@ -126,21 +139,17 @@ function BlogPostCard({
                             path="category.name"
                             value={entity.category.name}
                         />
-                        <EntityCardRow
-                            icon={IconHash}
-                            label={resolveLanguageKey("fields.slug")}
-                            tooltip={resolveLanguageKey("fields.slug")}
-                            path="slug"
-                            value={entity.slug}
-                        />
-                        <EntityCardRow
-                            icon={IconCalendar}
-                            label={resolveLanguageKey("fields.publishedAt")}
-                            tooltip={resolveLanguageKey("fields.publishedAt")}
-                            path="publishedAt"
-                            type="date"
-                            value={entity.publishedAt}
-                        />
+                        {/* An unpublished post has no date: leave the row off (`show` is the read permission). */}
+                        {entity.publishedAt ? (
+                            <EntityCardRow
+                                icon={IconCalendar}
+                                label={resolveLanguageKey("fields.publishedAt")}
+                                tooltip={resolveLanguageKey("fields.publishedAt")}
+                                path="publishedAt"
+                                type="date"
+                                value={entity.publishedAt}
+                            />
+                        ) : null}
                     </EntityCard.Body>
                 </>
             )}

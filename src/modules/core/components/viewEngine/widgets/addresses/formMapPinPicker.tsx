@@ -1,4 +1,6 @@
+import type {ComponentType} from "react";
 import { useFormContext, type FieldValues } from "react-hook-form";
+import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import { useSelector } from "react-redux";
 import MapWithPins from "@coreModule/components/viewEngine/widgets/addresses/mapWithPins.tsx";
 import type { RootState } from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -17,19 +19,20 @@ type FormMapPinPickerProps = {
     defaultLat?: number;
     defaultLng?: number;
     loading?: boolean;
-};
+} & WithLanguageType;
 
 /**
  * `#FormMapPinPicker` — interactive lat/lng map for use inside `#FormRepeater` row templates.
  * `fieldPrefix` is injected by the repeater; `latField`/`lngField` are relative to the row.
  */
-export default function FormMapPinPicker({
+function FormMapPinPicker({
     fieldPrefix,
     latField = "latitude",
     lngField = "longitude",
     defaultLat,
     defaultLng,
     loading = false,
+    resolveLanguageKey,
 }: FormMapPinPickerProps) {
     const form = useFormContext<FieldValues>();
     const pLat = fieldPrefix ? `${fieldPrefix}.${latField}` : latField;
@@ -63,9 +66,12 @@ export default function FormMapPinPicker({
             />
             {fieldError?.message ? (
                 <p role="alert" className="mt-1 text-sm text-destructive">
-                    {fieldError.message}
+                    {/* Without a pin the schema's "'Latitude' must be a number" says nothing a person can act on (TD-F114). */}
+                    {hasPin ? fieldError.message : resolveLanguageKey("placePin")}
                 </p>
             ) : null}
         </div>
     );
 }
+
+export default withLanguage("src/modules/core/components/viewEngine/widgets/addresses/formMapPinPicker.tsx")(FormMapPinPicker) as ComponentType<Omit<FormMapPinPickerProps, keyof WithLanguageType>>;

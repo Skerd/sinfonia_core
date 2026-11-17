@@ -9,6 +9,7 @@
   "searchPlaceholder": "Nach Sitzung, Gerät oder Standort suchen",
   "unknown": "Unbekannt",
   "unknownDevice": "Unbekanntes Gerät",
+  "deviceLabel": "{browser} auf {os}",
   "unknownLocation": "Unbekannter Standort",
   "location": "Standort",
   "sessionId": "Sitzungs-ID",

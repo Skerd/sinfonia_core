@@ -9,7 +9,7 @@ export default createGenericCreatePage<CreateBlogPostFormType>({
     model: "blogposts",
     apiUrl: "/api/auxiliary/blogPost",
     schema: createBlogPostFormSchema,
-    successPath: "/company/blogPosts",
+    // Back to the list it was opened from, its category filter included, as the edit page does (TD-F125).
     // The slug follows the title until it is edited by hand (UX-05, TD-F116).
     renderChildren: (form) => <PrefillSlug form={form} from="title" to="slug" max={BLOG_POST_SLUG_MAX} />,
     submitIcon: <IconBook />,

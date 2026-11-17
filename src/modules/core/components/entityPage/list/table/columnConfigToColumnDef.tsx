@@ -45,6 +45,7 @@ import {
     STATUS_BADGE_SUCCESS,
     STATUS_BADGE_WARNING,
 } from "@coreModule/components/entityPage/list/entityCard.constants.ts";
+import {countryDisplayName} from "@coreModule/helpers/general/countryName.ts";
 
 export type ColumnConfigToColumnDefOptions<T> = {
     fields: TranslationValue;
@@ -332,14 +333,19 @@ export function useColumnConfigToColumnDef<T>(columns: TableColumnConfig[], opti
                 ...base,
                 cell: ({row}) => {
                     const items = toRecords(readCell(row, col))
-                        .map((item, index) => ({
-                            key: item._id != null ? String(item._id) : `ref-${index}`,
-                            /* A ref with no display field still has to be clickable, so it borrows the column label. */
-                            label: toDisplayLabel(item) || label,
-                            href: resolveHref(item),
-                            mediaId: resolveMediaId(item),
-                            flagCode: resolveFlagCode(item),
-                        }))
+                        .map((item, index) => {
+                            const flagCode = resolveFlagCode(item);
+                            const text = toDisplayLabel(item);
+                            return {
+                                key: item._id != null ? String(item._id) : `ref-${index}`,
+                                /* A ref with no display field still has to be clickable, so it borrows the column label;
+                                   a flagged ref is a country, named in the app's language (TD-F122). */
+                                label: (flagCode && text ? countryDisplayName(flagCode, text) : text) || label,
+                                href: resolveHref(item),
+                                mediaId: resolveMediaId(item),
+                                flagCode,
+                            };
+                        })
                         .filter(({label: text, href}) => text !== "" || !!href)
                         .map(({key, label: text, href, mediaId, flagCode}) => ({
                             key,

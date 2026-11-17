@@ -23,6 +23,7 @@ import DisplayValue, {type DisplayValueType} from "./displayValue.tsx";
 import ExpandableText from "@coreModule/components/viewEngine/widgets/display/expandableText.tsx";
 import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {countryDisplayName} from "@coreModule/helpers/general/countryName.ts";
 
 function plainTextFromNode(node: ReactNode): string {
     if (node == null || typeof node === "boolean") return "";
@@ -211,7 +212,7 @@ export default function DisplayCard({
     avatar,
     flagCode,
     mdiIcon,
-    value,
+    value: storedValue,
     tooltip,
     dontRenderValue = false,
     externalHref,
@@ -223,6 +224,8 @@ export default function DisplayCard({
     stackBody = false,
     smallMedia = false,
 }: DisplayCardProps) {
+    // A card with a flag shows a country: name it in the app's language from its code (TD-F122).
+    const value = flagCode && typeof storedValue === "string" ? countryDisplayName(flagCode, storedValue) : storedValue;
     const accessResourceId = linkedReferenceSheet?.resourceId ?? "";
     const LinkedSheet = linkedReferenceSheet?.LinkedSheet;
     const linkedAccess = useAccess(accessResourceId);

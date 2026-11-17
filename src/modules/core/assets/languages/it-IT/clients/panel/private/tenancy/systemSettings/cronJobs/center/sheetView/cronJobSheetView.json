@@ -49,5 +49,6 @@
       "timeout": "Tempo scaduto",
       "cancelled": "Annullata"
     }
-  }
+  },
+  "scheduledAction": "Azione pianificata"
 }

@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
-  "title": "Serveurs de courrier sortant",
+  "title": "Serveurs mail",
   "description": "Les serveurs de la plateforme envoient les e-mails de toutes les entreprises, au nom de chacune, et les réponses lui reviennent. La priorité la plus basse est essayée en premier.",
   "ownServersDescription": "Vos propres serveurs envoient les campagnes de cette entreprise depuis votre adresse. Tous les autres e-mails passent par les serveurs de la plateforme, au nom de votre entreprise.",
   "help": {
-    "ariaLabel": "À propos des serveurs de courrier sortant",
-    "title": "À propos des serveurs de courrier sortant",
+    "ariaLabel": "À propos des serveurs mail",
+    "title": "À propos des serveurs mail",
     "overview": "Ces serveurs distribuent les e-mails de toutes les entreprises : notifications, e-mails de commande et de facture, réinitialisations de mot de passe. L'e-mail d'une entreprise part sous la forme « Nom de l'entreprise <votre adresse d'expédition> », avec la réponse adressée à l'entreprise, pour qu'on réponde à l'entreprise et non à la plateforme. Les nouveaux serveurs sont inactifs au départ ; activez-en un seulement après un test de connexion réussi.",
     "sections": [
       {
@@ -27,8 +27,8 @@
     ]
   },
   "ownServersHelp": {
-    "ariaLabel": "À propos des serveurs de courrier sortant",
-    "title": "À propos des serveurs de courrier sortant",
+    "ariaLabel": "À propos des serveurs mail",
+    "title": "À propos des serveurs mail",
     "overview": "Les serveurs ajoutés ici envoient les campagnes de cette entreprise depuis votre propre adresse. Les e-mails courants (notifications, factures, réinitialisations de mot de passe) passent toujours par les serveurs de la plateforme, au nom de votre entreprise, avec les réponses adressées à votre entreprise. Si aucun de vos serveurs n'est actif, les campagnes passent aussi par les serveurs de la plateforme. Les nouveaux serveurs sont inactifs au départ ; activez-en un seulement après un test de connexion réussi.",
     "sections": [
       {
@@ -49,11 +49,11 @@
       }
     ]
   },
-  "createSmtpServer": "Ajouter un serveur SMTP",
+  "createSmtpServer": "Ajouter un serveur mail",
   "searchPlaceholder": "Rechercher par nom ou par hôte...",
-  "noData": "Aucun serveur SMTP configuré",
-  "failTitle": "Échec du chargement des serveurs SMTP",
-  "failDescription": "Une erreur s'est produite lors du chargement des serveurs SMTP. Veuillez réessayer.",
+  "noData": "Aucun serveur mail configuré",
+  "failTitle": "Échec du chargement des serveurs mail",
+  "failDescription": "Une erreur s'est produite lors du chargement des serveurs mail. Veuillez réessayer.",
   "name": "Nom",
   "host": "Hôte",
   "sequence": "Priorité",

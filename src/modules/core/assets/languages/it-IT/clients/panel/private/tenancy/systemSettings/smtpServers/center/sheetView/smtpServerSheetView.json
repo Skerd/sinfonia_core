@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx",
-  "failedTitle": "Impossibile caricare il server SMTP",
+  "failedTitle": "Impossibile caricare il server di posta",
   "failedDescription": "Qualcosa è andato storto durante il caricamento di questo server. Fare clic per riprovare.",
   "failedTooltipDescription": "Clicca per riprovare a caricare i dati.",
   "host": "Host",
@@ -42,5 +42,6 @@
   "lastTestStatusValues": {
     "ok": "OK",
     "failed": "Non riuscito"
-  }
+  },
+  "mailServer": "Server di posta"
 }

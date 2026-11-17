@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
-  "title": "Server di posta in uscita",
+  "title": "Server di posta",
   "description": "I server della piattaforma inviano le e-mail di tutte le aziende, a nome di ciascuna, e le risposte tornano all'azienda. Si prova prima la priorità più bassa.",
   "ownServersDescription": "I tuoi server inviano le campagne di questa azienda dal tuo indirizzo. Tutte le altre e-mail passano dai server della piattaforma, a nome della tua azienda.",
   "help": {
-    "ariaLabel": "Informazioni su Server di posta in uscita",
-    "title": "Informazioni su Server di posta in uscita",
+    "ariaLabel": "Informazioni sui server di posta",
+    "title": "Informazioni sui server di posta",
     "overview": "Questi server consegnano le e-mail di tutte le aziende: notifiche, e-mail di ordini e fatture, reimpostazioni della password. L'e-mail di un'azienda parte come «Nome azienda <il tuo indirizzo mittente>», con la risposta indirizzata all'azienda, così si risponde all'azienda e non alla piattaforma. I nuovi server partono inattivi; attivane uno solo dopo un test di connessione riuscito.",
     "sections": [
       {
@@ -27,8 +27,8 @@
     ]
   },
   "ownServersHelp": {
-    "ariaLabel": "Informazioni su Server di posta in uscita",
-    "title": "Informazioni su Server di posta in uscita",
+    "ariaLabel": "Informazioni sui server di posta",
+    "title": "Informazioni sui server di posta",
     "overview": "I server aggiunti qui inviano le campagne di questa azienda dal tuo indirizzo. Le e-mail di tutti i giorni (notifiche, fatture, reimpostazioni della password) passano sempre dai server della piattaforma, a nome della tua azienda, con le risposte alla tua azienda. Se nessuno dei tuoi server è attivo, anche le campagne passano dai server della piattaforma. I nuovi server partono inattivi; attivane uno solo dopo un test di connessione riuscito.",
     "sections": [
       {
@@ -49,11 +49,11 @@
       }
     ]
   },
-  "createSmtpServer": "Aggiungi il server SMTP",
+  "createSmtpServer": "Aggiungi il server di posta",
   "searchPlaceholder": "Cerca per nome o host...",
-  "noData": "Nessun server SMTP configurato",
-  "failTitle": "Impossibile caricare i server SMTP",
-  "failDescription": "Si è verificato un errore durante il caricamento dei server SMTP. Per favore riprova.",
+  "noData": "Nessun server di posta configurato",
+  "failTitle": "Impossibile caricare i server di posta",
+  "failDescription": "Si è verificato un errore durante il caricamento dei server di posta. Per favore riprova.",
   "name": "Nome",
   "host": "Host",
   "sequence": "Priorità",

@@ -49,5 +49,6 @@
       "timeout": "Timed out",
       "cancelled": "Cancelled"
     }
-  }
+  },
+  "scheduledAction": "Scheduled action"
 }

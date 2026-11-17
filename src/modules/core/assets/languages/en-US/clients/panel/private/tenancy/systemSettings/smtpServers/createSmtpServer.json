@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/createSmtpServer.tsx",
-  "title": "Add SMTP server",
+  "title": "Add mail server",
   "description": "Outgoing mail is sent using active servers in priority order (lowest sequence first).",
   "form": {
     "nameLabel": "Name",
@@ -36,7 +36,7 @@
     "senderSectionTitle": "Sender"
   },
   "formHeader": {
-    "title": "Add SMTP server",
+    "title": "Add mail server",
     "description": "Outgoing mail is sent using active servers in priority order (lowest sequence first)."
   },
   "formButtons": {

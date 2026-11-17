@@ -8,7 +8,7 @@
   "encryption": "Verschlüsselung",
   "fromEmail": "Absender-E-Mail",
   "deleted": "Gelöscht",
-  "failedTitle": "SMTP-Server konnte nicht geladen werden",
+  "failedTitle": "Mailserver konnte nicht geladen werden",
   "failedDescription": "Tippen, um es erneut zu versuchen.",
   "inactive": "Inaktiv"
 }

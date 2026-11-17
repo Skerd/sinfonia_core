@@ -26,7 +26,8 @@ function EditUserAction({user, resolveLanguageKey, specificUserId, onEdit}: Edit
     if (!write) return <HiddenElement />;
 
     return (
-        <DropdownMenuItem onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleEdit(); }}>
+        // Selecting closes the menu before the edit sheet opens; preventing the click's default kept it open on top.
+        <DropdownMenuItem onClick={(e) => e.stopPropagation()} onSelect={handleEdit}>
             <IconUserEdit size={16} />
             <p>{resolveLanguageKey("editProfile")}</p>
             <DropdownMenuShortcut>⌘{shortcut}</DropdownMenuShortcut>

@@ -6,6 +6,18 @@
   "code": "Code",
   "handler": "Gestionnaire",
   "cronExpression": "Expression Cron",
+  "schedule": "Planification",
+  "scheduleText": {
+    "everyNSeconds": "Toutes les {n} secondes",
+    "everyMinute": "Chaque minute",
+    "everyNMinutes": "Toutes les {n} minutes",
+    "hourly": "Toutes les heures à :{minute}",
+    "everyNHours": "Toutes les {n} heures à :{minute}",
+    "daily": "Tous les jours à {time}",
+    "weekdays": "En semaine à {time}",
+    "weekly": "Chaque {weekday} à {time}",
+    "monthly": "Tous les mois le {day} à {time}"
+  },
   "description": "Description",
   "priority": "Priorité",
   "pausedAt": "En pause depuis",

@@ -32,6 +32,15 @@
       },
       "apps": {
         "title": "Aplikacionet e lidhura"
+      },
+      "addresses": {
+        "title": "Adresat"
+      },
+      "savedsearches": {
+        "title": "Kërkimet e ruajtura"
+      },
+      "providerprofile": {
+        "title": "Profili i ofruesit"
       }
     },
     "tenancy": {

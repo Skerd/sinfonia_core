@@ -1,11 +1,11 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
-  "title": "Serverët SMTP",
+  "title": "Serverët e postës",
   "description": "Serverat e platformës dërgojnë email-et e të gjitha kompanive, në emër të secilës, dhe përgjigjet shkojnë tek ajo. Provohet së pari prioriteti më i ulët.",
   "ownServersDescription": "Serverat tuaj dërgojnë fushatat e kësaj kompanie nga adresa juaj. Të gjitha email-et e tjera kalojnë nga serverat e platformës, në emër të kompanisë suaj.",
   "help": {
-    "ariaLabel": "Rreth serverëve SMTP",
-    "title": "Rreth serverëve SMTP",
+    "ariaLabel": "Rreth serverëve të postës",
+    "title": "Rreth serverëve të postës",
     "overview": "Këta servera dorëzojnë email-et e të gjitha kompanive: njoftime, email-e porosish dhe faturash, rivendosje fjalëkalimi. Email-i i një kompanie niset si \"Emri i kompanisë <adresa juaj e dërguesit>\", me Reply-To te kompania, që njerëzit t'i përgjigjen kompanisë, jo platformës. Serverat e rinj nisin joaktivë; aktivizoni një vetëm pas një testi të suksesshëm lidhjeje.",
     "sections": [
       {
@@ -27,8 +27,8 @@
     ]
   },
   "ownServersHelp": {
-    "ariaLabel": "Rreth serverëve SMTP",
-    "title": "Rreth serverëve SMTP",
+    "ariaLabel": "Rreth serverëve të postës",
+    "title": "Rreth serverëve të postës",
     "overview": "Serverat që shtoni këtu dërgojnë fushatat e kësaj kompanie nga adresa juaj. Email-et e përditshme (njoftime, fatura, rivendosje fjalëkalimi) kalojnë gjithmonë nga serverat e platformës, në emër të kompanisë suaj, me përgjigjet te kompania juaj. Nëse asnjë nga serverat tuaj nuk është aktiv, edhe fushatat kalojnë nga serverat e platformës. Serverat e rinj nisin joaktivë; aktivizoni një vetëm pas një testi të suksesshëm lidhjeje.",
     "sections": [
       {
@@ -49,10 +49,10 @@
       }
     ]
   },
-  "createSmtpServer": "Shto server SMTP",
+  "createSmtpServer": "Shto server poste",
   "searchPlaceholder": "Kërko sipas emrit ose hostit...",
-  "noData": "Nuk ka serverë SMTP",
-  "failTitle": "Ngarkimi i serverëve SMTP dështoi",
+  "noData": "Nuk ka serverë poste",
+  "failTitle": "Ngarkimi i serverëve të postës dështoi",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit. Provoni përsëri.",
   "name": "Emri",
   "host": "Hosti",

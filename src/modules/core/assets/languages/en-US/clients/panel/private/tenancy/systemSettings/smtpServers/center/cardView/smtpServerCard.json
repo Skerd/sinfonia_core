@@ -8,7 +8,7 @@
   "encryption": "Encryption",
   "fromEmail": "From email",
   "deleted": "Deleted",
-  "failedTitle": "Failed to load SMTP server",
+  "failedTitle": "Failed to load mail server",
   "failedDescription": "Tap to retry.",
   "inactive": "Inactive"
 }

@@ -7,7 +7,8 @@ import {cronJobEditPath} from "../../cronJobPaths.ts";
 import EntityCardRow from "@coreModule/components/entityPage/list/card/entityCardRow.tsx";
 import DisplayValue from "@coreModule/components/viewEngine/widgets/display/displayValue.tsx";
 import CopyTooltip from "@coreModule/components/custom/copyTooltip.tsx";
-import {IconCalendarClock, IconClock, IconCode, IconHistory} from "@tabler/icons-react";
+import {IconCalendarClock, IconClock, IconHistory} from "@tabler/icons-react";
+import {describeCronSchedule} from "../cronSchedule.ts";
 import CronJobSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cronJobs/center/sheetView/cronJobSheetView.tsx";
 import EntityCard from "@coreModule/components/entityPage/list/card/entityCard.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -121,19 +122,13 @@ function CronJobCard({job, resolveLanguageKey, onDelete, onRestore, onModifySucc
                     </EntityCard.Header>
                     <Separator className="-mx-(--density-pad) w-auto self-stretch" />
                     <EntityCard.Body className={CARD_INFO_ROWS_TWO_COL_CLASS}>
-                        <EntityCardRow
-                            icon={IconCode}
-                            label={resolveLanguageKey("handler")}
-                            tooltip={resolveLanguageKey("handler")}
-                            path="handler"
-                            value={entity.handler}
-                        />
+                        {/* A readable schedule; the expression stays in its tooltip and the handler key on the sheet (TD-F118). */}
                         <EntityCardRow
                             icon={IconClock}
-                            label={resolveLanguageKey("cronExpression")}
-                            tooltip={resolveLanguageKey("cronExpression")}
+                            label={resolveLanguageKey("schedule")}
+                            tooltip={entity.cronExpression}
                             path="cronExpression"
-                            value={entity.cronExpression}
+                            value={describeCronSchedule(entity.cronExpression, resolveLanguageKey)}
                         />
                         <EntityCardRow
                             icon={IconCalendarClock}

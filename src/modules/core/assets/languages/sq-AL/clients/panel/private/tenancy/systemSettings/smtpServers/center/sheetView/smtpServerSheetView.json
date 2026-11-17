@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/center/sheetView/smtpServerSheetView.tsx",
-  "failedTitle": "Ngarkimi i serverit SMTP dështoi",
+  "failedTitle": "Ngarkimi i serverit të postës dështoi",
   "failedDescription": "Diçka shkoi keq gjatë ngarkimit. Klikoni për të riprovuar.",
   "failedTooltipDescription": "Klikoni për të provuar përsëri marrjen e të dhënave.",
   "host": "Hosti",
@@ -42,5 +42,6 @@
   "lastTestStatusValues": {
     "ok": "OK",
     "failed": "Dështoi"
-  }
+  },
+  "mailServer": "Server poste"
 }

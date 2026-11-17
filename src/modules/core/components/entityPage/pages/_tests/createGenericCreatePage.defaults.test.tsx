@@ -28,6 +28,11 @@ vi.mock("@coreModule/helpers/hooks/useViewConfig.ts", () => ({
     useViewConfigState: () => ({config: {nodes: []}, loading: false}),
 }));
 // UTC+14: at noon UTC it is already the next calendar day there.
+// A builder also gets the signed-in user (TD-F114).
+vi.mock("react-redux", async (original) => ({
+    ...(await original<object>()),
+    useSelector: (pick: (state: unknown) => unknown) => pick({authentication: {user: {id: "u1", name: "Arta", surname: "Hoxha", email: "arta@example.com", company: {}}}}),
+}));
 vi.mock("@coreModule/helpers/hooks/useCompanyTimeZone.ts", () => ({
     useCompanyTimeZone: () => "Pacific/Kiritimati",
 }));

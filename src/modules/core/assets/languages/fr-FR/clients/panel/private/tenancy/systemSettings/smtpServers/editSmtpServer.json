@@ -1,10 +1,10 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/editSmtpServer.tsx",
-  "title": "Modifier le serveur SMTP",
+  "title": "Modifier le serveur mail",
   "description": "Laissez le mot de passe vide pour conserver le mot de passe actuel.",
-  "errorTitle": "Échec du chargement du serveur SMTP",
+  "errorTitle": "Échec du chargement du serveur mail",
   "errorDescription": "Veuillez cliquer ici pour réessayer de récupérer les données du serveur.",
-  "noId": "Aucun serveur SMTP sélectionné.",
+  "noId": "Aucun serveur mail sélectionné.",
   "backToList": "Retour à la liste",
   "form": {
     "nameLabel": "Nom",
@@ -40,7 +40,7 @@
     "senderSectionTitle": "Expéditeur"
   },
   "formHeader": {
-    "title": "Modifier le serveur SMTP",
+    "title": "Modifier le serveur mail",
     "description": "Laissez le mot de passe vide pour conserver le mot de passe actuel."
   },
   "formButtons": {

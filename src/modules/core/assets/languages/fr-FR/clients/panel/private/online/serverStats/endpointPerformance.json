@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/online/serverStats/endpointPerformance.tsx",
-  "lastUpdated": " Dernière mise à jour :",
+  "lastUpdated": "Dernière mise à jour",
   "endpointPerformanceTitle": "Performances des points de terminaison",
   "waitingForPerformanceData": "En attente des données de performances...",
   "endpointsTracked": "Points de terminaison suivis",

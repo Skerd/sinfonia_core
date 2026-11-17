@@ -19,5 +19,6 @@
       "title": "La langue n’a pas pu être mise à jour",
       "time": 3000
     }
-  }
+  },
+  "descriptionOthers": "Les SMS et les notifications WhatsApp et Telegram sont envoyés à cette personne dans cette langue. Elle seule peut la modifier."
 }

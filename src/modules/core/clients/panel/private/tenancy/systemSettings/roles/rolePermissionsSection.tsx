@@ -80,8 +80,11 @@ function RolePermissionsSection({editedRole: role, editable, loading = false, re
         return resolved;
     }, [catalog, permissions]);
 
-    const handlePermissionSelect = useCallback((permissionId: string, selected: boolean) => {
-        form.setValue("permissions", {...form.getValues("permissions"), [permissionId]: selected}, {shouldDirty: true});
+    // One change for a whole row, column or model (TD-F111), so a model's hundreds of fields re-render once.
+    const handlePermissionsSelect = useCallback((permissionIds: string[], selected: boolean) => {
+        const record = {...form.getValues("permissions")};
+        for (const id of permissionIds) record[id] = selected;
+        form.setValue("permissions", record, {shouldDirty: true});
     }, [form]);
 
     const applyTemplate = (value: string) => {
@@ -131,7 +134,7 @@ function RolePermissionsSection({editedRole: role, editable, loading = false, re
                 permissions={resolvedPermissions}
                 editable={editable}
                 parentLoading={loading}
-                onPermissionSelect={handlePermissionSelect}
+                onPermissionsSelect={handlePermissionsSelect}
                 forNewRole={!role}
             />
         );

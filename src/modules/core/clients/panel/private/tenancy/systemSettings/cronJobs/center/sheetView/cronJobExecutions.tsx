@@ -59,7 +59,7 @@ export default function CronJobExecutions({jobId, resolveLanguageKey, refreshNon
     if (!canRead) return null;
 
     const rk = (key: string) => String(resolveLanguageKey(`executions.${key}`));
-    const at = (value: string) => formatDate(value, {timeZone: timezone, format: DATE_FORMATS.dateTime});
+    const at = (value: string) => formatDate(value, {timeZone: timezone, format: DATE_FORMATS.mediumDateTime});
 
     return (
         <SheetGroup

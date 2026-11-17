@@ -5,5 +5,13 @@
   "loading": "Chargement...",
   "noNotifications": "Aucune notification",
   "viewAll": "Tout voir",
-  "system": "Système"
+  "system": "Système",
+  "categories": {
+    "financial": "Paiements",
+    "social": "Interactions",
+    "system": "Système",
+    "security": "Sécurité",
+    "company": "Entreprise",
+    "chat": "Discussion"
+  }
 }

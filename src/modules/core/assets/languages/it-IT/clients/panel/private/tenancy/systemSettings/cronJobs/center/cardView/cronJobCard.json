@@ -6,6 +6,18 @@
   "code": "Codice",
   "handler": "Gestore",
   "cronExpression": "Espressione cron",
+  "schedule": "Pianificazione",
+  "scheduleText": {
+    "everyNSeconds": "Ogni {n} secondi",
+    "everyMinute": "Ogni minuto",
+    "everyNMinutes": "Ogni {n} minuti",
+    "hourly": "Ogni ora al minuto {minute}",
+    "everyNHours": "Ogni {n} ore al minuto {minute}",
+    "daily": "Ogni giorno alle {time}",
+    "weekdays": "Nei giorni feriali alle {time}",
+    "weekly": "Ogni {weekday} alle {time}",
+    "monthly": "Ogni mese il giorno {day} alle {time}"
+  },
   "description": "Descrizione",
   "priority": "Priorità",
   "pausedAt": "In pausa dal",

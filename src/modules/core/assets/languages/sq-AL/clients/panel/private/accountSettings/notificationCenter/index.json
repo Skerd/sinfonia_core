@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/accountSettings/notificationCenter/index.tsx",
-  "title": "Qendra e njoftimeve",
+  "title": "Aktiviteti",
   "description": "Shikoni dhe menaxhoni njoftimet tuaja",
   "unreadOnly": "Vetëm të palexuarat",
   "failTitle": "Ngarkimi i njoftimit dështoi",
@@ -9,5 +9,13 @@
   "noNotifications": "Nuk ka njoftime",
   "error": "Ngarkimi i njoftimeve dështoi",
   "loadMore": "Ngarko më shumë",
-  "system": "Sistemi"
+  "system": "Sistemi",
+  "categories": {
+    "financial": "Pagesa",
+    "social": "Sociale",
+    "system": "Sistemi",
+    "security": "Siguria",
+    "company": "Kompania",
+    "chat": "Biseda"
+  }
 }

@@ -6,6 +6,18 @@
   "code": "Kodi",
   "handler": "Trajtuesi",
   "cronExpression": "Shprehje cron",
+  "schedule": "Orari",
+  "scheduleText": {
+    "everyNSeconds": "Çdo {n} sekonda",
+    "everyMinute": "Çdo minutë",
+    "everyNMinutes": "Çdo {n} minuta",
+    "hourly": "Çdo orë në minutën {minute}",
+    "everyNHours": "Çdo {n} orë në minutën {minute}",
+    "daily": "Çdo ditë në {time}",
+    "weekdays": "Ditëve të punës në {time}",
+    "weekly": "Çdo {weekday} në {time}",
+    "monthly": "Çdo muaj më {day} në {time}"
+  },
   "description": "Përshkrimi",
   "priority": "Prioriteti",
   "pausedAt": "Ndaluar më",

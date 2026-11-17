@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/createSmtpServer.tsx",
-  "title": "SMTP-Server hinzufügen",
+  "title": "Mailserver hinzufügen",
   "description": "Ausgehende E-Mails werden über aktive Server in der Reihenfolge ihrer Priorität gesendet (niedrigste Reihenfolge zuerst).",
   "form": {
     "nameLabel": "Name",
@@ -36,7 +36,7 @@
     "senderSectionTitle": "Absender"
   },
   "formHeader": {
-    "title": "SMTP-Server hinzufügen",
+    "title": "Mailserver hinzufügen",
     "description": "Ausgehende E-Mails werden über aktive Server in der Reihenfolge ihrer Priorität gesendet (niedrigste Reihenfolge zuerst)."
   },
   "formButtons": {

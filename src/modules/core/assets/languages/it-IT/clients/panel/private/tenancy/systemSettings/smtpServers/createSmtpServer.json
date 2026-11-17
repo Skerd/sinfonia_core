@@ -1,6 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/createSmtpServer.tsx",
-  "title": "Aggiungi il server SMTP",
+  "title": "Aggiungi il server di posta",
   "description": "La posta in uscita viene inviata utilizzando i server attivi in ordine di priorità (prima la sequenza più bassa).",
   "form": {
     "nameLabel": "Nome",
@@ -36,7 +36,7 @@
     "senderSectionTitle": "Mittente"
   },
   "formHeader": {
-    "title": "Aggiungi il server SMTP",
+    "title": "Aggiungi il server di posta",
     "description": "La posta in uscita viene inviata utilizzando i server attivi in ordine di priorità (prima la sequenza più bassa)."
   },
   "formButtons": {
