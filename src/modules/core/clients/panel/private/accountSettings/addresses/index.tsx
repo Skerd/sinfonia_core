@@ -30,20 +30,19 @@ function applySetDefaultToList(
     });
 }
 
-type AllUserAddressesProps = WithLanguageType & {
-    /** The user whose book an admin opened from their account sheet; the server reads it as that user's (D163). */
-    specificUserId?: string;
-};
+type AllUserAddressesProps = WithLanguageType;
 
-/** A person's address book (D163): the server only ever returns the person's own addresses, whichever site they use. */
-function AllUserAddresses({resolveLanguageKey, specificUserId}: AllUserAddressesProps) {
+/**
+ * A person's address book (D163): the server only ever returns the signed-in person's own addresses, whichever site
+ * they use. Only their own account settings show it; an admin viewing someone else's settings does not get this tab.
+ */
+function AllUserAddresses({resolveLanguageKey}: AllUserAddressesProps) {
     return (
         <EntityListPage<UserAddress>
             apiUrl="/api/user/userAddress"
             collectionName="userAddresses"
             accessModel="userAddresses"
             tableConfigKey="userAddresses"
-            selfAccess={!specificUserId}
             header={(ctx) => (
                 <EntityListHeader ctx={ctx}>
                     <EntityListCreateButton

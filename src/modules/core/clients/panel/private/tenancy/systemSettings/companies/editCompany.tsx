@@ -26,6 +26,7 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormType>({
         facebook:       writeFields.facebook       ? companyData.facebook       : undefined,
         vat:            writeFields.vat            ? companyData.vat            : undefined,
         siteSlug:       writeFields.siteSlug       ? companyData.siteSlug       : undefined,
+        timezone:       writeFields.timezone       ? companyData.timezone       : undefined,
         shopListedOnPortal: writeFields.shopListedOnPortal ? companyData.shopListedOnPortal ?? false : undefined,
         description:    writeFields.description    ? companyData.description    : undefined,
         allowedDomains: writeFields.allowedDomains ? companyData.allowedDomains || [] : undefined,
@@ -68,6 +69,8 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormType>({
             facebook:       data.facebook,
             vat:            data.vat,
             siteSlug:       data.siteSlug,
+            // An emptied zone is sent as "" so the server clears it and the instance's zone applies (D91).
+            timezone:       data.timezone,
             shopListedOnPortal: data.shopListedOnPortal,
             parentCompany:  data.parentCompany,
             allowedDomains: data.allowedDomains || [],

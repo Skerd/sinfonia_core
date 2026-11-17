@@ -105,9 +105,10 @@ function AccountSettings({
                 href: specificUserId ? "apps" : '/account/apps',
                 icon: <IconBoxMultiple size={18} />,
             }] : []),
-            ...(readAddresses !== false ? [{
+            // A person's address book is theirs alone (D163): staff read a buyer's addresses through the order, never here.
+            ...(!specificUserId && readAddresses !== false ? [{
                 title: resolveLanguageKey("addresses"),
-                href: specificUserId ? "addresses" : '/account/addresses',
+                href: '/account/addresses',
                 icon: <IconMapPin size={18} />,
             }] : []),
             ...visiblePages.map((page) => ({
@@ -183,7 +184,7 @@ function AccountSettings({
                         : activeTab === "notificationCenter" ? <NotificationCenter specificUserId={specificUserId} />
                         : activeTab === "notifications" ? <NotificationsForm specificUserId={specificUserId} />
                         : activeTab === "apps" ? <ConnectedApps specificUserId={specificUserId} />
-                        : activeTab === "addresses" ? <AllUserAddresses specificUserId={specificUserId} />
+                        : activeTab === "addresses" && !specificUserId ? <AllUserAddresses />
                         : visiblePages.some((page) => page.id === activeTab) ? visiblePages.map((page) => (
                             activeTab === page.id ? <div key={page.id} className="flex min-h-0 flex-1 flex-col overflow-hidden">{page.render()}</div> : null
                         ))

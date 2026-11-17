@@ -14,7 +14,7 @@
     "siteSlugLabel": "Slug du site",
     "siteSlugPlaceholder": "my-company",
     "timezoneLabel": "Fuseau horaire",
-    "timezonePlaceholder": "Europe/Zurich",
+    "timezonePlaceholder": "Choisir un fuseau horaire",
     "emailLabel": "E-mail",
     "emailPlaceholder": "E-mail",
     "phoneNumberNumberLabel": "Numéro de téléphone",

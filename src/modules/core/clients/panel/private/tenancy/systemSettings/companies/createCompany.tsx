@@ -19,6 +19,7 @@ export default createGenericCreatePage<CreateCompanyFormType>({
         const postBody: CreateCompanyFormType = {
             name:           data.name,
             siteSlug:       data.siteSlug,
+            timezone:       data.timezone,
             email:          data.email,
             phoneNumber:    data.phoneNumber,
             addresses:      (data.addresses || []).map((address) => ({

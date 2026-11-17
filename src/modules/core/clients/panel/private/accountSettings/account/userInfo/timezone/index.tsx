@@ -1,9 +1,9 @@
 import {IconPencil} from "@tabler/icons-react";
 import {compose} from "redux";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import timezones from "timezones.json";
+import {TIME_ZONE_OPTIONS} from "armonia/src/modules/core/helpers/timeZoneOptions.ts";
 import {UserProfileTimezoneFormResponseType} from "armonia/src/modules/core/api/user/private/data/userProfileTimezone.form.response.type.ts";
 import {useDispatch} from "react-redux";
 import {updateTimezone} from "@coreModule/helpers/redux/slices/authSlice.ts";
@@ -68,26 +68,7 @@ function AccountProfileTimeZone({
         }
     }, [data]);
 
-    const timezoneSelectItems = useMemo(() => {
-        if (!timezones) return;
-        const seen = new Set<string>();
-        const returnThis: SimpleSelectOption[] = [];
-        timezones.sort((a, b) => a.offset - b.offset).forEach((timezone) => {
-            const indexOf = timezone.text.indexOf(") ");
-            const offsetText = timezone.text.substring(0, indexOf + 1);
-
-            timezone.utc.forEach((utc) => {
-                if (seen.has(utc)) return; // skip duplicates
-                seen.add(utc);
-                returnThis.push({
-                    value: utc,
-                    label:  offsetText + " " + utc
-                });
-            });
-        });
-        return returnThis;
-
-    }, [])
+    const timezoneSelectItems: SimpleSelectOption[] = TIME_ZONE_OPTIONS;
 
     if( loading ){
         return <Loader />
@@ -112,7 +93,7 @@ function AccountProfileTimeZone({
         setEditing(false);
     };
 
-    const timezoneLabel = timezoneSelectItems?.find((option) => option.value === currentTimeZone)?.label ?? currentTimeZone;
+    const timezoneLabel = timezoneSelectItems.find((option) => option.value === currentTimeZone)?.label ?? currentTimeZone;
     const display = (
         <div className="flex flex-col gap-1">
             {currentTimeZone
