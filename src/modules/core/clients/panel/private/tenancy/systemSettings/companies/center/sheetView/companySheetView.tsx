@@ -9,6 +9,10 @@ import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSet
 import DeactivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx";
 import ActivateCompanyDialog from "../dialogs/activateCompanyDialog.tsx";
 import DeactivateCompanyDialog from "../dialogs/deactivateCompanyDialog.tsx";
+import ManageModules from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/manageModules.tsx";
+import SetPortalVisibility from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/setPortalVisibility.tsx";
+import ManageModulesDialog from "../dialogs/manageModulesDialog.tsx";
+import SetPortalVisibilityDialog from "../dialogs/setPortalVisibilityDialog.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 
 export type CompanySheetViewOwnProps = {
@@ -22,6 +26,8 @@ export type CompanySheetViewOwnProps = {
     hideEdit?: boolean;
     onActivateSuccess?: () => void;
     onDeactivateSuccess?: () => void;
+    /** A sheet action changed the company (its modules, its portal visibility): the list updates its row. */
+    onCompanyPatched?: (patch: Partial<Company>) => void;
 };
 
 function companyEditPath(c: Company) {
@@ -41,6 +47,7 @@ function CompanySheetView({
     hideEdit = false,
     onActivateSuccess,
     onDeactivateSuccess,
+    onCompanyPatched,
 }: CompanySheetViewOwnProps & WithLanguageType) {
     const access = useAccess("companies");
     const viewConfig = useViewConfig("companies", "sheet");
@@ -59,6 +66,10 @@ function CompanySheetView({
 
     if (!viewConfig) return null;
     const company = sheetData as Company;
+    const patchCompany = (patch: Partial<Company>) => {
+        setSheetData((prev) => ({...prev, ...patch}));
+        onCompanyPatched?.(patch);
+    };
 
     return (
         <>
@@ -82,6 +93,9 @@ function CompanySheetView({
                     <>
                         <ActivateCompany company={company} onAction={(a: string) => setAction(a)} />
                         <DeactivateCompany company={company} onAction={(a: string) => setAction(a)} />
+                        {/* The same platform actions as the list's row and card menus (TD-F112). */}
+                        <ManageModules company={company} onAction={(a: string) => setAction(a)} />
+                        <SetPortalVisibility company={company} onAction={(a: string) => setAction(a)} />
                     </>
                 }
             />
@@ -100,6 +114,22 @@ function CompanySheetView({
                     onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
                     company={company}
                     onSuccess={onDeactivateSuccess}
+                />
+            )}
+            {action === "manageModules" && (
+                <ManageModulesDialog
+                    open
+                    onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
+                    company={company}
+                    onSuccess={(modules) => patchCompany({modules})}
+                />
+            )}
+            {action === "setPortalVisibility" && (
+                <SetPortalVisibilityDialog
+                    open
+                    onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
+                    company={company}
+                    onSuccess={(hiddenFromPortal) => patchCompany({hiddenFromPortal})}
                 />
             )}
         </>
