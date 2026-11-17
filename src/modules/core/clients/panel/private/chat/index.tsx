@@ -49,7 +49,8 @@ function Chat({resolveLanguageKey, websiteChannels}: ChatProps){
     const isWebsiteInbox = !!websiteChannels;
     const peeking = isPeekingWebsiteChannel(openedChannel, userId);
     const room = isWebsiteInbox ? "websiteChats" : "allChats";
-    const openChannelId = isWebsiteInbox ? searchParams.get("channelId")?.trim() || null : null;
+    // Any inbox opens a channel from `?channelId` (a mention notice links to the team chat too, TD-F133).
+    const openChannelId = searchParams.get("channelId")?.trim() || null;
 
     useWebSocketRoom(room);
 
