@@ -189,7 +189,10 @@ function ActionMenu({
                 <DropdownMenuContent
                     key={contextMenuPositionNonce}
                     className="w-fit"
-                    align="start"
+                    // The ⋮ sits at the right of a row, card or sheet: open towards the page, not past its edge
+                    // (TD-F128). A right-click menu opens at the pointer instead.
+                    align={contextPointer ? "start" : "end"}
+                    collisionPadding={8}
                     sideOffset={pointerPopperShift?.sideOffset ?? 4}
                     alignOffset={pointerPopperShift?.alignOffset ?? 0}
                     avoidCollisions={!contextPointer}
