@@ -1,10 +1,9 @@
 import {IconBuildingCommunity} from "@tabler/icons-react";
-import {useEffect} from "react";
-import type {UseFormReturn} from "react-hook-form";
 import {createGenericCreatePage} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
+import {PrefillSlug} from "@coreModule/components/entityPage/pages/prefillSlug.tsx";
 import {createCompanyFormSchema} from "armonia/src/modules/core/api/company/private/company/createCompany.form.validator.ts";
 import type {CreateCompanyFormType} from "armonia/src/modules/core/api/company/private/company/company.schema-def.ts";
-import {slugifySiteSlug} from "armonia/src/modules/core/api/company/private/company/siteSlug.ts";
+import {SITE_SLUG_MAX} from "armonia/src/modules/core/api/company/private/company/siteSlug.ts";
 
 export default createGenericCreatePage<CreateCompanyFormType>({
     languagePath: "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/createCompany.tsx",
@@ -14,7 +13,7 @@ export default createGenericCreatePage<CreateCompanyFormType>({
     schema: createCompanyFormSchema,
     defaultValues: {name: "", vat: "", siteSlug: ""},
     submitIcon: <IconBuildingCommunity />,
-    renderChildren: (form) => <PrefillSiteSlug form={form} />,
+    renderChildren: (form) => <PrefillSlug form={form} from="name" to="siteSlug" max={SITE_SLUG_MAX} />,
     mapSubmitPayload: (data) => {
         const postBody: CreateCompanyFormType = {
             name:           data.name,
@@ -42,17 +41,3 @@ export default createGenericCreatePage<CreateCompanyFormType>({
         return formData;
     },
 });
-
-function PrefillSiteSlug({form}: {form: UseFormReturn<CreateCompanyFormType>}) {
-    const name = form.watch("name");
-    const siteSlugDirty = form.formState.dirtyFields.siteSlug;
-
-    useEffect(() => {
-        if (siteSlugDirty) {
-            return;
-        }
-        form.setValue("siteSlug", slugifySiteSlug(name ?? ""), {shouldDirty: false, shouldValidate: false});
-    }, [form, name, siteSlugDirty]);
-
-    return null;
-}
