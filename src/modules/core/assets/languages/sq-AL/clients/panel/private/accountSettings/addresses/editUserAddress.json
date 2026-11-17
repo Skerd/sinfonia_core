@@ -1,0 +1,62 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/editUserAddress.tsx",
+  "title": "Ndrysho adresën",
+  "errorTitle": "Ngarkimi i adresës dështoi",
+  "errorDescription": "Adresa nuk u ngarkua. Provoni përsëri.",
+  "form": {
+    "recipientSectionTitle": "Marrësi",
+    "addressSectionTitle": "Adresa",
+    "_idLabel": "ID e regjistrimit",
+    "typeLabel": "Lloji",
+    "addressType": {
+      "billing": "Faturim",
+      "shipping": "Dërgesë"
+    },
+    "firstNameLabel": "Emri i marrësit",
+    "firstNamePlaceholder": "Emri në paketë",
+    "lastNameLabel": "Mbiemri i marrësit",
+    "lastNamePlaceholder": "Mbiemri në paketë",
+    "streetLabel": "Rruga",
+    "streetPlaceholder": "Adresa e rrugës",
+    "cityLabel": "Qyteti",
+    "cityPlaceholder": "Zgjidh qytetin",
+    "stateLabel": "Rajoni",
+    "statePlaceholder": "Zgjidh rajonin",
+    "postalCodeLabel": "Kodi postar",
+    "postalCodePlaceholder": "Kodi postar",
+    "emailLabel": "Email",
+    "emailPlaceholder": "emri@shembull.com",
+    "phoneLabel": "Telefoni",
+    "phonePlaceholder": "Numri i telefonit",
+    "countryLabel": "Shteti",
+    "countryPlaceholder": "Zgjidh shtetin",
+    "latitudeLabel": "Gjerësia gjeografike",
+    "latitudePlaceholder": "Zgjidhni në hartë",
+    "longitudeLabel": "Gjatësia gjeografike",
+    "longitudePlaceholder": "Zgjidhni në hartë",
+    "labelLabel": "Etiketa",
+    "labelPlaceholder": "Shtëpi, punë, …"
+  },
+  "axios": {
+    "start": {
+      "title": "Duke ruajtur adresën",
+      "time": 3000
+    },
+    "success": {
+      "title": "Adresa u përditësua",
+      "time": 3000
+    },
+    "error": {
+      "title": "Adresa nuk u përditësua",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Ndrysho adresën",
+    "description": "Përditësoni marrësin, vendndodhjen dhe shenjën në hartë."
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Ruaj ndryshimet"
+  }
+}

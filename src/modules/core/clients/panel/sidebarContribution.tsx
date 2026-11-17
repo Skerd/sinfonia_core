@@ -1,4 +1,4 @@
-import {IconBuilding, IconCash, IconFlag, IconMap, IconUserKey, IconMessages, IconUsers, IconUserCog, IconTool, IconBell, IconUserShield, IconSettings, IconGauge, IconBoxMultiple, IconMail, IconMessage, IconWorld, IconUserCheck, IconStopwatch, IconMailCheck, IconBook, IconTags} from "@tabler/icons-react";
+import {IconBuilding, IconCash, IconFlag, IconMap, IconUserKey, IconMessages, IconUsers, IconUserCog, IconTool, IconBell, IconUserShield, IconSettings, IconGauge, IconBoxMultiple, IconMail, IconMessage, IconWorld, IconUserCheck, IconStopwatch, IconMailCheck, IconBook, IconTags, IconMapPin} from "@tabler/icons-react";
 import type {SidebarContribution} from "@coreModule/helpers/types/sidebarContribution.types.ts";
 import type {NavGroup, NavItem, NavSubItem} from "@coreModule/helpers/types/sidebarNav.types.ts";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -132,6 +132,14 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
             url: "/account/apps",
             icon: IconBoxMultiple,
             permissions: ["users"],
+            usersPermissions: [],
+            atLeastOnePermission: true,
+        },
+        {
+            title: resolveLanguageKey("menus.account.accountSettings.addresses.title"),
+            url: "/account/addresses",
+            icon: IconMapPin,
+            permissions: ["userAddresses"],
             usersPermissions: [],
             atLeastOnePermission: true,
         },

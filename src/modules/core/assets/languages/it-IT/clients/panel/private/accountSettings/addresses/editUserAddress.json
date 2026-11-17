@@ -1,0 +1,62 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/editUserAddress.tsx",
+  "title": "Modifica indirizzo",
+  "errorTitle": "Impossibile caricare l'indirizzo",
+  "errorDescription": "Impossibile caricare questo indirizzo. Riprova.",
+  "form": {
+    "recipientSectionTitle": "Destinatario",
+    "addressSectionTitle": "Indirizzo",
+    "_idLabel": "ID record",
+    "typeLabel": "Tipo",
+    "addressType": {
+      "billing": "Fatturazione",
+      "shipping": "Spedizione"
+    },
+    "firstNameLabel": "Nome del destinatario",
+    "firstNamePlaceholder": "Nome sulla confezione",
+    "lastNameLabel": "Cognome del destinatario",
+    "lastNamePlaceholder": "Cognome sulla confezione",
+    "streetLabel": "Via",
+    "streetPlaceholder": "Indirizzo stradale",
+    "cityLabel": "Città",
+    "cityPlaceholder": "Seleziona la città",
+    "stateLabel": "Cantone / Stato",
+    "statePlaceholder": "Seleziona il cantone",
+    "postalCodeLabel": "CAP",
+    "postalCodePlaceholder": "CAP",
+    "emailLabel": "Email",
+    "emailPlaceholder": "nome@esempio.com",
+    "phoneLabel": "Telefono",
+    "phonePlaceholder": "Numero di telefono",
+    "countryLabel": "Paese",
+    "countryPlaceholder": "Seleziona il paese",
+    "latitudeLabel": "Latitudine",
+    "latitudePlaceholder": "Scegli sulla mappa",
+    "longitudeLabel": "Longitudine",
+    "longitudePlaceholder": "Scegli sulla mappa",
+    "labelLabel": "Etichetta",
+    "labelPlaceholder": "Casa, lavoro,…"
+  },
+  "axios": {
+    "start": {
+      "title": "Salvataggio dell'indirizzo",
+      "time": 3000
+    },
+    "success": {
+      "title": "Indirizzo aggiornato",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare l'indirizzo",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Modifica indirizzo",
+    "description": "Aggiorna destinatario, luogo e segnaposto sulla mappa."
+  },
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Salva modifiche"
+  }
+}

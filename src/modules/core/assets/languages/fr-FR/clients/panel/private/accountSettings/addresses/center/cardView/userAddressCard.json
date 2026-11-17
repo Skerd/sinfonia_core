@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/center/cardView/userAddressCard.tsx",
+  "failedTitle": "Échec du chargement de l'adresse",
+  "failedDescription": "Touchez pour réessayer.",
+  "addressType": {
+    "billing": "Facturation",
+    "shipping": "Livraison"
+  },
+  "firstName": "Prénom",
+  "email": "E-mail",
+  "phone": "Téléphone",
+  "defaultAddress": "Par défaut",
+  "notDefault": "Pas par défaut",
+  "address": "Adresse",
+  "user": "Client"
+}

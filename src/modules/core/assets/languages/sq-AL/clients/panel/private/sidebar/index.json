@@ -32,6 +32,9 @@
         },
         "connectedApps": {
           "title": "Aplikacionet e lidhura"
+        },
+        "addresses": {
+          "title": "Adresat"
         }
       }
     },

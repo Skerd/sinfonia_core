@@ -53,7 +53,8 @@
     "Smtpservers": "Serveurs SMTP",
     "States": "États / cantons",
     "Users": "Utilisateurs",
-    "Usersessions": "Sessions utilisateur"
+    "Usersessions": "Sessions utilisateur",
+    "Useraddresses": "Adresses"
   },
   "permissions": {
     "Apiaccesses": {
@@ -721,6 +722,29 @@
       "userAgent": "Agent utilisateur",
       "usersessions": "Sessions utilisateur",
       "revoke": "Révoquer la session"
+    },
+    "Useraddresses": {
+      "city": "Ville",
+      "country": "Pays",
+      "createdAt": "Créé le",
+      "createdBy": "Créé par",
+      "useraddresses": "Adresses",
+      "deletedAt": "Supprimé le",
+      "deletedBy": "Supprimé par",
+      "firstName": "Prénom",
+      "isDefault": "Est par défaut",
+      "label": "Étiquette",
+      "lastName": "Nom de famille",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "phone": "Téléphone",
+      "postalCode": "Code postal",
+      "state": "Région / État",
+      "street": "Rue",
+      "updatedAt": "Mis à jour le",
+      "user": "Utilisateur",
+      "email": "E-mail",
+      "type": "Type d'adresse"
     }
   },
   "commonFields": {

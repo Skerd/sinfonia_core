@@ -32,6 +32,9 @@
         },
         "connectedApps": {
           "title": "Connected apps"
+        },
+        "addresses": {
+          "title": "Addresses"
         }
       }
     },

@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/center/dialogs/setDefaultUserAddressDialog.tsx",
+  "title": "Vendos si adresë e parazgjedhur",
+  "description": "Kjo adresë do të bëhet e parazgjedhur për tipin e saj (dërgesë ose faturim). Parazgjedhja e mëparshme e të njëjtit tip do të hiqet; tipi tjetër mbetet i pandryshuar.",
+  "cancel": "Anulo",
+  "confirm": "Vendos si parazgjedhur",
+  "busy": "Duke punuar…",
+  "axios": {
+    "start": {
+      "title": "Duke vendosur adresën e parazgjedhur…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Adresa e parazgjedhur u përditësua",
+      "time": 3000
+    },
+    "error": {
+      "title": "Adresa e parazgjedhur nuk u vendos",
+      "time": 3000
+    }
+  }
+}

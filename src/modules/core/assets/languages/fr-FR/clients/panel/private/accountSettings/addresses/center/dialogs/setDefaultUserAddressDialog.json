@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/center/dialogs/setDefaultUserAddressDialog.tsx",
+  "title": "Définir comme adresse par défaut",
+  "description": "Cette adresse deviendra l'adresse par défaut pour son type (livraison ou facturation). La précédente adresse par défaut du même type sera effacée ; l'autre type reste inchangé.",
+  "cancel": "Annuler",
+  "confirm": "Définir par défaut",
+  "busy": "En cours…",
+  "axios": {
+    "start": {
+      "title": "Définition de l'adresse par défaut…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Adresse par défaut mise à jour",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossible de définir l'adresse par défaut",
+      "time": 3000
+    }
+  }
+}

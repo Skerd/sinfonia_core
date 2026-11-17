@@ -53,7 +53,8 @@
     "Smtpservers": "SMTP servers",
     "States": "States",
     "Users": "Users",
-    "Usersessions": "User sessions"
+    "Usersessions": "User sessions",
+    "Useraddresses": "Addresses"
   },
   "permissions": {
     "Apiaccesses": {
@@ -721,6 +722,29 @@
       "userAgent": "User agent",
       "usersessions": "User sessions",
       "revoke": "Revoke session"
+    },
+    "Useraddresses": {
+      "city": "City",
+      "country": "Country",
+      "createdAt": "Created at",
+      "createdBy": "Created by",
+      "useraddresses": "Addresses",
+      "deletedAt": "Deleted at",
+      "deletedBy": "Deleted by",
+      "firstName": "First name",
+      "isDefault": "Is default",
+      "label": "Label",
+      "lastName": "Last name",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "phone": "Phone",
+      "postalCode": "Postal code",
+      "state": "State",
+      "street": "Street",
+      "updatedAt": "Updated at",
+      "user": "User",
+      "email": "Email",
+      "type": "Address type"
     }
   },
   "commonFields": {

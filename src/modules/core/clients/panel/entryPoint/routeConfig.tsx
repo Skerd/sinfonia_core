@@ -6,6 +6,8 @@ import type {PublicChatInboxFilter} from "armonia/src/modules/core/api/user/priv
 // Pages load on first visit (D21); the panel shell's Suspense boundary shows the loader.
 const EditCompany = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/companies/editCompany.tsx"));
 const AccountSettings = lazy(() => import("@coreModule/clients/panel/private/accountSettings"));
+const CreateUserAddress = lazy(() => import("@coreModule/clients/panel/private/accountSettings/addresses/createUserAddress.tsx"));
+const EditUserAddress = lazy(() => import("@coreModule/clients/panel/private/accountSettings/addresses/editUserAddress.tsx"));
 const Users = lazy(() => import("@coreModule/clients/panel/private/users"));
 const NotFound = lazy(() => import("@coreModule/components/custom/pages/notFound.tsx"));
 const AllCountries = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries"));
@@ -95,6 +97,11 @@ function renderCoreCenterPanelContent({
 
     // Account routes
     if (menu === "account") {
+        if (subview === "addresses" && segments[2] === "create") return <CreateUserAddress />;
+        if (subview === "addresses" && segments[2] === "edit") {
+            const userAddressId = searchParams.get("userAddressId") || undefined;
+            if (userAddressId) return <EditUserAddress entityId={userAddressId} />;
+        }
         const accountTabs = ["account", "security", "notifications", "notificationCenter", "apps", "addresses", "savedsearches", "providerprofile"];
         if (accountTabs.includes(subview || "")) return <AccountSettings />;
     }

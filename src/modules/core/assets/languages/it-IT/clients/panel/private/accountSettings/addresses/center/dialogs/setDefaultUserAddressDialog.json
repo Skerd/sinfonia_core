@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/center/dialogs/setDefaultUserAddressDialog.tsx",
+  "title": "Imposta come indirizzo predefinito",
+  "description": "Questo indirizzo diventerà quello predefinito per il suo tipo (spedizione o fatturazione). Il precedente predefinito dello stesso tipo verrà cancellato; l'altro tipo resta invariato.",
+  "cancel": "Annulla",
+  "confirm": "Imposta come predefinito",
+  "busy": "Attendere…",
+  "axios": {
+    "start": {
+      "title": "Impostazione dell'indirizzo predefinito...",
+      "time": 3000
+    },
+    "success": {
+      "title": "Indirizzo predefinito aggiornato",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile impostare l'indirizzo predefinito",
+      "time": 3000
+    }
+  }
+}

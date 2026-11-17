@@ -1,0 +1,65 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/index.tsx",
+  "title": "Adressen",
+  "description": "Ihre gespeicherten Liefer- und Rechnungsadressen, auf jeder Website, auf der Sie sich anmelden.",
+  "createUserAddress": "Adresse erstellen",
+  "searchPlaceholder": "Suchen oder Filter hinzufügen...",
+  "fields": {
+    "!enums": {
+      "type": {
+        "billing": "Rechnung",
+        "shipping": "Versand"
+      }
+    },
+    "user": "Kunde",
+    "type": "Typ",
+    "firstName": "Vorname des Empfängers",
+    "lastName": "Nachname des Empfängers",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "street": "Strasse",
+    "city": "Ort",
+    "state": "Kanton",
+    "postalCode": "Postleitzahl",
+    "country": "Land",
+    "latitude": "Breitengrad",
+    "longitude": "Längengrad",
+    "isDefault": "Standard",
+    "label": "Bezeichnung",
+    "createdBy": "Erstellt von",
+    "company": "Firma",
+    "createdAt": "Erstellt am",
+    "updatedAt": "Aktualisiert am",
+    "deletedAt": "Gelöscht am",
+    "deletedBy": "Gelöscht von"
+  },
+  "help": {
+    "ariaLabel": "Über Adressen",
+    "title": "Über Adressen",
+    "overview": "Ihr Adressbuch: Die Liefer- und Rechnungsadressen, die Sie speichern, gehören Ihnen, und jeder Shop und jede Website, auf der Sie sich anmelden, bietet sie an der Kasse an. Ein Shop sieht Ihr Adressbuch nie, nur die Adresse, die Sie für seine Bestellung wählen.",
+    "sections": [
+      {
+        "title": "Felder",
+        "items": [
+          "Typ (Rechnung oder Lieferung), Vor- und Nachname, Strasse, Ort, Land und die Kartenmarkierung sind Pflicht; E-Mail, Telefon, Kanton, Postleitzahl und eine Bezeichnung sind optional.",
+          "Land, Kanton und Postleitzahl sind das, womit die Steuer- und Versandzonen eines Shops an der Kasse abgleichen."
+        ]
+      },
+      {
+        "title": "Standardadressen",
+        "body": "Sie haben höchstens eine Standardadresse pro Typ.",
+        "items": [
+          "Eine neue Standardadresse ersetzt die bisherige desselben Typs.",
+          "Die Kasse bietet die Standardadresse zuerst an."
+        ]
+      },
+      {
+        "title": "Bestellungen behalten ihre eigene Kopie",
+        "items": [
+          "Eine Bestellung kopiert die gewählte Adresse; spätere Änderungen oder Löschungen ändern vergangene Bestellungen nie.",
+          "Eine gelöschte Adresse lässt sich mit Wiederherstellen zurückholen."
+        ]
+      }
+    ]
+  }
+}

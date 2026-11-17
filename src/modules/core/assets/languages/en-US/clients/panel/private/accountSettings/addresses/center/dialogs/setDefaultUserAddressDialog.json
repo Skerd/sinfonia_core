@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/center/dialogs/setDefaultUserAddressDialog.tsx",
+  "title": "Set as default address",
+  "description": "This address will become the default for its type (shipping or billing). The previous default of the same type will be cleared; the other type is unchanged.",
+  "cancel": "Cancel",
+  "confirm": "Set as default",
+  "busy": "Working…",
+  "axios": {
+    "start": {
+      "title": "Setting default address…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Default address updated",
+      "time": 3000
+    },
+    "error": {
+      "title": "Could not set default address",
+      "time": 3000
+    }
+  }
+}

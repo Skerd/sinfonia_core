@@ -1,0 +1,59 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/createUserAddress.tsx",
+  "title": "Créer une adresse",
+  "form": {
+    "recipientSectionTitle": "Destinataire",
+    "addressSectionTitle": "Adresse",
+    "typeLabel": "Type",
+    "addressType": {
+      "billing": "Facturation",
+      "shipping": "Livraison"
+    },
+    "firstNameLabel": "Prénom du destinataire",
+    "firstNamePlaceholder": "Prénom sur le colis",
+    "lastNameLabel": "Nom du destinataire",
+    "lastNamePlaceholder": "Nom de famille sur le colis",
+    "streetLabel": "Rue",
+    "streetPlaceholder": "Adresse postale",
+    "cityLabel": "Ville",
+    "cityPlaceholder": "Sélectionner la ville",
+    "stateLabel": "Région / État",
+    "statePlaceholder": "Sélectionner la région",
+    "postalCodeLabel": "Code postal",
+    "postalCodePlaceholder": "Code postal",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "nom@exemple.com",
+    "phoneLabel": "Téléphone",
+    "phonePlaceholder": "Numéro de téléphone",
+    "countryLabel": "Pays",
+    "countryPlaceholder": "Sélectionner le pays",
+    "latitudeLabel": "Latitude",
+    "latitudePlaceholder": "Choisir sur la carte",
+    "longitudeLabel": "Longitude",
+    "longitudePlaceholder": "Choisir sur la carte",
+    "labelLabel": "Étiquette",
+    "labelPlaceholder": "Maison, travail,…"
+  },
+  "axios": {
+    "start": {
+      "title": "Création d'une adresse",
+      "time": 3000
+    },
+    "success": {
+      "title": "Adresse créée",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossible de créer l'adresse",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Créer une adresse",
+    "description": "Enregistrez un destinataire, un lieu et un repère sur la carte dans votre carnet d'adresses."
+  },
+  "formButtons": {
+    "cancel": "Annuler",
+    "submit": "Créer une adresse"
+  }
+}

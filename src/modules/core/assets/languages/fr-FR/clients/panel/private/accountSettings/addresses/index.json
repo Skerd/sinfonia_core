@@ -1,0 +1,65 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/index.tsx",
+  "title": "Adresses",
+  "description": "Vos adresses de livraison et de facturation enregistrées, sur chaque site où vous vous connectez.",
+  "createUserAddress": "Créer une adresse",
+  "searchPlaceholder": "Rechercher ou ajouter des filtres...",
+  "fields": {
+    "!enums": {
+      "type": {
+        "billing": "Facturation",
+        "shipping": "Livraison"
+      }
+    },
+    "user": "Client",
+    "type": "Type",
+    "firstName": "Prénom du destinataire",
+    "lastName": "Nom du destinataire",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "street": "Rue",
+    "city": "Ville",
+    "state": "Région / État",
+    "postalCode": "Code postal",
+    "country": "Pays",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "isDefault": "Par défaut",
+    "label": "Étiquette",
+    "createdBy": "Créé par",
+    "company": "Entreprise",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "deletedAt": "Supprimé le",
+    "deletedBy": "Supprimé par"
+  },
+  "help": {
+    "ariaLabel": "À propos des adresses",
+    "title": "À propos des adresses",
+    "overview": "Votre carnet d'adresses : les adresses de livraison et de facturation que vous enregistrez vous appartiennent, et chaque boutique et site où vous vous connectez vous les propose au paiement. Une boutique ne voit jamais votre carnet d'adresses, seulement l'adresse que vous choisissez pour sa commande.",
+    "sections": [
+      {
+        "title": "Champs",
+        "items": [
+          "Le type (facturation ou livraison), le prénom et le nom, la rue, la ville, le pays et le repère sur la carte sont obligatoires ; l'e-mail, le téléphone, la région, le code postal et un libellé sont facultatifs.",
+          "Le pays, la région et le code postal sont ce que les zones de taxe et de livraison d'une boutique comparent au paiement."
+        ]
+      },
+      {
+        "title": "Adresses par défaut",
+        "body": "Vous avez au plus une adresse par défaut par type.",
+        "items": [
+          "Choisir une adresse par défaut remplace la précédente du même type.",
+          "Le paiement propose d'abord l'adresse par défaut."
+        ]
+      },
+      {
+        "title": "Les commandes gardent leur propre copie",
+        "items": [
+          "Une commande copie l'adresse choisie : modifier ou supprimer une adresse ensuite ne change jamais les commandes passées.",
+          "Une adresse supprimée peut être rétablie avec Restaurer."
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/index.tsx",
+  "title": "Addresses",
+  "description": "Your saved shipping and billing addresses, on every site you sign in to.",
+  "createUserAddress": "Create address",
+  "searchPlaceholder": "Search or add filters...",
+  "fields": {
+    "!enums": {
+      "type": {
+        "billing": "Billing",
+        "shipping": "Shipping"
+      }
+    },
+    "user": "Customer",
+    "type": "Type",
+    "firstName": "Recipient first name",
+    "lastName": "Recipient last name",
+    "email": "Email",
+    "phone": "Phone",
+    "street": "Street",
+    "city": "City",
+    "state": "State",
+    "postalCode": "Postal code",
+    "country": "Country",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "isDefault": "Default",
+    "label": "Label",
+    "createdBy": "Created by",
+    "company": "Company",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "deletedAt": "Deleted at",
+    "deletedBy": "Deleted by"
+  },
+  "help": {
+    "ariaLabel": "About Addresses",
+    "title": "About Addresses",
+    "overview": "Your address book: the shipping and billing addresses you save are yours, and every shop and site you sign in to offers them at checkout. A shop never sees your address book, only the address you choose for its order.",
+    "sections": [
+      {
+        "title": "Fields",
+        "items": [
+          "Type (billing or shipping), first and last name, street, city, country and the map pin are required; email, phone, state, postal code and a label are optional.",
+          "Country, state and postal code are what a shop's tax and shipping zones match at checkout."
+        ]
+      },
+      {
+        "title": "Default addresses",
+        "body": "You have at most one default address per type.",
+        "items": [
+          "Setting a default clears the previous default of the same type.",
+          "Checkout offers the default first."
+        ]
+      },
+      {
+        "title": "Orders keep their own copy",
+        "items": [
+          "An order copies the address you pick, so changing or deleting an address later never changes past orders.",
+          "Deleting an address can be undone with Restore."
+        ]
+      }
+    ]
+  }
+}

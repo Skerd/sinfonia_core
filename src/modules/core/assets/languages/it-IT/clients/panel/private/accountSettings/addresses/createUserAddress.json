@@ -1,0 +1,59 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/createUserAddress.tsx",
+  "title": "Crea indirizzo",
+  "form": {
+    "recipientSectionTitle": "Destinatario",
+    "addressSectionTitle": "Indirizzo",
+    "typeLabel": "Tipo",
+    "addressType": {
+      "billing": "Fatturazione",
+      "shipping": "Spedizione"
+    },
+    "firstNameLabel": "Nome del destinatario",
+    "firstNamePlaceholder": "Nome sulla confezione",
+    "lastNameLabel": "Cognome del destinatario",
+    "lastNamePlaceholder": "Cognome sulla confezione",
+    "streetLabel": "Via",
+    "streetPlaceholder": "Indirizzo stradale",
+    "cityLabel": "Città",
+    "cityPlaceholder": "Seleziona la città",
+    "stateLabel": "Cantone / Stato",
+    "statePlaceholder": "Seleziona il cantone",
+    "postalCodeLabel": "CAP",
+    "postalCodePlaceholder": "CAP",
+    "emailLabel": "Email",
+    "emailPlaceholder": "nome@esempio.com",
+    "phoneLabel": "Telefono",
+    "phonePlaceholder": "Numero di telefono",
+    "countryLabel": "Paese",
+    "countryPlaceholder": "Seleziona il paese",
+    "latitudeLabel": "Latitudine",
+    "latitudePlaceholder": "Scegli sulla mappa",
+    "longitudeLabel": "Longitudine",
+    "longitudePlaceholder": "Scegli sulla mappa",
+    "labelLabel": "Etichetta",
+    "labelPlaceholder": "Casa, lavoro,…"
+  },
+  "axios": {
+    "start": {
+      "title": "Creazione dell'indirizzo",
+      "time": 3000
+    },
+    "success": {
+      "title": "Indirizzo creato",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile creare l'indirizzo",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Crea indirizzo",
+    "description": "Salva destinatario, luogo e segnaposto sulla mappa nella tua rubrica."
+  },
+  "formButtons": {
+    "cancel": "Annulla",
+    "submit": "Crea indirizzo"
+  }
+}

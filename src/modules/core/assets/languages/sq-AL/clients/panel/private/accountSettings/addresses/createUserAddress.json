@@ -1,0 +1,59 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/createUserAddress.tsx",
+  "title": "Krijo adresë",
+  "form": {
+    "recipientSectionTitle": "Marrësi",
+    "addressSectionTitle": "Adresa",
+    "typeLabel": "Lloji",
+    "addressType": {
+      "billing": "Faturim",
+      "shipping": "Dërgesë"
+    },
+    "firstNameLabel": "Emri i marrësit",
+    "firstNamePlaceholder": "Emri në paketë",
+    "lastNameLabel": "Mbiemri i marrësit",
+    "lastNamePlaceholder": "Mbiemri në paketë",
+    "streetLabel": "Rruga",
+    "streetPlaceholder": "Adresa e rrugës",
+    "cityLabel": "Qyteti",
+    "cityPlaceholder": "Zgjidh qytetin",
+    "stateLabel": "Rajoni",
+    "statePlaceholder": "Zgjidh rajonin",
+    "postalCodeLabel": "Kodi postar",
+    "postalCodePlaceholder": "Kodi postar",
+    "emailLabel": "Email",
+    "emailPlaceholder": "emri@shembull.com",
+    "phoneLabel": "Telefoni",
+    "phonePlaceholder": "Numri i telefonit",
+    "countryLabel": "Shteti",
+    "countryPlaceholder": "Zgjidh shtetin",
+    "latitudeLabel": "Gjerësia gjeografike",
+    "latitudePlaceholder": "Zgjidhni në hartë",
+    "longitudeLabel": "Gjatësia gjeografike",
+    "longitudePlaceholder": "Zgjidhni në hartë",
+    "labelLabel": "Etiketa",
+    "labelPlaceholder": "Shtëpi, punë, …"
+  },
+  "axios": {
+    "start": {
+      "title": "Duke krijuar adresën",
+      "time": 3000
+    },
+    "success": {
+      "title": "Adresa u krijua",
+      "time": 3000
+    },
+    "error": {
+      "title": "Adresa nuk u krijua",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Krijo adresë",
+    "description": "Ruani marrësin, vendndodhjen dhe shenjën në hartë në librin tuaj të adresave."
+  },
+  "formButtons": {
+    "cancel": "Anulo",
+    "submit": "Krijo adresë"
+  }
+}

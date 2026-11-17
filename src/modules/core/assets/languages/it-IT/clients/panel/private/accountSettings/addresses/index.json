@@ -1,0 +1,65 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/index.tsx",
+  "title": "Indirizzi",
+  "description": "I tuoi indirizzi di spedizione e fatturazione salvati, su ogni sito in cui accedi.",
+  "createUserAddress": "Crea indirizzo",
+  "searchPlaceholder": "Cerca o aggiungi filtri...",
+  "fields": {
+    "!enums": {
+      "type": {
+        "billing": "Fatturazione",
+        "shipping": "Spedizione"
+      }
+    },
+    "user": "Cliente",
+    "type": "Tipo",
+    "firstName": "Nome del destinatario",
+    "lastName": "Cognome del destinatario",
+    "email": "Email",
+    "phone": "Telefono",
+    "street": "Via",
+    "city": "Città",
+    "state": "Cantone / Stato",
+    "postalCode": "CAP",
+    "country": "Paese",
+    "latitude": "Latitudine",
+    "longitude": "Longitudine",
+    "isDefault": "Predefinito",
+    "label": "Etichetta",
+    "createdBy": "Creato da",
+    "company": "Azienda",
+    "createdAt": "Creato il",
+    "updatedAt": "Aggiornato il",
+    "deletedAt": "Eliminato il",
+    "deletedBy": "Eliminato da"
+  },
+  "help": {
+    "ariaLabel": "Informazioni sugli indirizzi",
+    "title": "Informazioni sugli indirizzi",
+    "overview": "La tua rubrica: gli indirizzi di spedizione e fatturazione che salvi sono tuoi, e ogni negozio e sito in cui accedi te li propone al pagamento. Un negozio non vede mai la tua rubrica, solo l'indirizzo che scegli per il suo ordine.",
+    "sections": [
+      {
+        "title": "Campi",
+        "items": [
+          "Tipo (fatturazione o spedizione), nome e cognome, via, città, paese e il segnaposto sulla mappa sono obbligatori; e-mail, telefono, provincia, CAP e un'etichetta sono facoltativi.",
+          "Paese, provincia e CAP sono ciò che le zone fiscali e di spedizione di un negozio confrontano al pagamento."
+        ]
+      },
+      {
+        "title": "Indirizzi predefiniti",
+        "body": "Hai al massimo un indirizzo predefinito per tipo.",
+        "items": [
+          "Impostare un predefinito sostituisce il precedente dello stesso tipo.",
+          "Il pagamento propone prima l'indirizzo predefinito."
+        ]
+      },
+      {
+        "title": "Gli ordini tengono la propria copia",
+        "items": [
+          "Un ordine copia l'indirizzo scelto: modificarlo o eliminarlo in seguito non cambia mai gli ordini passati.",
+          "Un indirizzo eliminato si può recuperare con Ripristina."
+        ]
+      }
+    ]
+  }
+}

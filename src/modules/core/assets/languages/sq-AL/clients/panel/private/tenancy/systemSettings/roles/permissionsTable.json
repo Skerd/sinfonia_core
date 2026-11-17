@@ -53,7 +53,8 @@
     "Smtpservers": "Serverët SMTP",
     "States": "Rajonet",
     "Users": "Përdoruesit",
-    "Usersessions": "Sesionet e përdoruesve"
+    "Usersessions": "Sesionet e përdoruesve",
+    "Useraddresses": "Adresat"
   },
   "permissions": {
     "Apiaccesses": {
@@ -721,6 +722,29 @@
       "userAgent": "Agjenti i përdoruesit",
       "usersessions": "Sesionet e përdoruesve",
       "revoke": "Revoko sesionin"
+    },
+    "Useraddresses": {
+      "city": "Qyteti",
+      "country": "Shteti",
+      "createdAt": "Krijuar më",
+      "createdBy": "Krijuar nga",
+      "useraddresses": "Adresat",
+      "deletedAt": "Fshirë më",
+      "deletedBy": "Fshirë nga",
+      "firstName": "Emri",
+      "isDefault": "Parazgjedhur",
+      "label": "Etiketa",
+      "lastName": "Mbiemri",
+      "latitude": "Gjerësia gjeografike",
+      "longitude": "Gjatësia gjeografike",
+      "phone": "Telefoni",
+      "postalCode": "Kodi postar",
+      "state": "Rajoni",
+      "street": "Rruga",
+      "updatedAt": "Përditësuar më",
+      "user": "Përdoruesi",
+      "email": "Emaili",
+      "type": "Lloji i adresës"
     }
   },
   "commonFields": {

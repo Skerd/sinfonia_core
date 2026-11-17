@@ -53,7 +53,8 @@
     "Smtpservers": "Server SMTP",
     "States": "Stati / cantoni",
     "Users": "Utenti",
-    "Usersessions": "Sessioni utente"
+    "Usersessions": "Sessioni utente",
+    "Useraddresses": "Indirizzi"
   },
   "permissions": {
     "Apiaccesses": {
@@ -721,6 +722,29 @@
       "userAgent": "Agente utente",
       "usersessions": "Sessioni utente",
       "revoke": "Revoca la sessione"
+    },
+    "Useraddresses": {
+      "city": "Città",
+      "country": "Paese",
+      "createdAt": "Creato il",
+      "createdBy": "Creato da",
+      "useraddresses": "Indirizzi",
+      "deletedAt": "Eliminato il",
+      "deletedBy": "Eliminato da",
+      "firstName": "Nome",
+      "isDefault": "È predefinito",
+      "label": "Etichetta",
+      "lastName": "Cognome",
+      "latitude": "Latitudine",
+      "longitude": "Longitudine",
+      "phone": "Telefono",
+      "postalCode": "CAP",
+      "state": "Cantone / Stato",
+      "street": "Via",
+      "updatedAt": "Aggiornato il",
+      "user": "Utente",
+      "email": "E-mail",
+      "type": "Tipo di indirizzo"
     }
   },
   "commonFields": {

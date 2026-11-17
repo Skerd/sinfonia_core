@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/center/cardView/userAddressCard.tsx",
+  "failedTitle": "Ngarkimi i adresës dështoi",
+  "failedDescription": "Prekni për të provuar përsëri.",
+  "addressType": {
+    "billing": "Faturim",
+    "shipping": "Dërgesë"
+  },
+  "firstName": "Emri",
+  "email": "Email",
+  "phone": "Telefoni",
+  "defaultAddress": "Parazgjedhur",
+  "notDefault": "Jo parazgjedhur",
+  "address": "Adresa",
+  "user": "Klienti"
+}

@@ -1,0 +1,16 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/center/cardView/userAddressCard.tsx",
+  "failedTitle": "Failed to load address",
+  "failedDescription": "Tap to retry.",
+  "addressType": {
+    "billing": "Billing",
+    "shipping": "Shipping"
+  },
+  "firstName": "First name",
+  "email": "Email",
+  "phone": "Phone",
+  "defaultAddress": "Default",
+  "notDefault": "Not default",
+  "address": "Address",
+  "user": "Customer"
+}

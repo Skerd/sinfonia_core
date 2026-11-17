@@ -1,0 +1,65 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/index.tsx",
+  "title": "Adresat",
+  "description": "Adresat tuaja të ruajtura të dërgesës dhe faturimit, në çdo faqe ku hyni.",
+  "createUserAddress": "Krijo adresë",
+  "searchPlaceholder": "Kërko ose shto filtra...",
+  "fields": {
+    "!enums": {
+      "type": {
+        "billing": "Faturim",
+        "shipping": "Dërgesë"
+      }
+    },
+    "user": "Klienti",
+    "type": "Lloji",
+    "firstName": "Emri i marrësit",
+    "lastName": "Mbiemri i marrësit",
+    "email": "Email",
+    "phone": "Telefoni",
+    "street": "Rruga",
+    "city": "Qyteti",
+    "state": "Rajoni",
+    "postalCode": "Kodi postar",
+    "country": "Shteti",
+    "latitude": "Gjerësia gjeografike",
+    "longitude": "Gjatësia gjeografike",
+    "isDefault": "Parazgjedhur",
+    "label": "Etiketa",
+    "createdBy": "Krijuar nga",
+    "company": "Kompania",
+    "createdAt": "Krijuar më",
+    "updatedAt": "Përditësuar më",
+    "deletedAt": "Fshirë më",
+    "deletedBy": "Fshirë nga"
+  },
+  "help": {
+    "ariaLabel": "Rreth adresave",
+    "title": "Rreth adresave",
+    "overview": "Libri juaj i adresave: adresat e dërgesës dhe faturimit që ruani janë tuajat, dhe çdo dyqan e faqe ku hyni jua ofron në arkë. Një dyqan nuk e sheh kurrë librin tuaj të adresave, vetëm adresën që zgjidhni për porosinë e tij.",
+    "sections": [
+      {
+        "title": "Fushat",
+        "items": [
+          "Lloji (faturim ose dërgesë), emri dhe mbiemri, rruga, qyteti, shteti dhe shenja në hartë janë të detyrueshme; email-i, telefoni, rajoni, kodi postar dhe një etiketë janë opsionale.",
+          "Shteti, rajoni dhe kodi postar janë ato me të cilat përputhen zonat e taksave dhe të dërgesës së një dyqani në arkë."
+        ]
+      },
+      {
+        "title": "Adresat e parazgjedhura",
+        "body": "Keni më së shumti një adresë të parazgjedhur për çdo lloj.",
+        "items": [
+          "Vendosja e një të parazgjedhure zëvendëson të mëparshmen e të njëjtit lloj.",
+          "Arka ofron së pari adresën e parazgjedhur."
+        ]
+      },
+      {
+        "title": "Porositë mbajnë kopjen e tyre",
+        "items": [
+          "Një porosi kopjon adresën që zgjidhni, ndaj ndryshimi ose fshirja e saj më vonë nuk ndryshon kurrë porositë e kaluara.",
+          "Një adresë e fshirë mund të rikthehet me Rikthe."
+        ]
+      }
+    ]
+  }
+}

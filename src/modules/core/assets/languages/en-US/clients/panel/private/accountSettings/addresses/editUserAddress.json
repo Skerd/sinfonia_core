@@ -1,0 +1,62 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/editUserAddress.tsx",
+  "title": "Edit address",
+  "errorTitle": "Failed to load address",
+  "errorDescription": "Could not load this address. Try again.",
+  "form": {
+    "recipientSectionTitle": "Recipient",
+    "addressSectionTitle": "Address",
+    "_idLabel": "Record ID",
+    "typeLabel": "Type",
+    "addressType": {
+      "billing": "Billing",
+      "shipping": "Shipping"
+    },
+    "firstNameLabel": "Recipient first name",
+    "firstNamePlaceholder": "First name on the package",
+    "lastNameLabel": "Recipient last name",
+    "lastNamePlaceholder": "Last name on the package",
+    "streetLabel": "Street",
+    "streetPlaceholder": "Street address",
+    "cityLabel": "City",
+    "cityPlaceholder": "Select city",
+    "stateLabel": "State",
+    "statePlaceholder": "Select state",
+    "postalCodeLabel": "Postal code",
+    "postalCodePlaceholder": "Postal code",
+    "emailLabel": "Email",
+    "emailPlaceholder": "name@example.com",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "Phone number",
+    "countryLabel": "Country",
+    "countryPlaceholder": "Select country",
+    "latitudeLabel": "Latitude",
+    "latitudePlaceholder": "Pick on the map",
+    "longitudeLabel": "Longitude",
+    "longitudePlaceholder": "Pick on the map",
+    "labelLabel": "Label",
+    "labelPlaceholder": "Home, work, …"
+  },
+  "axios": {
+    "start": {
+      "title": "Saving address",
+      "time": 3000
+    },
+    "success": {
+      "title": "Address updated",
+      "time": 3000
+    },
+    "error": {
+      "title": "Could not update address",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Edit address",
+    "description": "Update the recipient, location and map pin."
+  },
+  "formButtons": {
+    "cancel": "Cancel",
+    "submit": "Save changes"
+  }
+}

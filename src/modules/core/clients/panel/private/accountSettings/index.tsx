@@ -1,4 +1,4 @@
-import {IconBell, IconBoxMultiple, IconMailCheck, IconUserCog, IconTool} from "@tabler/icons-react";
+import {IconBell, IconBoxMultiple, IconMailCheck, IconMapPin, IconUserCog, IconTool} from "@tabler/icons-react";
 import { SidebarNav } from './components/sidebar-nav.tsx'
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -8,6 +8,7 @@ import Security from "@coreModule/clients/panel/private/accountSettings/security
 import NotificationCenter from "@coreModule/clients/panel/private/accountSettings/notificationCenter";
 import NotificationsForm from "@coreModule/clients/panel/private/accountSettings/notifications";
 import ConnectedApps from "@coreModule/clients/panel/private/accountSettings/apps";
+import AllUserAddresses from "@coreModule/clients/panel/private/accountSettings/addresses";
 import {useEffect, useMemo, useState, type ReactNode} from "react";
 import {getAccountSettingsPages} from "@coreModule/helpers/moduleContributions/loadAccountSettingsContributions.ts";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -41,7 +42,7 @@ function AccountSettings({
     const {read: readSessions} = useAccess("userSessions", perspective);
     const {read: readHistory} = useAccess("loginHistories", perspective);
     const {read: readNotifications} = useAccess("notifications", perspective);
-    const {read: readAddresses} = useAccess("customerAddresses", perspective);
+    const {read: readAddresses} = useAccess("userAddresses", perspective);
     const {read: readSavedSearches} = useAccess("savedsearches", perspective);
     const {read: readProviderProfiles} = useAccess("providerProfiles", perspective);
     const readSecurity = readSessions || readHistory
@@ -72,7 +73,6 @@ function AccountSettings({
     );
 
     const visiblePages = contributedPages.filter((page) => {
-        if (page.id === "addresses") return readAddresses !== false;
         if (page.id === "savedsearches") return readSavedSearches !== false;
         if (page.id === "providerprofile") return readProviderProfiles !== false;
         return true;
@@ -104,6 +104,11 @@ function AccountSettings({
                 title: resolveLanguageKey("connectedApps"),
                 href: specificUserId ? "apps" : '/account/apps',
                 icon: <IconBoxMultiple size={18} />,
+            }] : []),
+            ...(readAddresses !== false ? [{
+                title: resolveLanguageKey("addresses"),
+                href: specificUserId ? "addresses" : '/account/addresses',
+                icon: <IconMapPin size={18} />,
             }] : []),
             ...visiblePages.map((page) => ({
                 title: resolveLanguageKey(page.titleKey),
@@ -178,6 +183,7 @@ function AccountSettings({
                         : activeTab === "notificationCenter" ? <NotificationCenter specificUserId={specificUserId} />
                         : activeTab === "notifications" ? <NotificationsForm specificUserId={specificUserId} />
                         : activeTab === "apps" ? <ConnectedApps specificUserId={specificUserId} />
+                        : activeTab === "addresses" ? <AllUserAddresses specificUserId={specificUserId} />
                         : visiblePages.some((page) => page.id === activeTab) ? visiblePages.map((page) => (
                             activeTab === page.id ? <div key={page.id} className="flex min-h-0 flex-1 flex-col overflow-hidden">{page.render()}</div> : null
                         ))

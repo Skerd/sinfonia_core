@@ -1,0 +1,62 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/editUserAddress.tsx",
+  "title": "Adresse bearbeiten",
+  "errorTitle": "Adresse konnten nicht geladen werden",
+  "errorDescription": "Die Adresse konnte nicht geladen werden. Bitte erneut versuchen.",
+  "form": {
+    "recipientSectionTitle": "Empfänger",
+    "addressSectionTitle": "Adresse",
+    "_idLabel": "Protokoll ID",
+    "typeLabel": "Typ",
+    "addressType": {
+      "billing": "Rechnung",
+      "shipping": "Versand"
+    },
+    "firstNameLabel": "Vorname des Empfängers",
+    "firstNamePlaceholder": "Vorname auf dem Paket",
+    "lastNameLabel": "Nachname des Empfängers",
+    "lastNamePlaceholder": "Nachname auf dem Paket",
+    "streetLabel": "Strasse",
+    "streetPlaceholder": "Strasse und Hausnummer",
+    "cityLabel": "Ort",
+    "cityPlaceholder": "Ort auswählen",
+    "stateLabel": "Kanton",
+    "statePlaceholder": "Kanton auswählen",
+    "postalCodeLabel": "Postleitzahl",
+    "postalCodePlaceholder": "Postleitzahl",
+    "emailLabel": "E-Mail",
+    "emailPlaceholder": "name@example.com",
+    "phoneLabel": "Telefon",
+    "phonePlaceholder": "Telefonnummer",
+    "countryLabel": "Land",
+    "countryPlaceholder": "Land auswählen",
+    "latitudeLabel": "Breitengrad",
+    "latitudePlaceholder": "Auf der Karte wählen",
+    "longitudeLabel": "Längengrad",
+    "longitudePlaceholder": "Auf der Karte wählen",
+    "labelLabel": "Bezeichnung",
+    "labelPlaceholder": "Startseite, arbeit, …"
+  },
+  "axios": {
+    "start": {
+      "title": "Adresse wird gespeichert",
+      "time": 3000
+    },
+    "success": {
+      "title": "Adresse aktualisiert",
+      "time": 3000
+    },
+    "error": {
+      "title": "Adresse konnte nicht aktualisiert werden",
+      "time": 3000
+    }
+  },
+  "formHeader": {
+    "title": "Adresse bearbeiten",
+    "description": "Empfänger, Ort und Kartenmarkierung aktualisieren."
+  },
+  "formButtons": {
+    "cancel": "Abbrechen",
+    "submit": "Speichern änderungen"
+  }
+}

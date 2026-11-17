@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/accountSettings/addresses/center/dialogs/setDefaultUserAddressDialog.tsx",
+  "title": "Als Standardadresse festlegen",
+  "description": "Diese Adresse wird die Standardadresse für ihren Typ (Versand oder Rechnung). Die bisherige Standardadresse desselben Typs wird ersetzt; der andere Typ bleibt unverändert.",
+  "cancel": "Abbrechen",
+  "confirm": "Als Standard festlegen",
+  "busy": "Wird ausgeführt…",
+  "axios": {
+    "start": {
+      "title": "Standardadresse wird festgelegt…",
+      "time": 3000
+    },
+    "success": {
+      "title": "Standardadresse aktualisiert",
+      "time": 3000
+    },
+    "error": {
+      "title": "Standardadresse konnte nicht festgelegt werden",
+      "time": 3000
+    }
+  }
+}

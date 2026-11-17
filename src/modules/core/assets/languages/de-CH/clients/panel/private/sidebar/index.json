@@ -32,6 +32,9 @@
         },
         "connectedApps": {
           "title": "Verbundene Apps"
+        },
+        "addresses": {
+          "title": "Adressen"
         }
       }
     },
