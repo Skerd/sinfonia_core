@@ -1,4 +1,8 @@
 import {useMemo} from "react";
+import {useSearchParams} from "react-router-dom";
+import {pendingScopeFilterId, quickOrScopeLabel, quickOrScopeParam, type ScopeQuickFilter} from "@coreModule/helpers/filter/filterUrl.ts";
+import {usePromoteScopeToQuickFilters} from "@coreModule/helpers/filter/usePromoteScopeToQuickFilters.ts";
+import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -8,7 +12,7 @@ import {IconBuildingPlus} from "@tabler/icons-react";
 import {buildPageTitle} from "@coreModule/helpers/general/pageTitle.ts";
 import CityCard from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/cardView/cityCard.tsx";
 import CitySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/cities/center/sheetView/citySheetView.tsx";
-import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListCreateButton, EntityListHeader, type QuickFilterDef} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 export function cityEditPath(countryId: string | undefined, countryName: string | undefined, stateId: string | undefined, stateName: string | undefined, city: City) {
     const params = new URLSearchParams();
@@ -32,29 +36,42 @@ export function buildCitiesCreatePath(countryId?: string, countryName?: string, 
 }
 
 type AllCitiesProps = WithLanguageType & {
+    /** Read from the URL below; kept for the route that passes them. */
     countryId?: string;
     countryName?: string;
     stateId?: string;
     stateName?: string;
 };
 
-function AllCities({
-    resolveLanguageKey,
-    stateId,
-    stateName,
-    countryId,
-    countryName,
-}: AllCitiesProps) {
+/** "View cities" on a country or state scopes this list; each scope becomes a quick filter: named, shown and clearable (TD-F109). */
+const CITY_LIST_SCOPES: readonly ScopeQuickFilter[] = [
+    {field: "country", idParam: "countryId", nameParam: "countryName"},
+    {field: "state", idParam: "stateId", nameParam: "stateName"},
+];
+
+function AllCities({resolveLanguageKey}: AllCitiesProps) {
+    const [searchParams] = useSearchParams();
+    usePromoteScopeToQuickFilters(CITY_LIST_SCOPES);
+    const countryId = quickOrScopeParam(searchParams, "country", "countryId") || undefined;
+    const countryName = quickOrScopeLabel(searchParams, "country", "countryName") || undefined;
+    const stateId = quickOrScopeParam(searchParams, "state", "stateId") || undefined;
+    const stateName = quickOrScopeLabel(searchParams, "state", "stateName") || undefined;
+    const pendingCountryId = pendingScopeFilterId(searchParams, "country", "countryId");
+    const pendingStateId = pendingScopeFilterId(searchParams, "state", "stateId");
+    const quickFilters = useMemo<QuickFilterDef[]>(() => [
+        {field: "country", label: resolveLanguageKey("country"), type: COLUMN_TYPE.OBJECT_ID, apiUrl: "/api/auxiliary/country/select"},
+        {field: "state", label: resolveLanguageKey("state"), type: COLUMN_TYPE.OBJECT_ID, apiUrl: "/api/auxiliary/state/select", dependsOn: "country"},
+    ], [resolveLanguageKey]);
 
     const headerTitle = buildPageTitle(resolveLanguageKey("title"), [countryName, stateName]);
 
     const extraFilters = useMemo(() => {
-        if (!countryId && !stateId) return undefined;
+        if (!pendingCountryId && !pendingStateId) return undefined;
         return {
-            ...(countryId ? {country: countryId} : {}),
-            ...(stateId ? {state: stateId} : {}),
+            ...(pendingCountryId ? {country: pendingCountryId} : {}),
+            ...(pendingStateId ? {state: pendingStateId} : {}),
         };
-    }, [countryId, stateId]);
+    }, [pendingCountryId, pendingStateId]);
 
     return (
         <EntityListPage<City>
@@ -77,6 +94,7 @@ function AllCities({
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
             configurations={{limit: 20}}
             extraFilters={extraFilters}
+            quickFilters={quickFilters}
             renderCard={(city, onDelete, onRestore) => (
                 <CityCard
                     countryId={countryId}

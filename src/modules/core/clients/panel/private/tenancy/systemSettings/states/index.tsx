@@ -1,3 +1,8 @@
+import {useMemo} from "react";
+import {useSearchParams} from "react-router-dom";
+import {pendingScopeFilterId, quickOrScopeLabel, quickOrScopeParam, type ScopeQuickFilter} from "@coreModule/helpers/filter/filterUrl.ts";
+import {usePromoteScopeToQuickFilters} from "@coreModule/helpers/filter/usePromoteScopeToQuickFilters.ts";
+import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators";
 import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -8,7 +13,7 @@ import {buildPageTitle} from "@coreModule/helpers/general/pageTitle.ts";
 import StateCard from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/cardView/stateCard.tsx";
 import ViewCities from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/actions/viewCities.tsx";
 import StateSheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/states/center/sheetView/stateSheetView.tsx";
-import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListCreateButton, EntityListHeader, type QuickFilterDef} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
 
 export function stateEditPath(countryId: string | undefined, countryName: string | undefined, state: State) {
     const params = new URLSearchParams();
@@ -28,11 +33,23 @@ function buildStatesCreatePath(countryId?: string, countryName?: string): string
 }
 
 type AllStatesProps = WithLanguageType & {
+    /** Read from the URL below; kept for the route that passes them. */
     countryId?: string;
     countryName?: string;
 };
 
-function AllStates({resolveLanguageKey, countryId, countryName}: AllStatesProps) {
+/** "View states" on a country scopes this list; the scope becomes a quick filter: named, shown and clearable (TD-F109). */
+const STATE_LIST_SCOPES: readonly ScopeQuickFilter[] = [{field: "country", idParam: "countryId", nameParam: "countryName"}];
+
+function AllStates({resolveLanguageKey}: AllStatesProps) {
+    const [searchParams] = useSearchParams();
+    usePromoteScopeToQuickFilters(STATE_LIST_SCOPES);
+    const countryId = quickOrScopeParam(searchParams, "country", "countryId") || undefined;
+    const countryName = quickOrScopeLabel(searchParams, "country", "countryName") || undefined;
+    const pendingCountryId = pendingScopeFilterId(searchParams, "country", "countryId");
+    const quickFilters = useMemo<QuickFilterDef[]>(() => [
+        {field: "country", label: resolveLanguageKey("country"), type: COLUMN_TYPE.OBJECT_ID, apiUrl: "/api/auxiliary/country/select"},
+    ], [resolveLanguageKey]);
 
     const actionMenuChildren = (state: State) => {
         return (
@@ -85,7 +102,8 @@ function AllStates({resolveLanguageKey, countryId, countryName}: AllStatesProps)
                     onRestore={onRestore}
                 />
             )}
-            extraFilters={countryId ? {country: countryId} : undefined}
+            extraFilters={pendingCountryId ? {country: pendingCountryId} : undefined}
+            quickFilters={quickFilters}
         />
     );
 }
