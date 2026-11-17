@@ -8,6 +8,8 @@ export default createGenericCreatePage<CreateUserAddressFormType>({
     collectionName: "userAddresses",
     accessModel: "userAddresses",
     apiUrl: "/api/user/userAddress",
+    // Back to the book, wherever the form was opened from (a link would otherwise go back to that page, TD-F129).
+    successPath: "/account/addresses",
     schema: createUserAddressFormSchema,
     defaultValues: () => ({
         type: "shipping",
