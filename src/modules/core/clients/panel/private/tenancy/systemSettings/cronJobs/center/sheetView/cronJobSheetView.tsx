@@ -5,6 +5,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import SheetViewRenderer from "@coreModule/components/viewEngine/SheetViewRenderer.tsx";
 import {useViewConfig} from "@coreModule/helpers/hooks/useViewConfig.ts";
+import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 import type {CronJob} from "armonia/src/modules/core/api/auxiliary/private/cronJob/cronJob.dto.ts";
 import {cronJobEditPath} from "../../cronJobPaths.ts";
@@ -60,6 +61,20 @@ function CronJobSheetView({
     }, [cronJobProp]);
 
     const entityId = cronJobProp?._id ?? fetchId;
+
+    // Run now only makes the job due; once the scheduler has run it, its row has the new Last run and the next slot.
+    // Reload the row with the run history, or the sheet keeps "Next run" at the moment Run now was pressed (TD-B239).
+    const {data: reloadedJob} = useHttpRequest<CronJob>(
+        {method: "post", url: "/api/auxiliary/cron-jobs/single", data: {_id: entityId}},
+        {},
+        executionsNonce,
+    );
+    useEffect(() => {
+        if (!reloadedJob) return;
+        setSheetData(reloadedJob);
+        onSheetRowPatched?.(reloadedJob);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [reloadedJob]);
     const asJob = sheetData as CronJob;
 
     if (!viewConfig) {
