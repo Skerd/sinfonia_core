@@ -324,7 +324,8 @@ function UserProfileCardInner({
                                     })}</h3>
                                 }
                                 {
-                                    (read.online || read.mfaStatus) &&
+                                    // A bot never signs in, so presence and MFA say nothing about it (TD-B240).
+                                    (read.online || read.mfaStatus) && !data.isBot &&
                                     <div className="flex items-center gap-1.5">
                                         {
                                             read.online &&
