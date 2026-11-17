@@ -1,11 +1,35 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
   "title": "Outgoing mail servers",
-  "description": "Configure SMTP servers for this company. Lower sequence is tried first.",
+  "description": "The platform's servers send every company's mail, under that company's name, with replies going to it. A lower priority is tried first.",
+  "ownServersDescription": "Your own servers send this company's campaigns from your address. All other mail goes through the platform's servers, under your company's name.",
   "help": {
     "ariaLabel": "About Outgoing mail servers",
     "title": "About Outgoing mail servers",
-    "overview": "Outgoing mail servers provide SMTP delivery for this company. New servers start inactive and should be activated only after a successful connection test.",
+    "overview": "These servers deliver every company's mail: notifications, order and invoice mail, password resets. A company's mail goes out as \"Company name <your From address>\", with Reply-To set to the company, so people answer the company, not the platform. New servers start inactive; activate one only after a successful connection test.",
+    "sections": [
+      {
+        "title": "Configuration",
+        "items": [
+          "Enter a name, host, port, encryption and authentication type, and a required From email address.",
+          "Username and password are optional when the chosen authentication allows it. From name and Reply-To are also optional.",
+          "Use Test connection before activating a server."
+        ]
+      },
+      {
+        "title": "Delivery order",
+        "items": [
+          "A lower priority or sequence number is tried first.",
+          "Only active, non-deleted servers can send mail.",
+          "Deleting a server is a soft delete and it can be restored."
+        ]
+      }
+    ]
+  },
+  "ownServersHelp": {
+    "ariaLabel": "About Outgoing mail servers",
+    "title": "About Outgoing mail servers",
+    "overview": "Servers you add here send this company's campaigns, from your own address. Everyday mail (notifications, invoices, password resets) always goes through the platform's servers under your company's name, with replies to your company. If none of your servers is active, campaigns go through the platform's servers too. New servers start inactive; activate one only after a successful connection test.",
     "sections": [
       {
         "title": "Configuration",

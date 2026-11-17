@@ -12,6 +12,7 @@ import TestSmtpConnection from "@coreModule/clients/panel/private/tenancy/system
 import SetSmtpServerActiveDialog from "./center/dialogs/setSmtpServerActiveDialog.tsx";
 import TestSmtpConnectionDialog from "./center/dialogs/testSmtpConnectionDialog.tsx";
 import EntityListPage, {EntityListCreateButton, EntityListHeader} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import {useIsPlatformCompany} from "@coreModule/helpers/hooks/useIsPlatformCompany.ts";
 
 export function smtpServerEditPath(s: SmtpServer) {
     const params = new URLSearchParams();
@@ -21,6 +22,9 @@ export function smtpServerEditPath(s: SmtpServer) {
 }
 
 function AllSmtpServers({resolveLanguageKey}: WithLanguageType) {
+    // The platform's servers send every company's mail (D161); any other company that sees this page keeps its own
+    // servers for the campaigns of a module registered through `platformOnlyUses`, so it reads a different description.
+    const isPlatformCompany = useIsPlatformCompany();
     return (
         <EntityListPage<SmtpServer>
             apiUrl="/api/auxiliary/smtpServer"
@@ -29,7 +33,11 @@ function AllSmtpServers({resolveLanguageKey}: WithLanguageType) {
             tableConfigKey="smtpservers"
             rowActionMenu={{allowMenuForCustomChildren: true}}
             header={(ctx) => (
-                <EntityListHeader ctx={ctx}>
+                <EntityListHeader
+                    ctx={ctx}
+                    description={isPlatformCompany ? undefined : resolveLanguageKey("ownServersDescription")}
+                    helpKey={isPlatformCompany ? undefined : "ownServersHelp"}
+                >
                     <EntityListCreateButton
                         ctx={ctx}
                         path="/tenancy/systemSettings/smtpServers/create"

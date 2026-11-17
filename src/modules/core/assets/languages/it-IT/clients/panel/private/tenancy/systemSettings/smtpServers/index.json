@@ -1,11 +1,35 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
   "title": "Server di posta in uscita",
-  "description": "Configura i server SMTP per questa azienda. Viene provato per primo il server con la sequenza più bassa.",
+  "description": "I server della piattaforma inviano le e-mail di tutte le aziende, a nome di ciascuna, e le risposte tornano all'azienda. Si prova prima la priorità più bassa.",
+  "ownServersDescription": "I tuoi server inviano le campagne di questa azienda dal tuo indirizzo. Tutte le altre e-mail passano dai server della piattaforma, a nome della tua azienda.",
   "help": {
     "ariaLabel": "Informazioni su Server di posta in uscita",
     "title": "Informazioni su Server di posta in uscita",
-    "overview": "I server di posta in uscita gestiscono l’invio SMTP dell’azienda. I nuovi server sono inattivi e vanno attivati solo dopo un test di connessione riuscito.",
+    "overview": "Questi server consegnano le e-mail di tutte le aziende: notifiche, e-mail di ordini e fatture, reimpostazioni della password. L'e-mail di un'azienda parte come «Nome azienda <il tuo indirizzo mittente>», con la risposta indirizzata all'azienda, così si risponde all'azienda e non alla piattaforma. I nuovi server partono inattivi; attivane uno solo dopo un test di connessione riuscito.",
+    "sections": [
+      {
+        "title": "Configurazione",
+        "items": [
+          "Inserite nome, host, porta, crittografia, tipo di autenticazione e indirizzo mittente obbligatorio.",
+          "Nome utente e password sono facoltativi quando l’autenticazione lo consente; anche nome mittente e Reply-To sono facoltativi.",
+          "Testate la connessione prima dell’attivazione."
+        ]
+      },
+      {
+        "title": "Ordine di invio",
+        "items": [
+          "La priorità o sequenza più bassa viene provata per prima.",
+          "Solo i server attivi e non eliminati inviano e-mail.",
+          "L’eliminazione è logica e il server può essere ripristinato."
+        ]
+      }
+    ]
+  },
+  "ownServersHelp": {
+    "ariaLabel": "Informazioni su Server di posta in uscita",
+    "title": "Informazioni su Server di posta in uscita",
+    "overview": "I server aggiunti qui inviano le campagne di questa azienda dal tuo indirizzo. Le e-mail di tutti i giorni (notifiche, fatture, reimpostazioni della password) passano sempre dai server della piattaforma, a nome della tua azienda, con le risposte alla tua azienda. Se nessuno dei tuoi server è attivo, anche le campagne passano dai server della piattaforma. I nuovi server partono inattivi; attivane uno solo dopo un test di connessione riuscito.",
     "sections": [
       {
         "title": "Configurazione",

@@ -1,11 +1,35 @@
 {
   "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/smtpServers/index.tsx",
   "title": "Serveurs de courrier sortant",
-  "description": "Configurez les serveurs SMTP pour cette entreprise. Le serveur dont la séquence est la plus basse est essayé en premier.",
+  "description": "Les serveurs de la plateforme envoient les e-mails de toutes les entreprises, au nom de chacune, et les réponses lui reviennent. La priorité la plus basse est essayée en premier.",
+  "ownServersDescription": "Vos propres serveurs envoient les campagnes de cette entreprise depuis votre adresse. Tous les autres e-mails passent par les serveurs de la plateforme, au nom de votre entreprise.",
   "help": {
     "ariaLabel": "À propos des serveurs de courrier sortant",
     "title": "À propos des serveurs de courrier sortant",
-    "overview": "Les serveurs de courrier sortant assurent l’envoi SMTP de cette entreprise. Un nouveau serveur est inactif et ne doit être activé qu’après un test de connexion réussi.",
+    "overview": "Ces serveurs distribuent les e-mails de toutes les entreprises : notifications, e-mails de commande et de facture, réinitialisations de mot de passe. L'e-mail d'une entreprise part sous la forme « Nom de l'entreprise <votre adresse d'expédition> », avec la réponse adressée à l'entreprise, pour qu'on réponde à l'entreprise et non à la plateforme. Les nouveaux serveurs sont inactifs au départ ; activez-en un seulement après un test de connexion réussi.",
+    "sections": [
+      {
+        "title": "Configuration",
+        "items": [
+          "Renseignez le nom, l’hôte, le port, le chiffrement, le type d’authentification et l’adresse d’expéditeur obligatoire.",
+          "L’identifiant et le mot de passe sont facultatifs si l’authentification le permet ; le nom d’expéditeur et l’adresse de réponse le sont aussi.",
+          "Testez la connexion avant l’activation."
+        ]
+      },
+      {
+        "title": "Ordre d’envoi",
+        "items": [
+          "La priorité ou séquence la plus basse est essayée en premier.",
+          "Seuls les serveurs actifs et non supprimés envoient des e-mails.",
+          "La suppression est logique et le serveur peut être restauré."
+        ]
+      }
+    ]
+  },
+  "ownServersHelp": {
+    "ariaLabel": "À propos des serveurs de courrier sortant",
+    "title": "À propos des serveurs de courrier sortant",
+    "overview": "Les serveurs ajoutés ici envoient les campagnes de cette entreprise depuis votre propre adresse. Les e-mails courants (notifications, factures, réinitialisations de mot de passe) passent toujours par les serveurs de la plateforme, au nom de votre entreprise, avec les réponses adressées à votre entreprise. Si aucun de vos serveurs n'est actif, les campagnes passent aussi par les serveurs de la plateforme. Les nouveaux serveurs sont inactifs au départ ; activez-en un seulement après un test de connexion réussi.",
     "sections": [
       {
         "title": "Configuration",
