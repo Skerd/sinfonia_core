@@ -1,5 +1,5 @@
 import {compose} from "redux";
-import {useMemo, useState} from "react";
+import {useLayoutEffect, useMemo, useRef, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
@@ -31,6 +31,16 @@ import CatalogCard from "./catalogCard.tsx";
 const PAGE_SIZE = 24;
 const BROWSE_REQUEST = {method: "post" as const, url: "/api/portal/browse", data: {}};
 const ALL = "all";
+
+/** Keep the chosen kind in the scrolling row without moving the page. */
+function revealActiveTab(list: HTMLElement | null) {
+    const tab = list?.querySelector<HTMLElement>("[data-state='active']");
+    if (!list || !tab) return;
+    const start = tab.offsetLeft;
+    const end = start + tab.offsetWidth;
+    if (start < list.scrollLeft) list.scrollLeft = start;
+    else if (end > list.scrollLeft + list.clientWidth) list.scrollLeft = end - list.clientWidth;
+}
 /** Params that belong to one kind and are dropped when switching kinds. */
 const KIND_PARAMS = ["page", "priceMin", "priceMax", "sort"];
 
@@ -69,6 +79,10 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
     const form = useMemo(() => browseForm(params), [params]);
     const catalogs = sections.flatMap((section) => (section.catalogs ?? []).map((catalog) => ({...catalog, path: section.path})));
     const active = catalogs.find((catalog) => catalog.kind === form.kind);
+    const kindTabs = useRef<HTMLDivElement>(null);
+    useLayoutEffect(() => {
+        revealActiveTab(kindTabs.current);
+    }, [active?.kind]);
 
     // One request per URL state; silent, like before: loading shows skeletons, a failure shows the empty state.
     const [browse, setBrowse] = useState({form, count: 1});
@@ -109,7 +123,7 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
     return (
         <section className="flex flex-col gap-6" aria-label={resolveLanguageKey("label")}>
             <Tabs value={active?.kind ?? ALL} onValueChange={selectKind}>
-                <TabsList className="h-auto flex-wrap justify-start">
+                <TabsList ref={kindTabs} className="h-8 w-full min-w-0 max-w-full justify-start overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:w-fit">
                     <TabsTrigger value={ALL} className="flex-none px-3">{resolveLanguageKey("all")}</TabsTrigger>
                     {catalogs.map((catalog) => (
                         <TabsTrigger key={catalog.kind} value={catalog.kind} className="flex-none px-3">

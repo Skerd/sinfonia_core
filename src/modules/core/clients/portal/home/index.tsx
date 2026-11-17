@@ -102,8 +102,10 @@ function CatalogSearchForm({
                 <InputGroupAddon><IconSearch aria-hidden /></InputGroupAddon>
                 <InputGroupInput name="q" defaultValue={query} placeholder={searchPlaceholder(resolveLanguageKey, "whatPlaceholder", sections)} aria-label={resolveLanguageKey("what")} />
             </InputGroup>
+            {/* On a phone the fields stack, so the line sits above the city. Beside each other, the city field carries it. */}
+            <div className="relative z-20 border-t border-foreground/20 sm:contents">
             <InputGroup
-                className="h-12 border-0 shadow-none sm:border-l sm:rounded-none dark:bg-transparent"
+                className="h-12 border-0 shadow-none sm:rounded-none sm:border-l sm:border-foreground/20 dark:bg-transparent"
                 onBlur={(event) => {
                     if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
                 }}
@@ -180,6 +182,7 @@ function CatalogSearchForm({
                     </ul>
                 ) : null}
             </InputGroup>
+            </div>
             <Button type="submit" size="lg" className="h-12 px-6">
                 <IconSearch aria-hidden />
                 {resolveLanguageKey("search")}
