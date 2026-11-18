@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/components/viewEngine/widgets/gallery/galleryDialog.tsx",
+  "gallery": "Galerie",
+  "previews": "Aperçus de la galerie",
+  "thumbnails": "Miniatures de la galerie",
+  "preview": "Aperçu {number} sur {total}",
+  "thumbnail": "Miniature {number} sur {total}"
+}

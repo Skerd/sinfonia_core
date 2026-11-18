@@ -13,5 +13,6 @@
   "backToBlog": "Zurück zum Blog",
   "moreStories": "Weitere Artikel",
   "notFound": "Artikel nicht gefunden",
-  "notFoundMessage": "Dieser Artikel wurde möglicherweise verschoben oder zurückgezogen."
+  "notFoundMessage": "Dieser Artikel wurde möglicherweise verschoben oder zurückgezogen.",
+  "viewImage": "Bild {number} von {total} ansehen"
 }

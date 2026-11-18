@@ -7,13 +7,13 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@coreModule/components/ui/carousel.tsx"
-import { Dialog, DialogContent, DialogTitle } from "@coreModule/components/ui/dialog.tsx"
 import { Media } from "armonia/src/modules/core/types"
 import { cn } from "@coreModule/components/lib/utils.ts";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
 import {IconPhoto} from "@tabler/icons-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {GalleryDialog, GalleryPreviewRail, type GalleryImageComponent, type GalleryMediaItem} from "@coreModule/components/viewEngine/widgets/gallery/galleryDialog.tsx";
 
 function resolveMediaUrl(url: string, media: Media): string {
     return `${url}${media._id}`
@@ -32,11 +32,7 @@ interface GalleryCarouselProps {
     showThumbnails?: boolean
     allowFullScreen?: boolean
     coverAfterFirst?: boolean
-    modifyImagesOnDarkMode?: React.ComponentType<{
-        src: string
-        alt: string
-        className: string
-    }>
+    modifyImagesOnDarkMode?: GalleryImageComponent
     /**
      * When true, renders a scrollable strip of square preview tiles for all media.
      * Placement is controlled by `previewLocation`.
@@ -63,128 +59,6 @@ interface GalleryCarouselProps {
 /** Tallest the sheet hero may grow. Matches `max-h-[28rem]`. */
 const SHEET_HERO_MAX_HEIGHT = "28rem"
 
-type PreviewRailOrientation = "horizontal" | "vertical"
-type PreviewRailVariant = "thumbnail" | "preview" | "square"
-
-function GalleryPreviewRail({
-    media,
-    mediaUrl,
-    selectedIndex,
-    onPick,
-    orientation,
-    variant,
-    ariaLabel,
-    /** When set (vertical rail only), height matches the main carousel / image viewport. */
-    constrainHeightPx,
-}: {
-    media: Media[]
-    mediaUrl: string
-    selectedIndex: number
-    onPick: (i: number) => void
-    orientation: PreviewRailOrientation
-    variant: PreviewRailVariant
-    ariaLabel: string
-    constrainHeightPx?: number | null
-}) {
-    const railRef = React.useRef<HTMLDivElement>(null)
-
-    React.useLayoutEffect(() => {
-        const el = railRef.current?.querySelector<HTMLElement>(
-            '[role="tab"][aria-selected="true"]'
-        )
-        el?.scrollIntoView({ block: "nearest", inline: "nearest" })
-    }, [selectedIndex, media])
-
-    const isHorizontal = orientation === "horizontal"
-    const isSquare = variant === "square"
-    const thumbnailMediaClass = "h-16 w-24 object-cover"
-    /** Preview tiles: slightly larger squares; media fills via object-cover on full button box. */
-    const previewTileBoxClass = "flex aspect-square size-20 p-0"
-    const previewMediaClass = "block h-full w-full object-cover"
-    const squareMediaClass = "block size-full object-cover"
-
-    const verticalConstrained =
-        !isHorizontal &&
-        typeof constrainHeightPx === "number" &&
-        constrainHeightPx > 0
-
-    return (
-        <div
-            ref={railRef}
-            className={
-                isSquare
-                    ? "mx-auto flex w-fit max-w-full shrink-0 flex-row gap-2 overflow-x-auto px-1 py-1"
-                    : isHorizontal
-                    ? "flex shrink-0 flex-row gap-2 overflow-x-auto px-2 py-0.5"
-                    : verticalConstrained
-                      ? "flex min-h-0 w-22 shrink-0 flex-col gap-2 overflow-y-auto overflow-x-hidden px-1 py-0.5"
-                      : "flex min-h-0 max-h-full w-22 shrink-0 flex-col gap-2 overflow-y-auto overflow-x-hidden px-1 py-2"
-            }
-            style={
-                verticalConstrained
-                    ? {
-                          height: constrainHeightPx,
-                          maxHeight: constrainHeightPx,
-                      }
-                    : undefined
-            }
-            role="tablist"
-            aria-label={ariaLabel}
-        >
-            {media.map((item, i) => (
-                <Button variant="bare"
-                    key={item._id}
-                    type="button"
-                    role="tab"
-                    aria-selected={i === selectedIndex}
-                    aria-label={`${variant === "preview" ? "Preview" : "Thumbnail"} ${i + 1} of ${media.length}`}
-                    onClick={(e) => {
-                        if (variant === "preview" || variant === "square") {
-                            e.preventDefault()
-                        }
-                        onPick(i)
-                    }}
-                    className={cn(
-                        "shrink-0 overflow-hidden border p-0",
-                        isSquare ? "size-14 rounded-lg" : "rounded",
-                        variant === "preview" && previewTileBoxClass,
-                        i === selectedIndex ? "border-primary" : "border-muted",
-                        isSquare && i === selectedIndex && "border-2",
-                    )}
-                >
-                    {item.mime.includes("video") ? (
-                        <video
-                            src={resolveMediaUrl(mediaUrl, item)}
-                            muted
-                            preload="metadata"
-                            className={
-                                isSquare
-                                    ? squareMediaClass
-                                    : variant === "preview"
-                                      ? previewMediaClass
-                                      : thumbnailMediaClass
-                            }
-                            aria-hidden
-                        />
-                    ) : (
-                        <img
-                            src={resolveMediaUrl(mediaUrl, item)}
-                            alt=""
-                            className={
-                                isSquare
-                                    ? squareMediaClass
-                                    : variant === "preview"
-                                      ? previewMediaClass
-                                      : thumbnailMediaClass
-                            }
-                        />
-                    )}
-                </Button>
-            ))}
-        </div>
-    )
-}
-
 export function GalleryCarousel({
     mediaUrl = MEDIA_BASE_URL,
     mainImage,
@@ -206,6 +80,15 @@ export function GalleryCarousel({
         () => [...(mainImage ? [mainImage] : []), ...videos, ...images],
         [mainImage, images, videos]
     )
+    const items = React.useMemo<GalleryMediaItem[]>(
+        () => media.map((item) => ({
+            key: item._id,
+            src: resolveMediaUrl(mediaUrl, item),
+            video: item.mime.includes("video"),
+            name: item.name,
+        })),
+        [media, mediaUrl]
+    )
     const leadMedia = media[0]
     const leadUrl = leadMedia ? resolveMediaUrl(mediaUrl, leadMedia) : null
 
@@ -218,15 +101,11 @@ export function GalleryCarousel({
             ? forcedAspectRatio
             : null
     const aspectRatio = forcedRatio ?? detectedAspectRatio
-    const [fullscreenIndex, setFullscreenIndex] = React.useState(0)
-    const [fullscreenApi, setFullscreenApi] = React.useState<CarouselApi | null>(null)
     /** Keep showing the last ratio while the same lead URL reloads — avoids empty-frame twitch on parent re-render. */
     const measuredLeadUrlRef = React.useRef<string | null>(null)
 
     // Refs for video elements in main carousel
     const videoRefs = React.useRef<Map<number, HTMLVideoElement>>(new Map())
-    // Refs for video elements in fullscreen dialog
-    const fullscreenVideoRefs = React.useRef<Map<number, HTMLVideoElement>>(new Map())
 
     const pickSlide = React.useCallback(
         (i: number) => {
@@ -234,14 +113,6 @@ export function GalleryCarousel({
             api?.scrollTo(i)
         },
         [api]
-    )
-
-    const pickFullscreenSlide = React.useCallback(
-        (i: number) => {
-            setFullscreenIndex(i)
-            fullscreenApi?.scrollTo(i)
-        },
-        [fullscreenApi]
     )
 
     /* ---------------- Resolve main image aspect ratio ---------------- */
@@ -312,59 +183,13 @@ export function GalleryCarousel({
         }
     }, [index])
 
-    /* ---------------- Sync fullscreen carousel index → state ---------------- */
-    React.useEffect(() => {
-        if (!fullscreenApi) return
-        const onSelect = () =>
-            setFullscreenIndex(fullscreenApi.selectedScrollSnap())
-        fullscreenApi.on("select", onSelect)
-        return () => {
-            fullscreenApi.off("select", onSelect)
-        }
-    }, [fullscreenApi])
-
-    /* ---------------- Control video playback in fullscreen dialog ---------------- */
-    React.useEffect(() => {
-        if (!open) {
-            // Pause all videos when dialog closes
-            fullscreenVideoRefs.current.forEach((video) => {
-                if (video) {
-                    video.pause()
-                }
-            })
-            return
-        }
-
-        // Pause all videos in fullscreen
-        fullscreenVideoRefs.current.forEach((video, videoIndex) => {
-            if (video && videoIndex !== fullscreenIndex) {
-                video.pause()
-            }
-        })
-        // Play current video if it's a video
-        const currentVideo = fullscreenVideoRefs.current.get(fullscreenIndex)
-        if (currentVideo) {
-            currentVideo.play().catch(() => {
-                /* Autoplay may be blocked by browser policy */
-            })
-        }
-    }, [fullscreenIndex, open])
-
-    /* ---------------- Sync fullscreen index when dialog opens ---------------- */
-    React.useEffect(() => {
-        if (open) {
-            setFullscreenIndex(index)
-        }
-    }, [open, index])
-
     const mediaClassBase =
         "absolute inset-0 m-auto max-w-full max-h-full w-full h-full "
     const setVideoRef = React.useCallback(
-        (mediaIndex: number, isFullscreen: boolean) =>
+        (mediaIndex: number) =>
             (el: HTMLVideoElement | null) => {
-                const map = isFullscreen ? fullscreenVideoRefs : videoRefs
-                if (el) map.current.set(mediaIndex, el)
-                else map.current.delete(mediaIndex)
+                if (el) videoRefs.current.set(mediaIndex, el)
+                else videoRefs.current.delete(mediaIndex)
             },
         []
     )
@@ -398,7 +223,7 @@ export function GalleryCarousel({
                         >
                             {item.mime.includes("video") ? (
                                 <video
-                                    ref={setVideoRef(i, false)}
+                                    ref={setVideoRef(i)}
                                     autoPlay={i === 0}
                                     src={resolveMediaUrl(mediaUrl, item)}
                                     aria-label={item.name ?? "Gallery video"}
@@ -464,7 +289,7 @@ export function GalleryCarousel({
     ])
 
     const previewRailVertical = previewLocation === "left" || previewLocation === "right"
-    const previewOrientation: PreviewRailOrientation = previewRailVertical
+    const previewOrientation = previewRailVertical
         ? "vertical"
         : "horizontal"
 
@@ -492,13 +317,11 @@ export function GalleryCarousel({
     const previewRailNode =
         showPreviews && media.length > 0 ? (
             <GalleryPreviewRail
-                media={media}
-                mediaUrl={mediaUrl}
+                items={items}
                 selectedIndex={index}
                 onPick={pickSlide}
                 orientation={previewOrientation}
                 variant="preview"
-                ariaLabel="Gallery previews"
                 constrainHeightPx={
                     previewRailVertical ? carouselViewportHeightPx : null
                 }
@@ -508,13 +331,11 @@ export function GalleryCarousel({
     const thumbnailRailNode =
         showThumbnails && media.length > 0 ? (
             <GalleryPreviewRail
-                media={media}
-                mediaUrl={mediaUrl}
+                items={items}
                 selectedIndex={index}
                 onPick={pickSlide}
                 orientation="horizontal"
                 variant="thumbnail"
-                ariaLabel="Gallery thumbnails"
             />
         ) : null
 
@@ -656,72 +477,13 @@ export function GalleryCarousel({
         <div data-slot="gallery-carousel" className={root}>
             {layoutBody}
             {enlarge && (
-                <Dialog open={open} onOpenChange={setOpen}>
-                    <DialogContent
-                        className="w-auto max-w-[min(96vw,80rem)] gap-0 border-none bg-background p-3 sm:max-w-[min(96vw,80rem)]"
-                        aria-describedby={undefined}
-                    >
-                        <DialogTitle className="sr-only">Gallery</DialogTitle>
-                        <div className="flex w-[min(92vw,76rem)] flex-col gap-3">
-                        <Carousel
-                            className="w-full"
-                            opts={{ startIndex: index }}
-                            setApi={setFullscreenApi}
-                        >
-                            <CarouselContent>
-                                {media.map((item, i) => (
-                                    <CarouselItem key={item._id}>
-                                        <div className="flex h-[min(75vh,48rem)] w-full items-center justify-center">
-                                            {item.mime.includes("video") ? (
-                                                <video
-                                                    ref={setVideoRef(i, true)}
-                                                    autoPlay={i === fullscreenIndex}
-                                                    src={resolveMediaUrl(mediaUrl, item)}
-                                                    aria-label={item.name ?? "Gallery video fullscreen"}
-                                                    controls
-                                                    muted
-                                                    playsInline
-                                                    preload="metadata"
-                                                    className="max-h-full max-w-full object-contain"
-                                                />
-                                            ) : modifyImagesOnDarkMode ? (
-                                                React.createElement(modifyImagesOnDarkMode, {
-                                                    src: resolveMediaUrl(mediaUrl, item),
-                                                    alt: item.name ?? "",
-                                                    className: "max-h-full max-w-full object-contain",
-                                                })
-                                            ) : (
-                                                <img
-                                                    src={resolveMediaUrl(mediaUrl, item)}
-                                                    alt={item.name ?? ""}
-                                                    className="max-h-full max-w-full object-contain"
-                                                />
-                                            )}
-                                        </div>
-                                    </CarouselItem>
-                                ))}
-                            </CarouselContent>
-                            {media.length > 1 && (
-                                <>
-                                    <CarouselPrevious className="left-2" />
-                                    <CarouselNext className="right-2" />
-                                </>
-                            )}
-                        </Carousel>
-                        {media.length > 1 && (
-                            <GalleryPreviewRail
-                                media={media}
-                                mediaUrl={mediaUrl}
-                                selectedIndex={fullscreenIndex}
-                                onPick={pickFullscreenSlide}
-                                orientation="horizontal"
-                                variant="square"
-                                ariaLabel="Gallery thumbnails"
-                            />
-                        )}
-                        </div>
-                    </DialogContent>
-                </Dialog>
+                <GalleryDialog
+                    items={items}
+                    open={open}
+                    onOpenChange={setOpen}
+                    startIndex={index}
+                    imageComponent={modifyImagesOnDarkMode}
+                />
             )}
         </div>
     )

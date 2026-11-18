@@ -13,5 +13,6 @@
   "backToBlog": "Back to the blog",
   "moreStories": "More stories",
   "notFound": "Story not found",
-  "notFoundMessage": "This story may have been moved or unpublished."
+  "notFoundMessage": "This story may have been moved or unpublished.",
+  "viewImage": "View image {number} of {total}"
 }

@@ -13,5 +13,6 @@
   "backToBlog": "Torna al blog",
   "moreStories": "Altri articoli",
   "notFound": "Articolo non trovato",
-  "notFoundMessage": "Questo articolo potrebbe essere stato spostato o rimosso."
+  "notFoundMessage": "Questo articolo potrebbe essere stato spostato o rimosso.",
+  "viewImage": "Visualizza l’immagine {number} di {total}"
 }

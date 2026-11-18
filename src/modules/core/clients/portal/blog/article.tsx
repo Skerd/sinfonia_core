@@ -7,6 +7,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
+import {GalleryDialog, type GalleryMediaItem} from "@coreModule/components/viewEngine/widgets/gallery/galleryDialog.tsx";
 import type {
     PublicBlogFormResponseType,
     PublicBlogPostItem,
@@ -104,6 +105,8 @@ function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
     const [post, setPost] = useState<PublicBlogPostItem | null>(null);
     const [more, setMore] = useState<PublicBlogPostItem[]>([]);
     const [loading, setLoading] = useState(true);
+    /** The photo open in the gallery dialog, by its place among the post's photos. */
+    const [viewing, setViewing] = useState<number | null>(null);
     const showCompany = !companySlug && site?.scope !== "company";
     const listHref = withCompany("/blog", companySlug);
 
@@ -181,6 +184,14 @@ function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
     }
 
     const gallery = post.imageGallery ?? [];
+    const photos: GalleryMediaItem[] = [
+        ...(post.mainImage ? [{key: "cover", src: post.mainImage, video: false}] : []),
+        ...gallery.map((src, index) => ({key: `gallery-${index}`, src, video: false})),
+    ];
+    const galleryStart = post.mainImage ? 1 : 0;
+    const viewLabel = (index: number) => resolveLanguageKey("viewImage")
+        .replace("{number}", String(index + 1))
+        .replace("{total}", String(photos.length));
     const relatedCompany = (item: PublicBlogPostItem) => companySlug || (showCompany ? item.seller?.siteSlug : undefined);
 
     return (
@@ -216,7 +227,11 @@ function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
                     </div>
                 </header>
 
-                {post.mainImage ? <img src={post.mainImage} alt="" className="aspect-[16/9] w-full rounded-3xl bg-muted object-cover" /> : null}
+                {post.mainImage ? (
+                    <Button variant="bare" type="button" onClick={() => setViewing(0)} aria-label={viewLabel(0)} className="block w-full cursor-zoom-in overflow-hidden rounded-3xl">
+                        <img src={post.mainImage} alt="" className="block aspect-[16/9] w-full bg-muted object-cover" />
+                    </Button>
+                ) : null}
 
                 <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 text-[17px] leading-[1.75]">
                     {paragraphs(post.content).map((block, index) => (
@@ -226,8 +241,17 @@ function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
 
                 {gallery.length > 0 ? (
                     <div className="grid gap-4 sm:grid-cols-2">
-                        {gallery.map((url) => (
-                            <img key={url} src={url} alt="" loading="lazy" className="aspect-[4/3] w-full rounded-2xl bg-muted object-cover" />
+                        {gallery.map((url, index) => (
+                            <Button
+                                key={url}
+                                variant="bare"
+                                type="button"
+                                onClick={() => setViewing(galleryStart + index)}
+                                aria-label={viewLabel(galleryStart + index)}
+                                className="block w-full cursor-zoom-in overflow-hidden rounded-2xl"
+                            >
+                                <img src={url} alt="" loading="lazy" className="block aspect-[4/3] w-full bg-muted object-cover" />
+                            </Button>
                         ))}
                     </div>
                 ) : null}
@@ -251,6 +275,13 @@ function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
                 </section>
             ) : null}
             {post.seller ? <BlogCompanyCard seller={post.seller} resolveLanguageKey={resolveLanguageKey} /> : null}
+            <GalleryDialog
+                items={photos}
+                open={viewing !== null}
+                onOpenChange={(open) => !open && setViewing(null)}
+                startIndex={viewing ?? 0}
+                title={post.title}
+            />
         </div>
     );
 }

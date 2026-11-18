@@ -13,5 +13,6 @@
   "backToBlog": "Kthehu te blogu",
   "moreStories": "Më shumë artikuj",
   "notFound": "Artikulli nuk u gjet",
-  "notFoundMessage": "Ky artikull mund të jetë zhvendosur ose hequr nga publikimi."
+  "notFoundMessage": "Ky artikull mund të jetë zhvendosur ose hequr nga publikimi.",
+  "viewImage": "Shiko imazhin {number} nga {total}"
 }
