@@ -20,5 +20,7 @@
   "starting": "Starting…",
   "placeholder": "Type a message…",
   "placeholderUnavailable": "Chat is unavailable",
-  "send": "Send"
+  "send": "Send",
+  "edited": "edited",
+  "messageDeleted": "This message was deleted"
 }

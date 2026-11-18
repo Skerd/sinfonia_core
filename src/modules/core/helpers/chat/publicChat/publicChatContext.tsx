@@ -39,6 +39,12 @@ type PublicChatMessage = {
     pending?: boolean;
     /** True when the send failed; the bubble renders a retry affordance. */
     failed?: boolean;
+    /** The author changed it after sending. */
+    edited?: boolean;
+    /** The author deleted it: render a "deleted" marker, not the text. */
+    deleted?: boolean;
+    /** How many of each emoji it has. */
+    reactions?: {emoji: string; count: number}[];
 };
 
 /**
@@ -102,6 +108,9 @@ const toMessage = (dto: PublicChatMessageType): PublicChatMessage => ({
     author: dto.author,
     authorName: dto.authorName,
     sentAt: new Date(dto.createdAt).getTime(),
+    ...(dto.edited ? {edited: true} : {}),
+    ...(dto.deleted ? {deleted: true} : {}),
+    ...(dto.reactions?.length ? {reactions: dto.reactions} : {}),
 });
 
 type PublicChatProviderProps = {
@@ -163,12 +172,15 @@ function PublicChatProvider({children, sessionContext, customerToken = null}: Pu
             return;
         }
         setMessages((prev) => {
-            const known = new Set(prev.map((message) => message.id));
+            const known = new Map(prev.map((message, index) => [message.id, index]));
             const merged = [...prev];
             let sawIncomingReply = false;
 
             for (const dto of incoming) {
-                if (known.has(dto._id)) {
+                const index = known.get(dto._id);
+                if (index !== undefined) {
+                    // The server's copy wins: an edit, a deletion or a reaction since we last saw it.
+                    merged[index] = toMessage(dto);
                     continue;
                 }
                 merged.push(toMessage(dto));
@@ -418,6 +430,25 @@ function PublicChatProvider({children, sessionContext, customerToken = null}: Pu
         }
     }, [applyConversationState, mergeServerMessages]);
 
+    /**
+     * Re-reads the recent conversation, not only what is new: an edit, a deletion or a reaction changes a message the
+     * widget already shows, and the incremental fetch above never returns it again.
+     */
+    const reload = useCallback(async () => {
+        try {
+            const response = await fetchMessages({});
+            applyConversationState({
+                status: response.status,
+                hasAgent: response.hasAgent,
+                agentName: response.agentName,
+            });
+            mergeServerMessages(response.messages);
+        }
+        catch {
+            // Transient failure: the next change (or poll) catches up.
+        }
+    }, [applyConversationState, mergeServerMessages]);
+
     // Signing in, out, or into another account changes who the conversation
     // belongs to: start over as the new identity. On sign-out (or a switch) the
     // stored visitor token is dropped too, so this browser stops holding the
@@ -446,6 +477,9 @@ function PublicChatProvider({children, sessionContext, customerToken = null}: Pu
         enabled: isLive && hasSession,
         onWake: () => {
             void refresh();
+        },
+        onChange: () => {
+            void reload();
         },
         onAgentTyping: setIsAgentTyping,
     });

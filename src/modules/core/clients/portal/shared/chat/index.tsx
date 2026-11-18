@@ -29,9 +29,15 @@ const SCROLL_CLASS = cn(
 
 const TEXT_LINK_CLASS = "cursor-pointer text-xs text-primary-foreground/75 underline underline-offset-2 transition-colors hover:text-primary-foreground";
 
-/** One chat bubble. The customer speaks on the right; the assistant and the team on the left. */
-function PortalChatBubble({message, notDelivered}: {message: PublicChatMessage; notDelivered: string}) {
+type BubbleLabels = {notDelivered: string; edited: string; deleted: string};
+
+/**
+ * One chat bubble. The customer speaks on the right; the assistant and the team on the left. Like the internal chat,
+ * an edited message says so, a deleted one leaves a marker, and reactions show under it.
+ */
+function PortalChatBubble({message, labels}: {message: PublicChatMessage; labels: BubbleLabels}) {
     const isVisitor = message.author === "visitor";
+    const hasFooter = !!message.edited || !!message.reactions?.length;
 
     return (
         <div className={cn("flex w-full flex-col", isVisitor ? "items-end" : "items-start")}>
@@ -44,11 +50,22 @@ function PortalChatBubble({message, notDelivered}: {message: PublicChatMessage; 
                     isVisitor ? "bg-primary-foreground/15" : "bg-primary-foreground/20",
                     message.pending && "opacity-60",
                     message.failed && "border border-red-300/70",
+                    message.deleted && "italic text-primary-foreground/70",
                 )}
             >
-                {message.text}
+                {message.deleted ? labels.deleted : message.text}
             </p>
-            {message.failed ? <span className="mt-1 px-1 text-xs text-red-200">{notDelivered}</span> : null}
+            {hasFooter ? (
+                <div className={cn("mt-1 flex max-w-[85%] flex-wrap items-center gap-1 px-1", isVisitor ? "justify-end" : "justify-start")}>
+                    {message.reactions?.map((reaction) => (
+                        <span key={reaction.emoji} className="rounded-full bg-primary-foreground/15 px-1.5 py-0.5 text-xs text-primary-foreground">
+                            {reaction.emoji}{reaction.count > 1 ? ` ${reaction.count}` : ""}
+                        </span>
+                    ))}
+                    {message.edited ? <span className="text-xs text-primary-foreground/60">{labels.edited}</span> : null}
+                </div>
+            ) : null}
+            {message.failed ? <span className="mt-1 px-1 text-xs text-red-200">{labels.notDelivered}</span> : null}
         </div>
     );
 }
@@ -87,6 +104,11 @@ function PortalChatPanel({resolveLanguageKey}: WithLanguageType) {
     const location = useLocation();
     const [draft, setDraft] = useState("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const bubbleLabels: BubbleLabels = {
+        notDelivered: resolveLanguageKey("notDelivered"),
+        edited: resolveLanguageKey("edited"),
+        deleted: resolveLanguageKey("messageDeleted"),
+    };
     const isClosed = status === "closed";
     const canSend = !isUnavailable && !isClosed;
     const isWaitingForHuman = status === "requested_human";
@@ -172,7 +194,7 @@ function PortalChatPanel({resolveLanguageKey}: WithLanguageType) {
                     {hasConversation ? (
                         <div className={cn("mb-3 flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto pe-1", SCROLL_CLASS)}>
                             {messages.map((message) => (
-                                <PortalChatBubble key={message.id} message={message} notDelivered={resolveLanguageKey("notDelivered")} />
+                                <PortalChatBubble key={message.id} message={message} labels={bubbleLabels} />
                             ))}
                             {isAgentTyping ? (
                                 <PortalChatTyping label={resolveLanguageKey("teamTyping").replace("{name}", agentName ?? resolveLanguageKey("ourTeam"))} />
@@ -280,7 +302,8 @@ function PortalChatWidget(props: WithLanguageType) {
  * signed-out visitor chats anonymously. Either way it reaches the team's
  * "Website chats" queue once they ask for a person.
  *
- * Renders nothing unless the company has switched the website chat on (on its own site only).
+ * Renders nothing unless the site's company has switched the website chat on: a company on its own site, the
+ * platform owner on the apex (where every page, a company's included, chats with the platform owner).
  */
 function PortalChatInner(props: WithLanguageType) {
     const {site} = usePortalSite();

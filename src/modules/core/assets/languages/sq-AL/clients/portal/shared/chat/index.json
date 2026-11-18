@@ -20,5 +20,7 @@
   "starting": "Duke filluar…",
   "placeholder": "Shkruani një mesazh…",
   "placeholderUnavailable": "Biseda nuk është e disponueshme",
-  "send": "Dërgo"
+  "send": "Dërgo",
+  "edited": "ndryshuar",
+  "messageDeleted": "Ky mesazh u fshi"
 }

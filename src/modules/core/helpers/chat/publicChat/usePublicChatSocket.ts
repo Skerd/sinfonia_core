@@ -15,12 +15,18 @@ import {useEffect, useRef, useState} from "react";
 import {WebSocketMessageCodes} from "armonia/src/modules/core/websocket/types";
 import {getVisitorToken} from "@coreModule/helpers/chat/publicChat/publicChatClient.ts";
 
-/**
- * Codes that should make the widget re-fetch. Only new messages matter here —
- * the public widget renders no receipts, reactions or pins, so the other codes
- * would be wasted round-trips.
- */
+/** A new message: fetch what came after the last one the widget has. */
 const WAKE_CODES: string[] = [WebSocketMessageCodes.NEW_MESSAGE];
+
+/**
+ * A message the widget already shows changed (edited, deleted, reacted to): re-read the recent conversation, like the
+ * internal chat updates in place. Receipts and pins are not shown to visitors, so their codes are ignored.
+ */
+const CHANGE_CODES: string[] = [
+    WebSocketMessageCodes.MESSAGE_EDITED,
+    WebSocketMessageCodes.MESSAGE_DELETED,
+    WebSocketMessageCodes.MESSAGE_REACTION,
+];
 
 const MAX_RECONNECT_DELAY_MS = 30000;
 const BASE_RECONNECT_DELAY_MS = 1000;
@@ -36,6 +42,8 @@ export type PublicChatSocketOptions = {
     languageCode?: string;
     /** Called when the server signals there is something new to fetch. */
     onWake: () => void;
+    /** Called when a message already shown changed (edited, deleted, reacted to). */
+    onChange: () => void;
     /** Called when an agent signals they are typing. */
     onAgentTyping?: (typing: boolean) => void;
 };
@@ -47,14 +55,16 @@ export type PublicChatSocketOptions = {
  *          polling loop down while it is.
  */
 export function usePublicChatSocket(options: PublicChatSocketOptions): boolean {
-    const {enabled, languageCode = "en-US", onWake, onAgentTyping} = options;
+    const {enabled, languageCode = "en-US", onWake, onChange, onAgentTyping} = options;
     const [isConnected, setIsConnected] = useState(false);
 
     // Keep the latest callbacks in refs so reconnect logic never re-subscribes
     // just because a parent re-rendered.
     const onWakeRef = useRef(onWake);
+    const onChangeRef = useRef(onChange);
     const onAgentTypingRef = useRef(onAgentTyping);
     onWakeRef.current = onWake;
+    onChangeRef.current = onChange;
     onAgentTypingRef.current = onAgentTyping;
 
     useEffect(() => {
@@ -102,6 +112,10 @@ export function usePublicChatSocket(options: PublicChatSocketOptions): boolean {
                 }
                 if (WAKE_CODES.includes(parsed.code)) {
                     onWakeRef.current();
+                    return;
+                }
+                if (CHANGE_CODES.includes(parsed.code)) {
+                    onChangeRef.current();
                     return;
                 }
                 if (parsed.code === WebSocketMessageCodes.TYPING_START) {

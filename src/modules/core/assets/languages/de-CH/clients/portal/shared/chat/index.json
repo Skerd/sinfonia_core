@@ -20,5 +20,7 @@
   "starting": "Wird gestartet…",
   "placeholder": "Nachricht eingeben…",
   "placeholderUnavailable": "Chat nicht verfügbar",
-  "send": "Senden"
+  "send": "Senden",
+  "edited": "bearbeitet",
+  "messageDeleted": "Diese Nachricht wurde gelöscht"
 }

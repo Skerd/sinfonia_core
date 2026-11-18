@@ -20,5 +20,7 @@
   "starting": "Avvio in corso…",
   "placeholder": "Scrivi un messaggio…",
   "placeholderUnavailable": "Chat non disponibile",
-  "send": "Invia"
+  "send": "Invia",
+  "edited": "modificato",
+  "messageDeleted": "Questo messaggio è stato eliminato"
 }

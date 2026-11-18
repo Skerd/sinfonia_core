@@ -20,5 +20,7 @@
   "starting": "Démarrage…",
   "placeholder": "Écrivez un message…",
   "placeholderUnavailable": "Chat indisponible",
-  "send": "Envoyer"
+  "send": "Envoyer",
+  "edited": "modifié",
+  "messageDeleted": "Ce message a été supprimé"
 }
