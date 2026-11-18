@@ -3,6 +3,8 @@ import {BasicCompanyInfoFormResponseType} from "armonia/src/modules/core/api/com
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import HiddenElement from "@coreModule/components/custom/hiddenElement.tsx";
 import {useRelogin} from "@coreModule/helpers/hooks/useRelogin.ts";
+import {useSelector} from "react-redux";
+import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 
 type SmallCompanyWithReLoginProps = {
     company: BasicCompanyInfoFormResponseType,
@@ -11,6 +13,7 @@ type SmallCompanyWithReLoginProps = {
 function SmallCompanyWithReLogin({company}: SmallCompanyWithReLoginProps){
     // Basic info of the caller's own companies, as /api/companies/basicInfo returns it to any member.
     const {triggerRelogin} = useRelogin();
+    const currentCompanyId = useSelector((state: RootState) => state.authentication.user?.company?._id);
 
     function reLoginWithDifferentCompany(){
         triggerRelogin(company._id);
@@ -19,7 +22,11 @@ function SmallCompanyWithReLogin({company}: SmallCompanyWithReLoginProps){
     return(
         <DropdownMenuItem
             key={"generated_company_content_" + company._id}
-            onClick={(e) => {e.preventDefault(); e.stopPropagation(); reLoginWithDifferentCompany();}}
+            onClick={(e) => {
+                // The current company has nothing to switch to, so the menu closes: the user's only sign the click landed.
+                if (company._id === currentCompanyId) return;
+                e.preventDefault(); e.stopPropagation(); reLoginWithDifferentCompany();
+            }}
             className='gap-2 p-2'
         >
             <div className='flex items-center justify-center'>
