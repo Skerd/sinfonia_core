@@ -29,6 +29,7 @@
     "notActive": "MFA non actif"
   },
   "roles": "Rôles",
+  "companyBot": "Bot de l’entreprise",
   "noRoles": "Aucun rôle défini pour cet utilisateur",
   "unsuccessfulLogins": "Connexions infructueuses",
   "lastLoginDate": "Dernière connexion",

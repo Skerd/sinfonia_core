@@ -29,6 +29,7 @@
     "notActive": "MFA non attiva"
   },
   "roles": "Ruoli",
+  "companyBot": "Bot aziendale",
   "noRoles": "Nessun ruolo assegnato all'utente",
   "unsuccessfulLogins": "Accessi non riusciti",
   "lastLoginDate": "Ultimo accesso",

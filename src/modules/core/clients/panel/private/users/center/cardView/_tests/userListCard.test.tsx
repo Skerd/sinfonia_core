@@ -65,9 +65,15 @@ describe("users list card", () => {
         expect(screen.queryByText("noRoles")).toBeNull();
     });
 
-    it("does not warn about the company's AI bot, which has no roles by design", () => {
+    it("names the company's AI bot as such instead of warning, since it has no roles by design", () => {
         render(<UserCard user={{...user, roles: [], isBot: true} as never} specificUserId="u1" onEdit={() => {}}/>);
         expect(screen.queryByText("noRoles")).toBeNull();
+        expect(screen.getByText("companyBot")).toBeTruthy();
+    });
+
+    it("gives a person no bot badge", () => {
+        render(<UserCard user={user as never} specificUserId="u1" onEdit={() => {}}/>);
+        expect(screen.queryByText("companyBot")).toBeNull();
     });
 
     it("says nothing about roles to a viewer who may not read them", () => {

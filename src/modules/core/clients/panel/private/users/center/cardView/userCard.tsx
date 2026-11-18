@@ -1,7 +1,7 @@
 import {useState, type ComponentType} from "react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {IconAlertTriangle, IconClock} from "@tabler/icons-react";
+import {IconAlertTriangle, IconClock, IconRobot} from "@tabler/icons-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -12,7 +12,7 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import {Dialog, DialogContent, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import type {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {DATE_FORMATS, formatDate} from "@coreModule/helpers/general/dateTime.ts";
-import {STATUS_BADGE_NEUTRAL, STATUS_BADGE_SUCCESS, STATUS_BADGE_WARNING} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
+import {STATUS_BADGE_INFO, STATUS_BADGE_NEUTRAL, STATUS_BADGE_SUCCESS, STATUS_BADGE_WARNING} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
 import ProfilePhoto
     from "@coreModule/clients/panel/private/accountSettings/account/userInfo/updateProfileAndCoverPhoto/updateProfilePhoto/profilePhoto.tsx";
 import {translateDefaultRole} from "@coreModule/helpers/moduleContributions/loadRolesPermissionsContributions.ts";
@@ -87,9 +87,14 @@ function UserCard({user, specificUserId, onEdit, resolveLanguageKey, languageCod
                         ))}
                         {roles.length > MAX_ROLES ? <Badge variant="outline" className="text-muted-foreground">+{roles.length - MAX_ROLES}</Badge> : null}
                     </div>
-                ) : readRoles && !user.isBot ? (
-                    // Only a viewer who may read roles learns there are none; to anyone else the row stays hidden. A
-                    // company's AI bot has no roles by design, so it gets no warning.
+                ) : user.isBot ? (
+                    // The company's AI bot has no roles by design: it is named for what it is instead of warned about.
+                    <Badge variant="outline" className={cn("w-fit gap-1 text-xs font-normal", STATUS_BADGE_INFO)}>
+                        <IconRobot className="size-3" aria-hidden />
+                        {resolveLanguageKey("companyBot")}
+                    </Badge>
+                ) : readRoles ? (
+                    // Only a viewer who may read roles learns there are none; to anyone else the row stays hidden.
                     <Badge variant="outline" className={cn("w-fit gap-1 text-xs font-normal", STATUS_BADGE_WARNING)}>
                         <IconAlertTriangle className="size-3" aria-hidden />
                         {resolveLanguageKey("noRoles")}
