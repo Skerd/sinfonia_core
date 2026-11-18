@@ -1,7 +1,7 @@
 import {useState, type ComponentType} from "react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
-import {IconClock} from "@tabler/icons-react";
+import {IconAlertTriangle, IconClock} from "@tabler/icons-react";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
@@ -31,14 +31,16 @@ type UserCardProps = WithLanguageType & {
 }
 
 /**
- * A person in the users list: photo, name, status and last sign-in badges, and roles (TD-F124: the list showed the whole
+ * A person in the users list: photo, name, status and last sign-in badges, and roles, or a warning when they have none
+ * (TD-F124: the list showed the whole
  * profile, five or six facts and "Status: Active" as a row). The full profile, with its requests, opens in a dialog.
  */
 function UserCard({user, specificUserId, onEdit, resolveLanguageKey, languageCode}: UserCardProps) {
     const {write, read} = useAccess("users", !specificUserId ? "self" : "others");
     const [open, setOpen] = useState(false);
     const name = getName({name: read?.name ? user.name : "", surname: read?.surname ? user.surname : ""});
-    const roles = read?.roles?.keys?.roles ? user.roles ?? [] : [];
+    const readRoles = !!read?.roles?.keys?.roles;
+    const roles = readRoles ? user.roles ?? [] : [];
     const status = read?.roles?.keys?.active ? user.status : undefined;
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
     const lastLogin = read?.roles?.keys?.lastLogin && user.lastLogin
@@ -85,6 +87,13 @@ function UserCard({user, specificUserId, onEdit, resolveLanguageKey, languageCod
                         ))}
                         {roles.length > MAX_ROLES ? <Badge variant="outline" className="text-muted-foreground">+{roles.length - MAX_ROLES}</Badge> : null}
                     </div>
+                ) : readRoles && !user.isBot ? (
+                    // Only a viewer who may read roles learns there are none; to anyone else the row stays hidden. A
+                    // company's AI bot has no roles by design, so it gets no warning.
+                    <Badge variant="outline" className={cn("w-fit gap-1 text-xs font-normal", STATUS_BADGE_WARNING)}>
+                        <IconAlertTriangle className="size-3" aria-hidden />
+                        {resolveLanguageKey("noRoles")}
+                    </Badge>
                 ) : null}
             </Button>
             {write ? (

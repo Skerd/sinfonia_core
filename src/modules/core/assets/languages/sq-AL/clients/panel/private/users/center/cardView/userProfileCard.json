@@ -29,6 +29,7 @@
     "notActive": "MFA jo aktive"
   },
   "roles": "Rolet",
+  "noRoles": "Përdoruesi nuk ka role të caktuara",
   "unsuccessfulLogins": "Hyrje të pasuksesshme",
   "lastLoginDate": "Hyrja e fundit",
   "requests": "Kërkesat",

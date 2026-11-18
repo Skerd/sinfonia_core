@@ -29,6 +29,7 @@
     "notActive": "MFA nicht aktiv"
   },
   "roles": "Rollen",
+  "noRoles": "Für diesen Benutzer sind keine Rollen festgelegt",
   "unsuccessfulLogins": "Fehlgeschlagene Anmeldungen",
   "lastLoginDate": "Letzte Anmeldung",
   "requests": "Anfragen",
