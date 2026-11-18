@@ -24,7 +24,8 @@ function isValidWidgetContribution(entry: Record<string, unknown>): boolean {
         && isStringArrayOrUndefined(entry.compoundFormWidgets)
         && isOptionalRecordOf(entry.compoundFormWidgetRenderers, isFunction)
         && isOptionalRecordOf(entry.formWriteAccessKeys, isString)
-        && isOptionalRecordOf(entry.auditSinglePostHints, isAuditHint);
+        && isOptionalRecordOf(entry.auditSinglePostHints, isAuditHint)
+        && isOptionalRecordOf(entry.createPages, isComponentLike);
 }
 
 export function createWidgetContributions(glob: ContributionGlob) {

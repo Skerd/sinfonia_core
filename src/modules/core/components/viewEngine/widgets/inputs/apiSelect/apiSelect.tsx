@@ -1,5 +1,5 @@
-import {IconSelector, IconUser, IconX, IconCheck, IconCirclePlus} from "@tabler/icons-react";
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {IconSelector, IconUser, IconX, IconCheck, IconCirclePlus, IconPlus} from "@tabler/icons-react";
+import {Suspense, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useFormContext, useWatch, type FieldValues} from 'react-hook-form';
 import {Button} from '@coreModule/components/ui/button.tsx';
 import {Popover, PopoverContent, PopoverTrigger} from '@coreModule/components/ui/popover.tsx';
@@ -33,7 +33,10 @@ import {
     API_SELECT_INLINE_CREATE_FALLBACK_LABEL_KEY_BY_API_URL,
 } from "@coreModule/components/viewEngine/widgets/inputs/apiSelect/createFromSearchRegistry.ts";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
-import {Dialog, DialogContent} from "@coreModule/components/ui/dialog.tsx";
+import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
+import {getCreatePage} from "@coreModule/components/viewEngine/widgetRegistry.ts";
+import {useViewConfigContext} from "@coreModule/helpers/hooks/useViewConfigContext.ts";
+import {selectViewConfigByApiUrl} from "@coreModule/helpers/hooks/useViewConfig.ts";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {findFromObject} from "@coreModule/helpers/general/objectPath.ts";
 import {clearedCascadeValue} from "@coreModule/components/viewEngine/form/widgets/emptyValue.ts";
@@ -445,10 +448,20 @@ function ApiSelectCore({
         [createFromSearchOverride, apiUrl]
     );
 
-    const {create: canInlineCreate} = useAccess(mergedCreateFromSearch?.accessModel ?? "");
-
     const createAdapterKey = mergedCreateFromSearch ? API_SELECT_CREATE_ADAPTER_BY_API_URL[apiUrl] : undefined;
     const CreateAdapter = createAdapterKey ? API_SELECT_CREATE_ADAPTERS[createAdapterKey] : undefined;
+    // Every other model opens its own create page, contributed by its module under the CRUD url behind `/select`.
+    const crudApiUrl = apiUrl.endsWith("/select") ? apiUrl.slice(0, -"/select".length) : undefined;
+    const CreatePage = !CreateAdapter && crudApiUrl ? getCreatePage(crudApiUrl) : undefined;
+    const viewConfigs = useViewConfigContext()?.configs;
+    const createView = useMemo(
+        () => (CreatePage ? selectViewConfigByApiUrl(viewConfigs, crudApiUrl, "form:create") : undefined),
+        [CreatePage, viewConfigs, crudApiUrl],
+    );
+    const createAccessModel = CreateAdapter ? mergedCreateFromSearch?.accessModel : createView?.accessModel;
+    const {create: canInlineCreate} = useAccess(createAccessModel ?? "");
+    // List filters pick among existing records only.
+    const canCreateInPlace = !forTable && canInlineCreate && (!!CreateAdapter || !!createView);
 
     const handleOpenChange = useCallback((nextOpen: boolean) => {
         if( disabled ) return;
@@ -507,43 +520,39 @@ function ApiSelectCore({
         queueMicrotask(() => setCreateDialogOpen(true));
     }, [searchText]);
 
+    /** Picks the new record. A create page answers with its id only; the select then loads its label by id. */
     const handleInlineCreated = useCallback(
-        (id: string, label: string) => {
+        (id: string, label?: string) => {
             setCreateDialogOpen(false);
-            const opt: SelectOption = {value: id, label};
             if (multiple) {
                 const nextValues = [...selectedValues, id];
                 const resolveLabel = (v: string) =>
                     selectedOptions.find((o) => o.value === v)?.label ??
                     allOptions.find((o) => o.value === v)?.label ??
                     v;
-                const nextLabels = [...selectedValues.map(resolveLabel), label];
+                const nextLabels = [...selectedValues.map(resolveLabel), label ?? id];
                 onValueChange?.(nextValues, nextLabels);
             } else {
                 onValueChange?.(id, label, undefined);
             }
-            prependCreatedOption(opt);
+            if (label) prependCreatedOption({value: id, label});
             setSearchText("");
         },
         [multiple, selectedValues, selectedOptions, allOptions, onValueChange, prependCreatedOption]
     );
 
-    const showInlineCreateCta =
-        !!mergedCreateFromSearch &&
-        !!CreateAdapter &&
-        canInlineCreate &&
-        !loading &&
-        !disabled &&
-        searchText.trim().length > 0;
+    const handleCreatePageFinished = useCallback(
+        (createdId?: string) => {
+            if (createdId) handleInlineCreated(createdId);
+            else setCreateDialogOpen(false);
+        },
+        [handleInlineCreated]
+    );
 
     const inlineCreateFallbackKey = API_SELECT_INLINE_CREATE_FALLBACK_LABEL_KEY_BY_API_URL[apiUrl];
-    const inlineCreateCtaText =
-        mergedCreateFromSearch &&
-        (inlineCreateEntityLabel?.trim()
-            ? String(resolveLanguageKey("createNewModel")).replaceAll("{}", inlineCreateEntityLabel.trim())
-            : inlineCreateFallbackKey
-              ? String(resolveLanguageKey(inlineCreateFallbackKey))
-              : String(resolveLanguageKey("createNewModel")).replaceAll("{}", ""));
+    const inlineCreateCtaText = inlineCreateEntityLabel?.trim()
+        ? String(resolveLanguageKey("createNewModel")).replaceAll("{}", inlineCreateEntityLabel.trim())
+        : String(resolveLanguageKey(inlineCreateFallbackKey ?? "createNew"));
 
     const clearValue = useCallback(() => {
         if (disabled) return;
@@ -816,16 +825,6 @@ function ApiSelectCore({
                                     options.length === 0 && filteredDefaultOptions.length === 0 ?
                                     <div className="flex flex-col gap-2 p-3 items-center justify-center w-full rounded-lg">
                                         <CommandEmpty className="py-0">{resolveLanguageKey("noResults")}</CommandEmpty>
-                                        {showInlineCreateCta && mergedCreateFromSearch && (
-                                            <Button
-                                                type="button"
-                                                variant="link"
-                                                className="h-auto p-0 text-sm font-medium"
-                                                onClick={openInlineCreateDialog}
-                                            >
-                                                {inlineCreateCtaText}
-                                            </Button>
-                                        )}
                                     </div>
                                     :
                                     <>
@@ -869,6 +868,21 @@ function ApiSelectCore({
                             </>
                         }
                     </CommandList>
+                    {canCreateInPlace && (
+                        // Outside the scrolling list, so it stays in view however long the list is.
+                        <div className="border-t p-1">
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="w-full justify-start gap-2 font-normal"
+                                onClick={openInlineCreateDialog}
+                            >
+                                <IconPlus className="size-4" />
+                                {inlineCreateCtaText}
+                            </Button>
+                        </div>
+                    )}
                 </Command>
             </PopoverContent>
         </Popover>
@@ -893,21 +907,44 @@ function ApiSelectCore({
             </div>
         )}
         </div>
-        {CreateAdapter ? (
+        {canCreateInPlace ? (
             <Dialog
                 open={createDialogOpen}
                 onOpenChange={(next) => {
                     if (!next) setCreateDialogOpen(false);
                 }}
             >
-                <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
-                    <CreateAdapter
-                        onCreated={handleInlineCreated}
-                        onCancel={() => setCreateDialogOpen(false)}
-                        defaultNameQuery={createPrefillSearch}
-                        postBody={postBody}
-                        formExtras={formExtras}
-                    />
+                <DialogContent
+                    // React bubbles a submit through the portal: without this, saving here also submits the form around the select.
+                    onSubmit={(e) => e.stopPropagation()}
+                    className={
+                        CreateAdapter
+                            ? "max-h-[90vh] overflow-y-auto sm:max-w-lg"
+                            : "flex max-h-[min(90vh,920px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl"
+                    }
+                    // A create page has no description line; an explicit `undefined` tells Radix so instead of warning.
+                    {...(CreateAdapter ? {} : {"aria-describedby": undefined})}
+                >
+                    {CreateAdapter ? (
+                        <CreateAdapter
+                            onCreated={handleInlineCreated}
+                            onCancel={() => setCreateDialogOpen(false)}
+                            defaultNameQuery={createPrefillSearch}
+                            postBody={postBody}
+                            formExtras={formExtras}
+                        />
+                    ) : CreatePage ? (
+                        <>
+                            <DialogHeader className="shrink-0 border-b px-6 py-4 text-left">
+                                <DialogTitle>{inlineCreateCtaText}</DialogTitle>
+                            </DialogHeader>
+                            <div className="min-h-0 flex-1 overflow-y-auto px-6 py-4">
+                                <Suspense fallback={<Loader size="20px" className="p-3" />}>
+                                    {createDialogOpen ? <CreatePage embedForm onFinished={handleCreatePageFinished} /> : null}
+                                </Suspense>
+                            </div>
+                        </>
+                    ) : null}
                 </DialogContent>
             </Dialog>
         ) : null}

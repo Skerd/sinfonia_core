@@ -181,5 +181,13 @@ export function getCoreWidgetContribution(): WidgetContribution {
             "#TenancyCityCard": CITY_SINGLE,
             "#TenancyCurrencyCard": CURRENCY_SINGLE,
         },
+        /** Create pages an `#ApiSelect` on `<apiUrl>/select` opens in a dialog ("Create new …" below the dropdown). */
+        createPages: {
+            "/api/auxiliary/blogCategory": lazy(() => import("@coreModule/clients/panel/private/blogCategories/createBlogCategory.tsx")),
+            "/api/auxiliary/city": lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/cities/createCity.tsx")),
+            "/api/auxiliary/country": lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/countries/createCountry.tsx")),
+            "/api/auxiliary/state": lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/states/createState.tsx")),
+            "/api/finance/currency": lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/currencies/createCurrency.tsx")),
+        },
     };
 }

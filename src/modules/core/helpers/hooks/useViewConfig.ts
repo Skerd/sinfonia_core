@@ -25,6 +25,19 @@ export function selectViewConfig(
 }
 
 /**
+ * The `viewKey` config of the model served at the CRUD `apiUrl`, for callers that know a route rather than a
+ * collection (an `#ApiSelect` reading the create form's `accessModel` behind its `/select`).
+ */
+export function selectViewConfigByApiUrl(
+    configs: Record<string, CachedViewConfigs> | undefined,
+    apiUrl: string | undefined,
+    viewKey: string,
+): ViewConfig | undefined {
+    if (!configs || !apiUrl) return undefined;
+    return Object.values(configs).find((byKey) => byKey[viewKey]?.apiUrl === apiUrl)?.[viewKey];
+}
+
+/**
  * Reads a view config and whether it is still loading or definitively missing — for callers
  * that render a loader vs. a "not available" state.
  *

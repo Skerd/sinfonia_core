@@ -57,11 +57,20 @@ type GenericCreatePageConfig<TForm extends FieldValues> = {
 };
 
 export type GenericCreateSurfaceProps = {
-    /** Close host UI (e.g. dialog) instead of `navigate(-1)` after success or on cancel. */
-    onFinished?: () => void;
+    /**
+     * Close host UI (e.g. dialog) instead of `navigate(-1)` after success or on cancel. After a save it gets the new
+     * record's id, so the host can pick it (an `#ApiSelect` creating a missing option); on cancel it gets nothing.
+     */
+    onFinished?: (createdId?: string) => void;
     /** Hide page header chrome — set when embedding inside a dialog. */
     embedForm?: boolean;
 };
+
+/** The new record's id in a create response: `createCrudRouter`'s PUT always answers with `_id`. */
+function createdIdOf(data: unknown): string | undefined {
+    if (typeof data !== "object" || data === null || !("_id" in data)) return undefined;
+    return typeof data._id === "string" && data._id !== "" ? data._id : undefined;
+}
 
 export function createGenericCreatePage<TForm extends FieldValues>(config: GenericCreatePageConfig<TForm>) {
     type CreateProps = WithLanguageType & WithAxiosType<unknown, TForm> & GenericCreateSurfaceProps;
@@ -114,15 +123,15 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
         if (!create && !(requestable && canRequest)) return <Forbidden />;
         if (!viewConfig) return viewConfigLoading ? <Loader /> : <Forbidden />;
 
-        const close = () => {
-            if (onFinished) onFinished();
+        const close = (createdId?: string) => {
+            if (onFinished) onFinished(createdId);
             else navigate(-1);
         };
 
-        const handleSuccess = () => {
+        const handleSuccess = (data: unknown) => {
             config.afterSuccess?.();
             // An embedding host (dialog) always owns the close; `successPath` only applies to routed pages.
-            if (onFinished || config.successPath === undefined) return close();
+            if (onFinished || config.successPath === undefined) return close(createdIdOf(data));
             if (typeof config.successPath === "number") navigate(config.successPath);
             else navigate(config.successPath);
         };
@@ -141,7 +150,7 @@ export function createGenericCreatePage<TForm extends FieldValues>(config: Gener
                 loading={loading}
                 innerRef={innerRef}
                 onSubmit={handleSubmit}
-                onCancel={close}
+                onCancel={() => close()}
                 onSuccess={handleSuccess}
                 formExtras={formExtras}
                 extraTitles={extraTitles}

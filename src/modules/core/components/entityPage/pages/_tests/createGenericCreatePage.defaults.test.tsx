@@ -1,7 +1,7 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 import type {ComponentType} from "react";
 import {MemoryRouter} from "react-router-dom";
-import {render, screen} from "@testing-library/react";
+import {fireEvent, render, screen} from "@testing-library/react";
 
 vi.mock("@coreModule/helpers/hocs/withLanguage.tsx", () => ({
     default: () => (Inner: ComponentType<Record<string, unknown>>) => (props: Record<string, unknown>) =>
@@ -37,10 +37,18 @@ vi.mock("@coreModule/helpers/hooks/useCompanyTimeZone.ts", () => ({
     useCompanyTimeZone: () => "Pacific/Kiritimati",
 }));
 vi.mock("@coreModule/components/viewEngine/FormViewRenderer.tsx", () => ({
-    default: ({defaultValues, resolveLanguageKey}: {defaultValues: unknown; resolveLanguageKey: (key: string) => string}) => (
+    default: ({defaultValues, resolveLanguageKey, onSuccess, onCancel}: {
+        defaultValues: unknown;
+        resolveLanguageKey: (key: string) => string;
+        onSuccess: (data: unknown) => void;
+        onCancel: () => void;
+    }) => (
         <>
             <pre data-testid="defaults">{JSON.stringify(defaultValues)}</pre>
             <p data-testid="submit">{resolveLanguageKey("formButtons.submit")}</p>
+            {/* What withAxios hands the form after the PUT: the response body. */}
+            <button type="button" onClick={() => onSuccess({_id: "new-1", name: "Draft"})}>saved</button>
+            <button type="button" onClick={onCancel}>cancel</button>
         </>
     ),
 }));
@@ -112,6 +120,22 @@ describe("createGenericCreatePage defaultValues (GLB-09, D116)", () => {
         access.requestable = true;
         render(<MemoryRouter><Creating /></MemoryRouter>);
         expect(screen.getByTestId("submit").textContent).toBe("request.formButtons.submit");
+    });
+});
+
+describe("createGenericCreatePage embedded in a dialog", () => {
+    it("hands the host the new record's id after a save, so an #ApiSelect can pick it", () => {
+        const onFinished = vi.fn();
+        render(<MemoryRouter><Creating embedForm onFinished={onFinished} /></MemoryRouter>);
+        fireEvent.click(screen.getByText("saved"));
+        expect(onFinished).toHaveBeenCalledExactlyOnceWith("new-1");
+    });
+
+    it("hands the host nothing on cancel", () => {
+        const onFinished = vi.fn();
+        render(<MemoryRouter><Creating embedForm onFinished={onFinished} /></MemoryRouter>);
+        fireEvent.click(screen.getByText("cancel"));
+        expect(onFinished).toHaveBeenCalledExactlyOnceWith(undefined);
     });
 });
 

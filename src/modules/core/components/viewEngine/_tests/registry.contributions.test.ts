@@ -36,4 +36,10 @@ describe("widget registry with real contributions", () => {
         expect(registry.getAuditSinglePostHint("#TenancyCountryCard")?.url).toBe("/api/auxiliary/country/single");
         expect(registry.getAuditSinglePostHint("#ProjectSheetView")?.url).toBe("/api/realEstate/project/single");
     });
+
+    it("finds core and module create pages by their CRUD url", () => {
+        expect(registry.getCreatePage("/api/auxiliary/country")).toBeDefined();
+        expect(registry.getCreatePage("/api/realEstate/project")).toBeDefined();
+        expect(registry.getCreatePage("/api/realEstate/project/select")).toBeUndefined();
+    });
 });

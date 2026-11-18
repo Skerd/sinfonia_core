@@ -16,6 +16,7 @@ const full = {
     compoundFormWidgetRenderers: {"#B": renderer},
     formWriteAccessKeys: {"#B": "field"},
     auditSinglePostHints: {"#A": {url: "/api/x/single", labelFields: ["name"]}},
+    createPages: {"/api/x": Widget},
 };
 
 describe("createWidgetContributions", () => {
@@ -51,6 +52,7 @@ describe("createWidgetContributions", () => {
         ["an audit hint without url", {auditSinglePostHints: {"#A": {labelFields: []}}}],
         ["an audit hint with bad labels", {auditSinglePostHints: {"#A": {url: "/x", labelFields: [1]}}}],
         ["widgets as an array", {widgets: [Widget]}],
+        ["createPages with a string", {createPages: {"/api/x": "page"}}],
     ])("rejects %s", (_label, entry) => {
         const {list} = createWidgetContributions({[path("bad")]: {default: [entry]}});
         expect(() => list()).toThrow(`[widgetContribution] Invalid entry at ${path("bad")}[0]`);

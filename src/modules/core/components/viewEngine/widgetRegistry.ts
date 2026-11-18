@@ -8,6 +8,7 @@ import type {
 import {getSortedWidgetContributions} from "@coreModule/helpers/moduleContributions/loadWidgetContributions.ts";
 import {getCoreWidgetContribution} from "./registry/coreContribution.ts";
 import type {WidgetMeta} from "./widgetMeta.ts";
+import type {GenericCreateSurfaceProps} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
 
 export {LEGACY_TO_TABLER_EXPORT, registerIcon, resolveIcon, type ViewConfigIcon} from "./registry/icons.ts";
 
@@ -30,6 +31,8 @@ const COMPOUND_FORM_WIDGET_RENDERERS: Record<string, CompoundFormWidgetRenderer>
 const FORM_WRITE_ACCESS_KEYS: Record<string, string> = {};
 /** Audit `singlePost` hints by widget / linked-sheet token. */
 const AUDIT_SINGLE_POST_HINTS: Record<string, AuditSinglePostHint> = {};
+/** Create pages by their model's CRUD `apiUrl`, opened in a dialog from an `#ApiSelect`. */
+const CREATE_PAGES: Record<string, ComponentType<GenericCreateSurfaceProps>> = {};
 
 let contributionsStatus: "idle" | "applying" | "done" = "idle";
 
@@ -41,6 +44,7 @@ function applyContribution(contribution: WidgetContribution): void {
     Object.assign(AUDIT_SINGLE_POST_HINTS, contribution.auditSinglePostHints);
     Object.assign(COMPOUND_FORM_WIDGET_RENDERERS, contribution.compoundFormWidgetRenderers);
     Object.assign(FORM_WRITE_ACCESS_KEYS, contribution.formWriteAccessKeys);
+    Object.assign(CREATE_PAGES, contribution.createPages);
     for (const token of [
         ...(contribution.compoundFormWidgets ?? []),
         ...Object.keys(contribution.compoundFormWidgetRenderers ?? {}),
@@ -116,6 +120,12 @@ export function getFormWriteAccessKey(token: string): string | undefined {
 export function getAuditSinglePostHint(token: string): AuditSinglePostHint | undefined {
     ensureContributionsApplied();
     return AUDIT_SINGLE_POST_HINTS[token];
+}
+
+/** The create page of the model served at `apiUrl` (its CRUD base, without `/select`), if its module contributes one. */
+export function getCreatePage(apiUrl: string): ComponentType<GenericCreateSurfaceProps> | undefined {
+    ensureContributionsApplied();
+    return CREATE_PAGES[apiUrl];
 }
 
 /*

@@ -3,7 +3,7 @@ import type {ReactNode} from "react";
 import {describe, expect, it} from "vitest";
 import type {ViewConfig} from "armonia/src/modules/core/api/auxiliary/private/viewConfig";
 import {type CachedViewConfigs, ViewConfigContext} from "@coreModule/helpers/context/viewConfigContext.tsx";
-import {selectViewConfig, useViewConfig, useViewConfigState} from "@coreModule/helpers/hooks/useViewConfig.ts";
+import {selectViewConfig, selectViewConfigByApiUrl, useViewConfig, useViewConfigState} from "@coreModule/helpers/hooks/useViewConfig.ts";
 
 const sheet = {viewType: "sheet"} as unknown as ViewConfig;
 const createForm = {viewType: "form"} as unknown as ViewConfig;
@@ -33,6 +33,27 @@ describe("selectViewConfig", () => {
         expect(selectViewConfig(configs, "", "sheet")).toBeUndefined();
         expect(selectViewConfig(configs, null, "sheet")).toBeUndefined();
         expect(selectViewConfig(configs, undefined, "sheet")).toBeUndefined();
+    });
+});
+
+describe("selectViewConfigByApiUrl", () => {
+    const cityCreate = {viewType: "form", apiUrl: "/api/auxiliary/city"} as ViewConfig;
+    const citySheet = {viewType: "sheet", apiUrl: "/api/auxiliary/city"} as ViewConfig;
+    const byUrl: Record<string, CachedViewConfigs> = {
+        countries: {"form:create": {viewType: "form", apiUrl: "/api/auxiliary/country"} as ViewConfig},
+        cities: {sheet: citySheet, "form:create": cityCreate},
+    };
+
+    it("finds the view of the model served at a CRUD url, by exact view key", () => {
+        expect(selectViewConfigByApiUrl(byUrl, "/api/auxiliary/city", "form:create")).toBe(cityCreate);
+        expect(selectViewConfigByApiUrl(byUrl, "/api/auxiliary/city", "sheet")).toBe(citySheet);
+    });
+
+    it("returns undefined for an unknown url or view key, or without a cache or url", () => {
+        expect(selectViewConfigByApiUrl(byUrl, "/api/auxiliary/city/select", "form:create")).toBeUndefined();
+        expect(selectViewConfigByApiUrl(byUrl, "/api/auxiliary/country", "form:edit")).toBeUndefined();
+        expect(selectViewConfigByApiUrl(undefined, "/api/auxiliary/city", "form:create")).toBeUndefined();
+        expect(selectViewConfigByApiUrl(byUrl, undefined, "form:create")).toBeUndefined();
     });
 });
 

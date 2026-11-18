@@ -3,6 +3,7 @@ import type {FieldBinding, ViewNode} from "armonia/src/modules/core/api/auxiliar
 import type {ViewRendererContext} from "@coreModule/components/viewEngine/viewRendererHelpers.ts";
 import type {WidgetMeta} from "@coreModule/components/viewEngine/widgetMeta.ts";
 import type {CompoundFormWidgetRenderer} from "@coreModule/components/viewEngine/form/types.ts";
+import type {GenericCreateSurfaceProps} from "@coreModule/components/entityPage/pages/createGenericCreatePage.tsx";
 
 export type {CompoundFormWidgetArgs, CompoundFormWidgetRenderer, FormWidgetExtra} from "@coreModule/components/viewEngine/form/types.ts";
 
@@ -76,4 +77,10 @@ export type WidgetContribution = {
      * Read by the audit drawer (`viewEngine/audit/auditFieldHints.ts`).
      */
     auditSinglePostHints?: Record<string, AuditSinglePostHint>;
+    /**
+     * A model's CRUD `apiUrl` (its create page's PUT url, e.g. `/api/realEstate/project`) → that create page, built by
+     * `createGenericCreatePage` and loaded lazily. An `#ApiSelect` on `<apiUrl>/select` then offers "Create new …" below
+     * the dropdown and opens the page in a dialog, so a missing record is created without leaving the form.
+     */
+    createPages?: Record<string, ComponentType<GenericCreateSurfaceProps>>;
 };

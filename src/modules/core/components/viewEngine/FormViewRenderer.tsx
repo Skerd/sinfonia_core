@@ -31,8 +31,8 @@ export type FormViewRendererProps<T extends FieldValues = FieldValues> = {
      * Rendered after config-driven fields and before static children.
      */
     renderChildren?: (form: UseFormReturn<T>) => ReactNode;
-    /** Override the default useImperativeHandle success behavior (default: reset the form). */
-    onSuccess?: () => void;
+    /** Override the default useImperativeHandle success behavior (default: reset the form). Receives the response body. */
+    onSuccess?: (data: unknown) => void;
     extraTitles?: (string | undefined)[];
     /** Disables the submit control (e.g. client-side pricing gates) without affecting cancel. */
     submitDisabled?: boolean;
@@ -71,8 +71,8 @@ export default function FormViewRenderer<T extends FieldValues = FieldValues>({
     });
 
     useImperativeHandle(innerRef, () => ({
-        success: () => {
-            if (onSuccess) onSuccess();
+        success: (data: unknown) => {
+            if (onSuccess) onSuccess(data);
             else form.reset();
         },
     }));
