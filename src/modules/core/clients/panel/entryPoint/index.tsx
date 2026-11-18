@@ -8,8 +8,13 @@ import LanguageSwitch from "@coreModule/components/custom/preferences/languageSw
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {clsx} from "clsx";
 import {Link, useLocation, useSearchParams} from "react-router-dom";
-import withLanguage, {WithLanguageType, type ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {PageHeaderProvider, usePageHeader} from "@coreModule/helpers/context/pageHeaderContext.tsx";
+import {useAccessHydrated, useAccessMap} from "@coreModule/helpers/context/accessContext.tsx";
+import {getModuleSidebarNavGroups} from "@coreModule/helpers/moduleContributions/loadSidebarContributions.ts";
+import {filterNavGroups} from "@coreModule/helpers/navigation/filterNavByAccess.ts";
+import {flattenPanelNavLinks} from "@coreModule/helpers/navigation/flattenPanelNavLinks.ts";
+import {buildRouteCrumbs, navPagePaths} from "@coreModule/helpers/navigation/routeCrumbs.ts";
 import {renderCenterPanelContent} from "@coreModule/clients/panel/entryPoint/routeConfig.tsx";
 import NotificationBell from "@coreModule/components/custom/notifications/notificationBell.tsx";
 import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
@@ -23,60 +28,6 @@ import {CommandPaletteKbd} from "@coreModule/components/custom/commandPalette/co
 import {Button} from "@coreModule/components/ui/button.tsx";
 
 type CenterPanelProps = WithLanguageType;
-
-/** Turns `costControl` into `Cost control` when no translation exists. */
-function humanize(segment: string) {
-    const spaced = segment.replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/[-_]+/g, " ");
-    return spaced.charAt(0).toLocaleUpperCase() + spaced.slice(1);
-}
-
-/**
- * Builds the breadcrumb trail from the route.
- *
- * Walks every segment rather than stopping at two: the previous version
- * special-cased `tenancy/systemSettings` and truncated everything else, so
- * `/realEstate/projects/create` rendered as "Real Estate › Projects" and the
- * create and edit pages had no trail at all.
- *
- * Labels resolve against the same `menus.*` key path the sidebar uses, falling
- * back to `common.*` for the standard CRUD verbs and finally to a humanized
- * segment, so an untranslated route degrades to readable text rather than a
- * raw key.
- */
-function buildBreadcrumbs(pathname: string, resolveLanguageKey: ResolveLanguageKey) {
-    const translate = (key: string) => {
-        const value = resolveLanguageKey(key, true);
-        return typeof value === "string" && value ? value : undefined;
-    };
-
-    const segments = pathname.split("/").filter(Boolean);
-
-    if (segments.length === 0 || (segments.length === 1 && segments[0] === "home")) {
-        return [{label: translate("home.title") ?? "Home", path: "/"}];
-    }
-
-    const breadcrumbs: Array<{label: string; path: string}> = [];
-    let keyPath = "menus";
-    let urlPath = "";
-
-    for (const segment of segments) {
-        // Object ids are not navigation: they carry no label and the crumb the
-        // user wants there is the entity name, which the page publishes.
-        if (/^[0-9a-f]{24}$/i.test(segment)) continue;
-
-        keyPath += `.${segment}`;
-        urlPath += `/${segment}`;
-        breadcrumbs.push({
-            label:
-                translate(`${keyPath}.title`) ??
-                translate(`common.${segment}`) ??
-                humanize(segment),
-            path: urlPath,
-        });
-    }
-
-    return breadcrumbs;
-}
 
 /**
  * The trail is route crumbs followed by whatever the page published. Rendered
@@ -100,9 +51,9 @@ function ShellBreadcrumb() {
                               * trail left the header with no indication of location at all.
                               */}
                             <BreadcrumbItem className={cn("min-w-0", !isLast && "hidden md:block")}>
-                                {isLast || !crumb.path ? (
+                                {isLast ? (
                                     <BreadcrumbPage className="truncate">{crumb.label}</BreadcrumbPage>
-                                ) : (
+                                ) : crumb.path ? (
                                     /*
                                      * asChild + router Link, not href: a bare anchor is a full
                                      * document load, which tears down the Redux store and refetches
@@ -111,6 +62,9 @@ function ShellBreadcrumb() {
                                     <BreadcrumbLink asChild className="truncate">
                                         <Link to={crumb.path}>{crumb.label}</Link>
                                     </BreadcrumbLink>
+                                ) : (
+                                    // A menu group: names where the page sits but has no page of its own.
+                                    <span className="truncate">{crumb.label}</span>
                                 )}
                             </BreadcrumbItem>
                         </Fragment>
@@ -133,9 +87,24 @@ function CenterPanel({resolveLanguageKey}: CenterPanelProps){
     const menu = segments[0];
     const subview = segments[1];
 
+    const isPlatformCompany = useSelector((state: RootState) => state.authentication.user.company.isPlatformOwner);
+    const isPlatformAdmin = useSelector((state: RootState) => state.authentication.user.isPlatformAdmin);
+    const accessMap = useAccessMap();
+    const accessHydrated = useAccessHydrated();
+
+    // The same pages the sidebar offers this user, so a crumb links exactly where the sidebar would.
+    const pagePaths = useMemo(
+        () => navPagePaths(flattenPanelNavLinks(filterNavGroups(
+            getModuleSidebarNavGroups(resolveLanguageKey, {isPlatformCompany, isPlatformAdmin}),
+            accessMap,
+            accessHydrated,
+        ))),
+        [resolveLanguageKey, isPlatformCompany, isPlatformAdmin, accessMap, accessHydrated],
+    );
+
     const routeCrumbs = useMemo(
-        () => buildBreadcrumbs(pathname, resolveLanguageKey),
-        [pathname, resolveLanguageKey],
+        () => buildRouteCrumbs(pathname, resolveLanguageKey, pagePaths),
+        [pathname, resolveLanguageKey, pagePaths],
     );
 
     const hideHeader = menu === "company" && isMobile && (
