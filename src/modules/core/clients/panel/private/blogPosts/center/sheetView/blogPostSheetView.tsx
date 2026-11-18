@@ -11,6 +11,7 @@ import PublishBlogPost, {PUBLISH_BLOG_POST_ACTION} from "@coreModule/clients/pan
 import UnpublishBlogPost, {UNPUBLISH_BLOG_POST_ACTION} from "@coreModule/clients/panel/private/blogPosts/center/actions/unpublishBlogPost.tsx";
 import SetBlogPostPublishedDialog from "@coreModule/clients/panel/private/blogPosts/center/dialogs/setBlogPostPublishedDialog.tsx";
 import {BlogPostPublishedBadge} from "@coreModule/clients/panel/private/blogPosts/center/cardView/blogPostCard.tsx";
+import AccessFields from "@coreModule/components/viewEngine/widgets/display/accessFields.tsx";
 
 export type BlogPostSheetViewOwnProps = {
     open: boolean;
@@ -78,7 +79,13 @@ function BlogPostSheetView({
                 onRestore={onRestore}
                 editPath={buildEditPath(asBlogPost)}
                 onSheetRowPatched={onSheetRowPatched}
-                headerDescription={<BlogPostPublishedBadge entity={asBlogPost} resolveLanguageKey={resolveLanguageKey} />}
+                // The badge gates on the "published" read key through `AccessFields`; the card provides one, the sheet
+                // mounts outside it, so without its own the badge showed the no-permission lock.
+                headerDescription={
+                    <AccessFields read={access.read}>
+                        <BlogPostPublishedBadge entity={asBlogPost} resolveLanguageKey={resolveLanguageKey} />
+                    </AccessFields>
+                }
                 actionMenuAllowCustomChildren
                 actionMenuChildren={
                     <>
