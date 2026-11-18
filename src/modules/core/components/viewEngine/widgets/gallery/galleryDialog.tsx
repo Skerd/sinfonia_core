@@ -179,8 +179,6 @@ export function GalleryDialog({
     const [currentIndex, setCurrentIndex] = React.useState(firstIndex)
     const [api, setApi] = React.useState<CarouselApi | null>(null)
     const videoRefs = React.useRef<Map<number, HTMLVideoElement>>(new Map())
-    // Radix returns focus only to a DialogTrigger; the gallery opens from its own photo buttons (as DialogFrame does).
-    const openerRef = React.useRef<HTMLElement | null>(null)
 
     const pickSlide = React.useCallback(
         (i: number) => {
@@ -229,13 +227,6 @@ export function GalleryDialog({
             <DialogContent
                 className="w-auto max-w-[min(96vw,80rem)] gap-0 border-none bg-background p-3 sm:max-w-[min(96vw,80rem)]"
                 aria-describedby={undefined}
-                onOpenAutoFocus={() => {
-                    openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
-                }}
-                onCloseAutoFocus={(event) => {
-                    event.preventDefault()
-                    openerRef.current?.focus()
-                }}
             >
                 <DialogTitle className="sr-only">
                     {title ?? <UiTexts path={LANGUAGE_PATH} english={ENGLISH}>{(text) => text("gallery")}</UiTexts>}

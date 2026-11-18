@@ -97,10 +97,15 @@ function DialogContent({
   children,
   showCloseButton = true,
   onPointerDownOutside,
+  onOpenAutoFocus,
+  onCloseAutoFocus,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean
 }) {
+  // Radix returns focus only to a DialogTrigger; most dialogs open from their own button, so remember the opener
+  // (as DialogFrame does, TD-F139).
+  const openerRef = React.useRef<HTMLElement | null>(null)
   return (
     <DialogPortal>
       <DialogOverlay
@@ -118,6 +123,18 @@ function DialogContent({
           className
         )}
         {...props}
+        onOpenAutoFocus={(event) => {
+          openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+          onOpenAutoFocus?.(event)
+        }}
+        onCloseAutoFocus={(event) => {
+          onCloseAutoFocus?.(event)
+          const opener = openerRef.current
+          // An opener that is gone (a menu item) leaves Radix its own return to a DialogTrigger.
+          if (event.defaultPrevented || !opener?.isConnected) return
+          event.preventDefault()
+          opener.focus()
+        }}
         onPointerDownOutside={(event) => {
           onPointerDownOutside?.(event)
           if (event.defaultPrevented) return
