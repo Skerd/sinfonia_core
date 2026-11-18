@@ -145,6 +145,7 @@ const gallery: SheetFieldRenderer = ({binding, ctx, index, Component}) => {
         mainImage,
         imageGallery,
         videoGallery,
+        capHero: true,
     }) : null);
 };
 

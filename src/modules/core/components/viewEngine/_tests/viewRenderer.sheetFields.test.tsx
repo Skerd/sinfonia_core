@@ -463,7 +463,7 @@ describe("media", () => {
         renderSheetWith(ViewRenderer, [fieldNode("#GalleryCarousel", "main", wp)], {
             data: {main: [{_id: "i0"}], images: [], videos: [{_id: "v1"}]},
         });
-        expect(lastProps("#GalleryCarousel")).toMatchObject({mainImage: null, imageGallery: [{_id: "i0"}], videoGallery: [{_id: "v1"}], autoplay: true});
+        expect(lastProps("#GalleryCarousel")).toMatchObject({mainImage: null, imageGallery: [{_id: "i0"}], videoGallery: [{_id: "v1"}], autoplay: true, capHero: true});
         expect("icon" in lastProps("#GalleryCarousel")).toBe(false);
 
         renderSheetWith(ViewRenderer, [fieldNode("#GalleryCarousel", "main", wp)], {

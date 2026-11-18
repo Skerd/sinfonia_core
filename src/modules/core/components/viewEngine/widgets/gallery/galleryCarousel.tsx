@@ -7,7 +7,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@coreModule/components/ui/carousel.tsx"
-import { Dialog, DialogContent } from "@coreModule/components/ui/dialog.tsx"
+import { Dialog, DialogContent, DialogTitle } from "@coreModule/components/ui/dialog.tsx"
 import { Media } from "armonia/src/modules/core/types"
 import { cn } from "@coreModule/components/lib/utils.ts";
 import {accessFieldPathExists} from "@coreModule/helpers/context/accessContext.tsx";
@@ -51,11 +51,20 @@ interface GalleryCarouselProps {
      * `1` renders a square — used for logos and other fixed tiles.
      */
     forcedAspectRatio?: number
+    /**
+     * Sheet only. The slide keeps the photo's ratio, but the frame stops at
+     * {@link SHEET_HERO_MAX_HEIGHT} so a portrait does not fill a wide panel.
+     * Click still opens the fullscreen dialog. Cards leave this off.
+     */
+    capHero?: boolean
     className?: string
 }
 
+/** Tallest the sheet hero may grow. Matches `max-h-[28rem]`. */
+const SHEET_HERO_MAX_HEIGHT = "28rem"
+
 type PreviewRailOrientation = "horizontal" | "vertical"
-type PreviewRailVariant = "thumbnail" | "preview"
+type PreviewRailVariant = "thumbnail" | "preview" | "square"
 
 function GalleryPreviewRail({
     media,
@@ -87,10 +96,12 @@ function GalleryPreviewRail({
     }, [selectedIndex, media])
 
     const isHorizontal = orientation === "horizontal"
+    const isSquare = variant === "square"
     const thumbnailMediaClass = "h-16 w-24 object-cover"
     /** Preview tiles: slightly larger squares; media fills via object-cover on full button box. */
     const previewTileBoxClass = "flex aspect-square size-20 p-0"
     const previewMediaClass = "block h-full w-full object-cover"
+    const squareMediaClass = "block size-full object-cover"
 
     const verticalConstrained =
         !isHorizontal &&
@@ -101,7 +112,9 @@ function GalleryPreviewRail({
         <div
             ref={railRef}
             className={
-                isHorizontal
+                isSquare
+                    ? "mx-auto flex w-fit max-w-full shrink-0 flex-row gap-2 overflow-x-auto px-1 py-1"
+                    : isHorizontal
                     ? "flex shrink-0 flex-row gap-2 overflow-x-auto px-2 py-0.5"
                     : verticalConstrained
                       ? "flex min-h-0 w-22 shrink-0 flex-col gap-2 overflow-y-auto overflow-x-hidden px-1 py-0.5"
@@ -126,16 +139,18 @@ function GalleryPreviewRail({
                     aria-selected={i === selectedIndex}
                     aria-label={`${variant === "preview" ? "Preview" : "Thumbnail"} ${i + 1} of ${media.length}`}
                     onClick={(e) => {
-                        if (variant === "preview") {
+                        if (variant === "preview" || variant === "square") {
                             e.preventDefault()
                         }
                         onPick(i)
                     }}
-                    className={`shrink-0 overflow-hidden rounded border ${
-                        variant === "preview" ? `${previewTileBoxClass} ` : ""
-                    }${
-                        i === selectedIndex ? "border-primary" : "border-muted"
-                    }`}
+                    className={cn(
+                        "shrink-0 overflow-hidden border p-0",
+                        isSquare ? "size-14 rounded-lg" : "rounded",
+                        variant === "preview" && previewTileBoxClass,
+                        i === selectedIndex ? "border-primary" : "border-muted",
+                        isSquare && i === selectedIndex && "border-2",
+                    )}
                 >
                     {item.mime.includes("video") ? (
                         <video
@@ -143,9 +158,11 @@ function GalleryPreviewRail({
                             muted
                             preload="metadata"
                             className={
-                                variant === "preview"
-                                    ? previewMediaClass
-                                    : thumbnailMediaClass
+                                isSquare
+                                    ? squareMediaClass
+                                    : variant === "preview"
+                                      ? previewMediaClass
+                                      : thumbnailMediaClass
                             }
                             aria-hidden
                         />
@@ -154,9 +171,11 @@ function GalleryPreviewRail({
                             src={resolveMediaUrl(mediaUrl, item)}
                             alt=""
                             className={
-                                variant === "preview"
-                                    ? previewMediaClass
-                                    : thumbnailMediaClass
+                                isSquare
+                                    ? squareMediaClass
+                                    : variant === "preview"
+                                      ? previewMediaClass
+                                      : thumbnailMediaClass
                             }
                         />
                     )}
@@ -178,6 +197,7 @@ export function GalleryCarousel({
     showPreviews = false,
     previewLocation = "right",
     forcedAspectRatio,
+    capHero = false,
     className,
 }: GalleryCarouselProps) {
     const images = imageGallery?.length ? imageGallery : EMPTY_MEDIA
@@ -214,6 +234,14 @@ export function GalleryCarousel({
             api?.scrollTo(i)
         },
         [api]
+    )
+
+    const pickFullscreenSlide = React.useCallback(
+        (i: number) => {
+            setFullscreenIndex(i)
+            fullscreenApi?.scrollTo(i)
+        },
+        [fullscreenApi]
     )
 
     /* ---------------- Resolve main image aspect ratio ---------------- */
@@ -341,10 +369,13 @@ export function GalleryCarousel({
         []
     )
 
+    /** A capped sheet image is a preview. Click opens the dialog even when the view turns fullscreen off. */
+    const enlarge = allowFullScreen || capHero
+
     const mediaObjectClass =
         mediaClassBase +
-        (coverAfterFirst ? "object-cover" : "object-contain") +
-        (allowFullScreen ? "" : " pointer-events-none")
+        (capHero || !coverAfterFirst ? "object-contain" : "object-cover") +
+        (enlarge ? "" : " pointer-events-none")
 
     const mainCarouselContent = React.useMemo(() => {
         if (!media?.length || aspectRatio == null) return null
@@ -353,8 +384,17 @@ export function GalleryCarousel({
                 {media.map((item, i) => {
                     const slide = (
                         <div
-                            className="relative w-full h-full"
-                            style={{ aspectRatio }}
+                            className={cn(
+                                "relative w-full",
+                                capHero
+                                    ? "h-auto max-h-[28rem] overflow-hidden rounded-md bg-muted"
+                                    : "h-full",
+                            )}
+                            style={
+                                capHero
+                                    ? {aspectRatio, maxHeight: SHEET_HERO_MAX_HEIGHT}
+                                    : {aspectRatio}
+                            }
                         >
                             {item.mime.includes("video") ? (
                                 <video
@@ -385,10 +425,13 @@ export function GalleryCarousel({
                     )
                     return (
                         <CarouselItem key={item._id}>
-                            {allowFullScreen ? (
+                            {enlarge ? (
                                 <Button variant="bare"
                                     type="button"
-                                    className="w-full h-full"
+                                    className={cn(
+                                        "cursor-zoom-in",
+                                        capHero ? "h-auto w-full" : "h-full w-full",
+                                    )}
                                     onClick={() => {
                                         setIndex(i)
                                         api?.scrollTo(i)
@@ -399,7 +442,7 @@ export function GalleryCarousel({
                                     {slide}
                                 </Button>
                             ) : (
-                                <div className="h-full w-full">{slide}</div>
+                                <div className={capHero ? "h-auto w-full" : "h-full w-full"}>{slide}</div>
                             )}
                         </CarouselItem>
                     )
@@ -413,6 +456,8 @@ export function GalleryCarousel({
         coverAfterFirst,
         modifyImagesOnDarkMode,
         allowFullScreen,
+        capHero,
+        enlarge,
         setVideoRef,
         api,
         mediaObjectClass,
@@ -509,12 +554,20 @@ export function GalleryCarousel({
 
     /** Left/right: shell matches slide aspect ratio so height equals rendered media box. */
     const carouselShellClassName = isRowRoot
-        ? "relative w-full min-h-0 min-w-0 shrink-0 overflow-hidden"
-        : "relative min-h-0 min-w-0 flex-1"
+        ? cn(
+              "relative w-full min-h-0 min-w-0 shrink-0 overflow-hidden",
+              capHero && "max-h-[28rem]",
+          )
+        : cn("relative min-h-0 min-w-0", capHero ? "max-h-[28rem] shrink-0" : "flex-1")
     const carouselShellStyle: React.CSSProperties | undefined =
         isRowRoot && aspectRatio != null
-            ? { aspectRatio: `${aspectRatio}` }
-            : undefined
+            ? {
+                  aspectRatio: `${aspectRatio}`,
+                  ...(capHero ? {maxHeight: SHEET_HERO_MAX_HEIGHT} : {}),
+              }
+            : capHero
+              ? {maxHeight: SHEET_HERO_MAX_HEIGHT}
+              : undefined
 
     const mainColumn = (
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
@@ -529,7 +582,11 @@ export function GalleryCarousel({
         </div>
     )
 
-    const rootClassName = isRowRoot ? "flex h-full min-h-0 min-w-0 w-full flex-row items-start" : "flex h-full min-h-0 min-w-0 w-full flex-col"
+    const rootClassName = cn(
+        "flex min-h-0 min-w-0 w-full",
+        isRowRoot ? "flex-row items-start" : "flex-col",
+        capHero ? "h-auto" : "h-full",
+    )
 
     const layoutBody = (() => {
         if (!showPreviews || !previewRailNode) {
@@ -598,92 +655,71 @@ export function GalleryCarousel({
     return (
         <div data-slot="gallery-carousel" className={root}>
             {layoutBody}
-            {allowFullScreen && (
+            {enlarge && (
                 <Dialog open={open} onOpenChange={setOpen}>
-                    <DialogContent className="max-w-6xl border-none p-0 overflow-hidden">
+                    <DialogContent
+                        className="w-auto max-w-[min(96vw,80rem)] gap-0 border-none bg-background p-3 sm:max-w-[min(96vw,80rem)]"
+                        aria-describedby={undefined}
+                    >
+                        <DialogTitle className="sr-only">Gallery</DialogTitle>
+                        <div className="flex w-[min(92vw,76rem)] flex-col gap-3">
                         <Carousel
+                            className="w-full"
                             opts={{ startIndex: index }}
                             setApi={setFullscreenApi}
                         >
                             <CarouselContent>
                                 {media.map((item, i) => (
                                     <CarouselItem key={item._id}>
-                                        <div className="max-h-[85vh] w-full">
-                                            <div
-                                                className="relative w-full h-full"
-                                                style={{
-                                                    aspectRatio:
-                                                        aspectRatio ?? undefined,
-                                                }}
-                                            >
-                                                {item.mime.includes("video") ? (
-                                                    <video
-                                                        ref={setVideoRef(i, true)}
-                                                        autoPlay={
-                                                            i === fullscreenIndex
-                                                        }
-                                                        src={resolveMediaUrl(
-                                                            mediaUrl,
-                                                            item
-                                                        )}
-                                                        aria-label={
-                                                            item.name ??
-                                                            "Gallery video fullscreen"
-                                                        }
-                                                        controls
-                                                        muted
-                                                        playsInline
-                                                        preload="metadata"
-                                                        className={
-                                                            mediaClassBase +
-                                                            (coverAfterFirst
-                                                                ? "object-cover"
-                                                                : "object-contain")
-                                                        }
-                                                    />
-                                                ) : modifyImagesOnDarkMode ? (
-                                                    React.createElement(
-                                                        modifyImagesOnDarkMode,
-                                                        {
-                                                            src: resolveMediaUrl(
-                                                                mediaUrl,
-                                                                item
-                                                            ),
-                                                            alt: item.name ?? "",
-                                                            className:
-                                                                mediaClassBase +
-                                                                (coverAfterFirst
-                                                                    ? "object-cover"
-                                                                    : "object-contain"),
-                                                        }
-                                                    )
-                                                ) : (
-                                                    <img
-                                                        src={resolveMediaUrl(
-                                                            mediaUrl,
-                                                            item
-                                                        )}
-                                                        alt={item.name ?? ""}
-                                                        className={
-                                                            mediaClassBase +
-                                                            (coverAfterFirst
-                                                                ? "object-cover"
-                                                                : "object-contain")
-                                                        }
-                                                    />
-                                                )}
-                                            </div>
+                                        <div className="flex h-[min(75vh,48rem)] w-full items-center justify-center">
+                                            {item.mime.includes("video") ? (
+                                                <video
+                                                    ref={setVideoRef(i, true)}
+                                                    autoPlay={i === fullscreenIndex}
+                                                    src={resolveMediaUrl(mediaUrl, item)}
+                                                    aria-label={item.name ?? "Gallery video fullscreen"}
+                                                    controls
+                                                    muted
+                                                    playsInline
+                                                    preload="metadata"
+                                                    className="max-h-full max-w-full object-contain"
+                                                />
+                                            ) : modifyImagesOnDarkMode ? (
+                                                React.createElement(modifyImagesOnDarkMode, {
+                                                    src: resolveMediaUrl(mediaUrl, item),
+                                                    alt: item.name ?? "",
+                                                    className: "max-h-full max-w-full object-contain",
+                                                })
+                                            ) : (
+                                                <img
+                                                    src={resolveMediaUrl(mediaUrl, item)}
+                                                    alt={item.name ?? ""}
+                                                    className="max-h-full max-w-full object-contain"
+                                                />
+                                            )}
                                         </div>
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
                             {media.length > 1 && (
                                 <>
-                                    <CarouselPrevious />
-                                    <CarouselNext />
+                                    <CarouselPrevious className="left-2" />
+                                    <CarouselNext className="right-2" />
                                 </>
                             )}
                         </Carousel>
+                        {media.length > 1 && (
+                            <GalleryPreviewRail
+                                media={media}
+                                mediaUrl={mediaUrl}
+                                selectedIndex={fullscreenIndex}
+                                onPick={pickFullscreenSlide}
+                                orientation="horizontal"
+                                variant="square"
+                                ariaLabel="Gallery thumbnails"
+                            />
+                        )}
+                        </div>
                     </DialogContent>
                 </Dialog>
             )}
