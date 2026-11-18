@@ -35,6 +35,11 @@ export type EmbeddedItemFieldConfig = {
     icon?: string;
     /** When true, the field value is an ISO country code shown as a flag in the icon slot. */
     flagFromValue?: boolean;
+    /**
+     * Opt-in (D167): an empty value the viewer may read leaves the row off instead of showing "value not set", for an
+     * optional field most items leave blank (a checklist item's instructions). A field the viewer may not read still shows locked.
+     */
+    hideWhenEmpty?: boolean;
 };
 
 function normalizeExternalHref(href: string): string | null {

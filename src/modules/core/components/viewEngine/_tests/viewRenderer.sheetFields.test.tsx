@@ -316,6 +316,36 @@ describe("#SheetEmbeddedItemsList", () => {
         expect(screen.getByText("#1")).toBeInTheDocument();
     });
 
+    it("leaves an empty readable field off when it opts in with hideWhenEmpty, and still locks an unreadable one (D167)", () => {
+        renderSheetWith(ViewRenderer, [fieldNode("#SheetEmbeddedItemsList", "geolocation", {
+            cardColumns: 2,
+            fields: [
+                {name: "city", type: "text", labelKey: "geoCity", hideWhenEmpty: true},
+                {name: "ip", type: "text", labelKey: "geoIp", hideWhenEmpty: true},
+                {name: "region", type: "text", labelKey: "geoRegion"},
+            ],
+            compactSummaryFields: ["city"],
+        })], {
+            data: {geolocation: [{city: "", ip: "", region: ""}]},
+            access: {geolocation: {keys: {city: {}, region: {}}}},
+        });
+        const titles = propsOf("#DisplayCard").map((c) => c.title);
+        expect(titles).not.toContain("t:geoCity");
+        expect(propsOf("#DisplayCard").find((c) => c.title === "t:geoIp")).toMatchObject({locked: true});
+        expect(propsOf("#DisplayCard").find((c) => c.title === "t:geoRegion")).toMatchObject({locked: false, value: ""});
+    });
+
+    it("leaves an empty opted-in field off in entity cards too (D167)", () => {
+        renderSheetWith(ViewRenderer, [fieldNode("#SheetEmbeddedItemsList", "notes", {
+            entityCards: true,
+            fields: [{name: "text", type: "text"}, {name: "hint", type: "text", labelKey: "hint", hideWhenEmpty: true}],
+        })], {
+            data: {notes: [{text: "Keys handed over", hint: ""}]},
+        });
+        expect(screen.getAllByText("Keys handed over").length).toBeGreaterThan(0);
+        expect(screen.queryByText(/t:hint/)).toBeNull();
+    });
+
     it("treats a parent grant with no keys as readable children", () => {
         renderSheetWith(ViewRenderer, [fieldNode("#SheetEmbeddedItemsList", "geolocation", {
             cardColumns: 2,

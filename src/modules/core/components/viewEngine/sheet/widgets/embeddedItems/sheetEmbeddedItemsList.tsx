@@ -121,6 +121,7 @@ function renderEntityCardBodyField(
     const allowed = embeddedFieldReadable(access, listPath, field.name);
     const text = allowed ? resolveEmbeddedFieldText(item, field, resolveSheet) : "";
     if (!text) {
+        if (field.hideWhenEmpty && allowed) return null;
         const label =
             typeof field.labelKey === "string" && field.labelKey.length > 0
                 ? String(resolveSheet(field.labelKey))

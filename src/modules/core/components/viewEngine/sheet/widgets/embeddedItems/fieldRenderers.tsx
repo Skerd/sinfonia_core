@@ -303,6 +303,7 @@ export function renderScalarEmbeddedField(
 ) {
     const allowed = fieldAllowed(access, listPath, field);
     const text = allowed ? resolveEmbeddedFieldText(item, field, resolveSheet) : "";
+    if (field.hideWhenEmpty && allowed && !text) return null;
     const label =
         typeof field.labelKey === "string" && field.labelKey.length > 0
             ? resolveSheet(field.labelKey)
