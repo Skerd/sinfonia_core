@@ -52,7 +52,7 @@ function Users({resolveLanguageKey, administration}: UsersProps) {
                 extraParams={{administration, fetchAdministrationUsers: true}}
                 // The person first; pictures and record dates stay one click away in the column menu (TD-F124).
                 configurations={{limit: 20, columnVisibility: {photo: false, cover: false, createdAt: false, updatedAt: false}}}
-                cardViewClassName="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 pe-1"
+                cardViewClassName="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pe-1"
                 rowActionMenu={{
                     hideView: true,
                     hideEdit: true,
