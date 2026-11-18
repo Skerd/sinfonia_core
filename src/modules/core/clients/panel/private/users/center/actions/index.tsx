@@ -30,6 +30,7 @@ function UserActions({user, specificUserId, onEdit}: UserActionsProps) {
             hideDelete
             hideRestore
             allowMenuForCustomChildren
+            alwaysShowDropDownMenuTrigger
         >
             <EditUserAction user={user} specificUserId={user._id} onEdit={onEdit} />
         </ActionMenu>

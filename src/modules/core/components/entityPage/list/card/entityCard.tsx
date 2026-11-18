@@ -195,6 +195,7 @@ function EntityCardHeader({
                     hideDelete={hideDelete}
                     hideRestore={hideRestore}
                     hideEdit={hideEdit}
+                    alwaysShowDropDownMenuTrigger
                     standardMenuLabel={requestable ? <RequestableStandardMenuLabel entry={entity} collection={resource} /> : null}
                     afterStandardMenuChildren={
                         requestable ? <RequestableEntryMenu entry={entity} collection={resource} onAction={setAction} /> : null

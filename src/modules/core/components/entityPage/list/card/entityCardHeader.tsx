@@ -5,7 +5,7 @@ import {
     CardTitle,
 } from "@coreModule/components/ui/card.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
-import {ACTION_MENU_PIN_WHEN_GALLERY} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
+import {ACTION_MENU_PIN_WHEN_GALLERY, ACTION_MENU_SURFACE_WHEN_GALLERY} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
 
 type EntityTextCardHeaderProps = {
     /** Left tile: avatar, MdiIcon box, or Tabler icon wrapper. */
@@ -97,7 +97,7 @@ export function EntityCardHeader({
                 showActions &&
                 <CardAction className={cn("self-start", ACTION_MENU_PIN_WHEN_GALLERY)}>
                     <div
-                        className={cn("shrink-0 flex justify-end", className)}
+                        className={cn("shrink-0 flex justify-end", ACTION_MENU_SURFACE_WHEN_GALLERY, className)}
                         onClick={(e: MouseEvent) => e.stopPropagation()}
                         role="presentation"
                     >

@@ -43,6 +43,13 @@ export const MEDIA_CAROUSEL_CLASS =
 export const ACTION_MENU_PIN_WHEN_GALLERY =
     "group-has-[[data-slot=gallery-carousel]]/card:absolute group-has-[[data-slot=gallery-carousel]]/card:top-0 group-has-[[data-slot=gallery-carousel]]/card:right-0 group-has-[[data-slot=gallery-carousel]]/card:z-30 group-has-[[data-slot=gallery-carousel]]/card:m-0 group-has-[[data-slot=gallery-carousel]]/card:p-1.5";
 
+/**
+ * A card's ⋮ is always shown, so over a photo it needs its own surface to stay legible. Same `bg-background` as the
+ * gallery's arrow buttons. Goes on the box that wraps the menu trigger, not the pinned slot, which carries the corner padding.
+ */
+export const ACTION_MENU_SURFACE_WHEN_GALLERY =
+    "group-has-[[data-slot=gallery-carousel]]/card:rounded-md group-has-[[data-slot=gallery-carousel]]/card:bg-background/90 group-has-[[data-slot=gallery-carousel]]/card:shadow-sm";
+
 /*
  * Card lists use column lanes (`.grid-hierarchy` / `.grid-transactional`
  * in index.css, laid out by `CardMosaic`): the first row runs left to right
