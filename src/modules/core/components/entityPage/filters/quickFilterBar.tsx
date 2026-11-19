@@ -1,5 +1,5 @@
 import {IconX, IconCalendar} from "@tabler/icons-react";
-import {useEffect, useId, useMemo, useRef, useState} from "react";
+import {Fragment, useEffect, useId, useMemo, useRef, useState} from "react";
 import {compose} from "redux";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -122,7 +122,8 @@ export function buildQuickFilterExtraParams(
 // ---------------------------------------------------------------------------
 
 const TEXT_DEBOUNCE_MS = 300;
-const FIELD_WIDTH = "h-8 text-sm min-w-[140px] max-w-[200px] max-md:w-full max-md:max-w-none";
+/* The bar sits in the list's compact filters dropdown (D170): each control takes its row's width. */
+const FIELD_WIDTH = "h-8 text-sm w-full min-w-0";
 /** Room for the bar's own clear button, which sits over the right edge of text/date inputs. */
 const CLEARABLE_PADDING = "pr-7";
 
@@ -257,7 +258,7 @@ function BooleanInput({def, value, onChange, resolveLanguageKey}: QuickFilterInp
             value={boolVal}
             onValueChange={(v: string | string[] | undefined) => onChange(v ? v === "true" : null)}
             placeholder={def.placeholder ?? def.label}
-            className="h-8 text-sm min-w-[120px] max-w-[160px] max-md:w-full max-md:max-w-none"
+            className={FIELD_WIDTH}
         />
     );
 }
@@ -328,7 +329,7 @@ function ObjectIdInput({def, value, label, onChange, values, extraParams}: Quick
                 onChange(next as FilterValue | null, resolvedLabel);
             }}
             placeholder={def.placeholder ?? def.label}
-            className={cn(FIELD_WIDTH, "max-w-[220px]")}
+            className={FIELD_WIDTH}
             pageSize={50}
         />
     );
@@ -374,17 +375,17 @@ function QuickFilterBar({
         <div
             role="group"
             aria-label={String(resolveLanguageKey("groupLabel"))}
-            className="flex flex-col items-stretch gap-2 pb-1 md:flex-row md:flex-wrap md:items-end"
+            className="grid grid-cols-[minmax(0,7rem)_minmax(0,1fr)] items-center gap-x-3 gap-y-2"
         >
             {defs.map((def) => {
                 const active = hasActiveValue(values[def.field]);
                 const inputId = `${idPrefix}-${def.field}`;
                 return (
-                    <div key={def.field} className="flex flex-col gap-2 min-w-0 max-md:w-full">
-                        <label htmlFor={inputId} className="text-xs text-muted-foreground leading-none">
+                    <Fragment key={def.field}>
+                        <label htmlFor={inputId} className="truncate text-xs text-muted-foreground">
                             {def.label}
                         </label>
-                        <div className={cn("relative flex items-center max-md:w-full", active && "ring-1 ring-primary/30 rounded-md")}>
+                        <div className={cn("relative flex min-w-0 items-center", active && "ring-1 ring-primary/30 rounded-md")}>
                             <QuickFilterInput
                                 id={inputId}
                                 def={def}
@@ -406,7 +407,7 @@ function QuickFilterBar({
                                 </Button>
                             )}
                         </div>
-                    </div>
+                    </Fragment>
                 );
             })}
             {anyActive && (
@@ -415,7 +416,7 @@ function QuickFilterBar({
                     variant="ghost"
                     size="sm"
                     onClick={onClearAll}
-                    className="h-8 px-2 text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                    className="col-span-2 h-7 justify-self-end px-2 text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                 >
                     <IconX className="size-3.5 mr-1" />
                     {String(resolveLanguageKey("clearFilters"))}
@@ -424,6 +425,65 @@ function QuickFilterBar({
         </div>
     );
 }
+
+/** How many quick filters hold a value (the Filters button's count, D170). */
+export function countActiveQuickFilters(defs: QuickFilterDef[], values: Record<string, FilterValue | null>): number {
+    return defs.filter((def) => hasActiveValue(values[def.field])).length;
+}
+
+/** A quick filter's value as the person picked it: the option's label, never a stored code or id. */
+function quickFilterValueText(
+    def: QuickFilterDef,
+    value: FilterValue,
+    label: string | null | undefined,
+    resolveLanguageKey: WithLanguageType["resolveLanguageKey"],
+): string {
+    switch (def.type) {
+        case COLUMN_TYPE.BOOLEAN:
+            return String(resolveLanguageKey(value === true ? "yes" : "no"));
+        case COLUMN_TYPE.ENUM:
+            return def.enumValues?.find((option) => option.value === value)?.label ?? String(value);
+        case COLUMN_TYPE.OBJECT_ID:
+            return label ?? "";
+        case COLUMN_TYPE.DATE:
+        case COLUMN_TYPE.DATETIME: {
+            const day = typeof value === "string" ? parseIsoDate(value) : undefined;
+            return day ? formatDate(day, {format: DATE_FORMATS.longDate}) : String(value);
+        }
+        default:
+            return String(value);
+    }
+}
+
+type QuickFilterChipsProps = WithLanguageType & Pick<QuickFilterBarProps, "defs" | "values" | "labels" | "onChange">;
+
+/** One removable chip per active quick filter, shown under the list's search box while the filters panel is closed. */
+function QuickFilterChipsView({defs, values, labels, onChange, resolveLanguageKey}: QuickFilterChipsProps) {
+    return (
+        <>
+            {defs.filter((def) => hasActiveValue(values[def.field])).map((def) => {
+                const text = quickFilterValueText(def, values[def.field] as FilterValue, labels?.[def.field], resolveLanguageKey);
+                return (
+                    <div key={def.field} className="inline-flex items-center rounded-md bg-secondary/50 border border-border/50 overflow-hidden shrink-0 h-6">
+                        <span className="px-2 text-xs font-medium max-w-48 truncate">
+                            {text ? `${def.label}: ${text}` : def.label}
+                        </span>
+                        <Button variant="bare"
+                            type="button"
+                            onClick={() => onChange(def.field, null, null)}
+                            className="w-5 h-6 flex items-center justify-center shrink-0 hover:bg-destructive/15 hover:text-destructive transition-colors border-l border-border/50"
+                            aria-label={`${String(resolveLanguageKey("clear"))} ${def.label}`}
+                        >
+                            <IconX className="size-3" />
+                        </Button>
+                    </div>
+                );
+            })}
+        </>
+    );
+}
+
+export const QuickFilterChips = withLanguage("src/modules/core/components/entityPage/quickFilterBar.tsx")(QuickFilterChipsView);
 
 export default compose(
     withLanguage("src/modules/core/components/entityPage/quickFilterBar.tsx"),

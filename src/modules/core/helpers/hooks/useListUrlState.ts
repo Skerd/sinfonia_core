@@ -4,6 +4,7 @@ import type {SortingState} from "@tanstack/react-table";
 import {
     EXTRA_PARAM_PREFIX,
     LIST_PAGE_PARAM,
+    LIST_SEARCH_PARAM,
     LIST_SORT_PARAM,
     LIST_VIEW_PARAM,
     QUICK_FILTER_PARAM_PREFIX,
@@ -20,8 +21,9 @@ import {
  * - `ep_<name>_label` — display labels for ObjectId extraParams
  * - `*Id` / `*Name` — scope/default filters
  * - `listView` / `listPage` / `listSort` — chrome
+ * - `q` — search text (D170)
  */
-export {EXTRA_PARAM_PREFIX, LIST_PAGE_PARAM, LIST_SORT_PARAM, LIST_VIEW_PARAM, QUICK_FILTER_PARAM_PREFIX};
+export {EXTRA_PARAM_PREFIX, LIST_PAGE_PARAM, LIST_SEARCH_PARAM, LIST_SORT_PARAM, LIST_VIEW_PARAM, QUICK_FILTER_PARAM_PREFIX};
 /** Suffix for companion display-label params (`qf_project_label`, `ep_reservedBy_label`). */
 export const FILTER_LABEL_SUFFIX = "_label";
 
@@ -113,6 +115,7 @@ export function useListUrlState({fallbackView = "card", limit, paramScope}: UseL
     const viewParam = listChromeParam(LIST_VIEW_PARAM, paramScope);
     const pageParam = listChromeParam(LIST_PAGE_PARAM, paramScope);
     const sortParamKey = listChromeParam(LIST_SORT_PARAM, paramScope);
+    const searchParamKey = listChromeParam(LIST_SEARCH_PARAM, paramScope);
 
     const urlView = parseView(searchParams.get(viewParam), fallbackView);
     const urlViewRef = useRef(urlView);
@@ -134,6 +137,7 @@ export function useListUrlState({fallbackView = "card", limit, paramScope}: UseL
     const sortParam = searchParams.get(sortParamKey);
     const sorting = useMemo(() => parseSort(sortParam), [sortParam]);
     const offset = (page - 1) * limit;
+    const search = searchParams.get(searchParamKey) ?? "";
 
     const patchParams = useCallback((mutate: (next: URLSearchParams) => void) => {
         setSearchParamsRef.current(
@@ -189,9 +193,23 @@ export function useListUrlState({fallbackView = "card", limit, paramScope}: UseL
         [patchParams, sortParamKey, pageParam],
     );
 
+    const setSearch = useCallback(
+        (text: string) => {
+            patchParams((params) => {
+                const trimmed = text.trim();
+                if ((params.get(searchParamKey) ?? "") === trimmed) return;
+                if (trimmed) params.set(searchParamKey, trimmed);
+                else params.delete(searchParamKey);
+                // Other results: start from the first page.
+                params.delete(pageParam);
+            });
+        },
+        [patchParams, searchParamKey, pageParam],
+    );
+
     return useMemo(
-        () => ({viewMode, setViewMode, page, offset, setOffset, setPage, sorting, setSorting}),
-        [viewMode, setViewMode, page, offset, setOffset, setPage, sorting, setSorting],
+        () => ({viewMode, setViewMode, page, offset, setOffset, setPage, sorting, setSorting, search, setSearch}),
+        [viewMode, setViewMode, page, offset, setOffset, setPage, sorting, setSorting, search, setSearch],
     );
 }
 
@@ -278,6 +296,14 @@ export function writeQuickFilterParam(
     listPageParam: string = LIST_PAGE_PARAM,
 ) {
     writeValueWithLabel(setSearchParams, quickFilterParamKey(field), quickFilterLabelParamKey(field), value, label, listPageParam);
+}
+
+/** Removes the quick-filter values and labels of `fields` from `params` (mutates), for a clear that writes the URL once. */
+export function deleteQuickFilterParams(params: URLSearchParams, fields: string[]): void {
+    for (const field of fields) {
+        params.delete(quickFilterParamKey(field));
+        params.delete(quickFilterLabelParamKey(field));
+    }
 }
 
 export function clearQuickFilterParams(

@@ -208,6 +208,22 @@ describe("useListUrlState", () => {
         expect(result.current.search.has("listSort")).toBe(false);
     });
 
+    // D170: the search box's text, per list, trimmed; a new search starts from page 1.
+    it("writes the search text per list and resets the page", () => {
+        const {result} = setup("/list?listPage_units=4&q=other", {limit: 20, paramScope: "units"});
+        expect(result.current.state.search).toBe("");
+
+        act(() => result.current.state.setSearch("  tirana  "));
+        expect(result.current.search.get("q_units")).toBe("tirana");
+        expect(result.current.search.get("q")).toBe("other");
+        expect(result.current.search.has("listPage_units")).toBe(false);
+        expect(result.current.state.search).toBe("tirana");
+
+        act(() => result.current.state.setSearch(" "));
+        expect(result.current.search.has("q_units")).toBe(false);
+        expect(result.current.state.search).toBe("");
+    });
+
     it("keeps sorting and setters referentially stable across unrelated URL changes", () => {
         const {result} = setup("/list?listSort=name:asc");
         const first = result.current.state;

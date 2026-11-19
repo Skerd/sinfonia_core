@@ -233,7 +233,8 @@ export function FilterValueInput({
     }
 
     //TODO fix this
-    if (fieldConfig.type === "objectId" && fieldConfig.apiUrl) {
+    // `contains` on a reference takes the linked record's name as text (D170), not a picked record.
+    if (fieldConfig.type === "objectId" && fieldConfig.apiUrl && operator !== "contains") {
         return (
             <ObjectIdFilterValueInput
                 fieldConfig={fieldConfig}

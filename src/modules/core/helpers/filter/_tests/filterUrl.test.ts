@@ -69,6 +69,12 @@ describe("pruneFilterLabelsToDsl", () => {
         const labels = { project: { a1: "A1", a2: "A2" }, unit: { u1: "U1" }, other: { z: "Z" } };
         expect(pruneFilterLabelsToDsl(labels, dsl)).toEqual({ project: { a1: "A1" }, unit: { u1: "U1" } });
     });
+
+    // D170: "Project contains tower" carries search text, not an id to label.
+    it("treats a reference's search text as no id", () => {
+        const dsl = group({ rules: [buildFilterRule("project", "contains", "a1"), buildFilterRule("unit", "notIn", ["u1"])] });
+        expect(pruneFilterLabelsToDsl({ project: { a1: "A1" }, unit: { u1: "U1" } }, dsl)).toEqual({ unit: { u1: "U1" } });
+    });
 });
 
 describe("mergeAndFilterDSL", () => {
@@ -165,7 +171,7 @@ describe("navigation URLs", () => {
     });
 
     it("strips user filter and chrome params", () => {
-        const params = new URLSearchParams("filter=1&qf_a=1&qf_a=2&ep_b=1&listView=card&listView_x=t&listPage_x=2&listSort=s&keep=1");
+        const params = new URLSearchParams("filter=1&q=tirana&q_x=rome&qf_a=1&qf_a=2&ep_b=1&listView=card&listView_x=t&listPage_x=2&listSort=s&keep=1");
         stripUserFilterParams(params);
         stripListChromeParams(params, true);
         expect(params.toString()).toBe("listView=card&listView_x=t&keep=1");

@@ -36,15 +36,16 @@ export function FilterRuleComponent({
         <div
             role="group"
             aria-label={resolveLanguageKey("filterRule")}
-            className="flex items-center gap-2 w-full min-w-0 rounded-md border border-border bg-muted/5 px-2 py-1.5"
+            className="flex w-full min-w-0 flex-wrap items-center gap-1.5 rounded-md border border-border bg-muted/5 p-1.5 sm:flex-nowrap sm:gap-2 sm:px-2"
         >
             {/*
-              Progressive widths:
+              Phones (D170, the rule builder sits in a narrow dialog): the field and its remove button on one line,
+              the operator and value on the next, so no control is cut to "Co…". From `sm` one line, progressive widths:
               - no field → field 100%
               - field only → field + operator 50/50
               - field + operator → field + operator + value 33/33/33
             */}
-            <div className={cn("min-w-0", showValue || hasField ? "flex-1 basis-0" : "w-full flex-1")}>
+            <div className={cn("order-1 min-w-0 basis-[calc(100%-2.5rem)] sm:order-none", showValue || hasField ? "sm:flex-1 sm:basis-0" : "sm:w-full sm:flex-1")}>
                 <SimpleSelect
                     options={fields.map((f) => ({
                         value: f.path,
@@ -72,7 +73,7 @@ export function FilterRuleComponent({
             </div>
 
             {hasField && (
-                <div className="min-w-0 flex-1 basis-0">
+                <div className="order-3 min-w-0 grow basis-2/5 sm:order-none sm:flex-1 sm:basis-0">
                     <SimpleSelect
                         options={(fieldConfig?.operators ?? []).map((op: string) => ({
                             value: op,
@@ -93,7 +94,7 @@ export function FilterRuleComponent({
             )}
 
             {showValue && (
-                <div className="min-w-0 flex-1 basis-0">
+                <div className="order-4 min-w-0 grow basis-1/2 sm:order-none sm:flex-1 sm:basis-0">
                     <FilterValueInput
                         fieldConfig={fieldConfig}
                         operator={rule.operator}
@@ -113,7 +114,7 @@ export function FilterRuleComponent({
                         size="sm"
                         aria-label={resolveLanguageKey("removeFilter")}
                         onClick={() => onRemove(groupId, rule.id)}
-                        className="h-8 w-8 shrink-0 px-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                        className="order-2 h-8 w-8 shrink-0 px-0 text-destructive hover:text-destructive hover:bg-destructive/10 sm:order-none"
                     >
                         <IconTrash className="size-4" />
                     </Button>

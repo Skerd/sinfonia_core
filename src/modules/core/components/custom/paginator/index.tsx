@@ -28,9 +28,8 @@ function Paginator({
 }: PaginatorProps) {
 
     const [start, setStart] = useState(1);
-    const [end, setEnd] = useState(propLimit);
     const [offset, setOffset] = useState(start - 1);
-    const [limit, setLimit] = useState(end - start + 1);
+    const [limit, setLimit] = useState(propLimit);
 
     useEffect(() => {
         setPropOffset?.(offset);
@@ -40,19 +39,20 @@ function Paginator({
     }, [limit]);
 
     // `total` is fetched data (see cardAndTableView.tsx: `total={data?.total ?? 0}`), so it can shrink
-    // out from under the current start/end/offset when a filter narrows the result set — without this,
+    // out from under the current start/offset when a filter narrows the result set — without this,
     // the paginator kept requesting an out-of-range offset and showed a stale "81-100 / 5" range.
     useEffect(() => {
         if (total <= 0) return;
         if (start > total) {
-            const newEnd = Math.min(limit, total);
             setStart(1);
-            setEnd(newEnd);
             setOffset(0);
-        } else if (end > total) {
-            setEnd(total);
         }
     }, [total]);
+
+    // The range is read from the page and the current total, never kept: a search changes the total on every
+    // keystroke, and a kept end stuck at "1-3" after the list grew back (D170).
+    const shownStart = total > 0 ? start : 0;
+    const shownEnd = Math.min(start + limit - 1, total);
 
     // This control pages by offset/limit over an editable range rather than by
     // page number, so it borrows Pagination's nav/list semantics but keeps
@@ -62,12 +62,11 @@ function Paginator({
             <PaginationContent className="gap-0">
                 <PaginationItem className="mr-2 flex items-center gap-1 text-nowrap text-xs text-muted-foreground">
                     <LimitUpdater
-                        start={start}
-                        end={end}
+                        start={shownStart}
+                        end={shownEnd}
                         total={total}
                         onRangeChange={(newStart, newEnd) => {
                             setStart(newStart);
-                            setEnd(newEnd);
                             setOffset(newStart - 1);
                             setLimit(newEnd - newStart + 1);
                         }}
@@ -88,7 +87,6 @@ function Paginator({
                                         ? Math.max(0, total - limit)
                                         : rawOffset;
                                 setStart(Math.max(1, newOffset + 1));
-                                setEnd(Math.max(1, Math.min(newOffset + limit, total)));
                                 setOffset(newOffset);
                             }}
                             disabled={total === 0 || loading}
@@ -111,7 +109,6 @@ function Paginator({
                                         ? 0
                                         : rawOffset;
                                 setStart(Math.max(1, newOffset + 1));
-                                setEnd(Math.max(1, Math.min(newOffset + limit, total)));
                                 setOffset(newOffset);
                             }}
                             disabled={total === 0 || loading}

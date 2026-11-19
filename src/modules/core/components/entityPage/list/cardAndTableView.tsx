@@ -1,19 +1,23 @@
-import {IconLayoutGrid, IconList, IconAdjustments} from "@tabler/icons-react";
+import {IconChevronDown, IconFilter, IconLayoutGrid, IconList, IconPlus, IconSearch, IconX} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
+import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
+import {Input} from "@coreModule/components/ui/input.tsx";
 import {ToggleGroup, ToggleGroupItem} from "@coreModule/components/ui/toggle-group.tsx";
 import {type CSSProperties, JSX, type KeyboardEvent, type ReactNode, Ref, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {TableVirtuoso, type FillerRowProps, type ItemProps, type TableComponents, type TableProps} from "react-virtuoso";
 import type {DeletedData} from "armonia/src/modules/core/types/shared.types.ts";
 // ROW SELECTION — parked until a multi-selection action exists (bulk delete/export/assign).
 // import {Checkbox} from "@coreModule/components/ui/checkbox.tsx";
-import {useListUrlState, listChromeParam, LIST_PAGE_PARAM, type EntityListViewMode as UrlViewMode} from "@coreModule/helpers/hooks/useListUrlState.ts";
+import {useListUrlState, listChromeParam, LIST_PAGE_PARAM, LIST_SEARCH_PARAM, type EntityListViewMode as UrlViewMode} from "@coreModule/helpers/hooks/useListUrlState.ts";
 // import type {RowSelectionState} from "@tanstack/react-table";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import type { FilterGroup } from "armonia/src/modules/core/database/filter";
 import { isFilterGroupEmpty, mergeAndFilterDSL } from "@coreModule/helpers/filter/mergeFilterDsl.ts";
+import {buildListSearchDSL, canSearchList, type EnumLabelOf} from "@coreModule/helpers/filter/listSearch.ts";
 import { decodeFilterFromUrl, FILTER_URL_PARAM } from "@coreModule/helpers/filter/filterUrl.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
@@ -29,15 +33,14 @@ import DataTableTableHeaderProps, {DataTableHeaderRows} from "@coreModule/compon
 import {TableColGroup, tableWidthStyle} from "@coreModule/components/ui/table/table-colgroup.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import DataTableViewOptions from "@coreModule/components/ui/table/view-options.tsx";
-import {Collapsible, CollapsibleContent} from "@coreModule/components/ui/collapsible.tsx";
-import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useTableConfig} from "@coreModule/helpers/hooks/useTableConfig.ts";
 import {applyPageColumnDefaults} from "@coreModule/helpers/context/tableConfigContext.tsx";
 import {getUser} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 import {GRID_MASONRY_ITEM} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
 import {CardMosaic} from "@coreModule/components/entityPage/list/cardMosaic.tsx";
 import {useColumnConfigToColumnDef} from "@coreModule/components/entityPage/list/table/columnConfigToColumnDef.tsx";
-import FilterBuilder from "@coreModule/components/entityPage/filters/filterBuilder/filterBuilder.tsx";
+import FilterBuilder, {type FilterBuilderLayout} from "@coreModule/components/entityPage/filters/filterBuilder/filterBuilder.tsx";
+import {enumLabel} from "@coreModule/components/entityPage/filters/filterBuilder/filterValueInput.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {openActionMenuFromContextMenu} from "@coreModule/components/viewEngine/widgets/actions/menu/openActionMenuFromContextMenu.ts";
@@ -108,8 +111,114 @@ function saveStoredListViewMode(tableConfigKey: string, mode: EntityListViewMode
 type VisibilityState = Record<string, boolean>;
 
 type TableConfigOptions = {
-    filterConfig: { placeholder: string; fields: unknown };
+    /** `placeholder` is no longer shown: the search box has one core placeholder (D170, TD-F141). */
+    filterConfig: { placeholder?: string; fields: unknown };
 };
+
+/** The page's quick filters, laid out by the list (D170): inputs in the filters dropdown, tags in the search bar. */
+export type ListQuickFilters = {
+    panel: ReactNode;
+    chips: ReactNode;
+    activeCount: number;
+    /** Removes the quick filters' URL params (mutates), so clearing the bar writes the URL once. */
+    clearParams: (params: URLSearchParams) => void;
+};
+
+const SEARCH_DEBOUNCE_MS = 300;
+
+type ListSearchBarProps = {
+    value: string;
+    onSearch: (text: string) => void;
+    /** False when no field of the list takes typed text: the bar then holds only the active filters. */
+    searchable: boolean;
+    placeholder: string;
+    clearLabel: string;
+    /** The active filters, as removable tags inside the bar. */
+    facets: ReactNode;
+    hasFacets: boolean;
+    /** Clears the text and every filter in one URL write. */
+    onClearAll: () => void;
+    /** The filters toggle at the bar's end. */
+    menu: ReactNode;
+};
+
+/**
+ * The list's search bar (D170), laid out like Odoo's: the active filters sit inside it as tags, typing searches every
+ * field, and the toggle at its end opens the filters. Text applies a moment after typing stops, at once on Enter;
+ * Escape clears it.
+ */
+export function ListSearchBar({value, onSearch, searchable, placeholder, clearLabel, facets, hasFacets, onClearAll, menu}: ListSearchBarProps) {
+    const [text, setText] = useState(value);
+    const timer = useRef(0);
+    /* The text last handed to `onSearch`: its echo from the URL must not undo keys typed since. */
+    const sent = useRef(value);
+
+    useEffect(() => {
+        if (value === sent.current) return;
+        // Changed elsewhere (back/forward, a link): that wins over a pending keystroke.
+        window.clearTimeout(timer.current);
+        sent.current = value;
+        setText(value);
+    }, [value]);
+    useEffect(() => () => window.clearTimeout(timer.current), []);
+
+    const send = (next: string) => {
+        window.clearTimeout(timer.current);
+        sent.current = next.trim();
+        onSearch(next);
+    };
+    const change = (next: string) => {
+        setText(next);
+        window.clearTimeout(timer.current);
+        timer.current = window.setTimeout(() => send(next), SEARCH_DEBOUNCE_MS);
+    };
+    const clearAll = () => {
+        window.clearTimeout(timer.current);
+        sent.current = "";
+        setText("");
+        onClearAll();
+    };
+
+    return (
+        <div className="flex min-h-9 min-w-0 flex-1 flex-wrap items-center gap-1 rounded-lg border border-input bg-transparent py-1 pl-2.5 pr-1 transition-colors focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 dark:bg-input/30 max-md:basis-full md:max-w-2xl">
+            <IconSearch className="size-4 shrink-0 text-muted-foreground" />
+            {facets}
+            {
+                searchable
+                    ? <Input
+                        bare
+                        value={text}
+                        onChange={(e) => change(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") send(text);
+                            if (e.key === "Escape" && text) {
+                                setText("");
+                                send("");
+                            }
+                        }}
+                        placeholder={hasFacets ? undefined : placeholder}
+                        aria-label={placeholder}
+                        className="h-7 min-w-20 flex-1 bg-transparent px-1 text-sm placeholder:text-muted-foreground focus-visible:ring-0"
+                    />
+                    : <span className="flex-1" />
+            }
+            {
+                (text || hasFacets) &&
+                <TooltipDisplayer tooltip={clearLabel}>
+                    <Button variant="bare"
+                        type="button"
+                        onClick={clearAll}
+                        aria-label={clearLabel}
+                        className="flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
+                    >
+                        <IconX className="size-4" />
+                    </Button>
+                </TooltipDisplayer>
+            }
+            {menu}
+        </div>
+    );
+}
 
 type ListRequest = Record<string, unknown>;
 
@@ -161,11 +270,8 @@ type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: numbe
     toolbarFilterDSL?: FilterGroup;
     /** Rendered directly above the filter toolbar row. */
     aboveToolbar?: ReactNode;
-    /**
-     * Quick-filter inputs. Always visible above the toolbar on desktop.
-     * On mobile they share the existing sliders collapsible with FilterBuilder.
-     */
-    quickFilterBar?: ReactNode;
+    /** The page's quick filters: their inputs go in the filters panel, their chips under the search box (D170). */
+    quickFilters?: ListQuickFilters;
     /** When set, merges `extraFilters` into request state keys and deletes them when absent (clears stale params). */
     syncExtraFiltersKeys?: readonly string[];
 }
@@ -201,12 +307,11 @@ function CountryCenterView<
     extraFilters,
     toolbarFilterDSL,
     aboveToolbar,
-    quickFilterBar,
+    quickFilters,
     syncExtraFiltersKeys,
 }: CountryCenterViewProps<ResponseType, T>) {
 
     const {read} = useAccess(access, selfAccess ? "self" : "others");
-    const isMobile = useIsMobile();
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
 
     const [firstCall, setFirstCall] = useState<boolean>(true);
@@ -223,6 +328,8 @@ function CountryCenterView<
         setOffset,
         sorting,
         setSorting,
+        search,
+        setSearch,
     } = useListUrlState({
         fallbackView: listViewFallback,
         limit,
@@ -230,6 +337,7 @@ function CountryCenterView<
     });
     const viewMode: EntityListViewMode = cardView ? requestedViewMode : "table";
     const listPageParam = listChromeParam(LIST_PAGE_PARAM, tableConfigKey);
+    const searchParamKey = listChromeParam(LIST_SEARCH_PARAM, tableConfigKey);
     // const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [rowOverlays, setRowOverlays] = useState<Record<string, EntityRowPatch<T>>>({});
     const [columnFilters, onColumnFiltersChange] = useState<ColumnFiltersState>([]);
@@ -263,7 +371,8 @@ function CountryCenterView<
         },
     }), []);
 
-    const [open, setOpen] = useState(false);
+    const [filtersMenuOpen, setFiltersMenuOpen] = useState(false);
+    const [customFilterOpen, setCustomFilterOpen] = useState(false);
     const [extraParameters, setExtraParameters] = useState<Record<string, any>>({...extraParams});
     // Seed FilterBuilder DSL from `?filter=` on first render so the initial list
     // POST includes it (FilterBuilder effect alone races the fetch effect).
@@ -286,22 +395,10 @@ function CountryCenterView<
 
     // console.log(tableFilters);
 
-    const effectiveFilters = useMemo(() => {
-        return (props: { filters: Record<string, unknown>; setFilters: (f: Record<string, unknown>) => void; extraParams?: Record<string, unknown> }) => (
-            <FilterBuilder
-                filters={props.filters}
-                setFilters={props.setFilters}
-                extraParams={props.extraParams}
-                filterFields={tableFilters}
-                listPageParam={listPageParam}
-                configuration={{
-                    placeholder: tableConfigOptions!.filterConfig.placeholder,
-                    fields: tableConfigOptions!.filterConfig.fields,
-                }}
-                resolveLanguageKey={resolveLanguageKey}
-            />
-        );
-    }, [tableFilters, tableConfigOptions, resolveLanguageKey, listPageParam]);
+    // Read when the list fetches, not as a dependency: the page passes its texts inline, a new object each render.
+    const enumLabelOf = useRef<EnumLabelOf>((_path, value) => value);
+    enumLabelOf.current = (path, value) => enumLabel(tableConfigOptions?.filterConfig.fields, path, value);
+    const searchable = canSearchList(tableFilters);
 
     useEffect(() => {
         const next = {...(extraParams ?? {})};
@@ -361,7 +458,8 @@ function CountryCenterView<
                 filter?: FilterGroup;
             };
             const fbFilter = fbFilterUnknown as FilterGroup | undefined;
-            const merged = mergeAndFilterDSL(fbFilter, toolbarFilterDSL);
+            const searchDSL = buildListSearchDSL(search, tableFilters, enumLabelOf.current);
+            const merged = mergeAndFilterDSL(fbFilter, mergeAndFilterDSL(toolbarFilterDSL, searchDSL));
             const filterOut =
                 merged && !isFilterGroupEmpty(merged) ? { filter: merged } : {};
             onFilterChange({
@@ -376,7 +474,7 @@ function CountryCenterView<
                 ...filterOut,
             });
         }
-    }, [offset, limit, forceReload, sorting, filters, extraParameters, loadingTableConfig, tableConfigError, toolbarFilterDSL, read]);
+    }, [offset, limit, forceReload, sorting, filters, extraParameters, loadingTableConfig, tableConfigError, toolbarFilterDSL, read, search, tableFilters]);
     const effectiveRef = listRefFromParent ?? refFromParent;
     useImperativeHandle(effectiveRef, () => listApi, [listApi]);
     useImperativeHandle(innerRef, () => ({
@@ -652,37 +750,71 @@ function CountryCenterView<
     );
 
 
-    return (
-        <>
-            {aboveToolbar}
-            {!isMobile && quickFilterBar}
-
-            <div className="flex items-center justify-between gap-1">
-                <div className="flex grow">
-                    {
-                        !firstCall &&
-                        <>
-                            {
-                                isMobile ?
-                                <TooltipDisplayer tooltip={resolveLanguageKey(open ? "hideFilters" : "showFilters")}>
-                                    <Button
-                                        variant={open ? "secondary" : "ghost"}
-                                        size="icon"
-                                        onClick={() => {setOpen(!open)}}
-                                        className={cn("border")}
-                                    >
-                                        <IconAdjustments />
-                                    </Button>
-                                </TooltipDisplayer>
-                                :
-                                <>
-                                    {effectiveFilters({ filters, setFilters, extraParams })}
-                                </>
+    /*
+     * One compact row (D170): the search bar, holding the active filters as tags and the filters toggle, then paging and
+     * view. The toggle opens a small dropdown with the page's quick filters and "Add custom filter", which opens the
+     * rule builder in a dialog. Without a builder yet (before the first answer) only paging and view show.
+     */
+    const renderToolbar = (layout?: FilterBuilderLayout) => {
+        const hasFacets = !!layout && (quickFilters?.activeCount ?? 0) + layout.activeCount > 0;
+        return (
+            <div className="flex flex-wrap items-center justify-between gap-2">
+                {
+                    layout
+                        ? <ListSearchBar
+                            value={search}
+                            onSearch={setSearch}
+                            searchable={searchable}
+                            placeholder={String(resolveLanguageKey("searchPlaceholder"))}
+                            clearLabel={String(resolveLanguageKey("clearAll"))}
+                            facets={<>{quickFilters?.chips}{layout.chips}</>}
+                            hasFacets={hasFacets}
+                            onClearAll={() => layout.clear((params) => {
+                                quickFilters?.clearParams(params);
+                                params.delete(searchParamKey);
+                            })}
+                            menu={
+                                <Popover open={filtersMenuOpen} onOpenChange={setFiltersMenuOpen}>
+                                    {/* No tooltip: focus returns here when the dropdown closes, and it would float over the dialog. */}
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="sm"
+                                            aria-label={String(resolveLanguageKey("filters"))}
+                                            className="h-7 shrink-0 gap-0.5 px-1.5 text-muted-foreground"
+                                        >
+                                            <IconFilter className="size-4" />
+                                            <IconChevronDown className="size-3.5" />
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent align="end" className="flex w-[min(22rem,calc(100vw-2rem))] flex-col gap-3 p-3">
+                                        <p className="flex items-center gap-1.5 text-xs font-semibold">
+                                            <IconFilter className="size-3.5" />
+                                            {resolveLanguageKey("filters")}
+                                        </p>
+                                        {quickFilters?.panel}
+                                        {quickFilters && <div role="separator" className="-mx-3 border-t" />}
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => {
+                                                setFiltersMenuOpen(false);
+                                                setCustomFilterOpen(true);
+                                            }}
+                                            className="justify-start px-2 text-sm"
+                                        >
+                                            <IconPlus className="size-4" />
+                                            {resolveLanguageKey("addCustomFilter")}
+                                        </Button>
+                                    </PopoverContent>
+                                </Popover>
                             }
-                        </>
-                    }
-                </div>
-                <div className="flex items-center gap-2">
+                        />
+                        : <div className="grow" />
+                }
+                <div className="flex items-center gap-2 max-md:ml-auto">
                     <PageController
                         total={data?.total ?? 0}
                         limit={configurations.limit}
@@ -723,16 +855,41 @@ function CountryCenterView<
                         </div>
                     }
                 </div>
+                {
+                    layout &&
+                    <Dialog open={customFilterOpen} onOpenChange={setCustomFilterOpen}>
+                        {/* Phones get the width: a thin margin and padding, so the rule's controls are not cut. */}
+                        <DialogContent className="max-w-[calc(100%-1rem)] gap-3 p-3 sm:max-w-2xl sm:gap-4 sm:p-4" onOpenAutoFocus={(e) => e.preventDefault()}>
+                            <DialogHeader>
+                                <DialogTitle>{resolveLanguageKey("customFilter")}</DialogTitle>
+                            </DialogHeader>
+                            {layout.editor}
+                        </DialogContent>
+                    </Dialog>
+                }
             </div>
+        );
+    };
+
+    return (
+        <>
+            {aboveToolbar}
 
             {
-                isMobile && open &&
-                <Collapsible open={open} onOpenChange={setOpen}>
-                    <CollapsibleContent className="flex flex-col gap-2 pt-1">
-                        {quickFilterBar}
-                        {effectiveFilters({ filters, setFilters, extraParams })}
-                    </CollapsibleContent>
-                </Collapsible>
+                firstCall
+                    ? renderToolbar()
+                    : <FilterBuilder
+                        filters={filters}
+                        setFilters={setFilters}
+                        extraParams={extraParams}
+                        filterFields={tableFilters}
+                        listPageParam={listPageParam}
+                        configuration={{fields: tableConfigOptions?.filterConfig.fields}}
+                        editorOpen={customFilterOpen}
+                        onEditorClose={() => setCustomFilterOpen(false)}
+                    >
+                        {renderToolbar}
+                    </FilterBuilder>
             }
 
             <div className={cn("min-w-0 flex-1 min-h-0 flex flex-col overflow-x-hidden", containersClassName?.scrollRootClassName)}>

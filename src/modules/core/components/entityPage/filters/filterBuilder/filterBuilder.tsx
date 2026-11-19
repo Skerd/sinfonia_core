@@ -1,13 +1,11 @@
-import {IconSearch, IconTrash} from "@tabler/icons-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {IconTrash} from "@tabler/icons-react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import {Button} from "@coreModule/components/ui/button.tsx";
-import { Popover, PopoverContent, PopoverTrigger } from "@coreModule/components/ui/popover.tsx";
 import { FilterBuilderProvider, useFilterBuilder } from "./filterBuilderContext.tsx";
 import FilterGroup from "./filterGroup.tsx";
 import FilterChip from "./filterChip.tsx";
 import { classifyUrlFilterParam, hasDraftRules, isCompleteRule, isDraftRule, searchParamAfterSet, shouldAutoCommit, useFilterState, withPreservedDrafts } from "@coreModule/helpers/hooks/components/useFilterState.ts";
-import { cn } from "@coreModule/components/lib/utils.ts";
 import type { FilterDSL, FilterRule, FilterFieldConfig } from "armonia/src/modules/core/database/filter";
 import {
     collectObjectIdValuesFromDsl,
@@ -22,7 +20,6 @@ import {
 import { fetchSelectLabels } from "@coreModule/helpers/hooks/components/useApiSelectOptions.ts";
 import { LIST_PAGE_PARAM } from "@coreModule/helpers/hooks/useListUrlState.ts";
 import withLanguage, {TranslationValue, WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
 
 type RuleWithGroup = { groupId: string; rule: FilterRule };
 
@@ -45,6 +42,20 @@ function countActiveRules(group: FilterDSL): number {
     return rules + nested;
 }
 
+/** What the list places where it wants it (D170): chips under the search box, the editor in the filters panel. */
+export type FilterBuilderLayout = {
+    /** One chip per applied rule, each editable and removable. */
+    chips: ReactNode[];
+    /** The rule editor with Apply and Clear. */
+    editor: ReactNode;
+    activeCount: number;
+    /**
+     * Drops every rule. `alsoClear` removes more params in the same URL write: react-router applies only the last of
+     * two writes made at once, so the list's "Clear all" passes its quick filters here.
+     */
+    clear: (alsoClear?: (params: URLSearchParams) => void) => void;
+};
+
 type FilterBuilderProps = WithLanguageType & {
     resourceUrl: string;
     filters: Record<string, unknown>;
@@ -55,11 +66,15 @@ type FilterBuilderProps = WithLanguageType & {
     /** When provided, use these filter fields instead of fetching. Enables single-request flow with table-config. */
     filterFields?: import("armonia/src/modules/core/database/filter").FilterFieldConfig[];
     configuration: {
-        placeholder: string;
         fields: TranslationValue
     };
     /** Namespaced `listPage` key when multiple lists share the route. */
     listPageParam?: string;
+    /** Whether the list shows the editor: an open editor starts with a blank rule. */
+    editorOpen: boolean;
+    /** Apply and Clear are done with the editor. */
+    onEditorClose: () => void;
+    children: (layout: FilterBuilderLayout) => ReactNode;
 };
 
 function FilterBuilderInner({
@@ -70,7 +85,10 @@ function FilterBuilderInner({
     languageCode,
     configuration,
     listPageParam = LIST_PAGE_PARAM,
-}: Omit<FilterBuilderProps, "resourceUrl" | "resolveLanguageValue">) {
+    editorOpen,
+    onEditorClose,
+    children,
+}: Omit<FilterBuilderProps, "resourceUrl" | "resolveLanguageValue" | "filterFields">) {
 
     const { fields, refLabelsByFieldPath, mergeRefLabels, replaceRefLabels } = useFilterBuilder();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -94,7 +112,6 @@ function FilterBuilderInner({
         serialize,
     } = useFilterState(initialFilter);
 
-    const [popoverOpen, setPopoverOpen] = useState(false);
     /** Suppress auto-apply once after URL hydrate / programmatic commit. */
     const suppressAutoApplyRef = useRef(1);
     const lastCommittedKeyRef = useRef<string | null>(null);
@@ -110,7 +127,7 @@ function FilterBuilderInner({
     const autoCommitTimerRef = useRef<number>(0);
 
     const commitFilters = useCallback(
-        (dsl: FilterDSL | undefined, options?: { closePopover?: boolean }) => {
+        (dsl: FilterDSL | undefined, options?: { closeEditor?: boolean; alsoClear?: (params: URLSearchParams) => void }) => {
             window.clearTimeout(autoCommitTimerRef.current);
             const prunedLabels = pruneFilterLabelsToDsl(refLabelsByFieldPath, dsl);
             const encodedFilter = dsl ? encodeFilterToUrl(dsl) : null;
@@ -140,6 +157,7 @@ function FilterBuilderInner({
                     next.delete(FILTER_URL_PARAM);
                     next.delete(FILTER_LABELS_URL_PARAM);
                 }
+                options?.alsoClear?.(next);
                 next.delete(listPageParam);
                 return next;
             }, { replace: true });
@@ -147,9 +165,9 @@ function FilterBuilderInner({
             else replaceRefLabels({});
             lastCommittedKeyRef.current = JSON.stringify(dsl ?? null);
             lastCommittedDslRef.current = dsl ?? null;
-            if (options?.closePopover) setPopoverOpen(false);
+            if (options?.closeEditor) onEditorClose();
         },
-        [setFilters, extraParams, setSearchParams, refLabelsByFieldPath, replaceRefLabels, listPageParam],
+        [setFilters, extraParams, setSearchParams, refLabelsByFieldPath, replaceRefLabels, listPageParam, onEditorClose],
     );
 
     // Re-sync UI + applied filters whenever the URL `filter` param changes
@@ -274,7 +292,7 @@ function FilterBuilderInner({
         const delay = commitImmediatelyRef.current ? 0 : AUTO_COMMIT_MS;
         commitImmediatelyRef.current = false;
         autoCommitTimerRef.current = window.setTimeout(() => {
-            commitFilters(appliedDsl, { closePopover: false });
+            commitFilters(appliedDsl, { closeEditor: false });
         }, delay);
         return () => window.clearTimeout(autoCommitTimerRef.current);
     }, [appliedKey, appliedDsl, commitFilters, root]);
@@ -282,10 +300,10 @@ function FilterBuilderInner({
     // When the builder opens, ensure there is a blank rule ready to edit.
     // After a draft becomes a chip (and auto-applies), add another blank rule.
     useEffect(() => {
-        if (!popoverOpen) return;
+        if (!editorOpen) return;
         if (root.rules.some(isDraftRule)) return;
         addRule(root.id);
-    }, [popoverOpen, root.rules, root.id, addRule]);
+    }, [editorOpen, root.rules, root.id, addRule]);
 
     const handleRemoveRule = useCallback(
         (groupId: string, ruleId: string) => {
@@ -304,130 +322,67 @@ function FilterBuilderInner({
     );
 
     const onApply = useCallback(() => {
-        commitFilters(serialize(), { closePopover: true });
+        commitFilters(serialize(), { closeEditor: true });
     }, [commitFilters, serialize]);
 
-    const onClear = useCallback(() => {
+    const onClear = useCallback((alsoClear?: (params: URLSearchParams) => void) => {
         window.clearTimeout(autoCommitTimerRef.current);
         reset();
         replaceRefLabels({});
-        commitFilters(undefined, { closePopover: true });
+        commitFilters(undefined, { closeEditor: true, alsoClear });
     }, [reset, replaceRefLabels, commitFilters]);
 
-    const handlePopoverOpenChange = useCallback((open: boolean) => {
-        setPopoverOpen(open);
-    }, []);
+    const chips = rulesWithGroups.map(({ groupId, rule }) => (
+        <FilterChip
+            key={rule.id}
+            rule={rule}
+            groupId={groupId}
+            fields={fields}
+            fieldsLanguage={configuration.fields}
+            onUpdate={updateRule}
+            onRemove={handleRemoveRule}
+        />
+    ));
 
-    return (
-        <Popover open={popoverOpen} onOpenChange={handlePopoverOpenChange}>
-            <PopoverTrigger asChild>
-                <div
-                    role="button"
-                    tabIndex={0}
-                    aria-label={configuration.placeholder}
-                    aria-expanded={popoverOpen}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            setPopoverOpen((prev) => !prev);
-                        }
-                    }}
-                    className={cn(
-                        "flex items-center w-full min-w-[280px] max-w-[560px] min-h-9 rounded-md border border-input bg-transparent pl-3 pr-1.5 py-1",
-                        "hover:border-input/80 focus:outline-none focus:ring-1 focus:ring-ring focus:ring-offset-0 transition-colors text-left text-sm cursor-pointer",
-                        activeCount > 0 && "border-primary/40 ring-1 ring-primary/10"
-                    )}
-                >
-                    <IconSearch className="size-4 shrink-0 text-muted-foreground mr-2.5" />
-                    <div className="flex flex-1 min-w-0 items-center gap-1.5 overflow-x-auto scrollbar-none py-1.5">
-                        {
-                            rulesWithGroups.length > 0 ?
-                            <>
-                                {
-                                    rulesWithGroups.map(({ groupId, rule }) => {
-                                        return (
-                                            <div key={rule.id} role="presentation" onClick={(e) => e.stopPropagation()}>
-                                                <FilterChip
-                                                    rule={rule}
-                                                    groupId={groupId}
-                                                    fields={fields}
-                                                    fieldsLanguage={configuration.fields}
-                                                    onUpdate={updateRule}
-                                                    onRemove={handleRemoveRule}
-                                                />
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </>
-                            :
-                            <span className="text-muted-foreground text-sm truncate">{configuration.placeholder}</span>
-                        }
-                    </div>
-                    <div className="flex items-center shrink-0 gap-1 ml-1 border-l border-border pl-1.5" role="presentation" onClick={(e) => e.stopPropagation()}>
-                        {
-                            activeCount > 0 &&
-                            <TooltipDisplayer tooltip={resolveLanguageKey("clearFilters")}>
-                                <Button
-                                    type="button"
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        onClear();
-                                    }}
-                                    className="h-7 px-1.5 text-destructive hover:text-destructive hover:bg-destructive/10"
-                                >
-                                    <IconTrash className="size-4" />
-                                    {/*<ButtonTitle hideMobile={true} className="ml-1">*/}
-                                    {/*    {resolveLanguageKey("clearFilters")}*/}
-                                    {/*</ButtonTitle>*/}
-                                </Button>
-                            </TooltipDisplayer>
-                        }
-                        <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            className="h-7 px-2"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onApply();
-                            }}
-                        >
-                            {resolveLanguageKey("apply")}
-                        </Button>
-                    </div>
-                </div>
-            </PopoverTrigger>
-            <PopoverContent
-                align="start"
-                // sideOffset={4}
-                avoidCollisions={true}
-                // collisionPadding={16}
-                className="w-(--radix-popover-trigger-width) p-0 rounded-md shadow-md border border-border bg-popover overflow-hidden gap-0"
-            >
-                {/*<div className="px-3 py-2 border-b border-border bg-muted/30">*/}
-                {/*    <p className="text-base text-muted-foreground">{resolveLanguageKey("addCustomFilter")}</p>*/}
-                {/*</div>*/}
-                <div className="p-3 max-h-[min(60vh,360px)] overflow-y-auto overscroll-contain">
-                    <FilterGroup
-                        group={root}
-                        parentId={null}
-                        depth={0}
-                        fieldsLanguage={configuration.fields}
-                        fields={fields}
-                        onAddRule={addRule}
-                        onRemoveRule={handleRemoveRule}
-                        onUpdateRule={updateRule}
-                        onAddGroup={addGroup}
-                        onRemoveGroup={handleRemoveGroup}
-                        onUpdateGroupOperator={updateGroupOperator}
-                    />
-                </div>
-            </PopoverContent>
-        </Popover>
+    const editor = (
+        <div className="flex flex-col gap-2">
+            <div className="max-h-[min(60vh,360px)] overflow-y-auto overscroll-contain">
+                <FilterGroup
+                    group={root}
+                    parentId={null}
+                    depth={0}
+                    fieldsLanguage={configuration.fields}
+                    fields={fields}
+                    onAddRule={addRule}
+                    onRemoveRule={handleRemoveRule}
+                    onUpdateRule={updateRule}
+                    onAddGroup={addGroup}
+                    onRemoveGroup={handleRemoveGroup}
+                    onUpdateGroupOperator={updateGroupOperator}
+                />
+            </div>
+            <div className="flex items-center justify-end gap-2">
+                {
+                    activeCount > 0 &&
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onClear()}
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                    >
+                        <IconTrash className="size-4" />
+                        {resolveLanguageKey("clearFilters")}
+                    </Button>
+                }
+                <Button type="button" variant="outline" size="sm" onClick={onApply}>
+                    {resolveLanguageKey("apply")}
+                </Button>
+            </div>
+        </div>
     );
+
+    return <>{children({ chips, editor, activeCount, clear: onClear })}</>;
 }
 
 function FilterBuilderView({
@@ -438,7 +393,11 @@ function FilterBuilderView({
     configuration,
     resolveLanguageKey,
     languageCode,
-    currentLanguage
+    currentLanguage,
+    listPageParam,
+    editorOpen,
+    onEditorClose,
+    children,
 }: FilterBuilderProps) {
     const [searchParams] = useSearchParams();
     const initialRefLabels = useMemo(
@@ -463,7 +422,12 @@ function FilterBuilderView({
                     resolveLanguageKey={resolveLanguageKey}
                     languageCode={languageCode}
                     currentLanguage={currentLanguage}
-                />
+                    listPageParam={listPageParam}
+                    editorOpen={editorOpen}
+                    onEditorClose={onEditorClose}
+                >
+                    {children}
+                </FilterBuilderInner>
             </FilterBuilderProvider>
         </>
     );

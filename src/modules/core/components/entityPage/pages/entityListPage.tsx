@@ -3,6 +3,7 @@ import {findFromObject} from "@coreModule/helpers/general/objectPath.ts";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {
     clearQuickFilterParams,
+    deleteQuickFilterParams,
     LIST_PAGE_PARAM,
     listChromeParam,
     quickFilterLabelParamKey,
@@ -33,6 +34,8 @@ import QuickFilterBar, {
     buildQuickFilterDSL,
     buildQuickFilterExtraParams,
     collectDependentQuickFilterFields,
+    countActiveQuickFilters,
+    QuickFilterChips,
     type QuickFilterDef,
 } from "@coreModule/components/entityPage/filters/quickFilterBar.tsx";
 import {GRID_TRANSACTIONAL} from "@coreModule/components/entityPage/list/entityCard.constants.ts";
@@ -353,9 +356,9 @@ export type EntityListPageProps<T extends BaseEntity> = {
         hideDelete?: boolean | ((entity: T) => boolean);
     };
     /**
-     * Filter inputs rendered above the FilterBuilder row on desktop.
-     * On mobile they open with the existing sliders toggle.
-     * Each def becomes a labeled input; their values AND-combine with the main DSL filter and with `extraFilters`.
+     * Filter inputs shown in the list's filters panel, above the advanced filters; an active one also shows as a chip
+     * under the search box (D170). Each def becomes a labeled input; their values AND-combine with the main DSL filter
+     * and with `extraFilters`.
      */
     quickFilters?: QuickFilterDef[];
     /**
@@ -613,17 +616,29 @@ export default function EntityListPage<T extends BaseEntity>({
                     extraParams={mergedExtraParams}
                     toolbarFilterDSL={combinedToolbarDSL}
                     aboveToolbar={aboveToolbar}
-                    quickFilterBar={
-                        stableQuickFilters.length ? (
-                            <QuickFilterBar
-                                defs={stableQuickFilters}
-                                values={quickFilterValues}
-                                labels={quickFilterLabels}
-                                onChange={setQuickFilterValue}
-                                onClearAll={clearQuickFilters}
-                                extraParams={mergedExtraParams}
-                            />
-                        ) : undefined
+                    quickFilters={
+                        stableQuickFilters.length ? {
+                            panel: (
+                                <QuickFilterBar
+                                    defs={stableQuickFilters}
+                                    values={quickFilterValues}
+                                    labels={quickFilterLabels}
+                                    onChange={setQuickFilterValue}
+                                    onClearAll={clearQuickFilters}
+                                    extraParams={mergedExtraParams}
+                                />
+                            ),
+                            chips: (
+                                <QuickFilterChips
+                                    defs={stableQuickFilters}
+                                    values={quickFilterValues}
+                                    labels={quickFilterLabels}
+                                    onChange={setQuickFilterValue}
+                                />
+                            ),
+                            activeCount: countActiveQuickFilters(stableQuickFilters, quickFilterValues),
+                            clearParams: (params: URLSearchParams) => deleteQuickFilterParams(params, quickFilterFields),
+                        } : undefined
                     }
                     tableConfigOptions={{
                         filterConfig: {

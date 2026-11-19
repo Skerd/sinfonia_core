@@ -14,6 +14,7 @@ import { isFilterGroupEmpty } from "./mergeFilterDsl.ts";
  * - `projectId` / `edificeId` / `floorId` / `*Name` — legacy scope links; list pages
  *   promote them into `qf_*` and then drop them so the quick filter owns the scope
  * - `listView` / `listPage` / `listSort` — list chrome (useListUrlState)
+ * - `q` — the list's search text (D170), namespaced like the chrome
  *
  * The param-key constants live here and `useListUrlState` (which owns the runtime chrome
  * helpers) re-exports them. This module must not import `useListUrlState`, or the two would cycle.
@@ -33,6 +34,8 @@ export const LIST_PAGE_PARAM = "listPage";
 export const LIST_SORT_PARAM = "listSort";
 /** Prefix for QuickFilterBar values mirrored in the URL. */
 export const QUICK_FILTER_PARAM_PREFIX = "qf_";
+/** The list's search box (D170): the typed text, which the list turns into filter rules over its fields. */
+export const LIST_SEARCH_PARAM = "q";
 
 /** Same limit the API's `filterDSLSchema` enforces; deeper URL filters would only fail server-side. */
 const MAX_FILTER_DEPTH = 5;
@@ -160,6 +163,9 @@ function filterLabels(
     return out;
 }
 
+/** Operators whose value is the id of a linked record; `contains` on a reference carries search text (D170). */
+const ID_VALUE_OPERATORS: ReadonlySet<FilterRule["operator"]> = new Set(["equals", "notEquals", "in", "notIn"]);
+
 /** Collect non-empty string values used in a DSL tree (ObjectId candidates), keyed by rule field path. */
 export function collectObjectIdValuesFromDsl(dsl: FilterDSL | undefined): Record<string, Set<string>> {
     const out: Record<string, Set<string>> = {};
@@ -169,7 +175,7 @@ export function collectObjectIdValuesFromDsl(dsl: FilterDSL | undefined): Record
 
     const visit = (group: FilterGroup) => {
         for (const rule of group.rules ?? []) {
-            if (!rule.field) continue;
+            if (!rule.field || !ID_VALUE_OPERATORS.has(rule.operator)) continue;
             if (Array.isArray(rule.value)) rule.value.forEach((v) => add(rule.field, v));
             else add(rule.field, rule.value);
         }
@@ -357,6 +363,7 @@ function isChromeParam(key: string, base: string): boolean {
 
 function isUserFilterParamKey(key: string): boolean {
     return (
+        isChromeParam(key, LIST_SEARCH_PARAM) ||
         key === FILTER_URL_PARAM ||
         key === FILTER_LABELS_URL_PARAM ||
         key.startsWith(QUICK_FILTER_PARAM_PREFIX) ||
@@ -370,7 +377,7 @@ function deleteKeysWhere(params: URLSearchParams, predicate: (key: string) => bo
     }
 }
 
-/** Strip user filter params (`filter`, `filterLabels`, `qf_*`, `ep_*`) from a params object (mutates). */
+/** Strip user filter params (`q`, `filter`, `filterLabels`, `qf_*`, `ep_*`) from a params object (mutates). */
 export function stripUserFilterParams(params: URLSearchParams): void {
     deleteKeysWhere(params, isUserFilterParamKey);
 }
