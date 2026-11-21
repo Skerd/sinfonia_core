@@ -2,6 +2,9 @@ import {IconExternalLink} from "@tabler/icons-react";
 import {useEffect, useLayoutEffect, useState} from "react";
 import {Circle, MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
 import L, {type LatLngBoundsExpression, type LatLngExpression} from "leaflet";
+// Its own stylesheet: without it the panes are not positioned and the tiles flow as images, so a page whose only
+// map is this one (the public task page, D172) grew millions of pixels wide.
+import "leaflet/dist/leaflet.css";
 import {CloseMapControl, ExpandMapControl, MapDialog, SyncMapSize} from "@coreModule/components/viewEngine/widgets/addresses/mapChrome.tsx";
 import {settleMapAnimations} from "@coreModule/components/viewEngine/widgets/addresses/mapTeardown.ts";
 

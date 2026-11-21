@@ -19,5 +19,9 @@
   "properties": {
     "title": "Immobili",
     "description": "Nuovi progetti e immobili in vendita. Chiedi direttamente al costruttore."
+  },
+  "tasks": {
+    "title": "Richieste di preventivo",
+    "description": "Lavori pubblicati dai clienti. I professionisti fanno un'offerta, il cliente sceglie."
   }
 }

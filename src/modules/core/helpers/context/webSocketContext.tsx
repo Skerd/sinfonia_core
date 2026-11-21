@@ -19,6 +19,8 @@ type WebSocketProviderProps = {
     children: ReactNode;
     setupStep?: number;
     setupTotal?: number;
+    /** False on the portal (D172): its pages render at once; the panel shows the setup step while the socket starts. */
+    showSetupScreen?: boolean;
 };
 
 /**
@@ -35,6 +37,7 @@ export function WebSocketProvider({
     children,
     setupStep = 3,
     setupTotal = SESSION_SETUP_TOTAL_STEPS,
+    showSetupScreen = true,
 }: WebSocketProviderProps) {
     const dispatch = useDispatch<AppDispatch>();
     const token = useSelector((state: RootState) => state.authentication.token);
@@ -83,7 +86,7 @@ export function WebSocketProvider({
         setShowSetup(false);
     }, []);
 
-    if (showSetup) {
+    if (showSetup && showSetupScreen) {
         return (
             <SessionSetupScreen
                 step={setupStep}

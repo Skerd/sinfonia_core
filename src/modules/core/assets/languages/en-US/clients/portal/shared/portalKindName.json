@@ -19,5 +19,9 @@
   "project": {
     "tab": "Properties",
     "item": "Property"
+  },
+  "task": {
+    "tab": "Tasks",
+    "item": "Task"
   }
 }

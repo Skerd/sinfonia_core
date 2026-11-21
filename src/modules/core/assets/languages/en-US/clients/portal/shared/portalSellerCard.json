@@ -3,6 +3,8 @@
   "soldBy": "Sold by",
   "offeredBy": "Offered by",
   "publishedBy": "Published by",
+  "postedOn": "Posted on",
+  "sentQuote": "Sent a quote",
   "visitSiteNamed": "Visit {name}",
   "visitSite": "Visit site"
 }

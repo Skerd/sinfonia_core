@@ -19,5 +19,9 @@
   "project": {
     "tab": "Immobilien",
     "item": "Immobilie"
+  },
+  "task": {
+    "tab": "Ausschreibungen",
+    "item": "Ausschreibung"
   }
 }

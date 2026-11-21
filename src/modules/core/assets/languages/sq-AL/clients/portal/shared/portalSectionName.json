@@ -19,5 +19,9 @@
   "properties": {
     "title": "Pronat",
     "description": "Projekte të reja dhe prona në shitje. Pyesni drejtpërdrejt zhvilluesin."
+  },
+  "tasks": {
+    "title": "Kërkesat për ofertë",
+    "description": "Punë të publikuara nga klientët. Profesionistët ofertojnë, klienti zgjedh njërin."
   }
 }

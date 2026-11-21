@@ -18,6 +18,7 @@ import PortalCompanySite from "@coreModule/clients/portal/shared/portalCompanySi
 import PortalScrollToTop from "@coreModule/clients/portal/shared/portalScrollToTop.tsx";
 import SitePageLayout from "@coreModule/clients/portal/shared/sitePageLayout.tsx";
 import {getPortalContributions, portalHostPagesOf} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
+import {WebSocketProvider} from "@coreModule/helpers/context/webSocketContext.tsx";
 
 const HomePage = lazy(() => import("@coreModule/clients/portal/home/index.tsx"));
 const BlogPage = lazy(() => import("@coreModule/clients/portal/blog/index.tsx"));
@@ -129,11 +130,14 @@ function PortalApp() {
                             <PortalScrollToTop />
                             <PortalSiteProvider>
                                 <PortalSessionProvider>
-                                    <SectionProviders>
-                                        <Suspense fallback={<Loader />}>
-                                            <PortalRoutes />
-                                        </Suspense>
-                                    </SectionProviders>
+                                    {/* The shared socket, for signed-in sessions only (no token, no socket): live updates (D172). */}
+                                    <WebSocketProvider showSetupScreen={false}>
+                                        <SectionProviders>
+                                            <Suspense fallback={<Loader />}>
+                                                <PortalRoutes />
+                                            </Suspense>
+                                        </SectionProviders>
+                                    </WebSocketProvider>
                                 </PortalSessionProvider>
                             </PortalSiteProvider>
                         </BrowserRouter>

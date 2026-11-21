@@ -19,5 +19,9 @@
   "project": {
     "tab": "Immobilier",
     "item": "Bien"
+  },
+  "task": {
+    "tab": "Demandes de devis",
+    "item": "Demande de devis"
   }
 }

@@ -40,6 +40,8 @@ const SHARED_DICTIONARIES: Record<string, string[]> = {
     "src/modules/core/components/viewEngine/widgets/media/singleFile.tsx": ["src/modules/core/components/custom/files/singleFile.tsx"],
     "src/modules/eCommerce/clients/panel/private/posConfigs/center/actions/posConfigsBulkMenu.tsx": ["src/modules/eCommerce/clients/panel/private/posConfigs/index.tsx"],
     "src/modules/marketplace/clients/panel/private/providerProfile/providerProfileSection.tsx": ["src/modules/marketplace/clients/panel/private/providerProfile/editProviderProfile.tsx"],
+    // The task board's sheet draws the lead sheet's view, so it reads the lead sheet's texts (D172).
+    "src/modules/marketplace/clients/panel/private/taskBoard/center/sheetView/taskBoardSheetView.tsx": ["src/modules/marketplace/clients/panel/private/taskLeads/center/sheetView/taskLeadSheetView.tsx"],
     "src/modules/propertyManagement/clients/panel/private/unitCosts/paymentCalendarTab.tsx": ["src/modules/propertyManagement/clients/panel/private/unitCosts/index.tsx"],
     "src/modules/propertyManagement/clients/client/public/shared/sections/contactLeadColumn.tsx": ["src/modules/propertyManagement/clients/client/public/contact/index.tsx"],
     "src/modules/propertyManagement/clients/client/public/shared/favorites/publicFavoritesPanelHost.tsx": ["src/modules/propertyManagement/clients/client/public/projects/index.tsx"],

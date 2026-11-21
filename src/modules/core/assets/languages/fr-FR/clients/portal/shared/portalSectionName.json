@@ -19,5 +19,9 @@
   "properties": {
     "title": "Biens immobiliers",
     "description": "Programmes neufs et biens à vendre. Contactez directement le promoteur."
+  },
+  "tasks": {
+    "title": "Demandes de devis",
+    "description": "Des travaux publiés par des clients. Les pros font une offre, le client choisit."
   }
 }

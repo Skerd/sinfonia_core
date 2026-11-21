@@ -19,5 +19,9 @@
   "properties": {
     "title": "Immobilien",
     "description": "Neubauprojekte und Immobilien zum Kauf. Fragen Sie direkt beim Bauträger an."
+  },
+  "tasks": {
+    "title": "Ausschreibungen",
+    "description": "Aufträge von Kundinnen und Kunden. Fachleute offerieren, die Kundschaft wählt."
   }
 }

@@ -19,5 +19,9 @@
   "properties": {
     "title": "Properties",
     "description": "New developments and homes for sale. Ask the developer directly."
+  },
+  "tasks": {
+    "title": "Tasks",
+    "description": "Jobs clients posted. Pros send quotes; the client picks one."
   }
 }

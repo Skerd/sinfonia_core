@@ -3,6 +3,8 @@
   "soldBy": "Venduto da",
   "offeredBy": "Offerto da",
   "publishedBy": "Pubblicato da",
+  "postedOn": "Pubblicato su",
+  "sentQuote": "Ha inviato un preventivo",
   "visitSiteNamed": "Visita {name}",
   "visitSite": "Visita il sito"
 }

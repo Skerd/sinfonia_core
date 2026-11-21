@@ -69,8 +69,8 @@ type PortalSellerCardProps = WithLanguageType & {
     seller?: SellerRef;
     /** The section the seller's own site opens at (`shop`, `services`). */
     sectionPath: string;
-    /** Product / service listing / blog post. */
-    kind?: "product" | "service" | "blog";
+    /** Product / service listing / blog post / the board a task is posted on / a company that quoted on a task (D172). */
+    kind?: "product" | "service" | "blog" | "task" | "quote";
     /** Compact line for catalog cards; card for detail pages. */
     size?: "compact" | "card";
     /**
@@ -85,6 +85,8 @@ const KIND_LABEL: Record<NonNullable<PortalSellerCardProps["kind"]>, string> = {
     product: "soldBy",
     service: "offeredBy",
     blog: "publishedBy",
+    task: "postedOn",
+    quote: "sentQuote",
 };
 
 function openSellerSite(event: MouseEvent | KeyboardEvent, href: string) {

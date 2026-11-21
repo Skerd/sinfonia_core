@@ -30,14 +30,20 @@ export function formatCatalogPrice(amount: number, currency: string): string {
         : formatCurrency(amount, currency, {maximumFractionDigits: undefined});
 }
 
+/** A card's price as words: "€60 / day", "from €60", "up to €200" (a task's budget), or the amount alone. */
+export function catalogPriceLabel(price: PortalCatalogItem["price"], resolveLanguageKey: (key: string) => string): string | null {
+    const amount = price ? formatCatalogPrice(price.amount, price.currency) : null;
+    if (!price || !amount) return null;
+    if (price.per === "day") return resolveLanguageKey("pricePerDay").replace("{price}", amount);
+    if (price.from) return resolveLanguageKey("priceFrom").replace("{price}", amount);
+    if (price.upTo) return resolveLanguageKey("priceUpTo").replace("{price}", amount);
+    return amount;
+}
+
 function CatalogCard({item, resolveLanguageKey}: WithLanguageType & {item: PortalCatalogItem}) {
     const href = useCatalogItemHref()(item);
     if (!href) return null;
-    const amount = item.price ? formatCatalogPrice(item.price.amount, item.price.currency) : null;
-    const price = !item.price || !amount ? null
-        : item.price.per === "day" ? resolveLanguageKey("pricePerDay").replace("{price}", amount)
-        : item.price.from ? resolveLanguageKey("priceFrom").replace("{price}", amount)
-        : amount;
+    const price = catalogPriceLabel(item.price, (key) => String(resolveLanguageKey(key)));
 
     return (
         <Link to={href} className="group flex flex-col gap-3 rounded-2xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50">

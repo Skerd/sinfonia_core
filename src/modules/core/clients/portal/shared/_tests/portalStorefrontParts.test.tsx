@@ -41,6 +41,16 @@ describe("portal storefront parts shared by the shop and the services (D142)", (
         expect(screen.getByLabelText("Visit Alpha Studio")).toHaveAttribute("href", "https://alpha.example.test/services");
     });
 
+    it("names the board a task is posted on and a company that quoted, each linking to its own site (D172)", () => {
+        render(<PortalSellerCard seller={{...SELLER, name: "Board", siteSlug: "tasks"}} sectionPath="tasks" kind="task" size="card" />);
+        render(<PortalSellerCard seller={SELLER} sectionPath="services" kind="quote" size="card" />);
+
+        expect(screen.getByText("postedOn")).toBeInTheDocument();
+        expect(screen.getByText("sentQuote")).toBeInTheDocument();
+        expect(screen.getByLabelText("Visit Board")).toHaveAttribute("href", "https://tasks.example.test/tasks");
+        expect(screen.getByLabelText("Visit Alpha Studio")).toHaveAttribute("href", "https://alpha.example.test/services");
+    });
+
     it("hides the seller on a company's own site, where everything is that company's", () => {
         portal.scope = "company";
         const {container} = render(<PortalSellerCard seller={SELLER} sectionPath="shop" kind="product" />);

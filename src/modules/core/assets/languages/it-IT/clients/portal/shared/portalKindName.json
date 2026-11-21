@@ -19,5 +19,9 @@
   "project": {
     "tab": "Immobili",
     "item": "Immobile"
+  },
+  "task": {
+    "tab": "Richieste di preventivo",
+    "item": "Richiesta di preventivo"
   }
 }

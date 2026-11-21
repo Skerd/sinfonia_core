@@ -19,5 +19,9 @@
   "project": {
     "tab": "Prona",
     "item": "Pronë"
+  },
+  "task": {
+    "tab": "Kërkesat për ofertë",
+    "item": "Kërkesë për ofertë"
   }
 }
