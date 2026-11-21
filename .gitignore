@@ -28,3 +28,6 @@ scripts/.locale-translate-cache-*-en-sq.json
 .env
 .env.local
 .env.*.local
+
+# graphify knowledge-graph output and scan cache (local tool output, never shared)
+/graphify-out/
