@@ -16,5 +16,6 @@
   "noResultsHint": "Try other words, another city or fewer filters.",
   "failed": "The catalog could not be loaded. Try again.",
   "previous": "Previous",
-  "next": "Next"
+  "next": "Next",
+  "loading": "Loading results"
 }

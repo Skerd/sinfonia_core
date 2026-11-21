@@ -6,6 +6,7 @@ import {PhoneInput} from "@coreModule/components/custom/inputs/phoneInput.tsx";
 // store; the test supplies the dictionary directly instead.
 const language = vi.hoisted(() => ({current: {currentLanguage: null, languageCode: "en-US"}}));
 vi.mock("@coreModule/helpers/hooks/useSelectedLanguage.ts", () => ({
+    warmComponentLanguage: () => undefined,
     default: () => language.current,
 }));
 

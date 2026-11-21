@@ -3,6 +3,14 @@ import {useEffect, useRef, useState} from 'react';
 import apiClient from "@coreModule/helpers/apiClient/apiClient.ts";
 import {isRequestCancelled} from "@coreModule/helpers/apiClient/requestCancelled.ts";
 import {
+    beginWaitingRead,
+    endWaitingRead,
+    pendingRead,
+    readCachedResponse,
+    responseCacheKey,
+    storeResponse,
+} from "@coreModule/helpers/apiClient/responseCache.ts";
+import {
     buildBody,
     buildHeaders,
     buildToastMessages,
@@ -62,6 +70,10 @@ const readErrorBody = async (err: unknown): Promise<HttpError> => {
  * Notes:
  * - For multipart requests, never set `Content-Type` manually; browser sets boundary.
  * - Requests are held while `inViewPort` is false and sent once it turns true.
+ * - A request flagged `cache` (a read) shows the last answer for the same request at once, without a loading state,
+ *   and asks again in the background when that answer is older than a few seconds; it waits for a prefetch of the
+ *   same read instead of asking twice. Asking again for what the page already shows always reaches the server.
+ *   Any successful write through `apiClient` marks the kept answers stale (`helpers/apiClient/apiWrites.ts`).
  */
 export default function useHttpRequest<TData = unknown>(
     httpRequest: HttpRequest,
@@ -83,6 +95,8 @@ export default function useHttpRequest<TData = unknown>(
     const rateLimitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const abortControllerRef = useRef<AbortController | null>(null);
     const requestIdRef = useRef(0);
+    // The cached read this page last asked for: asking it again is a refresh, which skips the cache.
+    const lastCacheKeyRef = useRef<string | null>(null);
     const latestValuesRef = useRef({
         httpRequest,
         requestData,
@@ -146,7 +160,30 @@ export default function useHttpRequest<TData = unknown>(
         const requestId = ++requestIdRef.current;
         const isCurrent = () => requestId === requestIdRef.current;
 
-        const toastMessages = buildToastMessages(currentHttpRequest, currentProps.resolveLanguageKey);
+        const isFormDataRequest = !!currentProps.isFormData || currentRequestData instanceof FormData;
+        const url = buildUrl(currentHttpRequest, currentProps, currentProps.url ?? currentHttpRequest.url);
+        const data = buildBody(currentHttpRequest, currentProps, currentRequestData, currentProps.jsonData);
+        const headers = buildHeaders(currentHttpRequest, currentProps, isFormDataRequest);
+
+        // A cached read shows the last answer at once, unless this page already shows it and asks again (a refresh).
+        const cacheKey = currentHttpRequest.cache ? responseCacheKey(currentHttpRequest.method, url, data, headers) : null;
+        const refresh = cacheKey !== null && cacheKey === lastCacheKeyRef.current;
+        lastCacheKeyRef.current = cacheKey;
+        const cached = cacheKey && !refresh ? readCachedResponse(cacheKey) : undefined;
+        if (cached) {
+            // Stored under this request's own key: the answer this request had.
+            const cachedData = cached.data as TData;
+            setResponse(cachedData);
+            setError(null);
+            setLoading(false);
+            lifecycle.success?.(cachedData);
+            if (cached.fresh) return;
+        }
+        // Asked again behind the shown answer: no loading state, no toasts.
+        const background = cached !== undefined;
+        const shared = cacheKey && !refresh && !cached ? pendingRead(cacheKey) : undefined;
+
+        const toastMessages = buildToastMessages(currentHttpRequest, background ? undefined : currentProps.resolveLanguageKey);
         const toastId = toastMessages.loading !== undefined ? toast.loading(toastMessages.loading) : undefined;
         /** Replaces the loading toast with `message`, or just dismisses it when there is nothing to say. */
         const settleToast = (kind: "success" | "error", message?: string) => {
@@ -157,35 +194,43 @@ export default function useHttpRequest<TData = unknown>(
             }
         };
 
-        setLoading(true);
-        setError(null);
-        lifecycle.start?.();
-
-        const isFormDataRequest = !!currentProps.isFormData || currentRequestData instanceof FormData;
-        const url = buildUrl(currentHttpRequest, currentProps, currentProps.url ?? currentHttpRequest.url);
-        const data = buildBody(currentHttpRequest, currentProps, currentRequestData, currentProps.jsonData);
-        const headers = buildHeaders(currentHttpRequest, currentProps, isFormDataRequest);
+        if (!background) {
+            setLoading(true);
+            setError(null);
+            lifecycle.start?.();
+        }
 
         currentProps.notifyPost?.({url, data, headers});
 
+        const ask = () => apiClient<TData>({
+            method: currentHttpRequest.method,
+            url,
+            data,
+            headers,
+            signal: controller.signal,
+            responseType: currentHttpRequest.responseType,
+            cachedRead: cacheKey !== null,
+        }).then((res) => res.data);
+
         const run = async () => {
+            const waited = cacheKey !== null && !background;
+            if (waited) beginWaitingRead();
             try {
-                const res = await apiClient<TData>({
-                    method: currentHttpRequest.method,
-                    url,
-                    data,
-                    headers,
-                    signal: controller.signal,
-                    responseType: currentHttpRequest.responseType,
-                });
+                // A prefetch of the same read is already on its way: wait for it rather than ask twice.
+                const payload = shared
+                    ? await (shared as Promise<TData>).catch(() => ask())
+                    : await ask();
+                if (cacheKey) storeResponse(cacheKey, payload);
                 if (!isCurrent()) {
                     settleToast("success");
                     return;
                 }
-                setResponse(res.data);
-                lifecycle.success?.(res.data);
-                settleToast("success", toastMessages.success?.(res.data));
-                currentProps.notifySuccess?.({data: res.data});
+                // The same answer as the one on screen: nothing to redraw.
+                if (background && JSON.stringify(payload) === JSON.stringify(cached?.data)) return;
+                setResponse(payload);
+                lifecycle.success?.(payload);
+                settleToast("success", toastMessages.success?.(payload));
+                currentProps.notifySuccess?.({data: payload});
             } catch (err: unknown) {
                 if (!isCurrent() || controller.signal.aborted || isRequestCancelled(err)) {
                     settleToast("error");
@@ -197,18 +242,21 @@ export default function useHttpRequest<TData = unknown>(
                     settleToast("error");
                     return;
                 }
+                // Offline behind a shown answer: keep showing it. The server saying no (gone, forbidden) still counts.
+                if (background && errorBody.status === undefined) return;
 
                 setError(errorBody);
                 if (errorBody.error_code === "rate_limit_exceeded" && errorBody.availableIn && errorBody.availableIn > 0) {
                     startRateLimitCooldown(errorBody.availableIn);
                 }
 
-                const showToast = shouldToastError(errorBody, currentProps.hideIfError);
+                const showToast = !background && shouldToastError(errorBody, currentProps.hideIfError);
                 settleToast("error", showToast ? toastMessages.error?.(errorBody) : undefined);
 
                 lifecycle.error?.(err);
                 currentProps.notifyError?.({data: errorBody});
             } finally {
+                if (waited) endWaitingRead();
                 if (isCurrent()) {
                     setLoading(false);
                 }

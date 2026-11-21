@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {Suspense, useEffect, useRef} from "react";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {Outlet, matchPath, useLocation} from "react-router-dom";
@@ -11,17 +11,30 @@ import PortalChat from "../chat/index.tsx";
 import PortalFooter from "../footer/index.tsx";
 import PortalNavigation from "../navigation/index.tsx";
 import {usePortalSite} from "../portalSiteContext.tsx";
+import {usePortalLinkIntent} from "../portalLinkIntent.ts";
+import PortalProgressBar from "../portalProgress.tsx";
+import {useFadeInOnChange} from "../portalFade.ts";
+import {isAccountTabSwitch} from "../accountArea.ts";
 
 /**
  * Portal chrome around every page (and a company site's visitor chat). A host the portal does not know shows only
  * "not found", except the modules' host pages (D96): emailed token links work on every company host.
+ *
+ * The one loading boundary of the pages sits here: a navigation keeps the current page on screen until the next
+ * one's code has loaded (the router navigates in a transition), so the chrome never blanks; only a first visit
+ * straight to a page shows the quiet placeholder. Each new page fades in.
  */
 function PortalLayout({resolveLanguageKey}: WithLanguageType) {
     const dispatch = useDispatch();
     const sessionExpired = useSelector((state: RootState) => state.authentication.sessionExpired);
-    const {site} = usePortalSite();
+    const {site, sections} = usePortalSite();
     const {pathname} = useLocation();
     const onHostPage = portalHostPagesOf(getPortalContributions()).some(({path}) => matchPath(`/${path}`, pathname) !== null);
+    usePortalLinkIntent(site, sections);
+
+    const page = useRef<HTMLDivElement>(null);
+    // A tab of the same account area is faded by its shell, beside the list that stays.
+    useFadeInOnChange(page, pathname, {first: true, skip: isAccountTabSwitch});
 
     // No expiry dialog on the portal: an expired session simply ends.
     useEffect(() => {
@@ -36,9 +49,14 @@ function PortalLayout({resolveLanguageKey}: WithLanguageType) {
             >
                 {resolveLanguageKey("skipToContent")}
             </a>
+            <PortalProgressBar />
             <PortalNavigation />
             <main id="portal-main" tabIndex={-1} className="flex-1 outline-none">
-                {site === null && !onHostPage ? <PortalNotFound /> : <Outlet />}
+                <div ref={page}>
+                    <Suspense fallback={<div className="min-h-svh" aria-busy="true" aria-label={resolveLanguageKey("loadingPage")} />}>
+                        {site === null && !onHostPage ? <PortalNotFound /> : <Outlet />}
+                    </Suspense>
+                </div>
             </main>
             <PortalFooter />
             <PortalChat />

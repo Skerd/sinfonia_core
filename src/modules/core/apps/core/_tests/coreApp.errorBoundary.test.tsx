@@ -46,6 +46,7 @@ vi.mock("@coreModule/components/ui/sidebar.tsx", () => ({
     SidebarProvider: ({children}: {children: unknown}) => <>{children}</>,
 }));
 vi.mock("@coreModule/helpers/hooks/useSelectedLanguage.ts", () => ({
+    warmComponentLanguage: () => undefined,
     default: () => ({currentLanguage: null}),
 }));
 vi.mock("@coreModule/helpers/general/errors.ts", () => ({

@@ -1,5 +1,6 @@
 {
   "path": "src/modules/core/clients/portal/shared/portalCompanySite.tsx",
   "back": "Kthehu te seksioni",
-  "visitSite": "Vizito faqen"
+  "visitSite": "Vizito faqen",
+  "loading": "Faqja e kompanisë po ngarkohet"
 }

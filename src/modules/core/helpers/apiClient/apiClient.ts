@@ -1,9 +1,9 @@
 import axios, {AxiosError, InternalAxiosRequestConfig} from "axios";
-import {getDeviceId, getToken} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 import {store} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {markSessionExpired} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import {SESSION_EXPIRED_ERROR_CODES} from "@coreModule/helpers/apiClient/sessionExpiredErrorCodes.ts";
-import {getSiteCompany} from "@coreModule/helpers/apiClient/siteCompany.ts";
+import {contextHeaders} from "@coreModule/helpers/apiClient/contextHeaders.ts";
+import {noteApiWrite} from "@coreModule/helpers/apiClient/apiWrites.ts";
 
 const AUTH_PATH_PREFIX = "/authenticate";
 
@@ -58,28 +58,11 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     }
     const nextConfig = config;
     const headers = nextConfig.headers || {};
-    const state = store.getState();
 
-    const token = getToken();
-    const deviceId = getDeviceId();
-    const languageCode = state.language?.languageCode;
-    const companyId = state.authentication?.user?.company?._id;
-
-    if (token) {
-        headers["x-auth-token"] = token + "";
-    }
-    if (deviceId) {
-        headers["x-device-id"] = deviceId;
-    }
-    if (languageCode) {
-        headers["language"] = languageCode;
-    }
-    if (companyId) {
-        headers["x-company-id"] = companyId;
-    }
-    const siteCompany = getSiteCompany();
-    if (siteCompany) {
-        headers["x-site-company"] = siteCompany;
+    for (const [name, value] of Object.entries(contextHeaders())) {
+        // A request that names its site company itself (a prefetch of another company's page) keeps it.
+        if (name === "x-site-company" && headers[name]) continue;
+        headers[name] = value;
     }
 
     nextConfig.headers = headers;
@@ -87,7 +70,11 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 });
 
 apiClient.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        // A write changes what kept answers say (see apiWrites.ts); a cached read sent as POST does not.
+        if ((response.config.method ?? "get").toLowerCase() !== "get" && !response.config.cachedRead) noteApiWrite();
+        return response;
+    },
     (error: AxiosError) => {
         // Another origin's 401 says nothing about our session.
         if (isSessionExpiredError(error) && targetsOwnOrigin(error.config) && shouldHandleSessionExpiry()) {

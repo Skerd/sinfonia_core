@@ -1,5 +1,6 @@
 {
   "path": "src/modules/core/clients/portal/shared/portalCompanySite.tsx",
   "back": "Zurück zur Rubrik",
-  "visitSite": "Website besuchen"
+  "visitSite": "Website besuchen",
+  "loading": "Website des Unternehmens wird geladen"
 }

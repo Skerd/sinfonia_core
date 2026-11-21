@@ -16,5 +16,6 @@
   "noResultsHint": "Essayez d'autres mots, une autre ville ou moins de filtres.",
   "failed": "Le catalogue n'a pas pu être chargé. Réessayez.",
   "previous": "Précédent",
-  "next": "Suivant"
+  "next": "Suivant",
+  "loading": "Chargement des résultats"
 }

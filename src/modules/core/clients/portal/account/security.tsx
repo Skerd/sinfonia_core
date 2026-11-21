@@ -18,7 +18,7 @@ import {FieldError} from "@coreModule/components/ui/field.tsx";
 
 const LANGUAGE_PATH = "src/modules/core/clients/portal/account/security.tsx";
 
-const MFA_STATUS_REQUEST = {method: "get" as const, url: "/api/user/mfa", data: {}};
+const MFA_STATUS_REQUEST = {method: "get" as const, url: "/api/user/mfa", data: {}, cache: true};
 const CHANGE_PASSWORD_REQUEST = {method: "patch" as const, url: "/api/user/data/password", data: {}};
 const MFA_SETUP_REQUEST = {method: "post" as const, url: "/api/user/mfa", data: {}};
 const MFA_ENABLE_REQUEST = {method: "put" as const, url: "/api/user/mfa", data: {}};

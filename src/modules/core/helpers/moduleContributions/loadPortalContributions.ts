@@ -32,7 +32,8 @@ const isSection = (entry: Record<string, unknown>) => isString(entry.section)
     && isOptionalComponent(entry.Provider)
     && isOptionalComponent(entry.NavAction)
     && isOptionalComponent(entry.AccountSection)
-    && (entry.hostPages === undefined || isHostPages(entry.hostPages));
+    && (entry.hostPages === undefined || isHostPages(entry.hostPages))
+    && (entry.prefetch === undefined || typeof entry.prefetch === "function");
 
 /** No section, at least one host page, and nothing that only a section can use. */
 const isHostPagesOnly = (entry: Record<string, unknown>) => entry.section === undefined

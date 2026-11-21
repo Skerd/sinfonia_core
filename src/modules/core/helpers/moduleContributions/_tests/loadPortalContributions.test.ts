@@ -33,6 +33,14 @@ describe("createPortalContributions", () => {
         expect(list().filter(isPortalSection)[0].catalogs?.map((catalog) => catalog.kind)).toEqual(["product", "service"]);
     });
 
+    it("accepts a section's prefetch and rejects one that is not a function", () => {
+        const prefetch = () => undefined;
+        const list = createPortalContributions({[path("eCommerce")]: {default: {section: "shop", path: "shop", SectionSite: Site, prefetch}}});
+        expect(list().filter(isPortalSection)[0].prefetch).toBe(prefetch);
+        const broken = createPortalContributions({[path("x")]: {default: {section: "x", path: "x", prefetch: "soon"}}});
+        expect(() => broken()).toThrow(/portalContribution/);
+    });
+
     it("rejects a catalog without a kind", () => {
         const list = createPortalContributions({[path("x")]: {default: {section: "x", path: "x", catalogs: [{Filters: Site}]}}});
         expect(() => list()).toThrow(/portalContribution/);

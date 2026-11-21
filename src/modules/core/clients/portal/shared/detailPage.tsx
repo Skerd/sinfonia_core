@@ -36,7 +36,8 @@ type DetailPageProps = WithLanguageType & {
 
 function DetailPage({kind, title, crumbs = [], media, story, children, below, resolveLanguageKey}: DetailPageProps) {
     return (
-        <div className="flex flex-col gap-16 sm:gap-20">
+        // Fades in as it takes over from the page's loading placeholder.
+        <div className="flex flex-col gap-16 transition-opacity duration-300 ease-out starting:opacity-0 sm:gap-20">
             <div className="flex flex-col gap-6">
                 <Breadcrumb aria-label={resolveLanguageKey("breadcrumb")}>
                     <BreadcrumbList>

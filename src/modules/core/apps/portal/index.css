@@ -94,10 +94,70 @@ body {
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
 }
 
+/*
+ * Loading. A page's placeholder (`aria-busy="true"` with its label) fades in only when the wait is long enough to
+ * notice: a quick answer never flashes it. While one is up, the page keeps a full window of height, so the footer
+ * does not jump up under the header and back.
+ */
+#portal-main [aria-busy="true"][aria-label],
+#portal-main [role="status"][aria-label] {
+    /* Visibility too: a placeholder that pulses runs its own opacity animation, which would show it at once. */
+    transition: opacity 240ms ease-out 180ms, visibility 0s linear 180ms;
+}
+
+/* The core `Loader` (a block in an account overview, a spinner in a button) waits the same way. */
+@starting-style {
+    #portal-main [aria-busy="true"][aria-label],
+    #portal-main [role="status"][aria-label] {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+#portal-main:has([aria-busy="true"][aria-label]) {
+    min-height: 100svh;
+}
+
+/*
+ * Pictures fade in once loaded (`revealImage` in `portalImageMotion.ts`) instead of drawing in line by line. Without
+ * weight, so a picture's own transition classes (a card's hover zoom) win; they list `opacity` themselves.
+ */
+:where(img[data-reveal]) {
+    transition: opacity 400ms ease-out;
+}
+
+:where(img[data-reveal]:not([data-revealed])) {
+    opacity: 0;
+}
+
+/*
+ * Account pages (`AccountShell`): their sections, list rows and booking items come up one after another as they
+ * arrive. An animation, not a transition, so a row's own hover transition is left alone.
+ */
+@keyframes portal-rise {
+    from {
+        opacity: 0;
+        translate: 0 8px;
+    }
+}
+
+[data-account-content] :is(section, :is(ul, ol) > li, [data-slot="item-group"] > [data-slot="item"]) {
+    animation: portal-rise 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+[data-account-content] :is(section, :is(ul, ol) > li, [data-slot="item-group"] > [data-slot="item"]):nth-child(2) { animation-delay: 40ms; }
+[data-account-content] :is(section, :is(ul, ol) > li, [data-slot="item-group"] > [data-slot="item"]):nth-child(3) { animation-delay: 80ms; }
+[data-account-content] :is(section, :is(ul, ol) > li, [data-slot="item-group"] > [data-slot="item"]):nth-child(4) { animation-delay: 120ms; }
+[data-account-content] :is(section, :is(ul, ol) > li, [data-slot="item-group"] > [data-slot="item"]):nth-child(5) { animation-delay: 160ms; }
+[data-account-content] :is(section, :is(ul, ol) > li, [data-slot="item-group"] > [data-slot="item"]):nth-child(6) { animation-delay: 200ms; }
+[data-account-content] :is(section, :is(ul, ol) > li, [data-slot="item-group"] > [data-slot="item"]):nth-child(7) { animation-delay: 240ms; }
+[data-account-content] :is(section, :is(ul, ol) > li, [data-slot="item-group"] > [data-slot="item"]):nth-child(n + 8) { animation-delay: 280ms; }
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
+        animation-delay: 0s !important;
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;

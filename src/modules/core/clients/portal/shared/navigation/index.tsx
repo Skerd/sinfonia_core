@@ -16,6 +16,7 @@ import {
 } from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@coreModule/components/ui/sheet.tsx";
 import {Separator} from "@coreModule/components/ui/separator.tsx";
+import {SlidingIndicator} from "@coreModule/components/ui/sliding-indicator.tsx";
 import LanguageSwitch from "@coreModule/components/custom/preferences/languageSwitch.tsx";
 import ThemeSwitch from "@coreModule/components/custom/preferences/themeSwitch.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -32,10 +33,13 @@ function useIsSectionActive(): (section: PortalSection) => boolean {
     return (section) => pathname.startsWith(`/${section.path}`) || Boolean(kind && section.catalogs?.some((catalog) => catalog.kind === kind));
 }
 
-function navLinkClass({isActive}: {isActive: boolean}): string {
+/** `sliding`: the row draws the active pill itself (`SlidingIndicator`), so the link only changes colour. */
+function navLinkClass({isActive, sliding = false}: {isActive: boolean; sliding?: boolean}): string {
     return cn(
         "rounded-full px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
-        isActive && "bg-muted text-foreground",
+        sliding && "relative",
+        isActive && "text-foreground",
+        isActive && !sliding && "bg-muted",
     );
 }
 
@@ -85,6 +89,7 @@ function PortalNavigation({resolveLanguageKey}: WithLanguageType) {
     const {sections} = usePortalSite();
     const isSectionActive = useIsSectionActive();
     const blogActive = pathname === "/blog" || pathname.startsWith("/blog/");
+    const activeLink = sections.find(isSectionActive)?.section ?? (blogActive ? "blog" : undefined);
     const [menuOpen, setMenuOpen] = useState(false);
     const closeMenu = () => setMenuOpen(false);
 
@@ -94,13 +99,22 @@ function PortalNavigation({resolveLanguageKey}: WithLanguageType) {
                 <Link to="/" className="flex min-w-0 shrink-0 items-center" aria-label={resolveLanguageKey("home")}>
                     <Brand />
                 </Link>
-                <nav className="hidden items-center gap-1 lg:flex" aria-label={resolveLanguageKey("navLabel")}>
+                <nav className="relative hidden items-center gap-1 lg:flex" aria-label={resolveLanguageKey("navLabel")}>
+                    {/* The current section's pill slides from link to link. */}
+                    <SlidingIndicator activeKey={activeLink} className="rounded-full bg-muted" />
                     {sections.map((section) => (
-                        <Link key={section.section} to={sectionHref(section)} className={navLinkClass({isActive: isSectionActive(section)})}>
+                        <Link
+                            key={section.section}
+                            to={sectionHref(section)}
+                            data-indicator-active={activeLink === section.section ? "" : undefined}
+                            className={navLinkClass({isActive: activeLink === section.section, sliding: true})}
+                        >
                             <PortalSectionName section={section.section} />
                         </Link>
                     ))}
-                    <Link to="/blog" className={navLinkClass({isActive: blogActive})}>{resolveLanguageKey("blog")}</Link>
+                    <Link to="/blog" data-indicator-active={activeLink === "blog" ? "" : undefined} className={navLinkClass({isActive: activeLink === "blog", sliding: true})}>
+                        {resolveLanguageKey("blog")}
+                    </Link>
                 </nav>
                 <div className="ml-auto hidden flex-1 justify-end md:flex">
                     <NavigationSearch resolveLanguageKey={resolveLanguageKey} />

@@ -8,6 +8,7 @@ vi.mock("@coreModule/helpers/hocs/withDebug.tsx", () => ({
 }));
 vi.mock("@coreModule/helpers/hooks/useAccess.ts", () => ({useAccess: () => ({read: true, write: true, delete: true, restore: true})}));
 vi.mock("@coreModule/helpers/hooks/useSelectedLanguage.ts", () => ({
+    warmComponentLanguage: () => undefined,
     default: () => ({currentLanguage: null, languageCode: "en-US", loading: false}),
 }));
 

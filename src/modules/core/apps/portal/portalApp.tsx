@@ -8,14 +8,13 @@ import {ThemeProvider} from "@coreModule/helpers/context/providers/theme-provide
 import {ensureDeviceId} from "@coreModule/helpers/context/localStorage/authenticationStorage.ts";
 import {TooltipProvider} from "@coreModule/components/ui/tooltip.tsx";
 import ErrorBoundary from "@coreModule/components/custom/errors/errorBoundary.tsx";
-import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import PortalLayout from "@coreModule/clients/portal/shared/layout/index.tsx";
 import {PortalSiteProvider, usePortalSite} from "@coreModule/clients/portal/shared/portalSiteContext.tsx";
 import {PortalSessionProvider} from "@coreModule/clients/portal/shared/portalSession.tsx";
 import {GuestOnly, RequireSession} from "@coreModule/clients/portal/shared/sessionRoutes.tsx";
 import {SectionBaseProvider, sectionHref} from "@coreModule/clients/portal/shared/sectionBase.tsx";
 import PortalCompanySite from "@coreModule/clients/portal/shared/portalCompanySite.tsx";
-import PortalScrollToTop from "@coreModule/clients/portal/shared/portalScrollToTop.tsx";
+import PortalScrollRestoration from "@coreModule/clients/portal/shared/portalScrollRestoration.tsx";
 import SitePageLayout from "@coreModule/clients/portal/shared/sitePageLayout.tsx";
 import {getPortalContributions, portalHostPagesOf} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
 import {WebSocketProvider} from "@coreModule/helpers/context/webSocketContext.tsx";
@@ -34,6 +33,11 @@ const ForgotPasswordPage = lazy(() => import("@coreModule/clients/portal/auth/fo
 const ResetPasswordPage = lazy(() => import("@coreModule/clients/portal/auth/resetPassword.tsx"));
 const NotFoundPage = lazy(() => import("@coreModule/clients/portal/notFound/index.tsx"));
 
+/** While the host is being identified: the header's line and nothing else, so the page does not open on a spinner. */
+function PortalBoot() {
+    return <div className="h-16 border-b" />;
+}
+
 /** The state the sections this host offers share with the shell (the shop's cart). */
 function SectionProviders({children}: {children: ReactNode}) {
     const {sections} = usePortalSite();
@@ -47,7 +51,7 @@ function SectionProviders({children}: {children: ReactNode}) {
  */
 function PortalRoutes() {
     const {site, sections} = usePortalSite();
-    if (site === undefined) return <Loader />;
+    if (site === undefined) return <PortalBoot />;
     const companyHost = site?.scope === "company";
     // The modules' host pages (D96): on every host, whatever sections it lists, and never in the navbar or footer.
     const hostPages = portalHostPagesOf(getPortalContributions());
@@ -127,13 +131,13 @@ function PortalApp() {
                 <ThemeProvider>
                     <TooltipProvider>
                         <BrowserRouter>
-                            <PortalScrollToTop />
+                            <PortalScrollRestoration />
                             <PortalSiteProvider>
                                 <PortalSessionProvider>
                                     {/* The shared socket, for signed-in sessions only (no token, no socket): live updates (D172). */}
                                     <WebSocketProvider showSetupScreen={false}>
                                         <SectionProviders>
-                                            <Suspense fallback={<Loader />}>
+                                            <Suspense fallback={<PortalBoot />}>
                                                 <PortalRoutes />
                                             </Suspense>
                                         </SectionProviders>

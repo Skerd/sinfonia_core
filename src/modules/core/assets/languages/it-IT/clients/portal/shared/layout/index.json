@@ -1,4 +1,5 @@
 {
   "path": "src/modules/core/clients/portal/shared/layout/index.tsx",
-  "skipToContent": "Vai al contenuto"
+  "skipToContent": "Vai al contenuto",
+  "loadingPage": "Caricamento della pagina"
 }

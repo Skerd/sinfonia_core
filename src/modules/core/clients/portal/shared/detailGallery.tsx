@@ -1,9 +1,10 @@
 import {IconPhotoOff, IconPlayerPlay} from "@tabler/icons-react";
 import {compose} from "redux";
-import {useState} from "react";
+import {useCallback, useLayoutEffect, useRef, useState} from "react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {morphFromOrigin, revealImage} from "./portalImageMotion.ts";
 
 type DetailGalleryProps = WithLanguageType & {
     title: string;
@@ -32,6 +33,14 @@ function DetailGallery({title, images, videos = [], shape = "portrait", placehol
     const stage = shape === "portrait" ? "aspect-[4/5]" : "aspect-[4/3]";
     const thumbs = media.length > 1;
 
+    // The picture on stage grows out of the card the visitor clicked to get here, when it is the same picture.
+    const hero = useRef<HTMLImageElement | null>(null);
+    const heroRef = useCallback((image: HTMLImageElement | null) => {
+        hero.current = image;
+        revealImage(image);
+    }, []);
+    useLayoutEffect(() => (hero.current ? morphFromOrigin(hero.current) : undefined), []);
+
     if (!current) {
         if (!placeholder) return null;
         return (
@@ -49,7 +58,7 @@ function DetailGallery({title, images, videos = [], shape = "portrait", placehol
                     // Keyed so switching clips restarts the player instead of reusing the old source.
                     <video key={current.src} src={current.src} className="size-full bg-black object-contain" controls playsInline preload="metadata" />
                 ) : (
-                    <img src={current.src} alt={title} className="size-full object-cover" />
+                    <img ref={heroRef} data-reveal src={current.src} alt={title} className="size-full object-cover" />
                 )}
             </div>
             {thumbs ? (

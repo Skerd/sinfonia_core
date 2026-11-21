@@ -12,6 +12,7 @@ import useSelectedLanguage, {
     createComponentLanguageLoader,
     type LanguageModuleLoader,
     localeJsonStemFromSourcePath,
+    warmComponentLanguage,
 } from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
 
 const ROOT = "/src/modules";
@@ -213,5 +214,21 @@ describe("useSelectedLanguage", () => {
     it("does nothing without a path", () => {
         const {result} = setup("");
         expect(result.current).toEqual({languageCode: "en-US", loading: false, error: false, errorDescription: "", currentLanguage: null});
+    });
+});
+
+describe("warmComponentLanguage", () => {
+    it("loads the dictionary of code that arrives once the app runs, before its component renders", async () => {
+        const store = configureStore({reducer: {language: languageReducer}});
+        store.dispatch(changeLanguage("de-CH"));
+        const wrapper = ({children}: {children: ReactNode}) => <Provider store={store}>{children}</Provider>;
+        // A mounted component tells the loader the app's language.
+        renderHook(() => useSelectedLanguage("src/modules/core/components/custom/errors/errorBoundary.tsx"), {wrapper});
+        const lateComponent = "src/modules/core/clients/portal/shared/layout/index.tsx";
+        componentLanguageLoader.clear();
+
+        warmComponentLanguage(lateComponent);
+
+        await waitFor(() => expect(componentLanguageLoader.peek(lateComponent, "de-CH")).toMatchObject({skipToContent: expect.any(String)}));
     });
 });

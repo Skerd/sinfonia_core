@@ -95,8 +95,8 @@ function BlogCompanyCard({seller, resolveLanguageKey}: {seller: PublicBlogSeller
     );
 }
 
-const ARTICLE_REQUEST = {method: "post" as const, url: "/api/auxiliary/public/blog/single", data: {}};
-const RELATED_REQUEST = {method: "post" as const, url: "/api/auxiliary/public/blog", data: {}};
+const ARTICLE_REQUEST = {method: "post" as const, url: "/api/auxiliary/public/blog/single", data: {}, cache: true};
+const RELATED_REQUEST = {method: "post" as const, url: "/api/auxiliary/public/blog", data: {}, cache: true};
 
 function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
     const companySlug = useBlogCompanyQuery();

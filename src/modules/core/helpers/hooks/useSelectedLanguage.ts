@@ -191,6 +191,21 @@ export const componentLanguageLoader = createComponentLanguageLoader({
         applyModuleRolesPermissionsContributions(applyModuleMenuContributions(dictionary, languageCode), languageCode),
 })
 
+/**
+ * The language of the running app, once a component has mounted; `null` while the app boots. Boot-time code loads each
+ * dictionary as its component mounts; code that arrives later (see {@link warmComponentLanguage}) loads it right away.
+ */
+let runningLanguageCode: string | null = null
+
+/**
+ * Starts loading a component's dictionary as soon as its code arrives, when that is after the app is running: a lazily
+ * loaded page, or one asked ahead for a hovered link. Its components then render with their text on their first
+ * render, instead of each waiting for its parent's text before it mounts and asks for its own. `withLanguage` calls it.
+ */
+export function warmComponentLanguage(componentPath: string): void {
+    if (runningLanguageCode && componentPath) void componentLanguageLoader.load(componentPath, runningLanguageCode)
+}
+
 type SelectedLanguageState = {
     requestKey: string
     componentPath: string
@@ -239,6 +254,10 @@ export default function useSelectedLanguage<TLanguage extends LanguageDictionary
         current = stateFor(requestKey, componentPath, languageCode, state)
         setState(current)
     }
+
+    useEffect(() => {
+        if (languageCode) runningLanguageCode = languageCode
+    }, [languageCode])
 
     useEffect(() => {
         if (!requestKey) return

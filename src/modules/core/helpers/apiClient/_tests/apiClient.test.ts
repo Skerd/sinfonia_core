@@ -16,6 +16,7 @@ vi.mock("@coreModule/helpers/redux/store/generalStore.ts", () => ({
 vi.mock("@coreModule/helpers/redux/slices/authSlice.ts", () => ({markSessionExpired: () => ({type: "expired"})}));
 
 import apiClient, {isSameOrigin} from "@coreModule/helpers/apiClient/apiClient.ts";
+import {onApiWrite} from "@coreModule/helpers/apiClient/apiWrites.ts";
 
 /** Runs a request through the interceptors and returns the headers it would send. */
 async function sentHeaders(url: string): Promise<Record<string, unknown>> {
@@ -57,6 +58,21 @@ describe("isSameOrigin", () => {
 });
 
 describe("apiClient", () => {
+    it("tells the response cache about every successful write, but not about reads", async () => {
+        const writes = vi.fn();
+        const stop = onApiWrite(writes);
+        const ok = {adapter: async (config: InternalAxiosRequestConfig) => ({data: null, status: 200, statusText: "OK", headers: {}, config})};
+        await apiClient.get("/api/x", ok);
+        await apiClient.post("/api/read", {}, {...ok, cachedRead: true});
+        expect(writes).not.toHaveBeenCalled();
+        await apiClient.post("/api/orders/create", {}, ok);
+        await apiClient.delete("/api/address", ok);
+        expect(writes).toHaveBeenCalledTimes(2);
+        await apiClient.post("/api/orders/create", {}, {adapter: async () => Promise.reject(new Error("offline"))}).catch(() => undefined);
+        expect(writes).toHaveBeenCalledTimes(2);
+        stop();
+    });
+
     it("adds auth and tenant headers for this origin", async () => {
         expect(await sentHeaders("/api/x")).toMatchObject({
             "x-auth-token": "secret-token",

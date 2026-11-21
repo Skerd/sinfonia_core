@@ -1,11 +1,13 @@
 import {compose} from "redux";
 import {useLayoutEffect, useMemo, useRef, useState} from "react";
 import {useSearchParams} from "react-router-dom";
+import {cn} from "@coreModule/components/lib/utils.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import {Tabs, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
+import {SlidingIndicator} from "@coreModule/components/ui/sliding-indicator.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@coreModule/components/ui/select.tsx";
 import {Empty, EmptyDescription, EmptyHeader, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
 import {
@@ -17,19 +19,14 @@ import {
     PaginationPrevious,
 } from "@coreModule/components/ui/pagination.tsx";
 import type {PortalBrowseResponse} from "armonia/src/modules/core/api/portal/public/portal/portal.dto.ts";
-import {
-    PORTAL_SORTS,
-    type PortalBrowseFilters,
-    type PortalBrowseFormType,
-} from "armonia/src/modules/core/api/portal/public/portal/portalBrowse.form.validator.ts";
+import {PORTAL_SORTS} from "armonia/src/modules/core/api/portal/public/portal/portalBrowse.form.validator.ts";
 import PortalKindName from "../shared/portalKindName.tsx";
 import {usePortalSite} from "../shared/portalSiteContext.tsx";
 import {SectionBaseProvider} from "../shared/sectionBase.tsx";
 import {CATALOG_FILTER_PREFIX, CatalogFilterField, CatalogNumberInput} from "../shared/catalogFilters.tsx";
 import CatalogCard from "./catalogCard.tsx";
+import {BROWSE_REQUEST, CATALOG_PAGE_SIZE, browseForm} from "./catalogBrowse.ts";
 
-const PAGE_SIZE = 24;
-const BROWSE_REQUEST = {method: "post" as const, url: "/api/portal/browse", data: {}};
 const ALL = "all";
 
 /** Keep the chosen kind in the scrolling row without moving the page. */
@@ -44,32 +41,13 @@ function revealActiveTab(list: HTMLElement | null) {
 /** Params that belong to one kind and are dropped when switching kinds. */
 const KIND_PARAMS = ["page", "priceMin", "priceMax", "sort"];
 
-function numberParam(params: URLSearchParams, key: string): number | undefined {
-    const value = Number(params.get(key));
-    return params.get(key) && Number.isFinite(value) ? value : undefined;
-}
-
-/** The browse request the URL describes. */
-function browseForm(params: URLSearchParams): PortalBrowseFormType {
-    const filters: PortalBrowseFilters = {};
-    params.forEach((value, key) => {
-        if (key.startsWith(CATALOG_FILTER_PREFIX)) filters[key.slice(CATALOG_FILTER_PREFIX.length)] = value;
-    });
-    return {
-        kind: params.get("kind") || undefined,
-        query: params.get("q") || undefined,
-        city: params.get("city") || undefined,
-        priceMin: numberParam(params, "priceMin"),
-        priceMax: numberParam(params, "priceMax"),
-        sort: PORTAL_SORTS.find((sort) => sort === params.get("sort")),
-        page: numberParam(params, "page"),
-        limit: PAGE_SIZE,
-        filters,
-    };
-}
-
-function CardGrid({children}: {children: React.ReactNode}) {
-    return <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 lg:grid-cols-4">{children}</div>;
+/** `busyLabel` marks the grid of skeletons a first load shows. */
+function CardGrid({children, busyLabel}: {children: React.ReactNode; busyLabel?: string}) {
+    return (
+        <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 lg:grid-cols-4" aria-busy={busyLabel ? true : undefined} aria-label={busyLabel}>
+            {children}
+        </div>
+    );
 }
 
 /** Every kind the host's sections list, as tabs; the chosen kind's filters; its items. */
@@ -84,11 +62,13 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
         revealActiveTab(kindTabs.current);
     }, [active?.kind]);
 
-    // One request per URL state; silent, like before: loading shows skeletons, a failure shows the empty state.
+    // One request per URL state, silent: the first load shows skeletons, a failure the empty state. Later loads
+    // keep the results on screen (dimmed when the wait is noticeable) until the new ones arrive.
     const [browse, setBrowse] = useState({form, count: 1});
     if (browse.form !== form) setBrowse({form, count: browse.count + 1});
     const {data, loading, error} = useHttpRequest<PortalBrowseResponse>(BROWSE_REQUEST, form, browse.count);
-    const groups: PortalBrowseResponse["data"] | null | undefined = loading ? undefined : error ? null : data?.data;
+    const groups: PortalBrowseResponse["data"] | null | undefined = error && !loading ? null : data?.data;
+    const refreshing = loading && groups !== undefined;
 
     const update = (change: (next: URLSearchParams) => void) => {
         setParams((current) => {
@@ -109,7 +89,7 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
     if (catalogs.length === 0) return null;
     const page = form.page ?? 1;
     const group = active ? groups?.find((candidate) => candidate.kind === active.kind) : undefined;
-    const pageCount = group ? Math.ceil(group.total / PAGE_SIZE) : 0;
+    const pageCount = group ? Math.ceil(group.total / CATALOG_PAGE_SIZE) : 0;
     const pageHref = (target: number) => {
         const next = new URLSearchParams(params);
         next.set("page", String(target));
@@ -123,11 +103,17 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
     return (
         <section className="flex flex-col gap-6" aria-label={resolveLanguageKey("label")}>
             <Tabs value={active?.kind ?? ALL} onValueChange={selectKind}>
-                <TabsList ref={kindTabs} className="h-8 w-full min-w-0 max-w-full justify-start overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:w-fit">
-                    <TabsTrigger value={ALL} className="flex-none px-3">{resolveLanguageKey("all")}</TabsTrigger>
-                    {catalogs.map((catalog) => (
-                        <TabsTrigger key={catalog.kind} value={catalog.kind} className="flex-none px-3">
-                            <PortalKindName kind={catalog.kind} />
+                <TabsList ref={kindTabs} className="relative h-8 w-full min-w-0 max-w-full justify-start overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:w-fit">
+                    {/* The chosen kind's highlight slides from tab to tab. */}
+                    <SlidingIndicator activeKey={active?.kind ?? ALL} className="rounded-md bg-background shadow-sm dark:border dark:border-input dark:bg-input/30" />
+                    {[{kind: ALL, label: resolveLanguageKey("all")}, ...catalogs.map((catalog) => ({kind: catalog.kind, label: <PortalKindName kind={catalog.kind} />}))].map(({kind, label}) => (
+                        <TabsTrigger
+                            key={kind}
+                            value={kind}
+                            data-indicator-active={(active?.kind ?? ALL) === kind ? "" : undefined}
+                            className="flex-none px-3 data-active:bg-transparent group-data-[variant=default]/tabs-list:data-active:shadow-none dark:data-active:border-transparent dark:data-active:bg-transparent"
+                        >
+                            {label}
                         </TabsTrigger>
                     ))}
                 </TabsList>
@@ -157,7 +143,7 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
             ) : null}
 
             {groups === undefined ? (
-                <CardGrid>
+                <CardGrid busyLabel={resolveLanguageKey("loading")}>
                     {Array.from({length: 8}, (_, index) => (
                         <div key={index} className="flex flex-col gap-3">
                             <Skeleton className="aspect-[4/3] rounded-2xl" />
@@ -174,9 +160,9 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
                     </EmptyHeader>
                 </Empty>
             ) : group ? (
-                <div className="flex flex-col gap-8">
+                <div className={cn("flex flex-col gap-8 transition-opacity", refreshing && "opacity-50")} aria-busy={refreshing} aria-label={refreshing ? resolveLanguageKey("loading") : undefined}>
                     <p className="text-sm text-muted-foreground">{resolveLanguageKey("results").replace("{count}", String(group.total))}</p>
-                    <CardGrid>{group.items.map((item) => <CatalogCard key={`${item.section}-${item.id}`} item={item} />)}</CardGrid>
+                    <CardGrid>{group.items.map((item, index) => <CatalogCard key={`${item.section}-${item.id}`} item={item} index={index} />)}</CardGrid>
                     {pageCount > 1 ? (
                         <Pagination>
                             <PaginationContent>
@@ -202,7 +188,7 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
                     ) : null}
                 </div>
             ) : (
-                <div className="flex flex-col gap-14">
+                <div className={cn("flex flex-col gap-14 transition-opacity", refreshing && "opacity-50")} aria-busy={refreshing} aria-label={refreshing ? resolveLanguageKey("loading") : undefined}>
                     {catalogs.map((catalog) => {
                         const rail = groups.find((candidate) => candidate.kind === catalog.kind);
                         if (!rail?.items.length) return null;
@@ -214,7 +200,7 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
                                         {resolveLanguageKey("seeAll").replace("{count}", String(rail.total))}
                                     </Button>
                                 </div>
-                                <CardGrid>{rail.items.map((item) => <CatalogCard key={`${item.section}-${item.id}`} item={item} />)}</CardGrid>
+                                <CardGrid>{rail.items.map((item, index) => <CatalogCard key={`${item.section}-${item.id}`} item={item} index={index} />)}</CardGrid>
                             </div>
                         );
                     })}

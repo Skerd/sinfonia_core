@@ -20,7 +20,7 @@ function useHttpRequestMock(request: {url: string}, body: {_id: string}, count: 
     return {loading: false};
 }
 vi.mock("@coreModule/helpers/hooks/useHttpRequest.ts", () => ({default: useHttpRequestMock}));
-vi.mock("@coreModule/helpers/hooks/useSelectedLanguage.ts", () => ({default: () => ({currentLanguage: {total: "Total"}})}));
+vi.mock("@coreModule/helpers/hooks/useSelectedLanguage.ts", () => ({default: () => ({currentLanguage: {total: "Total"}}), warmComponentLanguage: () => undefined}));
 
 const {formTotalValue} = await import("../totalValue.ts");
 const {FormTotal} = await import("../total.tsx");

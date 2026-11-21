@@ -1,5 +1,5 @@
 import {createContext, useCallback, useMemo} from "react";
-import useSelectedLanguage, {LanguageDictionary} from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
+import useSelectedLanguage, {LanguageDictionary, warmComponentLanguage} from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
 
 /**
  * Supported translation payload values.
@@ -112,6 +112,8 @@ export type WithLanguageType<TLanguage extends LanguageDictionary = LanguageDict
  *   It should be the wrapping file's own path; sharing another file's dictionary must be listed in `tests/withLanguagePaths.test.ts`.
  */
 const withLanguage = (componentFilePath: string) => (WrappedComponent: any) => {
+    // Code arriving after the app runs (a lazy page) asks for its text now, not when it first renders.
+    warmComponentLanguage(componentFilePath);
 
     function EnhancedComponent_WithLanguage(props: any) {
 

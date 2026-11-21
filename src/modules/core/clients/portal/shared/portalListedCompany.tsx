@@ -12,7 +12,8 @@ export type PortalListedCompany = {
 const PortalListedCompanyContext = createContext<PortalListedCompany | null>(null);
 
 /** The company whose pages `PortalCompanySite` is showing on the apex. */
-export function PortalListedCompanyProvider({company, children}: {company: PortalListedCompany; children: ReactNode}) {
+/** `company` is `null` while it is still being looked up. */
+export function PortalListedCompanyProvider({company, children}: {company: PortalListedCompany | null; children: ReactNode}) {
     return <PortalListedCompanyContext.Provider value={company}>{children}</PortalListedCompanyContext.Provider>;
 }
 

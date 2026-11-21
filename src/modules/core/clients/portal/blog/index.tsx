@@ -16,7 +16,7 @@ import {useBlogCompanyQuery} from "./blogCompany.ts";
 
 const LANGUAGE_PATH = "src/modules/core/clients/portal/blog/index.tsx";
 const PAGE_SIZE = 12;
-const BLOG_REQUEST = {method: "post" as const, url: "/api/auxiliary/public/blog", data: {}};
+const BLOG_REQUEST = {method: "post" as const, url: "/api/auxiliary/public/blog", data: {}, cache: true};
 
 type BlogBrowserProps = WithLanguageType & {
     /** `page` is `/blog`. `section` is the block on the home and on a company's pages. */

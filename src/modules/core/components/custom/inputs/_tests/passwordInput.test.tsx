@@ -3,6 +3,7 @@ import {describe, expect, it, vi} from "vitest";
 
 // The toggle's copy comes from the dictionary loader, which reaches for the redux store.
 vi.mock("@coreModule/helpers/hooks/useSelectedLanguage.ts", () => ({
+    warmComponentLanguage: () => undefined,
     default: () => ({currentLanguage: {show: "Show password", hide: "Hide password"}}),
 }));
 

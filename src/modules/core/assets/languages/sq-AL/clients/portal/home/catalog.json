@@ -16,5 +16,6 @@
   "noResultsHint": "Provo fjalë të tjera, një qytet tjetër ose më pak filtra.",
   "failed": "Katalogu nuk u ngarkua. Provo përsëri.",
   "previous": "E mëparshmja",
-  "next": "Tjetra"
+  "next": "Tjetra",
+  "loading": "Rezultatet po ngarkohen"
 }

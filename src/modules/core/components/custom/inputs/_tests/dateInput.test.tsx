@@ -10,6 +10,7 @@ import {DATE_FORMATS, formatDate} from "@coreModule/helpers/general/dateTime.ts"
 // The component only needs labels from the dictionary loader, and that loader pulls in the redux
 // store; the test supplies the dictionary directly instead.
 vi.mock("@coreModule/helpers/hooks/useSelectedLanguage.ts", () => ({
+    warmComponentLanguage: () => undefined,
     default: () => ({currentLanguage: {clear: "Clear", hourLabel: "Hr", minuteLabel: "Min"}}),
 }));
 

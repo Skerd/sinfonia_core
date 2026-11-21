@@ -1,5 +1,6 @@
 {
   "path": "src/modules/core/clients/portal/shared/portalCompanySite.tsx",
   "back": "Back to the section",
-  "visitSite": "Visit site"
+  "visitSite": "Visit site",
+  "loading": "Loading the company's site"
 }

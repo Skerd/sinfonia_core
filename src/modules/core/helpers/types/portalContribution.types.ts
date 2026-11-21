@@ -21,6 +21,15 @@ export type PortalHostPage = {
     Page: ComponentType;
 };
 
+/** Where a link the visitor is about to follow leads inside a section (see {@link PortalSection.prefetch}). */
+export type PortalPrefetchTarget = {
+    /** The path after `/<path>`, and on the apex after a company site's `/<company>`: `/product`, `/categories/suv`. */
+    path: string;
+    params: URLSearchParams;
+    /** On the apex, the company whose site the link opens: pass it on as `prefetchHttpRequest(…, {siteCompany})`. */
+    siteCompany?: string;
+};
+
 /**
  * One section of the portal (shop, car rental, dentists, properties). The portal renders
  * its pages in its own shell, on the apex and on every company's own site.
@@ -58,6 +67,12 @@ export type PortalSection = {
     AccountSection?: ComponentType;
     /** Pages outside the section's URL space, on every host (see {@link PortalHostPage}). */
     hostPages?: readonly PortalHostPage[];
+    /**
+     * Runs when the visitor points at, touches or focuses a link into the section, before the click: load the page's
+     * code (`import()` of the same file its route lazy-loads) and `prefetchHttpRequest` the cached reads it opens with,
+     * so it opens at once. Reads only; the portal already asks for the company of an apex company site.
+     */
+    prefetch?: (target: PortalPrefetchTarget) => void;
 };
 
 /** A module that offers no section, only pages on every host (see {@link PortalHostPage}). */

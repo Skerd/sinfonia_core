@@ -32,6 +32,13 @@ export type HttpRequest = {
         message: string;
     };
     responseType?: ResponseType;
+    /**
+     * A read a page may show again from memory (`helpers/apiClient/responseCache.ts`): a page opening with the same
+     * request (Back, a revisit, a hovered link's `prefetchHttpRequest`) shows the last answer at once and refreshes it
+     * in the background. A repeated request of the same mounted page (a refresh after a write) always asks the server.
+     * Only for reads whose answer is the same for everyone with the same session, language and company.
+     */
+    cache?: boolean;
 }
 
 export type RequestPayload = Record<string, unknown> | FormData;
