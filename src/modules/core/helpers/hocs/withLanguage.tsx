@@ -1,5 +1,6 @@
 import {createContext, useCallback, useMemo} from "react";
 import useSelectedLanguage, {LanguageDictionary, warmComponentLanguage} from "@coreModule/helpers/hooks/useSelectedLanguage.ts";
+import {noteLanguagePath} from "@coreModule/helpers/hocs/languagePath.ts";
 
 /**
  * Supported translation payload values.
@@ -153,6 +154,8 @@ const withLanguage = (componentFilePath: string) => (WrappedComponent: any) => {
 
     EnhancedComponent_WithLanguage.displayName =
         `withLanguage(${WrappedComponent?.displayName ?? WrappedComponent?.name ?? "Component"})`;
+    // Read with `languagePathOf`, by a shell that loads the text of parts it shows later.
+    noteLanguagePath(EnhancedComponent_WithLanguage, componentFilePath);
 
     return EnhancedComponent_WithLanguage;
 }

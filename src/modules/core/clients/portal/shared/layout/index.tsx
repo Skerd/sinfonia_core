@@ -15,6 +15,7 @@ import {usePortalLinkIntent} from "../portalLinkIntent.ts";
 import PortalProgressBar from "../portalProgress.tsx";
 import {useFadeInOnChange} from "../portalFade.ts";
 import {isAccountTabSwitch} from "../accountArea.ts";
+import {usePortalSectionTexts} from "../portalSectionTexts.ts";
 
 /**
  * Portal chrome around every page (and a company site's visitor chat). A host the portal does not know shows only
@@ -24,13 +25,14 @@ import {isAccountTabSwitch} from "../accountArea.ts";
  * one's code has loaded (the router navigates in a transition), so the chrome never blanks; only a first visit
  * straight to a page shows the quiet placeholder. Each new page fades in.
  */
-function PortalLayout({resolveLanguageKey}: WithLanguageType) {
+function PortalLayout({resolveLanguageKey, languageCode}: WithLanguageType) {
     const dispatch = useDispatch();
     const sessionExpired = useSelector((state: RootState) => state.authentication.sessionExpired);
     const {site, sections} = usePortalSite();
     const {pathname} = useLocation();
     const onHostPage = portalHostPagesOf(getPortalContributions()).some(({path}) => matchPath(`/${path}`, pathname) !== null);
     usePortalLinkIntent(site, sections);
+    usePortalSectionTexts(sections, languageCode);
 
     const page = useRef<HTMLDivElement>(null);
     // A tab of the same account area is faded by its shell, beside the list that stays.

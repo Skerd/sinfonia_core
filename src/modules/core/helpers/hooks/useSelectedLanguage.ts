@@ -198,12 +198,13 @@ export const componentLanguageLoader = createComponentLanguageLoader({
 let runningLanguageCode: string | null = null
 
 /**
- * Starts loading a component's dictionary as soon as its code arrives, when that is after the app is running: a lazily
- * loaded page, or one asked ahead for a hovered link. Its components then render with their text on their first
- * render, instead of each waiting for its parent's text before it mounts and asks for its own. `withLanguage` calls it.
+ * Starts loading a component's dictionary before the component renders, so it renders with its text: `withLanguage`
+ * calls it for code that arrives after the app is running (a lazily loaded page, or one asked ahead for a hovered
+ * link), instead of each component waiting for its parent's text before it mounts and asks for its own; a shell may
+ * call it for parts it will show later, with its `languageCode`.
  */
-export function warmComponentLanguage(componentPath: string): void {
-    if (runningLanguageCode && componentPath) void componentLanguageLoader.load(componentPath, runningLanguageCode)
+export function warmComponentLanguage(componentPath: string, languageCode: string | null = runningLanguageCode): void {
+    if (languageCode && componentPath) void componentLanguageLoader.load(componentPath, languageCode)
 }
 
 type SelectedLanguageState = {
