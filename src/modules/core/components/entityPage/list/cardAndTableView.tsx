@@ -966,8 +966,10 @@ function CountryCenterView<
                                                         <NoData title={requestInfo?.noData ?? resolveLanguageKey("noData")}/>
                                                     ) : (
                                                         renderCardContainer(tableData.map((item) => (
+                                                            // `data-list-item`: a new card comes up in turn (panel stylesheet).
                                                             <div
                                                                 key={String(getId(item))}
+                                                                data-list-item
                                                                 className={cardItemClassName}
                                                                 onContextMenu={openActionMenuFromContextMenu}
                                                             >

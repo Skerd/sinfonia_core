@@ -21,11 +21,22 @@ import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {resolveCenterPanelClassName} from "@coreModule/helpers/moduleContributions/loadPanelLayoutContributions.ts";
-import {Fragment, Suspense, useMemo, useState} from "react";
+import {Fragment, Suspense, useMemo, useRef, useState} from "react";
 import Loader from "@coreModule/components/custom/loader/loader.tsx";
 import CommandPalette from "@coreModule/components/custom/commandPalette/commandPalette.tsx";
 import {CommandPaletteKbd} from "@coreModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {useFadeInOnChange} from "@coreModule/helpers/hooks/useFadeInOnChange.ts";
+
+/**
+ * Areas whose pages keep a list of their own on screen (the account settings' menu, a chat's conversations): moving
+ * inside one is not a new page, so the center does not fade.
+ */
+const STAYING_AREA = /^\/(account|company\/(?:chats|websiteChats))(\/|$)/;
+const staysInArea = (previous: string, next: string) => {
+    const area = STAYING_AREA.exec(previous)?.[1];
+    return area !== undefined && STAYING_AREA.exec(next)?.[1] === area;
+};
 
 type CenterPanelProps = WithLanguageType;
 
@@ -83,6 +94,9 @@ function CenterPanel({resolveLanguageKey}: CenterPanelProps){
     const [searchParams] = useSearchParams();
     const [commandOpen, setCommandOpen] = useState(false);
     const pathname = location.pathname;
+    // Each new page fades in (D174); opening a sheet or changing a list's filters stays on the same path.
+    const pageContent = useRef<HTMLDivElement>(null);
+    useFadeInOnChange(pageContent, pathname, {skip: staysInArea});
     const segments = pathname.split('/').filter(Boolean);
     const menu = segments[0];
     const subview = segments[1];
@@ -145,6 +159,7 @@ function CenterPanel({resolveLanguageKey}: CenterPanelProps){
                 }
                 <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
                     <div
+                        ref={pageContent}
                         className={clsx(
                             "mx-auto flex min-h-0 min-w-0 w-full max-w-full flex-1 flex-col",
                             resolveCenterPanelClassName({menu, subview, isMobile})

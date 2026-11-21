@@ -397,7 +397,8 @@ const CompanyCard = memo(function CompanyCard({
                                         row.addresses.filter((a) => a?.longitude && a?.latitude).length > 0 && (
                                             <div role="presentation" className="h-full min-h-32 w-full" onClick={(e) => e.stopPropagation()}>
                                                 {mapShown ? (
-                                                    <Suspense fallback={<div className="w-full animate-pulse rounded-md border bg-muted" />}>
+                                                    // The map's own box while its code loads, so the card does not grow when it arrives.
+                                                    <Suspense fallback={<div className="h-full min-h-32 w-full rounded-md border bg-muted" />}>
                                                         <CompanyMap
                                                             openInGoogleMaps={resolveLanguageKey("openInGoogleMaps")}
                                                             openInAppleMaps={resolveLanguageKey("openInAppleMaps")}

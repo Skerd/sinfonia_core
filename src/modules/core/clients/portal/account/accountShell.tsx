@@ -2,7 +2,7 @@ import {useRef} from "react";
 import {NavLink, Outlet, useLocation} from "react-router-dom";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {SlidingIndicator} from "@coreModule/components/ui/sliding-indicator.tsx";
-import {useFadeInOnChange} from "../shared/portalFade.ts";
+import {useFadeInOnChange} from "@coreModule/helpers/hooks/useFadeInOnChange.ts";
 import {isAccountTabSwitch} from "../shared/accountArea.ts";
 
 export type AccountNavItem = {to: string; end: boolean; label: string};

@@ -176,6 +176,8 @@ export default function useHttpRequest<TData = unknown>(
             setResponse(cachedData);
             setError(null);
             setLoading(false);
+            // The same lifecycle as an answer from the server: callers that count started requests (withAxios) settle.
+            lifecycle.start?.();
             lifecycle.success?.(cachedData);
             if (cached.fresh) return;
         }

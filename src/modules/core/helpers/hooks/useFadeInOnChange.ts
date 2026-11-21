@@ -1,9 +1,9 @@
 import {useLayoutEffect, useRef, type RefObject} from "react";
 
 /**
- * Fades `element` in each time `page` changes, as the new page is shown: the portal layout for whole pages, an
- * account area for its tabs (`rise`: coming up a few pixels as well; never for a whole page, whose fixed parts a
- * transform would move). `skip(previous, next)` leaves a change alone; `first` fades the first page too. Nothing
+ * Fades `element` in each time `page` changes, as the new page is shown: the portal layout and the panel's center
+ * for whole pages, a portal account area for its tabs (`rise`: coming up a few pixels as well; never for a whole
+ * page, whose fixed parts a transform would move). `skip(previous, next)` leaves a change alone; `first` fades the first page too. Nothing
  * moves for a visitor who asked for less motion, or without Web Animations (an old browser, a test DOM).
  */
 export function useFadeInOnChange(

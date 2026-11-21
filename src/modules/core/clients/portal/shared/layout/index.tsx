@@ -13,7 +13,7 @@ import PortalNavigation from "../navigation/index.tsx";
 import {usePortalSite} from "../portalSiteContext.tsx";
 import {usePortalLinkIntent} from "../portalLinkIntent.ts";
 import PortalProgressBar from "../portalProgress.tsx";
-import {useFadeInOnChange} from "../portalFade.ts";
+import {useFadeInOnChange} from "@coreModule/helpers/hooks/useFadeInOnChange.ts";
 import {isAccountTabSwitch} from "../accountArea.ts";
 import {usePortalSectionTexts} from "../portalSectionTexts.ts";
 

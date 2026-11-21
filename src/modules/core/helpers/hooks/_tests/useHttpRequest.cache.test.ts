@@ -39,11 +39,14 @@ describe("useHttpRequest with a cached read", () => {
         await waitFor(() => expect(first.result.current.data).toEqual({name: "first"}));
         first.unmount();
 
-        const success = vi.fn();
-        const again = renderHook(() => useHttpRequest<{name: string}>(READ, {id: "a"}, 1, true, {success}));
+        const order: string[] = [];
+        const success = vi.fn(() => order.push("success"));
+        const again = renderHook(() => useHttpRequest<{name: string}>(READ, {id: "a"}, 1, true, {start: () => order.push("start"), success}));
         await waitFor(() => expect(again.result.current.data).toEqual({name: "first"}));
         expect(again.result.current.loading).toBe(false);
         expect(success).toHaveBeenCalledWith({name: "first"});
+        // Callers that count started requests (withAxios, the entity card fetch) see a request start and settle.
+        expect(order).toEqual(["start", "success"]);
         expect(apiClientMock).toHaveBeenCalledTimes(1);
     });
 
