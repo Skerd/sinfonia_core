@@ -3,7 +3,6 @@
   "title": "Adresat",
   "description": "Adresat tuaja të ruajtura të dërgesës dhe faturimit, në çdo faqe ku hyni.",
   "createUserAddress": "Krijo adresë",
-  "searchPlaceholder": "Kërko ose shto filtra...",
   "fields": {
     "!enums": {
       "type": {

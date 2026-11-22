@@ -5,6 +5,7 @@ import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button } from "@coreModule/components/ui/button.tsx"
 import { IconX } from "@tabler/icons-react"
 import { UiTexts } from "@coreModule/components/ui/ui-texts.tsx"
+import { useReturnFocusToOpener } from "@coreModule/components/ui/useReturnFocusToOpener.ts"
 
 const LANGUAGE_PATH = "src/modules/core/components/ui/dialog.tsx"
 const ENGLISH = { close: "Close" } as const
@@ -103,9 +104,7 @@ function DialogContent({
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean
 }) {
-  // Radix returns focus only to a DialogTrigger; most dialogs open from their own button, so remember the opener
-  // (as DialogFrame does, TD-F139).
-  const openerRef = React.useRef<HTMLElement | null>(null)
+  const returnFocus = useReturnFocusToOpener(onOpenAutoFocus, onCloseAutoFocus)
   return (
     <DialogPortal>
       <DialogOverlay
@@ -123,18 +122,7 @@ function DialogContent({
           className
         )}
         {...props}
-        onOpenAutoFocus={(event) => {
-          openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
-          onOpenAutoFocus?.(event)
-        }}
-        onCloseAutoFocus={(event) => {
-          onCloseAutoFocus?.(event)
-          const opener = openerRef.current
-          // An opener that is gone (a menu item) leaves Radix its own return to a DialogTrigger.
-          if (event.defaultPrevented || !opener?.isConnected) return
-          event.preventDefault()
-          opener.focus()
-        }}
+        {...returnFocus}
         onPointerDownOutside={(event) => {
           onPointerDownOutside?.(event)
           if (event.defaultPrevented) return
@@ -189,8 +177,7 @@ function DialogFrame({
   title: string
   overlayClassName?: string
 }) {
-  // Radix returns focus only to a DialogTrigger; these modals open from their own buttons, so remember the opener.
-  const openerRef = React.useRef<HTMLElement | null>(null)
+  const returnFocus = useReturnFocusToOpener(onOpenAutoFocus, onCloseAutoFocus)
   return (
     <DialogPortal>
       <DialogPrimitive.Overlay data-slot="dialog-overlay" className={overlayClassName}>
@@ -199,16 +186,7 @@ function DialogFrame({
           aria-describedby={undefined}
           className={cn("outline-none", className)}
           {...props}
-          onOpenAutoFocus={(event) => {
-            openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
-            onOpenAutoFocus?.(event)
-          }}
-          onCloseAutoFocus={(event) => {
-            onCloseAutoFocus?.(event)
-            if (event.defaultPrevented) return
-            event.preventDefault()
-            openerRef.current?.focus()
-          }}
+          {...returnFocus}
           onPointerDownOutside={(event) => {
             onPointerDownOutside?.(event)
             if (event.defaultPrevented) return

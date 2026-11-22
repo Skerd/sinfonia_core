@@ -50,7 +50,6 @@
     ]
   },
   "createSmtpServer": "Aggiungi il server di posta",
-  "searchPlaceholder": "Cerca per nome o host...",
   "noData": "Nessun server di posta configurato",
   "failTitle": "Impossibile caricare i server di posta",
   "failDescription": "Si è verificato un errore durante il caricamento dei server di posta. Per favore riprova.",

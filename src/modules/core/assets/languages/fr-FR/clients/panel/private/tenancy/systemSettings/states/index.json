@@ -18,7 +18,6 @@
     ]
   },
   "createState": "Créer un état",
-  "searchPlaceholder": "Recherchez par nom, code ou ajoutez des filtres...",
   "noData": "Aucun état trouvé",
   "failTitle": "Échec du chargement des états",
   "failDescription": "Une erreur s'est produite lors du chargement des états. Veuillez réessayer.",

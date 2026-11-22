@@ -6,7 +6,6 @@
   "noData": "Keine Blogbeiträge gefunden",
   "failTitle": "Blogbeiträge konnten nicht geladen werden",
   "failDescription": "Beim Laden der Blogbeiträge ist ein Fehler aufgetreten. Bitte erneut versuchen.",
-  "searchPlaceholder": "Suchen oder Filter hinzufügen...",
   "fields": {
     "createdAt": "Erstellt am",
     "createdBy": "Erstellt von",

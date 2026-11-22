@@ -6,7 +6,6 @@
   "noData": "Nuk u gjetën artikuj blogu",
   "failTitle": "Artikujt e blogut nuk u ngarkuan",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit të artikujve. Ju lutemi provoni përsëri.",
-  "searchPlaceholder": "Kërko ose shto filtra...",
   "fields": {
     "createdAt": "Krijuar më",
     "createdBy": "Krijuar nga",

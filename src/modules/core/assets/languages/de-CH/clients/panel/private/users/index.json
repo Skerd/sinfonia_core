@@ -1,7 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/users/index.tsx",
   "title": "Benutzerliste",
-  "searchPlaceholder": "Nach Name, E-Mail suchen oder Filter hinzufügen...",
   "activeFilters": "aktiv",
   "administrationTitle": "Liste der Administrationsbenutzer",
   "description": "Verwalten Sie hier Ihre Benutzer und deren Rollen.",

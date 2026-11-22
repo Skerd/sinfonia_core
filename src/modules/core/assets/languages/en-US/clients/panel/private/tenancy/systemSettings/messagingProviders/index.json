@@ -25,7 +25,6 @@
     ]
   },
   "createMessagingProvider": "Add messaging provider",
-  "searchPlaceholder": "Search by name or account SID...",
   "noData": "No messaging providers configured",
   "failTitle": "Failed to load messaging providers",
   "failDescription": "An error occurred while loading messaging providers. Please try again.",

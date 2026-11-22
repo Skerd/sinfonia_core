@@ -3,7 +3,6 @@
   "title": "Companies",
   "description": "Manage companies",
   "createCompany": "Create company",
-  "searchPlaceholder": "Search by name, email, or add filters...",
   "noData": "No companies found",
   "failTitle": "Failed to load companies",
   "failDescription": "An error occurred while loading companies. Please try again.",

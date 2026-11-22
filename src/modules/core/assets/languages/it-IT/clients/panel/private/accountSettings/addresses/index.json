@@ -3,7 +3,6 @@
   "title": "Indirizzi",
   "description": "I tuoi indirizzi di spedizione e fatturazione salvati, su ogni sito in cui accedi.",
   "createUserAddress": "Crea indirizzo",
-  "searchPlaceholder": "Cerca o aggiungi filtri...",
   "fields": {
     "!enums": {
       "type": {

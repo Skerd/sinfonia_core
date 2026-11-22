@@ -5,6 +5,7 @@ import { cn } from "@coreModule/components/lib/utils.ts"
 import { Button } from "@coreModule/components/ui/button.tsx"
 import { IconX } from "@tabler/icons-react"
 import { UiTexts } from "@coreModule/components/ui/ui-texts.tsx"
+import { useReturnFocusToOpener } from "@coreModule/components/ui/useReturnFocusToOpener.ts"
 
 const LANGUAGE_PATH = "src/modules/core/components/ui/sheet.tsx"
 const ENGLISH = { close: "Close" } as const
@@ -56,11 +57,14 @@ function SheetContent({
   children,
   side = "right",
   showCloseButton = true,
+  onOpenAutoFocus,
+  onCloseAutoFocus,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left"
   showCloseButton?: boolean
 }) {
+  const returnFocus = useReturnFocusToOpener(onOpenAutoFocus, onCloseAutoFocus)
   return (
     <SheetPortal>
       <SheetOverlay />
@@ -87,6 +91,7 @@ function SheetContent({
           className
         )}
         {...props}
+        {...returnFocus}
       >
         {children}
         {showCloseButton && (

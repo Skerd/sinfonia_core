@@ -3,7 +3,6 @@
   "title": "Firmen",
   "description": "Firmen verwalten",
   "createCompany": "Firma erstellen",
-  "searchPlaceholder": "Nach Name, E-Mail suchen oder Filter hinzufügen...",
   "noData": "Keine Firmen gefunden",
   "failTitle": "Firmen konnten nicht geladen werden",
   "failDescription": "Beim Laden der Firmen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",

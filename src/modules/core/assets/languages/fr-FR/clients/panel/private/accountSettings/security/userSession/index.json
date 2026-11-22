@@ -6,7 +6,6 @@
   "description": "Vérifiez où vous êtes connecté et révoquez l'accès aux appareils auxquels vous ne faites pas confiance.",
   "helperText": "Si vous ne reconnaissez pas un appareil, ouvrez le menu de la ligne (⋮) et choisissez Révoquer l'accès, puis modifiez votre mot de passe.",
   "rowActions": "Ouvrir le menu de la session",
-  "searchPlaceholder": "Rechercher par session, appareil ou emplacement",
   "unknown": "Inconnu",
   "unknownDevice": "Appareil inconnu",
   "deviceLabel": "{browser} sur {os}",

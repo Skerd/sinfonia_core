@@ -23,7 +23,6 @@
     ]
   },
   "createCurrency": "Krijo monedhë",
-  "searchPlaceholder": "Kërkoni sipas emrit, shkurtesës ose shtoni filtra...",
   "noData": "Nuk u gjet asnjë monedhë",
   "failTitle": "Ngarkimi i monedhave dështoi",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit të monedhave. Ju lutemi provoni përsëri.",

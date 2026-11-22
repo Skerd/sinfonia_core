@@ -25,7 +25,6 @@
     ]
   },
   "createMessagingProvider": "Shto ofrues mesazhesh",
-  "searchPlaceholder": "Kërko sipas emrit ose Account SID...",
   "noData": "Nuk ka ofrues mesazhesh",
   "failTitle": "Ngarkimi i ofruesve të mesazheve dështoi",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit. Provoni përsëri.",

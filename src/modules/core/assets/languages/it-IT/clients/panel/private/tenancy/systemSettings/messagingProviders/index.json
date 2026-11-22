@@ -25,7 +25,6 @@
     ]
   },
   "createMessagingProvider": "Aggiungi provider di messaggistica",
-  "searchPlaceholder": "Cerca per nome o SID dell'account...",
   "noData": "Nessun provider di messaggistica configurato",
   "failTitle": "Impossibile caricare i provider di messaggistica",
   "failDescription": "Si è verificato un errore durante il caricamento dei provider di messaggistica. Per favore riprova.",

@@ -25,7 +25,6 @@
       }
     ]
   },
-  "searchPlaceholder": "Search by name, code, or handler...",
   "noData": "No scheduled actions found",
   "failTitle": "Failed to load scheduled actions",
   "failDescription": "An error occurred while loading scheduled actions. Please try again.",

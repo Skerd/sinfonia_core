@@ -18,7 +18,6 @@
     ]
   },
   "createState": "Krijo rajon",
-  "searchPlaceholder": "Kërko sipas emrit, kodit ose shto filtra...",
   "noData": "Nuk u gjet asnjë rajon",
   "failTitle": "Ngarkimi i rajoneve dështoi",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit të rajoneve. Ju lutemi provoni përsëri.",

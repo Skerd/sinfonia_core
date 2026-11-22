@@ -26,7 +26,6 @@
     ]
   },
   "createCronJob": "Créer une action planifiée",
-  "searchPlaceholder": "Recherchez par nom, code ou gestionnaire...",
   "noData": "Aucune action planifiée trouvée",
   "failTitle": "Échec du chargement des actions planifiées",
   "failDescription": "Une erreur s'est produite lors du chargement des actions planifiées. Veuillez réessayer.",

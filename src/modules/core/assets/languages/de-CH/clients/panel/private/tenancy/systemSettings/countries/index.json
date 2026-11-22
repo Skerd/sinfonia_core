@@ -24,7 +24,6 @@
     ]
   },
   "create": "Land erstellen",
-  "searchPlaceholder": "Nach Name, Code suchen oder Filter hinzufügen...",
   "noData": "Keine Länder gefunden",
   "failTitle": "Länder konnten nicht geladen werden",
   "failDescription": "Beim Laden der Länder ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",

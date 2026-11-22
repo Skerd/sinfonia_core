@@ -24,7 +24,6 @@
       }
     ]
   },
-  "searchPlaceholder": "Kërko sipas emrit ose përshkrimit, ose shto filtra...",
   "failTitle": "Ngarkimi i roleve dështoi",
   "failTitleTooltip": "Kliko këtu për të riprovuar ngarkimin e roleve",
   "create": "Krijo rol",

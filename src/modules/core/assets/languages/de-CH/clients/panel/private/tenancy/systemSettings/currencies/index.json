@@ -23,7 +23,6 @@
     ]
   },
   "createCurrency": "Währung erstellen",
-  "searchPlaceholder": "Nach Name oder Abkürzung suchen oder Filter hinzufügen...",
   "noData": "Keine Währungen gefunden",
   "failTitle": "Währungen konnten nicht geladen werden",
   "failDescription": "Beim Laden der Währungen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",

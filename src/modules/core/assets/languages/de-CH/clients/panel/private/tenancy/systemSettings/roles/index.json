@@ -24,7 +24,6 @@
       }
     ]
   },
-  "searchPlaceholder": "Nach Name oder Beschreibung suchen, oder Filter hinzufügen...",
   "failTitle": "Rollen konnten nicht geladen werden",
   "failTitleTooltip": "Hier klicken, um die Rollen erneut zu laden",
   "create": "Rolle erstellen",

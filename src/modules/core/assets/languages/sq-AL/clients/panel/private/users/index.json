@@ -1,7 +1,6 @@
 {
   "path": "src/modules/core/clients/panel/private/users/index.tsx",
   "title": "Lista e përdoruesve",
-  "searchPlaceholder": "Kërko sipas emrit, emailit ose shto filtra...",
   "activeFilters": "aktive",
   "administrationTitle": "Lista e përdoruesve të administratës",
   "description": "Menaxho përdoruesit dhe rolet e tyre këtu.",

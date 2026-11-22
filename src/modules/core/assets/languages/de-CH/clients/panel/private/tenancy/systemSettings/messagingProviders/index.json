@@ -25,7 +25,6 @@
     ]
   },
   "createMessagingProvider": "Messaging-Anbieter hinzufügen",
-  "searchPlaceholder": "Nach Name oder Account SID suchen...",
   "noData": "Keine Messaging-Anbieter konfiguriert",
   "failTitle": "Messaging-Anbieter konnten nicht geladen werden",
   "failDescription": "Beim Laden der Messaging-Anbieter ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",

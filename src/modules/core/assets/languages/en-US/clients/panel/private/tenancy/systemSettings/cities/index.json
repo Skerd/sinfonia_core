@@ -18,7 +18,6 @@
     ]
   },
   "createCity": "Create city",
-  "searchPlaceholder": "Search by name or add filters...",
   "noData": "No cities found",
   "failTitle": "Failed to load cities",
   "failDescription": "An error occurred while loading cities. Please try again.",

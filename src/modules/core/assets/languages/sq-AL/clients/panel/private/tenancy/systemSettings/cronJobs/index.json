@@ -26,7 +26,6 @@
     ]
   },
   "createCronJob": "Krijo veprim të planifikuar",
-  "searchPlaceholder": "Kërko sipas emrit, kodit ose trajtuesit...",
   "noData": "Nuk u gjetën veprime të planifikuara",
   "failTitle": "Ngarkimi i listës dështoi",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit të veprimeve të planifikuara. Provoni përsëri.",

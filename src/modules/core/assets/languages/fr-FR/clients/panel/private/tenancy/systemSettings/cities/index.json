@@ -18,7 +18,6 @@
     ]
   },
   "createCity": "Créer une ville",
-  "searchPlaceholder": "Recherchez par nom ou ajoutez des filtres...",
   "noData": "Aucune ville trouvée",
   "failTitle": "Échec du chargement des villes",
   "failDescription": "Une erreur s'est produite lors du chargement des villes. Veuillez réessayer.",

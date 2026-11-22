@@ -3,7 +3,6 @@
   "title": "Adresses",
   "description": "Vos adresses de livraison et de facturation enregistrées, sur chaque site où vous vous connectez.",
   "createUserAddress": "Créer une adresse",
-  "searchPlaceholder": "Rechercher ou ajouter des filtres...",
   "fields": {
     "!enums": {
       "type": {

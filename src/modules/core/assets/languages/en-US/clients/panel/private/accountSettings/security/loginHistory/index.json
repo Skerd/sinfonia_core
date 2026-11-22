@@ -4,7 +4,6 @@
   "failedDescription": "Tap to retry.",
   "title": "Login history",
   "description": "Review recent sign-ins and failed attempts. Server-generated records cannot be edited here.",
-  "searchPlaceholder": "Search by time, device, or IP",
   "unknownLocation": "Unknown location",
   "reason": "Reason",
   "time": "Time",

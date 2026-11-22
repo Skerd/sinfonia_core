@@ -24,7 +24,6 @@
     ]
   },
   "create": "Create country",
-  "searchPlaceholder": "Search by name, code, or add filters...",
   "noData": "No countries found",
   "failTitle": "Failed to load countries",
   "failDescription": "An error occurred while loading countries. Please try again.",

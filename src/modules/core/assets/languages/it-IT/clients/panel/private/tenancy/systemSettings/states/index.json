@@ -18,7 +18,6 @@
     ]
   },
   "createState": "Crea stato",
-  "searchPlaceholder": "Cerca per nome, codice o aggiungi filtri...",
   "noData": "Nessuno stato trovato",
   "failTitle": "Impossibile caricare gli stati",
   "failDescription": "Si è verificato un errore durante il caricamento degli stati. Per favore riprova.",

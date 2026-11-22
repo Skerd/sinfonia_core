@@ -25,7 +25,6 @@
     ]
   },
   "createMessagingProvider": "Ajouter un fournisseur de messagerie",
-  "searchPlaceholder": "Recherche par nom ou SID de compte...",
   "noData": "Aucun fournisseur de messagerie configuré",
   "failTitle": "Échec du chargement des fournisseurs de messagerie",
   "failDescription": "Une erreur s'est produite lors du chargement des fournisseurs de messagerie. Veuillez réessayer.",

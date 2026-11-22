@@ -389,7 +389,7 @@ export default function TableEditor({entry}: TableEditorProps) {
                                 configurations={{limit: 10}}
                                 containersClassName={{scrollRootClassName: "flex-full"}}
                                 tableConfigOptions={{
-                                    filterConfig: {placeholder: "Search", fields: {}},
+                                    filterConfig: {fields: {}},
                                 }}
                                 renderFunctions={{
                                     cardRender: () => <></>,

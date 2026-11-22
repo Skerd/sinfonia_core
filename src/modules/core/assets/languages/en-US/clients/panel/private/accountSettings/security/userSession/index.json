@@ -6,7 +6,6 @@
   "description": "See where you are signed in and revoke access on devices you do not trust.",
   "helperText": "If you do not recognize a device, open the row menu (⋮) and choose Revoke access, then change your password.",
   "rowActions": "Open session menu",
-  "searchPlaceholder": "Search by session, device, or location",
   "unknown": "Unknown",
   "unknownDevice": "Unknown device",
   "deviceLabel": "{browser} on {os}",

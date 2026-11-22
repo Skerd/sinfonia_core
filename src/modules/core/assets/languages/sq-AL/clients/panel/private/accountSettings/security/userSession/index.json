@@ -6,7 +6,6 @@
   "description": "Shikoni ku jeni identifikuar dhe revokoni aksesin në pajisjet të cilave nuk u besoni.",
   "helperText": "Nëse nuk e njihni një pajisje, hapni menynë e rreshtit (⋮) dhe zgjidhni Revoko aksesin, më pas ndryshoni fjalëkalimin tuaj.",
   "rowActions": "Hap menynë e sesionit",
-  "searchPlaceholder": "Kërko sipas sesionit, pajisjes ose vendndodhjes",
   "unknown": "E panjohur",
   "unknownDevice": "Pajisja e panjohur",
   "deviceLabel": "{browser} në {os}",

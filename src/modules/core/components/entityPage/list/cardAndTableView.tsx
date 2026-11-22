@@ -111,8 +111,8 @@ function saveStoredListViewMode(tableConfigKey: string, mode: EntityListViewMode
 type VisibilityState = Record<string, boolean>;
 
 type TableConfigOptions = {
-    /** `placeholder` is no longer shown: the search box has one core placeholder (D170, TD-F141). */
-    filterConfig: { placeholder?: string; fields: unknown };
+    /** The page's field labels for filters. The search box has one core placeholder (D170). */
+    filterConfig: { fields: unknown };
 };
 
 /** The page's quick filters, laid out by the list (D170): inputs in the filters dropdown, tags in the search bar. */

@@ -50,7 +50,6 @@
     ]
   },
   "createSmtpServer": "Mailserver hinzufügen",
-  "searchPlaceholder": "Nach Name oder Host suchen...",
   "noData": "Keine Mailserver konfiguriert",
   "failTitle": "Mailserver konnten nicht geladen werden",
   "failDescription": "Beim Laden der Mailserver ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",

@@ -3,7 +3,6 @@
   "title": "Aziende",
   "description": "Gestisci le aziende",
   "createCompany": "Crea azienda",
-  "searchPlaceholder": "Cerca per nome, email o aggiungi filtri...",
   "noData": "Nessuna azienda trovata",
   "failTitle": "Impossibile caricare le aziende",
   "failDescription": "Si è verificato un errore durante il caricamento delle aziende. Per favore riprova.",

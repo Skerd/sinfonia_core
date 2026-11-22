@@ -4,7 +4,6 @@
   "failedDescription": "Zum erneuten Versuch tippen.",
   "title": "Anmeldeverlauf",
   "description": "Überprüfen Sie kürzliche Anmeldungen und fehlgeschlagene Versuche. Servergenerierte Einträge können hier nicht bearbeitet werden.",
-  "searchPlaceholder": "Nach Zeit, Gerät oder IP suchen",
   "unknownLocation": "Unbekannter Standort",
   "reason": "Grund",
   "time": "Zeit",

@@ -26,7 +26,6 @@
     ]
   },
   "createCronJob": "Geplante Aktion erstellen",
-  "searchPlaceholder": "Nach Name, Code oder Handler suchen...",
   "noData": "Keine geplanten Aktionen gefunden",
   "failTitle": "Geplante Aktionen konnten nicht geladen werden",
   "failDescription": "Beim Laden der geplanten Aktionen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",

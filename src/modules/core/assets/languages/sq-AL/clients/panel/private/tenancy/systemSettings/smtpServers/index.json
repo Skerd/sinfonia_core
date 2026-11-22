@@ -50,7 +50,6 @@
     ]
   },
   "createSmtpServer": "Shto server poste",
-  "searchPlaceholder": "Kërko sipas emrit ose hostit...",
   "noData": "Nuk ka serverë poste",
   "failTitle": "Ngarkimi i serverëve të postës dështoi",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit. Provoni përsëri.",

@@ -3,7 +3,6 @@
   "title": "Adressen",
   "description": "Ihre gespeicherten Liefer- und Rechnungsadressen, auf jeder Website, auf der Sie sich anmelden.",
   "createUserAddress": "Adresse erstellen",
-  "searchPlaceholder": "Suchen oder Filter hinzufügen...",
   "fields": {
     "!enums": {
       "type": {

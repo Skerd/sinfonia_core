@@ -18,7 +18,6 @@
     ]
   },
   "createCity": "Krijo qytet",
-  "searchPlaceholder": "Kërko sipas emrit ose shto filtra...",
   "noData": "Nuk u gjet asnjë qytet",
   "failTitle": "Ngarkimi i qyteteve dështoi",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit të qyteteve. Ju lutemi provoni përsëri.",

@@ -6,7 +6,6 @@
   "noData": "Keine Blogkategorien gefunden",
   "failTitle": "Kategorien konnten nicht geladen werden",
   "failDescription": "Beim Laden der Kategorien ist ein Fehler aufgetreten. Bitte erneut versuchen.",
-  "searchPlaceholder": "Suchen oder Filter hinzufügen...",
   "fields": {
     "name": "Name",
     "slug": "Slug",

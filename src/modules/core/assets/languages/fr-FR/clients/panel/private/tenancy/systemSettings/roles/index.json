@@ -24,7 +24,6 @@
       }
     ]
   },
-  "searchPlaceholder": "Rechercher par nom ou description, ou ajouter des filtres...",
   "failTitle": "Échec du chargement des rôles",
   "failTitleTooltip": "Cliquez ici pour réessayer de charger les rôles",
   "create": "Créer un rôle",

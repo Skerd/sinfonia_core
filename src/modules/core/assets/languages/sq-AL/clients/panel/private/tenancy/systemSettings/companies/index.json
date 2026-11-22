@@ -3,7 +3,6 @@
   "title": "Kompanitë",
   "description": "Menaxhoni kompanitë",
   "createCompany": "Krijo kompani",
-  "searchPlaceholder": "Kërko sipas emrit, emailit ose shto filtra...",
   "noData": "Nuk u gjet asnjë kompani",
   "failTitle": "Ngarkimi i kompanive dështoi",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit të kompanive. Ju lutemi provoni përsëri.",

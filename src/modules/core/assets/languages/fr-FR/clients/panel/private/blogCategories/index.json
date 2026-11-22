@@ -6,7 +6,6 @@
   "noData": "Aucune catégorie de blog trouvée",
   "failTitle": "Échec du chargement des catégories",
   "failDescription": "Une erreur s'est produite lors du chargement des catégories. Veuillez réessayer.",
-  "searchPlaceholder": "Rechercher ou ajouter des filtres...",
   "fields": {
     "name": "Nom",
     "slug": "Slug",

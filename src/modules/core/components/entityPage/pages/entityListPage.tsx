@@ -642,7 +642,6 @@ export default function EntityListPage<T extends BaseEntity>({
                     }
                     tableConfigOptions={{
                         filterConfig: {
-                            placeholder: resolveLanguageKey("searchPlaceholder"),
                             fields: resolveLanguageKey("fields"),
                         },
                     }}

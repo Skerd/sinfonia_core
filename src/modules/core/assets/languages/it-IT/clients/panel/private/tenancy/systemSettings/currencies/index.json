@@ -23,7 +23,6 @@
     ]
   },
   "createCurrency": "Crea valuta",
-  "searchPlaceholder": "Cerca per nome, abbreviazione o aggiungi filtri...",
   "noData": "Nessuna valuta trovata",
   "failTitle": "Impossibile caricare le valute",
   "failDescription": "Si è verificato un errore durante il caricamento delle valute. Per favore riprova.",

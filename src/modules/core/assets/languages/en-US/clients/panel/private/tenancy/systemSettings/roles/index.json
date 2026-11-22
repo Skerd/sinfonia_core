@@ -24,7 +24,6 @@
       }
     ]
   },
-  "searchPlaceholder": "Search by name or description, or add filters...",
   "failTitle": "Failed to load roles",
   "failTitleTooltip": "Click here to retry loading roles",
   "create": "Create role",

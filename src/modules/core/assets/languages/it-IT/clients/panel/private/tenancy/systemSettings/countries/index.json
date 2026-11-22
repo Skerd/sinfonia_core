@@ -24,7 +24,6 @@
     ]
   },
   "create": "Crea paese",
-  "searchPlaceholder": "Cerca per nome, codice o aggiungi filtri...",
   "noData": "Nessun paese trovato",
   "failTitle": "Impossibile caricare i paesi",
   "failDescription": "Si è verificato un errore durante il caricamento dei paesi. Per favore riprova.",

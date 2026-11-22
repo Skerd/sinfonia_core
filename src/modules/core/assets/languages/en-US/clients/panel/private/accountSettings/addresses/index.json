@@ -3,7 +3,6 @@
   "title": "Addresses",
   "description": "Your saved shipping and billing addresses, on every site you sign in to.",
   "createUserAddress": "Create address",
-  "searchPlaceholder": "Search or add filters...",
   "fields": {
     "!enums": {
       "type": {

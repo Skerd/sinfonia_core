@@ -4,7 +4,6 @@
   "failedDescription": "Tocca per riprovare.",
   "title": "Cronologia degli accessi",
   "description": "Esamina gli accessi recenti e i tentativi non riusciti. I record generati dal server non possono essere modificati qui.",
-  "searchPlaceholder": "Cerca per ora, dispositivo o IP",
   "unknownLocation": "Posizione sconosciuta",
   "reason": "Motivo",
   "time": "Ora",

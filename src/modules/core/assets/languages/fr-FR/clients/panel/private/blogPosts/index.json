@@ -6,7 +6,6 @@
   "noData": "Aucun article de blog trouvé",
   "failTitle": "Échec du chargement des articles",
   "failDescription": "Une erreur s'est produite lors du chargement des articles. Veuillez réessayer.",
-  "searchPlaceholder": "Rechercher ou ajouter des filtres...",
   "fields": {
     "createdAt": "Créé le",
     "createdBy": "Créé par",

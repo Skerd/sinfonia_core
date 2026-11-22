@@ -26,7 +26,6 @@
     ]
   },
   "createCronJob": "Crea un'azione pianificata",
-  "searchPlaceholder": "Cerca per nome, codice o gestore...",
   "noData": "Nessuna azione pianificata trovata",
   "failTitle": "Impossibile caricare le azioni pianificate",
   "failDescription": "Si è verificato un errore durante il caricamento delle azioni pianificate. Per favore riprova.",

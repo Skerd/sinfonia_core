@@ -50,7 +50,6 @@
     ]
   },
   "createSmtpServer": "Ajouter un serveur mail",
-  "searchPlaceholder": "Rechercher par nom ou par hôte...",
   "noData": "Aucun serveur mail configuré",
   "failTitle": "Échec du chargement des serveurs mail",
   "failDescription": "Une erreur s'est produite lors du chargement des serveurs mail. Veuillez réessayer.",

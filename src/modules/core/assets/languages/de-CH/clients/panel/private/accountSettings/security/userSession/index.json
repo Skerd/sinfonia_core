@@ -6,7 +6,6 @@
   "description": "Sehen Sie, wo Sie angemeldet sind, und widerrufen Sie den Zugriff auf Geräte, denen Sie nicht vertrauen.",
   "helperText": "Wenn Sie ein Gerät nicht erkennen, öffnen Sie das Zeilenmenü (⋮), wählen Sie Zugriff widerrufen und ändern Sie danach Ihr Passwort.",
   "rowActions": "Sitzungsmenü öffnen",
-  "searchPlaceholder": "Nach Sitzung, Gerät oder Standort suchen",
   "unknown": "Unbekannt",
   "unknownDevice": "Unbekanntes Gerät",
   "deviceLabel": "{browser} auf {os}",

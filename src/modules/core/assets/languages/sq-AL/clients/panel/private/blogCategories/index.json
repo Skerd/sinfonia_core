@@ -6,7 +6,6 @@
   "noData": "Nuk u gjetën kategori blogu",
   "failTitle": "Kategoritë nuk u ngarkuan",
   "failDescription": "Ndodhi një gabim gjatë ngarkimit të kategorive. Ju lutemi provoni përsëri.",
-  "searchPlaceholder": "Kërko ose shto filtra...",
   "fields": {
     "name": "Emri",
     "slug": "Slug",

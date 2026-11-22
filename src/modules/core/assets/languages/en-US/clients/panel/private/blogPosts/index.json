@@ -6,7 +6,6 @@
   "noData": "No blog posts found",
   "failTitle": "Failed to load blog posts",
   "failDescription": "An error occurred while loading blog posts. Please try again.",
-  "searchPlaceholder": "Search or add filters...",
   "fields": {
     "createdAt": "Created at",
     "createdBy": "Created by",

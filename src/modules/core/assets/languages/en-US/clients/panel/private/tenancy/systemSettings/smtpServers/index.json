@@ -50,7 +50,6 @@
     ]
   },
   "createSmtpServer": "Add mail server",
-  "searchPlaceholder": "Search by name or host...",
   "noData": "No mail servers configured",
   "failTitle": "Failed to load mail servers",
   "failDescription": "An error occurred while loading mail servers. Please try again.",

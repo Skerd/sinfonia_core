@@ -18,7 +18,6 @@
     ]
   },
   "createState": "Create state",
-  "searchPlaceholder": "Search by name, code, or add filters...",
   "noData": "No states found",
   "failTitle": "Failed to load states",
   "failDescription": "An error occurred while loading states. Please try again.",

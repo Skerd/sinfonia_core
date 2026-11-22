@@ -18,7 +18,6 @@
     ]
   },
   "createState": "Kanton erstellen",
-  "searchPlaceholder": "Nach Name, Code suchen oder Filter hinzufügen...",
   "noData": "Keine Kantone / Bundesländer gefunden",
   "failTitle": "Kantone / Bundesländer konnten nicht geladen werden",
   "failDescription": "Beim Laden der Kantone / Bundesländer ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",

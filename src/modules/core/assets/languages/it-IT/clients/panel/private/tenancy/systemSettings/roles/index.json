@@ -24,7 +24,6 @@
       }
     ]
   },
-  "searchPlaceholder": "Cerca per nome o descrizione, o aggiungi filtri...",
   "failTitle": "Impossibile caricare i ruoli",
   "failTitleTooltip": "Fare clic qui per riprovare a caricare i ruoli",
   "create": "Crea ruolo",

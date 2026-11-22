@@ -18,7 +18,6 @@
     ]
   },
   "createCity": "Ort erstellen",
-  "searchPlaceholder": "Nach Name suchen oder Filter hinzufügen...",
   "noData": "Keine Städte gefunden",
   "failTitle": "Städte konnten nicht geladen werden",
   "failDescription": "Beim Laden der Städte ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",

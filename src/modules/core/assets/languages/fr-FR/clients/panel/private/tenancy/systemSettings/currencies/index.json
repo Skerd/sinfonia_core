@@ -23,7 +23,6 @@
     ]
   },
   "createCurrency": "Créer une devise",
-  "searchPlaceholder": "Recherchez par nom, abréviation ou ajoutez des filtres...",
   "noData": "Aucune devise trouvée",
   "failTitle": "Échec du chargement des devises",
   "failDescription": "Une erreur s'est produite lors du chargement des devises. Veuillez réessayer.",

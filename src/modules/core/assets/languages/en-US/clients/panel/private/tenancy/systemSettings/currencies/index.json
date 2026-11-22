@@ -23,7 +23,6 @@
     ]
   },
   "createCurrency": "Create currency",
-  "searchPlaceholder": "Search by name, abbreviation, or add filters...",
   "noData": "No currencies found",
   "failTitle": "Failed to load currencies",
   "failDescription": "An error occurred while loading currencies. Please try again.",
