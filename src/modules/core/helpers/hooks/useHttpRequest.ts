@@ -32,7 +32,7 @@ export type * from "@coreModule/helpers/types/httpRequest.types.ts";
 const optionalString = (value: unknown): string | undefined => (typeof value === "string" ? value : undefined);
 
 /** Normalises an axios error body (JSON or, for blob responses, a JSON-encoded Blob) into `HttpError`. */
-const readErrorBody = async (err: unknown): Promise<HttpError> => {
+export const readErrorBody = async (err: unknown): Promise<HttpError> => {
     // Read structurally: interceptors may reject with axios-shaped plain objects, not `AxiosError` instances.
     const response = (err as { response?: { data?: unknown; status?: number } } | null)?.response;
     let rawData: unknown = response?.data;

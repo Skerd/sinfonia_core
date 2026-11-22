@@ -1,6 +1,7 @@
 import {act, fireEvent, render, screen, waitFor} from "@testing-library/react";
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import type {ComponentType} from "react";
+import {type ComponentType, useEffect} from "react";
+import {toast} from "sonner";
 
 const {apiClientMock, replaceFilesWithIdsMock} = vi.hoisted(() => ({
     apiClientMock: vi.fn(),
@@ -120,17 +121,72 @@ describe("withAxios", () => {
         expect(signal?.aborted).toBe(true);
     });
 
-    it("reports a failed upload for the current submission", async () => {
-        replaceFilesWithIdsMock.mockRejectedValueOnce(new Error("upload failed"));
+    describe("a failed upload", () => {
+        const lifecycleError = vi.fn();
         let posted: Promise<void> | undefined;
-        function Poster({onPost}: WithAxiosType<Response>) {
-            return <button onClick={() => { posted = onPost({file: new File(["x"], "a.txt")}) as Promise<void>; }}>post</button>;
+        function Poster({onPost, onFilterChange, error, innerRef}: WithAxiosType<Response>) {
+            useEffect(() => {
+                innerRef.current = {error: lifecycleError};
+            });
+            return (
+                <div>
+                    <p data-testid="error">{error?.message ?? "none"}</p>
+                    <button onClick={() => { posted = onPost({file: new File(["x"], "a.exe")}); }}>post</button>
+                    <button onClick={() => onFilterChange({plain: true})}>post-plain</button>
+                </div>
+            );
         }
-        const Wrapped = withAxios<Response>({method: "post", url: "/api/x"}, true)(Poster);
-        render(<Wrapped/>);
 
-        fireEvent.click(screen.getByText("post"));
-        await expect(posted).rejects.toThrow("upload failed");
-        expect(apiClientMock).not.toHaveBeenCalled();
+        beforeEach(() => {
+            lifecycleError.mockReset();
+            vi.mocked(toast.error).mockReset();
+            posted = undefined;
+        });
+
+        it("is reported like a failed request, and the request is not sent", async () => {
+            const refused = {response: {status: 400, data: {error_code: "file_type_blocked", message: "Program files can't be uploaded."}}};
+            replaceFilesWithIdsMock.mockRejectedValueOnce(refused);
+            apiClientMock.mockResolvedValue({data: {value: "ok"}});
+            const Wrapped = withAxios<Response>({method: "post", url: "/api/x"}, true)(Poster);
+            render(<Wrapped/>);
+
+            fireEvent.click(screen.getByText("post"));
+
+            await expect(posted).resolves.toBeUndefined();
+            expect(toast.error).toHaveBeenCalledWith("Program files can't be uploaded.");
+            await waitFor(() => expect(screen.getByTestId("error")).toHaveTextContent("Program files can't be uploaded."));
+            expect(lifecycleError).toHaveBeenCalledWith(refused);
+            expect(apiClientMock).not.toHaveBeenCalled();
+
+            // The next submission starts clean.
+            fireEvent.click(screen.getByText("post-plain"));
+            await waitFor(() => expect(screen.getByTestId("error")).toHaveTextContent("none"));
+        });
+
+        it("still says something when no answer came back", async () => {
+            replaceFilesWithIdsMock.mockRejectedValueOnce({isAxiosError: true, message: "Network Error"});
+            const Wrapped = withAxios<Response>({method: "post", url: "/api/x"}, true)(Poster);
+            render(<Wrapped/>);
+
+            fireEvent.click(screen.getByText("post"));
+
+            await expect(posted).resolves.toBeUndefined();
+            expect(toast.error).toHaveBeenCalledWith("Network Error");
+        });
+
+        it("is not reported when a newer submission cancelled it", async () => {
+            replaceFilesWithIdsMock.mockImplementation((_data, {signal}: {signal: AbortSignal}) =>
+                new Promise((_resolve, reject) => signal.addEventListener("abort", () => reject(new Error("canceled")))));
+            apiClientMock.mockResolvedValue({data: {value: "ok"}});
+            const Wrapped = withAxios<Response>({method: "post", url: "/api/x"}, true)(Poster);
+            render(<Wrapped/>);
+
+            fireEvent.click(screen.getByText("post"));
+            fireEvent.click(screen.getByText("post-plain"));
+
+            await expect(posted).resolves.toBeUndefined();
+            expect(toast.error).not.toHaveBeenCalled();
+            expect(lifecycleError).not.toHaveBeenCalled();
+        });
     });
 });

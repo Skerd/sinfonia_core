@@ -9,8 +9,11 @@ import useHttpRequest, {
     HttpRequestDebugInfo,
     HttpRequestLifecycleFunctions,
     HttpRequestRuntimeProps,
+    readErrorBody,
     RequestPayload
 } from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import {buildToastMessages, formatHttpErrorMessage, shouldToastError} from "@coreModule/helpers/general/httpRequestBuilders.ts";
+import {isAbortError, normalizeError} from "@coreModule/helpers/general/errors.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import SimpleError from "@coreModule/components/custom/errors/errorViewWrapper.tsx";
 
@@ -165,11 +168,15 @@ export type WithAxiosLifecycleRef<ResponseType> = {
 export type WithAxiosType<ResponseType = unknown, PostType extends Record<string, unknown> = Record<string, unknown>> = {
     onFilterChange: (data: PostType | FormData) => void,
     onFormDataChange: (input: FormData | FormDataWithJson | PostType) => void,
-    /** Resolves once the request is sent (after file uploads); rejects if an upload fails. */
+    /**
+     * Resolves once the request is sent, after its file uploads. A failed upload is reported like a failed request
+     * (error toast, `innerRef.error`, `error`), and the request is not sent.
+     */
     onPost: (data: PostType | FormData) => Promise<void>,
     data: ResponseType | null,
     loading: boolean,
     innerRef: RefObject<WithAxiosLifecycleRef<ResponseType> | null>,
+    /** The last request's error, or the failed upload of the last `onPost`. */
     error: HttpError | null,
     /** Re-sends the current payload. */
     justForceRefresh: () => void
@@ -228,9 +235,13 @@ const withAxios =
                 /** Highest `fetchCount` whose request has actually started; lower means a request is queued. */
                 const [startedFetchCount, setStartedFetchCount] = useState<number>(0);
                 const [pendingUploads, setPendingUploads] = useState<number>(0);
+                /** The failed upload of the last `onPost`; cleared by the next submission. */
+                const [uploadError, setUploadError] = useState<HttpError | null>(null);
                 const submissionIdRef = useRef(0);
                 /** Cancels the in-flight upload once a newer submission (or unmount) makes it moot. */
                 const uploadAbortRef = useRef<AbortController | null>(null);
+                /** The request's current toast settings (language, `hideIfError`), read by `onPost`, which keeps a stable identity. */
+                const latestRequestProps = useRef<HttpRequestRuntimeProps<ResponseType>>({});
 
                 useEffect(() => () => uploadAbortRef.current?.abort(), []);
 
@@ -239,6 +250,7 @@ const withAxios =
                 const submit = useCallback((payload: RequestPayload, jsonData: Record<string, unknown> | null = null) => {
                     submissionIdRef.current += 1;
                     uploadAbortRef.current?.abort();
+                    setUploadError(null);
                     setRequest({payload: payload instanceof FormData ? payload : {...payload}, jsonData});
                     setFetchCount((count) => count + 1);
                 }, []);
@@ -262,6 +274,7 @@ const withAxios =
                     const controller = new AbortController();
                     uploadAbortRef.current = controller;
                     const submissionId = ++submissionIdRef.current;
+                    setUploadError(null);
                     setPendingUploads((count) => count + 1);
                     try {
                         const cleanData = await replaceFilesWithIds(data, {signal: controller.signal});
@@ -269,9 +282,18 @@ const withAxios =
                         if (submissionId === submissionIdRef.current) {
                             submit(cleanData);
                         }
-                    } catch (error) {
-                        // Superseded uploads are cancelled on purpose; only a live submission reports failure.
-                        if (submissionId === submissionIdRef.current) throw error;
+                    } catch (failure) {
+                        // Superseded or unmounted uploads are cancelled on purpose; only a live submission reports failure.
+                        if (submissionId !== submissionIdRef.current || isAbortError(failure, controller.signal)) return;
+                        const body = await readErrorBody(failure);
+                        // No server answer (offline): fall back to the transport's own message.
+                        const failed: HttpError = {...body, message: body.message ?? normalizeError(failure).message};
+                        setUploadError(failed);
+                        const {resolveLanguageKey, hideIfError} = latestRequestProps.current;
+                        if (shouldToastError(failed, hideIfError)) {
+                            toast.error(buildToastMessages(httpRequest, resolveLanguageKey).error?.(failed) ?? formatHttpErrorMessage(failed));
+                        }
+                        forwardedRef.current?.error?.(failure);
                     } finally {
                         if (uploadAbortRef.current === controller) uploadAbortRef.current = null;
                         setPendingUploads((count) => count - 1);
@@ -291,19 +313,23 @@ const withAxios =
                     success: (responseData) => forwardedRef.current?.success?.(responseData),
                 };
 
+                const requestProps: HttpRequestRuntimeProps<ResponseType> = {
+                    ...restProps,
+                    ...debugCallbacks,
+                    isFormData: request.payload instanceof FormData,
+                    jsonData: request.jsonData,
+                };
                 const {loading: httpLoading, error, data} = useHttpRequest<ResponseType>(
                     httpRequest,
                     request.payload,
                     fetchCount,
                     true,
                     lifecycle,
-                    {
-                        ...restProps,
-                        ...debugCallbacks,
-                        isFormData: request.payload instanceof FormData,
-                        jsonData: request.jsonData,
-                    }
+                    requestProps
                 );
+                useEffect(() => {
+                    latestRequestProps.current = requestProps;
+                });
 
                 // Covers the gap between a mutator call and the hook starting the request (uploads, effect timing, rate-limit deferral).
                 const loading = httpLoading || pendingUploads > 0 || fetchCount > startedFetchCount;
@@ -324,7 +350,7 @@ const withAxios =
                     justForceRefresh,
                     getLatestFormData,
                     loading,
-                    error,
+                    error: uploadError ?? error,
                     innerRef: forwardedRef,
                     withAxios: withAxiosMeta,
                 };
