@@ -55,7 +55,8 @@
     "States": "Rajonet",
     "Users": "Përdoruesit",
     "Usersessions": "Sesionet e përdoruesve",
-    "Useraddresses": "Adresat"
+    "Useraddresses": "Adresat",
+    "Uploadrefusals": "Ngarkime të refuzuara"
   },
   "permissions": {
     "Apiaccesses": {
@@ -408,7 +409,13 @@
       "uploadedAt": "Ngarkuar më",
       "url": "URL",
       "encrypted": "I enkriptuar",
-      "sharedWithCompanies": "Ndarë me kompanitë"
+      "sharedWithCompanies": "Ndarë me kompanitë",
+      "metadata_moderation": "Kontrolli i përmbajtjes",
+      "metadata_moderation_status": "Rezultati i kontrollit të përmbajtjes",
+      "metadata_moderation_scores": "Pikët e kontrollit të përmbajtjes",
+      "metadata_moderation_checkedAt": "Përmbajtja u kontrollua më",
+      "metadata_moderation_reviewedAt": "Shqyrtuar më",
+      "metadata_moderation_reviewedBy": "Shqyrtuar nga"
     },
     "Messages": {
       "createdAt": "Krijuar më",
@@ -746,6 +753,21 @@
       "user": "Përdoruesi",
       "email": "Emaili",
       "type": "Lloji i adresës"
+    },
+    "Uploadrefusals": {
+      "company": "Kompania",
+      "createdAt": "Krijuar më",
+      "createdBy": "Krijuar nga",
+      "errorCode": "Arsyeja",
+      "fileHash": "Gjurma e skedarit",
+      "fileName": "Emri i skedarit",
+      "fileSize": "Madhësia e skedarit",
+      "mimeType": "Lloji MIME",
+      "route": "Rruga e ngarkimit",
+      "scores": "Pikët",
+      "updatedAt": "Përditësuar më",
+      "uploadrefusals": "Ngarkime të refuzuara",
+      "reviewUploads": "Shqyrto ngarkimet e shënuara"
     }
   },
   "commonFields": {

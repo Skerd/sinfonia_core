@@ -28,6 +28,7 @@ const Roles = lazy(() => import("@coreModule/clients/panel/private/tenancy/syste
 const AllCompanies = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/companies"));
 const Chat = lazy(() => import("@coreModule/clients/panel/private/chat"));
 const OnlineResources = lazy(() => import("@coreModule/clients/panel/private/online"));
+const UploadReview = lazy(() => import("@coreModule/clients/panel/private/tenancy/uploadReview"));
 const MyCompany = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/companies/myCompany"));
 const AllSmtpServers = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers"));
 const CreateSmtpServer = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/smtpServers/createSmtpServer.tsx"));
@@ -109,6 +110,7 @@ function renderCoreCenterPanelContent({
     // Tenancy routes
     if (menu === "tenancy") {
         if (subview === "serverPerformance") return <OnlineResources />;
+        if (subview === "uploadReview") return <UploadReview />;
         if (subview === "cronJobs") {
             const cronJobId = searchParams.get("cronJobId") || undefined;
             const cronJobName = safeDecode(searchParams.get("cronJobName")) || undefined;

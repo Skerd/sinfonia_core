@@ -1,0 +1,69 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewSheet.tsx",
+  "status": {
+    "flagged": "En attente de vérification",
+    "rejected": "Retiré",
+    "approved": "Approuvé",
+    "refused": "Refusé",
+    "passed": "Validé",
+    "not_checked": "Non vérifié"
+  },
+  "approve": "Approuver",
+  "remove": "Retirer",
+  "notStored": "Refusé au téléversement : le fichier n'a pas été enregistré.",
+  "groups": {
+    "upload": "Téléversement",
+    "contentCheck": "Contrôle du contenu",
+    "file": "Fichier",
+    "review": "Vérification"
+  },
+  "company": "Entreprise",
+  "uploadedBy": "Téléversé par",
+  "uploadedAt": "Téléversé",
+  "record": "Fiche",
+  "inUse": {
+    "yes": "Utilisé dans une fiche",
+    "no": "Pas encore enregistré dans une fiche"
+  },
+  "scores": {
+    "porn": "Explicite",
+    "hentai": "Dessin explicite",
+    "sexy": "Suggestif",
+    "neutral": "Neutre",
+    "drawing": "Dessin"
+  },
+  "scoreHints": {
+    "porn": "Probabilité que le fichier montre un contenu sexuel explicite",
+    "hentai": "Probabilité qu'il s'agisse d'un dessin ou d'un cartoon explicite",
+    "sexy": "Probabilité qu'il soit suggestif (sous-vêtements, maillot de bain)",
+    "neutral": "Probabilité qu'il ne montre rien de tel",
+    "drawing": "Probabilité qu'il s'agisse d'un dessin ordinaire"
+  },
+  "checkedAt": "Contrôlé",
+  "fileName": "Nom du fichier",
+  "fileType": "Nature",
+  "fileSize": "Taille",
+  "mimeType": "Type",
+  "visibility": "Visibilité",
+  "public": "Public",
+  "private": "Privé",
+  "refusedAs": "Refusé comme",
+  "route": "Envoyé à",
+  "fingerprint": "Empreinte (SHA-256)",
+  "reviewedBy": "Vérifié par",
+  "reviewedAt": "Vérifié",
+  "fileTypes": {
+    "image": "Image",
+    "video": "Vidéo",
+    "pdf": "PDF",
+    "document": "Document",
+    "audio": "Audio",
+    "archive": "Archive",
+    "other": "Autre"
+  },
+  "refusalCodes": {
+    "file_explicit_content": "Image explicite",
+    "video_explicit_content": "Vidéo explicite",
+    "document_explicit_content": "Image explicite dans un document"
+  }
+}

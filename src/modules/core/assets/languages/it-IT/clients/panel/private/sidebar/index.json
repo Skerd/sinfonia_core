@@ -57,6 +57,9 @@
         "serverPerformance": {
           "title": "Prestazioni"
         },
+        "uploadReview": {
+          "title": "Revisione dei caricamenti"
+        },
         "cronJobs": {
           "title": "Azioni pianificate"
         }

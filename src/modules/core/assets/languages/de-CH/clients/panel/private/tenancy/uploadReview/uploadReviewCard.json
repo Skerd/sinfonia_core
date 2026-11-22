@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewCard.tsx",
+  "status": {
+    "flagged": "Wartet auf Prüfung",
+    "rejected": "Entfernt",
+    "approved": "Freigegeben",
+    "refused": "Abgelehnt",
+    "passed": "Bestanden",
+    "not_checked": "Nicht geprüft"
+  },
+  "notStored": "Beim Hochladen abgelehnt: Die Datei wurde nicht gespeichert.",
+  "company": "Firma",
+  "uploadedBy": "Hochgeladen von",
+  "uploadedAt": "Hochgeladen",
+  "reviewedBy": "Geprüft von",
+  "score": "Nacktheitswert",
+  "view": "Grösser anzeigen",
+  "approve": "Freigeben",
+  "remove": "Entfernen",
+  "details": "Details"
+}

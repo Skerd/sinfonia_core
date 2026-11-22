@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewDecisionDialog.tsx",
+  "approve": {
+    "title": "Approuver ce fichier ?",
+    "description": "\"{name}\" s'affichera comme n'importe quel fichier : pour l'équipe de l'entreprise et, s'il est public, pour les visiteurs. La personne qui l'a téléversé est prévenue.",
+    "confirm": "Approuver"
+  },
+  "remove": {
+    "title": "Retirer ce fichier ?",
+    "description": "\"{name}\" reste enregistré, mais les visiteurs ne le voient jamais et l'équipe de l'entreprise le voit flouté. La personne qui l'a téléversé est prévenue.",
+    "confirm": "Retirer"
+  },
+  "axios": {
+    "start": {
+      "title": "Enregistrement de la décision…"
+    },
+    "success": {
+      "title": "Fichier approuvé."
+    },
+    "removed": {
+      "title": "Fichier retiré."
+    },
+    "error": {
+      "title": "Impossible d'enregistrer la décision"
+    }
+  }
+}

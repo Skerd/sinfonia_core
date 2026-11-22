@@ -55,7 +55,8 @@
     "States": "Stati / cantoni",
     "Users": "Utenti",
     "Usersessions": "Sessioni utente",
-    "Useraddresses": "Indirizzi"
+    "Useraddresses": "Indirizzi",
+    "Uploadrefusals": "Caricamenti rifiutati"
   },
   "permissions": {
     "Apiaccesses": {
@@ -408,7 +409,13 @@
       "uploadedAt": "Caricato il",
       "url": "URL",
       "encrypted": "Crittografato",
-      "sharedWithCompanies": "Condiviso con le aziende"
+      "sharedWithCompanies": "Condiviso con le aziende",
+      "metadata_moderation": "Controllo del contenuto",
+      "metadata_moderation_status": "Esito del controllo del contenuto",
+      "metadata_moderation_scores": "Punteggi del controllo del contenuto",
+      "metadata_moderation_checkedAt": "Contenuto controllato il",
+      "metadata_moderation_reviewedAt": "Revisionato il",
+      "metadata_moderation_reviewedBy": "Revisionato da"
     },
     "Messages": {
       "createdAt": "Creato il",
@@ -746,6 +753,21 @@
       "user": "Utente",
       "email": "E-mail",
       "type": "Tipo di indirizzo"
+    },
+    "Uploadrefusals": {
+      "company": "Azienda",
+      "createdAt": "Creato il",
+      "createdBy": "Creato da",
+      "errorCode": "Motivo",
+      "fileHash": "Impronta del file",
+      "fileName": "Nome del file",
+      "fileSize": "Dimensione del file",
+      "mimeType": "Tipo MIME",
+      "route": "Percorso di caricamento",
+      "scores": "Punteggi",
+      "updatedAt": "Aggiornato il",
+      "uploadrefusals": "Caricamenti rifiutati",
+      "reviewUploads": "Revisionare i caricamenti segnalati"
     }
   },
   "commonFields": {

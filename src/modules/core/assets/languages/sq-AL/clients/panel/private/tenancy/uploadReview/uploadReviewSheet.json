@@ -1,0 +1,69 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewSheet.tsx",
+  "status": {
+    "flagged": "Pret shqyrtimin",
+    "rejected": "I hequr",
+    "approved": "I miratuar",
+    "refused": "I refuzuar",
+    "passed": "I kaluar",
+    "not_checked": "I pakontrolluar"
+  },
+  "approve": "Mirato",
+  "remove": "Hiq",
+  "notStored": "U refuzua gjatë ngarkimit: skedari nuk u ruajt.",
+  "groups": {
+    "upload": "Ngarkimi",
+    "contentCheck": "Kontrolli i përmbajtjes",
+    "file": "Skedari",
+    "review": "Shqyrtimi"
+  },
+  "company": "Kompania",
+  "uploadedBy": "Ngarkuar nga",
+  "uploadedAt": "Ngarkuar",
+  "record": "Regjistri",
+  "inUse": {
+    "yes": "Përdoret në një regjistër",
+    "no": "Ende i paruajtur në një regjistër"
+  },
+  "scores": {
+    "porn": "Eksplicit",
+    "hentai": "Vizatim eksplicit",
+    "sexy": "Provokues",
+    "neutral": "Neutral",
+    "drawing": "Vizatim"
+  },
+  "scoreHints": {
+    "porn": "Sa e mundshme është që skedari të tregojë përmbajtje seksuale eksplicite",
+    "hentai": "Sa e mundshme është të jetë vizatim ose karikaturë eksplicite",
+    "sexy": "Sa e mundshme është të jetë provokues (të brendshme, rroba banje)",
+    "neutral": "Sa e mundshme është të mos tregojë asgjë të tillë",
+    "drawing": "Sa e mundshme është të jetë vizatim i zakonshëm"
+  },
+  "checkedAt": "Kontrolluar",
+  "fileName": "Emri i skedarit",
+  "fileType": "Lloji",
+  "fileSize": "Madhësia",
+  "mimeType": "Formati",
+  "visibility": "Dukshmëria",
+  "public": "Publik",
+  "private": "Privat",
+  "refusedAs": "Refuzuar si",
+  "route": "Dërguar te",
+  "fingerprint": "Gjurma (SHA-256)",
+  "reviewedBy": "Shqyrtuar nga",
+  "reviewedAt": "Shqyrtuar",
+  "fileTypes": {
+    "image": "Imazh",
+    "video": "Video",
+    "pdf": "PDF",
+    "document": "Dokument",
+    "audio": "Audio",
+    "archive": "Arkiv",
+    "other": "Tjetër"
+  },
+  "refusalCodes": {
+    "file_explicit_content": "Imazh eksplicit",
+    "video_explicit_content": "Video eksplicite",
+    "document_explicit_content": "Figurë eksplicite në një dokument"
+  }
+}

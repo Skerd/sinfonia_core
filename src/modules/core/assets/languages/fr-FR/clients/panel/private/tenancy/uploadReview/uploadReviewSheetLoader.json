@@ -1,0 +1,8 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewSheetLoader.tsx",
+  "axios": {
+    "error": {
+      "title": "Impossible d'ouvrir ce fichier"
+    }
+  }
+}

@@ -55,7 +55,8 @@
     "States": "States",
     "Users": "Users",
     "Usersessions": "User sessions",
-    "Useraddresses": "Addresses"
+    "Useraddresses": "Addresses",
+    "Uploadrefusals": "Upload refusals"
   },
   "permissions": {
     "Apiaccesses": {
@@ -408,7 +409,13 @@
       "uploadedAt": "Uploaded at",
       "url": "URL",
       "encrypted": "Encrypted",
-      "sharedWithCompanies": "Shared with companies"
+      "sharedWithCompanies": "Shared with companies",
+      "metadata_moderation": "Content check",
+      "metadata_moderation_status": "Content check result",
+      "metadata_moderation_scores": "Content check scores",
+      "metadata_moderation_checkedAt": "Content checked at",
+      "metadata_moderation_reviewedAt": "Reviewed at",
+      "metadata_moderation_reviewedBy": "Reviewed by"
     },
     "Messages": {
       "createdAt": "Created at",
@@ -746,6 +753,21 @@
       "user": "User",
       "email": "Email",
       "type": "Address type"
+    },
+    "Uploadrefusals": {
+      "company": "Company",
+      "createdAt": "Created at",
+      "createdBy": "Created by",
+      "errorCode": "Reason",
+      "fileHash": "File fingerprint",
+      "fileName": "File name",
+      "fileSize": "File size",
+      "mimeType": "MIME type",
+      "route": "Upload route",
+      "scores": "Scores",
+      "updatedAt": "Updated at",
+      "uploadrefusals": "Upload refusals",
+      "reviewUploads": "Review flagged uploads"
     }
   },
   "commonFields": {

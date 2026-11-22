@@ -1,0 +1,69 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewSheet.tsx",
+  "status": {
+    "flagged": "Waiting for review",
+    "rejected": "Removed",
+    "approved": "Approved",
+    "refused": "Refused",
+    "passed": "Passed",
+    "not_checked": "Not checked"
+  },
+  "approve": "Approve",
+  "remove": "Remove",
+  "notStored": "Refused at upload: the file was not stored.",
+  "groups": {
+    "upload": "Upload",
+    "contentCheck": "Content check",
+    "file": "File",
+    "review": "Review"
+  },
+  "company": "Company",
+  "uploadedBy": "Uploaded by",
+  "uploadedAt": "Uploaded",
+  "record": "Record",
+  "inUse": {
+    "yes": "Used in a record",
+    "no": "Not saved in a record yet"
+  },
+  "scores": {
+    "porn": "Explicit",
+    "hentai": "Explicit drawing",
+    "sexy": "Suggestive",
+    "neutral": "Neutral",
+    "drawing": "Drawing"
+  },
+  "scoreHints": {
+    "porn": "How likely the file shows explicit sexual content",
+    "hentai": "How likely it is an explicit drawing or cartoon",
+    "sexy": "How likely it is suggestive (underwear, swimwear)",
+    "neutral": "How likely it shows nothing of the kind",
+    "drawing": "How likely it is an ordinary drawing"
+  },
+  "checkedAt": "Checked",
+  "fileName": "File name",
+  "fileType": "Kind",
+  "fileSize": "Size",
+  "mimeType": "Type",
+  "visibility": "Visibility",
+  "public": "Public",
+  "private": "Private",
+  "refusedAs": "Refused as",
+  "route": "Sent to",
+  "fingerprint": "Fingerprint (SHA-256)",
+  "reviewedBy": "Reviewed by",
+  "reviewedAt": "Reviewed",
+  "fileTypes": {
+    "image": "Image",
+    "video": "Video",
+    "pdf": "PDF",
+    "document": "Document",
+    "audio": "Audio",
+    "archive": "Archive",
+    "other": "Other"
+  },
+  "refusalCodes": {
+    "file_explicit_content": "Explicit image",
+    "video_explicit_content": "Explicit video",
+    "document_explicit_content": "Explicit picture in a document"
+  }
+}

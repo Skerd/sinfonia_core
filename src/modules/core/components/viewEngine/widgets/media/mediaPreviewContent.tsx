@@ -16,6 +16,7 @@ import {
     TextDialogViewer,
 } from "@coreModule/components/viewEngine/widgets/media/officePreview.tsx";
 import PdfDialogViewer from "@coreModule/components/custom/pdf/PdfDialogViewer.tsx";
+import {FlaggedMediaCover, revealedMediaSrc, useShowFlagged} from "@coreModule/components/viewEngine/widgets/media/flaggedMedia.tsx";
 import PdfFirstPageThumb from "@coreModule/components/custom/pdf/PdfFirstPageThumb.tsx";
 
 const FILE_NAME_MAX_LENGTH = 18;
@@ -35,6 +36,10 @@ export type MediaPreviewContentProps = {
     className?: string;
     videoUnsupportedText?: string;
     iconSize?: "sm" | "md" | "lg";
+    /** The content check flagged the image (D177): it shows blurred under a cover until the viewer shows it. */
+    flagged?: boolean;
+    /** Called once the viewer shows a flagged file, for a parent that changes with it (e.g. becomes clickable). */
+    onFlaggedShown?: () => void;
 };
 
 function KindFallback({
@@ -123,16 +128,36 @@ export default function MediaPreviewContent({
     className,
     videoUnsupportedText,
     iconSize = "md",
+    flagged = false,
+    onFlaggedShown,
 }: MediaPreviewContentProps) {
-    const [failed, setFailed] = useState(false);
+    const [flaggedShown, markShown] = useShowFlagged(flagged ? src : undefined);
+    const showFlagged = () => {
+        markShown();
+        onFlaggedShown?.();
+    };
+    // A flagged file's original is loaded only once it is shown; until then an image loads as the server's blurred copy.
+    const shownSrc = flagged && flaggedShown ? revealedMediaSrc(src) : src;
+    // A failure belongs to the URL that failed: a flagged video refused before its verdict was known loads once shown.
+    const [failedSrc, setFailedSrc] = useState<string | null>(null);
+    const failed = failedSrc === shownSrc;
     const kind = classifyMedia({mime, filename: filename || alt, fieldMediaType});
     const fit = objectFit ?? (mode === "dialog" ? "contain" : "cover");
     const fitClass =
         fit === "contain" ? "object-contain" : fit === "fill" ? "object-fill" : "object-cover";
     const displayName = filename || alt || "";
     const sizeLabel = fileSizeLabel || (fileSizeBytes != null ? formatFileSize(fileSizeBytes) : "");
-    const onMediaError = useCallback(() => setFailed(true), []);
-    const onPdfFail = useCallback(() => setFailed(true), []);
+    const onMediaError = useCallback(() => setFailedSrc(shownSrc), [shownSrc]);
+    // Only an image has a blurred copy; any other flagged file (a video, a PDF, a document) is not sent until shown.
+    const coveredFile = kind !== "image" && flagged && !flaggedShown;
+
+    if (coveredFile && src) {
+        return (
+            <div className={cn("relative h-full w-full overflow-hidden bg-muted", mode === "dialog" && "min-h-48 min-w-64 rounded-lg", className)}>
+                <FlaggedMediaCover onShow={showFlagged} compact={mode === "thumb" && iconSize === "sm"}/>
+            </div>
+        );
+    }
 
     if (failed || !src) {
         if (mode === "dialog") {
@@ -141,7 +166,7 @@ export default function MediaPreviewContent({
                     filename={displayName}
                     mime={mime}
                     fileSizeLabel={sizeLabel}
-                    src={src || undefined}
+                    src={shownSrc || undefined}
                     className={className}
                 />
             );
@@ -160,13 +185,21 @@ export default function MediaPreviewContent({
     }
 
     if (kind === "image") {
-        return (
+        const covered = flagged && !flaggedShown;
+        const image = (
             <img
-                src={src}
+                src={shownSrc}
                 alt={alt || displayName || "attachment"}
-                className={cn("h-full w-full", fitClass, mode === "dialog" && "max-h-[85vh] max-w-full rounded-lg", className)}
+                className={cn("h-full w-full", fitClass, mode === "dialog" && "max-h-[85vh] max-w-full rounded-lg", covered && "blur-md", className)}
                 onError={onMediaError}
             />
+        );
+        if (!covered) return image;
+        return (
+            <div className={cn("relative h-full w-full overflow-hidden", mode === "dialog" && "min-h-48 min-w-64 rounded-lg")}>
+                {image}
+                <FlaggedMediaCover onShow={showFlagged} compact={mode === "thumb" && iconSize === "sm"}/>
+            </div>
         );
     }
 
@@ -175,7 +208,7 @@ export default function MediaPreviewContent({
             return (
                 <div className={cn("relative h-full w-full", className)}>
                     <video
-                        src={src}
+                        src={shownSrc}
                         muted
                         playsInline
                         preload="metadata"
@@ -190,7 +223,7 @@ export default function MediaPreviewContent({
         }
         return (
             <video
-                src={src}
+                src={shownSrc}
                 controls
                 autoPlay
                 className={cn("max-h-[85vh] max-w-full rounded-lg", className)}
@@ -205,7 +238,7 @@ export default function MediaPreviewContent({
         if (mode === "dialog") {
             return (
                 <div className={cn("flex w-full items-center justify-center p-4", className)}>
-                    <audio src={src} controls className="w-full max-w-lg" onError={onMediaError} />
+                    <audio src={shownSrc} controls className="w-full max-w-lg" onError={onMediaError} />
                 </div>
             );
         }
@@ -239,26 +272,26 @@ export default function MediaPreviewContent({
             }
             return (
                 <PdfFirstPageThumb
-                    src={src}
+                    src={shownSrc}
                     fileSizeBytes={fileSizeBytes}
                     className={className}
-                    onFail={onPdfFail}
+                    onFail={onMediaError}
                 />
             );
         }
-        return <PdfDialogViewer src={src} className={className} />;
+        return <PdfDialogViewer src={shownSrc} className={className} />;
     }
 
     if (mode === "dialog") {
-        if (kind === "word") return <DocxDialogViewer src={src} filename={filename} className={className} />;
-        if (kind === "spreadsheet") return <SpreadsheetDialogViewer src={src} filename={filename} className={className} />;
-        if (kind === "text") return <TextDialogViewer src={src} filename={filename} className={className} />;
+        if (kind === "word") return <DocxDialogViewer src={shownSrc} filename={filename} className={className} />;
+        if (kind === "spreadsheet") return <SpreadsheetDialogViewer src={shownSrc} filename={filename} className={className} />;
+        if (kind === "text") return <TextDialogViewer src={shownSrc} filename={filename} className={className} />;
         return (
             <FileDetailsFallback
                 filename={displayName}
                 mime={mime}
                 fileSizeLabel={sizeLabel}
-                src={src}
+                src={shownSrc}
                 className={className}
             />
         );

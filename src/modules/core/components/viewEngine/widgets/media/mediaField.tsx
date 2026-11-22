@@ -14,6 +14,7 @@ import {
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import MediaPreviewContent from "@coreModule/components/viewEngine/widgets/media/mediaPreviewContent.tsx";
+import {isHeldModerationStatus, useShowFlagged} from "@coreModule/components/viewEngine/widgets/media/flaggedMedia.tsx";
 import {
     classifyMedia,
     formatFileSize,
@@ -33,6 +34,8 @@ type MediaInfoDto = {
     mimeType: string;
     originalName: string;
     fileSize: number;
+    /** The content check's verdict (D177). */
+    moderation?: string;
     type: string;
     extension: string;
 };
@@ -78,7 +81,7 @@ function MediaPreviewWithRemove({
         lg: "w-48 h-48",
     };
 
-    // Real mime/name/size for a stored file; silent, the field-level classification stays otherwise.
+    // Real mime/name/size and the content check's verdict for a stored file; silent, the field-level classification stays otherwise.
     const mediaId = fetchInfo ? mediaIdFromSrc(src) : null;
     const [infoLoad, setInfoLoad] = useState({mediaId, count: mediaId ? 1 : 0});
     if (infoLoad.mediaId !== mediaId) setInfoLoad({mediaId, count: mediaId ? infoLoad.count + 1 : infoLoad.count});
@@ -95,6 +98,10 @@ function MediaPreviewWithRemove({
         fieldMediaType: mediaType,
     });
     const needsCenteredBlock = kind !== "image" && kind !== "video" && kind !== "pdf";
+    const flagged = isHeldModerationStatus(info?.moderation);
+    const [flaggedShown, showFlagged] = useShowFlagged(flagged ? src : undefined);
+    // The hover buttons lie over the cover's own Show button, so while covered the first one shows the file in place.
+    const covered = flagged && !flaggedShown;
 
     return (
         <>
@@ -115,6 +122,7 @@ function MediaPreviewWithRemove({
                         fileSizeBytes={resolvedBytes}
                         fileSizeLabel={resolvedSizeLabel}
                         fieldMediaType={mediaType}
+                        flagged={flagged}
                     />
                     <div className="absolute inset-0 bg-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
                         <Button
@@ -122,10 +130,12 @@ function MediaPreviewWithRemove({
                             variant="secondary"
                             size="icon"
                             className="h-10 w-10"
-                            onClick={() => setOpen(true)}
+                            onClick={covered ? showFlagged : () => setOpen(true)}
                             disabled={disabled}
                         >
-                            {kind === "video" ? (
+                            {covered ? (
+                                <IconEye className="h-5 w-5" />
+                            ) : kind === "video" ? (
                                 <IconPlayerPlay className="h-5 w-5" />
                             ) : kind === "image" ? (
                                 <IconEye className="h-5 w-5" />
@@ -159,6 +169,7 @@ function MediaPreviewWithRemove({
                             fileSizeBytes={resolvedBytes}
                             fileSizeLabel={resolvedSizeLabel}
                             fieldMediaType={mediaType}
+                            flagged={flagged}
                             videoUnsupportedText={resolveLanguageKey?.("form.mediaField.videoUnsupported")}
                         />
                     </div>
@@ -471,7 +482,7 @@ function MediaField({
                                 disabled={loading}
                                 aspectSquare={true}
                                 resolveLanguageKey={resolveLanguageKey}
-                                fetchInfo={mediaType === "file"}
+                                fetchInfo
                             />
                         );
                     }

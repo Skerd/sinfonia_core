@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewList.tsx",
+  "views": {
+    "flagged": "Waiting",
+    "rejected": "Removed",
+    "approved": "Approved",
+    "refused": "Refused uploads"
+  },
+  "empty": {
+    "flagged": {
+      "title": "Nothing waiting for review",
+      "description": "Files the nudity check flags appear here until you decide."
+    },
+    "rejected": {
+      "title": "No removed files",
+      "description": "Files you remove stay here, hidden from visitors."
+    },
+    "approved": {
+      "title": "No approved files",
+      "description": "Flagged files you approve appear here."
+    },
+    "refused": {
+      "title": "No refused uploads",
+      "description": "Uploads the nudity check refused outright are logged here, without the file."
+    }
+  },
+  "pagination": {
+    "page": "Page {page} of {pages}",
+    "previous": "Previous page",
+    "next": "Next page"
+  },
+  "axios": {
+    "error": {
+      "title": "Could not load the upload review"
+    }
+  }
+}

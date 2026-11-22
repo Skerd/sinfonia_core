@@ -18,6 +18,8 @@ import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@coreModule/helpers/redux/slices/chatSlice.ts";
 import {useChatInboxBadges} from "@coreModule/helpers/hooks/useChatInboxBadges.ts";
+import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
+import {useUploadReviewWaiting} from "@coreModule/helpers/hooks/useUploadReviewWaiting.ts";
 import {IconHome} from "@tabler/icons-react";
 import type {ComponentProps, ReactNode} from "react";
 import {ModuleSidebarNavGroups} from "@coreModule/helpers/moduleContributions/ModuleSidebarNavGroups.tsx";
@@ -51,6 +53,8 @@ function AdministrativePanelSideBar({
     const publicChatMineUnread = useSelector(selectWebsiteChatMineUnread);
     const isPlatformCompany = useSelector((state: RootState) => state.authentication.user.company.isPlatformOwner);
     const isPlatformAdmin = useSelector((state: RootState) => state.authentication.user.isPlatformAdmin);
+    const canReviewUploads = useActionAccess("uploadrefusals", "reviewUploads");
+    const uploadReviewWaiting = useUploadReviewWaiting(isPlatformCompany === true && canReviewUploads);
     const {pathname} = useLocation();
     // The module nav groups resolve their own active state; this entry is hardcoded here.
     const isHomeActive = pathname === "/" || pathname === "/home";
@@ -85,6 +89,7 @@ function AdministrativePanelSideBar({
                     publicChatMineUnread={publicChatMineUnread}
                     isPlatformCompany={isPlatformCompany}
                     isPlatformAdmin={isPlatformAdmin}
+                    uploadReviewWaiting={uploadReviewWaiting}
                 />
                 {postChildren}
             </SidebarContent>

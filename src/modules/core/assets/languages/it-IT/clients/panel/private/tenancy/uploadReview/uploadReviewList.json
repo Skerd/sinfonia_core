@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewList.tsx",
+  "views": {
+    "flagged": "In attesa",
+    "rejected": "Rimossi",
+    "approved": "Approvati",
+    "refused": "Caricamenti rifiutati"
+  },
+  "empty": {
+    "flagged": {
+      "title": "Nulla in attesa di revisione",
+      "description": "I file che il controllo di nudità segnala compaiono qui finché non decidi."
+    },
+    "rejected": {
+      "title": "Nessun file rimosso",
+      "description": "I file che rimuovi restano qui, nascosti ai visitatori."
+    },
+    "approved": {
+      "title": "Nessun file approvato",
+      "description": "I file segnalati che approvi compaiono qui."
+    },
+    "refused": {
+      "title": "Nessun caricamento rifiutato",
+      "description": "I caricamenti che il controllo di nudità ha rifiutato subito sono registrati qui, senza il file."
+    }
+  },
+  "pagination": {
+    "page": "Pagina {page} di {pages}",
+    "previous": "Pagina precedente",
+    "next": "Pagina successiva"
+  },
+  "axios": {
+    "error": {
+      "title": "Impossibile caricare la revisione dei caricamenti"
+    }
+  }
+}

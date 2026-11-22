@@ -10,6 +10,8 @@ export type SidebarContributionContext = {
     isPlatformCompany?: boolean;
     /** Admin of the platform-owner company: sees the platform-wide Companies page. */
     isPlatformAdmin?: boolean;
+    /** Uploads waiting for the platform's review (D177), for the Upload review entry's badge. */
+    uploadReviewWaiting?: number;
 };
 
 /**

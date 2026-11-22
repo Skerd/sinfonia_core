@@ -19,6 +19,7 @@ import {
     isDialogPreviewable,
 } from "@coreModule/components/viewEngine/widgets/media/mediaPreviewKind.ts";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
+import {isFlaggedMedia, revealedMediaSrc} from "@coreModule/components/viewEngine/widgets/media/flaggedMedia.tsx";
 import TruncatedValue from "@coreModule/components/viewEngine/widgets/display/truncatedValue.tsx";
 
 type FileToUpload = any & {}
@@ -36,6 +37,7 @@ function resolvePreviewSource(innerFile: File | Media, previewPath?: string): {
     mime: string;
     filename: string;
     fileSizeBytes?: number;
+    flagged?: boolean;
 } {
     const filename = getMediaDisplayName(innerFile);
     if (innerFile instanceof File) {
@@ -53,6 +55,7 @@ function resolvePreviewSource(innerFile: File | Media, previewPath?: string): {
         mime: media.mime ?? media.mimeType ?? "",
         filename,
         fileSizeBytes: typeof media.size === "number" ? media.size : undefined,
+        flagged: isFlaggedMedia(innerFile),
     };
 }
 
@@ -154,7 +157,9 @@ function SingleFile({
             downloadFile(URL.createObjectURL(file.file), file.file.name);
         }
         else {
-            downloadFile(`/api/auxiliary/media/` + file.file._id, file.file.name);
+            const url = `/api/auxiliary/media/` + file.file._id;
+            // Downloading is choosing to see the file: a held one comes as the original, not its blurred copy (D177).
+            downloadFile(isFlaggedMedia(file.file) ? revealedMediaSrc(url) : url, file.file.name);
         }
     };
 
@@ -174,6 +179,7 @@ function SingleFile({
                     filename={preview.filename}
                     alt={preview.filename || "attachment"}
                     fileSizeBytes={preview.fileSizeBytes}
+                    flagged={preview.flagged}
                     variant={isChat ? "chat" : "default"}
                     objectFit={mode === "thumb" ? thumbObjectFit : isChat ? "cover" : "fill"}
                     iconSize={isBig && !isChat ? "lg" : "sm"}

@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/index.tsx",
+  "title": "Upload-Prüfung",
+  "description": "Dateien aus allen Firmen, die die Nacktheitsprüfung markiert oder abgelehnt hat. Geben Sie eine Datei frei, um sie wieder anzuzeigen, oder entfernen Sie sie, damit Besucher sie nie sehen."
+}

@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewCard.tsx",
+  "status": {
+    "flagged": "Pret shqyrtimin",
+    "rejected": "I hequr",
+    "approved": "I miratuar",
+    "refused": "I refuzuar",
+    "passed": "I kaluar",
+    "not_checked": "I pakontrolluar"
+  },
+  "notStored": "U refuzua gjatë ngarkimit: skedari nuk u ruajt.",
+  "company": "Kompania",
+  "uploadedBy": "Ngarkuar nga",
+  "uploadedAt": "Ngarkuar",
+  "reviewedBy": "Shqyrtuar nga",
+  "score": "Pikët e lakuriqësisë",
+  "view": "Shiko më të madh",
+  "approve": "Mirato",
+  "remove": "Hiq",
+  "details": "Detajet"
+}

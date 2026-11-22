@@ -14,6 +14,13 @@ import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
 import {IconPhoto} from "@tabler/icons-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {GalleryDialog, GalleryPreviewRail, type GalleryImageComponent, type GalleryMediaItem} from "@coreModule/components/viewEngine/widgets/gallery/galleryDialog.tsx";
+import {
+    FlaggedMediaCover,
+    flaggedAwareSrc,
+    isFlaggedMedia,
+    markShownThisVisit,
+    wasShownThisVisit,
+} from "@coreModule/components/viewEngine/widgets/media/flaggedMedia.tsx";
 
 function resolveMediaUrl(url: string, media: Media): string {
     return `${url}${media._id}`
@@ -86,6 +93,7 @@ export function GalleryCarousel({
             src: resolveMediaUrl(mediaUrl, item),
             video: item.mime.includes("video"),
             name: item.name,
+            flagged: isFlaggedMedia(item),
         })),
         [media, mediaUrl]
     )
@@ -94,6 +102,8 @@ export function GalleryCarousel({
 
     const [open, setOpen] = React.useState(false)
     const [index, setIndex] = React.useState(-1)
+    // Showing a flagged image changes only the shared "shown this visit" memory, so the slides redraw on this count.
+    const [flaggedShownCount, flaggedShown] = React.useReducer((count: number) => count + 1, 0)
     const [api, setApi] = React.useState<CarouselApi | null>(null)
     const [detectedAspectRatio, setDetectedAspectRatio] = React.useState<number | null>(null)
     const forcedRatio =
@@ -146,7 +156,8 @@ export function GalleryCarousel({
             }
         }
 
-        if (leadMedia.mime?.includes("video")) {
+        // The server holds a flagged video back until it is shown (D177), so a covered one is not measured.
+        if (leadMedia.mime?.includes("video") && !(isFlaggedMedia(leadMedia) && !wasShownThisVisit(leadUrl))) {
             const video = document.createElement("video")
             video.src = leadUrl
             video.preload = "metadata"
@@ -207,6 +218,13 @@ export function GalleryCarousel({
         return (
             <CarouselContent>
                 {media.map((item, i) => {
+                    const url = resolveMediaUrl(mediaUrl, item)
+                    const flagged = isFlaggedMedia(item)
+                    const video = item.mime.includes("video")
+                    // A flagged file the viewer has not shown yet sits under a cover and doesn't open the viewer: an
+                    // image as the server's blurred copy, a video as an empty frame (it is not sent before Show).
+                    const covered = flagged && !wasShownThisVisit(url)
+                    const imageUrl = flaggedAwareSrc(url, flagged)
                     const slide = (
                         <div
                             className={cn(
@@ -221,11 +239,13 @@ export function GalleryCarousel({
                                     : {aspectRatio}
                             }
                         >
-                            {item.mime.includes("video") ? (
+                            {covered && video ? (
+                                <div className="h-full w-full bg-muted" />
+                            ) : video ? (
                                 <video
                                     ref={setVideoRef(i)}
                                     autoPlay={i === 0}
-                                    src={resolveMediaUrl(mediaUrl, item)}
+                                    src={imageUrl}
                                     aria-label={item.name ?? "Gallery video"}
                                     controls={allowFullScreen}
                                     muted
@@ -233,24 +253,32 @@ export function GalleryCarousel({
                                     preload="metadata"
                                     className={mediaObjectClass}
                                 />
+                            ) : covered ? (
+                                <img src={url} alt={item.name ?? ""} className={cn(mediaObjectClass, "blur-md")} />
                             ) : modifyImagesOnDarkMode ? (
                                 React.createElement(modifyImagesOnDarkMode, {
-                                    src: resolveMediaUrl(mediaUrl, item),
+                                    src: imageUrl,
                                     alt: item.name ?? "",
                                     className: mediaObjectClass,
                                 })
                             ) : (
                                 <img
-                                    src={resolveMediaUrl(mediaUrl, item)}
+                                    src={imageUrl}
                                     alt={item.name ?? ""}
                                     className={mediaObjectClass}
                                 />
+                            )}
+                            {covered && (
+                                <FlaggedMediaCover onShow={() => {
+                                    markShownThisVisit(url)
+                                    flaggedShown()
+                                }} />
                             )}
                         </div>
                     )
                     return (
                         <CarouselItem key={item._id}>
-                            {enlarge ? (
+                            {enlarge && !covered ? (
                                 <Button variant="bare"
                                     type="button"
                                     className={cn(
@@ -286,6 +314,7 @@ export function GalleryCarousel({
         setVideoRef,
         api,
         mediaObjectClass,
+        flaggedShownCount,
     ])
 
     const previewRailVertical = previewLocation === "left" || previewLocation === "right"

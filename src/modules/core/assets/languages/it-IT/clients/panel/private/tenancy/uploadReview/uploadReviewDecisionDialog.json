@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewDecisionDialog.tsx",
+  "approve": {
+    "title": "Approvare questo file?",
+    "description": "\"{name}\" verrà mostrato come qualsiasi altro file: al team dell'azienda e, se è pubblico, ai visitatori. Chi lo ha caricato viene avvisato.",
+    "confirm": "Approva"
+  },
+  "remove": {
+    "title": "Rimuovere questo file?",
+    "description": "\"{name}\" resta salvato, ma i visitatori non lo vedono mai e il team dell'azienda lo vede sfocato. Chi lo ha caricato viene avvisato.",
+    "confirm": "Rimuovi"
+  },
+  "axios": {
+    "start": {
+      "title": "Salvataggio della decisione…"
+    },
+    "success": {
+      "title": "File approvato."
+    },
+    "removed": {
+      "title": "File rimosso."
+    },
+    "error": {
+      "title": "Impossibile salvare la decisione"
+    }
+  }
+}

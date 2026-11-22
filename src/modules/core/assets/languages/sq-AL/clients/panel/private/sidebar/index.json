@@ -57,6 +57,9 @@
         "serverPerformance": {
           "title": "Performanca"
         },
+        "uploadReview": {
+          "title": "Shqyrtimi i ngarkimeve"
+        },
         "cronJobs": {
           "title": "Veprime të planifikuara"
         }

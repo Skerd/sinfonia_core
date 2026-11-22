@@ -55,7 +55,8 @@
     "States": "Kantone / Bundesländer",
     "Users": "Benutzer",
     "Usersessions": "Benutzersitzungen",
-    "Useraddresses": "Adressen"
+    "Useraddresses": "Adressen",
+    "Uploadrefusals": "Abgelehnte Uploads"
   },
   "permissions": {
     "Apiaccesses": {
@@ -408,7 +409,13 @@
       "uploadedAt": "Hochgeladen am",
       "url": "URL",
       "encrypted": "Verschlüsselt",
-      "sharedWithCompanies": "Geteilt mit Firmen"
+      "sharedWithCompanies": "Geteilt mit Firmen",
+      "metadata_moderation": "Inhaltsprüfung",
+      "metadata_moderation_status": "Ergebnis der Inhaltsprüfung",
+      "metadata_moderation_scores": "Werte der Inhaltsprüfung",
+      "metadata_moderation_checkedAt": "Inhalt geprüft am",
+      "metadata_moderation_reviewedAt": "Geprüft am",
+      "metadata_moderation_reviewedBy": "Geprüft von"
     },
     "Messages": {
       "createdAt": "Erstellt am",
@@ -746,6 +753,21 @@
       "user": "Benutzer",
       "email": "E-Mail",
       "type": "Adressart"
+    },
+    "Uploadrefusals": {
+      "company": "Firma",
+      "createdAt": "Erstellt am",
+      "createdBy": "Erstellt von",
+      "errorCode": "Grund",
+      "fileHash": "Datei-Fingerabdruck",
+      "fileName": "Dateiname",
+      "fileSize": "Dateigrösse",
+      "mimeType": "MIME-Typ",
+      "route": "Upload-Route",
+      "scores": "Werte",
+      "updatedAt": "Aktualisiert am",
+      "uploadrefusals": "Abgelehnte Uploads",
+      "reviewUploads": "Markierte Uploads prüfen"
     }
   },
   "commonFields": {

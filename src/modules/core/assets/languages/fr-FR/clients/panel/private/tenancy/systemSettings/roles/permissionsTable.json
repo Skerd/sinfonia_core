@@ -55,7 +55,8 @@
     "States": "États / cantons",
     "Users": "Utilisateurs",
     "Usersessions": "Sessions utilisateur",
-    "Useraddresses": "Adresses"
+    "Useraddresses": "Adresses",
+    "Uploadrefusals": "Fichiers refusés"
   },
   "permissions": {
     "Apiaccesses": {
@@ -408,7 +409,13 @@
       "uploadedAt": "Importé le",
       "url": "URL",
       "encrypted": "Chiffré",
-      "sharedWithCompanies": "Partagé avec les entreprises"
+      "sharedWithCompanies": "Partagé avec les entreprises",
+      "metadata_moderation": "Contrôle du contenu",
+      "metadata_moderation_status": "Résultat du contrôle du contenu",
+      "metadata_moderation_scores": "Scores du contrôle du contenu",
+      "metadata_moderation_checkedAt": "Contenu contrôlé le",
+      "metadata_moderation_reviewedAt": "Vérifié le",
+      "metadata_moderation_reviewedBy": "Vérifié par"
     },
     "Messages": {
       "createdAt": "Créé le",
@@ -746,6 +753,21 @@
       "user": "Utilisateur",
       "email": "E-mail",
       "type": "Type d'adresse"
+    },
+    "Uploadrefusals": {
+      "company": "Entreprise",
+      "createdAt": "Créé le",
+      "createdBy": "Créé par",
+      "errorCode": "Motif",
+      "fileHash": "Empreinte du fichier",
+      "fileName": "Nom de fichier",
+      "fileSize": "Taille du fichier",
+      "mimeType": "Type MIME",
+      "route": "Route de téléversement",
+      "scores": "Scores",
+      "updatedAt": "Mis à jour le",
+      "uploadrefusals": "Fichiers refusés",
+      "reviewUploads": "Vérifier les fichiers signalés"
     }
   },
   "commonFields": {

@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewList.tsx",
+  "views": {
+    "flagged": "Në pritje",
+    "rejected": "Të hequr",
+    "approved": "Të miratuar",
+    "refused": "Ngarkime të refuzuara"
+  },
+  "empty": {
+    "flagged": {
+      "title": "Asgjë nuk pret shqyrtim",
+      "description": "Skedarët që kontrolli i lakuriqësisë i shënon shfaqen këtu derisa të vendosni."
+    },
+    "rejected": {
+      "title": "Asnjë skedar i hequr",
+      "description": "Skedarët që hiqni mbeten këtu, të fshehur nga vizitorët."
+    },
+    "approved": {
+      "title": "Asnjë skedar i miratuar",
+      "description": "Skedarët e shënuar që miratoni shfaqen këtu."
+    },
+    "refused": {
+      "title": "Asnjë ngarkim i refuzuar",
+      "description": "Ngarkimet që kontrolli i lakuriqësisë i refuzoi menjëherë regjistrohen këtu, pa skedarin."
+    }
+  },
+  "pagination": {
+    "page": "Faqja {page} nga {pages}",
+    "previous": "Faqja e mëparshme",
+    "next": "Faqja tjetër"
+  },
+  "axios": {
+    "error": {
+      "title": "Shqyrtimi i ngarkimeve nuk u ngarkua"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/index.tsx",
+  "title": "Vérification des fichiers",
+  "description": "Les fichiers de toutes les entreprises que le contrôle de nudité a signalés ou refusés. Approuvez un fichier pour l'afficher de nouveau, ou retirez-le pour que les visiteurs ne le voient jamais."
+}

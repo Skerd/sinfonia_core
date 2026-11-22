@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewList.tsx",
+  "views": {
+    "flagged": "Wartend",
+    "rejected": "Entfernt",
+    "approved": "Freigegeben",
+    "refused": "Abgelehnte Uploads"
+  },
+  "empty": {
+    "flagged": {
+      "title": "Nichts wartet auf eine Prüfung",
+      "description": "Dateien, die die Nacktheitsprüfung markiert, erscheinen hier, bis Sie entscheiden."
+    },
+    "rejected": {
+      "title": "Keine entfernten Dateien",
+      "description": "Dateien, die Sie entfernen, bleiben hier, für Besucher verborgen."
+    },
+    "approved": {
+      "title": "Keine freigegebenen Dateien",
+      "description": "Markierte Dateien, die Sie freigeben, erscheinen hier."
+    },
+    "refused": {
+      "title": "Keine abgelehnten Uploads",
+      "description": "Uploads, die die Nacktheitsprüfung direkt abgelehnt hat, werden hier ohne die Datei festgehalten."
+    }
+  },
+  "pagination": {
+    "page": "Seite {page} von {pages}",
+    "previous": "Vorherige Seite",
+    "next": "Nächste Seite"
+  },
+  "axios": {
+    "error": {
+      "title": "Die Upload-Prüfung konnte nicht geladen werden"
+    }
+  }
+}

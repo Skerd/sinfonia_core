@@ -1,4 +1,4 @@
-import {IconBuilding, IconCash, IconFlag, IconMap, IconUserKey, IconMessages, IconUsers, IconUserCog, IconTool, IconBell, IconUserShield, IconSettings, IconGauge, IconBoxMultiple, IconMail, IconMessage, IconWorld, IconUserCheck, IconStopwatch, IconMailCheck, IconBook, IconTags, IconMapPin} from "@tabler/icons-react";
+import {IconBuilding, IconCash, IconFlag, IconMap, IconUserKey, IconMessages, IconUsers, IconUserCog, IconTool, IconBell, IconUserShield, IconSettings, IconGauge, IconBoxMultiple, IconMail, IconMessage, IconWorld, IconUserCheck, IconStopwatch, IconMailCheck, IconBook, IconTags, IconMapPin, IconPhotoShield} from "@tabler/icons-react";
 import type {SidebarContribution} from "@coreModule/helpers/types/sidebarContribution.types.ts";
 import type {NavGroup, NavItem, NavSubItem} from "@coreModule/helpers/types/sidebarNav.types.ts";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -154,7 +154,7 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
     };
 }
 
-function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatformCompany = false, isPlatformAdmin = false): NavGroup {
+function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatformCompany = false, isPlatformAdmin = false, uploadReviewWaiting = 0): NavGroup {
     // Only platform admins may manage other companies; the server enforces the same rule.
     const platformItems: NavSubItem[] = isPlatformAdmin
         ? [{
@@ -166,13 +166,23 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatform
             atLeastOnePermission: true,
         }]
         : [];
-    // Performance covers the whole server, so only the platform company sees it.
+    // Performance covers the whole server and the upload review every company's files, so only the platform company
+    // sees them. The review's refusal log is platform-only: a role that may read it sees the entry, and the page checks
+    // the review permission itself.
     const performanceItems: NavItem[] = isPlatformCompany
         ? [{
             title: resolveLanguageKey("menus.tenancy.resources.serverPerformance.title"),
             url: "/tenancy/serverPerformance",
             icon: IconGauge,
             permissions: ["serverPerformance1m", "serverPerformance1h", "serverPerformance1d"],
+            usersPermissions: [],
+            atLeastOnePermission: false,
+        }, {
+            title: resolveLanguageKey("menus.tenancy.resources.uploadReview.title"),
+            url: "/tenancy/uploadReview",
+            icon: IconPhotoShield,
+            badge: uploadReviewWaiting || undefined,
+            permissions: ["uploadrefusals"],
             usersPermissions: [],
             atLeastOnePermission: false,
         }]
@@ -306,7 +316,7 @@ const coreTenancySidebarContribution: SidebarContribution = {
     id: "core-tenancy",
     order: 90,
     getNavGroups(resolveLanguageKey, context) {
-        return [buildTenancyNavGroup(resolveLanguageKey, context?.isPlatformCompany === true, context?.isPlatformAdmin === true)];
+        return [buildTenancyNavGroup(resolveLanguageKey, context?.isPlatformCompany === true, context?.isPlatformAdmin === true, context?.uploadReviewWaiting ?? 0)];
     },
 };
 

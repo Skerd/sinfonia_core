@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewCard.tsx",
+  "status": {
+    "flagged": "En attente de vérification",
+    "rejected": "Retiré",
+    "approved": "Approuvé",
+    "refused": "Refusé",
+    "passed": "Validé",
+    "not_checked": "Non vérifié"
+  },
+  "notStored": "Refusé au téléversement : le fichier n'a pas été enregistré.",
+  "company": "Entreprise",
+  "uploadedBy": "Téléversé par",
+  "uploadedAt": "Téléversé",
+  "reviewedBy": "Vérifié par",
+  "score": "Score de nudité",
+  "view": "Agrandir",
+  "approve": "Approuver",
+  "remove": "Retirer",
+  "details": "Détails"
+}

@@ -57,6 +57,9 @@
         "serverPerformance": {
           "title": "Performance"
         },
+        "uploadReview": {
+          "title": "Upload review"
+        },
         "cronJobs": {
           "title": "Scheduled actions"
         }

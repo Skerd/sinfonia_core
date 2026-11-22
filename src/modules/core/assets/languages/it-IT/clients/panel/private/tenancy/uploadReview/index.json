@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/index.tsx",
+  "title": "Revisione dei caricamenti",
+  "description": "I file di tutte le aziende che il controllo di nudità ha segnalato o rifiutato. Approva un file per mostrarlo di nuovo, oppure rimuovilo perché i visitatori non lo vedano mai."
+}

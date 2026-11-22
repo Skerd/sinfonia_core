@@ -1,0 +1,69 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewSheet.tsx",
+  "status": {
+    "flagged": "Wartet auf Prüfung",
+    "rejected": "Entfernt",
+    "approved": "Freigegeben",
+    "refused": "Abgelehnt",
+    "passed": "Bestanden",
+    "not_checked": "Nicht geprüft"
+  },
+  "approve": "Freigeben",
+  "remove": "Entfernen",
+  "notStored": "Beim Hochladen abgelehnt: Die Datei wurde nicht gespeichert.",
+  "groups": {
+    "upload": "Upload",
+    "contentCheck": "Inhaltsprüfung",
+    "file": "Datei",
+    "review": "Prüfung"
+  },
+  "company": "Firma",
+  "uploadedBy": "Hochgeladen von",
+  "uploadedAt": "Hochgeladen",
+  "record": "Datensatz",
+  "inUse": {
+    "yes": "In einem Datensatz verwendet",
+    "no": "Noch in keinem Datensatz gespeichert"
+  },
+  "scores": {
+    "porn": "Explizit",
+    "hentai": "Explizite Zeichnung",
+    "sexy": "Anzüglich",
+    "neutral": "Neutral",
+    "drawing": "Zeichnung"
+  },
+  "scoreHints": {
+    "porn": "Wie wahrscheinlich die Datei explizite sexuelle Inhalte zeigt",
+    "hentai": "Wie wahrscheinlich es eine explizite Zeichnung oder ein Cartoon ist",
+    "sexy": "Wie wahrscheinlich sie anzüglich ist (Unterwäsche, Badebekleidung)",
+    "neutral": "Wie wahrscheinlich sie nichts dergleichen zeigt",
+    "drawing": "Wie wahrscheinlich es eine gewöhnliche Zeichnung ist"
+  },
+  "checkedAt": "Geprüft",
+  "fileName": "Dateiname",
+  "fileType": "Art",
+  "fileSize": "Grösse",
+  "mimeType": "Typ",
+  "visibility": "Sichtbarkeit",
+  "public": "Öffentlich",
+  "private": "Privat",
+  "refusedAs": "Abgelehnt als",
+  "route": "Gesendet an",
+  "fingerprint": "Fingerabdruck (SHA-256)",
+  "reviewedBy": "Geprüft von",
+  "reviewedAt": "Geprüft am",
+  "fileTypes": {
+    "image": "Bild",
+    "video": "Video",
+    "pdf": "PDF",
+    "document": "Dokument",
+    "audio": "Audio",
+    "archive": "Archiv",
+    "other": "Andere"
+  },
+  "refusalCodes": {
+    "file_explicit_content": "Explizites Bild",
+    "video_explicit_content": "Explizites Video",
+    "document_explicit_content": "Explizites Bild in einem Dokument"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/index.tsx",
+  "title": "Upload review",
+  "description": "Files the nudity check flagged or refused, from every company. Approve a file to show it again, or remove it so visitors never see it."
+}

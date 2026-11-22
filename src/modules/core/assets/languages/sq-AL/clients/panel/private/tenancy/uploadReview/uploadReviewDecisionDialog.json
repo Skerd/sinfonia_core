@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewDecisionDialog.tsx",
+  "approve": {
+    "title": "Ta miratoni këtë skedar?",
+    "description": "\"{name}\" do të shfaqet si çdo skedar tjetër: për ekipin e kompanisë dhe, kur është publik, për vizitorët. Kush e ngarkoi njoftohet.",
+    "confirm": "Mirato"
+  },
+  "remove": {
+    "title": "Ta hiqni këtë skedar?",
+    "description": "\"{name}\" mbetet i ruajtur, por vizitorët nuk e shohin kurrë dhe ekipi i kompanisë e sheh të turbullt. Kush e ngarkoi njoftohet.",
+    "confirm": "Hiq"
+  },
+  "axios": {
+    "start": {
+      "title": "Vendimi po ruhet…"
+    },
+    "success": {
+      "title": "Skedari u miratua."
+    },
+    "removed": {
+      "title": "Skedari u hoq."
+    },
+    "error": {
+      "title": "Vendimi nuk u ruajt"
+    }
+  }
+}

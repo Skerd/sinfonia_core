@@ -1,0 +1,27 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewDecisionDialog.tsx",
+  "approve": {
+    "title": "Diese Datei freigeben?",
+    "description": "\"{name}\" wird wie jede andere Datei angezeigt: dem Team der Firma und, wo sie öffentlich ist, den Besuchern. Wer sie hochgeladen hat, wird benachrichtigt.",
+    "confirm": "Freigeben"
+  },
+  "remove": {
+    "title": "Diese Datei entfernen?",
+    "description": "\"{name}\" bleibt gespeichert, aber Besucher sehen sie nie, und das Team der Firma sieht sie unscharf. Wer sie hochgeladen hat, wird benachrichtigt.",
+    "confirm": "Entfernen"
+  },
+  "axios": {
+    "start": {
+      "title": "Entscheidung wird gespeichert…"
+    },
+    "success": {
+      "title": "Datei freigegeben."
+    },
+    "removed": {
+      "title": "Datei entfernt."
+    },
+    "error": {
+      "title": "Die Entscheidung konnte nicht gespeichert werden"
+    }
+  }
+}

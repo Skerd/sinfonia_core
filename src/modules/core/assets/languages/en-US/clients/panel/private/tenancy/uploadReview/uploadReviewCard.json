@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewCard.tsx",
+  "status": {
+    "flagged": "Waiting for review",
+    "rejected": "Removed",
+    "approved": "Approved",
+    "refused": "Refused",
+    "passed": "Passed",
+    "not_checked": "Not checked"
+  },
+  "notStored": "Refused at upload: the file was not stored.",
+  "company": "Company",
+  "uploadedBy": "Uploaded by",
+  "uploadedAt": "Uploaded",
+  "reviewedBy": "Reviewed by",
+  "score": "Nudity score",
+  "view": "View larger",
+  "approve": "Approve",
+  "remove": "Remove",
+  "details": "Details"
+}

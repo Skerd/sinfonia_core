@@ -11,6 +11,12 @@ import { Dialog, DialogContent, DialogTitle } from "@coreModule/components/ui/di
 import { Button } from "@coreModule/components/ui/button.tsx"
 import { UiTexts } from "@coreModule/components/ui/ui-texts.tsx"
 import { cn } from "@coreModule/components/lib/utils.ts"
+import {
+    FlaggedMediaCover,
+    flaggedAwareSrc,
+    markShownThisVisit,
+    wasShownThisVisit,
+} from "@coreModule/components/viewEngine/widgets/media/flaggedMedia.tsx"
 
 const LANGUAGE_PATH = "src/modules/core/components/viewEngine/widgets/gallery/galleryDialog.tsx"
 const ENGLISH = {
@@ -30,6 +36,8 @@ export type GalleryMediaItem = {
     src: string
     video: boolean
     name?: string
+    /** The content check flagged the image (D177): blurred under a cover until the viewer shows it. */
+    flagged?: boolean
 }
 
 export type GalleryImageComponent = React.ComponentType<{
@@ -134,16 +142,18 @@ export function GalleryPreviewRail({
                                 isSquare && i === selectedIndex && "border-2",
                             )}
                         >
-                            {item.video ? (
+                            {item.video && item.flagged && !wasShownThisVisit(item.src) ? (
+                                <div className={cn(mediaClass, "bg-muted")} aria-hidden />
+                            ) : item.video ? (
                                 <video
-                                    src={item.src}
+                                    src={flaggedAwareSrc(item.src, !!item.flagged)}
                                     muted
                                     preload="metadata"
                                     className={mediaClass}
                                     aria-hidden
                                 />
                             ) : (
-                                <img src={item.src} alt="" className={mediaClass} />
+                                <img src={flaggedAwareSrc(item.src, !!item.flagged)} alt="" className={mediaClass} />
                             )}
                         </Button>
                     ))}
@@ -178,6 +188,8 @@ export function GalleryDialog({
     const firstIndex = Math.min(Math.max(0, startIndex), Math.max(0, items.length - 1))
     const [currentIndex, setCurrentIndex] = React.useState(firstIndex)
     const [api, setApi] = React.useState<CarouselApi | null>(null)
+    // Showing a flagged image changes only the shared "shown this visit" memory, so redraw by hand.
+    const [, rerender] = React.useReducer((count: number) => count + 1, 0)
     const videoRefs = React.useRef<Map<number, HTMLVideoElement>>(new Map())
 
     const pickSlide = React.useCallback(
@@ -241,11 +253,18 @@ export function GalleryDialog({
                             {items.map((item, i) => (
                                 <CarouselItem key={item.key}>
                                     <div className="flex h-[min(75vh,48rem)] w-full items-center justify-center">
-                                        {item.video ? (
+                                        {item.video && item.flagged && !wasShownThisVisit(item.src) ? (
+                                            <div className="relative h-full w-full overflow-hidden rounded-lg bg-muted">
+                                                <FlaggedMediaCover onShow={() => {
+                                                    markShownThisVisit(item.src)
+                                                    rerender()
+                                                }} />
+                                            </div>
+                                        ) : item.video ? (
                                             <video
                                                 ref={setVideoRef(i)}
                                                 autoPlay={i === currentIndex}
-                                                src={item.src}
+                                                src={flaggedAwareSrc(item.src, !!item.flagged)}
                                                 aria-label={item.name ?? "Gallery video fullscreen"}
                                                 controls
                                                 muted
@@ -253,14 +272,22 @@ export function GalleryDialog({
                                                 preload="metadata"
                                                 className={mediaClass}
                                             />
+                                        ) : item.flagged && !wasShownThisVisit(item.src) ? (
+                                            <div className="relative h-full w-full overflow-hidden">
+                                                <img src={item.src} alt={item.name ?? ""} className={cn(mediaClass, "blur-md")} />
+                                                <FlaggedMediaCover onShow={() => {
+                                                    markShownThisVisit(item.src)
+                                                    rerender()
+                                                }} />
+                                            </div>
                                         ) : imageComponent ? (
                                             React.createElement(imageComponent, {
-                                                src: item.src,
+                                                src: flaggedAwareSrc(item.src, !!item.flagged),
                                                 alt: item.name ?? "",
                                                 className: mediaClass,
                                             })
                                         ) : (
-                                            <img src={item.src} alt={item.name ?? ""} className={mediaClass} />
+                                            <img src={flaggedAwareSrc(item.src, !!item.flagged)} alt={item.name ?? ""} className={mediaClass} />
                                         )}
                                     </div>
                                 </CarouselItem>

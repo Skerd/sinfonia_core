@@ -1,0 +1,37 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/uploadReview/uploadReviewList.tsx",
+  "views": {
+    "flagged": "En attente",
+    "rejected": "Retirés",
+    "approved": "Approuvés",
+    "refused": "Fichiers refusés"
+  },
+  "empty": {
+    "flagged": {
+      "title": "Rien n'attend de vérification",
+      "description": "Les fichiers que le contrôle de nudité signale apparaissent ici jusqu'à votre décision."
+    },
+    "rejected": {
+      "title": "Aucun fichier retiré",
+      "description": "Les fichiers que vous retirez restent ici, cachés aux visiteurs."
+    },
+    "approved": {
+      "title": "Aucun fichier approuvé",
+      "description": "Les fichiers signalés que vous approuvez apparaissent ici."
+    },
+    "refused": {
+      "title": "Aucun fichier refusé",
+      "description": "Les fichiers que le contrôle de nudité a refusés d'emblée sont consignés ici, sans le fichier."
+    }
+  },
+  "pagination": {
+    "page": "Page {page} sur {pages}",
+    "previous": "Page précédente",
+    "next": "Page suivante"
+  },
+  "axios": {
+    "error": {
+      "title": "Impossible de charger la vérification des fichiers"
+    }
+  }
+}
