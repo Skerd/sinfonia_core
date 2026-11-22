@@ -26,5 +26,11 @@
     "createdBy": "Erstellt von",
     "deletedAt": "Gelöscht am",
     "deletedBy": "Gelöscht von"
+  },
+  "approvalFilter": "Portal-Freigabe",
+  "approvalStatuses": {
+    "pending": "Wartet auf Freigabe",
+    "approved": "Freigegeben",
+    "rejected": "Abgelehnt"
   }
 }

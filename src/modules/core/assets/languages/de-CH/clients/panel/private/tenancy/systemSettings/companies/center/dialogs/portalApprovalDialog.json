@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx",
+  "approve": {
+    "title": "Portal-Eintrag freigeben",
+    "description": "das Unternehmen erscheint auf der Startseite des Portals, wo seine eigenen Einstellungen es listen. Seine Administratoren werden informiert."
+  },
+  "reject": {
+    "title": "Portal-Eintrag ablehnen",
+    "description": "das Unternehmen bleibt von der Startseite des Portals fern. Seine eigene Website funktioniert weiter. Seine Administratoren werden mit Ihrer Begründung informiert.",
+    "reasonLabel": "Begründung (freiwillig)",
+    "reasonHint": "Die Administratoren des Unternehmens sehen dies."
+  },
+  "verify": {
+    "title": "Als geprüft markieren",
+    "description": "Sie haben diese UID/MWST-Nummer geprüft. Das Unternehmen zeigt im Portal ein Geprüft-Zeichen, bis sich die Nummer ändert."
+  },
+  "unverify": {
+    "title": "Prüfzeichen entfernen",
+    "description": "das Unternehmen zeigt im Portal kein Geprüft-Zeichen mehr."
+  },
+  "axios": {
+    "start": {
+      "title": "Wird gespeichert",
+      "time": 3000
+    },
+    "success": {
+      "title": "Gespeichert.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Konnte nicht gespeichert werden",
+      "time": 3000
+    }
+  }
+}

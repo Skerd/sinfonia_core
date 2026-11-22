@@ -1,4 +1,5 @@
 import {compose} from "redux";
+import {useMemo} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -11,14 +12,26 @@ import ManageModules from "@coreModule/clients/panel/private/tenancy/systemSetti
 import ManageModulesDialog from "./center/dialogs/manageModulesDialog.tsx";
 import SetPortalVisibility from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/setPortalVisibility.tsx";
 import SetPortalVisibilityDialog from "./center/dialogs/setPortalVisibilityDialog.tsx";
+import PortalApprovalActions from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/portalApproval.tsx";
+import PortalApprovalDialog, {isPortalApprovalAction} from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx";
 import ActivateCompanyDialog from "./center/dialogs/activateCompanyDialog.tsx";
 import DeactivateCompanyDialog from "./center/dialogs/deactivateCompanyDialog.tsx";
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
 import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import type {QuickFilterDef} from "@coreModule/components/entityPage/filters/quickFilterBar.tsx";
+import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators.ts";
+import {PORTAL_APPROVAL_STATUSES} from "armonia/src/modules/core/api/company/private/company/portalApproval.ts";
 
 function AllCompanies({resolveLanguageKey}: WithLanguageType) {
     // Platform admins manage every company on the platform, not only the ones they belong to.
     const isPlatformAdmin = useSelector((state: RootState) => state.authentication.user.isPlatformAdmin);
+    // Self-serve companies waiting for the platform's approval to be listed on the portal (D178).
+    const quickFilters = useMemo<QuickFilterDef[]>(() => isPlatformAdmin ? [{
+        field: "portalApproval.status",
+        label: resolveLanguageKey("approvalFilter"),
+        type: COLUMN_TYPE.ENUM,
+        enumValues: PORTAL_APPROVAL_STATUSES.map((value) => ({value, label: resolveLanguageKey(`approvalStatuses.${value}`)})),
+    }] : [], [isPlatformAdmin, resolveLanguageKey]);
     return (
         <EntityListPage<Company>
             apiUrl={isPlatformAdmin ? "/api/platform/companies" : "/api/companies"}
@@ -28,6 +41,7 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
             buildEditPath={() => ""}
             resolveLanguageKey={resolveLanguageKey}
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-2"
+            quickFilters={quickFilters}
             rowActionMenu={{
                 hideDelete:                 true,
                 hideRestore:                true,
@@ -43,6 +57,7 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
                     <DeactivateCompany company={company} onAction={(a: string) => bindRowAction(a)} />
                     <ManageModules company={company} onAction={(a: string) => bindRowAction(a)} />
                     <SetPortalVisibility company={company} onAction={(a: string) => bindRowAction(a)} />
+                    <PortalApprovalActions company={company} onAction={(a: string) => bindRowAction(a)} />
                 </>
             )}
             renderFloatingModals={({action, entity, resetAction, listRef}) => {
@@ -91,6 +106,18 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
                             }}
                             company={entity}
                             onSuccess={(hiddenFromPortal) => listRef.current?.updateRow?.(entity._id, {hiddenFromPortal})}
+                        />
+                    );
+                }
+                if (isPortalApprovalAction(action)) {
+                    return (
+                        <PortalApprovalDialog
+                            action={action}
+                            onOpenChange={(o: boolean) => {
+                                if (!o) resetAction();
+                            }}
+                            company={entity}
+                            onSuccess={(patch) => listRef.current?.updateRow?.(entity._id, patch)}
                         />
                     );
                 }

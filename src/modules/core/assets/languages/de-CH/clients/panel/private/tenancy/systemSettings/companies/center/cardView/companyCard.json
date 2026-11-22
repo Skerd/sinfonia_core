@@ -45,5 +45,8 @@
   "hiddenFromPortal": "Im Portal ausgeblendet",
   "protected": "Geschützt",
   "protectedHint": "Die Plattform braucht diese Firma: Sie kann nicht deaktiviert, auf dem Portal verborgen oder um ein Modul gekürzt werden.",
-  "showMap": "Karte anzeigen"
+  "showMap": "Karte anzeigen",
+  "awaitingApproval": "Wartet auf Freigabe",
+  "approvalRejected": "Nicht im Portal gelistet",
+  "verified": "Geprüft"
 }

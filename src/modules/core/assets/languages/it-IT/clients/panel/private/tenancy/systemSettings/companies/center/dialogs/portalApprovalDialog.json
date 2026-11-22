@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx",
+  "approve": {
+    "title": "Approva la presenza sul portale",
+    "description": "l'azienda compare nella home del portale dove le sue impostazioni la elencano. I suoi amministratori vengono avvisati."
+  },
+  "reject": {
+    "title": "Rifiuta la presenza sul portale",
+    "description": "l'azienda resta fuori dalla home del portale. Il suo sito continua a funzionare. I suoi amministratori vengono avvisati, con il tuo motivo.",
+    "reasonLabel": "Motivo (facoltativo)",
+    "reasonHint": "Gli amministratori dell'azienda lo vedono."
+  },
+  "verify": {
+    "title": "Segna come verificata",
+    "description": "hai controllato questa partita IVA. L'azienda mostra un badge Verificata sul portale finché il numero non cambia."
+  },
+  "unverify": {
+    "title": "Togli la verifica",
+    "description": "l'azienda non mostra più il badge Verificata sul portale."
+  },
+  "axios": {
+    "start": {
+      "title": "Salvataggio",
+      "time": 3000
+    },
+    "success": {
+      "title": "Salvato.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile salvare",
+      "time": 3000
+    }
+  }
+}

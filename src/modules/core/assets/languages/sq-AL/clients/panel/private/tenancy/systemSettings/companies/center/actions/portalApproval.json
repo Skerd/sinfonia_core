@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/actions/portalApproval.tsx",
+  "approve": "Mirato listimin në portal",
+  "reject": "Refuzo listimin në portal",
+  "verify": "Shëno si të verifikuar",
+  "unverify": "Hiq shenjën e verifikimit"
+}

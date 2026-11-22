@@ -45,5 +45,8 @@
   "hiddenFromPortal": "Masquée du portail",
   "protected": "Protégée",
   "protectedHint": "La plateforme a besoin de cette entreprise : elle ne peut pas être désactivée, masquée du portail ni perdre un module.",
-  "showMap": "Afficher la carte"
+  "showMap": "Afficher la carte",
+  "awaitingApproval": "En attente de validation",
+  "approvalRejected": "Absente du portail",
+  "verified": "Vérifiée"
 }

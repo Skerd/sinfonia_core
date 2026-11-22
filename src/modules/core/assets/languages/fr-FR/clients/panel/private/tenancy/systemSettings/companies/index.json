@@ -26,5 +26,11 @@
     "createdBy": "Créé par",
     "deletedAt": "Supprimé le",
     "deletedBy": "Supprimé par"
+  },
+  "approvalFilter": "Validation portail",
+  "approvalStatuses": {
+    "pending": "En attente de validation",
+    "approved": "Validée",
+    "rejected": "Refusée"
   }
 }

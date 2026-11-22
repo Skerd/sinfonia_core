@@ -2,5 +2,6 @@
   "path": "src/modules/core/clients/portal/home/catalogCard.tsx",
   "priceFrom": "nga {price}",
   "priceUpTo": "deri në {price}",
-  "pricePerDay": "{price} / ditë"
+  "pricePerDay": "{price} / ditë",
+  "verified": "Biznes i verifikuar"
 }

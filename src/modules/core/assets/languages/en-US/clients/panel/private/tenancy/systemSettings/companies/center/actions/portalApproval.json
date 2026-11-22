@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/actions/portalApproval.tsx",
+  "approve": "Approve portal listing",
+  "reject": "Reject portal listing",
+  "verify": "Mark verified",
+  "unverify": "Remove verified mark"
+}

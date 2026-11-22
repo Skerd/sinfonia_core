@@ -26,5 +26,11 @@
     "createdBy": "Created by",
     "deletedAt": "Deleted at",
     "deletedBy": "Deleted by"
+  },
+  "approvalFilter": "Portal approval",
+  "approvalStatuses": {
+    "pending": "Waiting for approval",
+    "approved": "Approved",
+    "rejected": "Rejected"
   }
 }

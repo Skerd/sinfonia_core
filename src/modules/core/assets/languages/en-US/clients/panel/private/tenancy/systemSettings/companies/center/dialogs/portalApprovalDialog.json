@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx",
+  "approve": {
+    "title": "Approve portal listing",
+    "description": "the company appears on the portal home page wherever its own settings list it. Its admins are told."
+  },
+  "reject": {
+    "title": "Reject portal listing",
+    "description": "the company stays off the portal home page. Its own website keeps working. Its admins are told, with your reason.",
+    "reasonLabel": "Reason (optional)",
+    "reasonHint": "The company's admins see this."
+  },
+  "verify": {
+    "title": "Mark verified",
+    "description": "you checked this NIPT/VAT number. The company shows a Verified badge on the portal until its number changes."
+  },
+  "unverify": {
+    "title": "Remove verified mark",
+    "description": "the company no longer shows the Verified badge on the portal."
+  },
+  "axios": {
+    "start": {
+      "title": "Saving",
+      "time": 3000
+    },
+    "success": {
+      "title": "Saved.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Could not be saved",
+      "time": 3000
+    }
+  }
+}

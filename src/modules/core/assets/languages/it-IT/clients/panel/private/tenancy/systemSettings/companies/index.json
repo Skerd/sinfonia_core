@@ -26,5 +26,11 @@
     "createdBy": "Creato da",
     "deletedAt": "Eliminato il",
     "deletedBy": "Eliminato da"
+  },
+  "approvalFilter": "Approvazione portale",
+  "approvalStatuses": {
+    "pending": "In attesa di approvazione",
+    "approved": "Approvata",
+    "rejected": "Rifiutata"
   }
 }

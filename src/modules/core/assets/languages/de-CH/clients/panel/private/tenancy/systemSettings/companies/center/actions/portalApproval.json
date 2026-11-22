@@ -1,0 +1,7 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/actions/portalApproval.tsx",
+  "approve": "Portal-Eintrag freigeben",
+  "reject": "Portal-Eintrag ablehnen",
+  "verify": "Als geprüft markieren",
+  "unverify": "Prüfzeichen entfernen"
+}

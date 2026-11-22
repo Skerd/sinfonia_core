@@ -13,6 +13,8 @@ import ManageModules from "@coreModule/clients/panel/private/tenancy/systemSetti
 import SetPortalVisibility from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/setPortalVisibility.tsx";
 import ManageModulesDialog from "../dialogs/manageModulesDialog.tsx";
 import SetPortalVisibilityDialog from "../dialogs/setPortalVisibilityDialog.tsx";
+import PortalApprovalActions from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/portalApproval.tsx";
+import PortalApprovalDialog, {isPortalApprovalAction} from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 
 export type CompanySheetViewOwnProps = {
@@ -96,6 +98,7 @@ function CompanySheetView({
                         {/* The same platform actions as the list's row and card menus (TD-F112). */}
                         <ManageModules company={company} onAction={(a: string) => setAction(a)} />
                         <SetPortalVisibility company={company} onAction={(a: string) => setAction(a)} />
+                        <PortalApprovalActions company={company} onAction={(a: string) => setAction(a)} />
                     </>
                 }
             />
@@ -130,6 +133,14 @@ function CompanySheetView({
                     onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
                     company={company}
                     onSuccess={(hiddenFromPortal) => patchCompany({hiddenFromPortal})}
+                />
+            )}
+            {isPortalApprovalAction(action) && (
+                <PortalApprovalDialog
+                    action={action}
+                    onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
+                    company={company}
+                    onSuccess={patchCompany}
                 />
             )}
         </>

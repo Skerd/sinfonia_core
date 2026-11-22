@@ -26,5 +26,11 @@
     "createdBy": "Krijuar nga",
     "deletedAt": "Fshirë më",
     "deletedBy": "Fshirë nga"
+  },
+  "approvalFilter": "Miratimi në portal",
+  "approvalStatuses": {
+    "pending": "Pret miratim",
+    "approved": "E miratuar",
+    "rejected": "E refuzuar"
   }
 }

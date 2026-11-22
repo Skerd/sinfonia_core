@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx",
+  "approve": {
+    "title": "Mirato listimin në portal",
+    "description": "kompania shfaqet në faqen kryesore të portalit aty ku e listojnë cilësimet e saj. Administratorët e saj njoftohen."
+  },
+  "reject": {
+    "title": "Refuzo listimin në portal",
+    "description": "kompania nuk shfaqet në faqen kryesore të portalit. Faqja e saj vazhdon të funksionojë. Administratorët e saj njoftohen me arsyen tuaj.",
+    "reasonLabel": "Arsyeja (opsionale)",
+    "reasonHint": "Administratorët e kompanisë e shohin këtë."
+  },
+  "verify": {
+    "title": "Shëno si të verifikuar",
+    "description": "e keni kontrolluar këtë NIPT. Kompania shfaq shenjën E verifikuar në portal derisa të ndryshojë numri."
+  },
+  "unverify": {
+    "title": "Hiq shenjën e verifikimit",
+    "description": "kompania nuk e shfaq më shenjën E verifikuar në portal."
+  },
+  "axios": {
+    "start": {
+      "title": "Po ruhet",
+      "time": 3000
+    },
+    "success": {
+      "title": "U ruajt.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Nuk u ruajt",
+      "time": 3000
+    }
+  }
+}

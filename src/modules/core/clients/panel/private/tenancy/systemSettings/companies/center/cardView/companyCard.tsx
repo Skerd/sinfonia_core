@@ -1,4 +1,4 @@
-import {IconBlocks, IconChecks, IconFileText, IconWorld, IconMail, IconMapPin, IconPhone, IconPhotoDown, IconArrowsMaximize, IconArrowsMinimize, IconShieldLock} from "@tabler/icons-react";
+import {IconBlocks, IconChecks, IconFileText, IconWorld, IconMail, IconMapPin, IconPhone, IconPhotoDown, IconArrowsMaximize, IconArrowsMinimize, IconShieldLock, IconRosetteDiscountCheck} from "@tabler/icons-react";
 import {compose} from "redux";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -19,6 +19,8 @@ import ManageModules from "@coreModule/clients/panel/private/tenancy/systemSetti
 import ManageModulesDialog from "../dialogs/manageModulesDialog.tsx";
 import SetPortalVisibility from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/setPortalVisibility.tsx";
 import SetPortalVisibilityDialog from "../dialogs/setPortalVisibilityDialog.tsx";
+import PortalApprovalActions from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/portalApproval.tsx";
+import PortalApprovalDialog, {isPortalApprovalAction} from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx";
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@coreModule/components/ui/popover.tsx";
 import ExpandableText from "@coreModule/components/viewEngine/widgets/display/expandableText.tsx";
@@ -185,6 +187,19 @@ const CompanyCard = memo(function CompanyCard({
                                 }}
                             />
                         )}
+                        {isPortalApprovalAction(action) && (
+                            <PortalApprovalDialog
+                                action={action}
+                                onOpenChange={(next: boolean) => {
+                                    if (!next) setAction("");
+                                }}
+                                company={row}
+                                onSuccess={(patch) => {
+                                    setEntity({...row, ...patch});
+                                    listRef?.current?.updateRow?.(row._id, patch);
+                                }}
+                            />
+                        )}
                     </>
                 )}
             >
@@ -230,6 +245,7 @@ const CompanyCard = memo(function CompanyCard({
                                 <DeactivateCompany company={row} onAction={setAction} />
                                 <ManageModules company={row} onAction={setAction} />
                                 <SetPortalVisibility company={row} onAction={setAction} />
+                                <PortalApprovalActions company={row} onAction={setAction} />
                             </EntityCard.Header>
                             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" ref={companyInfoRef}>
                                 <EntityCard.Body className="flex-col flex-nowrap gap-4">
@@ -299,6 +315,18 @@ const CompanyCard = memo(function CompanyCard({
                                                 <div className="flex flex-wrap items-center gap-1">
                                                     {row.hiddenFromPortal ? (
                                                         <Badge variant="destructive">{resolveLanguageKey("hiddenFromPortal")}</Badge>
+                                                    ) : null}
+                                                    {row.portalApproval?.status === "pending" ? (
+                                                        <Badge variant="secondary">{resolveLanguageKey("awaitingApproval")}</Badge>
+                                                    ) : null}
+                                                    {row.portalApproval?.status === "rejected" ? (
+                                                        <Badge variant="destructive" title={row.portalApproval.reason}>{resolveLanguageKey("approvalRejected")}</Badge>
+                                                    ) : null}
+                                                    {row.verifiedAt ? (
+                                                        <Badge variant="outline">
+                                                            <IconRosetteDiscountCheck aria-hidden />
+                                                            {resolveLanguageKey("verified")}
+                                                        </Badge>
                                                     ) : null}
                                                     {row.isProtected ? (
                                                         <Badge variant="secondary" title={resolveLanguageKey("protectedHint")}>

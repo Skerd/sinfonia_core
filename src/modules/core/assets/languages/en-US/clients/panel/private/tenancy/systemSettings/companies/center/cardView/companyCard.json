@@ -45,5 +45,8 @@
   "hiddenFromPortal": "Hidden from portal",
   "protected": "Protected",
   "protectedHint": "The platform needs this company: it cannot be deactivated, hidden from the portal or lose a module.",
-  "showMap": "Show map"
+  "showMap": "Show map",
+  "awaitingApproval": "Waiting for approval",
+  "approvalRejected": "Not listed on portal",
+  "verified": "Verified"
 }

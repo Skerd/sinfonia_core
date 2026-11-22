@@ -1,0 +1,35 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx",
+  "approve": {
+    "title": "Valider la présence sur le portail",
+    "description": "l'entreprise apparaît sur la page d'accueil du portail là où ses propres réglages la présentent. Ses administrateurs sont prévenus."
+  },
+  "reject": {
+    "title": "Refuser la présence sur le portail",
+    "description": "l'entreprise reste absente de la page d'accueil du portail. Son propre site continue de fonctionner. Ses administrateurs sont prévenus, avec votre motif.",
+    "reasonLabel": "Motif (facultatif)",
+    "reasonHint": "Les administrateurs de l'entreprise le voient."
+  },
+  "verify": {
+    "title": "Marquer comme vérifiée",
+    "description": "vous avez vérifié ce numéro de TVA. L'entreprise affiche un badge Vérifiée sur le portail jusqu'à ce que son numéro change."
+  },
+  "unverify": {
+    "title": "Retirer la vérification",
+    "description": "l'entreprise n'affiche plus le badge Vérifiée sur le portail."
+  },
+  "axios": {
+    "start": {
+      "title": "Enregistrement",
+      "time": 3000
+    },
+    "success": {
+      "title": "Enregistré.",
+      "time": 3000
+    },
+    "error": {
+      "title": "L'enregistrement a échoué",
+      "time": 3000
+    }
+  }
+}

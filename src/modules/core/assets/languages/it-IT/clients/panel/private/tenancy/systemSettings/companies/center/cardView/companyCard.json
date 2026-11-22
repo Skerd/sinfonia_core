@@ -45,5 +45,8 @@
   "hiddenFromPortal": "Nascosta dal portale",
   "protected": "Protetta",
   "protectedHint": "La piattaforma ha bisogno di questa azienda: non può essere disattivata, nascosta dal portale o perdere un modulo.",
-  "showMap": "Mostra mappa"
+  "showMap": "Mostra mappa",
+  "awaitingApproval": "In attesa di approvazione",
+  "approvalRejected": "Non presente sul portale",
+  "verified": "Verificata"
 }

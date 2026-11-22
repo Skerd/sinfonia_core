@@ -1,4 +1,4 @@
-import {IconPhotoOff} from "@tabler/icons-react";
+import {IconPhotoOff, IconRosetteDiscountCheckFilled} from "@tabler/icons-react";
 import {compose} from "redux";
 import {Link} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -71,7 +71,15 @@ function CatalogCard({item, index = 0, resolveLanguageKey}: WithLanguageType & {
                 <p className="line-clamp-2 font-medium leading-snug">{item.title}</p>
                 {/* What sets the item apart, from its provider (a car's seats and gearbox, a project's place). */}
                 {item.subtitle ? <p className="truncate text-sm">{item.subtitle}</p> : null}
-                <p className="truncate text-sm text-muted-foreground">{[item.company.name, item.city].filter(Boolean).join(" · ")}</p>
+                <p className="flex min-w-0 items-center gap-1 text-sm text-muted-foreground">
+                    <span className="truncate">{[item.company.name, item.city].filter(Boolean).join(" · ")}</span>
+                    {/* The platform checked the company's NIPT/VAT (D178). */}
+                    {item.company.verified ? (
+                        <IconRosetteDiscountCheckFilled className="h-4 w-4 shrink-0 text-sky-600" role="img" aria-label={resolveLanguageKey("verified")}>
+                            <title>{resolveLanguageKey("verified")}</title>
+                        </IconRosetteDiscountCheckFilled>
+                    ) : null}
+                </p>
                 {price ? <p className="mt-1 font-display font-semibold tabular-nums">{price}</p> : null}
             </div>
         </Link>

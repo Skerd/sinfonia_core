@@ -45,5 +45,8 @@
   "hiddenFromPortal": "E fshehur nga portali",
   "protected": "E mbrojtur",
   "protectedHint": "Platforma ka nevojë për këtë kompani: nuk mund të çaktivizohet, të fshihet nga portali ose të humbasë një modul.",
-  "showMap": "Shfaq hartën"
+  "showMap": "Shfaq hartën",
+  "awaitingApproval": "Pret miratim",
+  "approvalRejected": "Jo e listuar në portal",
+  "verified": "E verifikuar"
 }
