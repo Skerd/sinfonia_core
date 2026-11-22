@@ -1,4 +1,4 @@
-import type {PortalContribution, PortalHostPage, PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
+import type {PortalBusinessType, PortalContribution, PortalHostPage, PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
 import {filterGlobByEnabledModules} from "@coreModule/helpers/modules/enabledModules.ts";
 import {
     type ContributionGlob,
@@ -20,6 +20,11 @@ const isHostPage = (value: unknown) => isPlainObject(value)
 
 const isHostPages = (value: unknown) => Array.isArray(value) && value.every(isHostPage);
 
+const isBusinessType = (value: unknown) => isPlainObject(value)
+    && isString(value.key) && value.key !== ""
+    && isComponentLike(value.Icon)
+    && isComponentLike(value.Summary);
+
 /** The keys a contribution without a section may carry (D96). */
 const HOST_PAGES_ONLY_KEYS = new Set(["id", "order", "section", "hostPages"]);
 
@@ -33,6 +38,7 @@ const isSection = (entry: Record<string, unknown>) => isString(entry.section)
     && isOptionalComponent(entry.NavAction)
     && isOptionalComponent(entry.AccountSection)
     && (entry.hostPages === undefined || isHostPages(entry.hostPages))
+    && (entry.businessType === undefined || isBusinessType(entry.businessType))
     && (entry.prefetch === undefined || typeof entry.prefetch === "function");
 
 /** No section, at least one host page, and nothing that only a section can use. */
@@ -73,4 +79,12 @@ export function isPortalSection(contribution: PortalContribution): contribution 
 export function portalHostPagesOf(contributions: readonly PortalContribution[]): PortalHostPage[] {
     return contributions.flatMap((contribution) => contribution.hostPages ?? [])
         .map((page) => ({...page, path: page.path.replace(/^\/+/, "")}));
+}
+
+/**
+ * Every built module's self-serve business type, in contribution order (D178). Offered whatever sections the host
+ * lists: a kind of business is open to sign-up before the first company of that kind exists.
+ */
+export function portalBusinessTypesOf(contributions: readonly PortalContribution[]): PortalBusinessType[] {
+    return contributions.filter(isPortalSection).flatMap((section) => section.businessType ? [section.businessType] : []);
 }

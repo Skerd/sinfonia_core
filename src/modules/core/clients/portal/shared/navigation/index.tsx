@@ -86,10 +86,13 @@ function PortalNavigation({resolveLanguageKey}: WithLanguageType) {
     const dispatch = useDispatch();
     const token = useSelector((state: RootState) => state.authentication.token);
     const {pathname} = useLocation();
-    const {sections} = usePortalSite();
+    const {site, sections} = usePortalSite();
     const isSectionActive = useIsSectionActive();
     const blogActive = pathname === "/blog" || pathname.startsWith("/blog/");
-    const activeLink = sections.find(isSectionActive)?.section ?? (blogActive ? "blog" : undefined);
+    // Self-serve business sign-up lives on the apex only (D178).
+    const offersBusinessSignUp = site?.scope === "platform";
+    const businessActive = offersBusinessSignUp && (pathname === "/business" || pathname.startsWith("/business/"));
+    const activeLink = sections.find(isSectionActive)?.section ?? (blogActive ? "blog" : businessActive ? "business" : undefined);
     const [menuOpen, setMenuOpen] = useState(false);
     const closeMenu = () => setMenuOpen(false);
 
@@ -115,6 +118,11 @@ function PortalNavigation({resolveLanguageKey}: WithLanguageType) {
                     <Link to="/blog" data-indicator-active={activeLink === "blog" ? "" : undefined} className={navLinkClass({isActive: activeLink === "blog", sliding: true})}>
                         {resolveLanguageKey("blog")}
                     </Link>
+                    {offersBusinessSignUp ? (
+                        <Link to="/business" data-indicator-active={activeLink === "business" ? "" : undefined} className={navLinkClass({isActive: activeLink === "business", sliding: true})}>
+                            {resolveLanguageKey("forBusinesses")}
+                        </Link>
+                    ) : null}
                 </nav>
                 <div className="ml-auto hidden flex-1 justify-end md:flex">
                     <NavigationSearch resolveLanguageKey={resolveLanguageKey} />
@@ -166,6 +174,9 @@ function PortalNavigation({resolveLanguageKey}: WithLanguageType) {
                                     </Link>
                                 ))}
                                 <Link to="/blog" className={navLinkClass({isActive: blogActive})} onClick={closeMenu}>{resolveLanguageKey("blog")}</Link>
+                                {offersBusinessSignUp ? (
+                                    <Link to="/business" className={navLinkClass({isActive: businessActive})} onClick={closeMenu}>{resolveLanguageKey("forBusinesses")}</Link>
+                                ) : null}
                             </nav>
                             <Separator className="my-4" />
                             <div className="flex flex-col gap-1 px-4">

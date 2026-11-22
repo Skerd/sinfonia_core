@@ -32,6 +32,8 @@ const ActivatePage = lazy(() => import("@coreModule/clients/portal/auth/activate
 const ForgotPasswordPage = lazy(() => import("@coreModule/clients/portal/auth/forgotPassword.tsx"));
 const ResetPasswordPage = lazy(() => import("@coreModule/clients/portal/auth/resetPassword.tsx"));
 const NotFoundPage = lazy(() => import("@coreModule/clients/portal/notFound/index.tsx"));
+const ForBusinessesPage = lazy(() => import("@coreModule/clients/portal/business/index.tsx"));
+const NewBusinessPage = lazy(() => import("@coreModule/clients/portal/business/newBusiness.tsx"));
 
 /** While the host is being identified: the header's line and nothing else, so the page does not open on a spinner. */
 function PortalBoot() {
@@ -77,6 +79,13 @@ function PortalRoutes() {
                     <Route path="reset-password/:code" element={<ErrorBoundary><ResetPasswordPage /></ErrorBoundary>} />
                 </Route>
                 <Route path="activate/:code" element={<ErrorBoundary><ActivatePage /></ErrorBoundary>} />
+                {/* Self-serve business sign-up (D178), on the apex only: a company's own site is that company's. */}
+                {companyHost ? null : <Route path="business" element={<ErrorBoundary><ForBusinessesPage /></ErrorBoundary>} />}
+                {companyHost ? null : (
+                    <Route path="business/new" element={<RequireSession />}>
+                        <Route index element={<ErrorBoundary><NewBusinessPage /></ErrorBoundary>} />
+                    </Route>
+                )}
                 <Route element={<SitePageLayout />}>
                     {hostPages.map(({path, Page}) => (
                         <Route key={`host-${path}`} path={path} element={<ErrorBoundary><Page /></ErrorBoundary>} />

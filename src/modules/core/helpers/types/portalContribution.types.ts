@@ -21,6 +21,19 @@ export type PortalHostPage = {
     Page: ComponentType;
 };
 
+/**
+ * A kind of business a person may create on the portal with the section's module (D178), shown on the apex's
+ * "For businesses" page and in its sign-up form. The module's API declares the same `key` (maestro
+ * `moduleBootstrap.selfServeBusinessTypes`), which decides what the new company starts with.
+ */
+export type PortalBusinessType = {
+    /** The business type's key, as the API declares it (the module's name). */
+    key: string;
+    Icon: ComponentType<{className?: string}>;
+    /** The type's name (a heading) and a one-line pitch, in the module's own language files. */
+    Summary: ComponentType;
+};
+
 /** Where a link the visitor is about to follow leads inside a section (see {@link PortalSection.prefetch}). */
 export type PortalPrefetchTarget = {
     /** The path after `/<path>`, and on the apex after a company site's `/<company>`: `/product`, `/categories/suv`. */
@@ -67,6 +80,8 @@ export type PortalSection = {
     AccountSection?: ComponentType;
     /** Pages outside the section's URL space, on every host (see {@link PortalHostPage}). */
     hostPages?: readonly PortalHostPage[];
+    /** The business a person may create with this section's module, offered whatever this host lists (D178). */
+    businessType?: PortalBusinessType;
     /**
      * Runs when the visitor points at, touches or focuses a link into the section, before the click: load the page's
      * code (`import()` of the same file its route lazy-loads) and `prefetchHttpRequest` the cached reads it opens with,

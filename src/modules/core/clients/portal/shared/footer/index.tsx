@@ -99,6 +99,7 @@ function PortalFooter({resolveLanguageKey}: WithLanguageType) {
                     <p className="mb-1 text-xs font-semibold tracking-wider text-muted-foreground uppercase">{resolveLanguageKey("exploreHeading")}</p>
                     <Link to="/" className={FOOTER_LINK_CLASS}>{resolveLanguageKey("home")}</Link>
                     <Link to="/blog" className={FOOTER_LINK_CLASS}>{resolveLanguageKey("blog")}</Link>
+                    {site.scope === "platform" ? <Link to="/business" className={FOOTER_LINK_CLASS}>{resolveLanguageKey("forBusinesses")}</Link> : null}
                     {sections.map((section) => (
                         <Link key={section.section} to={sectionHref(section)} className={FOOTER_LINK_CLASS}>
                             <PortalSectionName section={section.section} />

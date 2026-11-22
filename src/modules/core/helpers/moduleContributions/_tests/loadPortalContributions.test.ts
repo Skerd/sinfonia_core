@@ -2,6 +2,7 @@ import {afterEach, describe, expect, it} from "vitest";
 import {
     createPortalContributions,
     isPortalSection,
+    portalBusinessTypesOf,
     portalHostPagesOf,
 } from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
 import {setCompanyModules} from "@coreModule/helpers/modules/enabledModules.ts";
@@ -80,5 +81,17 @@ describe("createPortalContributions", () => {
             expect(() => createPortalContributions({[path("x")]: {default: {hostPages: []}}})()).toThrow(/portalContribution/);
             expect(() => createPortalContributions({[path("x")]: {default: {hostPages: [{path: "x", Page}], CompanySite: Site}}})()).toThrow(/portalContribution/);
         });
+    });
+    it("collects every section's business type and rejects one without its key, icon or summary (D178)", () => {
+        const businessType = {key: "fixtureRental", Icon: Site, Summary: Site};
+        const list = createPortalContributions({
+            [path("fixtureRental")]: {default: {section: "rental", path: "rental", order: 20, CompanySite: Site, businessType}},
+            [path("fixtureShop")]: {default: {section: "shop", path: "shop", order: 10, SectionSite: Site}},
+            [path("fixtureHostPages")]: {default: {hostPages: [{path: "token", Page: Site}]}},
+        });
+        expect(portalBusinessTypesOf(list())).toEqual([businessType]);
+
+        const broken = createPortalContributions({[path("x")]: {default: {section: "x", path: "x", businessType: {key: "x", Icon: Site}}}});
+        expect(() => broken()).toThrow("Invalid default export");
     });
 });

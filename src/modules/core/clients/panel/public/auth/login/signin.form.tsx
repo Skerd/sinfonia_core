@@ -12,7 +12,7 @@ import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import { PasswordInput } from '@coreModule/components/custom/inputs/passwordInput.tsx';
 import {useEffect, useImperativeHandle, useState} from 'react';
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import {LoginFormType} from "armonia/src/modules/core/api/user/public/login/login.form.type.ts";
 import { loginFormSchema } from "armonia/src/modules/core/api/user/public/login/login.form.validator.ts";
 import DisableOTP from "@coreModule/clients/panel/public/auth/login/disableOTP.form.tsx";
@@ -52,6 +52,8 @@ function SignInForm({
 
     const config = getClientConfig();
     const navigate = useNavigate();
+    // A link may name the account to sign in with (the portal's "Open your panel" after business sign-up, D178).
+    const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
     const formBusy = loading || oauthLoading;
 
@@ -91,7 +93,7 @@ function SignInForm({
     const formSchema = loginFormSchema(languageCode, resolveLanguageKey("form"));
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: EMPTY_FORM_VALUES,
+        defaultValues: {...EMPTY_FORM_VALUES, username: searchParams.get("username") ?? ""},
     });
     const mfaCode = form.watch("mfaCode");
 
