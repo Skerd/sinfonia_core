@@ -56,6 +56,13 @@
         "accountTitle": "Il tuo account",
         "accountText": "Profilo, password e sicurezza dell'accesso, notifiche e app collegate. “Fai il giro” in questo menu fa ripartire il giro in qualsiasi momento."
       }
+    },
+    "listing": {
+      "pendingTitle": "In attesa di essere elencata sul portale",
+      "pendingText": "Il portale elenca la tua attività nella sua home dopo un rapido controllo del nostro team. Il tuo sito funziona già e nel frattempo puoi preparare tutto.",
+      "rejectedTitle": "Non elencata sul portale",
+      "rejectedText": "La home del portale non elenca la tua attività. Il tuo sito continua a funzionare; scrivici se pensi che sia un errore.",
+      "reason": "Motivo: {reason}"
     }
   },
   "menus": {

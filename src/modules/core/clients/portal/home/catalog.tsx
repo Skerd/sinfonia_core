@@ -32,7 +32,7 @@ import {CATALOG_FILTER_PREFIX, CatalogFilterField, CatalogNumberInput} from "../
 import {usePortalSaved} from "../shared/portalSaved.tsx";
 import CatalogCard from "./catalogCard.tsx";
 import type {PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
-import {BROWSE_REQUEST, CATALOG_PAGE_SIZE, browseForm, landingSearch} from "./catalogBrowse.ts";
+import {BROWSE_REQUEST, CATALOG_PAGE_SIZE, browseForm, landingSearch, isNarrowedSearch} from "./catalogBrowse.ts";
 import {isSavableSearch, savedSearchLabel, savedSearchQuery} from "./savedSearch.ts";
 
 const ALL = "all";
@@ -116,6 +116,8 @@ function Catalog({landing, resolveLanguageKey}: CatalogProps) {
     const {sections} = usePortalSite();
     const [params, setParams] = useSearchParams();
     const search = useMemo(() => landing ? landingSearch(params, landing.section, landing.city) : params, [params, landing]);
+    // The visitor's own narrowing: a landing page's city is the page, not a search.
+    const narrowed = useMemo(() => isNarrowedSearch(params), [params]);
     const form = useMemo(() => browseForm(search), [search]);
     const catalogs = (landing ? [landing.section] : sections).flatMap((section) => (section.catalogs ?? []).map((catalog) => ({...catalog, path: section.path})));
     const active = catalogs.find((catalog) => catalog.kind === form.kind);
@@ -233,8 +235,8 @@ function Catalog({landing, resolveLanguageKey}: CatalogProps) {
             ) : !groups || groups.every((candidate) => candidate.items.length === 0) ? (
                 <Empty className="rounded-3xl bg-muted py-20">
                     <EmptyHeader>
-                        <EmptyTitle className="font-display text-2xl font-bold">{resolveLanguageKey(groups ? "noResults" : "failed")}</EmptyTitle>
-                        {groups ? <EmptyDescription>{resolveLanguageKey("noResultsHint")}</EmptyDescription> : null}
+                        <EmptyTitle className="font-display text-2xl font-bold">{resolveLanguageKey(!groups ? "failed" : narrowed ? "noResults" : "nothingYet")}</EmptyTitle>
+                        {groups ? <EmptyDescription>{resolveLanguageKey(narrowed ? "noResultsHint" : "nothingYetHint")}</EmptyDescription> : null}
                     </EmptyHeader>
                 </Empty>
             ) : group ? (

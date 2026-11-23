@@ -20,6 +20,11 @@ type EntityCardShellProps = {
     isSelected?: boolean;
     /** Disable pointer cursor (e.g. fetch-only preview). */
     disableClick?: boolean;
+    /**
+     * The id of the card's title: a clickable card is named by it, not by all its text (its menu's "Actions" too,
+     * TD-F160). An id with no element is ignored, so the card then keeps its text as its name.
+     */
+    labelledBy?: string;
     ref?: Ref<HTMLDivElement>;
 };
 
@@ -97,6 +102,7 @@ export function EntityCardShell({
     onClick,
     isSelected,
     disableClick = false,
+    labelledBy,
     ref,
 }: EntityCardShellProps) {
     const interactive = !!onClick && !disableClick;
@@ -116,6 +122,7 @@ export function EntityCardShell({
                 ? {
                       role: "button",
                       tabIndex: 0,
+                      "aria-labelledby": labelledBy,
                       onClick: (e: MouseEvent<HTMLDivElement>) =>
                           handleActivationClick(e, onClick),
                       onContextMenu: openActionMenuFromContextMenu,

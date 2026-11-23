@@ -56,6 +56,13 @@
         "accountTitle": "Ihr Konto",
         "accountText": "Ihr Profil, Passwort und die Sicherheit der Anmeldung, Benachrichtigungen und verbundene Apps. «Rundgang starten» in diesem Menü startet den Rundgang jederzeit neu."
       }
+    },
+    "listing": {
+      "pendingTitle": "Wartet auf die Aufnahme ins Portal",
+      "pendingText": "Das Portal führt Ihren Betrieb nach einer kurzen Prüfung durch unser Team auf seiner Startseite auf. Ihre eigene Website funktioniert bereits, und Sie können in der Zwischenzeit alles einrichten.",
+      "rejectedTitle": "Nicht im Portal aufgeführt",
+      "rejectedText": "Die Startseite des Portals führt Ihren Betrieb nicht auf. Ihre eigene Website funktioniert weiterhin; schreiben Sie uns, wenn Sie das für einen Fehler halten.",
+      "reason": "Grund: {reason}"
     }
   },
   "menus": {

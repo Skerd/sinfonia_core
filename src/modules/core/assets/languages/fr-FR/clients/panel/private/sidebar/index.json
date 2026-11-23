@@ -56,6 +56,13 @@
         "accountTitle": "Votre compte",
         "accountText": "Votre profil, votre mot de passe et la sécurité de connexion, les notifications et les applications connectées. « Faire le tour » dans ce menu relance la visite à tout moment."
       }
+    },
+    "listing": {
+      "pendingTitle": "En attente d'apparaître sur le portail",
+      "pendingText": "Le portail affiche votre entreprise sur sa page d'accueil après une rapide vérification par notre équipe. Votre propre site fonctionne déjà et vous pouvez tout préparer en attendant.",
+      "rejectedTitle": "Non affichée sur le portail",
+      "rejectedText": "La page d'accueil du portail n'affiche pas votre entreprise. Votre propre site fonctionne toujours ; écrivez-nous si vous pensez qu'il s'agit d'une erreur.",
+      "reason": "Motif : {reason}"
     }
   },
   "menus": {

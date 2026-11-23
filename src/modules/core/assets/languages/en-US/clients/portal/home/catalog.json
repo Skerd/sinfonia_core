@@ -25,5 +25,7 @@
   "labelPriceFrom": "from {min}",
   "labelPriceUpTo": "up to {max}",
   "labelFilters": "{count} filters",
-  "labelFilterOne": "1 filter"
+  "labelFilterOne": "1 filter",
+  "nothingYet": "Nothing listed yet",
+  "nothingYetHint": "New offers show here as soon as they are listed. Check back soon."
 }

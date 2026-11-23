@@ -2,6 +2,7 @@ import {
     createContext,
     createElement,
     useContext,
+    useId,
     useImperativeHandle,
     useMemo,
     type ComponentType,
@@ -82,6 +83,8 @@ type EntityCardContextValue = {
     editPath: (entity: SoftDeletable) => string;
     /** A list means the title falls back across these fields. */
     titlePath: string | string[];
+    /** The id `EntityCard.Header` gives its title, which names the clickable card (TD-F160). */
+    titleId: string;
 };
 
 const EntityCardContext = createContext<EntityCardContextValue | null>(null);
@@ -165,6 +168,7 @@ function EntityCardHeader({
         setAction,
         editPath,
         titlePath: hostTitlePath,
+        titleId,
     } = useEntityCardContext();
     const titlePath = titlePathProp ?? hostTitlePath;
     const titlePaths = Array.isArray(titlePath) ? titlePath : [titlePath];
@@ -185,6 +189,7 @@ function EntityCardHeader({
             badges={badges}
             badgesBesideTitle={badgesBesideTitle}
             hideActions={hideActions}
+            titleId={titleId}
             actionMenu={
                 <ActionMenu
                     accessModel={resource}
@@ -287,6 +292,7 @@ function EntityCardRoot<T extends SoftDeletable>({
     // A closed request (rejected or withdrawn) on a requestable list is final: no Edit or Restore, it is requested again (D160).
     const resolvedHideRestore = (typeof hideRestore === "function" ? hideRestore(entity) : hideRestore) || closedRequest;
 
+    const titleId = useId();
     /*
      * Memoized, and computed above the early returns so the hook order is unconditional. An
      * object literal here published a new context value on every render, which re-rendered every
@@ -305,6 +311,7 @@ function EntityCardRoot<T extends SoftDeletable>({
             setAction,
             editPath: editPath as (row: SoftDeletable) => string,
             titlePath,
+            titleId,
         }),
         [
             resource,
@@ -318,6 +325,7 @@ function EntityCardRoot<T extends SoftDeletable>({
             setAction,
             editPath,
             titlePath,
+            titleId,
         ],
     );
 
@@ -372,6 +380,7 @@ function EntityCardRoot<T extends SoftDeletable>({
                     <AccessFields read={read}>
                         <EntityCardShell
                             ref={shellRef}
+                            labelledBy={titleId}
                             className={resolvedShellClassName}
                             onClick={() => {
                                 if (isDialogDismissGuarded()) return;

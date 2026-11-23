@@ -56,6 +56,13 @@
         "accountTitle": "Llogaria juaj",
         "accountText": "Profili, fjalëkalimi dhe siguria e hyrjes, njoftimet dhe aplikacionet e lidhura. “Bëj shëtitjen” në këtë menu e nis shëtitjen nga e para në çdo kohë."
       }
+    },
+    "listing": {
+      "pendingTitle": "Në pritje për t'u shfaqur në portal",
+      "pendingText": "Portali e shfaq biznesin tuaj në faqen kryesore pas një kontrolli të shpejtë nga ekipi ynë. Faqja juaj funksionon tashmë dhe ndërkohë mund të përgatisni gjithçka.",
+      "rejectedTitle": "Nuk shfaqet në portal",
+      "rejectedText": "Faqja kryesore e portalit nuk e shfaq biznesin tuaj. Faqja juaj vazhdon të funksionojë; na shkruani nëse mendoni se është gabim.",
+      "reason": "Arsyeja: {reason}"
     }
   },
   "menus": {

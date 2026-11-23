@@ -59,6 +59,8 @@ function useOverflowMeasurement<T extends HTMLElement>() {
 }
 
 type TruncatedValueBaseProps = {
+    /** Where the hover tooltip opens (default above); a card row opens it below, clear of the card's menu (TD-F160). */
+    side?: "top" | "bottom";
     children: ReactNode;
     className?: string;
     /**
@@ -95,7 +97,7 @@ type TruncatedValueProps = TruncatedValueBaseProps & (
  * ResizeObserver rather than a one-time check at mount.
  */
 export default function TruncatedValue(props: TruncatedValueProps) {
-    const {children, className, as: Tag = "div"} = props;
+    const {children, className, as: Tag = "div", side} = props;
     const canHover = useCanHover();
 
     // Both hooks are always called, regardless of `preview`/`canHover` -- conditionally
@@ -113,7 +115,7 @@ export default function TruncatedValue(props: TruncatedValueProps) {
     if (props.preview !== "popover") {
         const tooltipText = props.text ?? (typeof children === "string" ? children : undefined);
         return (
-            <TooltipDisplayer tooltip={primaryOverflown ? tooltipText : undefined}>
+            <TooltipDisplayer side={side} tooltip={primaryOverflown ? tooltipText : undefined}>
                 {box}
             </TooltipDisplayer>
         );
@@ -156,7 +158,7 @@ export default function TruncatedValue(props: TruncatedValueProps) {
     }
 
     return (
-        <TooltipDisplayer tooltipRender={primaryOverflown ? renderPeek : undefined}>
+        <TooltipDisplayer side={side} tooltipRender={primaryOverflown ? renderPeek : undefined}>
             {box}
         </TooltipDisplayer>
     );

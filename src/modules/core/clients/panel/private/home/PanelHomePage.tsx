@@ -17,6 +17,7 @@ import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx
 import {CommandPaletteKbd, COMMAND_PALETTE_OPEN_EVENT} from "@coreModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import SetupChecklist from "./setupChecklist.tsx";
+import PortalListingNotice from "./portalListingNotice.tsx";
 
 const TILE_COLORS = [
     {
@@ -331,7 +332,8 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
                     </Button>
                 </div>
 
-                {/* A new company's setup steps, until they are done (D178). */}
+                {/* Whether the portal lists the company yet (TD-F159), then a new company's setup steps (D178). */}
+                <PortalListingNotice resolveLanguageKey={resolveLanguageKey} />
                 <SetupChecklist resolveLanguageKey={resolveLanguageKey} />
 
                 {recentLinks.length > 0 && (

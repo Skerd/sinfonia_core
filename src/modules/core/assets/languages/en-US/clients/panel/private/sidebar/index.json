@@ -56,6 +56,13 @@
         "accountTitle": "Your account",
         "accountText": "Your profile, password and sign-in security, notifications and connected apps. “Take the tour” in this menu starts the tour again any time."
       }
+    },
+    "listing": {
+      "pendingTitle": "Waiting to be listed on the portal",
+      "pendingText": "The portal lists your business on its home page after a quick check by our team. Your own site already works, and you can set everything up meanwhile.",
+      "rejectedTitle": "Not listed on the portal",
+      "rejectedText": "The portal's home page does not list your business. Your own site still works; write to us if you think this is a mistake.",
+      "reason": "Reason: {reason}"
     }
   },
   "menus": {

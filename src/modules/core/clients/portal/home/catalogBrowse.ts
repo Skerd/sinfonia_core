@@ -17,6 +17,15 @@ function numberParam(params: URLSearchParams, key: string): number | undefined {
     return params.get(key) && Number.isFinite(value) ? value : undefined;
 }
 
+/**
+ * Whether the visitor narrowed the catalog: words, a city, a price or a kind's filter. An empty catalog they did not
+ * narrow has nothing listed yet, such as a new shop's site, rather than nothing that matches (TD-F158).
+ */
+export function isNarrowedSearch(params: URLSearchParams): boolean {
+    const {query, city, priceMin, priceMax, filters} = browseForm(params);
+    return Boolean(query || city || priceMin != null || priceMax != null || Object.keys(filters ?? {}).length > 0);
+}
+
 /** The browse request the URL describes. */
 export function browseForm(params: URLSearchParams): PortalBrowseFormType {
     const filters: PortalBrowseFilters = {};

@@ -25,5 +25,7 @@
   "labelPriceFrom": "à partir de {min}",
   "labelPriceUpTo": "jusqu'à {max}",
   "labelFilters": "{count} filtres",
-  "labelFilterOne": "1 filtre"
+  "labelFilterOne": "1 filtre",
+  "nothingYet": "Rien en ligne pour l'instant",
+  "nothingYetHint": "Les nouvelles offres apparaissent ici dès qu'elles sont publiées. Revenez bientôt."
 }

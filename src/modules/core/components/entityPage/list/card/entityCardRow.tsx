@@ -106,7 +106,8 @@ export default function EntityCardRow({
         >
             {(iconReplacement || Icon) && (
                 <ItemMedia variant="icon">
-                    <TooltipDisplayer tooltipRender={tooltipRender} tooltip={tooltipText}>
+                    {/* Below the row, so a first row's tooltip never covers the card's menu (TD-F160). */}
+                    <TooltipDisplayer side="bottom" tooltipRender={tooltipRender} tooltip={tooltipText}>
                         <div>{iconReplacement ? iconReplacement : !!Icon && <Icon size={18} />}</div>
                     </TooltipDisplayer>
                 </ItemMedia>
@@ -117,7 +118,7 @@ export default function EntityCardRow({
             </span>
             {!dontRenderValue && (
                 <div className="min-w-0 hover:cursor-default">
-                    <TruncatedValue text={tooltipValueText}>
+                    <TruncatedValue side="bottom" text={tooltipValueText}>
                         <DisplayValue
                             value={value}
                             type={type}

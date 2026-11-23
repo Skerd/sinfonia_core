@@ -20,6 +20,8 @@ type EntityTextCardHeaderProps = {
      */
     badgesBesideTitle?: boolean;
     actionMenu?: ReactNode;
+    /** The title's id, which names the clickable card (TD-F160). */
+    titleId?: string;
     hideActions?: boolean;
     className?: string;
 };
@@ -43,6 +45,7 @@ export function EntityCardHeader({
     actionMenu,
     hideActions = false,
     className,
+    titleId,
 }: EntityTextCardHeaderProps) {
 
     const showSubtitleRow = subtitle != null;
@@ -73,7 +76,7 @@ export function EntityCardHeader({
                   */}
                 <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
                     <div className="flex min-w-0 items-center gap-1.5">
-                        <CardTitle className="min-w-0 truncate text-lg leading-snug font-semibold">
+                        <CardTitle id={titleId} className="min-w-0 truncate text-lg leading-snug font-semibold">
                             {title}
                         </CardTitle>
                         {

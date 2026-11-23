@@ -196,6 +196,21 @@ describe("EntityCard render-prop contract", () => {
     });
 });
 
+describe("EntityCard naming (TD-F160)", () => {
+    it("names the clickable card by its title, not by all its text with the menu's Actions", () => {
+        renderWithCardEnv(
+            <EntityCard {...baseCardProps()}>
+                {({entity}) => <EntityCard.Header title={entity.name} />}
+            </EntityCard>,
+            {access: accessMap("widgets")},
+        );
+        // The harness's DisplayValue is an empty probe, so the link is checked rather than the read-out name.
+        const title = document.querySelector<HTMLElement>("[data-slot=card-title]");
+        expect(title?.id).toBeTruthy();
+        expect(title?.closest("[role=button]")?.getAttribute("aria-labelledby")).toBe(title?.id);
+    });
+});
+
 describe("EntityCard actions", () => {
     /* Typed as the card's own props so callbacks in `extra` infer their context. */
     function openAction(action: string, extra: Partial<BaseCardProps> = {}) {

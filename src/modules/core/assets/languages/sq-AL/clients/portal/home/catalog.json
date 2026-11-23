@@ -25,5 +25,7 @@
   "labelPriceFrom": "nga {min}",
   "labelPriceUpTo": "deri në {max}",
   "labelFilters": "{count} filtra",
-  "labelFilterOne": "1 filtër"
+  "labelFilterOne": "1 filtër",
+  "nothingYet": "Ende asgjë e listuar",
+  "nothingYetHint": "Ofertat e reja shfaqen këtu sapo të listohen. Kthehuni së shpejti."
 }
