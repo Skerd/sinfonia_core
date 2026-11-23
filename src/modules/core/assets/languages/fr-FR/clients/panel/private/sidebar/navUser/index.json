@@ -12,5 +12,6 @@
     "description": "Voulez-vous vraiment vous déconnecter ? Vous devrez vous reconnecter pour accéder à votre compte.",
     "confirmText": "Se déconnecter",
     "cancelText": "Annuler"
-  }
+  },
+  "takeTour": "Faire le tour"
 }

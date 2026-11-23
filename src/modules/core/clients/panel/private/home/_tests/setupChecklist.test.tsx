@@ -3,18 +3,25 @@ import {MemoryRouter} from "react-router-dom";
 import {fireEvent, render, screen} from "@testing-library/react";
 import type {HomeSetupStep} from "@coreModule/helpers/types/homeContribution.types.ts";
 
-/* D178: the panel home's setup checklist, with core fixtures (no module's steps). */
+/* D178: the panel home's setup checklist, with core fixtures (no module's steps); D179: its welcome and step starts. */
 
 const fixture = vi.hoisted(() => ({
     steps: [] as HomeSetupStep[],
     totals: {} as Record<string, number>,
     company: {} as Record<string, unknown>,
     grants: {} as Record<string, {self: {create?: boolean; write?: boolean}}>,
+    startStep: vi.fn(),
+    navigate: vi.fn(),
 }));
 
-vi.mock("react-redux", () => ({
-    useSelector: (select: (state: unknown) => unknown) => select({authentication: {user: {company: {_id: "c1"}}}}),
+vi.mock("react-redux", async (importOriginal) => ({
+    ...await importOriginal<object>(),
+    useSelector: (select: (state: unknown) => unknown) => select({authentication: {user: {id: "u1", company: {_id: "c1", name: "Adriatic Smiles"}}}}),
 }));
+vi.mock("react-router-dom", async (importOriginal) => ({...await importOriginal<object>(), useNavigate: () => fixture.navigate}));
+// The guide's done checks call the API; the checklist itself uses `useHttpRequest` (mocked below).
+vi.mock("@coreModule/helpers/apiClient/requestFromApi.ts", () => ({requestFromApi: vi.fn()}));
+vi.mock("../guide/guideContext.tsx", () => ({useGuide: () => ({startStep: fixture.startStep})}));
 vi.mock("@coreModule/helpers/context/accessContext.tsx", () => ({
     useAccessMap: () => fixture.grants,
     useAccessHydrated: () => true,
@@ -35,7 +42,12 @@ const dictionary: Record<string, string> = {
     "home.setup.hide": "Hide",
     "home.setup.start": "Start",
     "home.setup.done": "Done",
+    "home.guide.welcomeTitle": "Welcome to {company}",
+    "home.guide.welcomeText": "Let's get {company} ready.",
+    "home.guide.welcomeStart": "Let's start",
+    "home.guide.later": "Later",
 };
+const WELCOME_SEEN = "panel_guide_welcome_seen_c1_u1";
 const renderChecklist = () => render(
     <MemoryRouter><SetupChecklist resolveLanguageKey={(key: string) => dictionary[key] ?? key} /></MemoryRouter>,
 );
@@ -46,6 +58,10 @@ const team: HomeSetupStep = {key: "core.team", title: "Invite your team", to: "/
 
 beforeEach(() => {
     localStorage.clear();
+    // The welcome is its own case below; elsewhere it has been seen, so the checklist is not behind a dialog.
+    localStorage.setItem(WELCOME_SEEN, "1");
+    fixture.startStep.mockReset();
+    fixture.navigate.mockReset();
     fixture.steps = [logo, car, team];
     fixture.totals = {"/api/cars": 0, "/api/users": 1};
     fixture.company = {logo: "m1"};
@@ -78,5 +94,44 @@ describe("SetupChecklist", () => {
         expect(screen.queryByText("Set up your business")).toBeNull();
         const {container} = renderChecklist();
         expect(container.querySelector("section")).toBeNull();
+    });
+
+    it("starts a step's guide when the viewer opens it (D179)", () => {
+        renderChecklist();
+        fireEvent.click(screen.getAllByRole("link", {name: "Start"})[0]);
+        expect(fixture.startStep).toHaveBeenCalledWith("fixture.car");
+    });
+});
+
+describe("SetupChecklist welcome (D179)", () => {
+    beforeEach(() => localStorage.removeItem(WELCOME_SEEN));
+
+    it("welcomes a business with most of its setup ahead, once, and starts the first open step", () => {
+        fixture.company = {};
+        renderChecklist();
+        expect(screen.getByRole("dialog", {name: "Welcome to Adriatic Smiles"})).toBeTruthy();
+        // The open steps, in order.
+        expect(screen.getAllByRole("listitem").map((item) => item.textContent).slice(-3)).toEqual(["Add your logo", "Add your first car", "Invite your team"]);
+
+        fireEvent.click(screen.getByRole("button", {name: "Let's start"}));
+        expect(fixture.startStep).toHaveBeenCalledWith("core.logo");
+        expect(fixture.navigate).toHaveBeenCalledWith("/company/info");
+        expect(localStorage.getItem(WELCOME_SEEN)).toBe("1");
+    });
+
+    it("does not welcome again once dismissed", () => {
+        fixture.company = {};
+        renderChecklist();
+        fireEvent.click(screen.getByRole("button", {name: "Later"}));
+        expect(screen.queryByRole("dialog")).toBeNull();
+        renderChecklist();
+        expect(screen.queryByRole("dialog")).toBeNull();
+    });
+
+    it("does not welcome a business with most of its setup done", () => {
+        fixture.totals = {"/api/cars": 3, "/api/users": 1};
+        renderChecklist();
+        expect(screen.getByText("2 of 3 done")).toBeTruthy();
+        expect(screen.queryByRole("dialog")).toBeNull();
     });
 });

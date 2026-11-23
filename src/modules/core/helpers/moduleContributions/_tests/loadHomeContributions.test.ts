@@ -24,7 +24,7 @@ describe("createHomeContributions", () => {
                 step("vehicle", String(resolveLanguageKey("vehicle"))),
             ]}},
         });
-        expect(getSetupSteps({resolveLanguageKey: resolve}).map(({key, title}) => `${key}:${title}`))
+        expect(getSetupSteps({resolveLanguageKey: resolve, company: {id: "c1", name: "Acme"}}).map(({key, title}) => `${key}:${title}`))
             .toEqual(["location:LOCATION", "vehicle:VEHICLE", "product:PRODUCT"]);
     });
 
@@ -38,7 +38,7 @@ describe("createHomeContributions", () => {
                 {id: "partial", order: 2, getSetupSteps: () => [{key: "noTarget", title: "x"}, step("ok", "Ok")]},
             ]},
         });
-        expect(getSetupSteps({resolveLanguageKey: resolve}).map((entry) => entry.key)).toEqual(["ok"]);
+        expect(getSetupSteps({resolveLanguageKey: resolve, company: {id: "c1", name: "Acme"}}).map((entry) => entry.key)).toEqual(["ok"]);
         expect(error).toHaveBeenCalledTimes(1);
     });
 });

@@ -19,6 +19,39 @@
       "vat": "Ajoutez votre numéro de TVA",
       "vatHint": "Une fois vérifié, votre entreprise obtient le badge Vérifiée sur le portail.",
       "team": "Invitez votre équipe"
+    },
+    "guide": {
+      "welcomeTitle": "Bienvenue chez {company}",
+      "welcomeText": "Préparons {company} à recevoir des clients, une courte étape à la fois. Vous utiliserez vos propres informations, et nous vous montrerons où va chacune.",
+      "welcomeStart": "Commencer",
+      "later": "Plus tard",
+      "next": "Suivant",
+      "back": "Retour",
+      "gotIt": "Compris",
+      "finish": "Terminer",
+      "skip": "Passer le guide",
+      "counter": "{current} sur {total}",
+      "stepDone": "{title} : fait",
+      "nextStep": "Ensuite : {title}",
+      "goNext": "Étape suivante",
+      "allDoneTitle": "Votre entreprise est prête",
+      "allDoneText": "Toutes les étapes de configuration sont faites.",
+      "allDoneTour": "Toutes les étapes de configuration sont faites. Faites un court tour des pages que vous utiliserez chaque jour.",
+      "takeTour": "Faire le tour",
+      "close": "Fermer",
+      "helpTitle": "De l'aide sur chaque page",
+      "helpText": "Vous ne savez pas à quoi sert une page ? Ce bouton l'explique, avec des conseils pour bien démarrer.",
+      "stepOpen": "{title} : pas encore terminé",
+      "saveTitle": "Enregistrer",
+      "saveText": "Enregistrez quand vous êtes prêt. Nous cocherons l'étape et vous mènerons à la suivante.",
+      "core": {
+        "logoTitle": "Votre logo",
+        "logoText": "Téléversez une image carrée. Elle apparaît sur votre site, votre fiche sur le portail et vos documents.",
+        "vatTitle": "Numéro NIPT / TVA",
+        "vatText": "Saisissez-le tel qu'il figure sur votre immatriculation. Une fois vérifié, votre entreprise reçoit le badge Vérifié sur le portail.",
+        "teamTitle": "Invitez votre équipe",
+        "teamText": "Invitez chaque personne par e-mail et choisissez son rôle. Elle rejoint l'équipe dès qu'elle accepte."
+      }
     }
   },
   "menus": {

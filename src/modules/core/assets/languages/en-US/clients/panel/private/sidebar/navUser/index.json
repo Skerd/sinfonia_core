@@ -12,5 +12,6 @@
     "description": "Are you sure you want to sign out? You will need to sign in again to access your account.",
     "confirmText": "Sign out",
     "cancelText": "Cancel"
-  }
+  },
+  "takeTour": "Take the tour"
 }

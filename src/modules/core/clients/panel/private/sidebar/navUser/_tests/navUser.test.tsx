@@ -2,7 +2,7 @@ import {render, screen} from "@testing-library/react";
 import {describe, expect, it, vi} from "vitest";
 import type {ComponentType, ReactNode} from "react";
 
-const state = vi.hoisted(() => ({user: {name: "Ada", surname: "Lovelace", email: "ada@example.com", photo: undefined as string | undefined}}));
+const state = vi.hoisted(() => ({user: {name: "Ada", surname: "Lovelace", email: "ada@example.com", photo: undefined as string | undefined, company: {_id: "c1", name: "Acme"}}}));
 
 vi.mock("react-redux", () => ({
     useDispatch: () => vi.fn(),

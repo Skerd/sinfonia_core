@@ -19,6 +19,39 @@
       "vat": "UID/MWST-Nummer erfassen",
       "vatHint": "Nach der Prüfung erhält Ihr Unternehmen im Portal das Geprüft-Zeichen.",
       "team": "Team einladen"
+    },
+    "guide": {
+      "welcomeTitle": "Willkommen bei {company}",
+      "welcomeText": "Machen wir {company} Schritt für Schritt bereit für Kunden. Sie verwenden Ihre eigenen Angaben, und wir zeigen Ihnen, wohin jede gehört.",
+      "welcomeStart": "Los geht's",
+      "later": "Später",
+      "next": "Weiter",
+      "back": "Zurück",
+      "gotIt": "Verstanden",
+      "finish": "Fertig",
+      "skip": "Anleitung überspringen",
+      "counter": "{current} von {total}",
+      "stepDone": "{title}: erledigt",
+      "nextStep": "Als Nächstes: {title}",
+      "goNext": "Nächster Schritt",
+      "allDoneTitle": "Ihr Unternehmen ist eingerichtet",
+      "allDoneText": "Alle Einrichtungsschritte sind erledigt.",
+      "allDoneTour": "Alle Einrichtungsschritte sind erledigt. Machen Sie einen kurzen Rundgang durch die Seiten, die Sie täglich nutzen.",
+      "takeTour": "Rundgang starten",
+      "close": "Schliessen",
+      "helpTitle": "Hilfe auf jeder Seite",
+      "helpText": "Nicht sicher, wozu eine Seite dient? Diese Schaltfläche erklärt es, mit Tipps für den Einstieg.",
+      "stepOpen": "{title}: noch nicht abgeschlossen",
+      "saveTitle": "Speichern",
+      "saveText": "Speichern Sie, wenn Sie bereit sind. Wir haken den Schritt ab und führen Sie zum nächsten.",
+      "core": {
+        "logoTitle": "Ihr Logo",
+        "logoText": "Laden Sie ein quadratisches Bild hoch. Es erscheint auf Ihrer Website, Ihrer Karte im Portal und Ihren Dokumenten.",
+        "vatTitle": "NIPT / MWST-Nummer",
+        "vatText": "Geben Sie sie so ein, wie sie in Ihrer Registrierung steht. Nach der Prüfung erhält Ihr Unternehmen im Portal das Abzeichen «Verifiziert».",
+        "teamTitle": "Laden Sie Ihr Team ein",
+        "teamText": "Laden Sie jede Person per E-Mail ein und wählen Sie ihre Rolle. Sie tritt bei, sobald sie annimmt."
+      }
     }
   },
   "menus": {

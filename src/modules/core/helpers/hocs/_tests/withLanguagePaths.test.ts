@@ -10,6 +10,8 @@ import {describe, expect, it} from "vitest";
  */
 const SHARED_DICTIONARIES: Record<string, string[]> = {
     "src/modules/core/clients/panel/private/home/PanelHomePage.tsx": ["src/modules/core/clients/panel/private/sidebar/index.tsx"],
+    // The guided first run (D179) reads the setup steps' texts where the home page does.
+    "src/modules/core/clients/panel/private/home/guide/guideRunner.tsx": ["src/modules/core/clients/panel/private/sidebar/index.tsx"],
     // The users list card names statuses, roles and last login with the profile card's texts (TD-F124).
     "src/modules/core/clients/panel/private/users/center/cardView/userCard.tsx": ["src/modules/core/clients/panel/private/users/center/cardView/userProfileCard.tsx"],
     "src/modules/core/components/custom/commandPalette/commandPalette.tsx": ["src/modules/core/clients/panel/private/sidebar/index.tsx"],

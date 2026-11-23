@@ -19,6 +19,39 @@
       "vat": "Add your NIPT/VAT number",
       "vatHint": "Once checked, your business gets the Verified badge on the portal.",
       "team": "Invite your team"
+    },
+    "guide": {
+      "welcomeTitle": "Welcome to {company}",
+      "welcomeText": "Let's get {company} ready for customers, one short step at a time. You'll use your own details, and we'll show you where each one goes.",
+      "welcomeStart": "Start",
+      "later": "Later",
+      "next": "Next",
+      "back": "Back",
+      "gotIt": "Got it",
+      "finish": "Finish",
+      "skip": "Skip the guide",
+      "counter": "{current} of {total}",
+      "stepDone": "{title}: done",
+      "nextStep": "Next: {title}",
+      "goNext": "Next step",
+      "allDoneTitle": "Your business is set up",
+      "allDoneText": "Every setup step is done.",
+      "allDoneTour": "Every setup step is done. Take a short tour of the pages you'll use every day.",
+      "takeTour": "Take the tour",
+      "close": "Close",
+      "helpTitle": "Help on every page",
+      "helpText": "Not sure what a page is for? This button explains it, with tips to get started.",
+      "stepOpen": "{title}: not finished yet",
+      "saveTitle": "Save",
+      "saveText": "Save when you're ready. We'll check it off and take you to the next step.",
+      "core": {
+        "logoTitle": "Your logo",
+        "logoText": "Upload a square image. It shows on your website, your card on the portal and your documents.",
+        "vatTitle": "NIPT / VAT number",
+        "vatText": "Enter it as it appears on your registration. Once it's checked, your business gets the Verified badge on the portal.",
+        "teamTitle": "Invite your team",
+        "teamText": "Invite each person by email and choose their role. They join as soon as they accept."
+      }
     }
   },
   "menus": {

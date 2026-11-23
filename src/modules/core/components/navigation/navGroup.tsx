@@ -189,7 +189,8 @@ function SidebarMenuLink({ item }: { item: NavLink }) {
     return (
         <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={checkIsActive(`/${menu}/${subview}`, item)} tooltip={item.title}>
-                <Link to={item.url} onClick={() => setOpenMobile(false)}>
+                {/* `data-tour`: what a tour's tip points at (D179). */}
+                <Link to={item.url} data-tour={`nav:${String(item.url)}`} onClick={() => setOpenMobile(false)}>
                     {item.icon && <item.icon />}
                     <NavTruncatedTitle title={item.title} />
                 </Link>
@@ -341,7 +342,7 @@ function NestedNavCollapsible({
                                 return (
                                     <SidebarMenuSubItem key={`${item.title}-${child.title}-${child.url}`}>
                                         <SidebarMenuSubButton asChild isActive={hrefMatchesSubLink(href, String(child.url))}>
-                                            <Link to={child.url} onClick={() => setOpenMobile(false)}>
+                                            <Link to={child.url} data-tour={`nav:${String(child.url)}`} onClick={() => setOpenMobile(false)}>
                                                 {child.icon && <child.icon />}
                                                 <NavTruncatedTitle title={child.title} />
                                                 {child.badge && <NavBadge>{child.badge}</NavBadge>}
@@ -398,7 +399,7 @@ function SidebarMenuCollapsible({item}: { item: NavCollapsible}) {
                                     return (
                                         <SidebarMenuSubItem key={`${subItem.title}-${subItem.url}`}>
                                             <SidebarMenuSubButton asChild isActive={checkIsActive(href, subItem as NavLink)}>
-                                                <Link to={subItem.url} onClick={() => setOpenMobile(false)}>
+                                                <Link to={subItem.url} data-tour={`nav:${String(subItem.url)}`} onClick={() => setOpenMobile(false)}>
                                                     {subItem.icon && <subItem.icon />}
                                                     <NavTruncatedTitle title={subItem.title} />
                                                     {subItem.badge && <NavBadge>{subItem.badge}</NavBadge>}

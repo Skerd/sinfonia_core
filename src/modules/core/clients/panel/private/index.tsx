@@ -5,6 +5,8 @@ import {SiteRoomProvider} from "@coreModule/helpers/context/siteRoomContext.tsx"
 import {AuthenticationProvider} from "@coreModule/helpers/context/authenticationContext.tsx";
 import {TableConfigProvider} from "@coreModule/helpers/context/tableConfigContext.tsx";
 import {ViewConfigProvider} from "@coreModule/helpers/context/viewConfigContext.tsx";
+import {GuideProvider} from "./home/guide/guideContext.tsx";
+import GuideRunner from "./home/guide/guideRunner.tsx";
 
 /**
  * Pathless layout route for the whole authenticated panel: mounts the provider
@@ -19,7 +21,11 @@ function PrivatePage() {
                     <SiteRoomProvider setupStep={4}>
                         <TableConfigProvider setupStep={5}>
                             <ViewConfigProvider setupStep={6}>
-                                <Outlet />
+                                {/* The guided first run (D179) outlives page changes, so it sits around the pages. */}
+                                <GuideProvider>
+                                    <Outlet />
+                                    <GuideRunner />
+                                </GuideProvider>
                             </ViewConfigProvider>
                         </TableConfigProvider>
                     </SiteRoomProvider>

@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {IconCircle, IconCircleCheckFilled, IconX} from "@tabler/icons-react";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -9,24 +9,29 @@ import useHttpRequest, {type HttpRequest} from "@coreModule/helpers/hooks/useHtt
 import {getHomeSetupSteps} from "@coreModule/helpers/moduleContributions/loadHomeContributions.ts";
 import type {HomeSetupStep} from "@coreModule/helpers/types/homeContribution.types.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "@coreModule/components/ui/dialog.tsx";
 import {cn} from "@coreModule/components/lib/utils.ts";
+import {canDoStep, type SetupAccessMap} from "./setupStepStatus.ts";
+import {useGuide} from "./guide/guideContext.tsx";
 
 const COMPANY_REQUEST: HttpRequest = {method: "get", url: "/api/company"};
 const DISMISS_PREFIX = "panel_setup_checklist_hidden_";
+/** The welcome of the guided first run (D179), once per person and company. */
+const WELCOME_PREFIX = "panel_guide_welcome_seen_";
 
-type AccessEntry = {self?: {create?: unknown; write?: unknown}};
-
-/** Whether the viewer may do the step: create in a list's model, write the company for a company step. */
-function canDoStep(step: HomeSetupStep, accessMap: Record<string, AccessEntry | undefined>): boolean {
-    const grants = accessMap[step.accessModel.toLowerCase()]?.self;
-    return "company" in step.doneWhen ? !!grants?.write : !!grants?.create;
-}
-
-function readHidden(key: string): boolean {
+function readFlag(key: string): boolean {
     try {
         return localStorage.getItem(key) === "1";
     } catch {
         return false;
+    }
+}
+
+function writeFlag(key: string): void {
+    try {
+        localStorage.setItem(key, "1");
+    } catch {
+        // A private window remembers it for this visit only.
     }
 }
 
@@ -47,15 +52,23 @@ function ListStepCheck({url, minTotal, params, onDone}: {url: string; minTotal: 
  */
 export default function SetupChecklist({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}) {
     const companyId = useSelector((state: RootState) => state.authentication.user.company._id);
-    const accessMap = useAccessMap() as Record<string, AccessEntry | undefined>;
+    const companyName = useSelector((state: RootState) => state.authentication.user.company.name);
+    const userId = useSelector((state: RootState) => state.authentication.user.id);
+    const accessMap = useAccessMap() as SetupAccessMap;
     const accessHydrated = useAccessHydrated();
+    const {startStep} = useGuide();
+    const navigate = useNavigate();
     const hideKey = `${DISMISS_PREFIX}${companyId}`;
-    const [hidden, setHidden] = useState(() => readHidden(hideKey));
+    const welcomeKey = `${WELCOME_PREFIX}${companyId}_${userId}`;
+    const [hidden, setHidden] = useState(() => readFlag(hideKey));
+    const [welcomed, setWelcomed] = useState(() => readFlag(welcomeKey));
     const [done, setDone] = useState<Record<string, boolean>>({});
 
     const steps = useMemo(
-        () => accessHydrated ? getHomeSetupSteps({resolveLanguageKey}).filter((step) => canDoStep(step, accessMap)) : [],
-        [resolveLanguageKey, accessMap, accessHydrated],
+        () => accessHydrated
+            ? getHomeSetupSteps({resolveLanguageKey, company: {id: companyId, name: companyName}}).filter((step) => canDoStep(step, accessMap))
+            : [],
+        [resolveLanguageKey, accessMap, accessHydrated, companyId, companyName],
     );
     const companySteps = steps.filter((step) => "company" in step.doneWhen);
     // `GET /api/company` answers the company itself, with no `data` wrapper.
@@ -79,13 +92,20 @@ export default function SetupChecklist({resolveLanguageKey}: {resolveLanguageKey
     if (allAnswered && doneCount === steps.length) return null;
 
     function hide() {
-        try {
-            localStorage.setItem(hideKey, "1");
-        } catch {
-            // A private window keeps it hidden for this visit only.
-        }
+        writeFlag(hideKey);
         setHidden(true);
     }
+
+    const openSteps = steps.filter((step) => isDone(step) === false);
+    const closeWelcome = () => {
+        writeFlag(welcomeKey);
+        setWelcomed(true);
+    };
+    /** A step's run starts with its page: its tips there, then a card offering the next step once it is saved (D179). */
+    const begin = (step: HomeSetupStep) => {
+        startStep(step.key);
+        navigate(step.to);
+    };
 
     return (
         <section
@@ -123,13 +143,36 @@ export default function SetupChecklist({resolveLanguageKey}: {resolveLanguageKey
                             </div>
                             {stepDone ? null : (
                                 <Button asChild size="sm" variant="outline">
-                                    <Link to={step.to}>{resolveLanguageKey("home.setup.start")}</Link>
+                                    <Link to={step.to} onClick={() => startStep(step.key)}>{resolveLanguageKey("home.setup.start")}</Link>
                                 </Button>
                             )}
                         </li>
                     );
                 })}
             </ol>
+            {/* For a business with most of its setup ahead; an established one with a step left gets no welcome. */}
+            <Dialog open={allAnswered && openSteps.length >= Math.ceil(steps.length / 2) && !welcomed} onOpenChange={(open) => (open ? undefined : closeWelcome())}>
+                <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>{resolveLanguageKey("home.guide.welcomeTitle").replace("{company}", companyName)}</DialogTitle>
+                        <DialogDescription>
+                            {resolveLanguageKey("home.guide.welcomeText").replace("{company}", companyName)}
+                        </DialogDescription>
+                    </DialogHeader>
+                    <ol className="flex list-decimal flex-col gap-1.5 pl-5 text-sm">
+                        {openSteps.map((step) => <li key={step.key}>{step.title}</li>)}
+                    </ol>
+                    <DialogFooter>
+                        <Button type="button" variant="outline" onClick={closeWelcome}>{resolveLanguageKey("home.guide.later")}</Button>
+                        <Button type="button" onClick={() => {
+                            closeWelcome();
+                            begin(openSteps[0]);
+                        }}>
+                            {resolveLanguageKey("home.guide.welcomeStart")}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </section>
     );
 }

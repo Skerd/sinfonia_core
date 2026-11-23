@@ -19,6 +19,39 @@
       "vat": "Aggiungi la tua partita IVA",
       "vatHint": "Dopo il controllo, la tua attività riceve il badge Verificata sul portale.",
       "team": "Invita il tuo team"
+    },
+    "guide": {
+      "welcomeTitle": "Benvenuto in {company}",
+      "welcomeText": "Prepariamo {company} per i clienti, un breve passaggio alla volta. Userai i tuoi dati e ti mostreremo dove va ciascuno.",
+      "welcomeStart": "Inizia",
+      "later": "Più tardi",
+      "next": "Avanti",
+      "back": "Indietro",
+      "gotIt": "Ho capito",
+      "finish": "Fine",
+      "skip": "Salta la guida",
+      "counter": "{current} di {total}",
+      "stepDone": "{title}: fatto",
+      "nextStep": "Prossimo: {title}",
+      "goNext": "Passaggio successivo",
+      "allDoneTitle": "La tua attività è pronta",
+      "allDoneText": "Tutti i passaggi di configurazione sono fatti.",
+      "allDoneTour": "Tutti i passaggi di configurazione sono fatti. Fai un breve giro delle pagine che userai ogni giorno.",
+      "takeTour": "Fai il giro",
+      "close": "Chiudi",
+      "helpTitle": "Aiuto in ogni pagina",
+      "helpText": "Non sai a cosa serve una pagina? Questo pulsante lo spiega, con consigli per iniziare.",
+      "stepOpen": "{title}: non ancora finito",
+      "saveTitle": "Salva",
+      "saveText": "Salva quando sei pronto. Lo segneremo come fatto e ti porteremo al passaggio successivo.",
+      "core": {
+        "logoTitle": "Il tuo logo",
+        "logoText": "Carica un'immagine quadrata. Appare sul tuo sito, sulla tua scheda nel portale e nei tuoi documenti.",
+        "vatTitle": "Numero NIPT / Partita IVA",
+        "vatText": "Inseriscilo come appare nella tua registrazione. Una volta verificato, la tua attività riceve il badge Verificato nel portale.",
+        "teamTitle": "Invita il tuo team",
+        "teamText": "Invita ogni persona via email e scegli il suo ruolo. Entra nel team appena accetta."
+      }
     }
   },
   "menus": {

@@ -101,6 +101,7 @@ export function PageHelp({help}: {help: PageHelpContent}) {
                     variant="outline"
                     size="icon-xs"
                     aria-label={help.ariaLabel}
+                    data-tour="page.help"
                     aria-expanded={open}
                     aria-haspopup="dialog"
                     className="shrink-0 rounded-full border-border text-muted-foreground hover:text-foreground"

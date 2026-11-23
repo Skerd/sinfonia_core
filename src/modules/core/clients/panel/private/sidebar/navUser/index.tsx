@@ -1,6 +1,6 @@
-import {IconBell, IconBoxMultiple, IconSelector, IconLogout, IconMailCheck, IconUserCog, IconTool} from "@tabler/icons-react";
+import {IconBell, IconBoxMultiple, IconCompass, IconSelector, IconLogout, IconMailCheck, IconUserCog, IconTool} from "@tabler/icons-react";
 import {compose} from "redux";
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -14,6 +14,8 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, 
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {MEDIA_BASE_URL} from "@coreModule/helpers/constants/media.constants.ts";
+import {getHomeTour} from "@coreModule/helpers/moduleContributions/loadHomeContributions.ts";
+import {useGuide} from "../../home/guide/guideContext.tsx";
 
 const CURRENT_REVOKE_REQUEST = {method: "post" as const, url: "/api/user/userSession/currentRevoke", data: {}};
 
@@ -34,7 +36,13 @@ function NavUser({
     };
     // Local logout completes either way: the network or the session may already be gone.
     useHttpRequest(CURRENT_REVOKE_REQUEST, {}, signOutCount, true, {success: finishSignOut, error: finishSignOut});
-    const {name, surname, email, photo} = useSelector((state: RootState) => state.authentication.user);
+    const {name, surname, email, photo, company} = useSelector((state: RootState) => state.authentication.user);
+    const {startTour} = useGuide();
+    // The tour of the daily pages can be taken again at any time (D179); only the count matters here, not the texts.
+    const hasTour = useMemo(
+        () => getHomeTour({resolveLanguageKey: (key) => key, company: {id: company._id, name: company.name}}).length > 0,
+        [company._id, company.name],
+    );
     // A user without a photo shows the initials; requesting `/media/undefined` answered 400 on every page (TD-B154).
     const photoUrl = photo ? `${MEDIA_BASE_URL}${photo}` : undefined;
     function getAvatarFallbackName() {
@@ -122,6 +130,15 @@ function NavUser({
                                     </Link>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
+                            {hasTour ? (
+                                <>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem onClick={startTour}>
+                                        <IconCompass />
+                                        {resolveLanguageKey("takeTour")}
+                                    </DropdownMenuItem>
+                                </>
+                            ) : null}
                             <DropdownMenuSeparator />
                             <DropdownMenuItem variant='destructive' onClick={() => setOpen(true)}>
                                 <IconLogout />

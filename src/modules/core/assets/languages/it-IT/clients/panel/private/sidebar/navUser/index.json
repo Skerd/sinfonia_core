@@ -12,5 +12,6 @@
     "description": "Vuoi davvero uscire? Dovrai accedere di nuovo per usare il tuo account.",
     "confirmText": "Esci",
     "cancelText": "Annulla"
-  }
+  },
+  "takeTour": "Fai il giro"
 }

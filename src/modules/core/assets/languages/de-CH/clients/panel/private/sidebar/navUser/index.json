@@ -12,5 +12,6 @@
     "description": "Möchten Sie sich wirklich abmelden? Sie müssen sich erneut anmelden, um auf Ihr Konto zuzugreifen.",
     "confirmText": "Abmelden",
     "cancelText": "Abbrechen"
-  }
+  },
+  "takeTour": "Rundgang starten"
 }

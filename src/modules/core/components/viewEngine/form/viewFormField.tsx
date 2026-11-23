@@ -33,11 +33,12 @@ export function createFormFieldRenderer<T extends FieldValues>({
         if (canRender && !canRender(binding)) return null;
 
         if (isCompoundFormWidget(binding.widget)) {
-            return <div key={index}>{renderCompoundWidget(Widget, binding, resolveLanguageKey, extra)}</div>;
+            return <div key={index} data-tour={`field.${binding.name}`}>{renderCompoundWidget(Widget, binding, resolveLanguageKey, extra)}</div>;
         }
 
+        // `data-tour`: what a setup guide's tip points at (D179).
         return (
-            <div key={index}>
+            <div key={index} data-tour={`field.${binding.name}`}>
                 <FormField
                     control={control}
                     name={binding.name as Path<T>}

@@ -8,6 +8,26 @@ export type HomeSetupDoneWhen =
     /** The current company (`GET /api/company`) has what the step asks for. */
     | {company: (company: Record<string, unknown>) => boolean};
 
+/**
+ * One tip of a guide (D179): it points at an element of the page by its `data-tour` key. Keys in use: `field.<name>`
+ * (a form field, named as its form binding), `form.save`, `page.help`, `nav:<url>` (a sidebar link). A tip whose element
+ * is not on the page is skipped.
+ */
+export type HomeGuideTip = {
+    target: string;
+    /** Already translated. */
+    title: string;
+    text: string;
+};
+
+/** One stop of a module's tour of its daily pages (D179): a tip, shown on the page at `to` when it has one. */
+export type HomeTourStop = HomeGuideTip & {
+    /** The page to open for this stop; without it the tip shows wherever the person is (e.g. a sidebar link). */
+    to?: string;
+    /** The access model the viewer must be able to read; the stop is left out otherwise. */
+    accessModel?: string;
+};
+
 /** One step of a company's setup checklist on the panel home (D178). */
 export type HomeSetupStep = {
     /** Unique across modules, e.g. `carRental.vehicle`. */
@@ -20,11 +40,15 @@ export type HomeSetupStep = {
     /** The access model the viewer must be able to create in (or write, for company steps); the step is left out otherwise. */
     accessModel: string;
     doneWhen: HomeSetupDoneWhen;
+    /** Tips walking the person through the step on its page, in order (D179). */
+    guide?: HomeGuideTip[];
 };
 
 /** What a module gets to build its setup steps. */
 export type HomeSetupContext = {
     resolveLanguageKey: ResolveLanguageKey;
+    /** The company being set up: a step's page may name it (e.g. the company's own edit form, D179). */
+    company: {id: string; name: string};
 };
 
 /**
@@ -33,4 +57,6 @@ export type HomeSetupContext = {
  */
 export type HomeContribution = ContributionBase & {
     getSetupSteps: (ctx: HomeSetupContext) => HomeSetupStep[];
+    /** The module's daily pages, for the tour offered once setup is done (D179). */
+    getTour?: (ctx: HomeSetupContext) => HomeTourStop[];
 };

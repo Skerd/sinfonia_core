@@ -30,6 +30,8 @@ function UsersInviteDialog({
             <Button
                 variant='outline'
                 className='flex gap-x-1'
+                // `data-tour`: what the team step's guide points at (D179).
+                data-tour="users.invite"
                 onClick={() => setOpen(true)}
             >
                 <IconMailPlus size={18} />

@@ -19,6 +19,39 @@
       "vat": "Shtoni NIPT-in tuaj",
       "vatHint": "Pasi të kontrollohet, biznesi juaj merr shenjën E verifikuar në portal.",
       "team": "Ftoni ekipin tuaj"
+    },
+    "guide": {
+      "welcomeTitle": "Mirë se vini në {company}",
+      "welcomeText": "Le ta bëjmë {company} gati për klientët, një hap të shkurtër në një kohë. Do të përdorni të dhënat tuaja, dhe ne do t'ju tregojmë ku shkon secila.",
+      "welcomeStart": "Fillo",
+      "later": "Më vonë",
+      "next": "Tjetri",
+      "back": "Mbrapa",
+      "gotIt": "E kuptova",
+      "finish": "Përfundo",
+      "skip": "Kalo udhëzuesin",
+      "counter": "{current} nga {total}",
+      "stepDone": "{title}: u krye",
+      "nextStep": "Më pas: {title}",
+      "goNext": "Hapi tjetër",
+      "allDoneTitle": "Biznesi juaj është gati",
+      "allDoneText": "Të gjithë hapat e konfigurimit janë kryer.",
+      "allDoneTour": "Të gjithë hapat e konfigurimit janë kryer. Bëni një shëtitje të shkurtër nëpër faqet që do të përdorni çdo ditë.",
+      "takeTour": "Bëj shëtitjen",
+      "close": "Mbyll",
+      "helpTitle": "Ndihmë në çdo faqe",
+      "helpText": "Nuk jeni të sigurt për çfarë shërben një faqe? Ky buton e shpjegon, me këshilla për të filluar.",
+      "stepOpen": "{title}: ende pa përfunduar",
+      "saveTitle": "Ruaj",
+      "saveText": "Ruajeni kur të jeni gati. Ne do ta shënojmë si të kryer dhe do t'ju çojmë te hapi tjetër.",
+      "core": {
+        "logoTitle": "Logoja juaj",
+        "logoText": "Ngarkoni një imazh katror. Shfaqet në faqen tuaj të internetit, në kartën tuaj në portal dhe në dokumentet tuaja.",
+        "vatTitle": "Numri NIPT / TVSH",
+        "vatText": "Shkruajeni siç është në regjistrimin tuaj. Pasi të verifikohet, biznesi juaj merr shenjën e Verifikuar në portal.",
+        "teamTitle": "Ftoni ekipin tuaj",
+        "teamText": "Ftojeni secilin person me email dhe zgjidhni rolin e tij. Ata bashkohen sapo të pranojnë."
+      }
     }
   },
   "menus": {

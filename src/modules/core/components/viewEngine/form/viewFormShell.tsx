@@ -96,7 +96,7 @@ export function ViewFormShell<T extends FieldValues>({
                                         <Button type="button" variant="outline" onClick={onCancel} disabled={busy}>
                                             {t("formButtons.cancel")}
                                         </Button>
-                                        <Button type="submit" disabled={busy || submitDisabled}>
+                                        <Button type="submit" disabled={busy || submitDisabled} data-tour="form.save">
                                             {submitting ? <IconLoader2 className="animate-spin h-4 w-4" /> : (submitIcon ?? <IconDeviceFloppy />)}
                                             {t("formButtons.submit")}
                                         </Button>
