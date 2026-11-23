@@ -14,6 +14,8 @@ vi.mock("@coreModule/helpers/hocs/withLanguage.tsx", () => ({
 }));
 vi.mock("@coreModule/clients/portal/shared/portalSiteContext.tsx", () => ({usePortalSite: () => ({site: siteState.site, sections: []})}));
 vi.mock("@coreModule/clients/portal/shared/portalZone.ts", () => ({portalApexOrigin: () => "http://portal.example.test:5212"}));
+// The real switch reads the app's ThemeProvider; here it only has to be placed.
+vi.mock("@coreModule/components/custom/preferences/themeSwitch.tsx", () => ({default: () => <button type="button">Theme</button>}));
 
 import PortalFooter from "../index.tsx";
 
@@ -46,5 +48,12 @@ describe("PortalFooter", () => {
         renderFooter();
 
         expect(screen.queryByRole("link", {name: /Powered by/})).not.toBeInTheDocument();
+    });
+
+    it("carries the theme switch, which left the header (2026-11-23)", () => {
+        siteState.site = site("platform");
+        renderFooter();
+
+        expect(screen.getByRole("button", {name: "Theme"})).toBeInTheDocument();
     });
 });
