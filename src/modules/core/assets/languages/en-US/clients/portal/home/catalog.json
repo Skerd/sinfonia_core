@@ -17,5 +17,13 @@
   "failed": "The catalog could not be loaded. Try again.",
   "previous": "Previous",
   "next": "Next",
-  "loading": "Loading results"
+  "loading": "Loading results",
+  "saveSearch": "Save this search",
+  "searchSavedShort": "Search saved",
+  "searchSaved": "Search saved. We will email you what is new every morning.",
+  "openSaved": "Open Saved",
+  "labelPriceFrom": "from {min}",
+  "labelPriceUpTo": "up to {max}",
+  "labelFilters": "{count} filters",
+  "labelFilterOne": "1 filter"
 }

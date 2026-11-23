@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/savedSearches/stop.tsx",
+  "stopping": "Stopping the alerts",
+  "stopped": "Alerts stopped",
+  "stoppedFor": "You will no longer get emails for “{label}”. The search stays in your Saved tab.",
+  "invalid": "This link does not work",
+  "invalidHint": "It may be incomplete or too old. You can turn alerts off under Saved in your account.",
+  "openSaved": "Open Saved"
+}

@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalSaved.tsx",
+  "keep": "Ruaj {title}",
+  "unkeep": "Hiq {title} nga të ruajturat"
+}

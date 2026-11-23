@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalSaved.tsx",
+  "keep": "Salva {title}",
+  "unkeep": "Rimuovi {title} dai salvati"
+}

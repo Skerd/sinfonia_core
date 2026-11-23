@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/portal/account/saved.tsx",
+  "title": "Gespeichert",
+  "subtitle": "Was Sie sich merken und welche Suchen Sie verfolgen, bei allen Anbietern auf dem Portal.",
+  "items": "Gemerkte Angebote",
+  "loading": "Ihre gemerkten Angebote werden geladen",
+  "failed": "Ihre gemerkten Angebote konnten nicht geladen werden. Versuchen Sie es erneut.",
+  "noItems": "Noch nichts gemerkt",
+  "noItemsHint": "Tippen Sie bei einem Angebot auf das Herz, um es hier wiederzufinden.",
+  "browse": "Katalog durchsuchen",
+  "unavailable": "{count} gemerkte Angebote sind auf dieser Website derzeit nicht verfügbar.",
+  "unavailableOne": "1 gemerktes Angebot ist auf dieser Website derzeit nicht verfügbar.",
+  "searches": "Gespeicherte Suchen",
+  "searchesHint": "Für jede Suche mit eingeschalteter täglicher E-Mail erhalten Sie morgens eine E-Mail mit den Neuheiten.",
+  "dailyEmail": "Tägliche E-Mail",
+  "deleteSearch": "Suche {label} löschen",
+  "noSearches": "Keine gespeicherten Suchen",
+  "noSearchesHint": "Durchsuchen Sie den Katalog und wählen Sie «Suche speichern», um von neuen Treffern zu erfahren."
+}

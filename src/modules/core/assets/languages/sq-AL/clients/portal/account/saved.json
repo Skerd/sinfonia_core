@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/portal/account/saved.tsx",
+  "title": "Të ruajturat",
+  "subtitle": "Çfarë ruani dhe kërkimet që ndiqni, te të gjitha bizneset në portal.",
+  "items": "Artikujt e ruajtur",
+  "loading": "Po ngarkohen artikujt e ruajtur",
+  "failed": "Artikujt e ruajtur nuk u ngarkuan. Provoni përsëri.",
+  "noItems": "Ende asgjë e ruajtur",
+  "noItemsHint": "Prekni zemrën te çdo gjë që ju pëlqen për ta gjetur sërish këtu.",
+  "browse": "Shfletoni katalogun",
+  "unavailable": "{count} artikuj të ruajtur nuk ofrohen tani në këtë faqe.",
+  "unavailableOne": "1 artikull i ruajtur nuk ofrohet tani në këtë faqe.",
+  "searches": "Kërkimet e ruajtura",
+  "searchesHint": "Për çdo kërkim me email-in ditor të aktivizuar merrni në mëngjes një email me të rejat.",
+  "dailyEmail": "Email ditor",
+  "deleteSearch": "Fshi kërkimin {label}",
+  "noSearches": "Asnjë kërkim i ruajtur",
+  "noSearchesHint": "Kërkoni në katalog, pastaj zgjidhni «Ruaj këtë kërkim» për të mësuar për rezultatet e reja."
+}

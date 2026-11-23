@@ -2,6 +2,7 @@
   "path": "src/modules/core/clients/portal/shared/navigation/index.tsx",
   "signIn": "Hyr",
   "account": "Rezervimet e mia",
+  "saved": "Të ruajturat",
   "signOut": "Dil",
   "navLabel": "Navigimi kryesor",
   "openMenu": "Hap menunë",

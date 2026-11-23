@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/savedSearches/stop.tsx",
+  "stopping": "Po ndalen njoftimet",
+  "stopped": "Njoftimet u ndalën",
+  "stoppedFor": "Nuk do të merrni më email për «{label}». Kërkimi mbetet te të ruajturat.",
+  "invalid": "Kjo lidhje nuk funksionon",
+  "invalidHint": "Mund të jetë e paplotë ose shumë e vjetër. Njoftimet i çaktivizoni te «Të ruajturat» në llogarinë tuaj.",
+  "openSaved": "Hap të ruajturat"
+}

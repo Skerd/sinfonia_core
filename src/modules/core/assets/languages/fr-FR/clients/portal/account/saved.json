@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/portal/account/saved.tsx",
+  "title": "Enregistrés",
+  "subtitle": "Ce que vous gardez et les recherches que vous suivez, chez toutes les entreprises du portail.",
+  "items": "Articles enregistrés",
+  "loading": "Chargement de vos articles enregistrés",
+  "failed": "Vos articles enregistrés n'ont pas pu être chargés. Réessayez.",
+  "noItems": "Rien d'enregistré pour l'instant",
+  "noItemsHint": "Touchez le cœur sur ce qui vous plaît pour le retrouver ici.",
+  "browse": "Parcourir le catalogue",
+  "unavailable": "{count} articles enregistrés ne sont pas proposés sur ce site actuellement.",
+  "unavailableOne": "1 article enregistré n'est pas proposé sur ce site actuellement.",
+  "searches": "Recherches enregistrées",
+  "searchesHint": "Chaque recherche avec l'e-mail quotidien activé vous envoie un e-mail le matin avec les nouveautés.",
+  "dailyEmail": "E-mail quotidien",
+  "deleteSearch": "Supprimer la recherche {label}",
+  "noSearches": "Aucune recherche enregistrée",
+  "noSearchesHint": "Cherchez dans le catalogue, puis choisissez « Enregistrer cette recherche » pour être averti des nouveaux résultats."
+}

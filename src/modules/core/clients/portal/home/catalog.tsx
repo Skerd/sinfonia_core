@@ -1,9 +1,13 @@
 import {compose} from "redux";
 import {useLayoutEffect, useMemo, useRef, useState} from "react";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {toast} from "sonner";
+import {IconBellPlus, IconCheck} from "@tabler/icons-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import {useDynamicLanguage} from "@coreModule/helpers/hooks/useDynamicLanguage.ts";
+import {requestFromApi} from "@coreModule/helpers/apiClient/requestFromApi.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import {Tabs, TabsList, TabsTrigger} from "@coreModule/components/ui/tabs.tsx";
@@ -19,13 +23,16 @@ import {
     PaginationPrevious,
 } from "@coreModule/components/ui/pagination.tsx";
 import type {PortalBrowseResponse} from "armonia/src/modules/core/api/portal/public/portal/portal.dto.ts";
+import type {PortalSavedSearchResponse} from "armonia/src/modules/core/api/portal/private/saved/portalSaved.dto.ts";
 import {PORTAL_SORTS} from "armonia/src/modules/core/api/portal/public/portal/portalBrowse.form.validator.ts";
 import PortalKindName from "../shared/portalKindName.tsx";
 import {usePortalSite} from "../shared/portalSiteContext.tsx";
 import {SectionBaseProvider} from "../shared/sectionBase.tsx";
 import {CATALOG_FILTER_PREFIX, CatalogFilterField, CatalogNumberInput} from "../shared/catalogFilters.tsx";
+import {usePortalSaved} from "../shared/portalSaved.tsx";
 import CatalogCard from "./catalogCard.tsx";
 import {BROWSE_REQUEST, CATALOG_PAGE_SIZE, browseForm} from "./catalogBrowse.ts";
+import {isSavableSearch, savedSearchLabel, savedSearchQuery} from "./savedSearch.ts";
 
 const ALL = "all";
 
@@ -47,6 +54,54 @@ function CardGrid({children, busyLabel}: {children: React.ReactNode; busyLabel?:
         <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 lg:grid-cols-4" aria-busy={busyLabel ? true : undefined} aria-label={busyLabel}>
             {children}
         </div>
+    );
+}
+
+/** The kinds' names ("Cars"), from the one dictionary every page that lists kinds reads. */
+const KIND_NAMES = "src/modules/core/clients/portal/shared/portalKindName.tsx";
+
+/**
+ * "Save this search" (D178, P23.7): keeps the search on screen (kind, words, city, price, the kind's filters) in the
+ * visitor's Saved tab, with a daily email of what is new. Signed out, it asks them to sign in and brings them back.
+ */
+function SaveSearchButton({params, resolveLanguageKey}: {params: URLSearchParams; resolveLanguageKey: WithLanguageType["resolveLanguageKey"]}) {
+    const {signedIn, signIn} = usePortalSaved();
+    const navigate = useNavigate();
+    const kindNames = useDynamicLanguage(KIND_NAMES);
+    const search = useMemo(() => savedSearchQuery(params), [params]);
+    // Saved for this search only: changing the search offers saving the new one.
+    const [saved, setSaved] = useState<{search: string; state: "saving" | "saved"} | null>(null);
+    const current = params.toString();
+    const state = saved?.search === current ? saved.state : "idle";
+    if (!isSavableSearch(search)) return null;
+
+    const save = async () => {
+        if (!signedIn) {
+            signIn();
+            return;
+        }
+        const words = (key: string) => String(resolveLanguageKey(key));
+        const kindName = search.kind ? String(kindNames.resolveLanguageKey(`${search.kind}.tab`, true) ?? search.kind) : undefined;
+        setSaved({search: current, state: "saving"});
+        try {
+            await requestFromApi<PortalSavedSearchResponse>({
+                method: "put",
+                url: "/api/portal/saved/searches",
+                data: {...search, label: savedSearchLabel(search, {kindName, resolveLanguageKey: words})},
+                resolveLanguageKey,
+            });
+            setSaved({search: current, state: "saved"});
+            toast.success(words("searchSaved"), {action: {label: words("openSaved"), onClick: () => navigate("/account/saved")}});
+        } catch {
+            setSaved(null);
+        }
+    };
+
+    return (
+        <Button variant="outline" size="lg" className="rounded-full" disabled={state !== "idle"} onClick={() => void save()}>
+            {state === "saved" ? <IconCheck aria-hidden /> : <IconBellPlus aria-hidden />}
+            {resolveLanguageKey(state === "saved" ? "searchSavedShort" : "saveSearch")}
+        </Button>
     );
 }
 
@@ -141,6 +196,10 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
                     </CatalogFilterField>
                 </div>
             ) : null}
+
+            <div className="flex justify-end empty:hidden">
+                <SaveSearchButton params={params} resolveLanguageKey={resolveLanguageKey} />
+            </div>
 
             {groups === undefined ? (
                 <CardGrid busyLabel={resolveLanguageKey("loading")}>

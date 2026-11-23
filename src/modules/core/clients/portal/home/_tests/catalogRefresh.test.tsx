@@ -18,6 +18,8 @@ vi.mock("../../shared/portalSiteContext.tsx", () => ({
     }),
 }));
 vi.mock("../../shared/portalKindName.tsx", () => ({default: ({kind}: {kind: string}) => <>{kind}</>}));
+// The "Save this search" button names the kind from the kinds' dictionary (P23.7).
+vi.mock("@coreModule/helpers/hooks/useDynamicLanguage.ts", () => ({useDynamicLanguage: () => ({resolveLanguageKey: (key: string) => key})}));
 
 import Catalog from "../catalog.tsx";
 import {clearResponseCache} from "@coreModule/helpers/apiClient/responseCache.ts";

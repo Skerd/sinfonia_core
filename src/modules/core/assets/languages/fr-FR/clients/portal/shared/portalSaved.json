@@ -1,0 +1,5 @@
+{
+  "path": "src/modules/core/clients/portal/shared/portalSaved.tsx",
+  "keep": "Enregistrer {title}",
+  "unkeep": "Retirer {title} des enregistrés"
+}

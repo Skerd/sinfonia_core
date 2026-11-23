@@ -17,5 +17,13 @@
   "failed": "Katalogu nuk u ngarkua. Provo përsëri.",
   "previous": "E mëparshmja",
   "next": "Tjetra",
-  "loading": "Rezultatet po ngarkohen"
+  "loading": "Rezultatet po ngarkohen",
+  "saveSearch": "Ruaj këtë kërkim",
+  "searchSavedShort": "Kërkimi u ruajt",
+  "searchSaved": "Kërkimi u ruajt. Çdo mëngjes ju dërgojmë me email çfarë ka të re.",
+  "openSaved": "Hap të ruajturat",
+  "labelPriceFrom": "nga {min}",
+  "labelPriceUpTo": "deri në {max}",
+  "labelFilters": "{count} filtra",
+  "labelFilterOne": "1 filtër"
 }

@@ -2,6 +2,7 @@
   "path": "src/modules/core/clients/portal/shared/navigation/index.tsx",
   "signIn": "Sign in",
   "account": "My bookings",
+  "saved": "Saved",
   "signOut": "Sign out",
   "navLabel": "Main navigation",
   "openMenu": "Open menu",

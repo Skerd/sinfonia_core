@@ -17,5 +17,13 @@
   "failed": "Der Katalog konnte nicht geladen werden. Bitte erneut versuchen.",
   "previous": "Zurück",
   "next": "Weiter",
-  "loading": "Ergebnisse werden geladen"
+  "loading": "Ergebnisse werden geladen",
+  "saveSearch": "Suche speichern",
+  "searchSavedShort": "Suche gespeichert",
+  "searchSaved": "Suche gespeichert. Wir schicken Ihnen jeden Morgen per E-Mail, was neu ist.",
+  "openSaved": "«Gespeichert» öffnen",
+  "labelPriceFrom": "ab {min}",
+  "labelPriceUpTo": "bis {max}",
+  "labelFilters": "{count} Filter",
+  "labelFilterOne": "1 Filter"
 }

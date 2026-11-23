@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/savedSearches/stop.tsx",
+  "stopping": "Benachrichtigungen werden beendet",
+  "stopped": "Benachrichtigungen beendet",
+  "stoppedFor": "Sie erhalten keine E-Mails mehr für «{label}». Die Suche bleibt unter «Gespeichert».",
+  "invalid": "Dieser Link funktioniert nicht",
+  "invalidHint": "Er ist vielleicht unvollständig oder zu alt. Unter «Gespeichert» in Ihrem Konto können Sie Benachrichtigungen ausschalten.",
+  "openSaved": "«Gespeichert» öffnen"
+}

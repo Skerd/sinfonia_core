@@ -9,6 +9,7 @@ import PortalKindName from "../shared/portalKindName.tsx";
 import {usePortalSite} from "../shared/portalSiteContext.tsx";
 import {useCompanyLink} from "../shared/sectionBase.tsx";
 import {revealImage} from "../shared/portalImageMotion.ts";
+import {PortalKeepButton} from "../shared/portalSaved.tsx";
 
 /** Cards of one grid arrive one after another, this far apart, the first eight of them. */
 const STAGGER_MS = 40;
@@ -52,48 +53,54 @@ function CatalogCard({item, index = 0, resolveLanguageKey}: WithLanguageType & {
     const price = catalogPriceLabel(item.price, (key) => String(resolveLanguageKey(key)));
 
     return (
-        <Link
-            to={href}
-            className="group flex flex-col gap-3 rounded-2xl outline-none transition-[opacity,translate] duration-500 ease-out focus-visible:ring-3 focus-visible:ring-ring/50 starting:translate-y-3 starting:opacity-0"
+        // The heart sits over the photo beside the link, not inside it (a control inside a link is not reachable).
+        <div
+            className="relative transition-[opacity,translate] duration-500 ease-out starting:translate-y-3 starting:opacity-0"
             style={{transitionDelay: `${Math.min(index, STAGGERED) * STAGGER_MS}ms`}}
         >
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted transition-transform duration-150 group-active:scale-[0.98]">
-                {item.image ? (
-                    <img ref={revealImage} data-reveal src={item.image} alt="" loading="lazy" className="size-full object-cover transition-[scale,opacity] duration-500 group-hover:scale-[1.03]" />
-                ) : (
-                    <div className="flex size-full items-center justify-center text-muted-foreground"><IconPhotoOff className="size-6" aria-hidden /></div>
-                )}
-                <Badge variant="secondary" className="absolute top-3 left-3 bg-background/90 backdrop-blur">
-                    <PortalKindName kind={item.kind} part="item" />
-                </Badge>
-            </div>
-            <div className="flex min-w-0 flex-col gap-0.5">
-                <p className="line-clamp-2 font-medium leading-snug">{item.title}</p>
-                {/* What sets the item apart, from its provider (a car's seats and gearbox, a project's place). */}
-                {item.subtitle ? <p className="truncate text-sm">{item.subtitle}</p> : null}
-                <p className="flex min-w-0 items-center gap-1 text-sm text-muted-foreground">
-                    <span className="truncate">{[item.company.name, item.city].filter(Boolean).join(" · ")}</span>
-                    {/* The platform checked the company's NIPT/VAT (D178). */}
-                    {item.company.verified ? (
-                        <IconRosetteDiscountCheckFilled className="h-4 w-4 shrink-0 text-sky-600" role="img" aria-label={resolveLanguageKey("verified")}>
-                            <title>{resolveLanguageKey("verified")}</title>
-                        </IconRosetteDiscountCheckFilled>
-                    ) : null}
-                </p>
-                {/* Reviews from completed bookings or purchases (D178). */}
-                {item.rating ? (
-                    <p
-                        className="flex items-center gap-1 text-sm tabular-nums"
-                        aria-label={resolveLanguageKey(item.rating.count === 1 ? "ratingLabelOne" : "ratingLabel").replace("{average}", String(item.rating.average)).replace("{count}", String(item.rating.count))}
-                    >
-                        <IconStarFilled className="h-4 w-4 shrink-0 text-amber-500" aria-hidden />
-                        <span aria-hidden className="font-medium">{item.rating.average.toFixed(1)}</span>
-                        <span aria-hidden className="text-muted-foreground">({item.rating.count})</span>
+            <Link
+                to={href}
+                className="group flex flex-col gap-3 rounded-2xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            >
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted transition-transform duration-150 group-active:scale-[0.98]">
+                    {item.image ? (
+                        <img ref={revealImage} data-reveal src={item.image} alt="" loading="lazy" className="size-full object-cover transition-[scale,opacity] duration-500 group-hover:scale-[1.03]" />
+                    ) : (
+                        <div className="flex size-full items-center justify-center text-muted-foreground"><IconPhotoOff className="size-6" aria-hidden /></div>
+                    )}
+                    <Badge variant="secondary" className="absolute top-3 left-3 bg-background/90 backdrop-blur">
+                        <PortalKindName kind={item.kind} part="item" />
+                    </Badge>
+                </div>
+                <div className="flex min-w-0 flex-col gap-0.5">
+                    <p className="line-clamp-2 font-medium leading-snug">{item.title}</p>
+                    {/* What sets the item apart, from its provider (a car's seats and gearbox, a project's place). */}
+                    {item.subtitle ? <p className="truncate text-sm">{item.subtitle}</p> : null}
+                    <p className="flex min-w-0 items-center gap-1 text-sm text-muted-foreground">
+                        <span className="truncate">{[item.company.name, item.city].filter(Boolean).join(" · ")}</span>
+                        {/* The platform checked the company's NIPT/VAT (D178). */}
+                        {item.company.verified ? (
+                            <IconRosetteDiscountCheckFilled className="h-4 w-4 shrink-0 text-sky-600" role="img" aria-label={resolveLanguageKey("verified")}>
+                                <title>{resolveLanguageKey("verified")}</title>
+                            </IconRosetteDiscountCheckFilled>
+                        ) : null}
                     </p>
-                ) : null}
-                {price ? <p className="mt-1 font-display font-semibold tabular-nums">{price}</p> : null}
-            </div>
-        </Link>
+                    {/* Reviews from completed bookings or purchases (D178). */}
+                    {item.rating ? (
+                        <p
+                            className="flex items-center gap-1 text-sm tabular-nums"
+                            aria-label={resolveLanguageKey(item.rating.count === 1 ? "ratingLabelOne" : "ratingLabel").replace("{average}", String(item.rating.average)).replace("{count}", String(item.rating.count))}
+                        >
+                            <IconStarFilled className="h-4 w-4 shrink-0 text-amber-500" aria-hidden />
+                            <span aria-hidden className="font-medium">{item.rating.average.toFixed(1)}</span>
+                            <span aria-hidden className="text-muted-foreground">({item.rating.count})</span>
+                        </p>
+                    ) : null}
+                    {price ? <p className="mt-1 font-display font-semibold tabular-nums">{price}</p> : null}
+                </div>
+            </Link>
+            <PortalKeepButton item={item} className="absolute top-3 right-3" />
+        </div>
     );
 }
 

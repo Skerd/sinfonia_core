@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/savedSearches/stop.tsx",
+  "stopping": "Arrêt des alertes",
+  "stopped": "Alertes arrêtées",
+  "stoppedFor": "Vous ne recevrez plus d'e-mails pour « {label} ». La recherche reste dans vos enregistrés.",
+  "invalid": "Ce lien ne fonctionne pas",
+  "invalidHint": "Il est peut-être incomplet ou trop ancien. Vous pouvez désactiver les alertes sous « Enregistrés » dans votre compte.",
+  "openSaved": "Ouvrir les enregistrés"
+}

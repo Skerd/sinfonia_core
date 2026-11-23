@@ -3,5 +3,6 @@
   "navLabel": "Konto",
   "navProfile": "Profil",
   "navSecurity": "Sicherheit",
-  "navBookings": "Meine Buchungen"
+  "navBookings": "Meine Buchungen",
+  "navSaved": "Gespeichert"
 }

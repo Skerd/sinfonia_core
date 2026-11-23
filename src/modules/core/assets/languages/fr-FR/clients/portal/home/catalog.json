@@ -17,5 +17,13 @@
   "failed": "Le catalogue n'a pas pu être chargé. Réessayez.",
   "previous": "Précédent",
   "next": "Suivant",
-  "loading": "Chargement des résultats"
+  "loading": "Chargement des résultats",
+  "saveSearch": "Enregistrer cette recherche",
+  "searchSavedShort": "Recherche enregistrée",
+  "searchSaved": "Recherche enregistrée. Chaque matin, nous vous envoyons les nouveautés par e-mail.",
+  "openSaved": "Ouvrir les enregistrés",
+  "labelPriceFrom": "à partir de {min}",
+  "labelPriceUpTo": "jusqu'à {max}",
+  "labelFilters": "{count} filtres",
+  "labelFilterOne": "1 filtre"
 }

@@ -239,6 +239,9 @@ function PortalNavigation({resolveLanguageKey}: WithLanguageType) {
                                 <DropdownMenuItem asChild>
                                     <Link to="/account">{resolveLanguageKey("account")}</Link>
                                 </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link to="/account/saved">{resolveLanguageKey("saved")}</Link>
+                                </DropdownMenuItem>
                                 <DropdownMenuItem onSelect={() => dispatch(signOut())}>
                                     {resolveLanguageKey("signOut")}
                                 </DropdownMenuItem>
@@ -275,7 +278,8 @@ function PortalNavigation({resolveLanguageKey}: WithLanguageType) {
                             <div className="flex flex-col gap-1 px-4">
                                 {token ? (
                                     <>
-                                        <NavLink to="/account" className={navLinkClass} onClick={closeMenu}>{resolveLanguageKey("account")}</NavLink>
+                                        <NavLink to="/account" end className={navLinkClass} onClick={closeMenu}>{resolveLanguageKey("account")}</NavLink>
+                                        <NavLink to="/account/saved" className={navLinkClass} onClick={closeMenu}>{resolveLanguageKey("saved")}</NavLink>
                                         <Button variant="ghost" className="justify-start rounded-full px-3 text-muted-foreground" onClick={() => { closeMenu(); dispatch(signOut()); }}>
                                             {resolveLanguageKey("signOut")}
                                         </Button>

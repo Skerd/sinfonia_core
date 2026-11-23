@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/portal/account/saved.tsx",
+  "title": "Salvati",
+  "subtitle": "Ciò che conservi e le ricerche che segui, presso tutte le attività del portale.",
+  "items": "Elementi salvati",
+  "loading": "Caricamento degli elementi salvati",
+  "failed": "Non è stato possibile caricare gli elementi salvati. Riprova.",
+  "noItems": "Ancora nulla di salvato",
+  "noItemsHint": "Tocca il cuore su ciò che ti piace per ritrovarlo qui.",
+  "browse": "Sfoglia il catalogo",
+  "unavailable": "{count} elementi salvati non sono offerti ora su questo sito.",
+  "unavailableOne": "1 elemento salvato non è offerto ora su questo sito.",
+  "searches": "Ricerche salvate",
+  "searchesHint": "Ogni ricerca con l'email giornaliera attiva ti invia al mattino un'email con le novità.",
+  "dailyEmail": "Email giornaliera",
+  "deleteSearch": "Elimina la ricerca {label}",
+  "noSearches": "Nessuna ricerca salvata",
+  "noSearchesHint": "Cerca nel catalogo, poi scegli «Salva questa ricerca» per sapere dei nuovi risultati."
+}

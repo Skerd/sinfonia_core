@@ -17,5 +17,13 @@
   "failed": "Impossibile caricare il catalogo. Riprova.",
   "previous": "Precedente",
   "next": "Successiva",
-  "loading": "Caricamento dei risultati"
+  "loading": "Caricamento dei risultati",
+  "saveSearch": "Salva questa ricerca",
+  "searchSavedShort": "Ricerca salvata",
+  "searchSaved": "Ricerca salvata. Ogni mattina ti mandiamo per email le novità.",
+  "openSaved": "Apri i salvati",
+  "labelPriceFrom": "da {min}",
+  "labelPriceUpTo": "fino a {max}",
+  "labelFilters": "{count} filtri",
+  "labelFilterOne": "1 filtro"
 }

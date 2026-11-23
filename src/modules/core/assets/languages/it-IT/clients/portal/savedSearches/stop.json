@@ -1,0 +1,9 @@
+{
+  "path": "src/modules/core/clients/portal/savedSearches/stop.tsx",
+  "stopping": "Interruzione degli avvisi",
+  "stopped": "Avvisi interrotti",
+  "stoppedFor": "Non riceverai più email per «{label}». La ricerca resta nei tuoi salvati.",
+  "invalid": "Questo link non funziona",
+  "invalidHint": "Forse è incompleto o troppo vecchio. Puoi disattivare gli avvisi in «Salvati» nel tuo account.",
+  "openSaved": "Apri i salvati"
+}

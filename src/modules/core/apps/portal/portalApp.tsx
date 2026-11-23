@@ -11,6 +11,7 @@ import ErrorBoundary from "@coreModule/components/custom/errors/errorBoundary.ts
 import PortalLayout from "@coreModule/clients/portal/shared/layout/index.tsx";
 import {PortalSiteProvider, usePortalSite} from "@coreModule/clients/portal/shared/portalSiteContext.tsx";
 import {PortalSessionProvider} from "@coreModule/clients/portal/shared/portalSession.tsx";
+import {PortalSavedProvider} from "@coreModule/clients/portal/shared/portalSaved.tsx";
 import {GuestOnly, RequireSession} from "@coreModule/clients/portal/shared/sessionRoutes.tsx";
 import {SectionBaseProvider, sectionHref} from "@coreModule/clients/portal/shared/sectionBase.tsx";
 import PortalCompanySite from "@coreModule/clients/portal/shared/portalCompanySite.tsx";
@@ -26,6 +27,8 @@ const AccountLayout = lazy(() => import("@coreModule/clients/portal/account/layo
 const AccountPage = lazy(() => import("@coreModule/clients/portal/account/index.tsx"));
 const ProfilePage = lazy(() => import("@coreModule/clients/portal/account/profile.tsx"));
 const SecurityPage = lazy(() => import("@coreModule/clients/portal/account/security.tsx"));
+const SavedPage = lazy(() => import("@coreModule/clients/portal/account/saved.tsx"));
+const SavedSearchStopPage = lazy(() => import("@coreModule/clients/portal/savedSearches/stop.tsx"));
 const LoginPage = lazy(() => import("@coreModule/clients/portal/auth/login.tsx"));
 const SignUpPage = lazy(() => import("@coreModule/clients/portal/auth/signup.tsx"));
 const ActivatePage = lazy(() => import("@coreModule/clients/portal/auth/activate.tsx"));
@@ -69,6 +72,7 @@ function PortalRoutes() {
                         <Route index element={<ErrorBoundary><AccountPage /></ErrorBoundary>} />
                         <Route path="profile" element={<ErrorBoundary><ProfilePage /></ErrorBoundary>} />
                         <Route path="security" element={<ErrorBoundary><SecurityPage /></ErrorBoundary>} />
+                        <Route path="saved" element={<ErrorBoundary><SavedPage /></ErrorBoundary>} />
                     </Route>
                 </Route>
                 <Route element={<GuestOnly />}>
@@ -79,6 +83,8 @@ function PortalRoutes() {
                     <Route path="reset-password/:code" element={<ErrorBoundary><ResetPasswordPage /></ErrorBoundary>} />
                 </Route>
                 <Route path="activate/:code" element={<ErrorBoundary><ActivatePage /></ErrorBoundary>} />
+                {/* A saved-search alert's stop link (P23.7): works signed out. */}
+                <Route path="saved-searches/stop" element={<ErrorBoundary><SavedSearchStopPage /></ErrorBoundary>} />
                 {/* Self-serve business sign-up (D178), on the apex only: a company's own site is that company's. */}
                 {companyHost ? null : <Route path="business" element={<ErrorBoundary><ForBusinessesPage /></ErrorBoundary>} />}
                 {companyHost ? null : (
@@ -146,9 +152,12 @@ function PortalApp() {
                                     {/* The shared socket, for signed-in sessions only (no token, no socket): live updates (D172). */}
                                     <WebSocketProvider showSetupScreen={false}>
                                         <SectionProviders>
-                                            <Suspense fallback={<PortalBoot />}>
-                                                <PortalRoutes />
-                                            </Suspense>
+                                            {/* What the visitor keeps, for the hearts on every page's cards (P23.7). */}
+                                            <PortalSavedProvider>
+                                                <Suspense fallback={<PortalBoot />}>
+                                                    <PortalRoutes />
+                                                </Suspense>
+                                            </PortalSavedProvider>
                                         </SectionProviders>
                                     </WebSocketProvider>
                                 </PortalSessionProvider>

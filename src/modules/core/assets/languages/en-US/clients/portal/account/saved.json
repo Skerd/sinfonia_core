@@ -1,0 +1,19 @@
+{
+  "path": "src/modules/core/clients/portal/account/saved.tsx",
+  "title": "Saved",
+  "subtitle": "What you keep and the searches you follow, across every business on the portal.",
+  "items": "Saved items",
+  "loading": "Loading your saved items",
+  "failed": "Your saved items could not be loaded. Try again.",
+  "noItems": "Nothing saved yet",
+  "noItemsHint": "Tap the heart on anything you like to find it here again.",
+  "browse": "Browse the catalog",
+  "unavailable": "{count} saved items are not offered on this site now.",
+  "unavailableOne": "1 saved item is not offered on this site now.",
+  "searches": "Saved searches",
+  "searchesHint": "Each search with its daily email on gets one email in the morning with what is new.",
+  "dailyEmail": "Daily email",
+  "deleteSearch": "Delete the search {label}",
+  "noSearches": "No saved searches",
+  "noSearchesHint": "Search the catalog, then choose Save this search to hear about new results."
+}
