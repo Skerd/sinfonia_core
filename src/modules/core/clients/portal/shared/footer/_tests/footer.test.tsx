@@ -1,10 +1,11 @@
-import {render, screen} from "@testing-library/react";
+import {render, screen, within} from "@testing-library/react";
 import {beforeEach, describe, expect, it, vi} from "vitest";
 import type {ComponentType} from "react";
 import {MemoryRouter} from "react-router-dom";
 import type {PortalSite} from "armonia/src/modules/core/api/portal/public/portal/portal.dto.ts";
+import type {PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
 
-const {siteState} = vi.hoisted(() => ({siteState: {site: undefined as PortalSite | undefined}}));
+const {siteState} = vi.hoisted(() => ({siteState: {site: undefined as PortalSite | undefined, sections: [] as PortalSection[]}}));
 
 vi.mock("@coreModule/helpers/hocs/withLanguage.tsx", () => ({
     default: () => (Wrapped: ComponentType<Record<string, unknown>>) =>
@@ -12,7 +13,14 @@ vi.mock("@coreModule/helpers/hocs/withLanguage.tsx", () => ({
             <Wrapped {...props} resolveLanguageKey={(key: string) => (key === "poweredBy" ? "Powered by {brand} · Create your free business site" : key)}/>
         ),
 }));
-vi.mock("@coreModule/clients/portal/shared/portalSiteContext.tsx", () => ({usePortalSite: () => ({site: siteState.site, sections: []})}));
+vi.mock("@coreModule/clients/portal/shared/portalSiteContext.tsx", () => ({usePortalSite: () => ({site: siteState.site, sections: siteState.sections})}));
+// The landing links' names (D181): the section names' and the landing texts' dictionaries.
+vi.mock("@coreModule/helpers/hooks/useDynamicLanguage.ts", () => ({
+    useDynamicLanguage: () => ({
+        currentLanguage: {},
+        resolveLanguageKey: (key: string) => ({name: "{section} in {city}", "carRental.title": "Car rental", "dentalClinic.title": "Dentists"})[key] ?? null,
+    }),
+}));
 vi.mock("@coreModule/clients/portal/shared/portalZone.ts", () => ({portalApexOrigin: () => "http://portal.example.test:5212"}));
 // The real switch reads the app's ThemeProvider; here it only has to be placed.
 vi.mock("@coreModule/components/custom/preferences/themeSwitch.tsx", () => ({default: () => <button type="button">Theme</button>}));
@@ -25,6 +33,7 @@ const site = (scope: PortalSite["scope"]): PortalSite => ({
     platform: {name: "Platform"},
     cities: [],
     sections: [],
+    landings: [],
 });
 
 const renderFooter = () => render(<MemoryRouter><PortalFooter/></MemoryRouter>);
@@ -33,6 +42,7 @@ const renderFooter = () => render(<MemoryRouter><PortalFooter/></MemoryRouter>);
 describe("PortalFooter", () => {
     beforeEach(() => {
         siteState.site = undefined;
+        siteState.sections = [];
     });
 
     it("links a company site's visitors to the platform's business sign-up, with the site as the referrer", () => {
@@ -55,5 +65,39 @@ describe("PortalFooter", () => {
         renderFooter();
 
         expect(screen.getByRole("button", {name: "Theme"})).toBeInTheDocument();
+    });
+
+    it("links the city landing pages, one column per section, and none when the site lists none (D181)", () => {
+        const Site = () => null;
+        siteState.sections = [
+            {section: "carRental", path: "car-rental", CompanySite: Site},
+            {section: "dentalClinic", path: "dentists", CompanySite: Site},
+            {section: "shop", path: "shop", SectionSite: Site},
+        ];
+        siteState.site = {
+            ...site("platform"),
+            landings: [
+                {section: "dentalClinic", city: "Durrës", count: 4},
+                {section: "carRental", city: "Tiranë", count: 9},
+                {section: "carRental", city: "Vlorë", count: 5},
+            ],
+        };
+        renderFooter();
+
+        const cars = screen.getByRole("navigation", {name: "carRental.title"});
+        expect(within(cars).getAllByRole("link").map((link) => [link.textContent, link.getAttribute("href")])).toEqual([
+            ["Car rental in Tiranë", "/car-rental/in/tirane"],
+            ["Car rental in Vlorë", "/car-rental/in/vlore"],
+        ]);
+        expect(within(screen.getByRole("navigation", {name: "dentalClinic.title"})).getByRole("link", {name: "Dentists in Durrës"})).toHaveAttribute("href", "/dentists/in/durres");
+        expect(screen.queryByRole("navigation", {name: "shop.title"})).toBeNull();
+    });
+
+    it("shows no landing links on a site that lists none", () => {
+        siteState.sections = [{section: "carRental", path: "car-rental", CompanySite: () => null}];
+        siteState.site = site("company");
+        renderFooter();
+
+        expect(screen.queryByRole("link", {name: /in /})).toBeNull();
     });
 });

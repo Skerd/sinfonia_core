@@ -3,6 +3,7 @@ import {compose} from "redux";
 import {useSearchParams} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
+import {useDynamicLanguage} from "@coreModule/helpers/hooks/useDynamicLanguage.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import type {
@@ -11,10 +12,13 @@ import type {
     PublicBlogPostItem,
 } from "armonia/src/modules/core/api/auxiliary/public/blog/blog.form.response.type.ts";
 import {usePortalSite} from "../shared/portalSiteContext.tsx";
+import {usePortalTitle} from "../shared/portalTitle.ts";
 import BlogCard from "./blogCard.tsx";
 import {useBlogCompanyQuery} from "./blogCompany.ts";
 
 const LANGUAGE_PATH = "src/modules/core/clients/portal/blog/index.tsx";
+/** The menu's texts: the page is named as the menu names it, "Blog". */
+const NAVIGATION = "src/modules/core/clients/portal/shared/navigation/index.tsx";
 const PAGE_SIZE = 12;
 const BLOG_REQUEST = {method: "post" as const, url: "/api/auxiliary/public/blog", data: {}, cache: true};
 
@@ -175,6 +179,8 @@ function BlogBrowser({resolveLanguageKey, mode, companySlug, contained = false}:
 
 function BlogPage(props: WithLanguageType) {
     const companySlug = useBlogCompanyQuery();
+    const navigation = useDynamicLanguage(NAVIGATION);
+    usePortalTitle(navigation.resolveLanguageKey("blog"));
     return (
         <div className="site-container py-8 sm:py-12">
             <BlogBrowser {...props} mode="page" companySlug={companySlug} />

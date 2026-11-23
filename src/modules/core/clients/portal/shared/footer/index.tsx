@@ -9,11 +9,13 @@ import {Button} from "@coreModule/components/ui/button.tsx";
 import type {PortalCompanyAddress} from "armonia/src/modules/core/api/portal/public/portal/portal.dto.ts";
 import PortalSectionName from "../portalSectionName.tsx";
 import {usePortalSite} from "../portalSiteContext.tsx";
+import {usePortalLandings} from "../portalLandings.ts";
 import {sectionHref} from "../sectionBase.tsx";
 import {portalApexOrigin} from "../portalZone.ts";
 import ThemeSwitch from "@coreModule/components/custom/preferences/themeSwitch.tsx";
 
 const FOOTER_LINK_CLASS = "inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground";
+const FOOTER_HEADING_CLASS = "mb-1 text-xs font-semibold tracking-wider text-muted-foreground uppercase";
 
 function addressLabel(address: PortalCompanyAddress): string {
     const cityLine = [address.postalCode, address.city?.name].filter(Boolean).join(" ");
@@ -31,6 +33,7 @@ function addressMapsHref(address: PortalCompanyAddress, label: string): string {
 /** The site company's profile: who runs this site, how to reach them, and where to go next. */
 function PortalFooter({resolveLanguageKey}: WithLanguageType) {
     const {site, sections} = usePortalSite();
+    const landings = usePortalLandings();
     if (!site) return null;
     const {company} = site;
     const socialLinks: {label: string; href: string | undefined; Icon: ComponentType<{className?: string}>}[] = [
@@ -97,17 +100,26 @@ function PortalFooter({resolveLanguageKey}: WithLanguageType) {
                         <p className="text-xs text-muted-foreground">{resolveLanguageKey("vatLabel")} {company.vat}</p>
                     ) : null}
                 </div>
-                <nav className="flex flex-col gap-2.5" aria-label={resolveLanguageKey("exploreHeading")}>
-                    <p className="mb-1 text-xs font-semibold tracking-wider text-muted-foreground uppercase">{resolveLanguageKey("exploreHeading")}</p>
-                    <Link to="/" className={FOOTER_LINK_CLASS}>{resolveLanguageKey("home")}</Link>
-                    <Link to="/blog" className={FOOTER_LINK_CLASS}>{resolveLanguageKey("blog")}</Link>
-                    {site.scope === "platform" ? <Link to="/business" className={FOOTER_LINK_CLASS}>{resolveLanguageKey("forBusinesses")}</Link> : null}
-                    {sections.map((section) => (
-                        <Link key={section.section} to={sectionHref(section)} className={FOOTER_LINK_CLASS}>
-                            <PortalSectionName section={section.section} />
-                        </Link>
+                <div className="flex flex-wrap gap-x-12 gap-y-10">
+                    <nav className="flex flex-col gap-2.5" aria-label={resolveLanguageKey("exploreHeading")}>
+                        <p className={FOOTER_HEADING_CLASS}>{resolveLanguageKey("exploreHeading")}</p>
+                        <Link to="/" className={FOOTER_LINK_CLASS}>{resolveLanguageKey("home")}</Link>
+                        <Link to="/blog" className={FOOTER_LINK_CLASS}>{resolveLanguageKey("blog")}</Link>
+                        {site.scope === "platform" ? <Link to="/business" className={FOOTER_LINK_CLASS}>{resolveLanguageKey("forBusinesses")}</Link> : null}
+                        {sections.map((section) => (
+                            <Link key={section.section} to={sectionHref(section)} className={FOOTER_LINK_CLASS}>
+                                <PortalSectionName section={section.section} />
+                            </Link>
+                        ))}
+                    </nav>
+                    {/* The city landing pages (D181), one column per section. */}
+                    {landings.map(({section, links}) => (
+                        <nav key={section.section} className="flex flex-col gap-2.5" aria-labelledby={`footer-landings-${section.section}`}>
+                            <p id={`footer-landings-${section.section}`} className={FOOTER_HEADING_CLASS}><PortalSectionName section={section.section} /></p>
+                            {links.map(({href, label}) => <Link key={href} to={href} className={FOOTER_LINK_CLASS}>{label}</Link>)}
+                        </nav>
                     ))}
-                </nav>
+                </div>
             </div>
             <div className="border-t">
                 <div className="site-container flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-muted-foreground">

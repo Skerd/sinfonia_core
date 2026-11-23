@@ -1,4 +1,5 @@
 import type {HttpRequest} from "@coreModule/helpers/types/httpRequest.types.ts";
+import type {PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
 import {
     PORTAL_SORTS,
     type PortalBrowseFilters,
@@ -33,4 +34,17 @@ export function browseForm(params: URLSearchParams): PortalBrowseFormType {
         limit: CATALOG_PAGE_SIZE,
         filters,
     };
+}
+
+/**
+ * The search a city landing page's catalog shows (D181): its address names neither the city nor, until the visitor
+ * picks another of the section's kinds, the kind; both are added here.
+ */
+export function landingSearch(params: URLSearchParams, section: Pick<PortalSection, "catalogs">, city: string): URLSearchParams {
+    const search = new URLSearchParams(params);
+    const kinds = (section.catalogs ?? []).map(({kind}) => kind);
+    const [first] = kinds;
+    if (first && !kinds.includes(search.get("kind") ?? "")) search.set("kind", first);
+    search.set("city", city);
+    return search;
 }

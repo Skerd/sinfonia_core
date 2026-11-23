@@ -15,6 +15,7 @@ import {NativeSelect} from "@coreModule/components/ui/native-select.tsx";
 import {RadioGroup, RadioGroupItem} from "@coreModule/components/ui/radio-group.tsx";
 import {usePortalSession} from "@coreModule/clients/portal/shared/portalSession.tsx";
 import {usePortalSite} from "@coreModule/clients/portal/shared/portalSiteContext.tsx";
+import {usePortalTitle} from "@coreModule/clients/portal/shared/portalTitle.ts";
 import {companySiteOrigin} from "@coreModule/clients/portal/shared/portalZone.ts";
 import {getPortalContributions, portalBusinessTypesOf} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
 import {isValidSiteSlug, resolveSiteSlug} from "armonia/src/modules/core/api/company/private/company/siteSlug.ts";
@@ -135,6 +136,8 @@ function NewBusinessPage({resolveLanguageKey}: WithLanguageType) {
         if (logo) payload.append("files", logo);
         setCreateCall((current) => ({form: payload, count: current.count + 1}));
     }
+
+    usePortalTitle(created ? resolveLanguageKey("doneTitle").replace("{name}", created.name) : resolveLanguageKey("title"));
 
     if (created) {
         return (

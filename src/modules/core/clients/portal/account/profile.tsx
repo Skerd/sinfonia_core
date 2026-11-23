@@ -16,6 +16,7 @@ import type {UserProfileSurnameFormResponse} from "armonia/src/modules/core/api/
 import type {PhoneNumberFormResponseType} from "armonia/src/modules/core/api/user/private/data/phoneNumber.form.response.type.ts";
 import type {EmailPreferencesFormResponse} from "armonia/src/modules/core/api/user/private/data/emailPreferences.form.response.type.ts";
 import FormStatus from "../shared/formStatus.tsx";
+import {usePortalTitle} from "../shared/portalTitle.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
@@ -26,6 +27,7 @@ const LANGUAGE_PATH = "src/modules/core/clients/portal/account/profile.tsx";
 type FieldErrors = Partial<Record<"name" | "surname" | "phoneNumber" | "newEmail", string>>;
 
 function ProfilePageInner({resolveLanguageKey, languageCode}: WithLanguageType) {
+    usePortalTitle(resolveLanguageKey("title"));
     const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");

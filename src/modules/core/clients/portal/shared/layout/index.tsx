@@ -16,6 +16,7 @@ import PortalProgressBar from "../portalProgress.tsx";
 import {useFadeInOnChange} from "@coreModule/helpers/hooks/useFadeInOnChange.ts";
 import {isAccountTabSwitch} from "../accountArea.ts";
 import {usePortalSectionTexts} from "../portalSectionTexts.ts";
+import {usePortalTitleReset} from "../portalTitle.ts";
 
 /**
  * Portal chrome around every page (and a company site's visitor chat). A host the portal does not know shows only
@@ -33,6 +34,7 @@ function PortalLayout({resolveLanguageKey, languageCode}: WithLanguageType) {
     const onHostPage = portalHostPagesOf(getPortalContributions()).some(({path}) => matchPath(`/${path}`, pathname) !== null);
     usePortalLinkIntent(site, sections);
     usePortalSectionTexts(sections, languageCode);
+    usePortalTitleReset();
 
     const page = useRef<HTMLDivElement>(null);
     // A tab of the same account area is faded by its shell, beside the list that stays.

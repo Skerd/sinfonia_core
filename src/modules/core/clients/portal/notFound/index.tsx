@@ -3,8 +3,10 @@ import {Link} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
+import {usePortalTitle} from "../shared/portalTitle.ts";
 
 function PortalNotFound({resolveLanguageKey}: WithLanguageType) {
+    usePortalTitle(resolveLanguageKey("title"));
     return (
         <Empty className="site-container py-24">
             <EmptyHeader>

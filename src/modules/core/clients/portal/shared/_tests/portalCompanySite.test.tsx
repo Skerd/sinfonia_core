@@ -11,7 +11,7 @@ vi.mock("@coreModule/helpers/hocs/withLanguage.tsx", () => ({
         <Wrapped {...props} languageCode="en-US" resolveLanguageKey={(key: string) => key} />
     ),
 }));
-vi.mock("../portalSiteContext.tsx", () => ({usePortalSite: () => ({site: {scope: "platform"}, sections: []})}));
+vi.mock("../portalSiteContext.tsx", () => ({usePortalSite: () => ({site: {scope: "platform", company: {name: "Kudoo"}}, sections: []})}));
 vi.mock("../../blog/index.tsx", () => ({BlogSection: () => null}));
 vi.mock("../../notFound/index.tsx", () => ({default: () => <p>not found</p>}));
 
@@ -23,9 +23,9 @@ const Site = () => null;
 const contribution = {section: "carRental", path: "car-rental", CompanySite: Site};
 
 /** The apex company site's pages as the portal mounts them, with one page inside. */
-function mount() {
+function mount(path = "/car-rental/rental/categories/suv") {
     return render(
-        <MemoryRouter initialEntries={["/car-rental/rental/categories/suv"]}>
+        <MemoryRouter initialEntries={[path]}>
             <Routes>
                 <Route path="car-rental/:company/*" element={<PortalCompanySite contribution={contribution}><p>the company's page</p></PortalCompanySite>} />
             </Routes>
@@ -61,5 +61,19 @@ describe("PortalCompanySite", () => {
         await act(async () => answer({data: {data: []}}));
         expect(screen.getByText("not found")).toBeInTheDocument();
         expect(screen.queryByText("the company's page")).toBeNull();
+    });
+
+    it("names the company's own page after it in the browser tab, and leaves its inner pages to name themselves (D181)", async () => {
+        document.title = "Server title";
+        const index = mount("/car-rental/rental");
+        await act(async () => answer({data: {data: [{name: "Adriatic Drive", slug: "rental", cities: []}]}}));
+        expect(document.title).toBe("Adriatic Drive · Kudoo");
+        index.unmount();
+
+        clearResponseCache();
+        document.title = "Server title";
+        mount();
+        await act(async () => answer({data: {data: [{name: "Adriatic Drive", slug: "rental", cities: []}]}}));
+        expect(document.title).toBe("Server title");
     });
 });

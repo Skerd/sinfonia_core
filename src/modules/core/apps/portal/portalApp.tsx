@@ -21,6 +21,7 @@ import {getPortalContributions, portalHostPagesOf} from "@coreModule/helpers/mod
 import {WebSocketProvider} from "@coreModule/helpers/context/webSocketContext.tsx";
 
 const HomePage = lazy(() => import("@coreModule/clients/portal/home/index.tsx"));
+const LandingPage = lazy(() => import("@coreModule/clients/portal/landing/index.tsx"));
 const BlogPage = lazy(() => import("@coreModule/clients/portal/blog/index.tsx"));
 const BlogArticlePage = lazy(() => import("@coreModule/clients/portal/blog/article.tsx"));
 const AccountLayout = lazy(() => import("@coreModule/clients/portal/account/layout.tsx"));
@@ -52,7 +53,8 @@ function SectionProviders({children}: {children: ReactNode}) {
 /**
  * The pages of the sections this host offers, and the modules' host pages. A section spanning companies (the shop) and a
  * company's own site live under `/<path>/*`; on the apex a company's pages live under
- * `/<path>/<company>/*`, and `/<path>` itself opens the section's items in the home catalog.
+ * `/<path>/<company>/*`, and `/<path>` itself opens the section's items in the home catalog; `/<path>/in/<city>` is the
+ * section's landing page for a city.
  */
 function PortalRoutes() {
     const {site, sections} = usePortalSite();
@@ -97,6 +99,14 @@ function PortalRoutes() {
                         <Route key={`host-${path}`} path={path} element={<ErrorBoundary><Page /></ErrorBoundary>} />
                     ))}
                 </Route>
+                {/* A section's offers in one city (D181), on the apex only; the fixed `in` outranks `/<path>/<company>/*`. */}
+                {companyHost ? null : sections.map((contribution) => (
+                    <Route
+                        key={`${contribution.section}-landing`}
+                        path={`${contribution.path}/in/:city`}
+                        element={<ErrorBoundary><LandingPage section={contribution} /></ErrorBoundary>}
+                    />
+                ))}
                 {sections.map((contribution) => {
                     const {section, path, CompanySite} = contribution;
                     const Site = contribution.SectionSite ?? (companyHost ? CompanySite : undefined);

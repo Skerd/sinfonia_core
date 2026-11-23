@@ -2,7 +2,8 @@ import {useEffect, useRef} from "react";
 import {prefetchHttpRequest} from "@coreModule/helpers/apiClient/responseCache.ts";
 import type {PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
 import type {PortalSite} from "armonia/src/modules/core/api/portal/public/portal/portal.dto.ts";
-import {BROWSE_REQUEST, browseForm} from "../home/catalogBrowse.ts";
+import {portalCitySlug} from "armonia/src/modules/core/helpers/slug.ts";
+import {BROWSE_REQUEST, browseForm, landingSearch} from "../home/catalogBrowse.ts";
 import {COMPANIES_REQUEST, companyLookupBody} from "./portalCompanies.ts";
 import {rememberImageOrigin} from "./portalImageMotion.ts";
 import {endPortalNavigation, startPortalNavigation} from "./portalProgress.tsx";
@@ -32,7 +33,7 @@ function internalLink(target: EventTarget | null): {anchor: HTMLAnchorElement; u
  * Asks ahead for what the page behind `url` opens with: the home catalog's results, the code of the visitor's own
  * pages, an apex company site's company, and whatever the section's own `prefetch` loads (the page's code and reads).
  */
-export function prefetchPortalLink(url: URL, site: Pick<PortalSite, "scope"> | null | undefined, sections: readonly PortalSection[]): void {
+export function prefetchPortalLink(url: URL, site: Pick<PortalSite, "scope" | "landings"> | null | undefined, sections: readonly PortalSection[]): void {
     const accountPage = ACCOUNT_PAGES[url.pathname.replace(/\/$/, "")];
     if (accountPage) {
         void import("../account/layout.tsx");
@@ -47,6 +48,13 @@ export function prefetchPortalLink(url: URL, site: Pick<PortalSite, "scope"> | n
     }
     const section = sections.find((candidate) => candidate.path === first);
     if (!section) return;
+    // A city landing page (D181), on the apex: its code and its catalog's results, never a company called "in".
+    if (site?.scope !== "company" && rest[0] === "in" && rest.length === 2) {
+        void import("../landing/index.tsx");
+        const landing = site?.landings.find((candidate) => candidate.section === section.section && portalCitySlug(candidate.city) === rest[1]);
+        if (landing) prefetchHttpRequest(BROWSE_REQUEST, browseForm(landingSearch(url.searchParams, section, landing.city)));
+        return;
+    }
     // On the apex a company's pages sit under `/<path>/<company>`, unless the segment is one of the section's own pages.
     const companySite = !section.SectionSite && !!section.CompanySite && site?.scope !== "company"
         && !(section.sectionPages ?? []).some((page) => page.path === rest[0]);

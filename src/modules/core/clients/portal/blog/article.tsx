@@ -16,6 +16,7 @@ import type {
 import {companySiteOrigin} from "../shared/portalZone.ts";
 import type {PublicBlogSingleFormResponseType} from "armonia/src/modules/core/api/auxiliary/public/blog/blogSingle.form.response.type.ts";
 import {usePortalSite} from "../shared/portalSiteContext.tsx";
+import {usePortalTitle} from "../shared/portalTitle.ts";
 import BlogCard, {blogMetaLine} from "./blogCard.tsx";
 import {useBlogCompanyQuery, withCompany} from "./blogCompany.ts";
 
@@ -159,6 +160,8 @@ function BlogArticlePage({resolveLanguageKey}: WithLanguageType) {
             toast.error(resolveLanguageKey("linkCopyFailed"));
         }
     }
+
+    usePortalTitle(loading ? undefined : post ? post.title : resolveLanguageKey("notFound"));
 
     if (loading) {
         return (

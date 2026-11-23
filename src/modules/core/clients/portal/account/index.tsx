@@ -2,10 +2,12 @@ import {compose} from "redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import PortalSectionName from "../shared/portalSectionName.tsx";
 import {usePortalSite} from "../shared/portalSiteContext.tsx";
+import {usePortalTitle} from "../shared/portalTitle.ts";
 
 /** The visitor's bookings and orders, one block per section this host offers (behind `RequireSession`). */
 function PortalAccountPage({resolveLanguageKey}: WithLanguageType) {
     const {sections} = usePortalSite();
+    usePortalTitle(resolveLanguageKey("title"));
 
     return (
         <div className="flex flex-col gap-12">

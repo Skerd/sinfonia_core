@@ -14,6 +14,7 @@ import PortalSectionName from "./portalSectionName.tsx";
 import {PortalListedCompanyProvider} from "./portalListedCompany.tsx";
 import {SectionBaseProvider, sectionHref} from "./sectionBase.tsx";
 import {companySiteOrigin} from "./portalZone.ts";
+import {usePortalTitle} from "./portalTitle.ts";
 import {BlogSection} from "../blog/index.tsx";
 import {COMPANIES_REQUEST, companyLookupBody} from "./portalCompanies.ts";
 
@@ -46,13 +47,15 @@ function PortalCompanySite({contribution, children, resolveLanguageKey}: PortalC
     const {data, loading, error} = useHttpRequest<PortalCompaniesResponse>(COMPANIES_REQUEST, body, lookup.count);
     const card: PortalCompanyCard | null | undefined = loading ? undefined : error ? null : data ? data.data[0] ?? null : undefined;
 
-    if (card === null) return <PortalNotFound />;
     const companySlug = card?.slug ?? slug;
-    const siteOrigin = companySiteOrigin(companySlug);
-
-    const visitHref = siteOrigin ? `${siteOrigin}/${contribution.path}` : undefined;
     const companyBase = `/${contribution.path}/${companySlug}`;
     const onCompanyIndex = pathname === companyBase || pathname === `${companyBase}/`;
+    // The company's own page is named after it; its inner pages (a car, a treatment) name themselves.
+    usePortalTitle(card && onCompanyIndex ? card.name : undefined);
+
+    if (card === null) return <PortalNotFound />;
+    const siteOrigin = companySiteOrigin(companySlug);
+    const visitHref = siteOrigin ? `${siteOrigin}/${contribution.path}` : undefined;
 
     return (
         <PortalListedCompanyProvider company={card ? {name: card.name, slug: card.slug, logo: card.logo, visitHref} : null}>

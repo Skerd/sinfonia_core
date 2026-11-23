@@ -33,6 +33,7 @@ const LISTED_SITE: PortalSite = {
     platform: {name: "Platform"},
     cities: [],
     sections: [],
+    landings: [],
 };
 
 /** Serves `/api/portal/site`: the listed host's site, or the refusal an unlisted host gets (`site === null`). */

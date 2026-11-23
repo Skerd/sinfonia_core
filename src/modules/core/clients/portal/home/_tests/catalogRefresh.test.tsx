@@ -42,7 +42,7 @@ describe("the home catalog while it loads other results", () => {
 
         let answer: (value: {data: unknown}) => void = () => undefined;
         apiClientMock.mockImplementationOnce(() => new Promise((resolve) => { answer = resolve; }));
-        fireEvent.mouseDown(screen.getByRole("tab", {name: "vehicleCategory"}));
+        fireEvent.click(screen.getByRole("tab", {name: "vehicleCategory"}));
 
         // The chosen kind's results from the last answer stay, busy; no skeletons in between.
         expect(screen.getByText("Item c1").closest("[aria-busy='true']")).not.toBeNull();

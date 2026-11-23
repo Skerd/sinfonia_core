@@ -2,6 +2,7 @@
   "path": "src/modules/core/clients/portal/home/index.tsx",
   "title": "Alles aus der Nähe, an einem Ort",
   "subtitle": "Einkaufen, ein Auto mieten, zum Zahnarzt oder ein neues Zuhause finden, bei Firmen in Ihrer Nähe.",
+  "byCity": "Nach Stadt entdecken",
   "what": "Was",
   "where": "Wo",
   "whatPlaceholder": "Produkt, Behandlung, Auto, Projekt…",

@@ -1,6 +1,6 @@
 import {compose} from "redux";
 import {useLayoutEffect, useMemo, useRef, useState} from "react";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import {toast} from "sonner";
 import {IconBellPlus, IconCheck} from "@tabler/icons-react";
 import {cn} from "@coreModule/components/lib/utils.ts";
@@ -31,7 +31,8 @@ import {SectionBaseProvider} from "../shared/sectionBase.tsx";
 import {CATALOG_FILTER_PREFIX, CatalogFilterField, CatalogNumberInput} from "../shared/catalogFilters.tsx";
 import {usePortalSaved} from "../shared/portalSaved.tsx";
 import CatalogCard from "./catalogCard.tsx";
-import {BROWSE_REQUEST, CATALOG_PAGE_SIZE, browseForm} from "./catalogBrowse.ts";
+import type {PortalSection} from "@coreModule/helpers/types/portalContribution.types.ts";
+import {BROWSE_REQUEST, CATALOG_PAGE_SIZE, browseForm, landingSearch} from "./catalogBrowse.ts";
 import {isSavableSearch, savedSearchLabel, savedSearchQuery} from "./savedSearch.ts";
 
 const ALL = "all";
@@ -58,7 +59,7 @@ function CardGrid({children, busyLabel}: {children: React.ReactNode; busyLabel?:
 }
 
 /** The kinds' names ("Cars"), from the one dictionary every page that lists kinds reads. */
-const KIND_NAMES = "src/modules/core/clients/portal/shared/portalKindName.tsx";
+export const KIND_NAMES = "src/modules/core/clients/portal/shared/portalKindName.tsx";
 
 /**
  * "Save this search" (D178, P23.7): keeps the search on screen (kind, words, city, price, the kind's filters) in the
@@ -105,12 +106,18 @@ function SaveSearchButton({params, resolveLanguageKey}: {params: URLSearchParams
     );
 }
 
+type CatalogProps = WithLanguageType & {
+    /** A city landing page (D181): only this section's kinds, all in this city, the first kind while the address names none. */
+    landing?: {section: PortalSection; city: string};
+};
+
 /** Every kind the host's sections list, as tabs; the chosen kind's filters; its items. */
-function Catalog({resolveLanguageKey}: WithLanguageType) {
+function Catalog({landing, resolveLanguageKey}: CatalogProps) {
     const {sections} = usePortalSite();
     const [params, setParams] = useSearchParams();
-    const form = useMemo(() => browseForm(params), [params]);
-    const catalogs = sections.flatMap((section) => (section.catalogs ?? []).map((catalog) => ({...catalog, path: section.path})));
+    const search = useMemo(() => landing ? landingSearch(params, landing.section, landing.city) : params, [params, landing]);
+    const form = useMemo(() => browseForm(search), [search]);
+    const catalogs = (landing ? [landing.section] : sections).flatMap((section) => (section.catalogs ?? []).map((catalog) => ({...catalog, path: section.path})));
     const active = catalogs.find((catalog) => catalog.kind === form.kind);
     const kindTabs = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
@@ -132,16 +139,24 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
             return next;
         });
     };
-    const selectKind = (kind: string) => update((next) => {
-        [...next.keys()].filter((key) => key.startsWith(CATALOG_FILTER_PREFIX) || KIND_PARAMS.includes(key)).forEach((key) => next.delete(key));
-        if (kind === ALL) next.delete("kind"); else next.set("kind", kind);
-    });
     const setParam = (key: string, value: string) => update((next) => {
         if (value) next.set(key, value); else next.delete(key);
         if (key !== "page") next.delete("page");
     });
 
     if (catalogs.length === 0) return null;
+    // Choosing a kind is a link a search engine follows too: the same address the tab used to write (D181).
+    const defaultKind = landing ? catalogs[0].kind : ALL;
+    const kindHref = (kind: string) => {
+        const next = new URLSearchParams(params);
+        [...next.keys()].filter((key) => key.startsWith(CATALOG_FILTER_PREFIX) || KIND_PARAMS.includes(key)).forEach((key) => next.delete(key));
+        if (kind === defaultKind) next.delete("kind"); else next.set("kind", kind);
+        return `?${next}`;
+    };
+    const tabs = [
+        ...(landing ? [] : [{kind: ALL, label: resolveLanguageKey("all")}]),
+        ...catalogs.map((catalog) => ({kind: catalog.kind, label: <PortalKindName kind={catalog.kind} />})),
+    ];
     const page = form.page ?? 1;
     const group = active ? groups?.find((candidate) => candidate.kind === active.kind) : undefined;
     const pageCount = group ? Math.ceil(group.total / CATALOG_PAGE_SIZE) : 0;
@@ -157,22 +172,26 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
 
     return (
         <section className="flex flex-col gap-6" aria-label={resolveLanguageKey("label")}>
-            <Tabs value={active?.kind ?? ALL} onValueChange={selectKind}>
-                <TabsList ref={kindTabs} className="relative h-8 w-full min-w-0 max-w-full justify-start overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:w-fit">
-                    {/* The chosen kind's highlight slides from tab to tab. */}
-                    <SlidingIndicator activeKey={active?.kind ?? ALL} className="rounded-md bg-background shadow-sm dark:border dark:border-input dark:bg-input/30" />
-                    {[{kind: ALL, label: resolveLanguageKey("all")}, ...catalogs.map((catalog) => ({kind: catalog.kind, label: <PortalKindName kind={catalog.kind} />}))].map(({kind, label}) => (
-                        <TabsTrigger
-                            key={kind}
-                            value={kind}
-                            data-indicator-active={(active?.kind ?? ALL) === kind ? "" : undefined}
-                            className="flex-none px-3 data-active:bg-transparent group-data-[variant=default]/tabs-list:data-active:shadow-none dark:data-active:border-transparent dark:data-active:bg-transparent"
-                        >
-                            {label}
-                        </TabsTrigger>
-                    ))}
-                </TabsList>
-            </Tabs>
+            {/* Each tab is a link (the address holds the kind); arrow keys move between them, Enter follows one. One kind needs no tabs. */}
+            {tabs.length > 1 ? (
+                <Tabs value={active?.kind ?? ALL} activationMode="manual">
+                    <TabsList ref={kindTabs} className="relative h-8 w-full min-w-0 max-w-full justify-start overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:w-fit">
+                        {/* The chosen kind's highlight slides from tab to tab. */}
+                        <SlidingIndicator activeKey={active?.kind ?? ALL} className="rounded-md bg-background shadow-sm dark:border dark:border-input dark:bg-input/30" />
+                        {tabs.map(({kind, label}) => (
+                            <TabsTrigger
+                                key={kind}
+                                value={kind}
+                                asChild
+                                data-indicator-active={(active?.kind ?? ALL) === kind ? "" : undefined}
+                                className="flex-none px-3 data-active:bg-transparent group-data-[variant=default]/tabs-list:data-active:shadow-none dark:data-active:border-transparent dark:data-active:bg-transparent"
+                            >
+                                <Link to={kindHref(kind)}>{label}</Link>
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
+                </Tabs>
+            ) : null}
 
             {active?.Intro ? <SectionBaseProvider base={`/${active.path}`}><active.Intro /></SectionBaseProvider> : null}
 
@@ -198,7 +217,7 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
             ) : null}
 
             <div className="flex justify-end empty:hidden">
-                <SaveSearchButton params={params} resolveLanguageKey={resolveLanguageKey} />
+                <SaveSearchButton params={search} resolveLanguageKey={resolveLanguageKey} />
             </div>
 
             {groups === undefined ? (
@@ -255,8 +274,8 @@ function Catalog({resolveLanguageKey}: WithLanguageType) {
                             <div key={catalog.kind} className="flex flex-col gap-5">
                                 <div className="flex items-baseline justify-between gap-4">
                                     <h2 className="font-display text-2xl font-bold tracking-tight"><PortalKindName kind={catalog.kind} /></h2>
-                                    <Button variant="link" className="h-auto p-0" onClick={() => selectKind(catalog.kind)}>
-                                        {resolveLanguageKey("seeAll").replace("{count}", String(rail.total))}
+                                    <Button asChild variant="link" className="h-auto p-0">
+                                        <Link to={kindHref(catalog.kind)}>{resolveLanguageKey("seeAll").replace("{count}", String(rail.total))}</Link>
                                     </Button>
                                 </div>
                                 <CardGrid>{rail.items.map((item, index) => <CatalogCard key={`${item.section}-${item.id}`} item={item} index={index} />)}</CardGrid>

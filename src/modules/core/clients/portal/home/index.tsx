@@ -1,8 +1,9 @@
 import {IconWorld, IconMail, IconMapPin, IconPhone, IconSearch} from "@tabler/icons-react";
 import {useEffect, useRef, useState} from "react";
 import {compose} from "redux";
-import {useSearchParams} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
+import {useDynamicLanguage} from "@coreModule/helpers/hooks/useDynamicLanguage.ts";
 import {cn} from "@coreModule/components/lib/utils.ts";
 import {Avatar, AvatarFallback, AvatarImage} from "@coreModule/components/ui/avatar.tsx";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
@@ -12,8 +13,11 @@ import type {PortalSiteCompany} from "armonia/src/modules/core/api/portal/public
 import {usePortalSite} from "../shared/portalSiteContext.tsx";
 import {searchPlaceholder} from "../shared/searchPlaceholder.ts";
 import {SectionBaseProvider} from "../shared/sectionBase.tsx";
+import PortalSectionName from "../shared/portalSectionName.tsx";
+import {usePortalLandings} from "../shared/portalLandings.ts";
+import {usePortalTitle} from "../shared/portalTitle.ts";
 import {BlogSection} from "../blog/index.tsx";
-import Catalog from "./catalog.tsx";
+import Catalog, {KIND_NAMES} from "./catalog.tsx";
 
 type ResolveLanguageKey = WithLanguageType["resolveLanguageKey"];
 
@@ -283,13 +287,44 @@ function CompanyIntro({company, resolveLanguageKey}: {company: PortalSiteCompany
     );
 }
 
+/** The city landing pages (D181), by section: "Car rental in Tirana", for visitors and search engines alike. */
+function LandingLinks({resolveLanguageKey}: {resolveLanguageKey: ResolveLanguageKey}) {
+    const groups = usePortalLandings();
+    if (groups.length === 0) return null;
+
+    return (
+        <section className="flex flex-col gap-6" aria-labelledby="portal-landings">
+            <h2 id="portal-landings" className="font-display text-2xl font-bold tracking-tight">{resolveLanguageKey("byCity")}</h2>
+            <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+                {groups.map(({section, links}) => (
+                    <div key={section.section} className="flex flex-col gap-3">
+                        <h3 className="text-sm font-semibold"><PortalSectionName section={section.section} /></h3>
+                        <ul className="flex flex-col gap-2">
+                            {links.map(({href, label}) => (
+                                <li key={href}>
+                                    <Link to={href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">{label}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+}
+
 /** The home page: the site's intro, one search across everything, the sections' own blocks, the catalog, then the journal. */
 function PortalHomePage({resolveLanguageKey}: WithLanguageType) {
     const {site, sections} = usePortalSite();
     const [params] = useSearchParams();
+    const kindNames = useDynamicLanguage(KIND_NAMES);
+    const kind = params.get("kind");
+    const kindName = kind && kindNames.currentLanguage ? kindNames.resolveLanguageKey(`${kind}.tab`, true) ?? kind : undefined;
+    // The site's name alone, or the kind the catalog shows: "Cars · Kudoo".
+    usePortalTitle(kind ? kindName : null);
     if (!site) return null;
     // The sections' showcases sit above an unfiltered catalog only.
-    const browsing = !params.get("kind") && !params.get("q") && !params.get("city");
+    const browsing = !kind && !params.get("q") && !params.get("city");
 
     return (
         <div className="site-container flex flex-col gap-12 py-8 sm:gap-16 sm:py-12">
@@ -308,6 +343,7 @@ function PortalHomePage({resolveLanguageKey}: WithLanguageType) {
                 <SectionBaseProvider key={section} base={`/${path}`}><Home /></SectionBaseProvider>
             ) : null) : null}
             <Catalog />
+            {browsing ? <LandingLinks resolveLanguageKey={resolveLanguageKey} /> : null}
             {browsing ? <BlogSection /> : null}
         </div>
     );

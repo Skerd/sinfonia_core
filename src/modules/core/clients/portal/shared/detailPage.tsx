@@ -12,6 +12,8 @@ import {
     BreadcrumbSeparator,
 } from "@coreModule/components/ui/breadcrumb.tsx";
 import PortalKindName from "./portalKindName.tsx";
+import {usePortalTitle} from "./portalTitle.ts";
+import {PortalKeepButton, type PortalKeepItem} from "./portalSaved.tsx";
 
 /*
  * The page a catalog card opens, the same frame for every kind: where the item sits, its
@@ -22,6 +24,7 @@ import PortalKindName from "./portalKindName.tsx";
 type DetailPageProps = WithLanguageType & {
     /** The item's catalog kind; its crumb opens that tab of the home catalog. */
     kind: string;
+    /** The item's name; it also names the page in the browser tab. */
     title: string;
     /** Crumbs between the kind and the item: a product's category, a unit's development. */
     crumbs?: readonly {label: string; to: string}[];
@@ -32,36 +35,42 @@ type DetailPageProps = WithLanguageType & {
     children: ReactNode;
     /** Full-width sections under the item: reviews, units, more of the kind. */
     below?: ReactNode;
+    /** The item as the catalog lists it, for the card's heart beside the breadcrumb (TD-F148); none on a page no card opens. */
+    keep?: PortalKeepItem;
 };
 
-function DetailPage({kind, title, crumbs = [], media, story, children, below, resolveLanguageKey}: DetailPageProps) {
+function DetailPage({kind, title, crumbs = [], media, story, children, below, keep, resolveLanguageKey}: DetailPageProps) {
+    usePortalTitle(title);
     return (
         // Fades in as it takes over from the page's loading placeholder.
         <div className="flex flex-col gap-16 transition-opacity duration-300 ease-out starting:opacity-0 sm:gap-20">
             <div className="flex flex-col gap-6">
-                <Breadcrumb aria-label={resolveLanguageKey("breadcrumb")}>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild><Link to="/">{resolveLanguageKey("home")}</Link></BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild><Link to={`/?${new URLSearchParams({kind})}`}><PortalKindName kind={kind} /></Link></BreadcrumbLink>
-                        </BreadcrumbItem>
-                        {crumbs.map((crumb) => (
-                            <Fragment key={crumb.to}>
-                                <BreadcrumbSeparator />
-                                <BreadcrumbItem>
-                                    <BreadcrumbLink asChild><Link to={crumb.to}>{crumb.label}</Link></BreadcrumbLink>
-                                </BreadcrumbItem>
-                            </Fragment>
-                        ))}
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage className="max-w-64 truncate">{title}</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
+                <div className="flex items-center justify-between gap-4">
+                    <Breadcrumb aria-label={resolveLanguageKey("breadcrumb")}>
+                        <BreadcrumbList>
+                            <BreadcrumbItem>
+                                <BreadcrumbLink asChild><Link to="/">{resolveLanguageKey("home")}</Link></BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator />
+                            <BreadcrumbItem>
+                                <BreadcrumbLink asChild><Link to={`/?${new URLSearchParams({kind})}`}><PortalKindName kind={kind} /></Link></BreadcrumbLink>
+                            </BreadcrumbItem>
+                            {crumbs.map((crumb) => (
+                                <Fragment key={crumb.to}>
+                                    <BreadcrumbSeparator />
+                                    <BreadcrumbItem>
+                                        <BreadcrumbLink asChild><Link to={crumb.to}>{crumb.label}</Link></BreadcrumbLink>
+                                    </BreadcrumbItem>
+                                </Fragment>
+                            ))}
+                            <BreadcrumbSeparator />
+                            <BreadcrumbItem>
+                                <BreadcrumbPage className="max-w-64 truncate">{title}</BreadcrumbPage>
+                            </BreadcrumbItem>
+                        </BreadcrumbList>
+                    </Breadcrumb>
+                    {keep ? <PortalKeepButton item={keep} /> : null}
+                </div>
 
                 {media ? (
                     <div className="grid items-start gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14">

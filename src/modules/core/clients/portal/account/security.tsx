@@ -11,6 +11,7 @@ import {deactivateMfaFormSchema} from "armonia/src/modules/core/api/user/private
 import type {MfaStatusFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/mfaStatus.form.response.type.ts";
 import type {GenerateMfaQrCodeFormResponseType} from "armonia/src/modules/core/api/user/private/mfa/generateMfaQrCode.form.response.type.ts";
 import FormStatus from "../shared/formStatus.tsx";
+import {usePortalTitle} from "../shared/portalTitle.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Label} from "@coreModule/components/ui/label.tsx";
 import {Input} from "@coreModule/components/ui/input.tsx";
@@ -27,6 +28,7 @@ const MFA_DISABLE_REQUEST = {method: "delete" as const, url: "/api/user/mfa", da
 type PasswordErrors = Partial<Record<"currentPassword" | "newPassword" | "confirmPassword", string>>;
 
 function SecurityPageInner({resolveLanguageKey, languageCode}: WithLanguageType) {
+    usePortalTitle(resolveLanguageKey("title"));
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");

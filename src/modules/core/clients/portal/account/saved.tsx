@@ -13,6 +13,7 @@ import {Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle} from "@c
 import type {PortalSavedResponse, PortalSavedSearch, PortalSavedSearchResponse} from "armonia/src/modules/core/api/portal/private/saved/portalSaved.dto.ts";
 import CatalogCard from "../home/catalogCard.tsx";
 import {savedSearchHref} from "../home/savedSearch.ts";
+import {usePortalTitle} from "../shared/portalTitle.ts";
 
 const SAVED_REQUEST = {method: "post" as const, url: "/api/portal/saved", data: {}};
 
@@ -74,6 +75,7 @@ function SavedSearchRow({search, onChange, onDelete, resolveLanguageKey}: Pick<W
  * saved searches with the daily email of what is new.
  */
 function PortalSavedPage({resolveLanguageKey}: WithLanguageType) {
+    usePortalTitle(resolveLanguageKey("title"));
     const {data, loading, error} = useHttpRequest<PortalSavedResponse>(SAVED_REQUEST, {}, 1);
     // Changes made here; the page's answer stays as it was loaded.
     const [searches, setSearches] = useState<PortalSavedSearch[] | null>(null);

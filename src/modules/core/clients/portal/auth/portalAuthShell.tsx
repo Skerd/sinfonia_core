@@ -1,8 +1,10 @@
 import type {ReactNode} from "react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@coreModule/components/ui/card.tsx";
+import {usePortalTitle} from "../shared/portalTitle.ts";
 
-/** Card the portal's account screens share. */
-export default function PortalAuthShell({title, subtitle, children}: {title: ReactNode; subtitle?: ReactNode; children: ReactNode}) {
+/** Card the portal's account screens share; its title also names the page in the browser tab. */
+export default function PortalAuthShell({title, subtitle, children}: {title: string; subtitle?: ReactNode; children: ReactNode}) {
+    usePortalTitle(title);
     return (
         <div className="site-container flex justify-center py-10 sm:py-16">
             <Card className="w-full max-w-md">

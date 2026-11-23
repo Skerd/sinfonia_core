@@ -2,6 +2,7 @@
   "path": "src/modules/core/clients/portal/home/index.tsx",
   "title": "Tout ce qui est local, au même endroit",
   "subtitle": "Faites vos achats, louez une voiture, consultez un dentiste ou trouvez votre prochain logement auprès des entreprises près de chez vous.",
+  "byCity": "Explorer par ville",
   "what": "Quoi",
   "where": "Où",
   "whatPlaceholder": "Produit, soin, voiture, projet…",

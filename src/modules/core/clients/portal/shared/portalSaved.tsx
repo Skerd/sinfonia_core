@@ -11,12 +11,15 @@ import type {PortalCatalogItem} from "armonia/src/modules/core/api/portal/public
 import type {PortalFavouriteKeysResponse} from "armonia/src/modules/core/api/portal/private/saved/portalSaved.dto.ts";
 import {usePortalSession} from "./portalSession.tsx";
 
+/** What keeping an item needs: a card's item, or a detail page's own (TD-F148). */
+export type PortalKeepItem = Pick<PortalCatalogItem, "kind" | "id" | "section" | "path" | "title">;
+
 type PortalSavedValue = {
     /** Keeping items and saving searches need an account. */
     signedIn: boolean;
     isKept: (item: Pick<PortalCatalogItem, "kind" | "id">) => boolean;
     /** Keeps the item, or drops it when kept. */
-    toggleKept: (item: PortalCatalogItem) => Promise<void>;
+    toggleKept: (item: PortalKeepItem) => Promise<void>;
     /** Sends a signed-out visitor to sign in, and back to this page after. */
     signIn: () => void;
 };
@@ -58,7 +61,7 @@ export function PortalSavedProvider({children}: {children: ReactNode}) {
         navigate(`/login?next=${encodeURIComponent(`${pathname}${search}`)}`);
     }, [navigate, pathname, search]);
 
-    const toggleKept = useCallback(async (item: PortalCatalogItem) => {
+    const toggleKept = useCallback(async (item: PortalKeepItem) => {
         if (!account) {
             signIn();
             return;
@@ -99,8 +102,8 @@ export function usePortalSaved(): PortalSavedValue {
     return useContext(PortalSavedContext);
 }
 
-/** The heart on a card: keeps the item in the visitor's Saved tab; signed out, it asks them to sign in first. */
-function KeepButton({item, className, resolveLanguageKey}: WithLanguageType & {item: PortalCatalogItem; className?: string}) {
+/** The heart on a card and on an item's page: keeps the item in the visitor's Saved tab; signed out, it asks them to sign in first. */
+function KeepButton({item, className, resolveLanguageKey}: WithLanguageType & {item: PortalKeepItem; className?: string}) {
     const {isKept, toggleKept} = usePortalSaved();
     const kept = isKept(item);
     const label = String(resolveLanguageKey(kept ? "unkeep" : "keep")).replace("{title}", item.title);

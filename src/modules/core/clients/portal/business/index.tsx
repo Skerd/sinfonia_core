@@ -5,6 +5,7 @@ import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLangu
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {usePortalSite} from "@coreModule/clients/portal/shared/portalSiteContext.tsx";
+import {usePortalTitle} from "@coreModule/clients/portal/shared/portalTitle.ts";
 import {getPortalContributions, portalBusinessTypesOf} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
 import {isValidSiteSlug} from "armonia/src/modules/core/api/company/private/company/siteSlug.ts";
 
@@ -43,6 +44,7 @@ function ForBusinessesPage({resolveLanguageKey}: WithLanguageType) {
     const brand = site?.company.name ?? "";
     const businessTypes = portalBusinessTypesOf(getPortalContributions());
     const withBrand = (key: string) => resolveLanguageKey(key).replace("{brand}", brand);
+    usePortalTitle(resolveLanguageKey("eyebrow"));
 
     return (
         <div className="site-container flex flex-col gap-16 py-8 sm:py-12">

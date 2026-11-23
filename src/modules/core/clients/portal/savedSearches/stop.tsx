@@ -5,6 +5,7 @@ import useHttpRequest from "@coreModule/helpers/hooks/useHttpRequest.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {Skeleton} from "@coreModule/components/ui/skeleton.tsx";
 import {Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle} from "@coreModule/components/ui/empty.tsx";
+import {usePortalTitle} from "../shared/portalTitle.ts";
 import type {PortalSavedSearchStopResponse} from "armonia/src/modules/core/api/portal/private/saved/portalSaved.dto.ts";
 
 const STOP_REQUEST = {method: "post" as const, url: "/api/portal/savedSearchAlerts/stop", data: {}};
@@ -19,6 +20,7 @@ function SavedSearchStopPage({resolveLanguageKey}: WithLanguageType) {
     // Silent: the page itself says when the link does not work.
     const {data, error} = useHttpRequest<PortalSavedSearchStopResponse>(STOP_REQUEST, {token}, token ? 1 : 0);
     const failed = !token || Boolean(error);
+    usePortalTitle(data ? resolveLanguageKey("stopped") : failed ? resolveLanguageKey("invalid") : undefined);
 
     return (
         <Empty className="site-container py-24">
