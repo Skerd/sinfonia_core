@@ -32,5 +32,9 @@
     "pending": "Wartet auf Freigabe",
     "approved": "Freigegeben",
     "rejected": "Abgelehnt"
+  },
+  "signupFilter": "Anmeldung",
+  "signupVia": {
+    "selfServe": "Selbst angemeldet"
   }
 }

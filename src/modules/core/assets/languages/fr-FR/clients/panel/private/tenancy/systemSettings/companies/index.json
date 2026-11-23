@@ -32,5 +32,9 @@
     "pending": "En attente de validation",
     "approved": "Validée",
     "rejected": "Refusée"
+  },
+  "signupFilter": "Inscription",
+  "signupVia": {
+    "selfServe": "Inscrites elles-mêmes"
   }
 }

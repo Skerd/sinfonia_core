@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
-import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
+import type {Company, CompanySignupSource} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import CompanyCard from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/cardView/companyCard.tsx";
 import ActivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx";
 import DeactivateCompany from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx";
@@ -25,12 +25,18 @@ import {PORTAL_APPROVAL_STATUSES} from "armonia/src/modules/core/api/company/pri
 function AllCompanies({resolveLanguageKey}: WithLanguageType) {
     // Platform admins manage every company on the platform, not only the ones they belong to.
     const isPlatformAdmin = useSelector((state: RootState) => state.authentication.user.isPlatformAdmin);
-    // Self-serve companies waiting for the platform's approval to be listed on the portal (D178).
+    // Self-serve companies waiting for the platform's approval to be listed on the portal (D178), and the companies that
+    // signed themselves up (P23.9); the rest were created by the platform.
     const quickFilters = useMemo<QuickFilterDef[]>(() => isPlatformAdmin ? [{
         field: "portalApproval.status",
         label: resolveLanguageKey("approvalFilter"),
         type: COLUMN_TYPE.ENUM,
         enumValues: PORTAL_APPROVAL_STATUSES.map((value) => ({value, label: resolveLanguageKey(`approvalStatuses.${value}`)})),
+    }, {
+        field: "signupSource.via",
+        label: resolveLanguageKey("signupFilter"),
+        type: COLUMN_TYPE.ENUM,
+        enumValues: [{value: "selfServe" satisfies CompanySignupSource["via"], label: resolveLanguageKey("signupVia.selfServe")}],
     }] : [], [isPlatformAdmin, resolveLanguageKey]);
     return (
         <EntityListPage<Company>

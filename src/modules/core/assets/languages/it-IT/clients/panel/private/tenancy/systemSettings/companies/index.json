@@ -32,5 +32,9 @@
     "pending": "In attesa di approvazione",
     "approved": "Approvata",
     "rejected": "Rifiutata"
+  },
+  "signupFilter": "Iscrizione",
+  "signupVia": {
+    "selfServe": "Iscritte da sole"
   }
 }

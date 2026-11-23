@@ -32,5 +32,9 @@
     "pending": "Waiting for approval",
     "approved": "Approved",
     "rejected": "Rejected"
+  },
+  "signupFilter": "Signed up",
+  "signupVia": {
+    "selfServe": "By themselves"
   }
 }

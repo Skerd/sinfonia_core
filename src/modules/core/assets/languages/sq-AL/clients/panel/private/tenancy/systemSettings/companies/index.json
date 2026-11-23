@@ -32,5 +32,9 @@
     "pending": "Pret miratim",
     "approved": "E miratuar",
     "rejected": "E refuzuar"
+  },
+  "signupFilter": "Regjistrimi",
+  "signupVia": {
+    "selfServe": "Të regjistruara vetë"
   }
 }
