@@ -8,7 +8,18 @@
     "recent": "Zuletzt verwendet",
     "greetingMorning": "Guten Morgen",
     "greetingAfternoon": "Guten Tag",
-    "greetingEvening": "Guten Abend"
+    "greetingEvening": "Guten Abend",
+    "setup": {
+      "title": "Richten Sie Ihr Unternehmen ein",
+      "progress": "{done} von {total} erledigt",
+      "hide": "Diese Liste ausblenden",
+      "start": "Starten",
+      "done": "Erledigt",
+      "logo": "Logo hinzufügen",
+      "vat": "UID/MWST-Nummer erfassen",
+      "vatHint": "Nach der Prüfung erhält Ihr Unternehmen im Portal das Geprüft-Zeichen.",
+      "team": "Team einladen"
+    }
   },
   "menus": {
     "account": {

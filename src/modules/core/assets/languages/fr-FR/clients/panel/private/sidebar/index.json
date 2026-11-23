@@ -8,7 +8,18 @@
     "recent": "Récents",
     "greetingMorning": "Bonjour",
     "greetingAfternoon": "Bon après-midi",
-    "greetingEvening": "Bonsoir"
+    "greetingEvening": "Bonsoir",
+    "setup": {
+      "title": "Configurez votre entreprise",
+      "progress": "{done} sur {total} terminées",
+      "hide": "Masquer cette liste",
+      "start": "Commencer",
+      "done": "Terminé",
+      "logo": "Ajoutez votre logo",
+      "vat": "Ajoutez votre numéro de TVA",
+      "vatHint": "Une fois vérifié, votre entreprise obtient le badge Vérifiée sur le portail.",
+      "team": "Invitez votre équipe"
+    }
   },
   "menus": {
     "account": {

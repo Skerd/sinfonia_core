@@ -211,7 +211,25 @@ export type EntityListHeaderContext = {
      * permission: {@link EntityListCreateButton} offers "Request an entry" on the same create page.
      */
     canRequest: boolean;
+    /**
+     * Set by {@link EntityListPage}: the header's {@link EntityListCreateButton} names its create page here, so an
+     * empty list offers the same button (D178). Absent outside a list page.
+     */
+    offerCreate?: (target: ListCreateTarget | null) => void;
 };
+
+/** The create page a list's Create button opens, which an empty list offers too (D178). */
+type ListCreateTarget = {path: string; icon?: ReactNode; labelKey: string};
+
+function CreatePageButton({resolveLanguageKey, path, icon, labelKey}: ListCreateTarget & {resolveLanguageKey: ResolveLanguageKey}) {
+    const navigate = useNavigate();
+    return (
+        <Button type="button" onClick={(e) => {navigate(path); e.stopPropagation(); e.preventDefault();}}>
+            {icon}
+            <ButtonTitle>{resolveLanguageKey(labelKey)}</ButtonTitle>
+        </Button>
+    );
+}
 
 type EntityListHeaderProps = {
     ctx: EntityListHeaderContext;
@@ -260,14 +278,16 @@ type EntityListCreateButtonProps = {
  * requestable platform list the viewer may request on (the create page then sends a request, D160).
  */
 export function EntityListCreateButton({ctx, path, icon, labelKey = "create"}: EntityListCreateButtonProps) {
-    const navigate = useNavigate();
-    if (!ctx.canCreate) return ctx.canRequest ? <RequestEntryButton path={path} /> : null;
-    return (
-        <Button type="button" onClick={(e) => {navigate(path); e.stopPropagation(); e.preventDefault();}}>
-            {icon}
-            <ButtonTitle>{ctx.resolveLanguageKey(labelKey)}</ButtonTitle>
-        </Button>
-    );
+    const {canCreate, offerCreate} = ctx;
+    useEffect(() => {
+        if (!canCreate || !offerCreate) return;
+        offerCreate({path, icon, labelKey});
+        return () => offerCreate(null);
+        // The icon is a fresh element on every render; the path and label decide the target.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [canCreate, offerCreate, path, labelKey]);
+    if (!canCreate) return ctx.canRequest ? <RequestEntryButton path={path} /> : null;
+    return <CreatePageButton resolveLanguageKey={ctx.resolveLanguageKey} path={path} icon={icon} labelKey={labelKey} />;
 }
 
 export type EntityListPageProps<T extends BaseEntity> = {
@@ -593,7 +613,8 @@ export default function EntityListPage<T extends BaseEntity>({
         typeof flag === "function" ? flag(entity) : !!flag;
 
     const listHelpers = {replaceRow};
-    const headerContext: EntityListHeaderContext = {resolveLanguageKey, canCreate: !!create, canRequest};
+    const [createTarget, setCreateTarget] = useState<ListCreateTarget | null>(null);
+    const headerContext: EntityListHeaderContext = {resolveLanguageKey, canCreate: !!create, canRequest, offerCreate: setCreateTarget};
     // Cards and sheets that change their entity on their own (request decisions) keep the list's row in step.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const rowContext = useMemo<EntityListRowContextValue>(() => ({patchRow: (id, patch) => patchRow(id, patch as EntityRowPatch<T>)}), [listRef]);
@@ -609,6 +630,7 @@ export default function EntityListPage<T extends BaseEntity>({
             <HiddenElement hideAll={true}>
                 <CardAndTableView<TableResponse<T>>
                     cardView={renderCard !== undefined}
+                    emptyAction={createTarget ? <CreatePageButton resolveLanguageKey={resolveLanguageKey} {...createTarget} /> : undefined}
                     url={apiUrl}
                     tableConfigKey={tableConfigKey}
                     access={accessModel}

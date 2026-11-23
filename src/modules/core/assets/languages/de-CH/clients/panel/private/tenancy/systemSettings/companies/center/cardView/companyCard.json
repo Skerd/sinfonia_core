@@ -48,5 +48,7 @@
   "showMap": "Karte anzeigen",
   "awaitingApproval": "Wartet auf Freigabe",
   "approvalRejected": "Nicht im Portal gelistet",
-  "verified": "Geprüft"
+  "verified": "Geprüft",
+  "signedUpFrom": "Angemeldet über die Website von {company}",
+  "signedUpOnPortal": "Im Portal angemeldet"
 }

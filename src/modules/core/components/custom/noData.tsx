@@ -1,5 +1,5 @@
 import {IconInbox} from "@tabler/icons-react";
-import type { MouseEventHandler } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 import {
     Empty,
     EmptyContent,
@@ -19,6 +19,8 @@ type NoDataProps = {
     /** Optional tooltip (e.g. for title-only alerts). When omitted and a description is set, the description is used as a tooltip. */
     tooltip?: string;
     reasons?: string[];
+    /** What the viewer can do about it, e.g. the list's Create button on an empty list (D178). */
+    actions?: ReactNode;
     className?: string;
 };
 
@@ -28,6 +30,7 @@ export default function NoData({
     onClick,
     tooltip,
     reasons,
+    actions,
     className,
 }: NoDataProps) {
     const isClickable = typeof onClick === "function";
@@ -63,6 +66,7 @@ export default function NoData({
                     </ul>
                 </EmptyContent>
             }
+            {actions ? <EmptyContent>{actions}</EmptyContent> : null}
         </Empty>
     );
 

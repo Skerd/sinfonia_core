@@ -1,7 +1,7 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
 import type {ReactNode} from "react";
 import {MemoryRouter, Route, Routes} from "react-router-dom";
-import {fireEvent, render, screen} from "@testing-library/react";
+import {fireEvent, render, screen, within} from "@testing-library/react";
 
 const access = {create: true};
 const helpKeys: (string | undefined)[] = [];
@@ -31,8 +31,9 @@ vi.mock("@coreModule/components/custom/pageHelp.tsx", () => ({
 vi.mock("@coreModule/components/custom/hiddenElement.tsx", () => ({
     default: ({children}: {children: unknown}) => <>{children}</>,
 }));
+// The list as the page hands it the button an empty list offers (D178).
 vi.mock("@coreModule/components/entityPage/list/cardAndTableView.tsx", () => ({
-    default: () => <div>list</div>,
+    default: ({emptyAction}: {emptyAction?: ReactNode}) => <div>list<div data-testid="empty-action">{emptyAction}</div></div>,
 }));
 vi.mock("@coreModule/helpers/hooks/useViewConfig.ts", () => ({
     useViewConfig: () => null,
@@ -117,10 +118,27 @@ describe("EntityListPage header slot", () => {
         expect(screen.getByRole("heading", {name: "Scoped widgets"})).toBeTruthy();
         expect(screen.getByText("Of one project")).toBeTruthy();
         expect(screen.getByText("extra control")).toBeTruthy();
-        expect(helpKeys).toEqual(["projectHelp"]);
+        // The page renders again once the header's create button registers (D178): the key is what counts.
+        expect([...new Set(helpKeys)]).toEqual(["projectHelp"]);
 
-        fireEvent.click(screen.getByRole("button", {name: "New widget"}));
+        fireEvent.click(within(screen.getByRole("banner")).getByRole("button", {name: "New widget"}));
         expect(screen.getByText("create page")).toBeTruthy();
+    });
+
+    it("offers the header's create button to an empty list, which opens the same page (D178)", () => {
+        renderPage((ctx) => (
+            <EntityListHeader ctx={ctx}>
+                <EntityListCreateButton ctx={ctx} path="/widgets/create" labelKey="createWidget" />
+            </EntityListHeader>
+        ));
+        fireEvent.click(within(screen.getByTestId("empty-action")).getByRole("button", {name: "New widget"}));
+        expect(screen.getByText("create page")).toBeTruthy();
+    });
+
+    it("offers an empty list nothing when the header has no create button", () => {
+        renderPage();
+        expect(screen.getByTestId("empty-action").childElementCount).toBe(0);
+        access.create = false;
     });
 
     it("hides the create button without the create grant", () => {
@@ -132,5 +150,6 @@ describe("EntityListPage header slot", () => {
         ));
         expect(screen.getByRole("heading", {name: "Widgets"})).toBeTruthy();
         expect(screen.queryByRole("button", {name: "Create"})).toBeNull();
+        expect(screen.getByTestId("empty-action").childElementCount).toBe(0);
     });
 });

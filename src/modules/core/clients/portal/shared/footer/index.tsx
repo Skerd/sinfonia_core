@@ -10,6 +10,7 @@ import type {PortalCompanyAddress} from "armonia/src/modules/core/api/portal/pub
 import PortalSectionName from "../portalSectionName.tsx";
 import {usePortalSite} from "../portalSiteContext.tsx";
 import {sectionHref} from "../sectionBase.tsx";
+import {portalApexOrigin} from "../portalZone.ts";
 
 const FOOTER_LINK_CLASS = "inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground";
 
@@ -110,7 +111,12 @@ function PortalFooter({resolveLanguageKey}: WithLanguageType) {
             <div className="border-t">
                 <div className="site-container flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-muted-foreground">
                     <p>© {new Date().getFullYear()} {company.name}</p>
-                    {site.scope === "company" ? <p>{resolveLanguageKey("poweredBy")}</p> : null}
+                    {/* Every company site invites its visitors to make their own (D178): the sign-up records whose site it was. */}
+                    {site.scope === "company" ? (
+                        <a href={`${portalApexOrigin()}/business?ref=${encodeURIComponent(company.slug)}`} className="transition-colors hover:text-foreground hover:underline">
+                            {resolveLanguageKey("poweredBy").replace("{brand}", site.platform.name)}
+                        </a>
+                    ) : null}
                 </div>
             </div>
         </footer>

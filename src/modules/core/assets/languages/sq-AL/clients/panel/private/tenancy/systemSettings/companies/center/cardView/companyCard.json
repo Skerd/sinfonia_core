@@ -48,5 +48,7 @@
   "showMap": "Shfaq hartën",
   "awaitingApproval": "Pret miratim",
   "approvalRejected": "Jo e listuar në portal",
-  "verified": "E verifikuar"
+  "verified": "E verifikuar",
+  "signedUpFrom": "E regjistruar nga faqja e {company}",
+  "signedUpOnPortal": "E regjistruar në portal"
 }

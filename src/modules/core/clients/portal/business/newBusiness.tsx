@@ -17,7 +17,7 @@ import {usePortalSession} from "@coreModule/clients/portal/shared/portalSession.
 import {usePortalSite} from "@coreModule/clients/portal/shared/portalSiteContext.tsx";
 import {companySiteOrigin} from "@coreModule/clients/portal/shared/portalZone.ts";
 import {getPortalContributions, portalBusinessTypesOf} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
-import {resolveSiteSlug} from "armonia/src/modules/core/api/company/private/company/siteSlug.ts";
+import {isValidSiteSlug, resolveSiteSlug} from "armonia/src/modules/core/api/company/private/company/siteSlug.ts";
 import type {
     SelfServeBusinessCreated,
     SelfServeBusinessCreatedResponse,
@@ -51,6 +51,10 @@ function NewBusinessPage({resolveLanguageKey}: WithLanguageType) {
     const brand = site?.company.name ?? "";
     const businessTypes = useMemo(() => portalBusinessTypesOf(getPortalContributions()), []);
     const requestedType = searchParams.get("type") ?? "";
+    // The company site whose "Powered by" link brought the person (P23.9); an edited link is dropped, not sent.
+    const requestedRef = searchParams.get("ref");
+    const ref = requestedRef && isValidSiteSlug(requestedRef) ? requestedRef : undefined;
+    const businessHref = ref ? `/business?ref=${encodeURIComponent(ref)}` : "/business";
     const [businessType, setBusinessType] = useState(businessTypes.some(({key}) => key === requestedType) ? requestedType : "");
     const [form, setForm] = useState({
         name: "",
@@ -118,6 +122,7 @@ function NewBusinessPage({resolveLanguageKey}: WithLanguageType) {
             phoneNumber: form.phoneNumber.trim(),
             vat: form.vat.trim() || undefined,
             siteSlug: form.siteSlug.trim() || undefined,
+            ref,
             address: {
                 street: form.street.trim(),
                 postalCode: form.postalCode.trim(),
@@ -158,7 +163,7 @@ function NewBusinessPage({resolveLanguageKey}: WithLanguageType) {
     const submitting = createRequest.loading;
     return (
         <div className="site-container flex flex-col gap-8 py-8 sm:py-12">
-            <Link to="/business" className="inline-flex items-center gap-1.5 self-start text-sm text-muted-foreground hover:text-foreground">
+            <Link to={businessHref} className="inline-flex items-center gap-1.5 self-start text-sm text-muted-foreground hover:text-foreground">
                 <IconArrowLeft className="h-4 w-4" aria-hidden />
                 {resolveLanguageKey("back")}
             </Link>
@@ -276,7 +281,7 @@ function NewBusinessPage({resolveLanguageKey}: WithLanguageType) {
                         <Button size="lg" type="submit" disabled={submitting}>
                             {resolveLanguageKey(submitting ? "submitting" : "submit")}
                         </Button>
-                        <Button asChild variant="outline" size="lg"><Link to="/business">{resolveLanguageKey("cancel")}</Link></Button>
+                        <Button asChild variant="outline" size="lg"><Link to={businessHref}>{resolveLanguageKey("cancel")}</Link></Button>
                     </div>
                 </div>
             </form>

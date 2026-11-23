@@ -16,6 +16,7 @@ import {Empty, EmptyHeader, EmptyMedia, EmptyTitle} from "@coreModule/components
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {CommandPaletteKbd, COMMAND_PALETTE_OPEN_EVENT} from "@coreModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import SetupChecklist from "./setupChecklist.tsx";
 
 const TILE_COLORS = [
     {
@@ -329,6 +330,9 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
                         <CommandPaletteKbd className="hidden sm:inline-flex" />
                     </Button>
                 </div>
+
+                {/* A new company's setup steps, until they are done (D178). */}
+                <SetupChecklist resolveLanguageKey={resolveLanguageKey} />
 
                 {recentLinks.length > 0 && (
                     <div className="z-10 flex gap-2 overflow-x-auto pb-1 hide-scrollbar">

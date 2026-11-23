@@ -48,5 +48,7 @@
   "showMap": "Mostra mappa",
   "awaitingApproval": "In attesa di approvazione",
   "approvalRejected": "Non presente sul portale",
-  "verified": "Verificata"
+  "verified": "Verificata",
+  "signedUpFrom": "Iscritta dal sito di {company}",
+  "signedUpOnPortal": "Iscritta sul portale"
 }

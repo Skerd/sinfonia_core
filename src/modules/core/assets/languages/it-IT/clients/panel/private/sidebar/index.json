@@ -8,7 +8,18 @@
     "recent": "Recenti",
     "greetingMorning": "Buongiorno",
     "greetingAfternoon": "Buon pomeriggio",
-    "greetingEvening": "Buonasera"
+    "greetingEvening": "Buonasera",
+    "setup": {
+      "title": "Configura la tua attività",
+      "progress": "{done} di {total} completati",
+      "hide": "Nascondi questa lista",
+      "start": "Inizia",
+      "done": "Fatto",
+      "logo": "Aggiungi il tuo logo",
+      "vat": "Aggiungi la tua partita IVA",
+      "vatHint": "Dopo il controllo, la tua attività riceve il badge Verificata sul portale.",
+      "team": "Invita il tuo team"
+    }
   },
   "menus": {
     "account": {

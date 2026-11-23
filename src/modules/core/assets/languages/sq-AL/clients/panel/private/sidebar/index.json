@@ -8,7 +8,18 @@
     "recent": "Të fundit",
     "greetingMorning": "Mirëmëngjes",
     "greetingAfternoon": "Mirëdita",
-    "greetingEvening": "Mirëmbrëma"
+    "greetingEvening": "Mirëmbrëma",
+    "setup": {
+      "title": "Përgatitni biznesin tuaj",
+      "progress": "{done} nga {total} të kryera",
+      "hide": "Fshihe këtë listë",
+      "start": "Fillo",
+      "done": "E kryer",
+      "logo": "Shtoni logon tuaj",
+      "vat": "Shtoni NIPT-in tuaj",
+      "vatHint": "Pasi të kontrollohet, biznesi juaj merr shenjën E verifikuar në portal.",
+      "team": "Ftoni ekipin tuaj"
+    }
   },
   "menus": {
     "account": {

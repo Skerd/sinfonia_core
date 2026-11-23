@@ -8,7 +8,18 @@
     "recent": "Recent",
     "greetingMorning": "Good morning",
     "greetingAfternoon": "Good afternoon",
-    "greetingEvening": "Good evening"
+    "greetingEvening": "Good evening",
+    "setup": {
+      "title": "Set up your business",
+      "progress": "{done} of {total} done",
+      "hide": "Hide this checklist",
+      "start": "Start",
+      "done": "Done",
+      "logo": "Add your logo",
+      "vat": "Add your NIPT/VAT number",
+      "vatHint": "Once checked, your business gets the Verified badge on the portal.",
+      "team": "Invite your team"
+    }
   },
   "menus": {
     "account": {

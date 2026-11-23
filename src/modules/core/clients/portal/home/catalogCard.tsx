@@ -1,4 +1,4 @@
-import {IconPhotoOff, IconRosetteDiscountCheckFilled} from "@tabler/icons-react";
+import {IconPhotoOff, IconRosetteDiscountCheckFilled, IconStarFilled} from "@tabler/icons-react";
 import {compose} from "redux";
 import {Link} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -80,6 +80,17 @@ function CatalogCard({item, index = 0, resolveLanguageKey}: WithLanguageType & {
                         </IconRosetteDiscountCheckFilled>
                     ) : null}
                 </p>
+                {/* Reviews from completed bookings or purchases (D178). */}
+                {item.rating ? (
+                    <p
+                        className="flex items-center gap-1 text-sm tabular-nums"
+                        aria-label={resolveLanguageKey(item.rating.count === 1 ? "ratingLabelOne" : "ratingLabel").replace("{average}", String(item.rating.average)).replace("{count}", String(item.rating.count))}
+                    >
+                        <IconStarFilled className="h-4 w-4 shrink-0 text-amber-500" aria-hidden />
+                        <span aria-hidden className="font-medium">{item.rating.average.toFixed(1)}</span>
+                        <span aria-hidden className="text-muted-foreground">({item.rating.count})</span>
+                    </p>
+                ) : null}
                 {price ? <p className="mt-1 font-display font-semibold tabular-nums">{price}</p> : null}
             </div>
         </Link>

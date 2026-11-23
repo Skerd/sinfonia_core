@@ -48,5 +48,7 @@
   "showMap": "Afficher la carte",
   "awaitingApproval": "En attente de validation",
   "approvalRejected": "Absente du portail",
-  "verified": "Vérifiée"
+  "verified": "Vérifiée",
+  "signedUpFrom": "Inscrite depuis le site de {company}",
+  "signedUpOnPortal": "Inscrite sur le portail"
 }

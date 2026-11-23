@@ -274,6 +274,11 @@ type CountryCenterViewProps<ResponseType extends { data: unknown[]; total: numbe
     quickFilters?: ListQuickFilters;
     /** When set, merges `extraFilters` into request state keys and deletes them when absent (clears stale params). */
     syncExtraFiltersKeys?: readonly string[];
+    /**
+     * Offered by an empty list that no search or filter narrows (the list page's Create button, D178); a list that is
+     * empty because of a search or filter shows its "no data" message alone.
+     */
+    emptyAction?: ReactNode;
 }
 
 function CountryCenterView<
@@ -309,7 +314,10 @@ function CountryCenterView<
     aboveToolbar,
     quickFilters,
     syncExtraFiltersKeys,
+    emptyAction,
 }: CountryCenterViewProps<ResponseType, T>) {
+    // Whether the last request was narrowed by a search or filter: an empty answer then means "no results".
+    const narrowedRef = useRef(false);
 
     const {read} = useAccess(access, selfAccess ? "self" : "others");
     const {timezone} = useSelector((state: RootState) => state.authentication.user);
@@ -462,6 +470,7 @@ function CountryCenterView<
             const merged = mergeAndFilterDSL(fbFilter, mergeAndFilterDSL(toolbarFilterDSL, searchDSL));
             const filterOut =
                 merged && !isFilterGroupEmpty(merged) ? { filter: merged } : {};
+            narrowedRef.current = "filter" in filterOut;
             onFilterChange({
                 offset,
                 limit,
@@ -963,7 +972,7 @@ function CountryCenterView<
                                             {
                                                 viewMode === "card" ? (
                                                     (!data || data?.data?.length === 0) && !firstCall ? (
-                                                        <NoData title={requestInfo?.noData ?? resolveLanguageKey("noData")}/>
+                                                        <NoData title={requestInfo?.noData ?? resolveLanguageKey("noData")} actions={narrowedRef.current ? undefined : emptyAction}/>
                                                     ) : (
                                                         renderCardContainer(tableData.map((item) => (
                                                             // `data-list-item`: a new card comes up in turn (panel stylesheet).
@@ -1032,7 +1041,7 @@ function CountryCenterView<
                                                                             colSpan={Math.max(table.getVisibleFlatColumns().length, 1)}
                                                                             className="h-48"
                                                                         >
-                                                                            <NoData title={requestInfo?.noData ?? resolveLanguageKey("noData")}/>
+                                                                            <NoData title={requestInfo?.noData ?? resolveLanguageKey("noData")} actions={narrowedRef.current ? undefined : emptyAction}/>
                                                                         </TableCell>
                                                                     </TableRow>
                                                                 ) : (

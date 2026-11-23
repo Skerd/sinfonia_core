@@ -3,5 +3,7 @@
   "priceFrom": "from {price}",
   "priceUpTo": "up to {price}",
   "pricePerDay": "{price} / day",
-  "verified": "Verified business"
+  "verified": "Verified business",
+  "ratingLabel": "Rated {average} out of 5 from {count} reviews",
+  "ratingLabelOne": "Rated {average} out of 5 from 1 review"
 }

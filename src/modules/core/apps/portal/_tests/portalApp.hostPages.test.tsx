@@ -30,6 +30,7 @@ import PortalApp from "../portalApp.tsx";
 const LISTED_SITE: PortalSite = {
     scope: "company",
     company: {name: "Builder Co", slug: "builder-co", cities: [], chatEnabled: false},
+    platform: {name: "Platform"},
     cities: [],
     sections: [],
 };

@@ -1,4 +1,4 @@
-import {IconBlocks, IconChecks, IconFileText, IconWorld, IconMail, IconMapPin, IconPhone, IconPhotoDown, IconArrowsMaximize, IconArrowsMinimize, IconShieldLock, IconRosetteDiscountCheck} from "@tabler/icons-react";
+import {IconBlocks, IconChecks, IconFileText, IconWorld, IconMail, IconMapPin, IconPhone, IconPhotoDown, IconArrowsMaximize, IconArrowsMinimize, IconShieldLock, IconRosetteDiscountCheck, IconUserPlus} from "@tabler/icons-react";
 import {compose} from "redux";
 import {Badge} from "@coreModule/components/ui/badge.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -215,6 +215,12 @@ const CompanyCard = memo(function CompanyCard({
                             </AvatarFallback>
                         </Avatar>
                     ) : undefined;
+                    // Where a self-serve company came from (P23.9): a company's site, or the portal itself.
+                    const signupSourceLabel = !row.signupSource
+                        ? undefined
+                        : row.signupSource.refCompany?.name
+                            ? resolveLanguageKey("signedUpFrom").replace("{company}", row.signupSource.refCompany.name)
+                            : resolveLanguageKey("signedUpOnPortal");
 
                     return (
                         <>
@@ -326,6 +332,13 @@ const CompanyCard = memo(function CompanyCard({
                                                         <Badge variant="outline">
                                                             <IconRosetteDiscountCheck aria-hidden />
                                                             {resolveLanguageKey("verified")}
+                                                        </Badge>
+                                                    ) : null}
+                                                    {/* The referring company's name is the point, so a long one wraps in the narrow row. */}
+                                                    {signupSourceLabel ? (
+                                                        <Badge variant="outline" className="h-auto max-w-full py-0.5 leading-snug whitespace-normal text-muted-foreground">
+                                                            <IconUserPlus aria-hidden />
+                                                            {signupSourceLabel}
                                                         </Badge>
                                                     ) : null}
                                                     {row.isProtected ? (

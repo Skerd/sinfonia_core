@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import {compose} from "redux";
 import {IconArrowRight, IconLayoutDashboard, IconUsers, IconWorld} from "@tabler/icons-react";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -6,6 +6,7 @@ import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import {usePortalSite} from "@coreModule/clients/portal/shared/portalSiteContext.tsx";
 import {getPortalContributions, portalBusinessTypesOf} from "@coreModule/helpers/moduleContributions/loadPortalContributions.ts";
+import {isValidSiteSlug} from "armonia/src/modules/core/api/company/private/company/siteSlug.ts";
 
 const LANGUAGE_PATH = "src/modules/core/clients/portal/business/index.tsx";
 
@@ -21,9 +22,24 @@ const STEPS = [
     {title: "stepLiveTitle", text: "stepLiveText"},
 ] as const;
 
-/** The apex's "For businesses" page (D178): why to join, the kinds of business the modules offer, how sign-up goes. */
+/** The sign-up page, keeping the company site that sent the visitor here (`ref`, P23.9). */
+function newBusinessHref(ref: string | null, type?: string): string {
+    const params = new URLSearchParams();
+    if (type) params.set("type", type);
+    if (ref) params.set("ref", ref);
+    const query = params.toString();
+    return query ? `/business/new?${query}` : "/business/new";
+}
+
+/**
+ * The apex's "For businesses" page (D178): why to join, the kinds of business the modules offer, how sign-up goes.
+ * A company site's "Powered by" link names that site in `ref`; the sign-up records it.
+ */
 function ForBusinessesPage({resolveLanguageKey}: WithLanguageType) {
     const {site} = usePortalSite();
+    const [searchParams] = useSearchParams();
+    const requestedRef = searchParams.get("ref");
+    const ref = requestedRef && isValidSiteSlug(requestedRef) ? requestedRef : null;
     const brand = site?.company.name ?? "";
     const businessTypes = portalBusinessTypesOf(getPortalContributions());
     const withBrand = (key: string) => resolveLanguageKey(key).replace("{brand}", brand);
@@ -36,7 +52,7 @@ function ForBusinessesPage({resolveLanguageKey}: WithLanguageType) {
                 <p className="max-w-2xl text-lg text-muted-foreground">{withBrand("lead")}</p>
                 <div className="flex flex-wrap gap-3">
                     <Button asChild size="lg">
-                        <Link to="/business/new">{resolveLanguageKey("cta")}<IconArrowRight aria-hidden /></Link>
+                        <Link to={newBusinessHref(ref)}>{resolveLanguageKey("cta")}<IconArrowRight aria-hidden /></Link>
                     </Button>
                     <Button asChild size="lg" variant="outline">
                         <a href="#business-how">{resolveLanguageKey("howLink")}</a>
@@ -61,7 +77,7 @@ function ForBusinessesPage({resolveLanguageKey}: WithLanguageType) {
                         {businessTypes.map(({key, Icon, Summary}) => (
                             <li key={key}>
                                 <Link
-                                    to={`/business/new?type=${encodeURIComponent(key)}`}
+                                    to={newBusinessHref(ref, key)}
                                     className="flex h-full items-start gap-4 rounded-2xl border p-5 transition-colors hover:border-foreground focus-visible:outline-2 focus-visible:outline-offset-2"
                                 >
                                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-muted">
@@ -94,7 +110,7 @@ function ForBusinessesPage({resolveLanguageKey}: WithLanguageType) {
                     <p className="text-muted-foreground">{resolveLanguageKey("closingText")}</p>
                 </div>
                 <Button asChild size="lg">
-                    <Link to="/business/new">{resolveLanguageKey("cta")}</Link>
+                    <Link to={newBusinessHref(ref)}>{resolveLanguageKey("cta")}</Link>
                 </Button>
             </section>
         </div>
