@@ -36,5 +36,10 @@
   "signupFilter": "Signed up",
   "signupVia": {
     "selfServe": "By themselves"
+  },
+  "views": {
+    "label": "View",
+    "list": "List",
+    "hierarchy": "Hierarchy"
   }
 }

@@ -36,5 +36,10 @@
   "signupFilter": "Regjistrimi",
   "signupVia": {
     "selfServe": "Të regjistruara vetë"
+  },
+  "views": {
+    "label": "Pamja",
+    "list": "Lista",
+    "hierarchy": "Hierarkia"
   }
 }

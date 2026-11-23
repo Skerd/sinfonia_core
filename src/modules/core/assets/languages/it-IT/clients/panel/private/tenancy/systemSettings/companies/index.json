@@ -36,5 +36,10 @@
   "signupFilter": "Iscrizione",
   "signupVia": {
     "selfServe": "Iscritte da sole"
+  },
+  "views": {
+    "label": "Vista",
+    "list": "Elenco",
+    "hierarchy": "Gerarchia"
   }
 }

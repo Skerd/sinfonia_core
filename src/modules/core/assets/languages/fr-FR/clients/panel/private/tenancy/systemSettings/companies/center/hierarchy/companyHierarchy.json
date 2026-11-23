@@ -1,0 +1,36 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companyHierarchy.tsx",
+  "title": "Hiérarchie des entreprises",
+  "search": "Rechercher par nom ou TVA",
+  "platform": "Plateforme",
+  "inactive": "Inactive",
+  "awaitingApproval": "En attente de validation",
+  "approvalRejected": "Absente du portail",
+  "openCompany": "Ouvrir {company}",
+  "expandCompany": "Afficher les entreprises sous {company}",
+  "collapseCompany": "Masquer les entreprises sous {company}",
+  "expandAll": "Tout déplier",
+  "collapseAll": "Tout replier",
+  "directCompanies": {
+    "one": "{count} filiale",
+    "other": "{count} filiales"
+  },
+  "allCompanies": {
+    "one": "{count} au total",
+    "other": "{count} au total"
+  },
+  "companiesCount": {
+    "one": "{count} entreprise",
+    "other": "{count} entreprises"
+  },
+  "levelsCount": {
+    "one": "{count} niveau",
+    "other": "{count} niveaux"
+  },
+  "inactiveCount": {
+    "one": "{count} inactive",
+    "other": "{count} inactives"
+  },
+  "noMatchTitle": "Aucune entreprise trouvée",
+  "noMatchDescription": "Aucun nom ni numéro de TVA ne contient « {query} »."
+}

@@ -1,0 +1,36 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companyHierarchy.tsx",
+  "title": "Company hierarchy",
+  "search": "Search by name or VAT",
+  "platform": "Platform",
+  "inactive": "Not active",
+  "awaitingApproval": "Waiting for approval",
+  "approvalRejected": "Not listed on portal",
+  "openCompany": "Open {company}",
+  "expandCompany": "Show the companies under {company}",
+  "collapseCompany": "Hide the companies under {company}",
+  "expandAll": "Expand all",
+  "collapseAll": "Collapse all",
+  "directCompanies": {
+    "one": "{count} subsidiary",
+    "other": "{count} subsidiaries"
+  },
+  "allCompanies": {
+    "one": "{count} in total",
+    "other": "{count} in total"
+  },
+  "companiesCount": {
+    "one": "{count} company",
+    "other": "{count} companies"
+  },
+  "levelsCount": {
+    "one": "{count} level",
+    "other": "{count} levels"
+  },
+  "inactiveCount": {
+    "one": "{count} not active",
+    "other": "{count} not active"
+  },
+  "noMatchTitle": "No company found",
+  "noMatchDescription": "No company name or VAT contains \"{query}\"."
+}

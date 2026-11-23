@@ -1,0 +1,36 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companyHierarchy.tsx",
+  "title": "Hierarkia e kompanive",
+  "search": "Kërko sipas emrit ose TVSH-së",
+  "platform": "Platforma",
+  "inactive": "Jo aktive",
+  "awaitingApproval": "Pret miratim",
+  "approvalRejected": "Jo e listuar në portal",
+  "openCompany": "Hap {company}",
+  "expandCompany": "Shfaq kompanitë nën {company}",
+  "collapseCompany": "Fshih kompanitë nën {company}",
+  "expandAll": "Hapi të gjitha",
+  "collapseAll": "Mbylli të gjitha",
+  "directCompanies": {
+    "one": "{count} kompani bijë",
+    "other": "{count} kompani bija"
+  },
+  "allCompanies": {
+    "one": "{count} gjithsej",
+    "other": "{count} gjithsej"
+  },
+  "companiesCount": {
+    "one": "{count} kompani",
+    "other": "{count} kompani"
+  },
+  "levelsCount": {
+    "one": "{count} nivel",
+    "other": "{count} nivele"
+  },
+  "inactiveCount": {
+    "one": "{count} jo aktive",
+    "other": "{count} jo aktive"
+  },
+  "noMatchTitle": "Nuk u gjet asnjë kompani",
+  "noMatchDescription": "Asnjë emër apo TVSH nuk përmban \"{query}\"."
+}

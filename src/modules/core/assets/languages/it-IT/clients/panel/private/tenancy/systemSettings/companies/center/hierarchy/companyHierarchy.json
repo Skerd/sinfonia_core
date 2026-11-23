@@ -1,0 +1,36 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companyHierarchy.tsx",
+  "title": "Gerarchia delle aziende",
+  "search": "Cerca per nome o partita IVA",
+  "platform": "Piattaforma",
+  "inactive": "Non attiva",
+  "awaitingApproval": "In attesa di approvazione",
+  "approvalRejected": "Non presente sul portale",
+  "openCompany": "Apri {company}",
+  "expandCompany": "Mostra le aziende sotto {company}",
+  "collapseCompany": "Nascondi le aziende sotto {company}",
+  "expandAll": "Espandi tutto",
+  "collapseAll": "Comprimi tutto",
+  "directCompanies": {
+    "one": "{count} controllata",
+    "other": "{count} controllate"
+  },
+  "allCompanies": {
+    "one": "{count} in totale",
+    "other": "{count} in totale"
+  },
+  "companiesCount": {
+    "one": "{count} azienda",
+    "other": "{count} aziende"
+  },
+  "levelsCount": {
+    "one": "{count} livello",
+    "other": "{count} livelli"
+  },
+  "inactiveCount": {
+    "one": "{count} non attiva",
+    "other": "{count} non attive"
+  },
+  "noMatchTitle": "Nessuna azienda trovata",
+  "noMatchDescription": "Nessun nome o partita IVA contiene \"{query}\"."
+}

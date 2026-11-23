@@ -36,5 +36,10 @@
   "signupFilter": "Anmeldung",
   "signupVia": {
     "selfServe": "Selbst angemeldet"
+  },
+  "views": {
+    "label": "Ansicht",
+    "list": "Liste",
+    "hierarchy": "Struktur"
   }
 }

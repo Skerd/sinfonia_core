@@ -1,0 +1,36 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companyHierarchy.tsx",
+  "title": "Firmenstruktur",
+  "search": "Nach Name oder MWST-Nr. suchen",
+  "platform": "Plattform",
+  "inactive": "Nicht aktiv",
+  "awaitingApproval": "Wartet auf Freigabe",
+  "approvalRejected": "Nicht im Portal gelistet",
+  "openCompany": "{company} öffnen",
+  "expandCompany": "Firmen unter {company} anzeigen",
+  "collapseCompany": "Firmen unter {company} ausblenden",
+  "expandAll": "Alle aufklappen",
+  "collapseAll": "Alle zuklappen",
+  "directCompanies": {
+    "one": "{count} Tochterfirma",
+    "other": "{count} Tochterfirmen"
+  },
+  "allCompanies": {
+    "one": "{count} insgesamt",
+    "other": "{count} insgesamt"
+  },
+  "companiesCount": {
+    "one": "{count} Firma",
+    "other": "{count} Firmen"
+  },
+  "levelsCount": {
+    "one": "{count} Ebene",
+    "other": "{count} Ebenen"
+  },
+  "inactiveCount": {
+    "one": "{count} nicht aktiv",
+    "other": "{count} nicht aktiv"
+  },
+  "noMatchTitle": "Keine Firma gefunden",
+  "noMatchDescription": "Kein Firmenname und keine MWST-Nr. enthält «{query}»."
+}

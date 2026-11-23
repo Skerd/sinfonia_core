@@ -1,6 +1,8 @@
 import {compose} from "redux";
-import {useMemo} from "react";
+import {useCallback, useMemo} from "react";
 import {useSelector} from "react-redux";
+import {useSearchParams} from "react-router-dom";
+import {IconHierarchy2, IconList} from "@tabler/icons-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -17,10 +19,32 @@ import PortalApprovalDialog, {isPortalApprovalAction} from "@coreModule/clients/
 import ActivateCompanyDialog from "./center/dialogs/activateCompanyDialog.tsx";
 import DeactivateCompanyDialog from "./center/dialogs/deactivateCompanyDialog.tsx";
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
-import EntityListPage from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import EntityListPage, {EntityListHeader, type EntityListHeaderContext} from "@coreModule/components/entityPage/pages/entityListPage.tsx";
+import {ToggleGroup, ToggleGroupItem} from "@coreModule/components/ui/toggle-group.tsx";
+import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
+import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
+import CompanyHierarchy from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companyHierarchy.tsx";
 import type {QuickFilterDef} from "@coreModule/components/entityPage/filters/quickFilterBar.tsx";
 import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators.ts";
 import {PORTAL_APPROVAL_STATUSES} from "armonia/src/modules/core/api/company/private/company/portalApproval.ts";
+
+type CompaniesView = "list" | "hierarchy";
+
+/** Switches the page between the companies' list and their hierarchy. */
+function CompaniesViewSwitch({view, onChange, resolveLanguageKey}: {view: CompaniesView; onChange: (next: string) => void} & Pick<WithLanguageType, "resolveLanguageKey">) {
+    return (
+        <ToggleGroup type="single" spacing={0} variant="outline" size="sm" value={view} onValueChange={onChange} aria-label={resolveLanguageKey("views.label")}>
+            <ToggleGroupItem value="list" className="gap-1.5 px-2.5">
+                <IconList aria-hidden />
+                {resolveLanguageKey("views.list")}
+            </ToggleGroupItem>
+            <ToggleGroupItem value="hierarchy" className="gap-1.5 px-2.5">
+                <IconHierarchy2 aria-hidden />
+                {resolveLanguageKey("views.hierarchy")}
+            </ToggleGroupItem>
+        </ToggleGroup>
+    );
+}
 
 function AllCompanies({resolveLanguageKey}: WithLanguageType) {
     // Platform admins manage every company on the platform, not only the ones they belong to.
@@ -38,6 +62,36 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
         type: COLUMN_TYPE.ENUM,
         enumValues: [{value: "selfServe" satisfies CompanySignupSource["via"], label: resolveLanguageKey("signupVia.selfServe")}],
     }] : [], [isPlatformAdmin, resolveLanguageKey]);
+    const {read} = useAccess("companies");
+    // The hierarchy covers every company on the platform, so only platform admins get it (the server checks the same).
+    const [searchParams, setSearchParams] = useSearchParams();
+    const view: CompaniesView = isPlatformAdmin && searchParams.get("view") === "hierarchy" ? "hierarchy" : "list";
+    const setView = useCallback((next: string) => {
+        // Radix clears the value when the active item is pressed again; the page always shows one view.
+        if (next !== "list" && next !== "hierarchy") return;
+        setSearchParams((prev) => {
+            const params = new URLSearchParams(prev);
+            if (next === "hierarchy") params.set("view", next);
+            else params.delete("view");
+            return params;
+        }, {replace: true});
+    }, [setSearchParams]);
+    const header = (ctx: EntityListHeaderContext) => (
+        <EntityListHeader ctx={ctx}>
+            {isPlatformAdmin ? <CompaniesViewSwitch view={view} onChange={setView} resolveLanguageKey={resolveLanguageKey} /> : null}
+        </EntityListHeader>
+    );
+
+    if (view === "hierarchy") {
+        if (read === false) return <Forbidden />;
+        return (
+            <div className="min-w-0 flex-full gap-4">
+                {header({resolveLanguageKey, canCreate: false, canRequest: false})}
+                <CompanyHierarchy />
+            </div>
+        );
+    }
+
     return (
         <EntityListPage<Company>
             apiUrl={isPlatformAdmin ? "/api/platform/companies" : "/api/companies"}
@@ -46,6 +100,7 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
             tableConfigKey="companies"
             buildEditPath={() => ""}
             resolveLanguageKey={resolveLanguageKey}
+            header={header}
             cardViewClassName="grid grid-cols-1 gap-2 lg:gap-4 md:grid-cols-2"
             quickFilters={quickFilters}
             rowActionMenu={{
