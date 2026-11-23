@@ -1,0 +1,59 @@
+{
+  "path": "src/modules/core/clients/panel/private/home/sampleCompanyCard.tsx",
+  "sampleName": "{name} (Beispiel)",
+  "offer": {
+    "title": "Mit Beispieldaten ausprobieren",
+    "description": "Schauen Sie sich das Panel mit Beispieldaten an, in einem separaten Unternehmen: {name}. Es erscheint nie im Portal, versendet keine E-Mails oder SMS und lässt sich mit einem Klick löschen.",
+    "create": "Beispielunternehmen erstellen",
+    "hide": "Ausblenden"
+  },
+  "preparing": "Beispieldaten werden vorbereitet…",
+  "preparingHint": "Das dauert ein paar Minuten. Sie können weiterarbeiten oder es jetzt öffnen und zusehen, wie es sich füllt.",
+  "ready": "Ihr Beispielunternehmen ist bereit.",
+  "readyHint": "Es erscheint nie im Portal und versendet keine E-Mails oder SMS. Löschen Sie es, wenn Sie fertig sind.",
+  "failed": "Nicht alle Beispieldaten konnten vorbereitet werden.",
+  "failedHint": "Sie können es trotzdem öffnen oder es löschen und ein neues erstellen.",
+  "open": "Beispielunternehmen öffnen",
+  "inSandbox": {
+    "title": "Sie sind in einem Beispielunternehmen",
+    "description": "Alles hier sind Beispieldaten. Es erscheint nie im Portal und versendet keine E-Mails oder SMS.",
+    "back": "Zurück zu {name}",
+    "deleteHint": "Wenn Sie fertig sind, löschen Sie es auf der Startseite von {name}."
+  },
+  "create": {
+    "axios": {
+      "start": {
+        "title": "Beispielunternehmen wird erstellt…",
+        "time": 3000
+      },
+      "success": {
+        "title": "Beispielunternehmen erstellt. Die Beispieldaten werden vorbereitet.",
+        "time": 4000
+      },
+      "error": {
+        "title": "Das Beispielunternehmen konnte nicht erstellt werden",
+        "time": 4000
+      }
+    }
+  },
+  "delete": {
+    "button": "Löschen",
+    "confirmTitle": "{name} löschen?",
+    "confirmDescription": "Das Beispielunternehmen und alle seine Beispieldaten werden endgültig gelöscht. Ihr eigenes Unternehmen bleibt unberührt.",
+    "confirm": "Beispielunternehmen löschen",
+    "axios": {
+      "start": {
+        "title": "Beispielunternehmen wird gelöscht…",
+        "time": 3000
+      },
+      "success": {
+        "title": "Beispielunternehmen gelöscht",
+        "time": 3000
+      },
+      "error": {
+        "title": "Das Beispielunternehmen konnte nicht gelöscht werden",
+        "time": 4000
+      }
+    }
+  }
+}

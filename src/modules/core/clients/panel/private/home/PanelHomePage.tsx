@@ -17,6 +17,7 @@ import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx
 import {CommandPaletteKbd, COMMAND_PALETTE_OPEN_EVENT} from "@coreModule/components/custom/commandPalette/commandPaletteShortcut.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import SetupChecklist from "./setupChecklist.tsx";
+import SampleCompanyCard from "./sampleCompanyCard.tsx";
 
 const TILE_COLORS = [
     {
@@ -333,6 +334,8 @@ function PanelHomePage({resolveLanguageKey}: WithLanguageType) {
 
                 {/* A new company's setup steps, until they are done (D178). */}
                 <SetupChecklist resolveLanguageKey={resolveLanguageKey} />
+                {/* "Try with sample data" for the company's admins, or the way back from a sample company (D178). */}
+                <SampleCompanyCard />
 
                 {recentLinks.length > 0 && (
                     <div className="z-10 flex gap-2 overflow-x-auto pb-1 hide-scrollbar">

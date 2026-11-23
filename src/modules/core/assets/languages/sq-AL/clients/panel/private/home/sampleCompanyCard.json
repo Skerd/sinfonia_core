@@ -1,0 +1,59 @@
+{
+  "path": "src/modules/core/clients/panel/private/home/sampleCompanyCard.tsx",
+  "sampleName": "{name} (shembull)",
+  "offer": {
+    "title": "Provojeni me të dhëna shembull",
+    "description": "Shikoni panelin të mbushur me të dhëna shembull, në një kompani më vete: {name}. Nuk shfaqet kurrë në portal, nuk dërgon email ose SMS dhe fshihet me një klik.",
+    "create": "Krijo kompaninë shembull",
+    "hide": "Fshihe"
+  },
+  "preparing": "Po përgatiten të dhënat shembull…",
+  "preparingHint": "Kjo zgjat disa minuta. Mund të vazhdoni punën, ose ta hapni tani dhe ta shihni teksa mbushet.",
+  "ready": "Kompania juaj shembull është gati.",
+  "readyHint": "Nuk shfaqet kurrë në portal dhe nuk dërgon email ose SMS. Fshijeni kur të keni mbaruar.",
+  "failed": "Jo të gjitha të dhënat shembull u përgatitën dot.",
+  "failedHint": "Mund ta hapni gjithsesi, ose ta fshini dhe të krijoni një të re.",
+  "open": "Hap kompaninë shembull",
+  "inSandbox": {
+    "title": "Jeni në një kompani shembull",
+    "description": "Gjithçka këtu janë të dhëna shembull. Nuk shfaqet kurrë në portal dhe nuk dërgon email ose SMS.",
+    "back": "Kthehu te {name}",
+    "deleteHint": "Kur të keni mbaruar, fshijeni nga faqja kryesore e {name}."
+  },
+  "create": {
+    "axios": {
+      "start": {
+        "title": "Po krijohet kompania juaj shembull…",
+        "time": 3000
+      },
+      "success": {
+        "title": "Kompania shembull u krijua. Të dhënat shembull po përgatiten.",
+        "time": 4000
+      },
+      "error": {
+        "title": "Kompania shembull nuk u krijua dot",
+        "time": 4000
+      }
+    }
+  },
+  "delete": {
+    "button": "Fshi",
+    "confirmTitle": "Të fshihet {name}?",
+    "confirmDescription": "Kompania shembull dhe të gjitha të dhënat e saj fshihen përgjithmonë. Kompania juaj nuk preket.",
+    "confirm": "Fshi kompaninë shembull",
+    "axios": {
+      "start": {
+        "title": "Po fshihet kompania shembull…",
+        "time": 3000
+      },
+      "success": {
+        "title": "Kompania shembull u fshi",
+        "time": 3000
+      },
+      "error": {
+        "title": "Kompania shembull nuk u fshi dot",
+        "time": 4000
+      }
+    }
+  }
+}
