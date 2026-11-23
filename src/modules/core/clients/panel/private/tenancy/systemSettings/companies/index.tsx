@@ -2,7 +2,7 @@ import {compose} from "redux";
 import {useCallback, useMemo} from "react";
 import {useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
-import {IconHierarchy2, IconList} from "@tabler/icons-react";
+import {IconHierarchy2, IconList, IconUserPlus} from "@tabler/icons-react";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
@@ -24,13 +24,21 @@ import {ToggleGroup, ToggleGroupItem} from "@coreModule/components/ui/toggle-gro
 import Forbidden from "@coreModule/components/custom/pages/forbidden.tsx";
 import {useAccess} from "@coreModule/helpers/hooks/useAccess.ts";
 import CompanyHierarchy from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companyHierarchy.tsx";
+import CompanySignups from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companySignups.tsx";
 import type {QuickFilterDef} from "@coreModule/components/entityPage/filters/quickFilterBar.tsx";
 import {COLUMN_TYPE} from "armonia/src/modules/core/database/filter/typeOperators.ts";
 import {PORTAL_APPROVAL_STATUSES} from "armonia/src/modules/core/api/company/private/company/portalApproval.ts";
 
-type CompaniesView = "list" | "hierarchy";
+type CompaniesView = "list" | "hierarchy" | "signups";
 
-/** Switches the page between the companies' list and their hierarchy. */
+/** The views over every company on the platform: only platform admins get them (the server checks the same). */
+const PLATFORM_VIEWS: readonly CompaniesView[] = ["hierarchy", "signups"];
+
+function platformView(value: string | null): CompaniesView | undefined {
+    return PLATFORM_VIEWS.find((view) => view === value);
+}
+
+/** Switches the page between the companies' list, their hierarchy and their sign-ups per source. */
 function CompaniesViewSwitch({view, onChange, resolveLanguageKey}: {view: CompaniesView; onChange: (next: string) => void} & Pick<WithLanguageType, "resolveLanguageKey">) {
     return (
         <ToggleGroup type="single" spacing={0} variant="outline" size="sm" value={view} onValueChange={onChange} aria-label={resolveLanguageKey("views.label")}>
@@ -41,6 +49,10 @@ function CompaniesViewSwitch({view, onChange, resolveLanguageKey}: {view: Compan
             <ToggleGroupItem value="hierarchy" className="gap-1.5 px-2.5">
                 <IconHierarchy2 aria-hidden />
                 {resolveLanguageKey("views.hierarchy")}
+            </ToggleGroupItem>
+            <ToggleGroupItem value="signups" className="gap-1.5 px-2.5">
+                <IconUserPlus aria-hidden />
+                {resolveLanguageKey("views.signups")}
             </ToggleGroupItem>
         </ToggleGroup>
     );
@@ -63,15 +75,15 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
         enumValues: [{value: "selfServe" satisfies CompanySignupSource["via"], label: resolveLanguageKey("signupVia.selfServe")}],
     }] : [], [isPlatformAdmin, resolveLanguageKey]);
     const {read} = useAccess("companies");
-    // The hierarchy covers every company on the platform, so only platform admins get it (the server checks the same).
     const [searchParams, setSearchParams] = useSearchParams();
-    const view: CompaniesView = isPlatformAdmin && searchParams.get("view") === "hierarchy" ? "hierarchy" : "list";
+    const view: CompaniesView = (isPlatformAdmin ? platformView(searchParams.get("view")) : undefined) ?? "list";
     const setView = useCallback((next: string) => {
         // Radix clears the value when the active item is pressed again; the page always shows one view.
-        if (next !== "list" && next !== "hierarchy") return;
+        const picked = platformView(next);
+        if (next !== "list" && !picked) return;
         setSearchParams((prev) => {
             const params = new URLSearchParams(prev);
-            if (next === "hierarchy") params.set("view", next);
+            if (picked) params.set("view", picked);
             else params.delete("view");
             return params;
         }, {replace: true});
@@ -82,12 +94,12 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
         </EntityListHeader>
     );
 
-    if (view === "hierarchy") {
+    if (view !== "list") {
         if (read === false) return <Forbidden />;
         return (
             <div className="min-w-0 flex-full gap-4">
                 {header({resolveLanguageKey, canCreate: false, canRequest: false})}
-                <CompanyHierarchy />
+                {view === "hierarchy" ? <CompanyHierarchy /> : <CompanySignups />}
             </div>
         );
     }

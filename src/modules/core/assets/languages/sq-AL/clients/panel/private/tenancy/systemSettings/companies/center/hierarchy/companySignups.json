@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companySignups.tsx",
+  "title": "Regjistrimet sipas burimit",
+  "portal": "Portali",
+  "sourceRemoved": "Një kompani që nuk është më në platformë",
+  "viaPortal": "U regjistruan drejtpërdrejt në portal",
+  "viaSite": "Nga lidhja \"Mundësuar nga\" në faqen e saj",
+  "companiesFrom": "Kompanitë e sjella nga {source}",
+  "awaitingApproval": "Pret miratim",
+  "approvalRejected": "Nuk shfaqet në portal",
+  "signupsCount": {
+    "one": "{count} regjistrim",
+    "other": "{count} regjistrime"
+  },
+  "sourcesCount": {
+    "one": "{count} burim",
+    "other": "{count} burime"
+  },
+  "emptyTitle": "Ende asnjë regjistrim",
+  "emptyDescription": "Bizneset që regjistrohen vetë në portal, ose nga faqja e një kompanie, shfaqen këtu sipas nga erdhën."
+}

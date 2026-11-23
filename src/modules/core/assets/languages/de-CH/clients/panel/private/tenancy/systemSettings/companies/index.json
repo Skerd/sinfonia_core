@@ -40,6 +40,7 @@
   "views": {
     "label": "Ansicht",
     "list": "Liste",
-    "hierarchy": "Struktur"
+    "hierarchy": "Struktur",
+    "signups": "Anmeldungen"
   }
 }

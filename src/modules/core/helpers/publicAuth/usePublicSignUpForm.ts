@@ -11,7 +11,8 @@ const FIELDS = ["name", "surname", "email", "password", "confirmPassword"] as co
 /**
  * Account sign-up for a public site: validates with the armonia sign-up schema and
  * posts through the page's `withAxios`. `submitted` turns true once the server has
- * sent the activation email. The dictionary must provide the `form.*Label` keys.
+ * sent the activation email. The dictionary must provide the `form.*Label` keys. `next` (a same-site path, see
+ * `safeNextPath`) goes with the sign-up, so the activation link brings the person back there (P23.12).
  */
 export function usePublicSignUpForm({
     resolveLanguageKey,
@@ -19,10 +20,12 @@ export function usePublicSignUpForm({
     onFilterChange,
     innerRef,
     busy,
+    next,
 }: Pick<WithAxiosType<SignupFormResponseType, SignUpFormType>, "onFilterChange" | "innerRef"> & {
     resolveLanguageKey: ResolveLanguageKey;
     languageCode: string;
     busy: boolean;
+    next?: string;
 }) {
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
@@ -50,6 +53,7 @@ export function usePublicSignUpForm({
             email: email.trim(),
             password,
             confirmPassword,
+            ...(next ? {next} : {}),
         };
         const parsed = signupFormSchema(languageCode, {
             nameLabel: resolveLanguageKey("form.nameLabel"),

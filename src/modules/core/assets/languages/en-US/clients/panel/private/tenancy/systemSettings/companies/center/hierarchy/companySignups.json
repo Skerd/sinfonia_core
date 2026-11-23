@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companySignups.tsx",
+  "title": "Sign-ups per source",
+  "portal": "The portal",
+  "sourceRemoved": "A company no longer on the platform",
+  "viaPortal": "Signed up on the portal directly",
+  "viaSite": "Through the \"Powered by\" link on its site",
+  "companiesFrom": "Companies brought by {source}",
+  "awaitingApproval": "Waiting for approval",
+  "approvalRejected": "Not listed on portal",
+  "signupsCount": {
+    "one": "{count} sign-up",
+    "other": "{count} sign-ups"
+  },
+  "sourcesCount": {
+    "one": "{count} source",
+    "other": "{count} sources"
+  },
+  "emptyTitle": "No sign-ups yet",
+  "emptyDescription": "Businesses that sign themselves up on the portal, or through a company's site, show here by where they came from."
+}

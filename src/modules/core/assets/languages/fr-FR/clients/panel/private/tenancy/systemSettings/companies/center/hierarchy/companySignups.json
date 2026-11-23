@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companySignups.tsx",
+  "title": "Inscriptions par origine",
+  "portal": "Le portail",
+  "sourceRemoved": "Une entreprise qui n'est plus sur la plateforme",
+  "viaPortal": "Inscrites directement sur le portail",
+  "viaSite": "Par le lien « Propulsé par » de son site",
+  "companiesFrom": "Entreprises amenées par {source}",
+  "awaitingApproval": "En attente de validation",
+  "approvalRejected": "Non listée sur le portail",
+  "signupsCount": {
+    "one": "{count} inscription",
+    "other": "{count} inscriptions"
+  },
+  "sourcesCount": {
+    "one": "{count} origine",
+    "other": "{count} origines"
+  },
+  "emptyTitle": "Pas encore d'inscription",
+  "emptyDescription": "Les entreprises qui s'inscrivent elles-mêmes sur le portail, ou depuis le site d'une entreprise, apparaissent ici selon leur origine."
+}

@@ -1,11 +1,12 @@
 import {compose} from "redux";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import withAxios, {WithAxiosType} from "@coreModule/helpers/hocs/withAxios.tsx";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import withDebug from "@coreModule/helpers/hocs/withDebug.tsx";
 import type {SignUpFormType} from "armonia/src/modules/core/api/user/public/signUp/signup.form.type.ts";
 import type {SignupFormResponseType} from "armonia/src/modules/core/api/user/public/signUp/signup.form.response.type.ts";
 import {usePublicSignUpForm} from "@coreModule/helpers/publicAuth/usePublicSignUpForm.ts";
+import {safeNextPath} from "@coreModule/helpers/publicAuth/safeNextPath.ts";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import PortalAuthShell from "./portalAuthShell.tsx";
 import FormField from "../shared/formField.tsx";
@@ -21,7 +22,10 @@ const FIELDS = [
 
 /** Create a portal account; it is activated from the emailed link. */
 function PortalSignUpPage({resolveLanguageKey, languageCode, onFilterChange, innerRef, loading}: WithLanguageType & WithAxiosType<SignupFormResponseType, SignUpFormType>) {
-    const form = usePublicSignUpForm({resolveLanguageKey, languageCode, onFilterChange, innerRef, busy: loading});
+    // Where the person was going (a business sign-up, a booking): the activation link brings them back there.
+    const location = useLocation();
+    const next = safeNextPath(location.search, "");
+    const form = usePublicSignUpForm({resolveLanguageKey, languageCode, onFilterChange, innerRef, busy: loading, next});
     const values = {name: form.name, surname: form.surname, email: form.email, password: form.password, confirmPassword: form.confirmPassword};
     const setters = {name: form.setName, surname: form.setSurname, email: form.setEmail, password: form.setPassword, confirmPassword: form.setConfirmPassword};
 
@@ -39,7 +43,7 @@ function PortalSignUpPage({resolveLanguageKey, languageCode, onFilterChange, inn
             )}
             {form.submitted ? null : <PortalThirdPartyAuthentication resolveLanguageKey={resolveLanguageKey} loading={loading} />}
             <p className="text-sm text-muted-foreground">
-                {resolveLanguageKey("haveAccount")} <Button asChild variant="link" className="h-auto p-0"><Link to="/login">{resolveLanguageKey("signInLink")}</Link></Button>
+                {resolveLanguageKey("haveAccount")} <Button asChild variant="link" className="h-auto p-0"><Link to={`/login${location.search}`}>{resolveLanguageKey("signInLink")}</Link></Button>
             </p>
         </PortalAuthShell>
     );

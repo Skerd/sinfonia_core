@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companySignups.tsx",
+  "title": "Anmeldungen nach Herkunft",
+  "portal": "Das Portal",
+  "sourceRemoved": "Eine Firma, die nicht mehr auf der Plattform ist",
+  "viaPortal": "Direkt im Portal angemeldet",
+  "viaSite": "Über den Link «Bereitgestellt von» auf ihrer Website",
+  "companiesFrom": "Firmen, die über {source} kamen",
+  "awaitingApproval": "Wartet auf Freigabe",
+  "approvalRejected": "Nicht im Portal gelistet",
+  "signupsCount": {
+    "one": "{count} Anmeldung",
+    "other": "{count} Anmeldungen"
+  },
+  "sourcesCount": {
+    "one": "{count} Herkunft",
+    "other": "{count} Herkünfte"
+  },
+  "emptyTitle": "Noch keine Anmeldungen",
+  "emptyDescription": "Betriebe, die sich selbst im Portal oder über die Website einer Firma anmelden, erscheinen hier nach ihrer Herkunft."
+}

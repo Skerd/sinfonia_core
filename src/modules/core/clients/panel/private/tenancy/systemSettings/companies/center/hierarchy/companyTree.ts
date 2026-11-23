@@ -1,4 +1,5 @@
 import type {CompanyTreeNode} from "armonia/src/modules/core/api/platform/private/companies/platformModules.dto.ts";
+import type {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 
 /** A company with the companies created under it. */
 export type CompanyBranch = {
@@ -75,4 +76,9 @@ export function companyTreeStats(roots: CompanyBranch[]): {companies: number; le
 /** The ids of every branch that has children: the set a fully expanded tree keeps open. */
 export function branchIds(roots: CompanyBranch[]): string[] {
     return roots.flatMap((branch) => branch.children.length > 0 ? [branch.company._id, ...branchIds(branch.children)] : []);
+}
+
+/** `{key}.one` or `{key}.other` with the count filled in. */
+export function counted(t: WithLanguageType["resolveLanguageKey"], key: string, count: number): string {
+    return String(t(`${key}.${count === 1 ? "one" : "other"}`)).replace("{count}", String(count));
 }

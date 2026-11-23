@@ -1,0 +1,21 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/hierarchy/companySignups.tsx",
+  "title": "Iscrizioni per provenienza",
+  "portal": "Il portale",
+  "sourceRemoved": "Un'azienda non più sulla piattaforma",
+  "viaPortal": "Iscritte direttamente sul portale",
+  "viaSite": "Dal link \"Realizzato con\" sul suo sito",
+  "companiesFrom": "Aziende portate da {source}",
+  "awaitingApproval": "In attesa di approvazione",
+  "approvalRejected": "Non elencata sul portale",
+  "signupsCount": {
+    "one": "{count} iscrizione",
+    "other": "{count} iscrizioni"
+  },
+  "sourcesCount": {
+    "one": "{count} provenienza",
+    "other": "{count} provenienze"
+  },
+  "emptyTitle": "Ancora nessuna iscrizione",
+  "emptyDescription": "Le attività che si iscrivono da sole sul portale, o dal sito di un'azienda, compaiono qui in base alla loro provenienza."
+}

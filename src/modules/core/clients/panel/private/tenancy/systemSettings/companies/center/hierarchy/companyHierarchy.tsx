@@ -23,7 +23,7 @@ import {InputGroup, InputGroupAddon, InputGroupInput} from "@coreModule/componen
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
 import type {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import type {CompanyTreeNode, CompanyTreeResponse} from "armonia/src/modules/core/api/platform/private/companies/platformModules.dto.ts";
-import {branchIds, buildCompanyTree, companyTreeStats, filterCompanyTree, type CompanyBranch} from "./companyTree.ts";
+import {branchIds, buildCompanyTree, companyTreeStats, counted, filterCompanyTree, type CompanyBranch} from "./companyTree.ts";
 
 type Translate = WithLanguageType["resolveLanguageKey"];
 
@@ -47,10 +47,6 @@ function initials(name: string): string {
     return name.split(/\s+/).filter(Boolean).slice(0, 2).map((word) => word[0]).join("").toLocaleUpperCase();
 }
 
-function counted(t: Translate, key: string, count: number): string {
-    return String(t(`${key}.${count === 1 ? "one" : "other"}`)).replace("{count}", String(count));
-}
-
 /** The name with the searched text marked. */
 function Highlighted({text, query}: {text: string; query: string}) {
     const needle = query.trim().toLocaleLowerCase();
@@ -65,12 +61,22 @@ function Highlighted({text, query}: {text: string; query: string}) {
     );
 }
 
-function StatChip({icon, children}: {icon: ReactNode; children: ReactNode}) {
+export function StatChip({icon, children}: {icon: ReactNode; children: ReactNode}) {
     return (
         <span className="inline-flex items-center gap-1.5 rounded-full border bg-background px-2.5 py-1 text-xs text-muted-foreground shadow-xs [&>svg]:size-3.5">
             {icon}
             {children}
         </span>
+    );
+}
+
+/** A company's logo, or its initials on a tone picked by name. */
+export function CompanyAvatar({name, logo, className}: {name: string; logo?: string; className?: string}) {
+    return (
+        <Avatar className={cn("shrink-0 border-2 border-background shadow-sm", className)}>
+            {logo ? <AvatarImage src={`/api/auxiliary/media/${logo}`} alt="" /> : null}
+            <AvatarFallback className={cn("text-xs font-semibold", initialsTone(name))}>{initials(name)}</AvatarFallback>
+        </Avatar>
     );
 }
 
@@ -124,16 +130,15 @@ function CompanyBranchItem({branch, depth, query, isOpen, onToggle, onOpenCompan
                     aria-label={String(t("openCompany")).replace("{company}", name)}
                     className="flex h-full min-w-0 flex-1 cursor-pointer items-center gap-3 rounded-xl px-3 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
                 >
-                    <Avatar
+                    <CompanyAvatar
+                        name={name}
+                        logo={company.logo}
                         className={cn(
-                            "shrink-0 border-2 border-background shadow-sm transition-transform group-hover/node:scale-105",
+                            "transition-transform group-hover/node:scale-105",
                             featured ? "size-10 ring-2 ring-primary/40" : "size-9",
                             inactive && "grayscale",
                         )}
-                    >
-                        {company.logo ? <AvatarImage src={`/api/auxiliary/media/${company.logo}`} alt="" /> : null}
-                        <AvatarFallback className={cn("text-xs font-semibold", initialsTone(name))}>{initials(name)}</AvatarFallback>
-                    </Avatar>
+                    />
                     <div className={cn("flex min-w-0 flex-1 flex-col gap-0.5", inactive && "opacity-60")}>
                         <div className="flex min-w-0 items-center gap-1.5">
                             <span className={cn("truncate font-medium", featured && "text-base font-semibold")}>
