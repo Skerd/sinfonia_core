@@ -1,8 +1,8 @@
-import {IconMenu, IconSearch, IconUser} from "@tabler/icons-react";
-import {useState} from "react";
+import {IconChevronDown, IconMenu, IconSearch, IconUser} from "@tabler/icons-react";
+import {useEffect, useRef, useState} from "react";
 import {compose} from "redux";
 import {useDispatch, useSelector} from "react-redux";
-import {Link, NavLink, useLocation, useNavigate} from "react-router-dom";
+import {Link, NavLink, useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {signOut} from "@coreModule/helpers/redux/slices/authSlice.ts";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
@@ -12,6 +12,7 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@coreModule/components/ui/dropdown-menu.tsx";
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@coreModule/components/ui/sheet.tsx";
@@ -48,36 +49,124 @@ function Brand() {
     const {site} = usePortalSite();
     if (!site) return null;
     return site.company.logo
-        ? <img src={site.company.logo} alt={site.company.name} className="h-8 w-auto max-w-40 rounded-sm object-contain" />
+        ? <img src={site.company.logo} alt={site.company.name} className="h-10 w-auto max-w-48 rounded-sm object-contain" />
         : <span className="truncate font-display text-lg font-bold tracking-tight">{site.company.name}</span>;
 }
 
-/** One query across every section; the home page narrows it down. */
+/** Typing searches by itself after this pause, as the panel's list search does. */
+const SEARCH_DEBOUNCE_MS = 300;
+
+/**
+ * One query across every section; the home page narrows it down. It searches as you type, after a short pause. The box
+ * shows the home page's query, and emptying it drops that query at once, so an empty box never sits above old results.
+ */
 function NavigationSearch({resolveLanguageKey}: Pick<WithLanguageType, "resolveLanguageKey">) {
     const navigate = useNavigate();
+    const {pathname} = useLocation();
+    const [params, setParams] = useSearchParams();
     const {sections} = usePortalSite();
-    const [query, setQuery] = useState("");
+    const onHome = pathname === "/";
+    const shownQuery = onHome ? params.get("q") ?? "" : "";
+    const [query, setQuery] = useState(shownQuery);
+    /* The query this box last put in the URL: its echo must not undo keys typed since (as the panel's ListSearchBar). */
+    const sent = useRef(shownQuery);
+    const timer = useRef(0);
     const placeholder = searchPlaceholder(resolveLanguageKey, "searchPlaceholder", sections);
+
+    useEffect(() => {
+        if (shownQuery === sent.current) return;
+        // Changed elsewhere (the home page's own box, back/forward, a link): that wins over a pending keystroke.
+        window.clearTimeout(timer.current);
+        sent.current = shownQuery;
+        setQuery(shownQuery);
+    }, [shownQuery]);
+    useEffect(() => () => window.clearTimeout(timer.current), []);
+
+    const send = (text: string) => {
+        window.clearTimeout(timer.current);
+        const trimmed = text.trim();
+        if (trimmed === sent.current) return;
+        sent.current = trimmed;
+        if (!onHome) {
+            if (trimmed) navigate(`/?${new URLSearchParams({q: trimmed})}`);
+            return;
+        }
+        // On the home page only the query changes; the kind and city chosen there stay. Refining a query replaces the
+        // history entry, so Back returns to the previous search rather than the previous letter.
+        setParams((current) => {
+            const next = new URLSearchParams(current);
+            if (trimmed) next.set("q", trimmed);
+            else next.delete("q");
+            next.delete("page");
+            return next;
+        }, {replace: Boolean(shownQuery && trimmed)});
+    };
 
     return (
         <form
             role="search"
-            className="w-full max-w-xs"
+            className="w-full max-w-xl"
             onSubmit={(event) => {
                 event.preventDefault();
-                if (query.trim()) navigate(`/?${new URLSearchParams({q: query.trim()})}`);
+                send(query);
             }}
         >
-            <InputGroup>
+            <InputGroup className="h-11 rounded-full bg-muted/40">
                 <InputGroupAddon><IconSearch aria-hidden /></InputGroupAddon>
                 <InputGroupInput
                     value={query}
-                    onChange={(event) => setQuery(event.target.value)}
+                    onChange={(event) => {
+                        const next = event.target.value;
+                        setQuery(next);
+                        window.clearTimeout(timer.current);
+                        if (!next.trim()) send("");
+                        else timer.current = window.setTimeout(() => send(next), SEARCH_DEBOUNCE_MS);
+                    }}
                     placeholder={placeholder}
                     aria-label={placeholder}
                 />
             </InputGroup>
         </form>
+    );
+}
+
+/** More sections than this go in the Explore menu (the apex); a company site keeps its few as links. */
+const INLINE_SECTIONS_MAX = 2;
+
+/**
+ * The apex's sections in one menu, so the header keeps to the logo, the search and the account (the user, 2026-11-23:
+ * "it's full of menus, I need something sleeker"). Inside a section the button names it.
+ */
+function ExploreMenu({sections, activeLink, resolveLanguageKey}: {
+    sections: readonly PortalSection[];
+    activeLink: string | undefined;
+    resolveLanguageKey: WithLanguageType["resolveLanguageKey"];
+}) {
+    const active = sections.find((section) => section.section === activeLink);
+    return (
+        <DropdownMenu modal={false}>
+            <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="hidden gap-1.5 rounded-full px-4 font-medium lg:inline-flex">
+                    {active ? <PortalSectionName section={active.section} /> : resolveLanguageKey(activeLink === "blog" ? "blog" : "explore")}
+                    <IconChevronDown className="size-4 text-muted-foreground" aria-hidden />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="grid w-96 grid-cols-2 gap-1 p-2">
+                {sections.map((section) => (
+                    <DropdownMenuItem
+                        key={section.section}
+                        asChild
+                        className={cn("rounded-lg px-3 py-2.5 font-medium", section.section === activeLink && "bg-muted")}
+                    >
+                        <Link to={sectionHref(section)}><PortalSectionName section={section.section} /></Link>
+                    </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator className="col-span-2" />
+                <DropdownMenuItem asChild className={cn("col-span-2 rounded-lg px-3 py-2 text-muted-foreground", activeLink === "blog" && "bg-muted")}>
+                    <Link to="/blog">{resolveLanguageKey("blog")}</Link>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
     );
 }
 
@@ -98,42 +187,46 @@ function PortalNavigation({resolveLanguageKey}: WithLanguageType) {
 
     return (
         <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-            <div className="site-container flex h-16 items-center gap-4">
+            <div className="site-container flex h-20 items-center gap-3 lg:gap-6">
                 <Link to="/" className="flex min-w-0 shrink-0 items-center" aria-label={resolveLanguageKey("home")}>
                     <Brand />
                 </Link>
-                <nav className="relative hidden items-center gap-1 lg:flex" aria-label={resolveLanguageKey("navLabel")}>
-                    {/* The current section's pill slides from link to link. */}
-                    <SlidingIndicator activeKey={activeLink} className="rounded-full bg-muted" />
-                    {sections.map((section) => (
-                        <Link
-                            key={section.section}
-                            to={sectionHref(section)}
-                            data-indicator-active={activeLink === section.section ? "" : undefined}
-                            className={navLinkClass({isActive: activeLink === section.section, sliding: true})}
-                        >
-                            <PortalSectionName section={section.section} />
+                {sections.length > INLINE_SECTIONS_MAX ? (
+                    <ExploreMenu sections={sections} activeLink={activeLink} resolveLanguageKey={resolveLanguageKey} />
+                ) : (
+                    <nav className="relative hidden items-center gap-1 lg:flex" aria-label={resolveLanguageKey("navLabel")}>
+                        {/* The current section's pill slides from link to link. */}
+                        <SlidingIndicator activeKey={activeLink} className="rounded-full bg-muted" />
+                        {sections.map((section) => (
+                            <Link
+                                key={section.section}
+                                to={sectionHref(section)}
+                                data-indicator-active={activeLink === section.section ? "" : undefined}
+                                className={navLinkClass({isActive: activeLink === section.section, sliding: true})}
+                            >
+                                <PortalSectionName section={section.section} />
+                            </Link>
+                        ))}
+                        <Link to="/blog" data-indicator-active={activeLink === "blog" ? "" : undefined} className={navLinkClass({isActive: activeLink === "blog", sliding: true})}>
+                            {resolveLanguageKey("blog")}
                         </Link>
-                    ))}
-                    <Link to="/blog" data-indicator-active={activeLink === "blog" ? "" : undefined} className={navLinkClass({isActive: activeLink === "blog", sliding: true})}>
-                        {resolveLanguageKey("blog")}
-                    </Link>
-                    {offersBusinessSignUp ? (
-                        <Link to="/business" data-indicator-active={activeLink === "business" ? "" : undefined} className={navLinkClass({isActive: activeLink === "business", sliding: true})}>
-                            {resolveLanguageKey("forBusinesses")}
-                        </Link>
-                    ) : null}
-                </nav>
-                <div className="ml-auto hidden flex-1 justify-end md:flex">
+                    </nav>
+                )}
+                <div className="hidden min-w-0 flex-1 justify-center md:flex">
                     <NavigationSearch resolveLanguageKey={resolveLanguageKey} />
                 </div>
                 <div className="ml-auto flex items-center gap-1 md:ml-0">
+                    {offersBusinessSignUp ? (
+                        <Link to="/business" className={cn(navLinkClass({isActive: businessActive}), "hidden whitespace-nowrap lg:inline-flex")}>
+                            {resolveLanguageKey("forBusinesses")}
+                        </Link>
+                    ) : null}
                     {sections.map(({section, path, NavAction}) => NavAction ? (
                         <SectionBaseProvider key={section} base={`/${path}`}><NavAction /></SectionBaseProvider>
                     ) : null)}
+                    {/* The theme switch lives in the footer: the header keeps what people use on every visit. */}
                     <div className="hidden items-center sm:flex">
                         <LanguageSwitch />
-                        <ThemeSwitch />
                     </div>
                     {token ? (
                         <DropdownMenu modal={false}>

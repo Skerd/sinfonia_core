@@ -1,5 +1,5 @@
 import {IconWorld, IconMail, IconMapPin, IconPhone, IconSearch} from "@tabler/icons-react";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {compose} from "redux";
 import {useSearchParams} from "react-router-dom";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -22,6 +22,9 @@ function foldCity(value: string) {
     return value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
+/** Typing in "what" searches by itself after this pause, as the panel's list search does. */
+const SEARCH_DEBOUNCE_MS = 300;
+
 /** "What" and "where", across every kind; the catalog below narrows it down. */
 function CatalogSearch({cities, resolveLanguageKey}: {cities: readonly string[]; resolveLanguageKey: ResolveLanguageKey}) {
     const [params, setParams] = useSearchParams();
@@ -30,11 +33,20 @@ function CatalogSearch({cities, resolveLanguageKey}: {cities: readonly string[];
 
     return (
         <CatalogSearchForm
-            key={`${query}|${named}`}
+            key={named}
             cities={cities}
             query={query}
             city={named}
             resolveLanguageKey={resolveLanguageKey}
+            onQuery={(q) => {
+                // Refining a query replaces the history entry, so Back returns to the previous search, not the previous letter.
+                setParams((current) => {
+                    const next = new URLSearchParams(current);
+                    if (q) next.set("q", q); else next.delete("q");
+                    next.delete("page");
+                    return next;
+                }, {replace: Boolean(query && q)});
+            }}
             onSearch={(q, city) => {
                 setParams((current) => {
                     const next = new URLSearchParams(current);
@@ -53,15 +65,47 @@ function CatalogSearchForm({
     query,
     city: initialCity,
     resolveLanguageKey,
+    onQuery,
     onSearch,
 }: {
     cities: readonly string[];
     query: string;
     city: string;
     resolveLanguageKey: ResolveLanguageKey;
+    /**
+     * The "what" text alone, as it is typed (after a pause) or emptied (at once, so no results stand under an empty box).
+     * The city waits for the search button.
+     */
+    onQuery: (query: string) => void;
     onSearch: (query: string, city: string) => void;
 }) {
     const {sections} = usePortalSite();
+    const [text, setText] = useState(query);
+    /* The query this form last put in the URL: its echo must not undo keys typed since (as the panel's ListSearchBar). */
+    const sent = useRef(query);
+    const timer = useRef(0);
+    useEffect(() => {
+        if (query === sent.current) return;
+        // Changed elsewhere (the header's box, back/forward, a link): that wins over a pending keystroke.
+        window.clearTimeout(timer.current);
+        sent.current = query;
+        setText(query);
+    }, [query]);
+    useEffect(() => () => window.clearTimeout(timer.current), []);
+
+    function sendQuery(typed: string) {
+        window.clearTimeout(timer.current);
+        const trimmed = typed.trim();
+        if (trimmed === sent.current) return;
+        sent.current = trimmed;
+        onQuery(trimmed);
+    }
+
+    function search(q: string, city: string) {
+        window.clearTimeout(timer.current);
+        sent.current = q;
+        onSearch(q, city);
+    }
     const options = initialCity && !cities.includes(initialCity) ? [initialCity, ...cities] : cities;
     const [draft, setDraft] = useState(initialCity);
     const [cityQuery, setCityQuery] = useState("");
@@ -95,12 +139,24 @@ function CatalogSearchForm({
                 const city = resolveCity(draft);
                 setDraft(city);
                 setOpen(false);
-                onSearch(String(data.get("q") ?? "").trim(), city);
+                search(String(data.get("q") ?? "").trim(), city);
             }}
         >
             <InputGroup className="h-12 border-0 shadow-none dark:bg-transparent">
                 <InputGroupAddon><IconSearch aria-hidden /></InputGroupAddon>
-                <InputGroupInput name="q" defaultValue={query} placeholder={searchPlaceholder(resolveLanguageKey, "whatPlaceholder", sections)} aria-label={resolveLanguageKey("what")} />
+                <InputGroupInput
+                    name="q"
+                    value={text}
+                    onChange={(event) => {
+                        const next = event.target.value;
+                        setText(next);
+                        window.clearTimeout(timer.current);
+                        if (!next.trim()) sendQuery("");
+                        else timer.current = window.setTimeout(() => sendQuery(next), SEARCH_DEBOUNCE_MS);
+                    }}
+                    placeholder={searchPlaceholder(resolveLanguageKey, "whatPlaceholder", sections)}
+                    aria-label={resolveLanguageKey("what")}
+                />
             </InputGroup>
             {/* On a phone the fields stack, so the line sits above the city. Beside each other, the city field carries it. */}
             <div className="relative z-20 border-t border-foreground/20 sm:contents">
@@ -152,7 +208,7 @@ function CatalogSearchForm({
                             fill(name);
                             if (form) {
                                 const data = new FormData(form);
-                                onSearch(String(data.get("q") ?? "").trim(), name);
+                                search(String(data.get("q") ?? "").trim(), name);
                             }
                         }
                     }}

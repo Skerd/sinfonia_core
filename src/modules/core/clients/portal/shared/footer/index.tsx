@@ -11,6 +11,7 @@ import PortalSectionName from "../portalSectionName.tsx";
 import {usePortalSite} from "../portalSiteContext.tsx";
 import {sectionHref} from "../sectionBase.tsx";
 import {portalApexOrigin} from "../portalZone.ts";
+import ThemeSwitch from "@coreModule/components/custom/preferences/themeSwitch.tsx";
 
 const FOOTER_LINK_CLASS = "inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground";
 
@@ -117,6 +118,8 @@ function PortalFooter({resolveLanguageKey}: WithLanguageType) {
                             {resolveLanguageKey("poweredBy").replace("{brand}", site.platform.name)}
                         </a>
                     ) : null}
+                    {/* Moved from the header (2026-11-23): a preference set once, not on every visit. */}
+                    <ThemeSwitch />
                 </div>
             </div>
         </footer>
