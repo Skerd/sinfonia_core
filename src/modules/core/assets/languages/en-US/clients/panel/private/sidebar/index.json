@@ -50,7 +50,11 @@
         "vatTitle": "NIPT / VAT number",
         "vatText": "Enter it as it appears on your registration. Once it's checked, your business gets the Verified badge on the portal.",
         "teamTitle": "Invite your team",
-        "teamText": "Invite each person by email and choose their role. They join as soon as they accept."
+        "teamText": "Invite each person by email and choose their role. They join as soon as they accept.",
+        "companyTitle": "Your businesses",
+        "companyText": "The business you're working in. Open this menu to switch to another business you belong to: each has its own data, team and settings.",
+        "accountTitle": "Your account",
+        "accountText": "Your profile, password and sign-in security, notifications and connected apps. “Take the tour” in this menu starts the tour again any time."
       }
     }
   },

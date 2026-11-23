@@ -41,4 +41,22 @@ describe("createHomeContributions", () => {
         expect(getSetupSteps({resolveLanguageKey: resolve, company: {id: "c1", name: "Acme"}}).map((entry) => entry.key)).toEqual(["ok"]);
         expect(error).toHaveBeenCalledTimes(1);
     });
+
+    it("keeps tour tips and page stops (D180) in contribution order, and leaves out malformed stops", () => {
+        const {getTour} = createHomeContributions({
+            [path("fixtureShop")]: {default: {id: "shop", order: 40, getSetupSteps: () => [], getTour: () => [
+                {page: "/products", accessModel: "products"},
+                {page: 42},
+                {target: "nav:/orders", title: "Orders"},
+            ]}},
+            [path("fixtureRental")]: {default: {id: "rental", order: 20, getSetupSteps: () => [], getTour: () => [
+                {target: "nav:/cars", title: "Cars", text: "Every car."},
+                {page: "/planner", accessModel: 7},
+            ]}},
+        });
+        expect(getTour({resolveLanguageKey: resolve, company: {id: "c1", name: "Acme"}})).toEqual([
+            {target: "nav:/cars", title: "Cars", text: "Every car."},
+            {page: "/products", accessModel: "products"},
+        ]);
+    });
 });

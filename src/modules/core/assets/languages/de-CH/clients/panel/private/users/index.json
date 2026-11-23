@@ -27,23 +27,22 @@
     ]
   },
   "administrationHelp": {
-    "ariaLabel": "Über die Liste der Administrationsbenutzer",
-    "title": "Über die Liste der Administrationsbenutzer",
-    "overview": "Diese Liste enthält Benutzer mit Personal- oder Administrationsrollen, die nicht als Standard für die Registrierung markiert sind, sowie Bot-Benutzer. Der aktuell angemeldete Benutzer ist ausgeschlossen.",
+    "ariaLabel": "Über Ihr Team",
+    "title": "Über Ihr Team",
+    "overview": "Ihre Mitarbeitenden: alle, die mit Ihnen im Panel arbeiten, dazu der automatische Assistent der Firma. Sie selbst sehen sich in dieser Liste nicht.",
     "sections": [
       {
-        "title": "Administratoren hinzufügen",
+        "title": "Personen hinzufügen",
         "items": [
-          "Erstellen Sie einen Benutzer mit Passwort oder laden Sie eine Person per E-Mail ein; sie erhält eine Administrationsrolle.",
-          "Bearbeiten Sie Konto und Rollen über das Zeilenmenü.",
-          "Karten zeigen Status, MFA sowie Einladungs-, Aktivierungs- und Passwort-Zurücksetzungsanfragen."
+          "Laden Sie jemanden per E-Mail ein oder erstellen Sie das Konto mit einem Passwort.",
+          "Jede Person erhält Rollen, die festlegen, was sie sehen und tun darf. Öffnen Sie das Menü einer Zeile, um Angaben oder Rollen zu ändern.",
+          "Jede Karte zeigt, ob das Konto aktiv ist, die Anmeldung in zwei Schritten nutzt oder noch eine offene Einladung hat."
         ]
       },
       {
-        "title": "Abgrenzung zu Benutzer",
+        "title": "Team und Benutzer",
         "items": [
-          "Rollen ohne «Standard für die Registrierung» führen Personen in der Administration.",
-          "Reguläre Firmenmitglieder mit Standardrollen erscheinen unter Firma → Benutzer."
+          "Personen mit einer Registrierungsrolle, etwa auf Ihrer Website erstellte Konten, stehen stattdessen unter Benutzer."
         ]
       }
     ]

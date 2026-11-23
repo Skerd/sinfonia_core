@@ -6,9 +6,12 @@ import {useSelector} from "react-redux";
 import withLanguage, {type WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {RootState} from "@coreModule/helpers/redux/store/generalStore.ts";
 import {useAccessHydrated, useAccessMap} from "@coreModule/helpers/context/accessContext.tsx";
+import {useIsMobile} from "@coreModule/helpers/hooks/useMobile.tsx";
 import {getHomeSetupSteps, getHomeTour} from "@coreModule/helpers/moduleContributions/loadHomeContributions.ts";
-import type {HomeGuideTip, HomeTourStop} from "@coreModule/helpers/types/homeContribution.types.ts";
+import type {HomeGuideTip, HomeTourStop, HomeTourTip} from "@coreModule/helpers/types/homeContribution.types.ts";
+import {pageHelpOf, type PageHelpSection} from "@coreModule/components/custom/pageHelp.tsx";
 import {Button} from "@coreModule/components/ui/button.tsx";
+import {cn} from "@coreModule/components/lib/utils.ts";
 import {Popover, PopoverAnchor, PopoverContent} from "@coreModule/components/ui/popover.tsx";
 import {canDoStep, canSeeTourStop, isStepDone, nextOpenStep, type SetupAccessMap} from "../setupStepStatus.ts";
 import {useGuide} from "./guideContext.tsx";
@@ -16,8 +19,9 @@ import {isOnPage} from "./guideRun.ts";
 
 /** How long a tip waits for its element (a page still loading) before it is skipped. */
 const TARGET_WAIT_MS = 4000;
-/** A sidebar link is there at once or not at all (a phone keeps the sidebar closed): no long wait for it. */
+/** The sidebar is there at once or not at all (a phone keeps it closed): no long wait for its links and menus. */
 const NAV_TARGET_WAIT_MS = 600;
+const isSidebarTarget = (target: string) => target.startsWith("nav:") || target.startsWith("sidebar.");
 const TARGET_POLL_MS = 150;
 /** The outline on the element a tip points at; a class list, so the person can still click and type in it. */
 const HIGHLIGHT = ["ring-2", "ring-primary", "ring-offset-2", "ring-offset-background", "rounded-md"];
@@ -38,7 +42,7 @@ function useGuideTarget(target: string | undefined, pageKey: string): {element: 
     useEffect(() => {
         if (!target) return;
         const startedAt = Date.now();
-        const wait = target.startsWith("nav:") ? NAV_TARGET_WAIT_MS : TARGET_WAIT_MS;
+        const wait = isSidebarTarget(target) ? NAV_TARGET_WAIT_MS : TARGET_WAIT_MS;
         const timer = window.setInterval(() => {
             const element = findTarget(target);
             if (element) {
@@ -63,8 +67,19 @@ function useGuideTarget(target: string | undefined, pageKey: string): {element: 
     return found.key === key ? {element: found.element, missing: found.missing} : {element: null, missing: false};
 }
 
+/** A tour stop ready to show: a page stop (D180) becomes a tip at its page's ⓘ, worded by that help. */
+type TourTip = HomeTourTip & {explainsPage?: boolean};
+
+function toTourTip(stop: HomeTourStop): TourTip {
+    return "page" in stop
+        ? {target: "page.help", to: stop.page, accessModel: stop.accessModel, title: "", text: "", explainsPage: true}
+        : stop;
+}
+
 type TipCardProps = {
     tip: HomeGuideTip;
+    /** A page's help points under the text (D180): the same sections its ⓘ opens. */
+    points?: PageHelpSection[];
     element: HTMLElement;
     index: number;
     total: number;
@@ -76,10 +91,10 @@ type TipCardProps = {
 };
 
 /** One tip beside its element. It stays open while the person works in the page; Escape ends the guide. */
-function TipCard({tip, element, index, total, onBack, onNext, onSkip, nextLabel, resolveLanguageKey: t}: TipCardProps) {
+function TipCard({tip, points = [], element, index, total, onBack, onNext, onSkip, nextLabel, resolveLanguageKey: t}: TipCardProps) {
     const titleId = useId();
     const anchor = useMemo(() => ({current: element}), [element]);
-    const sideways = (element.getAttribute("data-tour") ?? "").startsWith("nav:");
+    const sideways = isSidebarTarget(element.getAttribute("data-tour") ?? "");
 
     return (
         <Popover open>
@@ -89,7 +104,7 @@ function TipCard({tip, element, index, total, onBack, onNext, onSkip, nextLabel,
                 align="start"
                 sideOffset={10}
                 collisionPadding={12}
-                className="w-80 gap-3 p-4"
+                className={cn("gap-3 p-4", points.length > 0 ? "w-[26rem] max-w-[calc(100vw-1.5rem)]" : "w-80")}
                 aria-labelledby={titleId}
                 onOpenAutoFocus={(event) => event.preventDefault()}
                 onInteractOutside={(event) => event.preventDefault()}
@@ -99,6 +114,21 @@ function TipCard({tip, element, index, total, onBack, onNext, onSkip, nextLabel,
                     <h2 id={titleId} className="font-semibold">{tip.title}</h2>
                     <p className="text-sm text-muted-foreground">{tip.text}</p>
                 </div>
+                {points.length > 0 ? (
+                    <div className="flex max-h-[min(22rem,45vh)] flex-col gap-3 overflow-y-auto pr-1">
+                        {points.map((section, sectionIndex) => (
+                            <section key={sectionIndex} className="flex flex-col gap-1">
+                                <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{section.title}</h3>
+                                {section.body ? <p className="text-sm text-muted-foreground">{section.body}</p> : null}
+                                {section.items.length > 0 ? (
+                                    <ul className="flex list-disc flex-col gap-1 pl-4 text-sm text-muted-foreground">
+                                        {section.items.map((item, itemIndex) => <li key={itemIndex}>{item}</li>)}
+                                    </ul>
+                                ) : null}
+                            </section>
+                        ))}
+                    </div>
+                ) : null}
                 <div className="flex items-center justify-between gap-2">
                     <span className="text-xs text-muted-foreground">
                         {t("home.guide.counter").replace("{current}", String(index + 1)).replace("{total}", String(total))}
@@ -142,7 +172,8 @@ function CornerCard({title, text, finished = true, children}: {title: string; te
 
 /**
  * The guided first run (D179), on every private panel page: a setup step's tips on its page, a card when the step is
- * done (with the next open one), and the tour of the daily pages, ending at the page help.
+ * done (with the next open one), and the tour of the modules' pages, each explained by its own help (D180), ending at
+ * the page help.
  */
 function GuideRunner({resolveLanguageKey: t}: WithLanguageType) {
     const {run, setRun, startStep, startTour, end} = useGuide();
@@ -153,6 +184,8 @@ function GuideRunner({resolveLanguageKey: t}: WithLanguageType) {
     const navigate = useNavigate();
     const accessMap = useAccessMap() as SetupAccessMap;
     const accessHydrated = useAccessHydrated();
+    // A phone keeps the sidebar closed: its tour stops are left out, so the count matches what the person sees.
+    const isMobile = useIsMobile();
     const companyId = useSelector((state: RootState) => state.authentication.user.company._id);
     const companyName = useSelector((state: RootState) => state.authentication.user.company.name);
 
@@ -162,15 +195,18 @@ function GuideRunner({resolveLanguageKey: t}: WithLanguageType) {
             : [],
         [t, accessMap, accessHydrated, companyId, companyName],
     );
-    const stops = useMemo<HomeTourStop[]>(() => {
+    const stops = useMemo<TourTip[]>(() => {
         if (!accessHydrated) return [];
-        const moduleStops = getHomeTour({resolveLanguageKey: t, company: {id: companyId, name: companyName}}).filter((stop) => canSeeTourStop(stop, accessMap));
+        const moduleStops = getHomeTour({resolveLanguageKey: t, company: {id: companyId, name: companyName}})
+            .filter((stop) => canSeeTourStop(stop, accessMap))
+            .map(toTourTip)
+            .filter((stop) => !(isMobile && isSidebarTarget(stop.target)));
         if (moduleStops.length === 0) return [];
         // The tour ends at the page help, on the last page it named.
         const last = moduleStops[moduleStops.length - 1];
         const lastPage = last.to ?? (last.target.startsWith("nav:") ? last.target.slice(4) : undefined);
         return [...moduleStops, {target: "page.help", to: lastPage, title: t("home.guide.helpTitle"), text: t("home.guide.helpText")}];
-    }, [t, accessMap, accessHydrated, companyId, companyName]);
+    }, [t, accessMap, accessHydrated, companyId, companyName, isMobile]);
 
     const step = run && run.kind !== "tour" ? steps.find((entry) => entry.key === run.stepKey) : undefined;
     const onStepPage = run?.kind === "step" && step ? isOnPage(pathname, step.to) : false;
@@ -178,7 +214,12 @@ function GuideRunner({resolveLanguageKey: t}: WithLanguageType) {
     const stepTip = run?.kind === "step" && onStepPage && run.tip < tips.length ? tips[run.tip] : undefined;
     const stop = run?.kind === "tour" ? stops[run.stop] : undefined;
     const tip: HomeGuideTip | undefined = stepTip ?? stop;
-    const {element, missing} = useGuideTarget(tip?.target, `${pathname}|${run?.kind === "step" ? run.tip : run?.kind === "tour" ? run.stop : ""}`);
+    // A stop with its own page is looked for there only: the page being left may still show its own ⓘ.
+    const awaitingPage = run?.kind === "tour" && !!stop?.to && !isOnPage(pathname, stop.to);
+    const {element, missing} = useGuideTarget(
+        awaitingPage ? undefined : tip?.target,
+        `${pathname}|${run?.kind === "step" ? run.tip : run?.kind === "tour" ? run.stop : ""}`,
+    );
 
     // A run whose step or stop is gone (no access, another company's checklist) ends.
     useEffect(() => {
@@ -273,9 +314,11 @@ function GuideRunner({resolveLanguageKey: t}: WithLanguageType) {
 
     if (run.kind === "tour") {
         const last = run.stop === stops.length - 1;
+        const help = stop?.explainsPage ? pageHelpOf(element) : undefined;
         return (
             <TipCard
-                tip={tip}
+                tip={help ? {target: tip.target, title: help.title, text: help.overview} : tip}
+                points={help?.sections}
                 element={element}
                 index={run.stop}
                 total={stops.length}

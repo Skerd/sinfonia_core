@@ -3,23 +3,23 @@
   "title": "Tutti i ruoli",
   "description": "Visualizza e modifica i ruoli aziendali",
   "help": {
-    "ariaLabel": "Informazioni su Tutti i ruoli",
-    "title": "Informazioni su Tutti i ruoli",
-    "overview": "I ruoli sono pacchetti di autorizzazioni assegnati agli utenti aziendali. L’opzione «predefinito per la registrazione» determina anche se le persone appaiono in Azienda → Utenti o Azienda → Amministrazione.",
+    "ariaLabel": "Informazioni sui ruoli",
+    "title": "Informazioni sui ruoli",
+    "overview": "Un ruolo è un insieme di permessi: cosa una persona può vedere, aggiungere, modificare o eliminare. Dai a ciascuno i ruoli adatti al suo lavoro.",
     "sections": [
       {
-        "title": "Gestire i ruoli",
+        "title": "Gestisci i ruoli",
         "items": [
-          "Create un ruolo e modificatene la matrice delle autorizzazioni.",
-          "I ruoli predefiniti per la registrazione collocano gli utenti in Utenti; gli altri in Amministrazione.",
-          "Alcuni ruoli integrati non possono essere modificati o eliminati."
+          "Crea un ruolo, poi scegli cosa può fare in ogni pagina.",
+          "Un ruolo segnato per la registrazione viene dato a chi crea un account da solo; queste persone compaiono in Utenti. Tutti gli altri compaiono in Amministrazione, il tuo team.",
+          "Alcuni ruoli predefiniti non si possono modificare né eliminare."
         ]
       },
       {
-        "title": "Eliminazione e ripristino",
+        "title": "Prima di modificarne uno",
         "items": [
-          "L’eliminazione è logica e il ruolo può essere ripristinato.",
-          "Controllate chi utilizza il ruolo prima di cambiarne le autorizzazioni o eliminarlo."
+          "Controlla chi ha un ruolo prima di modificarlo o eliminarlo: la modifica vale per tutti quelli che lo hanno.",
+          "Un ruolo eliminato si può ripristinare."
         ]
       }
     ]

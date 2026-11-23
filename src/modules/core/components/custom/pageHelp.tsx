@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useLayoutEffect, useRef, useState} from "react";
 import {IconInfoCircle} from "@tabler/icons-react";
 import {Button} from "@coreModule/components/ui/button.tsx";
 import TooltipDisplayer from "@coreModule/components/custom/tooltipDisplayer.tsx";
@@ -90,8 +90,21 @@ export function readPageHelp(
     return {ariaLabel, title, overview, sections: fromArray.length > 0 ? fromArray : fromLegacy};
 }
 
+/** The help each ⓘ control opens, so the guided tour can explain a page with it (D180). */
+const helpByControl = new WeakMap<Element, PageHelpContent>();
+
+/** The help that the ⓘ control `control` opens, if it is one. */
+export function pageHelpOf(control: Element): PageHelpContent | undefined {
+    return helpByControl.get(control);
+}
+
 export function PageHelp({help}: {help: PageHelpContent}) {
     const [open, setOpen] = useState(false);
+    const control = useRef<HTMLButtonElement>(null);
+    // On every change: a page can keep its ⓘ control while its help changes (another list on the same page component).
+    useLayoutEffect(() => {
+        if (control.current) helpByControl.set(control.current, help);
+    }, [help]);
 
     return (
         <>
@@ -102,6 +115,7 @@ export function PageHelp({help}: {help: PageHelpContent}) {
                     size="icon-xs"
                     aria-label={help.ariaLabel}
                     data-tour="page.help"
+                    ref={control}
                     aria-expanded={open}
                     aria-haspopup="dialog"
                     className="shrink-0 rounded-full border-border text-muted-foreground hover:text-foreground"

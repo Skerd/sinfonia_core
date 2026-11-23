@@ -2,16 +2,16 @@
   "path": "src/modules/core/clients/panel/private/chat/left/index.tsx",
   "title": "Posteingang",
   "help": {
-    "ariaLabel": "Über Posteingang",
-    "title": "Über Posteingang",
-    "overview": "Der Posteingang dient der internen Kommunikation zwischen Mitarbeitenden der Firma. Öffentliche Website-Besucherchats gehören nicht hierher.",
+    "ariaLabel": "Über die Chats",
+    "title": "Über die Chats",
+    "overview": "Nachrichten zwischen Ihnen und Ihrem Team. Gespräche mit Besuchern Ihrer Website finden Sie unter Website-Chats.",
     "sections": [
       {
-        "title": "Unterhaltungen",
+        "title": "Gespräche",
         "items": [
-          "Suchen Sie eine Kollegin oder einen Kollegen, um eine Unterhaltung zu beginnen.",
-          "Gruppenkanäle können mehrere Mitarbeitende umfassen.",
-          "Über den Unterhaltungskopf sehen Sie Mitglieder oder verlassen den Kanal."
+          "Suchen Sie eine Kollegin oder einen Kollegen, um ein Gespräch zu beginnen.",
+          "Ein Gruppengespräch kann mehrere Personen umfassen.",
+          "Der Kopf des Gesprächs zeigt, wer dabei ist, und lässt Sie eine Gruppe verlassen."
         ]
       }
     ]

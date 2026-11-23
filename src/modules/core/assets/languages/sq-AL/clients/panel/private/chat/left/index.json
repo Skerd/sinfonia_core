@@ -2,16 +2,16 @@
   "path": "src/modules/core/clients/panel/private/chat/left/index.tsx",
   "title": "Kutia hyrëse",
   "help": {
-    "ariaLabel": "Rreth kutisë hyrëse",
-    "title": "Rreth kutisë hyrëse",
-    "overview": "Kutia hyrëse është komunikimi i brendshëm mes stafit të kompanisë. Nuk është radha e bisedave me vizitorët e faqes publike.",
+    "ariaLabel": "Rreth bisedave",
+    "title": "Rreth bisedave",
+    "overview": "Mesazhet mes jush dhe ekipit tuaj. Bisedat me vizitorët e faqes suaj janë te Bisedat e faqes.",
     "sections": [
       {
         "title": "Bisedat",
         "items": [
           "Kërkoni një koleg për të nisur një bisedë.",
-          "Kanalet në grup mund të përfshijnë disa anëtarë të stafit.",
-          "Nga kreu i bisedës shikoni anëtarët ose largohuni nga kanali."
+          "Një bisedë në grup mund të ketë disa persona.",
+          "Koka e bisedës tregon kush është në të dhe ju lejon të dilni nga një grup."
         ]
       }
     ]

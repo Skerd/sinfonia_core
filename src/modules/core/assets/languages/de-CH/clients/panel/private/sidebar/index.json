@@ -50,7 +50,11 @@
         "vatTitle": "NIPT / MWST-Nummer",
         "vatText": "Geben Sie sie so ein, wie sie in Ihrer Registrierung steht. Nach der Prüfung erhält Ihr Unternehmen im Portal das Abzeichen «Verifiziert».",
         "teamTitle": "Laden Sie Ihr Team ein",
-        "teamText": "Laden Sie jede Person per E-Mail ein und wählen Sie ihre Rolle. Sie tritt bei, sobald sie annimmt."
+        "teamText": "Laden Sie jede Person per E-Mail ein und wählen Sie ihre Rolle. Sie tritt bei, sobald sie annimmt.",
+        "companyTitle": "Ihre Firmen",
+        "companyText": "Die Firma, in der Sie gerade arbeiten. Öffnen Sie dieses Menü, um zu einer anderen Firma zu wechseln, zu der Sie gehören: Jede hat ihre eigenen Daten, ihr Team und ihre Einstellungen.",
+        "accountTitle": "Ihr Konto",
+        "accountText": "Ihr Profil, Passwort und die Sicherheit der Anmeldung, Benachrichtigungen und verbundene Apps. «Rundgang starten» in diesem Menü startet den Rundgang jederzeit neu."
       }
     }
   },

@@ -2,22 +2,22 @@
   "path": "src/modules/core/clients/panel/private/websiteChats/left/index.tsx",
   "titleWaiting": "Në pritje",
   "helpWaiting": {
-    "ariaLabel": "Rreth listës Në pritje",
-    "title": "Rreth listës Në pritje",
-    "overview": "Në pritje përmban bisedat e vizitorëve të faqes publike që presin një person dhe që ende nuk i keni marrë.",
+    "ariaLabel": "Rreth bisedave në pritje",
+    "title": "Rreth bisedave në pritje",
+    "overview": "Vizitorë të faqes suaj që kërkuan të flasin me një person. Biseda pret këtu derisa dikush nga ekipi juaj ta marrë.",
     "sections": [
       {
-        "title": "Menaxhimi i radhës",
+        "title": "Përgjigjuni vizitorëve",
         "items": [
-          "Shikoni një bisedë pa u bashkuar me të.",
-          "Bashkohuni për ta marrë përsipër dhe për ta kaluar te Të miat.",
-          "Kthejeni te boti ose mbylleni kur është e përshtatshme."
+          "Shikojeni një bisedë pa iu bashkuar.",
+          "Bashkohuni për t'iu përgjigjur: kalon te Të miat.",
+          "Kthejeni te asistenti automatik, ose mbylleni kur të keni mbaruar."
         ]
       },
       {
-        "title": "Boti dhe kalimi te një person",
+        "title": "Asistenti automatik",
         "items": [
-          "Cilësimet e bisedës publike me AI te Kompania kontrollojnë përshëndetjen, sjelljen e botit, identifikimin dhe kalimin te një person."
+          "Asistenti u përgjigjet vizitorëve i pari. Përshëndetja e tij, nëse vizitorët duhet të thonë kush janë dhe nëse mund të kërkojnë një person, caktohen te faqja Kompania."
         ]
       }
     ]

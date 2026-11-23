@@ -8,7 +8,7 @@ function companyEditPage(company: {id: string; name: string}): string {
 /**
  * What every company sets up (D178): its logo, its NIPT/VAT (needed for the portal's Verified mark) and its team. The
  * modules add their own steps after these. Each step's guide (D179) points at its fields; `home.guide.save*` is the
- * closing tip every module's guide may reuse.
+ * closing tip every module's guide may reuse. The tour starts with the pages every business shares (D180).
  */
 const contribution: HomeContribution = {
     id: "core",
@@ -45,6 +45,17 @@ const contribution: HomeContribution = {
             },
         ];
     },
+    // The pages every business shares, before the modules' own (D180): where to switch business, the team and its
+    // roles, the two inboxes, the company's details, and the account menu that replays the tour.
+    getTour: ({resolveLanguageKey: t}) => [
+        {target: "sidebar.company", title: t("home.guide.core.companyTitle"), text: t("home.guide.core.companyText")},
+        {page: "/company/administration", accessModel: "users"},
+        {page: "/tenancy/systemSettings/roles", accessModel: "roles"},
+        {page: "/company/chats", accessModel: "channels"},
+        {page: "/company/websiteChats/waiting", accessModel: "channels"},
+        {page: "/company/info", accessModel: "companies"},
+        {target: "sidebar.account", title: t("home.guide.core.accountTitle"), text: t("home.guide.core.accountText")},
+    ],
 };
 
 export default contribution;

@@ -2,22 +2,22 @@
   "path": "src/modules/core/clients/panel/private/websiteChats/left/index.tsx",
   "titleWaiting": "En attente",
   "helpWaiting": {
-    "ariaLabel": "À propos de « En attente »",
-    "title": "À propos de « En attente »",
-    "overview": "En attente contient les conversations de visiteurs du site public prêtes pour une intervention humaine, mais que vous n’avez pas encore prises.",
+    "ariaLabel": "À propos des chats en attente",
+    "title": "À propos des chats en attente",
+    "overview": "Des visiteurs de votre site qui ont demandé à parler à une personne. La conversation attend ici jusqu'à ce que quelqu'un de votre équipe la prenne.",
     "sections": [
       {
-        "title": "Traiter la file",
+        "title": "Répondre aux visiteurs",
         "items": [
-          "Consultez une conversation sans la rejoindre.",
-          "Rejoignez-la pour la prendre en charge et la déplacer vers Les miens.",
-          "Rendez-la au robot ou fermez-la selon le besoin."
+          "Jetez un œil pour lire une conversation sans la rejoindre.",
+          "Rejoignez-la pour répondre : elle passe dans Les miens.",
+          "Rendez-la à l'assistant automatique, ou fermez-la quand c'est terminé."
         ]
       },
       {
-        "title": "Robot et transfert",
+        "title": "Assistant automatique",
         "items": [
-          "Les réglages du chat IA public dans Entreprise contrôlent l’accueil, le comportement du robot, l’identification et le transfert à un humain."
+          "L'assistant répond d'abord aux visiteurs. Son message d'accueil, si les visiteurs doivent dire qui ils sont et s'ils peuvent demander une personne se règlent sur la page Entreprise."
         ]
       }
     ]

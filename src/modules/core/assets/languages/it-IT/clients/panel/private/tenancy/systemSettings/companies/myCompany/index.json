@@ -3,28 +3,29 @@
   "title": "Azienda",
   "description": "Informazioni sull'azienda",
   "help": {
-    "ariaLabel": "Informazioni su Azienda",
-    "title": "Informazioni su Azienda",
-    "overview": "Questa pagina gestisce i dati aziendali del mandante corrente, non un elenco di aziende. Modifica apre il modulo dell’azienda.",
+    "ariaLabel": "Informazioni sulla tua azienda",
+    "title": "Informazioni sulla tua azienda",
+    "overview": "I dati della tua attività, come li vedono i clienti sul tuo sito e sul portale. Usa Modifica per cambiarli.",
     "sections": [
       {
-        "title": "Dati aziendali",
+        "title": "Dati",
         "items": [
-          "Nome e partita IVA sono obbligatori. E-mail, telefono, sito, social, descrizione, logo e domini consentiti sono facoltativi.",
-          "Ogni nuovo indirizzo richiede via, CAP, città, paese e coordinate della mappa; stato o cantone è facoltativo."
+          "Solo il nome è obbligatorio. Aggiungi la partita IVA (NIPT) per ottenere il badge Verificato nel portale.",
+          "Email, telefono, sito, social, descrizione e logo sono facoltativi, ma rendono la tua scheda più completa.",
+          "Ogni indirizzo richiede via, CAP, città, paese e un punto sulla mappa; la provincia o il cantone è facoltativo."
         ]
       },
       {
-        "title": "Chat IA pubblica",
+        "title": "Chat del sito",
         "items": [
-          "Attivate il bot per i visitatori e impostate saluto e personalità.",
-          "Scegliete identificazione obbligatoria e passaggio a un operatore. Queste impostazioni alimentano le chat del sito."
+          "Attiva o disattiva l'assistente automatico e imposta il suo saluto e il suo tono.",
+          "Scegli se i visitatori devono dire chi sono e se possono chiedere una persona. Queste conversazioni arrivano in Chat del sito."
         ]
       },
       {
-        "title": "Stato azienda",
+        "title": "Stato dell'azienda",
         "items": [
-          "Attivate o disattivate questa azienda solo quando ha un’azienda capogruppo."
+          "Un'azienda che appartiene a un'azienda madre si può disattivare e riattivare qui."
         ]
       }
     ]

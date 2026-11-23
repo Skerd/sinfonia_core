@@ -5,21 +5,21 @@
   "help": {
     "ariaLabel": "Rreth roleve",
     "title": "Rreth roleve",
-    "overview": "Rolet janë paketa lejesh që u caktohen përdoruesve të kompanisë. Opsioni «i paracaktuar për regjistrim» përcakton gjithashtu nëse personat shfaqen te Kompania → Përdoruesit apo Kompania → Administrimi.",
+    "overview": "Një rol është një grup lejesh: çfarë mund të shohë, shtojë, ndryshojë ose fshijë dikush. Jepini çdo personi rolet që i përshtaten punës së tij.",
     "sections": [
       {
-        "title": "Menaxhimi i roleve",
+        "title": "Menaxhoni rolet",
         "items": [
-          "Krijoni një rol dhe më pas ndryshoni matricën e lejeve për të kontrolluar qasjen.",
-          "Rolet e paracaktuara për regjistrim i vendosin përdoruesit te Kompania → Përdoruesit; rolet e tjera te Kompania → Administrimi.",
-          "Disa role të integruara nuk mund të ndryshohen ose të fshihen."
+          "Krijoni një rol, pastaj zgjidhni çfarë mund të bëjë në çdo faqe.",
+          "Një rol i shënuar për regjistrim u jepet personave që krijojnë vetë llogari; ata shfaqen te Përdoruesit. Të gjithë të tjerët shfaqen te Administrimi, ekipi juaj.",
+          "Disa role të gatshme nuk mund të ndryshohen ose të fshihen."
         ]
       },
       {
-        "title": "Fshirja dhe rikthimi",
+        "title": "Para se ta ndryshoni",
         "items": [
-          "Fshirja është e butë dhe roli mund të rikthehet.",
-          "Kontrolloni kush e përdor rolin para se t’i ndryshoni lejet ose ta fshini."
+          "Shikoni kush e ka një rol para se ta ndryshoni ose ta fshini: preken të gjithë ata që e kanë.",
+          "Një rol i fshirë mund të rikthehet."
         ]
       }
     ]

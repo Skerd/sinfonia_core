@@ -3,23 +3,23 @@
   "title": "All roles",
   "description": "View and edit company roles",
   "help": {
-    "ariaLabel": "About All roles",
-    "title": "About All roles",
-    "overview": "Roles are permission packs assigned to company users. The default-for-signup setting also determines whether people appear under Company → Users or Company → Administration.",
+    "ariaLabel": "About roles",
+    "title": "About roles",
+    "overview": "A role is a set of permissions: what someone may see, add, change or delete. Give each person the roles that fit their work.",
     "sections": [
       {
         "title": "Manage roles",
         "items": [
-          "Create a role, then edit its permission matrix to control what assigned users can access.",
-          "Roles marked as default for signup place their users in Company → Users. Roles without that setting place their users in Company → Administration.",
-          "Some built-in roles cannot be edited or deleted."
+          "Create a role, then choose what it may do on each page.",
+          "A role marked for sign-up is given to people who create an account themselves; they appear under Users. Everyone else appears under Administration, your team.",
+          "Some built-in roles can't be changed or deleted."
         ]
       },
       {
-        "title": "Deletion and recovery",
+        "title": "Before you change one",
         "items": [
-          "Deleting a role is a soft delete, so it can be restored later.",
-          "Review who uses a role before changing its permissions or deleting it."
+          "Check who has a role before you change or delete it: everyone who has it is affected.",
+          "A deleted role can be restored."
         ]
       }
     ]

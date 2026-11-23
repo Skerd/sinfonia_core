@@ -50,7 +50,11 @@
         "vatTitle": "Numri NIPT / TVSH",
         "vatText": "Shkruajeni siç është në regjistrimin tuaj. Pasi të verifikohet, biznesi juaj merr shenjën e Verifikuar në portal.",
         "teamTitle": "Ftoni ekipin tuaj",
-        "teamText": "Ftojeni secilin person me email dhe zgjidhni rolin e tij. Ata bashkohen sapo të pranojnë."
+        "teamText": "Ftojeni secilin person me email dhe zgjidhni rolin e tij. Ata bashkohen sapo të pranojnë.",
+        "companyTitle": "Bizneset tuaja",
+        "companyText": "Biznesi ku po punoni. Hapni këtë menu për të kaluar te një biznes tjetër ku bëni pjesë: secili ka të dhënat, ekipin dhe cilësimet e veta.",
+        "accountTitle": "Llogaria juaj",
+        "accountText": "Profili, fjalëkalimi dhe siguria e hyrjes, njoftimet dhe aplikacionet e lidhura. “Bëj shëtitjen” në këtë menu e nis shëtitjen nga e para në çdo kohë."
       }
     }
   },

@@ -22,9 +22,12 @@ const isGuideTip = (tip: unknown): tip is HomeGuideTip => {
 };
 
 const isTourStop = (stop: unknown): stop is HomeTourStop => {
-    if (!isGuideTip(stop)) return false;
-    const {to, accessModel} = stop as Record<string, unknown>;
-    return (to === undefined || typeof to === "string") && (accessModel === undefined || typeof accessModel === "string");
+    if (typeof stop !== "object" || stop === null) return false;
+    const {page, to, accessModel} = stop as Record<string, unknown>;
+    if (accessModel !== undefined && typeof accessModel !== "string") return false;
+    // A page explained by its own help (D180), or a tip with its own words.
+    if (page !== undefined) return typeof page === "string";
+    return isGuideTip(stop) && (to === undefined || typeof to === "string");
 };
 
 export function createHomeContributions(glob: ContributionGlob) {

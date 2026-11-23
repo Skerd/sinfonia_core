@@ -3,28 +3,29 @@
   "title": "Entreprise",
   "description": "Informations sur l'entreprise",
   "help": {
-    "ariaLabel": "À propos de l'entreprise",
-    "title": "À propos de l'entreprise",
-    "overview": "Cette page gère la fiche de l’entreprise du mandant actuel, et non une liste d’entreprises. Modifier ouvre le formulaire.",
+    "ariaLabel": "À propos de votre entreprise",
+    "title": "À propos de votre entreprise",
+    "overview": "Les informations de votre entreprise, telles que les clients les voient sur votre site et sur le portail. Utilisez Modifier pour les changer.",
     "sections": [
       {
-        "title": "Informations de l’entreprise",
+        "title": "Informations",
         "items": [
-          "Le nom et le numéro de TVA sont obligatoires. E-mail, téléphone, site web, réseaux sociaux, description, logo et domaines autorisés sont facultatifs.",
-          "Une nouvelle adresse exige rue, code postal, ville, pays et coordonnées cartographiques ; l’État ou canton est facultatif."
+          "Seul le nom est obligatoire. Ajoutez votre numéro de TVA (NIPT) pour obtenir le badge Vérifié sur le portail.",
+          "L'e-mail, le téléphone, le site, les réseaux sociaux, la description et le logo sont facultatifs, mais ils complètent votre fiche.",
+          "Chaque adresse demande la rue, le code postal, la ville, le pays et un repère sur la carte ; la région ou le canton est facultatif."
         ]
       },
       {
-        "title": "Chat IA public",
+        "title": "Chat du site",
         "items": [
-          "Activez ou désactivez le robot des visiteurs et définissez son message d’accueil et sa personnalité.",
-          "Choisissez l’identification obligatoire et le transfert à un humain. Ces réglages alimentent les chats du site web."
+          "Activez ou désactivez l'assistant automatique et choisissez son message d'accueil et son ton.",
+          "Choisissez si les visiteurs doivent dire qui ils sont et s'ils peuvent demander une personne. Ces conversations arrivent dans Chats du site."
         ]
       },
       {
         "title": "Statut de l'entreprise",
         "items": [
-          "Activez ou désactivez cette entreprise uniquement lorsqu’elle possède une société mère."
+          "Une entreprise rattachée à une entreprise mère peut être désactivée et réactivée ici."
         ]
       }
     ]

@@ -27,23 +27,22 @@
     ]
   },
   "administrationHelp": {
-    "ariaLabel": "About Administration users list",
-    "title": "About Administration users list",
-    "overview": "This list contains users with staff or administration role packs that are not marked as default for signup, plus bot users. The currently signed-in user is excluded.",
+    "ariaLabel": "About your team",
+    "title": "About your team",
+    "overview": "Your staff: everyone who works in the panel with you, plus the company's assistant bot. You don't see yourself in this list.",
     "sections": [
       {
-        "title": "Add administrators",
+        "title": "Add people",
         "items": [
-          "Create a user with a password or invite someone by email; the person receives an administration role.",
-          "Open the row menu to edit the account and its assigned roles.",
-          "Cards show account status, MFA, and invitation, activation, and password-reset requests."
+          "Invite someone by email, or create their account with a password.",
+          "Each person gets roles that decide what they may see and do. Open a row's menu to change their details or roles.",
+          "Each card shows whether the account is active, uses two-step sign-in, or still has an invitation waiting."
         ]
       },
       {
-        "title": "Separate from Users",
+        "title": "Team and users",
         "items": [
-          "Roles without the default-for-signup setting place people in Administration.",
-          "Regular company members with default-for-signup roles appear in Company → Users."
+          "People with a sign-up role, such as accounts created on your website, are listed under Users instead."
         ]
       }
     ]

@@ -27,23 +27,22 @@
     ]
   },
   "administrationHelp": {
-    "ariaLabel": "Rreth listës së përdoruesve të administratës",
-    "title": "Rreth listës së përdoruesve të administratës",
-    "overview": "Kjo listë përmban përdoruesit me role stafi ose administrate që nuk janë të paracaktuara për regjistrim, si dhe përdoruesit bot. Përdoruesi i kyçur aktualisht përjashtohet.",
+    "ariaLabel": "Rreth ekipit tuaj",
+    "title": "Rreth ekipit tuaj",
+    "overview": "Stafi juaj: kushdo që punon në panel bashkë me ju, si dhe asistenti automatik i kompanisë. Veten nuk e shihni në këtë listë.",
     "sections": [
       {
-        "title": "Shtimi i administratorëve",
+        "title": "Shtoni njerëz",
         "items": [
-          "Krijoni një përdorues me fjalëkalim ose ftojeni me email; ai merr rol administrate.",
-          "Nga menuja e rreshtit ndryshoni llogarinë dhe rolet.",
-          "Kartat tregojnë statusin, MFA-në dhe kërkesat e llogarisë."
+          "Ftoni dikë me email, ose krijojini llogarinë me fjalëkalim.",
+          "Çdo person merr role që vendosin çfarë mund të shohë dhe të bëjë. Hapni menunë e rreshtit për të ndryshuar të dhënat ose rolet.",
+          "Çdo kartë tregon nëse llogaria është aktive, nëse përdor hyrjen me dy hapa, ose nëse ka ende një ftesë në pritje."
         ]
       },
       {
-        "title": "Ndarja nga Përdoruesit",
+        "title": "Ekipi dhe përdoruesit",
         "items": [
-          "Rolet që nuk janë të paracaktuara për regjistrim i vendosin personat te Administrimi.",
-          "Anëtarët e zakonshëm me role të paracaktuara shfaqen te Kompania → Përdoruesit."
+          "Personat me rol regjistrimi, si llogaritë e krijuara në faqen tuaj, shfaqen te Përdoruesit."
         ]
       }
     ]

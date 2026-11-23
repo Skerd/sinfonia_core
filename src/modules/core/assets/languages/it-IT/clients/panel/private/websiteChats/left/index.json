@@ -2,22 +2,22 @@
   "path": "src/modules/core/clients/panel/private/websiteChats/left/index.tsx",
   "titleWaiting": "In attesa",
   "helpWaiting": {
-    "ariaLabel": "Informazioni su In attesa",
-    "title": "Informazioni su In attesa",
-    "overview": "In attesa contiene le conversazioni dei visitatori del sito pubblico pronte per un operatore ma non ancora prese in carico da voi.",
+    "ariaLabel": "Informazioni sulle chat in attesa",
+    "title": "Informazioni sulle chat in attesa",
+    "overview": "Visitatori del tuo sito che hanno chiesto di parlare con una persona. La conversazione resta qui finché qualcuno del tuo team non la prende.",
     "sections": [
       {
-        "title": "Gestire la coda",
+        "title": "Rispondi ai visitatori",
         "items": [
-          "Date un’occhiata alla conversazione senza partecipare.",
-          "Partecipate per prenderla in carico e spostarla in Mie.",
-          "Restituitela al bot o chiudetela quando opportuno."
+          "Sbircia per leggere una conversazione senza unirti.",
+          "Unisciti per rispondere: passa in Mie.",
+          "Restituiscila all'assistente automatico, oppure chiudila quando hai finito."
         ]
       },
       {
-        "title": "Bot e passaggio",
+        "title": "Assistente automatico",
         "items": [
-          "Le impostazioni della chat IA pubblica in Azienda controllano saluto, comportamento del bot, identificazione e passaggio a un operatore."
+          "L'assistente risponde per primo ai visitatori. Il saluto, se i visitatori devono dire chi sono e se possono chiedere una persona si impostano nella pagina Azienda."
         ]
       }
     ]

@@ -10,8 +10,9 @@ export type HomeSetupDoneWhen =
 
 /**
  * One tip of a guide (D179): it points at an element of the page by its `data-tour` key. Keys in use: `field.<name>`
- * (a form field, named as its form binding), `form.save`, `page.help`, `nav:<url>` (a sidebar link). A tip whose element
- * is not on the page is skipped.
+ * (a form field, named as its form binding), `form.save`, `page.help`, `users.invite`, `nav:<url>` (a sidebar link),
+ * `sidebar.company` (the company switcher) and `sidebar.account` (the account menu). A tip whose element is not on the
+ * page is skipped.
  */
 export type HomeGuideTip = {
     target: string;
@@ -20,13 +21,26 @@ export type HomeGuideTip = {
     text: string;
 };
 
-/** One stop of a module's tour of its daily pages (D179): a tip, shown on the page at `to` when it has one. */
-export type HomeTourStop = HomeGuideTip & {
+/** A tour stop with its own words (D179): a tip, shown on the page at `to` when it has one. */
+export type HomeTourTip = HomeGuideTip & {
     /** The page to open for this stop; without it the tip shows wherever the person is (e.g. a sidebar link). */
     to?: string;
     /** The access model the viewer must be able to read; the stop is left out otherwise. */
     accessModel?: string;
 };
+
+/**
+ * A tour stop that opens a page and explains it with the page's own ⓘ help (D180): the tip points at the help control
+ * and shows the help's title, overview and points, so the tour and the ⓘ never disagree. A page without help is skipped.
+ */
+export type HomeTourPage = {
+    page: string;
+    /** The access model the viewer must be able to read; the stop is left out otherwise. */
+    accessModel?: string;
+};
+
+/** One stop of a module's tour (D179, D180): a tip of its own, or a page explained by its help. */
+export type HomeTourStop = HomeTourTip | HomeTourPage;
 
 /** One step of a company's setup checklist on the panel home (D178). */
 export type HomeSetupStep = {
@@ -57,6 +71,9 @@ export type HomeSetupContext = {
  */
 export type HomeContribution = ContributionBase & {
     getSetupSteps: (ctx: HomeSetupContext) => HomeSetupStep[];
-    /** The module's daily pages, for the tour offered once setup is done (D179). */
+    /**
+     * The module's tour, offered once setup is done and replayable from the account menu (D179): usually a short intro
+     * tip, then every page of the module in sidebar order, each explained by its own help (D180).
+     */
     getTour?: (ctx: HomeSetupContext) => HomeTourStop[];
 };

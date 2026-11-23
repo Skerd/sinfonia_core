@@ -3,23 +3,23 @@
   "title": "Alle Rollen",
   "description": "Firmenrollen anzeigen und bearbeiten",
   "help": {
-    "ariaLabel": "Über alle Rollen",
-    "title": "Über alle Rollen",
-    "overview": "Rollen sind Berechtigungspakete, die Benutzern der Firma zugewiesen werden. Die Einstellung «Standard für die Registrierung» bestimmt zudem, ob Personen unter Firma → Benutzer oder Firma → Administration erscheinen.",
+    "ariaLabel": "Über Rollen",
+    "title": "Über Rollen",
+    "overview": "Eine Rolle ist ein Satz von Berechtigungen: was jemand sehen, hinzufügen, ändern oder löschen darf. Geben Sie jeder Person die Rollen, die zu ihrer Arbeit passen.",
     "sections": [
       {
         "title": "Rollen verwalten",
         "items": [
-          "Erstellen Sie eine Rolle und bearbeiten Sie anschliessend die Berechtigungsmatrix.",
-          "Rollen mit «Standard für die Registrierung» führen ihre Benutzer unter Firma → Benutzer; Rollen ohne diese Einstellung unter Firma → Administration.",
-          "Einige integrierte Rollen können weder bearbeitet noch gelöscht werden."
+          "Erstellen Sie eine Rolle und wählen Sie dann, was sie auf jeder Seite darf.",
+          "Eine für die Registrierung markierte Rolle erhalten Personen, die selbst ein Konto erstellen; sie stehen unter Benutzer. Alle anderen stehen unter Administration, Ihrem Team.",
+          "Einige eingebaute Rollen lassen sich weder ändern noch löschen."
         ]
       },
       {
-        "title": "Löschen und Wiederherstellen",
+        "title": "Bevor Sie eine ändern",
         "items": [
-          "Das Löschen ist ein Soft-Delete; die Rolle kann später wiederhergestellt werden.",
-          "Prüfen Sie vor Änderungen oder dem Löschen, wer die Rolle verwendet."
+          "Prüfen Sie, wer eine Rolle hat, bevor Sie sie ändern oder löschen: Alle, die sie haben, sind betroffen.",
+          "Eine gelöschte Rolle kann wiederhergestellt werden."
         ]
       }
     ]

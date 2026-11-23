@@ -3,28 +3,29 @@
   "title": "Company",
   "description": "Company info",
   "help": {
-    "ariaLabel": "About Company",
-    "title": "About Company",
-    "overview": "This page manages the current tenant's company record, not a list of companies. Use Edit to open the company form.",
+    "ariaLabel": "About your company",
+    "title": "About your company",
+    "overview": "Your business's details, as customers see them on your website and on the portal. Use Edit to change them.",
     "sections": [
       {
-        "title": "Company details",
+        "title": "Details",
         "items": [
-          "Name and VAT are required. Email, phone, website, social links, description, logo, and allowed domains are optional.",
-          "Each added address requires street, postal code, city, country, and map coordinates; state or canton is optional."
+          "Only the name is required. Add your NIPT/VAT number to get the Verified badge on the portal.",
+          "Email, phone, website, social links, description and logo are optional, but they make your listing more complete.",
+          "Each address needs the street, postal code, city, country and a map pin; the state or canton is optional."
         ]
       },
       {
-        "title": "Public AI chat",
+        "title": "Website chat",
         "items": [
-          "Enable or disable the visitor bot and set its greeting and persona.",
-          "Choose whether visitors must identify themselves and whether human handoff is available. These settings feed Website chats."
+          "Turn the assistant bot on or off and set its greeting and tone.",
+          "Choose whether visitors must say who they are and whether they can ask for a person. Those conversations arrive under Website chats."
         ]
       },
       {
         "title": "Company status",
         "items": [
-          "Activate or deactivate this company only when it has a parent company."
+          "A company that belongs to a parent company can be switched off and on again here."
         ]
       }
     ]

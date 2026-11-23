@@ -3,28 +3,29 @@
   "title": "Firma",
   "description": "Firmeninformationen",
   "help": {
-    "ariaLabel": "Über die Firma",
-    "title": "Über die Firma",
-    "overview": "Diese Seite verwaltet den Firmendatensatz des aktuellen Mandanten, nicht eine Firmenliste. Mit Bearbeiten öffnen Sie das Firmenformular.",
+    "ariaLabel": "Über Ihre Firma",
+    "title": "Über Ihre Firma",
+    "overview": "Die Angaben Ihrer Firma, wie Kunden sie auf Ihrer Website und im Portal sehen. Mit Bearbeiten ändern Sie sie.",
     "sections": [
       {
-        "title": "Firmendaten",
+        "title": "Angaben",
         "items": [
-          "Name und MWST-Nummer sind erforderlich. E-Mail, Telefon, Website, Social Links, Beschreibung, Logo und erlaubte Domains sind optional.",
-          "Neue Adressen benötigen Strasse, Postleitzahl, Stadt, Land und Kartenkoordinaten; der Kanton ist optional."
+          "Nur der Name ist Pflicht. Ergänzen Sie Ihre MWST-Nummer (NIPT), um im Portal das Abzeichen «Verifiziert» zu erhalten.",
+          "E-Mail, Telefon, Website, soziale Netzwerke, Beschreibung und Logo sind freiwillig, machen Ihren Eintrag aber vollständiger.",
+          "Jede Adresse braucht Strasse, Postleitzahl, Ort, Land und eine Markierung auf der Karte; Kanton oder Region ist freiwillig."
         ]
       },
       {
-        "title": "Öffentlicher AI-Chat",
+        "title": "Website-Chat",
         "items": [
-          "Aktivieren Sie den Besucher-Bot und legen Sie Begrüssung und Persona fest.",
-          "Bestimmen Sie Identifikationspflicht und Übergabe an Menschen. Diese Einstellungen speisen die Website-Chats."
+          "Schalten Sie den automatischen Assistenten ein oder aus und legen Sie Begrüssung und Tonfall fest.",
+          "Wählen Sie, ob Besucher sagen müssen, wer sie sind, und ob sie nach einer Person fragen können. Diese Gespräche kommen unter Website-Chats an."
         ]
       },
       {
-        "title": "Firmenstatus",
+        "title": "Status der Firma",
         "items": [
-          "Aktivieren oder deaktivieren Sie diese Firma nur, wenn sie eine Mutterfirma hat."
+          "Eine Firma, die zu einer Mutterfirma gehört, kann hier deaktiviert und wieder aktiviert werden."
         ]
       }
     ]

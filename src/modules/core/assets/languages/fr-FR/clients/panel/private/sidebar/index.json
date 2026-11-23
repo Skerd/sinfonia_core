@@ -50,7 +50,11 @@
         "vatTitle": "Numéro NIPT / TVA",
         "vatText": "Saisissez-le tel qu'il figure sur votre immatriculation. Une fois vérifié, votre entreprise reçoit le badge Vérifié sur le portail.",
         "teamTitle": "Invitez votre équipe",
-        "teamText": "Invitez chaque personne par e-mail et choisissez son rôle. Elle rejoint l'équipe dès qu'elle accepte."
+        "teamText": "Invitez chaque personne par e-mail et choisissez son rôle. Elle rejoint l'équipe dès qu'elle accepte.",
+        "companyTitle": "Vos entreprises",
+        "companyText": "L'entreprise dans laquelle vous travaillez. Ouvrez ce menu pour passer à une autre entreprise dont vous faites partie : chacune a ses données, son équipe et ses paramètres.",
+        "accountTitle": "Votre compte",
+        "accountText": "Votre profil, votre mot de passe et la sécurité de connexion, les notifications et les applications connectées. « Faire le tour » dans ce menu relance la visite à tout moment."
       }
     }
   },

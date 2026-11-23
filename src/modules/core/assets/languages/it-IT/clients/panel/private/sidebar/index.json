@@ -50,7 +50,11 @@
         "vatTitle": "Numero NIPT / Partita IVA",
         "vatText": "Inseriscilo come appare nella tua registrazione. Una volta verificato, la tua attività riceve il badge Verificato nel portale.",
         "teamTitle": "Invita il tuo team",
-        "teamText": "Invita ogni persona via email e scegli il suo ruolo. Entra nel team appena accetta."
+        "teamText": "Invita ogni persona via email e scegli il suo ruolo. Entra nel team appena accetta.",
+        "companyTitle": "Le tue attività",
+        "companyText": "L'attività in cui stai lavorando. Apri questo menu per passare a un'altra attività di cui fai parte: ognuna ha i propri dati, il proprio team e le proprie impostazioni.",
+        "accountTitle": "Il tuo account",
+        "accountText": "Profilo, password e sicurezza dell'accesso, notifiche e app collegate. “Fai il giro” in questo menu fa ripartire il giro in qualsiasi momento."
       }
     }
   },

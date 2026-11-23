@@ -3,28 +3,29 @@
   "title": "Kompania",
   "description": "Informacioni i kompanisë",
   "help": {
-    "ariaLabel": "Rreth kompanisë",
-    "title": "Rreth kompanisë",
-    "overview": "Kjo faqe menaxhon regjistrimin e kompanisë aktuale, jo një listë kompanish. Përdorni Redakto për të hapur formularin e kompanisë.",
+    "ariaLabel": "Rreth kompanisë suaj",
+    "title": "Rreth kompanisë suaj",
+    "overview": "Të dhënat e biznesit tuaj, siç i shohin klientët në faqen tuaj dhe në portal. Përdorni Ndrysho për t'i ndryshuar.",
     "sections": [
       {
-        "title": "Të dhënat e kompanisë",
+        "title": "Të dhënat",
         "items": [
-          "Emri dhe TVSH-ja janë të detyrueshme. Emaili, telefoni, faqja, rrjetet sociale, përshkrimi, logoja dhe domenet e lejuara janë opsionale.",
-          "Çdo adresë e re kërkon rrugën, kodin postar, qytetin, vendin dhe koordinatat e hartës; rajoni ose kantoni është opsional."
+          "Vetëm emri është i detyrueshëm. Shtoni NIPT-in që biznesi të marrë shenjën e Verifikuar në portal.",
+          "Emaili, telefoni, faqja, rrjetet sociale, përshkrimi dhe logoja nuk janë të detyrueshme, por e bëjnë profilin tuaj më të plotë.",
+          "Çdo adresë kërkon rrugën, kodin postar, qytetin, shtetin dhe një pikë në hartë; rajoni ose kantoni nuk është i detyrueshëm."
         ]
       },
       {
-        "title": "Biseda publike me AI",
+        "title": "Biseda në faqe",
         "items": [
-          "Aktivizoni ose çaktivizoni botin për vizitorët dhe caktoni përshëndetjen dhe personalitetin e tij.",
-          "Zgjidhni nëse kërkohet identifikim dhe kalim te një person. Këto cilësime ushqejnë bisedat e faqes."
+          "Ndizni ose fikni asistentin automatik dhe caktoni përshëndetjen dhe tonin e tij.",
+          "Zgjidhni nëse vizitorët duhet të thonë kush janë dhe nëse mund të kërkojnë një person. Këto biseda vijnë te Bisedat e faqes."
         ]
       },
       {
         "title": "Statusi i kompanisë",
         "items": [
-          "Aktivizoni ose çaktivizoni këtë kompani vetëm kur ka një kompani mëmë."
+          "Një kompani që i përket një kompanie mëmë mund të çaktivizohet dhe të aktivizohet sërish këtu."
         ]
       }
     ]

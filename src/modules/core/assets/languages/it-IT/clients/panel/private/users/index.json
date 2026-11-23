@@ -27,23 +27,22 @@
     ]
   },
   "administrationHelp": {
-    "ariaLabel": "Informazioni su Elenco degli utenti di amministrazione",
-    "title": "Informazioni su Elenco degli utenti di amministrazione",
-    "overview": "Questo elenco contiene utenti con ruoli staff o amministrativi non predefiniti per la registrazione, oltre agli utenti bot. L’utente attualmente connesso è escluso.",
+    "ariaLabel": "Informazioni sul tuo team",
+    "title": "Informazioni sul tuo team",
+    "overview": "Il tuo personale: chi lavora nel pannello con te, più l'assistente automatico dell'azienda. Tu non compari in questo elenco.",
     "sections": [
       {
-        "title": "Aggiungere amministratori",
+        "title": "Aggiungi persone",
         "items": [
-          "Create un utente con password o invitatelo via e-mail; riceverà un ruolo amministrativo.",
-          "Dal menu riga modificate account e ruoli.",
-          "Le schede mostrano stato, MFA e richieste relative all’account."
+          "Invita qualcuno via email, oppure crea il suo account con una password.",
+          "Ogni persona riceve dei ruoli che decidono cosa può vedere e fare. Apri il menu di una riga per cambiare i suoi dati o i suoi ruoli.",
+          "Ogni scheda mostra se l'account è attivo, se usa l'accesso in due passaggi o se ha ancora un invito in sospeso."
         ]
       },
       {
-        "title": "Separato da Utenti",
+        "title": "Team e utenti",
         "items": [
-          "I ruoli non predefiniti per la registrazione collocano le persone in Amministrazione.",
-          "I membri ordinari con ruoli predefiniti appaiono in Azienda → Utenti."
+          "Le persone con un ruolo di registrazione, come gli account creati sul tuo sito, sono elencate in Utenti."
         ]
       }
     ]

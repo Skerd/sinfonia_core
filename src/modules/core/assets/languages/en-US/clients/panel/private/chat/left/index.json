@@ -2,16 +2,16 @@
   "path": "src/modules/core/clients/panel/private/chat/left/index.tsx",
   "title": "Inbox",
   "help": {
-    "ariaLabel": "About Inbox",
-    "title": "About Inbox",
-    "overview": "Inbox is internal company messaging between staff. It is not the queue for conversations from public website visitors.",
+    "ariaLabel": "About the inbox",
+    "title": "About the inbox",
+    "overview": "Messages between you and your team. Conversations with visitors of your website are under Website chats.",
     "sections": [
       {
         "title": "Conversations",
         "items": [
           "Search for a colleague to start a conversation.",
-          "Group channels can include several staff members.",
-          "Use the conversation header to view members or leave a channel."
+          "A group conversation can include several people.",
+          "The conversation's header shows who is in it and lets you leave a group."
         ]
       }
     ]

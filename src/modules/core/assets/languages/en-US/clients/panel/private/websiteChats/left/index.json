@@ -2,22 +2,22 @@
   "path": "src/modules/core/clients/panel/private/websiteChats/left/index.tsx",
   "titleWaiting": "Waiting",
   "helpWaiting": {
-    "ariaLabel": "About Waiting",
-    "title": "About Waiting",
-    "overview": "Waiting contains public-site visitor conversations that are ready for a human but have not yet been taken by you.",
+    "ariaLabel": "About waiting chats",
+    "title": "About waiting chats",
+    "overview": "Visitors of your website who asked to talk to a person. A conversation waits here until someone on your team takes it.",
     "sections": [
       {
-        "title": "Handle the queue",
+        "title": "Answer visitors",
         "items": [
           "Peek to read a conversation without joining it.",
-          "Join to take ownership and move the conversation to Mine.",
-          "Release a conversation back to the bot or close it when appropriate."
+          "Join to answer it: it moves to Mine.",
+          "Hand it back to the assistant bot, or close it when it's done."
         ]
       },
       {
-        "title": "Bot and handoff",
+        "title": "Assistant bot",
         "items": [
-          "Public AI chat settings on Company control the visitor greeting, bot behavior, identification, and human handoff."
+          "The bot answers visitors first. Its greeting, whether visitors must say who they are, and whether they can ask for a person are set on your Company page."
         ]
       }
     ]

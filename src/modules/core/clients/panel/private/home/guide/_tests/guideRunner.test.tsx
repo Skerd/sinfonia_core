@@ -38,6 +38,8 @@ vi.mock("../../setupStepStatus.ts", async (importOriginal) => ({
 import {GuideProvider} from "../guideContext.tsx";
 import GuideRunner from "../guideRunner.tsx";
 import {writeGuideRun, type GuideRun} from "../guideRun.ts";
+import {PageHelp, type PageHelpContent} from "@coreModule/components/custom/pageHelp.tsx";
+import {MobileOverrideContext} from "@coreModule/helpers/hooks/useMobile.tsx";
 
 const car: HomeSetupStep = {
     key: "fixture.car", title: "Add your first car", to: "/cars/create", accessModel: "cars", doneWhen: {list: {url: "/api/cars"}},
@@ -59,6 +61,30 @@ function renderAt(path: string, run: GuideRun | null) {
                 <button type="submit" data-tour="form.save">Add</button>
                 <a href="/cars" data-tour="nav:/cars">Cars</a>
                 <button type="button" data-tour="page.help">Help</button>
+                <Location />
+                <GuideRunner />
+            </GuideProvider>
+        </MemoryRouter>,
+    );
+}
+
+const carsHelp: PageHelpContent = {
+    ariaLabel: "About cars", title: "About cars", overview: "Every car you rent out.",
+    sections: [{title: "On this page", items: ["Retire a car instead of deleting it."]}],
+};
+const homeHelp: PageHelpContent = {ariaLabel: "About home", title: "About home", overview: "Your day at a glance.", sections: []};
+
+/** A panel whose pages each show their own ⓘ: the cars list, and every other page its home help. */
+function HelpPages() {
+    return <PageHelp help={useLocation().pathname === "/cars" ? carsHelp : homeHelp} />;
+}
+
+function renderPagesAt(path: string, run: GuideRun) {
+    writeGuideRun(run);
+    return render(
+        <MemoryRouter initialEntries={[path]}>
+            <GuideProvider>
+                <HelpPages />
                 <Location />
                 <GuideRunner />
             </GuideProvider>
@@ -166,6 +192,48 @@ describe("GuideRunner (D179)", () => {
         expect(screen.getByTestId("location").textContent).toBe("/cars");
         fireEvent.click(screen.getByRole("button", {name: "home.guide.finish"}));
         await waitFor(() => expect(storedRun()).toBeNull());
+    });
+
+    it("opens a page stop's page and explains it with that page's own help, not the help of the page being left (D180)", async () => {
+        fixture.tour = [{page: "/cars", accessModel: "cars"}];
+        renderPagesAt("/", {kind: "tour", companyId: "c1", stop: 0});
+
+        expect(await screen.findByRole("heading", {name: "About cars"})).toBeTruthy();
+        expect(screen.getByTestId("location").textContent).toBe("/cars");
+        expect(screen.getByText("Every car you rent out.")).toBeTruthy();
+        expect(screen.getByRole("heading", {name: "On this page"})).toBeTruthy();
+        expect(screen.getByText("Retire a car instead of deleting it.")).toBeTruthy();
+        expect(screen.queryByRole("heading", {name: "About home"})).toBeNull();
+
+        // Then the closing tip, at the same page's ⓘ.
+        fireEvent.click(screen.getByRole("button", {name: "home.guide.next"}));
+        expect(await screen.findByRole("heading", {name: "home.guide.helpTitle"})).toBeTruthy();
+    });
+
+    it("leaves out a page stop the viewer may not read", async () => {
+        fixture.tour = [{page: "/vault", accessModel: "vaults"}, {page: "/cars", accessModel: "cars"}];
+        renderPagesAt("/", {kind: "tour", companyId: "c1", stop: 0});
+        expect(await screen.findByRole("heading", {name: "About cars"})).toBeTruthy();
+        // Kept, it would have opened /vault first and shown that page's help.
+        expect(screen.getByTestId("location").textContent).toBe("/cars");
+    });
+
+    it("leaves the sidebar's stops out on a phone, where the sidebar stays closed", async () => {
+        fixture.tour = [{target: "nav:/cars", title: "Your cars", text: "Every car."}, {page: "/cars", accessModel: "cars"}];
+        writeGuideRun({kind: "tour", companyId: "c1", stop: 0});
+        render(
+            <MobileOverrideContext value>
+                <MemoryRouter initialEntries={["/"]}>
+                    <GuideProvider>
+                        <a href="/cars" data-tour="nav:/cars">Cars</a>
+                        <HelpPages />
+                        <GuideRunner />
+                    </GuideProvider>
+                </MemoryRouter>
+            </MobileOverrideContext>,
+        );
+        expect(await screen.findByRole("heading", {name: "About cars"})).toBeTruthy();
+        expect(screen.queryByRole("heading", {name: "Your cars"})).toBeNull();
     });
 
     it("does nothing for a run from another company", () => {
