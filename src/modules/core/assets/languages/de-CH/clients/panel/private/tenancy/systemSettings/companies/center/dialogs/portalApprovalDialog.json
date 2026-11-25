@@ -18,6 +18,16 @@
     "title": "Prüfzeichen entfernen",
     "description": "das Unternehmen zeigt im Portal kein Geprüft-Zeichen mehr."
   },
+  "suspend": {
+    "title": "Unternehmen sperren",
+    "description": "niemand kann sich anmelden oder darin arbeiten, seine Website und Portaleinträge gehen offline, und in seinem Namen wird nichts gemailt oder gesendet. Sie können die Sperre später aufheben.",
+    "reasonLabel": "Grund (optional)",
+    "reasonHint": "Wird beim Unternehmen gespeichert. Nur die Plattform sieht ihn."
+  },
+  "lift": {
+    "title": "Sperre aufheben",
+    "description": "seine Leute können sich wieder anmelden, und seine Website und Portaleinträge sind wieder wie vorher da."
+  },
   "axios": {
     "start": {
       "title": "Wird gespeichert",

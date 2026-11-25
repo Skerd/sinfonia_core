@@ -154,7 +154,7 @@ function buildAccountNavGroup(resolveLanguageKey: ResolveLanguageKey): NavGroup 
     };
 }
 
-function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatformCompany = false, isPlatformAdmin = false, uploadReviewWaiting = 0): NavGroup {
+function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatformCompany = false, isPlatformAdmin = false, uploadReviewWaiting = 0, reportDeskOpen = 0): NavGroup {
     // Only platform admins may manage other companies; the server enforces the same rule.
     const platformItems: NavSubItem[] = isPlatformAdmin
         ? [{
@@ -183,6 +183,15 @@ function buildTenancyNavGroup(resolveLanguageKey: ResolveLanguageKey, isPlatform
             icon: IconPhotoShield,
             badge: uploadReviewWaiting || undefined,
             permissions: ["uploadrefusals"],
+            usersPermissions: [],
+            atLeastOnePermission: false,
+        }, {
+            // The report desk (D191): what people reported across every company; the reports are platform-only.
+            title: resolveLanguageKey("menus.tenancy.resources.reportDesk.title"),
+            url: "/tenancy/reports",
+            icon: IconFlag,
+            badge: reportDeskOpen || undefined,
+            permissions: ["contentreports"],
             usersPermissions: [],
             atLeastOnePermission: false,
         }]
@@ -316,7 +325,7 @@ const coreTenancySidebarContribution: SidebarContribution = {
     id: "core-tenancy",
     order: 90,
     getNavGroups(resolveLanguageKey, context) {
-        return [buildTenancyNavGroup(resolveLanguageKey, context?.isPlatformCompany === true, context?.isPlatformAdmin === true, context?.uploadReviewWaiting ?? 0)];
+        return [buildTenancyNavGroup(resolveLanguageKey, context?.isPlatformCompany === true, context?.isPlatformAdmin === true, context?.uploadReviewWaiting ?? 0, context?.reportDeskOpen ?? 0)];
     },
 };
 

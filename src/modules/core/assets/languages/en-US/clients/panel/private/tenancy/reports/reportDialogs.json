@@ -1,0 +1,63 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportDialogs.tsx",
+  "decide": {
+    "title": "Decide report",
+    "description": "choose what the platform does. Every open report about the same thing closes with this decision.",
+    "noteLabel": "Note (optional)",
+    "noteHint": "Kept with the decision. Only the platform sees it."
+  },
+  "decisions": {
+    "dismissed": {
+      "label": "Dismissed",
+      "hint": "Nothing changes. The report closes."
+    },
+    "itemHidden": {
+      "label": "Item hidden",
+      "hint": "The reported thing disappears from the portal and the business's site. The business still sees it in its panel."
+    },
+    "companyHidden": {
+      "label": "Business hidden from portal",
+      "hint": "The business stays reachable on its own site, but the portal no longer lists it."
+    },
+    "companySuspended": {
+      "label": "Business suspended",
+      "hint": "Nobody can sign in or work in the business, its sites go offline, and nothing is emailed on its behalf."
+    },
+    "accountBanned": {
+      "label": "Account banned",
+      "hint": "The account that wrote it can no longer sign in anywhere. Its open sessions end now."
+    }
+  },
+  "undo": {
+    "itemHidden": {
+      "title": "Show again",
+      "description": "the reported thing appears on public pages again."
+    },
+    "companyHidden": {
+      "title": "Show business on portal again",
+      "description": "the portal lists the business again, as its own settings say."
+    },
+    "companySuspended": {
+      "title": "Lift suspension",
+      "description": "the business's people can sign in again and its sites come back."
+    },
+    "accountBanned": {
+      "title": "Lift ban",
+      "description": "the account can sign in again."
+    }
+  },
+  "axios": {
+    "start": {
+      "title": "Saving",
+      "time": 3000
+    },
+    "success": {
+      "title": "Saved.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Could not be saved",
+      "time": 3000
+    }
+  }
+}

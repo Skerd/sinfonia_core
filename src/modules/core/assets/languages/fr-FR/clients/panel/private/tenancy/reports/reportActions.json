@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportActions.tsx",
+  "decide": "Décider",
+  "undo": {
+    "itemHidden": "Afficher à nouveau",
+    "companyHidden": "Afficher à nouveau l'entreprise sur le portail",
+    "companySuspended": "Lever la suspension",
+    "accountBanned": "Lever le bannissement"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportCard.tsx",
+  "failedTitle": "Impossibile caricare la segnalazione",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento di questa segnalazione. Fai clic per riprovare.",
+  "statuses": {
+    "open": "Aperta",
+    "closed": "Chiusa"
+  },
+  "decisions": {
+    "dismissed": "Respinta",
+    "itemHidden": "Elemento nascosto",
+    "companyHidden": "Azienda nascosta dal portale",
+    "companySuspended": "Azienda sospesa",
+    "accountBanned": "Account bloccato"
+  },
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Truffa o frode",
+    "misleading": "Ingannevole",
+    "offensive": "Offensivo",
+    "illegal": "Illegale",
+    "other": "Altro"
+  },
+  "undone": "annullata",
+  "openLink": "Apri la pagina",
+  "reason": "Motivo",
+  "reporter": "Segnalato da",
+  "createdAt": "Segnalato il",
+  "company": "Azienda",
+  "comment": "Commento",
+  "decisionNote": "Nota della decisione",
+  "page": "Pagina"
+}

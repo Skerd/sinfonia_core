@@ -335,6 +335,9 @@ const CompanyCard = memo(function CompanyCard({
                                         >
                                             {() => (
                                                 <div className="flex flex-wrap items-center gap-1">
+                                                    {row.suspendedAt ? (
+                                                        <Badge variant="destructive" title={row.suspendedReason}>{resolveLanguageKey("suspended")}</Badge>
+                                                    ) : null}
                                                     {row.hiddenFromPortal ? (
                                                         <Badge variant="destructive">{resolveLanguageKey("hiddenFromPortal")}</Badge>
                                                     ) : null}

@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/components/custom/report/reportButton.tsx",
+  "report": "Report",
+  "title": "Report this",
+  "description": "Tell the platform what is wrong. The company does not see who reported it.",
+  "reasonLabel": "What is wrong?",
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Scam or fraud",
+    "misleading": "Misleading or false",
+    "offensive": "Offensive or inappropriate",
+    "illegal": "Illegal",
+    "other": "Something else"
+  },
+  "commentLabel": "Anything to add? (optional)",
+  "submit": "Send report",
+  "cancel": "Cancel",
+  "sent": "Thanks. The platform will look at it.",
+  "already": "You already reported this.",
+  "failed": "The report could not be sent",
+  "signInFirst": "Sign in so the platform knows the report is real.",
+  "signIn": "Sign in"
+}

@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportCard.tsx",
+  "failedTitle": "Meldung konnte nicht geladen werden",
+  "failedDescription": "Beim Laden dieser Meldung ist etwas schiefgelaufen. Klicken, um es erneut zu versuchen.",
+  "statuses": {
+    "open": "Offen",
+    "closed": "Geschlossen"
+  },
+  "decisions": {
+    "dismissed": "Abgewiesen",
+    "itemHidden": "Eintrag ausgeblendet",
+    "companyHidden": "Unternehmen im Portal ausgeblendet",
+    "companySuspended": "Unternehmen gesperrt",
+    "accountBanned": "Konto gesperrt"
+  },
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Betrug",
+    "misleading": "Irreführend",
+    "offensive": "Anstössig",
+    "illegal": "Rechtswidrig",
+    "other": "Etwas anderes"
+  },
+  "undone": "rückgängig gemacht",
+  "openLink": "Seite öffnen",
+  "reason": "Grund",
+  "reporter": "Gemeldet von",
+  "createdAt": "Gemeldet am",
+  "company": "Unternehmen",
+  "comment": "Kommentar",
+  "decisionNote": "Notiz zur Entscheidung",
+  "page": "Seite"
+}

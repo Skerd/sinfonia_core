@@ -8,15 +8,17 @@ import {Label} from "@coreModule/components/ui/label.tsx";
 import {Textarea} from "@coreModule/components/ui/textarea.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
 import {PORTAL_APPROVAL_REASON_MAX} from "armonia/src/modules/core/api/company/private/company/portalApproval.ts";
+import {COMPANY_SUSPENSION_REASON_MAX} from "armonia/src/modules/core/api/platform/private/companies/setCompanySuspension.form.validator.ts";
 import type {
+    SetCompanySuspensionResponse,
     SetCompanyVerificationResponse,
     SetPortalApprovalResponse,
 } from "armonia/src/modules/core/api/platform/private/companies/platformModules.dto.ts";
 
 const LANGUAGE_PATH = "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx";
 
-/** The row actions of the platform's approval and verified mark (D178). */
-export const PORTAL_APPROVAL_ACTIONS = ["approvePortalListing", "rejectPortalListing", "verifyCompany", "unverifyCompany"] as const;
+/** The row actions of the platform's approval and verified mark (D178), and its suspension (D191). */
+export const PORTAL_APPROVAL_ACTIONS = ["approvePortalListing", "rejectPortalListing", "verifyCompany", "unverifyCompany", "suspendCompany", "liftSuspension"] as const;
 export type PortalApprovalAction = typeof PORTAL_APPROVAL_ACTIONS[number];
 
 export function isPortalApprovalAction(action: string): action is PortalApprovalAction {
@@ -107,7 +109,52 @@ const VerificationDialog = compose(
     withDebug(true, true, "companies"),
 )(VerificationDialogInner);
 
-/** The dialog of one approval or verified-mark action, opened from a company's row, card or sheet. */
+function SuspensionDialogInner({
+    onOpenChange, company, onSuccess, suspend, resolveLanguageKey, innerRef, onFilterChange, loading,
+}: DialogProps & {suspend: boolean} & WithLanguageType & WithAxiosType<SetCompanySuspensionResponse>) {
+    const [reason, setReason] = useState("");
+    const prefix = suspend ? "suspend" : "lift";
+
+    useImperativeHandle(innerRef, () => ({
+        success: (data: SetCompanySuspensionResponse) => {
+            onSuccess?.(data.suspended
+                ? {suspendedAt: new Date().toISOString(), suspendedReason: data.suspendedReason}
+                : {suspendedAt: undefined, suspendedReason: undefined});
+            onOpenChange(false);
+        },
+    }));
+
+    return (
+        <ConfirmDialog
+            open
+            onOpenChange={(next: boolean) => { if (!loading) onOpenChange(next); }}
+            title={resolveLanguageKey(`${prefix}.title`)}
+            desc={`${company.name} — ${resolveLanguageKey(`${prefix}.description`)}`}
+            handleConfirm={() => onFilterChange({suspended: suspend, ...(suspend && reason.trim() ? {reason: reason.trim()} : {})})}
+            isLoading={loading}
+            destructive={suspend}
+        >
+            {suspend ? (
+                <Label className="flex-col items-stretch gap-1.5">
+                    {resolveLanguageKey("suspend.reasonLabel")}
+                    <Textarea rows={3} maxLength={COMPANY_SUSPENSION_REASON_MAX} value={reason} onChange={(event) => setReason(event.target.value)} className="h-auto py-2" />
+                    <span className="text-xs font-normal text-muted-foreground">{resolveLanguageKey("suspend.reasonHint")}</span>
+                </Label>
+            ) : null}
+        </ConfirmDialog>
+    );
+}
+
+const SuspensionDialog = compose(
+    withLanguage(LANGUAGE_PATH),
+    withAxios<SetCompanySuspensionResponse>(
+        {method: "PUT", url: "/api/platform/companies/suspension", data: {}, addToPath: [{whatToGet: ["company", "_id"]}]},
+        true,
+    ),
+    withDebug(true, true, "companies"),
+)(SuspensionDialogInner);
+
+/** The dialog of one approval, verified-mark or suspension action, opened from a company's row, card or sheet. */
 export default function PortalApprovalDialog({action, ...props}: DialogProps & {action: PortalApprovalAction}) {
     switch (action) {
         case "approvePortalListing":
@@ -118,5 +165,9 @@ export default function PortalApprovalDialog({action, ...props}: DialogProps & {
             return <VerificationDialog {...props} verified />;
         case "unverifyCompany":
             return <VerificationDialog {...props} verified={false} />;
+        case "suspendCompany":
+            return <SuspensionDialog {...props} suspend />;
+        case "liftSuspension":
+            return <SuspensionDialog {...props} suspend={false} />;
     }
 }

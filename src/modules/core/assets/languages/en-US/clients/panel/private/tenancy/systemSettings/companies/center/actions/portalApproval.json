@@ -3,5 +3,7 @@
   "approve": "Approve portal listing",
   "reject": "Reject portal listing",
   "verify": "Mark verified",
-  "unverify": "Remove verified mark"
+  "unverify": "Remove verified mark",
+  "suspend": "Suspend company",
+  "liftSuspension": "Lift suspension"
 }

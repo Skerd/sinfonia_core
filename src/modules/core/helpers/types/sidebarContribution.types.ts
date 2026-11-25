@@ -12,6 +12,8 @@ export type SidebarContributionContext = {
     isPlatformAdmin?: boolean;
     /** Uploads waiting for the platform's review (D177), for the Upload review entry's badge. */
     uploadReviewWaiting?: number;
+    /** Reports waiting for the platform's decision (D191), for the Reports entry's badge. */
+    reportDeskOpen?: number;
 };
 
 /**

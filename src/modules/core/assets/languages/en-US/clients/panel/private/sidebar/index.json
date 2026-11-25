@@ -115,6 +115,9 @@
         "uploadReview": {
           "title": "Upload review"
         },
+        "reportDesk": {
+          "title": "Reports"
+        },
         "cronJobs": {
           "title": "Scheduled actions"
         }

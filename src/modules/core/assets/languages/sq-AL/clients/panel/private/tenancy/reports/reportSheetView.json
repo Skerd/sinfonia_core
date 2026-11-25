@@ -1,0 +1,47 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportSheetView.tsx",
+  "failedTitle": "Raportimi nuk u ngarkua",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit të këtij raportimi. Klikoni për të provuar përsëri.",
+  "failedTooltipDescription": "Klikoni për t'i ngarkuar përsëri të dhënat.",
+  "report": "Raportimi",
+  "reported": "E raportuar",
+  "decision": "Vendimi",
+  "kind": "Lloji",
+  "recordCompany": "Biznesi",
+  "recordTitle": "E raportuar",
+  "recordUrl": "Lidhja",
+  "reason": "Arsyeja",
+  "reporter": "Raportuar nga",
+  "comment": "Komenti",
+  "status": "Statusi",
+  "decisionNote": "Shënimi i vendimit",
+  "decidedAt": "Vendosur më",
+  "undoneAt": "Zhbërë më",
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Mashtrim",
+    "misleading": "Çorientues",
+    "offensive": "Fyes",
+    "illegal": "I paligjshëm",
+    "other": "Diçka tjetër"
+  },
+  "statuses": {
+    "open": "E hapur",
+    "closed": "E mbyllur"
+  },
+  "decisions": {
+    "dismissed": "E hedhur poshtë",
+    "itemHidden": "Elementi u fsheh",
+    "companyHidden": "Biznesi u fsheh nga portali",
+    "companySuspended": "Biznesi u pezullua",
+    "accountBanned": "Llogaria u bllokua"
+  },
+  "lifecycle": "Cikli i jetës",
+  "createdAt": "Raportuar më",
+  "updatedAt": "Përditësuar",
+  "createdBy": "Krijuar nga",
+  "deletedAt": "Fshirë më",
+  "deletedBy": "Fshirë nga",
+  "yes": "Po",
+  "no": "Jo"
+}

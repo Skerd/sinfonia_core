@@ -13,6 +13,7 @@ import {usePortalLandings} from "../portalLandings.ts";
 import {sectionHref} from "../sectionBase.tsx";
 import {portalApexOrigin} from "../portalZone.ts";
 import ThemeSwitch from "@coreModule/components/custom/preferences/themeSwitch.tsx";
+import ReportButton from "@coreModule/components/custom/report/reportButton.tsx";
 
 const FOOTER_LINK_CLASS = "inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground";
 const FOOTER_HEADING_CLASS = "mb-1 text-xs font-semibold tracking-wider text-muted-foreground uppercase";
@@ -130,6 +131,8 @@ function PortalFooter({resolveLanguageKey}: WithLanguageType) {
                             {resolveLanguageKey("poweredBy").replace("{brand}", site.platform.name)}
                         </a>
                     ) : null}
+                    {/* Anyone can report a business to the platform from its own site (D191); the apex is the platform itself. */}
+                    {site.scope === "company" ? <ReportButton kind="core.company" recordId={company._id} variant="link" /> : null}
                     {/* Moved from the header (2026-11-23): a preference set once, not on every visit. */}
                     <ThemeSwitch />
                 </div>

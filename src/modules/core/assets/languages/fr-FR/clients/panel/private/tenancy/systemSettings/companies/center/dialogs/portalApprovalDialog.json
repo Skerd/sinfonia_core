@@ -18,6 +18,16 @@
     "title": "Retirer la vérification",
     "description": "l'entreprise n'affiche plus le badge Vérifiée sur le portail."
   },
+  "suspend": {
+    "title": "Suspendre l'entreprise",
+    "description": "personne ne peut s'y connecter ni y travailler, son site et ses fiches sur le portail sont hors ligne, et rien n'est envoyé par e-mail ou message en son nom. Vous pourrez lever la suspension plus tard.",
+    "reasonLabel": "Motif (facultatif)",
+    "reasonHint": "Conservé dans le dossier de l'entreprise. Seule la plateforme le voit."
+  },
+  "lift": {
+    "title": "Lever la suspension",
+    "description": "ses membres peuvent se reconnecter, et son site et ses fiches sur le portail reviennent comme avant."
+  },
   "axios": {
     "start": {
       "title": "Enregistrement",

@@ -1,0 +1,63 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportDialogs.tsx",
+  "decide": {
+    "title": "Decidi la segnalazione",
+    "description": "scegli cosa fa la piattaforma. Tutte le segnalazioni aperte sullo stesso contenuto si chiudono con questa decisione.",
+    "noteLabel": "Nota (facoltativa)",
+    "noteHint": "Resta con la decisione. La vede solo la piattaforma."
+  },
+  "decisions": {
+    "dismissed": {
+      "label": "Respinta",
+      "hint": "Non cambia nulla. La segnalazione si chiude."
+    },
+    "itemHidden": {
+      "label": "Elemento nascosto",
+      "hint": "Il contenuto segnalato sparisce dal portale e dal sito dell'azienda. L'azienda lo vede ancora nel suo pannello."
+    },
+    "companyHidden": {
+      "label": "Azienda nascosta dal portale",
+      "hint": "L'azienda resta raggiungibile sul proprio sito, ma il portale non la elenca più."
+    },
+    "companySuspended": {
+      "label": "Azienda sospesa",
+      "hint": "Nessuno può accedere o lavorare nell'azienda, i suoi siti vanno offline e nulla viene inviato via e-mail a suo nome."
+    },
+    "accountBanned": {
+      "label": "Account bloccato",
+      "hint": "L'account che l'ha scritto non può più accedere da nessuna parte. Le sue sessioni aperte terminano subito."
+    }
+  },
+  "undo": {
+    "itemHidden": {
+      "title": "Mostra di nuovo",
+      "description": "il contenuto segnalato riappare nelle pagine pubbliche."
+    },
+    "companyHidden": {
+      "title": "Mostra di nuovo l'azienda sul portale",
+      "description": "il portale elenca di nuovo l'azienda, come indicano le sue impostazioni."
+    },
+    "companySuspended": {
+      "title": "Revoca sospensione",
+      "description": "le persone dell'azienda possono accedere di nuovo e i suoi siti tornano."
+    },
+    "accountBanned": {
+      "title": "Revoca blocco",
+      "description": "l'account può accedere di nuovo."
+    }
+  },
+  "axios": {
+    "start": {
+      "title": "Salvataggio",
+      "time": 3000
+    },
+    "success": {
+      "title": "Salvato.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile salvare",
+      "time": 3000
+    }
+  }
+}

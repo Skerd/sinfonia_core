@@ -1,0 +1,93 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/index.tsx",
+  "title": "Raportime",
+  "description": "Çfarë kanë raportuar njerëzit në faqet publike, nga të gjitha bizneset. Raportimet e hapura vijnë të parat.",
+  "help": {
+    "ariaLabel": "Rreth raportimeve",
+    "title": "Rreth raportimeve",
+    "overview": "Kushdo që ka hyrë mund të raportojë një listim, një vlerësim, një biznes ose diçka tjetër publike. Çdo raportim vjen këtu, te biznesi i platformës. Biznesi i raportuar nuk e mëson kurrë kush e dërgoi.",
+    "sections": [
+      {
+        "title": "Vendimi",
+        "items": [
+          "Hapni menunë e një raportimi dhe zgjidhni Vendos. Mund ta hidhni poshtë, të fshihni atë që u raportua, të fshihni biznesin nga portali, të pezulloni biznesin ose të bllokoni llogarinë që e shkroi.",
+          "Një vendim mbyll të gjitha raportimet e hapura për të njëjtën gjë.",
+          "Një biznes i pezulluar nuk mund të hyjë, faqet e tij dalin jashtë linje dhe asgjë nuk dërgohet me email në emër të tij. Një llogari e bllokuar nuk mund të hyjë askund.",
+          "Gjithçka përveç hedhjes poshtë mund të zhbëhet nga e njëjta menu."
+        ]
+      },
+      {
+        "title": "Kush e sheh këtë faqe",
+        "items": [
+          "Vetëm biznesi i platformës, dhe vetëm personat roli i të cilëve lejon vendimin për raportimet."
+        ]
+      }
+    ]
+  },
+  "noData": "Nuk ka raportime",
+  "failTitle": "Raportimet nuk u ngarkuan",
+  "failDescription": "Ndodhi një gabim gjatë ngarkimit të raportimeve. Ju lutemi provoni përsëri.",
+  "tooltipDescription": "Klikoni për t'i ngarkuar përsëri raportimet.",
+  "filters": {
+    "status": "Statusi",
+    "reason": "Arsyeja",
+    "decision": "Vendimi",
+    "statuses": {
+      "open": "E hapur",
+      "closed": "E mbyllur"
+    },
+    "reasons": {
+      "spam": "Spam",
+      "scam": "Mashtrim",
+      "misleading": "Çorientues",
+      "offensive": "Fyes",
+      "illegal": "I paligjshëm",
+      "other": "Diçka tjetër"
+    },
+    "decisions": {
+      "dismissed": "E hedhur poshtë",
+      "itemHidden": "Elementi u fsheh",
+      "companyHidden": "Biznesi u fsheh nga portali",
+      "companySuspended": "Biznesi u pezullua",
+      "accountBanned": "Llogaria u bllokua"
+    }
+  },
+  "fields": {
+    "status": "Statusi",
+    "reason": "Arsyeja",
+    "decision": "Vendimi",
+    "kind": "Lloji",
+    "recordTitle": "E raportuar",
+    "recordCompanyName": "Biznesi",
+    "recordUrl": "Lidhja",
+    "reporterEmail": "Raportuar nga",
+    "comment": "Komenti",
+    "decisionNote": "Shënimi i vendimit",
+    "decidedAt": "Vendosur më",
+    "undoneAt": "Zhbërë më",
+    "createdAt": "Raportuar më",
+    "updatedAt": "Përditësuar",
+    "recordCompany": "Biznesi",
+    "!enums": {
+      "reason": {
+        "spam": "Spam",
+        "scam": "Mashtrim",
+        "misleading": "Çorientues",
+        "offensive": "Fyes",
+        "illegal": "I paligjshëm",
+        "other": "Diçka tjetër"
+      },
+      "status": {
+        "open": "E hapur",
+        "closed": "E mbyllur"
+      },
+      "decision": {
+        "dismissed": "E hedhur poshtë",
+        "itemHidden": "Elementi u fsheh",
+        "companyHidden": "Biznesi u fsheh nga portali",
+        "companySuspended": "Biznesi u pezullua",
+        "accountBanned": "Llogaria u bllokua"
+      }
+    }
+  }
+}

@@ -3,5 +3,7 @@
   "approve": "Mirato listimin në portal",
   "reject": "Refuzo listimin në portal",
   "verify": "Shëno si të verifikuar",
-  "unverify": "Hiq shenjën e verifikimit"
+  "unverify": "Hiq shenjën e verifikimit",
+  "suspend": "Pezullo biznesin",
+  "liftSuspension": "Hiq pezullimin"
 }

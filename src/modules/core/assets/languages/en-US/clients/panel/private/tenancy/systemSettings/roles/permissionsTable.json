@@ -56,7 +56,8 @@
     "Users": "Users",
     "Usersessions": "User sessions",
     "Useraddresses": "Addresses",
-    "Uploadrefusals": "Upload refusals"
+    "Uploadrefusals": "Upload refusals",
+    "Contentreports": "Reports"
   },
   "permissions": {
     "Apiaccesses": {
@@ -768,6 +769,32 @@
       "updatedAt": "Updated at",
       "uploadrefusals": "Upload refusals",
       "reviewUploads": "Review flagged uploads"
+    },
+    "Contentreports": {
+      "kind": "Type",
+      "recordId": "Reported",
+      "recordCompany": "Business",
+      "recordCompanyName": "Business",
+      "recordTitle": "Reported",
+      "recordUrl": "Link",
+      "authorAccount": "Author account",
+      "reason": "Reason",
+      "comment": "Comment",
+      "reporter": "Reported by",
+      "reporterEmail": "Reported by",
+      "status": "Status",
+      "decision": "Decision",
+      "decisionNote": "Decision note",
+      "decidedBy": "Decided by",
+      "decidedAt": "Decided",
+      "undoneAt": "Undone",
+      "undoneBy": "Undone by",
+      "company": "Business",
+      "createdAt": "Reported on",
+      "createdBy": "Created by",
+      "updatedAt": "Updated",
+      "contentreports": "Reports",
+      "decideReports": "Decide reports"
     }
   },
   "commonFields": {

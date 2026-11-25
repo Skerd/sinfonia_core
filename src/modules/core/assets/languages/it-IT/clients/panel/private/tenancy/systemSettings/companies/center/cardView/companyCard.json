@@ -50,5 +50,6 @@
   "approvalRejected": "Non presente sul portale",
   "verified": "Verificata",
   "signedUpFrom": "Iscritta dal sito di {company}",
-  "signedUpOnPortal": "Iscritta sul portale"
+  "signedUpOnPortal": "Iscritta sul portale",
+  "suspended": "Sospesa"
 }

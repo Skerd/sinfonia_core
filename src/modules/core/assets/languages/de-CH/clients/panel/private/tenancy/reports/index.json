@@ -1,0 +1,93 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/index.tsx",
+  "title": "Meldungen",
+  "description": "Was Leute auf öffentlichen Seiten gemeldet haben, aus allen Unternehmen. Offene Meldungen zuerst.",
+  "help": {
+    "ariaLabel": "Über Meldungen",
+    "title": "Über Meldungen",
+    "overview": "Wer angemeldet ist, kann ein Angebot, eine Bewertung, ein Unternehmen oder etwas anderes Öffentliches melden. Jede Meldung landet hier, im Plattformunternehmen. Das gemeldete Unternehmen erfährt nie, wer gemeldet hat.",
+    "sections": [
+      {
+        "title": "Entscheiden",
+        "items": [
+          "Öffnen Sie das Menü einer Meldung und wählen Sie Entscheiden. Sie können sie abweisen, das Gemeldete ausblenden, das Unternehmen im Portal ausblenden, das Unternehmen sperren oder das Konto sperren, das es geschrieben hat.",
+          "Eine Entscheidung schliesst alle offenen Meldungen zum selben Eintrag.",
+          "Ein gesperrtes Unternehmen kann sich nicht anmelden, seine Websites gehen offline und in seinem Namen wird nichts gemailt. Ein gesperrtes Konto kann sich nirgends anmelden.",
+          "Alles ausser einer Abweisung lässt sich im selben Menü rückgängig machen."
+        ]
+      },
+      {
+        "title": "Wer diese Seite sieht",
+        "items": [
+          "Nur das Plattformunternehmen, und nur Personen, deren Rolle das Entscheiden von Meldungen erlaubt."
+        ]
+      }
+    ]
+  },
+  "noData": "Keine Meldungen",
+  "failTitle": "Meldungen konnten nicht geladen werden",
+  "failDescription": "Beim Laden der Meldungen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+  "tooltipDescription": "Klicken, um die Meldungen erneut zu laden.",
+  "filters": {
+    "status": "Status",
+    "reason": "Grund",
+    "decision": "Entscheidung",
+    "statuses": {
+      "open": "Offen",
+      "closed": "Geschlossen"
+    },
+    "reasons": {
+      "spam": "Spam",
+      "scam": "Betrug",
+      "misleading": "Irreführend",
+      "offensive": "Anstössig",
+      "illegal": "Rechtswidrig",
+      "other": "Etwas anderes"
+    },
+    "decisions": {
+      "dismissed": "Abgewiesen",
+      "itemHidden": "Eintrag ausgeblendet",
+      "companyHidden": "Unternehmen im Portal ausgeblendet",
+      "companySuspended": "Unternehmen gesperrt",
+      "accountBanned": "Konto gesperrt"
+    }
+  },
+  "fields": {
+    "status": "Status",
+    "reason": "Grund",
+    "decision": "Entscheidung",
+    "kind": "Art",
+    "recordTitle": "Gemeldet",
+    "recordCompanyName": "Unternehmen",
+    "recordUrl": "Link",
+    "reporterEmail": "Gemeldet von",
+    "comment": "Kommentar",
+    "decisionNote": "Notiz zur Entscheidung",
+    "decidedAt": "Entschieden",
+    "undoneAt": "Rückgängig gemacht",
+    "createdAt": "Gemeldet am",
+    "updatedAt": "Aktualisiert",
+    "recordCompany": "Unternehmen",
+    "!enums": {
+      "reason": {
+        "spam": "Spam",
+        "scam": "Betrug",
+        "misleading": "Irreführend",
+        "offensive": "Anstössig",
+        "illegal": "Rechtswidrig",
+        "other": "Etwas anderes"
+      },
+      "status": {
+        "open": "Offen",
+        "closed": "Geschlossen"
+      },
+      "decision": {
+        "dismissed": "Abgewiesen",
+        "itemHidden": "Eintrag ausgeblendet",
+        "companyHidden": "Unternehmen im Portal ausgeblendet",
+        "companySuspended": "Unternehmen gesperrt",
+        "accountBanned": "Konto gesperrt"
+      }
+    }
+  }
+}

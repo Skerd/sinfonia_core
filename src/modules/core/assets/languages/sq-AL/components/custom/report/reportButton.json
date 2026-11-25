@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/components/custom/report/reportButton.tsx",
+  "report": "Raporto",
+  "title": "Raporto",
+  "description": "Tregoji platformës çfarë nuk shkon. Kompania nuk e sheh kush e raportoi.",
+  "reasonLabel": "Çfarë nuk shkon?",
+  "reasons": {
+    "spam": "Mesazh i padëshiruar",
+    "scam": "Mashtrim",
+    "misleading": "Çorientues ose i rremë",
+    "offensive": "Fyes ose i papërshtatshëm",
+    "illegal": "I paligjshëm",
+    "other": "Diçka tjetër"
+  },
+  "commentLabel": "Dëshiron të shtosh diçka? (opsionale)",
+  "submit": "Dërgo raportin",
+  "cancel": "Anulo",
+  "sent": "Faleminderit. Platforma do ta shqyrtojë.",
+  "already": "E ke raportuar tashmë.",
+  "failed": "Raporti nuk u dërgua",
+  "signInFirst": "Hyni që platforma ta dijë se raportimi është i vërtetë.",
+  "signIn": "Hyni"
+}

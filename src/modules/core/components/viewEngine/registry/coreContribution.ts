@@ -78,6 +78,7 @@ const UserSessionSheetViewLazy = lazy(() => import("@coreModule/clients/panel/pr
 const LoginHistorySheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/accountSettings/security/loginHistory/center/sheetView/loginHistorySheetView.tsx"));
 const MessagingProviderSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/systemSettings/messagingProviders/center/sheetView/messagingProviderSheetView.tsx"));
 const BlogPostSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/blogPosts/center/sheetView/blogPostSheetView.tsx"));
+const ContentReportSheetViewLazy = lazy(() => import("@coreModule/clients/panel/private/tenancy/reports/reportSheetView.tsx"));
 
 export function getCoreWidgetContribution(): WidgetContribution {
     return {
@@ -92,6 +93,7 @@ export function getCoreWidgetContribution(): WidgetContribution {
             "#LoginHistorySheetView": LoginHistorySheetViewLazy,
             "#MessagingProviderSheetView": MessagingProviderSheetViewLazy,
             "#BlogPostSheetView": BlogPostSheetViewLazy,
+            "#ContentReportSheetView": ContentReportSheetViewLazy,
             "#SheetGrid": SheetGrid,
             "#FormGrid": FormGrid,
             "#FormAlert": FormAlert,

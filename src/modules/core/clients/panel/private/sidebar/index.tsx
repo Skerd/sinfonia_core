@@ -20,6 +20,7 @@ import {selectInternalChatUnread, selectWebsiteChatMineUnread} from "@coreModule
 import {useChatInboxBadges} from "@coreModule/helpers/hooks/useChatInboxBadges.ts";
 import {useActionAccess} from "@coreModule/helpers/hooks/useActionAccess.ts";
 import {useUploadReviewWaiting} from "@coreModule/helpers/hooks/useUploadReviewWaiting.ts";
+import {useReportDeskOpen} from "@coreModule/helpers/hooks/useReportDeskOpen.ts";
 import {IconHome} from "@tabler/icons-react";
 import type {ComponentProps, ReactNode} from "react";
 import {ModuleSidebarNavGroups} from "@coreModule/helpers/moduleContributions/ModuleSidebarNavGroups.tsx";
@@ -55,6 +56,8 @@ function AdministrativePanelSideBar({
     const isPlatformAdmin = useSelector((state: RootState) => state.authentication.user.isPlatformAdmin);
     const canReviewUploads = useActionAccess("uploadrefusals", "reviewUploads");
     const uploadReviewWaiting = useUploadReviewWaiting(isPlatformCompany === true && canReviewUploads);
+    const canDecideReports = useActionAccess("contentreports", "decideReports");
+    const reportDeskOpen = useReportDeskOpen(isPlatformCompany === true && canDecideReports);
     const {pathname} = useLocation();
     // The module nav groups resolve their own active state; this entry is hardcoded here.
     const isHomeActive = pathname === "/" || pathname === "/home";
@@ -90,6 +93,7 @@ function AdministrativePanelSideBar({
                     isPlatformCompany={isPlatformCompany}
                     isPlatformAdmin={isPlatformAdmin}
                     uploadReviewWaiting={uploadReviewWaiting}
+                    reportDeskOpen={reportDeskOpen}
                 />
                 {postChildren}
             </SidebarContent>

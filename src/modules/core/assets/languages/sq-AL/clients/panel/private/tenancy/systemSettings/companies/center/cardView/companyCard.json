@@ -50,5 +50,6 @@
   "approvalRejected": "Jo e listuar në portal",
   "verified": "E verifikuar",
   "signedUpFrom": "E regjistruar nga faqja e {company}",
-  "signedUpOnPortal": "E regjistruar në portal"
+  "signedUpOnPortal": "E regjistruar në portal",
+  "suspended": "I pezulluar"
 }

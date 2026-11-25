@@ -115,6 +115,9 @@
         "uploadReview": {
           "title": "Vérification des fichiers"
         },
+        "reportDesk": {
+          "title": "Signalements"
+        },
         "cronJobs": {
           "title": "Actions planifiées"
         }

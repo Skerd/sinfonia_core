@@ -3,5 +3,7 @@
   "approve": "Portal-Eintrag freigeben",
   "reject": "Portal-Eintrag ablehnen",
   "verify": "Als geprüft markieren",
-  "unverify": "Prüfzeichen entfernen"
+  "unverify": "Prüfzeichen entfernen",
+  "suspend": "Unternehmen sperren",
+  "liftSuspension": "Sperre aufheben"
 }

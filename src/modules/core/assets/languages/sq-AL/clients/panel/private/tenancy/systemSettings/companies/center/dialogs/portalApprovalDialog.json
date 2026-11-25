@@ -18,6 +18,16 @@
     "title": "Hiq shenjën e verifikimit",
     "description": "kompania nuk e shfaq më shenjën E verifikuar në portal."
   },
+  "suspend": {
+    "title": "Pezullo biznesin",
+    "description": "askush nuk mund të hyjë ose të punojë në të, faqja e tij dhe listimet në portal dalin jashtë linje, dhe asgjë nuk dërgohet me email ose mesazh në emër të tij. Mund ta hiqni pezullimin më vonë.",
+    "reasonLabel": "Arsyeja (opsionale)",
+    "reasonHint": "Ruhet te kartela e biznesit. E sheh vetëm platforma."
+  },
+  "lift": {
+    "title": "Hiq pezullimin",
+    "description": "njerëzit e tij mund të hyjnë përsëri, dhe faqja e tij dhe listimet në portal kthehen si më parë."
+  },
   "axios": {
     "start": {
       "title": "Po ruhet",

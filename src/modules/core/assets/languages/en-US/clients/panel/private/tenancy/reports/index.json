@@ -1,0 +1,93 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/index.tsx",
+  "title": "Reports",
+  "description": "What people reported on public pages, from every company. Open reports come first.",
+  "help": {
+    "ariaLabel": "About Reports",
+    "title": "About Reports",
+    "overview": "Anyone signed in can report a listing, a review, a business or another public thing. Every report lands here, in the platform company. The reported business never learns who sent it.",
+    "sections": [
+      {
+        "title": "Deciding",
+        "items": [
+          "Open a report's menu and choose Decide. You can dismiss it, hide the reported thing, hide the business from the portal, suspend the business, or ban the account that wrote it.",
+          "A decision closes every open report about the same thing.",
+          "A suspended business can't sign in, its sites go offline and nothing is emailed on its behalf. A banned account can't sign in anywhere.",
+          "Everything except a dismissal can be undone from the same menu."
+        ]
+      },
+      {
+        "title": "Who sees this page",
+        "items": [
+          "Only the platform company, and only people whose role allows deciding reports."
+        ]
+      }
+    ]
+  },
+  "noData": "No reports",
+  "failTitle": "Failed to load reports",
+  "failDescription": "An error occurred while loading reports. Please try again.",
+  "tooltipDescription": "Click to retry fetching reports.",
+  "filters": {
+    "status": "Status",
+    "reason": "Reason",
+    "decision": "Decision",
+    "statuses": {
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "reasons": {
+      "spam": "Spam",
+      "scam": "Scam or fraud",
+      "misleading": "Misleading",
+      "offensive": "Offensive",
+      "illegal": "Illegal",
+      "other": "Something else"
+    },
+    "decisions": {
+      "dismissed": "Dismissed",
+      "itemHidden": "Item hidden",
+      "companyHidden": "Business hidden from portal",
+      "companySuspended": "Business suspended",
+      "accountBanned": "Account banned"
+    }
+  },
+  "fields": {
+    "status": "Status",
+    "reason": "Reason",
+    "decision": "Decision",
+    "kind": "Type",
+    "recordTitle": "Reported",
+    "recordCompanyName": "Business",
+    "recordUrl": "Link",
+    "reporterEmail": "Reported by",
+    "comment": "Comment",
+    "decisionNote": "Decision note",
+    "decidedAt": "Decided",
+    "undoneAt": "Undone",
+    "createdAt": "Reported on",
+    "updatedAt": "Updated",
+    "recordCompany": "Business",
+    "!enums": {
+      "reason": {
+        "spam": "Spam",
+        "scam": "Scam or fraud",
+        "misleading": "Misleading",
+        "offensive": "Offensive",
+        "illegal": "Illegal",
+        "other": "Something else"
+      },
+      "status": {
+        "open": "Open",
+        "closed": "Closed"
+      },
+      "decision": {
+        "dismissed": "Dismissed",
+        "itemHidden": "Item hidden",
+        "companyHidden": "Business hidden from portal",
+        "companySuspended": "Business suspended",
+        "accountBanned": "Account banned"
+      }
+    }
+  }
+}

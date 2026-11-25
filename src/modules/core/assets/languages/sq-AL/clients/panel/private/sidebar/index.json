@@ -115,6 +115,9 @@
         "uploadReview": {
           "title": "Shqyrtimi i ngarkimeve"
         },
+        "reportDesk": {
+          "title": "Raportime"
+        },
         "cronJobs": {
           "title": "Veprime të planifikuara"
         }

@@ -1,0 +1,47 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportSheetView.tsx",
+  "failedTitle": "Impossibile caricare la segnalazione",
+  "failedDescription": "Qualcosa è andato storto durante il caricamento di questa segnalazione. Fai clic per riprovare.",
+  "failedTooltipDescription": "Fai clic per ricaricare i dati.",
+  "report": "Segnalazione",
+  "reported": "Segnalato",
+  "decision": "Decisione",
+  "kind": "Tipo",
+  "recordCompany": "Azienda",
+  "recordTitle": "Segnalato",
+  "recordUrl": "Link",
+  "reason": "Motivo",
+  "reporter": "Segnalato da",
+  "comment": "Commento",
+  "status": "Stato",
+  "decisionNote": "Nota della decisione",
+  "decidedAt": "Deciso",
+  "undoneAt": "Annullato",
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Truffa o frode",
+    "misleading": "Ingannevole",
+    "offensive": "Offensivo",
+    "illegal": "Illegale",
+    "other": "Altro"
+  },
+  "statuses": {
+    "open": "Aperta",
+    "closed": "Chiusa"
+  },
+  "decisions": {
+    "dismissed": "Respinta",
+    "itemHidden": "Elemento nascosto",
+    "companyHidden": "Azienda nascosta dal portale",
+    "companySuspended": "Azienda sospesa",
+    "accountBanned": "Account bloccato"
+  },
+  "lifecycle": "Ciclo di vita",
+  "createdAt": "Segnalato il",
+  "updatedAt": "Aggiornato",
+  "createdBy": "Creato da",
+  "deletedAt": "Eliminato il",
+  "deletedBy": "Eliminato da",
+  "yes": "Sì",
+  "no": "No"
+}

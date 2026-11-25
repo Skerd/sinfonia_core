@@ -1,0 +1,63 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportDialogs.tsx",
+  "decide": {
+    "title": "Meldung entscheiden",
+    "description": "wählen Sie, was die Plattform tut. Alle offenen Meldungen zum selben Eintrag werden mit dieser Entscheidung geschlossen.",
+    "noteLabel": "Notiz (optional)",
+    "noteHint": "Wird mit der Entscheidung gespeichert. Nur die Plattform sieht sie."
+  },
+  "decisions": {
+    "dismissed": {
+      "label": "Abgewiesen",
+      "hint": "Nichts ändert sich. Die Meldung wird geschlossen."
+    },
+    "itemHidden": {
+      "label": "Eintrag ausgeblendet",
+      "hint": "Das Gemeldete verschwindet aus dem Portal und von der Website des Unternehmens. Das Unternehmen sieht es weiter in seinem Panel."
+    },
+    "companyHidden": {
+      "label": "Unternehmen im Portal ausgeblendet",
+      "hint": "Das Unternehmen bleibt über seine eigene Website erreichbar, aber das Portal listet es nicht mehr."
+    },
+    "companySuspended": {
+      "label": "Unternehmen gesperrt",
+      "hint": "Niemand kann sich anmelden oder im Unternehmen arbeiten, seine Websites gehen offline und in seinem Namen wird nichts gemailt."
+    },
+    "accountBanned": {
+      "label": "Konto gesperrt",
+      "hint": "Das Konto, das es geschrieben hat, kann sich nirgends mehr anmelden. Seine offenen Sitzungen enden sofort."
+    }
+  },
+  "undo": {
+    "itemHidden": {
+      "title": "Wieder anzeigen",
+      "description": "das Gemeldete erscheint wieder auf öffentlichen Seiten."
+    },
+    "companyHidden": {
+      "title": "Unternehmen im Portal wieder anzeigen",
+      "description": "das Portal listet das Unternehmen wieder, wie es seine Einstellungen vorsehen."
+    },
+    "companySuspended": {
+      "title": "Sperre aufheben",
+      "description": "die Leute des Unternehmens können sich wieder anmelden und seine Websites sind wieder da."
+    },
+    "accountBanned": {
+      "title": "Kontosperre aufheben",
+      "description": "das Konto kann sich wieder anmelden."
+    }
+  },
+  "axios": {
+    "start": {
+      "title": "Wird gespeichert",
+      "time": 3000
+    },
+    "success": {
+      "title": "Gespeichert.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Konnte nicht gespeichert werden",
+      "time": 3000
+    }
+  }
+}

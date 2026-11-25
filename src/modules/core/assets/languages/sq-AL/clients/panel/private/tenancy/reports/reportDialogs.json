@@ -1,0 +1,63 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportDialogs.tsx",
+  "decide": {
+    "title": "Vendos për raportimin",
+    "description": "zgjidhni çfarë bën platforma. Të gjitha raportimet e hapura për të njëjtën gjë mbyllen me këtë vendim.",
+    "noteLabel": "Shënim (opsional)",
+    "noteHint": "Ruhet me vendimin. E sheh vetëm platforma."
+  },
+  "decisions": {
+    "dismissed": {
+      "label": "E hedhur poshtë",
+      "hint": "Asgjë nuk ndryshon. Raportimi mbyllet."
+    },
+    "itemHidden": {
+      "label": "Elementi u fsheh",
+      "hint": "Ajo që u raportua zhduket nga portali dhe faqja e biznesit. Biznesi e sheh ende në panelin e tij."
+    },
+    "companyHidden": {
+      "label": "Biznesi u fsheh nga portali",
+      "hint": "Biznesi mbetet i arritshëm në faqen e tij, por portali nuk e liston më."
+    },
+    "companySuspended": {
+      "label": "Biznesi u pezullua",
+      "hint": "Askush nuk mund të hyjë ose të punojë në biznes, faqet e tij dalin jashtë linje dhe asgjë nuk dërgohet me email në emër të tij."
+    },
+    "accountBanned": {
+      "label": "Llogaria u bllokua",
+      "hint": "Llogaria që e shkroi nuk mund të hyjë më askund. Seancat e saj të hapura mbarojnë tani."
+    }
+  },
+  "undo": {
+    "itemHidden": {
+      "title": "Shfaqe përsëri",
+      "description": "ajo që u raportua shfaqet përsëri në faqet publike."
+    },
+    "companyHidden": {
+      "title": "Shfaqe përsëri biznesin në portal",
+      "description": "portali e liston përsëri biznesin, sipas cilësimeve të tij."
+    },
+    "companySuspended": {
+      "title": "Hiq pezullimin",
+      "description": "njerëzit e biznesit mund të hyjnë përsëri dhe faqet e tij kthehen."
+    },
+    "accountBanned": {
+      "title": "Hiq bllokimin",
+      "description": "llogaria mund të hyjë përsëri."
+    }
+  },
+  "axios": {
+    "start": {
+      "title": "Duke ruajtur",
+      "time": 3000
+    },
+    "success": {
+      "title": "U ruajt.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Nuk u ruajt",
+      "time": 3000
+    }
+  }
+}

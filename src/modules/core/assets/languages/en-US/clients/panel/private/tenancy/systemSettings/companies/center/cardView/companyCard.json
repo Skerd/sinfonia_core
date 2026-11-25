@@ -50,5 +50,6 @@
   "approvalRejected": "Not listed on portal",
   "verified": "Verified",
   "signedUpFrom": "Signed up from {company}'s site",
-  "signedUpOnPortal": "Signed up on the portal"
+  "signedUpOnPortal": "Signed up on the portal",
+  "suspended": "Suspended"
 }

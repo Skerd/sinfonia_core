@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/components/custom/report/reportButton.tsx",
+  "report": "Segnala",
+  "title": "Segnala",
+  "description": "Di’ alla piattaforma cosa non va. L’azienda non vede chi ha segnalato.",
+  "reasonLabel": "Cosa non va?",
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Truffa o frode",
+    "misleading": "Ingannevole o falso",
+    "offensive": "Offensivo o inappropriato",
+    "illegal": "Illegale",
+    "other": "Altro"
+  },
+  "commentLabel": "Vuoi aggiungere qualcosa? (facoltativo)",
+  "submit": "Invia segnalazione",
+  "cancel": "Annulla",
+  "sent": "Grazie. La piattaforma la esaminerà.",
+  "already": "Hai già segnalato questo contenuto.",
+  "failed": "Impossibile inviare la segnalazione",
+  "signInFirst": "Accedi, così la piattaforma sa che la segnalazione è reale.",
+  "signIn": "Accedi"
+}

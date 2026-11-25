@@ -3,5 +3,7 @@
   "approve": "Valider la présence sur le portail",
   "reject": "Refuser la présence sur le portail",
   "verify": "Marquer comme vérifiée",
-  "unverify": "Retirer la vérification"
+  "unverify": "Retirer la vérification",
+  "suspend": "Suspendre l'entreprise",
+  "liftSuspension": "Lever la suspension"
 }

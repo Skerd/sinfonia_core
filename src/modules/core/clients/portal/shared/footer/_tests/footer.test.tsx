@@ -29,7 +29,7 @@ import PortalFooter from "../index.tsx";
 
 const site = (scope: PortalSite["scope"]): PortalSite => ({
     scope,
-    company: {name: "Rental Co", slug: "rental-co", cities: [], chatEnabled: false},
+    company: {_id: "65a000000000000000000003", name: "Rental Co", slug: "rental-co", cities: [], chatEnabled: false},
     platform: {name: "Platform"},
     cities: [],
     sections: [],

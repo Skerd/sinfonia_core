@@ -1,0 +1,63 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportDialogs.tsx",
+  "decide": {
+    "title": "Décider du signalement",
+    "description": "choisissez ce que fait la plateforme. Tous les signalements ouverts sur le même contenu sont fermés avec cette décision.",
+    "noteLabel": "Note (facultative)",
+    "noteHint": "Conservée avec la décision. Seule la plateforme la voit."
+  },
+  "decisions": {
+    "dismissed": {
+      "label": "Rejeté",
+      "hint": "Rien ne change. Le signalement est fermé."
+    },
+    "itemHidden": {
+      "label": "Élément masqué",
+      "hint": "Le contenu signalé disparaît du portail et du site de l'entreprise. L'entreprise le voit toujours dans son panneau."
+    },
+    "companyHidden": {
+      "label": "Entreprise masquée du portail",
+      "hint": "L'entreprise reste joignable sur son propre site, mais le portail ne la liste plus."
+    },
+    "companySuspended": {
+      "label": "Entreprise suspendue",
+      "hint": "Personne ne peut se connecter ni travailler dans l'entreprise, ses sites sont hors ligne et rien n'est envoyé par e-mail en son nom."
+    },
+    "accountBanned": {
+      "label": "Compte banni",
+      "hint": "Le compte qui l'a écrit ne peut plus se connecter nulle part. Ses sessions ouvertes se terminent maintenant."
+    }
+  },
+  "undo": {
+    "itemHidden": {
+      "title": "Afficher à nouveau",
+      "description": "le contenu signalé réapparaît sur les pages publiques."
+    },
+    "companyHidden": {
+      "title": "Afficher à nouveau l'entreprise sur le portail",
+      "description": "le portail liste à nouveau l'entreprise, selon ses propres réglages."
+    },
+    "companySuspended": {
+      "title": "Lever la suspension",
+      "description": "les membres de l'entreprise peuvent se reconnecter et ses sites reviennent."
+    },
+    "accountBanned": {
+      "title": "Lever le bannissement",
+      "description": "le compte peut se reconnecter."
+    }
+  },
+  "axios": {
+    "start": {
+      "title": "Enregistrement",
+      "time": 3000
+    },
+    "success": {
+      "title": "Enregistré.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossible d'enregistrer",
+      "time": 3000
+    }
+  }
+}

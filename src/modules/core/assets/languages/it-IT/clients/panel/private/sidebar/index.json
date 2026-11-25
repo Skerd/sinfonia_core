@@ -115,6 +115,9 @@
         "uploadReview": {
           "title": "Revisione dei caricamenti"
         },
+        "reportDesk": {
+          "title": "Segnalazioni"
+        },
         "cronJobs": {
           "title": "Azioni pianificate"
         }

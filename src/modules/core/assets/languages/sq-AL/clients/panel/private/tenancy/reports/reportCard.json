@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportCard.tsx",
+  "failedTitle": "Raportimi nuk u ngarkua",
+  "failedDescription": "Diçka shkoi keq gjatë ngarkimit të këtij raportimi. Klikoni për të provuar përsëri.",
+  "statuses": {
+    "open": "E hapur",
+    "closed": "E mbyllur"
+  },
+  "decisions": {
+    "dismissed": "E hedhur poshtë",
+    "itemHidden": "Elementi u fsheh",
+    "companyHidden": "Biznesi u fsheh nga portali",
+    "companySuspended": "Biznesi u pezullua",
+    "accountBanned": "Llogaria u bllokua"
+  },
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Mashtrim",
+    "misleading": "Çorientues",
+    "offensive": "Fyes",
+    "illegal": "I paligjshëm",
+    "other": "Diçka tjetër"
+  },
+  "undone": "zhbërë",
+  "openLink": "Hap faqen",
+  "reason": "Arsyeja",
+  "reporter": "Raportuar nga",
+  "createdAt": "Raportuar më",
+  "company": "Biznesi",
+  "comment": "Komenti",
+  "decisionNote": "Shënimi i vendimit",
+  "page": "Faqja"
+}

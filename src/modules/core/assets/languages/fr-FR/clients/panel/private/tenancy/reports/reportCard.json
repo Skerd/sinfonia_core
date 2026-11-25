@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportCard.tsx",
+  "failedTitle": "Échec du chargement du signalement",
+  "failedDescription": "Un problème est survenu lors du chargement de ce signalement. Cliquez pour réessayer.",
+  "statuses": {
+    "open": "Ouvert",
+    "closed": "Fermé"
+  },
+  "decisions": {
+    "dismissed": "Rejeté",
+    "itemHidden": "Élément masqué",
+    "companyHidden": "Entreprise masquée du portail",
+    "companySuspended": "Entreprise suspendue",
+    "accountBanned": "Compte banni"
+  },
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Arnaque ou fraude",
+    "misleading": "Trompeur",
+    "offensive": "Choquant",
+    "illegal": "Illégal",
+    "other": "Autre chose"
+  },
+  "undone": "annulé",
+  "openLink": "Ouvrir la page",
+  "reason": "Motif",
+  "reporter": "Signalé par",
+  "createdAt": "Signalé le",
+  "company": "Entreprise",
+  "comment": "Commentaire",
+  "decisionNote": "Note de décision",
+  "page": "Page"
+}

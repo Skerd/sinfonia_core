@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/components/custom/report/reportButton.tsx",
+  "report": "Melden",
+  "title": "Melden",
+  "description": "Sagen Sie der Plattform, was nicht stimmt. Das Unternehmen sieht nicht, wer gemeldet hat.",
+  "reasonLabel": "Was stimmt nicht?",
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Betrug",
+    "misleading": "Irreführend oder falsch",
+    "offensive": "Anstössig oder unangemessen",
+    "illegal": "Rechtswidrig",
+    "other": "Etwas anderes"
+  },
+  "commentLabel": "Möchten Sie etwas ergänzen? (optional)",
+  "submit": "Meldung senden",
+  "cancel": "Abbrechen",
+  "sent": "Danke. Die Plattform prüft es.",
+  "already": "Sie haben dies bereits gemeldet.",
+  "failed": "Die Meldung konnte nicht gesendet werden",
+  "signInFirst": "Melden Sie sich an, damit die Plattform weiss, dass die Meldung echt ist.",
+  "signIn": "Anmelden"
+}

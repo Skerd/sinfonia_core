@@ -56,7 +56,8 @@
     "Users": "Utenti",
     "Usersessions": "Sessioni utente",
     "Useraddresses": "Indirizzi",
-    "Uploadrefusals": "Caricamenti rifiutati"
+    "Uploadrefusals": "Caricamenti rifiutati",
+    "Contentreports": "Segnalazioni"
   },
   "permissions": {
     "Apiaccesses": {
@@ -768,6 +769,32 @@
       "updatedAt": "Aggiornato il",
       "uploadrefusals": "Caricamenti rifiutati",
       "reviewUploads": "Revisionare i caricamenti segnalati"
+    },
+    "Contentreports": {
+      "kind": "Tipo",
+      "recordId": "Segnalato",
+      "recordCompany": "Azienda",
+      "recordCompanyName": "Azienda",
+      "recordTitle": "Segnalato",
+      "recordUrl": "Link",
+      "authorAccount": "Account dell'autore",
+      "reason": "Motivo",
+      "comment": "Commento",
+      "reporter": "Segnalato da",
+      "reporterEmail": "Segnalato da",
+      "status": "Stato",
+      "decision": "Decisione",
+      "decisionNote": "Nota della decisione",
+      "decidedBy": "Deciso da",
+      "decidedAt": "Deciso",
+      "undoneAt": "Annullato",
+      "undoneBy": "Annullato da",
+      "company": "Azienda",
+      "createdAt": "Segnalato il",
+      "createdBy": "Creato da",
+      "updatedAt": "Aggiornato",
+      "contentreports": "Segnalazioni",
+      "decideReports": "Decidere le segnalazioni"
     }
   },
   "commonFields": {

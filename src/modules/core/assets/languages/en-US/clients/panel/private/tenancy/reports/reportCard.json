@@ -1,0 +1,33 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportCard.tsx",
+  "failedTitle": "Failed to load report",
+  "failedDescription": "Something went wrong while loading this report. Click to retry.",
+  "statuses": {
+    "open": "Open",
+    "closed": "Closed"
+  },
+  "decisions": {
+    "dismissed": "Dismissed",
+    "itemHidden": "Item hidden",
+    "companyHidden": "Business hidden from portal",
+    "companySuspended": "Business suspended",
+    "accountBanned": "Account banned"
+  },
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Scam or fraud",
+    "misleading": "Misleading",
+    "offensive": "Offensive",
+    "illegal": "Illegal",
+    "other": "Something else"
+  },
+  "undone": "undone",
+  "openLink": "Open page",
+  "reason": "Reason",
+  "reporter": "Reported by",
+  "createdAt": "Reported on",
+  "company": "Business",
+  "comment": "Comment",
+  "decisionNote": "Decision note",
+  "page": "Page"
+}

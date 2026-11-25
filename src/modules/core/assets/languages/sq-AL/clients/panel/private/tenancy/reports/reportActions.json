@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportActions.tsx",
+  "decide": "Vendos",
+  "undo": {
+    "itemHidden": "Shfaqe përsëri",
+    "companyHidden": "Shfaqe përsëri biznesin në portal",
+    "companySuspended": "Hiq pezullimin",
+    "accountBanned": "Hiq bllokimin"
+  }
+}

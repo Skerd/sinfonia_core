@@ -40,7 +40,7 @@ import PortalApp from "../portalApp.tsx";
 
 const APEX: PortalSite = {
     scope: "platform",
-    company: {name: "Kudoo", slug: "kudoo", cities: [], chatEnabled: false},
+    company: {_id: "65a000000000000000000002", name: "Kudoo", slug: "kudoo", cities: [], chatEnabled: false},
     platform: {name: "Kudoo"},
     cities: ["Tiranë", "Durrës"],
     sections: ["carRental"],

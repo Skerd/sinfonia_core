@@ -56,7 +56,8 @@
     "Users": "Përdoruesit",
     "Usersessions": "Sesionet e përdoruesve",
     "Useraddresses": "Adresat",
-    "Uploadrefusals": "Ngarkime të refuzuara"
+    "Uploadrefusals": "Ngarkime të refuzuara",
+    "Contentreports": "Raportime"
   },
   "permissions": {
     "Apiaccesses": {
@@ -768,6 +769,32 @@
       "updatedAt": "Përditësuar më",
       "uploadrefusals": "Ngarkime të refuzuara",
       "reviewUploads": "Shqyrto ngarkimet e shënuara"
+    },
+    "Contentreports": {
+      "kind": "Lloji",
+      "recordId": "E raportuar",
+      "recordCompany": "Biznesi",
+      "recordCompanyName": "Biznesi",
+      "recordTitle": "E raportuar",
+      "recordUrl": "Lidhja",
+      "authorAccount": "Llogaria e autorit",
+      "reason": "Arsyeja",
+      "comment": "Komenti",
+      "reporter": "Raportuar nga",
+      "reporterEmail": "Raportuar nga",
+      "status": "Statusi",
+      "decision": "Vendimi",
+      "decisionNote": "Shënimi i vendimit",
+      "decidedBy": "Vendosur nga",
+      "decidedAt": "Vendosur më",
+      "undoneAt": "Zhbërë më",
+      "undoneBy": "Zhbërë nga",
+      "company": "Biznesi",
+      "createdAt": "Raportuar më",
+      "createdBy": "Krijuar nga",
+      "updatedAt": "Përditësuar",
+      "contentreports": "Raportime",
+      "decideReports": "Vendos për raportimet"
     }
   },
   "commonFields": {

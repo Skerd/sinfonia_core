@@ -41,10 +41,10 @@ beforeEach(() => {
 describe("ModuleSidebarNavGroups", () => {
     it("passes the counts and platform flags to the loader, defaulting them to 0 and false", () => {
         render(<ModuleSidebarNavGroups resolveLanguageKey={resolve} />);
-        expect(state.getGroups).toHaveBeenCalledWith(resolve, {chatUnreadTotal: 0, publicChatWaitingCount: 0, publicChatMineUnread: 0, isPlatformCompany: false, isPlatformAdmin: false, uploadReviewWaiting: 0});
+        expect(state.getGroups).toHaveBeenCalledWith(resolve, {chatUnreadTotal: 0, publicChatWaitingCount: 0, publicChatMineUnread: 0, isPlatformCompany: false, isPlatformAdmin: false, uploadReviewWaiting: 0, reportDeskOpen: 0});
 
-        render(<ModuleSidebarNavGroups resolveLanguageKey={resolve} chatUnreadTotal={2} publicChatWaitingCount={3} publicChatMineUnread={4} isPlatformCompany isPlatformAdmin uploadReviewWaiting={5} />);
-        expect(state.getGroups).toHaveBeenLastCalledWith(resolve, {chatUnreadTotal: 2, publicChatWaitingCount: 3, publicChatMineUnread: 4, isPlatformCompany: true, isPlatformAdmin: true, uploadReviewWaiting: 5});
+        render(<ModuleSidebarNavGroups resolveLanguageKey={resolve} chatUnreadTotal={2} publicChatWaitingCount={3} publicChatMineUnread={4} isPlatformCompany isPlatformAdmin uploadReviewWaiting={5} reportDeskOpen={6} />);
+        expect(state.getGroups).toHaveBeenLastCalledWith(resolve, {chatUnreadTotal: 2, publicChatWaitingCount: 3, publicChatMineUnread: 4, isPlatformCompany: true, isPlatformAdmin: true, uploadReviewWaiting: 5, reportDeskOpen: 6});
     });
 
     it("hides groups the user cannot read", () => {

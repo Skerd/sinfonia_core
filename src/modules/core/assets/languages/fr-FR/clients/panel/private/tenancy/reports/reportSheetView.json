@@ -1,0 +1,47 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportSheetView.tsx",
+  "failedTitle": "Échec du chargement du signalement",
+  "failedDescription": "Un problème est survenu lors du chargement de ce signalement. Cliquez pour réessayer.",
+  "failedTooltipDescription": "Cliquez pour recharger les données.",
+  "report": "Signalement",
+  "reported": "Signalé",
+  "decision": "Décision",
+  "kind": "Type",
+  "recordCompany": "Entreprise",
+  "recordTitle": "Signalé",
+  "recordUrl": "Lien",
+  "reason": "Motif",
+  "reporter": "Signalé par",
+  "comment": "Commentaire",
+  "status": "Statut",
+  "decisionNote": "Note de décision",
+  "decidedAt": "Décidé",
+  "undoneAt": "Annulé",
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Arnaque ou fraude",
+    "misleading": "Trompeur",
+    "offensive": "Choquant",
+    "illegal": "Illégal",
+    "other": "Autre chose"
+  },
+  "statuses": {
+    "open": "Ouvert",
+    "closed": "Fermé"
+  },
+  "decisions": {
+    "dismissed": "Rejeté",
+    "itemHidden": "Élément masqué",
+    "companyHidden": "Entreprise masquée du portail",
+    "companySuspended": "Entreprise suspendue",
+    "accountBanned": "Compte banni"
+  },
+  "lifecycle": "Cycle de vie",
+  "createdAt": "Signalé le",
+  "updatedAt": "Mis à jour",
+  "createdBy": "Créé par",
+  "deletedAt": "Supprimé le",
+  "deletedBy": "Supprimé par",
+  "yes": "Oui",
+  "no": "Non"
+}

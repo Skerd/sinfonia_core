@@ -18,6 +18,16 @@
     "title": "Togli la verifica",
     "description": "l'azienda non mostra più il badge Verificata sul portale."
   },
+  "suspend": {
+    "title": "Sospendi azienda",
+    "description": "nessuno può accedere o lavorarci, il suo sito e le sue schede sul portale vanno offline e nulla viene inviato via e-mail o messaggio a suo nome. Puoi revocare la sospensione in seguito.",
+    "reasonLabel": "Motivo (facoltativo)",
+    "reasonHint": "Resta nella scheda dell'azienda. Lo vede solo la piattaforma."
+  },
+  "lift": {
+    "title": "Revoca sospensione",
+    "description": "le sue persone possono accedere di nuovo, e il suo sito e le sue schede sul portale tornano come prima."
+  },
   "axios": {
     "start": {
       "title": "Salvataggio",

@@ -1,4 +1,4 @@
-import {IconCircleCheck, IconCircleX, IconRosetteDiscountCheck, IconRosetteDiscountCheckOff} from "@tabler/icons-react";
+import {IconBan, IconCircleCheck, IconCircleX, IconLockOpen, IconRosetteDiscountCheck, IconRosetteDiscountCheckOff} from "@tabler/icons-react";
 import {compose} from "redux";
 import {useSelector} from "react-redux";
 import withLanguage, {WithLanguageType} from "@coreModule/helpers/hocs/withLanguage.tsx";
@@ -15,7 +15,8 @@ type PortalApprovalActionsProps = WithLanguageType & {
 
 /**
  * Platform admins decide whether the apex lists a self-serve company, and mark a company verified after checking its
- * NIPT/VAT (D178). Companies the platform created carry no decision, so only the verified mark applies to them.
+ * NIPT/VAT (D178). Companies the platform created carry no decision, so only the verified mark applies to them. They
+ * also suspend a company, or lift its suspension (D191); a protected company is never suspended.
  */
 function PortalApprovalActions({company, resolveLanguageKey, onAction}: PortalApprovalActionsProps) {
     const isPlatformAdmin = useSelector((state: RootState) => state.authentication.user.isPlatformAdmin);
@@ -45,6 +46,17 @@ function PortalApprovalActions({company, resolveLanguageKey, onAction}: PortalAp
                 <DropdownMenuItem onClick={() => onAction("verifyCompany")}>
                     <IconRosetteDiscountCheck size={16} />
                     {resolveLanguageKey("verify")}
+                </DropdownMenuItem>
+            ) : null}
+            {company.suspendedAt ? (
+                <DropdownMenuItem onClick={() => onAction("liftSuspension")}>
+                    <IconLockOpen size={16} />
+                    {resolveLanguageKey("liftSuspension")}
+                </DropdownMenuItem>
+            ) : !company.isProtected && !company.isPlatformOwner ? (
+                <DropdownMenuItem onClick={() => onAction("suspendCompany")}>
+                    <IconBan size={16} />
+                    {resolveLanguageKey("suspend")}
                 </DropdownMenuItem>
             ) : null}
         </>

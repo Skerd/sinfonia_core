@@ -1,0 +1,47 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportSheetView.tsx",
+  "failedTitle": "Failed to load report",
+  "failedDescription": "Something went wrong while loading this report. Click to retry.",
+  "failedTooltipDescription": "Click to retry fetching data.",
+  "report": "Report",
+  "reported": "Reported",
+  "decision": "Decision",
+  "kind": "Type",
+  "recordCompany": "Business",
+  "recordTitle": "Reported",
+  "recordUrl": "Link",
+  "reason": "Reason",
+  "reporter": "Reported by",
+  "comment": "Comment",
+  "status": "Status",
+  "decisionNote": "Decision note",
+  "decidedAt": "Decided",
+  "undoneAt": "Undone",
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Scam or fraud",
+    "misleading": "Misleading",
+    "offensive": "Offensive",
+    "illegal": "Illegal",
+    "other": "Something else"
+  },
+  "statuses": {
+    "open": "Open",
+    "closed": "Closed"
+  },
+  "decisions": {
+    "dismissed": "Dismissed",
+    "itemHidden": "Item hidden",
+    "companyHidden": "Business hidden from portal",
+    "companySuspended": "Business suspended",
+    "accountBanned": "Account banned"
+  },
+  "lifecycle": "Lifecycle",
+  "createdAt": "Reported on",
+  "updatedAt": "Updated",
+  "createdBy": "Created by",
+  "deletedAt": "Deleted at",
+  "deletedBy": "Deleted by",
+  "yes": "Yes",
+  "no": "No"
+}

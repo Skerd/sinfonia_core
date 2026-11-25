@@ -56,7 +56,8 @@
     "Users": "Benutzer",
     "Usersessions": "Benutzersitzungen",
     "Useraddresses": "Adressen",
-    "Uploadrefusals": "Abgelehnte Uploads"
+    "Uploadrefusals": "Abgelehnte Uploads",
+    "Contentreports": "Meldungen"
   },
   "permissions": {
     "Apiaccesses": {
@@ -768,6 +769,32 @@
       "updatedAt": "Aktualisiert am",
       "uploadrefusals": "Abgelehnte Uploads",
       "reviewUploads": "Markierte Uploads prüfen"
+    },
+    "Contentreports": {
+      "kind": "Art",
+      "recordId": "Gemeldet",
+      "recordCompany": "Unternehmen",
+      "recordCompanyName": "Unternehmen",
+      "recordTitle": "Gemeldet",
+      "recordUrl": "Link",
+      "authorAccount": "Konto des Verfassers",
+      "reason": "Grund",
+      "comment": "Kommentar",
+      "reporter": "Gemeldet von",
+      "reporterEmail": "Gemeldet von",
+      "status": "Status",
+      "decision": "Entscheidung",
+      "decisionNote": "Notiz zur Entscheidung",
+      "decidedBy": "Entschieden von",
+      "decidedAt": "Entschieden",
+      "undoneAt": "Rückgängig gemacht",
+      "undoneBy": "Rückgängig gemacht von",
+      "company": "Unternehmen",
+      "createdAt": "Gemeldet am",
+      "createdBy": "Erstellt von",
+      "updatedAt": "Aktualisiert",
+      "contentreports": "Meldungen",
+      "decideReports": "Meldungen entscheiden"
     }
   },
   "commonFields": {

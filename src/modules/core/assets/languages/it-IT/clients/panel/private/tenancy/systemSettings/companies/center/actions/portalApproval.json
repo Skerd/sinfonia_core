@@ -3,5 +3,7 @@
   "approve": "Approva la presenza sul portale",
   "reject": "Rifiuta la presenza sul portale",
   "verify": "Segna come verificata",
-  "unverify": "Togli la verifica"
+  "unverify": "Togli la verifica",
+  "suspend": "Sospendi azienda",
+  "liftSuspension": "Revoca sospensione"
 }

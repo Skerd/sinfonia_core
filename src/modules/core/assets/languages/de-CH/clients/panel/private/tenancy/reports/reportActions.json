@@ -1,0 +1,10 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportActions.tsx",
+  "decide": "Entscheiden",
+  "undo": {
+    "itemHidden": "Wieder anzeigen",
+    "companyHidden": "Unternehmen im Portal wieder anzeigen",
+    "companySuspended": "Sperre aufheben",
+    "accountBanned": "Kontosperre aufheben"
+  }
+}

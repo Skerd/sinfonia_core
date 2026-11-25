@@ -1,0 +1,23 @@
+{
+  "path": "src/modules/core/components/custom/report/reportButton.tsx",
+  "report": "Signaler",
+  "title": "Signaler",
+  "description": "Dites à la plateforme ce qui ne va pas. L’entreprise ne voit pas qui a signalé.",
+  "reasonLabel": "Qu’est-ce qui ne va pas ?",
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Arnaque ou fraude",
+    "misleading": "Trompeur ou faux",
+    "offensive": "Choquant ou inapproprié",
+    "illegal": "Illégal",
+    "other": "Autre chose"
+  },
+  "commentLabel": "Quelque chose à ajouter ? (facultatif)",
+  "submit": "Envoyer le signalement",
+  "cancel": "Annuler",
+  "sent": "Merci. La plateforme va examiner.",
+  "already": "Vous avez déjà signalé ceci.",
+  "failed": "Le signalement n’a pas pu être envoyé",
+  "signInFirst": "Connectez-vous pour que la plateforme sache que le signalement est réel.",
+  "signIn": "Se connecter"
+}

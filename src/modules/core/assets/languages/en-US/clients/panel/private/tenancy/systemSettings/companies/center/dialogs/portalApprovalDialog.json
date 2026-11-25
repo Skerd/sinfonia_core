@@ -18,6 +18,16 @@
     "title": "Remove verified mark",
     "description": "the company no longer shows the Verified badge on the portal."
   },
+  "suspend": {
+    "title": "Suspend company",
+    "description": "nobody can sign in or work in it, its website and portal entries go offline, and nothing is emailed or messaged on its behalf. You can lift it later.",
+    "reasonLabel": "Reason (optional)",
+    "reasonHint": "Kept on the company's record. Only the platform sees it."
+  },
+  "lift": {
+    "title": "Lift suspension",
+    "description": "its people can sign in again, and its website and portal entries come back as they were."
+  },
   "axios": {
     "start": {
       "title": "Saving",

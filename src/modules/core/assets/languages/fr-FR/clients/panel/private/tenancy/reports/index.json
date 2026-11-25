@@ -1,0 +1,93 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/index.tsx",
+  "title": "Signalements",
+  "description": "Ce que les gens ont signalé sur les pages publiques, pour toutes les entreprises. Les signalements ouverts d'abord.",
+  "help": {
+    "ariaLabel": "À propos des signalements",
+    "title": "À propos des signalements",
+    "overview": "Toute personne connectée peut signaler une annonce, un avis, une entreprise ou un autre contenu public. Chaque signalement arrive ici, dans l'entreprise de la plateforme. L'entreprise signalée ne sait jamais qui l'a envoyé.",
+    "sections": [
+      {
+        "title": "Décider",
+        "items": [
+          "Ouvrez le menu d'un signalement et choisissez Décider. Vous pouvez le rejeter, masquer le contenu signalé, masquer l'entreprise du portail, suspendre l'entreprise ou bannir le compte qui l'a écrit.",
+          "Une décision ferme tous les signalements ouverts sur le même contenu.",
+          "Une entreprise suspendue ne peut plus se connecter, ses sites sont hors ligne et rien n'est envoyé par e-mail en son nom. Un compte banni ne peut se connecter nulle part.",
+          "Tout sauf un rejet peut être annulé depuis le même menu."
+        ]
+      },
+      {
+        "title": "Qui voit cette page",
+        "items": [
+          "Seulement l'entreprise de la plateforme, et seulement les personnes dont le rôle permet de décider des signalements."
+        ]
+      }
+    ]
+  },
+  "noData": "Aucun signalement",
+  "failTitle": "Échec du chargement des signalements",
+  "failDescription": "Une erreur s'est produite lors du chargement des signalements. Veuillez réessayer.",
+  "tooltipDescription": "Cliquez pour recharger les signalements.",
+  "filters": {
+    "status": "Statut",
+    "reason": "Motif",
+    "decision": "Décision",
+    "statuses": {
+      "open": "Ouvert",
+      "closed": "Fermé"
+    },
+    "reasons": {
+      "spam": "Spam",
+      "scam": "Arnaque ou fraude",
+      "misleading": "Trompeur",
+      "offensive": "Choquant",
+      "illegal": "Illégal",
+      "other": "Autre chose"
+    },
+    "decisions": {
+      "dismissed": "Rejeté",
+      "itemHidden": "Élément masqué",
+      "companyHidden": "Entreprise masquée du portail",
+      "companySuspended": "Entreprise suspendue",
+      "accountBanned": "Compte banni"
+    }
+  },
+  "fields": {
+    "status": "Statut",
+    "reason": "Motif",
+    "decision": "Décision",
+    "kind": "Type",
+    "recordTitle": "Signalé",
+    "recordCompanyName": "Entreprise",
+    "recordUrl": "Lien",
+    "reporterEmail": "Signalé par",
+    "comment": "Commentaire",
+    "decisionNote": "Note de décision",
+    "decidedAt": "Décidé",
+    "undoneAt": "Annulé",
+    "createdAt": "Signalé le",
+    "updatedAt": "Mis à jour",
+    "recordCompany": "Entreprise",
+    "!enums": {
+      "reason": {
+        "spam": "Spam",
+        "scam": "Arnaque ou fraude",
+        "misleading": "Trompeur",
+        "offensive": "Choquant",
+        "illegal": "Illégal",
+        "other": "Autre chose"
+      },
+      "status": {
+        "open": "Ouvert",
+        "closed": "Fermé"
+      },
+      "decision": {
+        "dismissed": "Rejeté",
+        "itemHidden": "Élément masqué",
+        "companyHidden": "Entreprise masquée du portail",
+        "companySuspended": "Entreprise suspendue",
+        "accountBanned": "Compte banni"
+      }
+    }
+  }
+}

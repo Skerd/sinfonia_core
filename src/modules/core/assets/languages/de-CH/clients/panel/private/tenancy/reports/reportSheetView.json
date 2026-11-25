@@ -1,0 +1,47 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/reports/reportSheetView.tsx",
+  "failedTitle": "Meldung konnte nicht geladen werden",
+  "failedDescription": "Beim Laden dieser Meldung ist etwas schiefgelaufen. Klicken, um es erneut zu versuchen.",
+  "failedTooltipDescription": "Klicken, um die Daten erneut zu laden.",
+  "report": "Meldung",
+  "reported": "Gemeldet",
+  "decision": "Entscheidung",
+  "kind": "Art",
+  "recordCompany": "Unternehmen",
+  "recordTitle": "Gemeldet",
+  "recordUrl": "Link",
+  "reason": "Grund",
+  "reporter": "Gemeldet von",
+  "comment": "Kommentar",
+  "status": "Status",
+  "decisionNote": "Notiz zur Entscheidung",
+  "decidedAt": "Entschieden",
+  "undoneAt": "Rückgängig gemacht",
+  "reasons": {
+    "spam": "Spam",
+    "scam": "Betrug",
+    "misleading": "Irreführend",
+    "offensive": "Anstössig",
+    "illegal": "Rechtswidrig",
+    "other": "Etwas anderes"
+  },
+  "statuses": {
+    "open": "Offen",
+    "closed": "Geschlossen"
+  },
+  "decisions": {
+    "dismissed": "Abgewiesen",
+    "itemHidden": "Eintrag ausgeblendet",
+    "companyHidden": "Unternehmen im Portal ausgeblendet",
+    "companySuspended": "Unternehmen gesperrt",
+    "accountBanned": "Konto gesperrt"
+  },
+  "lifecycle": "Lebenszyklus",
+  "createdAt": "Gemeldet am",
+  "updatedAt": "Aktualisiert",
+  "createdBy": "Erstellt von",
+  "deletedAt": "Gelöscht am",
+  "deletedBy": "Gelöscht von",
+  "yes": "Ja",
+  "no": "Nein"
+}
