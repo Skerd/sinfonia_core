@@ -13,6 +13,8 @@ import ManageModules from "@coreModule/clients/panel/private/tenancy/systemSetti
 import SetPortalVisibility from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/setPortalVisibility.tsx";
 import ManageModulesDialog from "../dialogs/manageModulesDialog.tsx";
 import SetPortalVisibilityDialog from "../dialogs/setPortalVisibilityDialog.tsx";
+import ManageDomains from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/manageDomains.tsx";
+import ManageDomainsDialog from "../dialogs/manageDomainsDialog.tsx";
 import PortalApprovalActions from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/portalApproval.tsx";
 import PortalApprovalDialog, {isPortalApprovalAction} from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx";
 import {Company} from "armonia/src/modules/core/api/company/private/company/company.dto.ts";
@@ -97,6 +99,7 @@ function CompanySheetView({
                         <DeactivateCompany company={company} onAction={(a: string) => setAction(a)} />
                         {/* The same platform actions as the list's row and card menus (TD-F112). */}
                         <ManageModules company={company} onAction={(a: string) => setAction(a)} />
+                        <ManageDomains company={company} onAction={(a: string) => setAction(a)} />
                         <SetPortalVisibility company={company} onAction={(a: string) => setAction(a)} />
                         <PortalApprovalActions company={company} onAction={(a: string) => setAction(a)} />
                     </>
@@ -125,6 +128,14 @@ function CompanySheetView({
                     onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
                     company={company}
                     onSuccess={(modules) => patchCompany({modules})}
+                />
+            )}
+            {action === "manageDomains" && (
+                <ManageDomainsDialog
+                    open
+                    onOpenChange={(o: boolean) => { if (!o) setAction(""); }}
+                    company={company}
+                    onSuccess={(allowedDomains) => patchCompany({allowedDomains})}
                 />
             )}
             {action === "setPortalVisibility" && (

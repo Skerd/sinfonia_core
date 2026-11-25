@@ -19,6 +19,7 @@ const {action} = vi.hoisted(() => ({action: (label: string) => ({default: () => 
 vi.mock("@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/activate.tsx", () => action("activate"));
 vi.mock("@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/deactivate.tsx", () => action("deactivate"));
 vi.mock("@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/manageModules.tsx", () => action("manage modules"));
+vi.mock("@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/manageDomains.tsx", () => action("domains"));
 vi.mock("@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/setPortalVisibility.tsx", () => action("portal visibility"));
 vi.mock("@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/portalApproval.tsx", () => action("portal approval"));
 
@@ -30,7 +31,7 @@ describe("company sheet actions", () => {
     it("offers the same platform actions as the list's row menu", () => {
         render(<CompanySheetView open onOpenChange={() => {}} company={{_id: "c1", name: "Adria Home Fix"} as never}/>);
 
-        for (const label of ["activate", "deactivate", "manage modules", "portal visibility", "portal approval"]) {
+        for (const label of ["activate", "deactivate", "manage modules", "domains", "portal visibility", "portal approval"]) {
             expect(screen.getByText(label)).toBeTruthy();
         }
     });

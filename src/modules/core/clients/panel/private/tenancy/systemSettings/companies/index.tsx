@@ -14,6 +14,8 @@ import ManageModules from "@coreModule/clients/panel/private/tenancy/systemSetti
 import ManageModulesDialog from "./center/dialogs/manageModulesDialog.tsx";
 import SetPortalVisibility from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/setPortalVisibility.tsx";
 import SetPortalVisibilityDialog from "./center/dialogs/setPortalVisibilityDialog.tsx";
+import ManageDomains from "./center/actions/manageDomains.tsx";
+import ManageDomainsDialog from "./center/dialogs/manageDomainsDialog.tsx";
 import PortalApprovalActions from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/portalApproval.tsx";
 import PortalApprovalDialog, {isPortalApprovalAction} from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx";
 import ActivateCompanyDialog from "./center/dialogs/activateCompanyDialog.tsx";
@@ -129,6 +131,7 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
                     <ActivateCompany company={company} onAction={(a: string) => bindRowAction(a)} />
                     <DeactivateCompany company={company} onAction={(a: string) => bindRowAction(a)} />
                     <ManageModules company={company} onAction={(a: string) => bindRowAction(a)} />
+                    <ManageDomains company={company} onAction={(a: string) => bindRowAction(a)} />
                     <SetPortalVisibility company={company} onAction={(a: string) => bindRowAction(a)} />
                     <PortalApprovalActions company={company} onAction={(a: string) => bindRowAction(a)} />
                 </>
@@ -167,6 +170,18 @@ function AllCompanies({resolveLanguageKey}: WithLanguageType) {
                             }}
                             company={entity}
                             onSuccess={(modules) => listRef.current?.updateRow?.(entity._id, {modules})}
+                        />
+                    );
+                }
+                if (action === "manageDomains") {
+                    return (
+                        <ManageDomainsDialog
+                            open={true}
+                            onOpenChange={(o: boolean) => {
+                                if (!o) resetAction();
+                            }}
+                            company={entity}
+                            onSuccess={(allowedDomains) => listRef.current?.updateRow?.(entity._id, {allowedDomains})}
                         />
                     );
                 }

@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/manageDomainsDialog.tsx",
+  "title": "Domänen des Unternehmens",
+  "description": "nur diese Adressen öffnen die eigene Website des Unternehmens, und jede gehört genau einem Unternehmen. Das DNS der Domain muss auf die Plattform zeigen, bevor sie funktioniert.",
+  "save": "Domänen speichern",
+  "domainsLabel": "Eigene Domänen",
+  "domainsHint": "Eine pro Zeile, zum Beispiel shop.example.com. Leer lassen, um nur die Portal-Adresse zu behalten.",
+  "axios": {
+    "start": {
+      "title": "Domänen werden gespeichert",
+      "time": 3000
+    },
+    "success": {
+      "title": "Domänen aktualisiert.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Domänen konnten nicht aktualisiert werden",
+      "time": 3000
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/manageDomainsDialog.tsx",
+  "title": "Domini dell’azienda",
+  "description": "solo questi indirizzi aprono il sito dell’azienda, e ognuno appartiene a una sola azienda. Il DNS del dominio deve puntare alla piattaforma prima che funzioni.",
+  "save": "Salva domini",
+  "domainsLabel": "Domini propri",
+  "domainsHint": "Uno per riga, per esempio shop.example.com. Lascia vuoto per tenere solo l’indirizzo del portale.",
+  "axios": {
+    "start": {
+      "title": "Salvataggio dei domini",
+      "time": 3000
+    },
+    "success": {
+      "title": "Domini aggiornati.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Impossibile aggiornare i domini",
+      "time": 3000
+    }
+  }
+}

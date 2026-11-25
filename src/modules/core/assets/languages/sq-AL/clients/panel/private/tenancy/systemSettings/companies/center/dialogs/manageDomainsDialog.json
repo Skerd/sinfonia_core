@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/manageDomainsDialog.tsx",
+  "title": "Domainet e kompanisë",
+  "description": "vetëm këto adresa hapin faqen e kompanisë, dhe secila i përket vetëm një kompanie. DNS-i i domainit duhet të drejtohet te platforma që të funksionojë.",
+  "save": "Ruaj domainet",
+  "domainsLabel": "Domainet e veta",
+  "domainsHint": "Një për rresht, për shembull shop.example.com. Lëre bosh për të mbajtur vetëm adresën në portal.",
+  "axios": {
+    "start": {
+      "title": "Po ruhen domainet",
+      "time": 3000
+    },
+    "success": {
+      "title": "Domainet u përditësuan.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Domainet nuk u përditësuan",
+      "time": 3000
+    }
+  }
+}

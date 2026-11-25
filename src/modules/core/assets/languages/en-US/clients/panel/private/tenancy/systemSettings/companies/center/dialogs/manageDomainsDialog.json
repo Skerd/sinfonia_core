@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/manageDomainsDialog.tsx",
+  "title": "Company domains",
+  "description": "only these addresses open the company's own website, and each one belongs to one company. The domain's DNS must point to the platform before it works.",
+  "save": "Save domains",
+  "domainsLabel": "Own domains",
+  "domainsHint": "One per line, for example shop.example.com. Leave empty to keep only the portal address.",
+  "axios": {
+    "start": {
+      "title": "Saving domains",
+      "time": 3000
+    },
+    "success": {
+      "title": "Domains updated.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Domains could not be updated",
+      "time": 3000
+    }
+  }
+}

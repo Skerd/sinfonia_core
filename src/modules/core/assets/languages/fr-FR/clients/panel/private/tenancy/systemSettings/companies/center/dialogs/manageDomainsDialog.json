@@ -1,0 +1,22 @@
+{
+  "path": "src/modules/core/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/manageDomainsDialog.tsx",
+  "title": "Domaines de l’entreprise",
+  "description": "seules ces adresses ouvrent le site propre de l’entreprise, et chacune appartient à une seule entreprise. Le DNS du domaine doit pointer vers la plateforme avant qu’il fonctionne.",
+  "save": "Enregistrer les domaines",
+  "domainsLabel": "Domaines propres",
+  "domainsHint": "Un par ligne, par exemple shop.example.com. Laissez vide pour ne garder que l’adresse du portail.",
+  "axios": {
+    "start": {
+      "title": "Enregistrement des domaines",
+      "time": 3000
+    },
+    "success": {
+      "title": "Domaines mis à jour.",
+      "time": 3000
+    },
+    "error": {
+      "title": "Les domaines n’ont pas pu être mis à jour",
+      "time": 3000
+    }
+  }
+}

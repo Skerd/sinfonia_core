@@ -19,6 +19,8 @@ import ManageModules from "@coreModule/clients/panel/private/tenancy/systemSetti
 import ManageModulesDialog from "../dialogs/manageModulesDialog.tsx";
 import SetPortalVisibility from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/setPortalVisibility.tsx";
 import SetPortalVisibilityDialog from "../dialogs/setPortalVisibilityDialog.tsx";
+import ManageDomains from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/manageDomains.tsx";
+import ManageDomainsDialog from "../dialogs/manageDomainsDialog.tsx";
 import PortalApprovalActions from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/actions/portalApproval.tsx";
 import PortalApprovalDialog, {isPortalApprovalAction} from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/dialogs/portalApprovalDialog.tsx";
 import CompanySheetView from "@coreModule/clients/panel/private/tenancy/systemSettings/companies/center/sheetView/companySheetView.tsx";
@@ -174,6 +176,19 @@ const CompanyCard = memo(function CompanyCard({
                                 }}
                             />
                         )}
+                        {action === "manageDomains" && (
+                            <ManageDomainsDialog
+                                open
+                                onOpenChange={(next: boolean) => {
+                                    if (!next) setAction("");
+                                }}
+                                company={row}
+                                onSuccess={(allowedDomains) => {
+                                    setEntity({...row, allowedDomains});
+                                    listRef?.current?.updateRow?.(row._id, {allowedDomains});
+                                }}
+                            />
+                        )}
                         {action === "setPortalVisibility" && (
                             <SetPortalVisibilityDialog
                                 open
@@ -250,6 +265,7 @@ const CompanyCard = memo(function CompanyCard({
                                 <ActivateCompany company={row} onAction={setAction} />
                                 <DeactivateCompany company={row} onAction={setAction} />
                                 <ManageModules company={row} onAction={setAction} />
+                                <ManageDomains company={row} onAction={setAction} />
                                 <SetPortalVisibility company={row} onAction={setAction} />
                                 <PortalApprovalActions company={row} onAction={setAction} />
                             </EntityCard.Header>
