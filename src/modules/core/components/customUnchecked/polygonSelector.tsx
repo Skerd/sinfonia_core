@@ -277,6 +277,12 @@ function PolygonSelector({
         onPhantomHoverChange?.(phantomPoints[index]?._id ?? null);
     }, [onPhantomHoverChange, phantomPoints]);
 
+    /** Opening a polygon dismisses its preview label, so the label does not hang over what opened. */
+    const openPhantom = useCallback((index: number) => {
+        clearPhantomHover();
+        onFloorClick(phantomPoints[index]);
+    }, [clearPhantomHover, onFloorClick, phantomPoints]);
+
     const [isClosed, setIsClosed] = useState(initialPoints?.length >= 3);
 
     const [containerDimensions, setContainerDimensions] = useState<{ width: number; height: number } | null>(null);
@@ -816,14 +822,14 @@ function PolygonSelector({
                                             if (!hoverCapable && canPhantomHover) {
                                                 e.stopPropagation();
                                                 if (hoveredPhantomIndex === index) {
-                                                    onFloorClick(phantomPoints[index]);
+                                                    openPhantom(index);
                                                     return;
                                                 }
                                                 activatePhantomHover(index, e.clientX, e.clientY);
                                                 return;
                                             }
 
-                                            onFloorClick(phantomPoints[index]);
+                                            openPhantom(index);
                                         }}
                                         style={{ pointerEvents: canPhantomHover ? 'visible' : 'none' }}
                                     >
@@ -855,7 +861,7 @@ function PolygonSelector({
             </>
         )
 
-    }, [phantomPoints, svgCoordinates, canPhantomHover, hoveredPhantomIndex, forcedHighlightId, dashboard, showPhantomsAlways, hoverCapable, onFloorClick, activatePhantomHover, clearPhantomHover]);
+    }, [phantomPoints, svgCoordinates, canPhantomHover, hoveredPhantomIndex, forcedHighlightId, dashboard, showPhantomsAlways, hoverCapable, openPhantom, activatePhantomHover, clearPhantomHover]);
 
     const imageSyncReady = renderedImageUrl === imageUrl && imageLoaded;
     const hasContentToShow =
@@ -920,7 +926,7 @@ function PolygonSelector({
                             {...(!hoverCapable && dashboard
                                 ? buttonLike<HTMLDivElement>((e) => {
                                     e.stopPropagation();
-                                    onFloorClick(phantomPoints[hoveredPhantomIndex]);
+                                    openPhantom(hoveredPhantomIndex);
                                 })
                                 : {})}
                         >
