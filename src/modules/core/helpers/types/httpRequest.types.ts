@@ -32,6 +32,8 @@ export type HttpRequest = {
         message: string;
     };
     responseType?: ResponseType;
+    /** This read draws its own empty state. A missing file must not also raise an error toast. */
+    hideIfError?: boolean;
     /**
      * A read a page may show again from memory (`helpers/apiClient/responseCache.ts`): a page opening with the same
      * request (Back, a revisit, a hovered link's `prefetchHttpRequest`) shows the last answer at once and refreshes it

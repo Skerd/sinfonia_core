@@ -29,6 +29,7 @@ function CoverPhoto({
 
     const [previewPhoto, setPreviewPhoto] = useState<string | null>(photoUrl);
     const [forceRefresh, setForceRefresh] = useState<number>(1);
+    const [imageFailed, setImageFailed] = useState(false);
     const company = useSelector((state: RootState) => state.authentication?.user?.company);
 
     useEffect(() => {
@@ -43,6 +44,12 @@ function CoverPhoto({
     useEffect(() => {
         setPreviewPhoto(photoUrl);
     }, [photoUrl]);
+    useEffect(() => {
+        setImageFailed(false);
+    }, [previewPhoto]);
+
+    const absent = imageFailed || error?.error_code === "media_not_found" || error?.error_code === "file_not_found";
+    const showPhoto = !absent && !!data && !!previewPhoto;
 
     return (
         <div className="rounded-full flex grow items-center justify-center h-full w-full" style={{height: "150px"}}>
@@ -50,25 +57,25 @@ function CoverPhoto({
                 (loading) ?
                 <Loader className="border-0"/>
                 :
-                <>
-                    {
-                        (error) ?
-                        <TooltipDisplayer tooltip={resolveLanguageKey("tooltipTitle")}>
-                            <IconRotate color={"red"} className="rotate-45 hover:-rotate-45 transition-all duration-300" onClick={(e) => {e.stopPropagation(); e.preventDefault(); setForceRefresh(Date.now());}}/>
-                        </TooltipDisplayer>
-                        :
-                        <>
-                            {
-                                (!data || !previewPhoto) ?
-                                <h3 className="text-muted-foreground font-bold text-xl">
-                                    {company?.name || ""}
-                                </h3>
-                                :
-                                <img src={previewPhoto} alt="profilePhoto" className="rounded-lg rounded-es-none rounded-ee-none h-full w-full object-cover"/>
-                            }
-                        </>
-                    }
-                </>
+                error && !absent ?
+                <TooltipDisplayer tooltip={resolveLanguageKey("tooltipTitle")}>
+                    <IconRotate color={"red"} className="rotate-45 hover:-rotate-45 transition-all duration-300" onClick={(e) => {e.stopPropagation(); e.preventDefault(); setForceRefresh(Date.now());}}/>
+                </TooltipDisplayer>
+                :
+                showPhoto ?
+                <img
+                    src={previewPhoto}
+                    alt="profilePhoto"
+                    className="rounded-lg rounded-es-none rounded-ee-none h-full w-full object-cover"
+                    onError={() => {
+                        setImageFailed(true);
+                        setPhotoUrl?.(null);
+                    }}
+                />
+                :
+                <h3 className="text-muted-foreground font-bold text-xl">
+                    {company?.name || ""}
+                </h3>
             }
         </div>
     )
@@ -80,6 +87,7 @@ export default compose(
         {
             url: "/api/user/data/coverPhoto",
             method: "GET",
+            hideIfError: true,
             data: {},
             addToHeader: [{
                 whatToGet: "specificUserId",

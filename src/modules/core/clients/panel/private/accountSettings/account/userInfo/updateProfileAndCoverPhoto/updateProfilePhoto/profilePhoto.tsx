@@ -27,6 +27,7 @@ function ProfilePhoto({
 
     const [previewPhoto, setPreviewPhoto] = useState<string | null>(photoUrl);
     const [forceRefresh, setForceRefresh] = useState<number>(1);
+    const [imageFailed, setImageFailed] = useState(false);
 
     useEffect(() => {
         onFilterChange({});
@@ -40,6 +41,12 @@ function ProfilePhoto({
     useEffect(() => {
         setPreviewPhoto(photoUrl);
     }, [photoUrl]);
+    useEffect(() => {
+        setImageFailed(false);
+    }, [previewPhoto]);
+
+    const absent = imageFailed || error?.error_code === "media_not_found" || error?.error_code === "file_not_found";
+    const showPhoto = !absent && !!data && !!previewPhoto;
 
     return (
         <div className="text-background rounded-full flex grow items-center justify-center h-full w-full">
@@ -47,28 +54,28 @@ function ProfilePhoto({
                 loading ?
                 <Loader className="border-0"/>
                 :
-                <>
-                    {
-                        error ?
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <IconRotate color={"red"} className="rotate-45 hover:-rotate-45 transition-all duration-300" onClick={(e) => {e.preventDefault(); e.stopPropagation(); setForceRefresh(Date.now());}}/>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>{resolveLanguageKey("tooltipTitle")}</p>
-                            </TooltipContent>
-                        </Tooltip>
-                        :
-                        <>
-                            {
-                                (!data || !previewPhoto) ?
-                                <IconUser size="50px"/>
-                                :
-                                <img src={previewPhoto} alt="profilePhoto" className="rounded-full h-full w-full object-cover"/>
-                            }
-                        </>
-                    }
-                </>
+                error && !absent ?
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <IconRotate color={"red"} className="rotate-45 hover:-rotate-45 transition-all duration-300" onClick={(e) => {e.preventDefault(); e.stopPropagation(); setForceRefresh(Date.now());}}/>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>{resolveLanguageKey("tooltipTitle")}</p>
+                    </TooltipContent>
+                </Tooltip>
+                :
+                showPhoto ?
+                <img
+                    src={previewPhoto}
+                    alt="profilePhoto"
+                    className="rounded-full h-full w-full object-cover"
+                    onError={() => {
+                        setImageFailed(true);
+                        setPhotoUrl?.(null);
+                    }}
+                />
+                :
+                <IconUser className="size-1/2" aria-hidden />
             }
         </div>
     )
@@ -80,6 +87,7 @@ export default compose(
         {
             url: "/api/user/data/profilePhoto",
             method: "GET",
+            hideIfError: true,
             data: {},
             addToHeader: [{
                 whatToGet: "specificUserId",

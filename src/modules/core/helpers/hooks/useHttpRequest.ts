@@ -252,7 +252,7 @@ export default function useHttpRequest<TData = unknown>(
                     startRateLimitCooldown(errorBody.availableIn);
                 }
 
-                const showToast = !background && shouldToastError(errorBody, currentProps.hideIfError);
+                const showToast = !background && shouldToastError(errorBody, currentProps.hideIfError || currentHttpRequest.hideIfError);
                 settleToast("error", showToast ? toastMessages.error?.(errorBody) : undefined);
 
                 lifecycle.error?.(err);

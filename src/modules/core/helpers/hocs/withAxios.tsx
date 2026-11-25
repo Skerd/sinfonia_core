@@ -290,7 +290,7 @@ const withAxios =
                         const failed: HttpError = {...body, message: body.message ?? normalizeError(failure).message};
                         setUploadError(failed);
                         const {resolveLanguageKey, hideIfError} = latestRequestProps.current;
-                        if (shouldToastError(failed, hideIfError)) {
+                        if (shouldToastError(failed, hideIfError || httpRequest.hideIfError)) {
                             toast.error(buildToastMessages(httpRequest, resolveLanguageKey).error?.(failed) ?? formatHttpErrorMessage(failed));
                         }
                         forwardedRef.current?.error?.(failure);

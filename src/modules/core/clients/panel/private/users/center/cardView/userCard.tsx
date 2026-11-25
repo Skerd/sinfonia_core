@@ -56,7 +56,7 @@ function UserCard({user, specificUserId, onEdit, resolveLanguageKey, languageCod
                 className="flex w-full flex-col gap-2 rounded-lg border bg-card p-3 text-left transition-colors hover:bg-accent/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
                 <div className="flex min-w-0 items-center gap-3 pe-8">
-                    <div className="size-10 shrink-0 overflow-hidden rounded-full bg-muted">
+                    <div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted-foreground text-background">
                         {read?.photo ? <ProfilePhoto key={`photo-${user._id}-${user.photo ?? ""}`} specificUserId={user._id} /> : null}
                     </div>
                     <div className="flex min-w-0 flex-col gap-1">
