@@ -1,6 +1,8 @@
 // Loads the real module contributions (no mocks): catches malformed attach files, id clashes and
 // wiring breaks that the fake-glob unit tests cannot see. Module-specific checks only run when
-// that module is enabled (`VITE_ENABLED_MODULES`).
+// that module is enabled (`VITE_ENABLED_MODULES`) and present: a deploy clones only its own modules.
+import {existsSync} from "node:fs";
+import {join} from "node:path";
 import {describe, expect, it} from "vitest";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {isModuleEnabled} from "@coreModule/helpers/modules/enabledModules.ts";
@@ -21,7 +23,9 @@ import {getStudioPages} from "../loadStudioRouteContributions.ts";
 import {getNotificationTypeGroups, notificationMessage} from "../loadNotificationTypesContributions.ts";
 
 const resolve = ((key: string) => key) as ResolveLanguageKey;
-const itIf = (moduleName: string) => (isModuleEnabled(moduleName) ? it : it.skip);
+const MODULES_ROOT = join(__dirname, "../../../..");
+const itIf = (moduleName: string) =>
+    (isModuleEnabled(moduleName) && existsSync(join(MODULES_ROOT, moduleName)) ? it : it.skip);
 const expectUniqueIds = (entries: readonly {id?: string}[]) => {
     const ids = entries.map((entry) => entry.id).filter((id) => id !== undefined);
     expect(ids).toEqual([...new Set(ids)]);

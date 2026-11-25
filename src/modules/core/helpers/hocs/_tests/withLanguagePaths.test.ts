@@ -1,5 +1,5 @@
 // @vitest-environment node
-import {readdirSync, readFileSync} from "node:fs";
+import {existsSync, readdirSync, readFileSync} from "node:fs";
 import {join, relative, sep} from "node:path";
 import {describe, expect, it} from "vitest";
 
@@ -80,7 +80,12 @@ describe("withLanguage paths", () => {
     });
 
     it("keeps the shared-dictionary list free of stale entries", () => {
-        const stale = Object.entries(SHARED_DICTIONARIES).flatMap(([caller, paths]) =>
+        // A deploy clones only its own modules, so an absent module's entries are not stale.
+        const present = (caller: string) => {
+            const module = /^src\/modules\/([^/]+)\//.exec(caller)?.[1];
+            return !module || existsSync(join(SINFONIA_ROOT, "src", "modules", module));
+        };
+        const stale = Object.entries(SHARED_DICTIONARIES).filter(([caller]) => present(caller)).flatMap(([caller, paths]) =>
             paths
                 .filter((path) => !calls.some((call) => call.caller === caller && call.path === path))
                 .map((path) => `${caller} → ${path}`),
