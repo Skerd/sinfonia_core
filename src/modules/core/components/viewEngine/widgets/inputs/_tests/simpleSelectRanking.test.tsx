@@ -31,3 +31,23 @@ describe("simple select search", () => {
         expect(shown).toHaveLength(4);
     });
 });
+
+describe("simple select options", () => {
+    it("shows a disabled option but does not pick it", () => {
+        const onValueChange = vi.fn();
+        const policies = [
+            {label: "At pickup", value: "pay_at_pickup"},
+            {label: "Online when booking · Coming soon", value: "prepay_online", disabled: true},
+        ];
+        render(<SimpleSelect options={policies} value="pay_at_pickup" onValueChange={onValueChange}/>);
+        fireEvent.click(screen.getByRole("combobox"));
+
+        const soon = screen.getByRole("option", {name: /coming soon/i});
+        expect(soon.getAttribute("aria-disabled")).toBe("true");
+        fireEvent.click(soon);
+        expect(onValueChange).not.toHaveBeenCalled();
+
+        fireEvent.click(screen.getByRole("option", {name: "At pickup"}));
+        expect(onValueChange).toHaveBeenCalledWith("pay_at_pickup", "At pickup");
+    });
+});

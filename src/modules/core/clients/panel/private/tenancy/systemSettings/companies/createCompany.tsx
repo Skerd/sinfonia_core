@@ -33,7 +33,6 @@ export default createGenericCreatePage<CreateCompanyFormType>({
             description:    data.description,
             website:        data.website,
             vat:            data.vat,
-            allowedDomains: data.allowedDomains || [],
         };
         const formData = new FormData();
         if (data.logo instanceof File) formData.append("files", data.logo);

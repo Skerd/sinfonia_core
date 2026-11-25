@@ -29,7 +29,6 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormType>({
         timezone:       writeFields.timezone       ? companyData.timezone       : undefined,
         shopListedOnPortal: writeFields.shopListedOnPortal ? companyData.shopListedOnPortal ?? false : undefined,
         description:    writeFields.description    ? companyData.description    : undefined,
-        allowedDomains: writeFields.allowedDomains ? companyData.allowedDomains || [] : undefined,
         parentCompany:  writeFields.parentCompany  ? companyData.parentCompany?._id : undefined,
         addresses: writeFields.addresses
             ? (companyData.addresses || []).map((address) => ({
@@ -44,6 +43,14 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormType>({
             }))
             : undefined,
         logo: writeFields.logo ? companyData.logo : undefined,
+        bankAccount: writeFields.bankAccount
+            ? {
+                holder: companyData.bankAccount?.holder ?? "",
+                iban: companyData.bankAccount?.iban ?? "",
+                bic: companyData.bankAccount?.bic ?? "",
+                bankName: companyData.bankAccount?.bankName ?? "",
+            }
+            : undefined,
         publicAiChat: writeFields.publicAiChat
             ? {
                 enabled: companyData.publicAiChat?.enabled ?? false,
@@ -73,7 +80,8 @@ const EditCompanyForm = createGenericEditPage<Company, EditCompanyFormType>({
             timezone:       data.timezone,
             shopListedOnPortal: data.shopListedOnPortal,
             parentCompany:  data.parentCompany,
-            allowedDomains: data.allowedDomains || [],
+            // Sent empty, the bank account is removed (D190).
+            bankAccount:    data.bankAccount,
             publicAiChat:   data.publicAiChat,
             addresses:      (data.addresses || []).map((addr) => ({
                 _id:        addr._id,

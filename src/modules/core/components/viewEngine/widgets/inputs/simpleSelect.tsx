@@ -23,6 +23,8 @@ import SelectOptionLabel from '@coreModule/components/custom/selectOptionLabel.t
 export type SimpleSelectOption = {
     label: string;
     value: string;
+    /** Shown but not selectable (e.g. an option that is coming soon). */
+    disabled?: boolean;
 };
 
 type SimpleSelectProps = WithLanguageType & {
@@ -186,6 +188,7 @@ function SimpleSelectRender({
                     keywords={[option.label, option.value]}
                     className="flex min-w-0 gap-x-2"
                     aria-selected={multiple ? isSelected : undefined}
+                    disabled={option.disabled}
                     onSelect={() => handleOptionSelect(option)}
                 >
                     {multiple ? (

@@ -32,8 +32,6 @@
     "facebookPlaceholder": "https://facebook.com/...",
     "vatLabel": "IVA",
     "vatPlaceholder": "IVA",
-    "allowedDomainsLabel": "Domini consentiti",
-    "allowedDomainsPlaceholder": "Aggiungi un dominio",
     "streetLabel": "Via",
     "streetPlaceholder": "Via",
     "postalCodeLabel": "CAP",

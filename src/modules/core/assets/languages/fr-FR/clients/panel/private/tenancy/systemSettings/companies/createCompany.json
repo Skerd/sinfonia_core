@@ -32,8 +32,6 @@
     "facebookPlaceholder": "https://facebook.com/...",
     "vatLabel": "TVA",
     "vatPlaceholder": "TVA",
-    "allowedDomainsLabel": "Domaines autorisés",
-    "allowedDomainsPlaceholder": "Ajouter un domaine",
     "streetLabel": "Rue",
     "streetPlaceholder": "Rue",
     "postalCodeLabel": "Code postal",

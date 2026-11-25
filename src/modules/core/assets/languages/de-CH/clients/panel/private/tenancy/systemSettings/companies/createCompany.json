@@ -32,8 +32,6 @@
     "facebookPlaceholder": "https://facebook.com/...",
     "vatLabel": "MWST-Nr.",
     "vatPlaceholder": "MWST-Nr.",
-    "allowedDomainsLabel": "Erlaubte Domains",
-    "allowedDomainsPlaceholder": "Domain hinzufügen",
     "streetLabel": "Strasse",
     "streetPlaceholder": "Strasse",
     "postalCodeLabel": "Postleitzahl",
