@@ -4,7 +4,10 @@
   "description": "seules ces adresses ouvrent le site propre de l’entreprise, et chacune appartient à une seule entreprise. Le DNS du domaine doit pointer vers la plateforme avant qu’il fonctionne.",
   "save": "Enregistrer les domaines",
   "domainsLabel": "Domaines propres",
-  "domainsHint": "Un par ligne, par exemple shop.example.com. Laissez vide pour ne garder que l’adresse du portail.",
+  "domainPlaceholder": "shop.example.com",
+  "addDomain": "Ajouter le domaine",
+  "removeDomain": "Retirer le domaine",
+  "domainsHint": "Saisissez un domaine puis cliquez sur Ajouter ou appuyez sur Entrée. Sans domaine, l’entreprise ne garde que son adresse sur le portail.",
   "axios": {
     "start": {
       "title": "Enregistrement des domaines",

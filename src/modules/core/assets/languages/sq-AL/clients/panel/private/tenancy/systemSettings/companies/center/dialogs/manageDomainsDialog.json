@@ -4,7 +4,10 @@
   "description": "vetëm këto adresa hapin faqen e kompanisë, dhe secila i përket vetëm një kompanie. DNS-i i domainit duhet të drejtohet te platforma që të funksionojë.",
   "save": "Ruaj domainet",
   "domainsLabel": "Domainet e veta",
-  "domainsHint": "Një për rresht, për shembull shop.example.com. Lëre bosh për të mbajtur vetëm adresën në portal.",
+  "domainPlaceholder": "shop.example.com",
+  "addDomain": "Shto domainin",
+  "removeDomain": "Hiq domainin",
+  "domainsHint": "Shkruaj një domain dhe shtyp Shto ose Enter. Pa domaine, kompania mban vetëm adresën në portal.",
   "axios": {
     "start": {
       "title": "Po ruhen domainet",

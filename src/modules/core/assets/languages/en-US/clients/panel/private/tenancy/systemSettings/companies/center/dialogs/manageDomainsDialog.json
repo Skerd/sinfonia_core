@@ -4,7 +4,10 @@
   "description": "only these addresses open the company's own website, and each one belongs to one company. The domain's DNS must point to the platform before it works.",
   "save": "Save domains",
   "domainsLabel": "Own domains",
-  "domainsHint": "One per line, for example shop.example.com. Leave empty to keep only the portal address.",
+  "domainPlaceholder": "shop.example.com",
+  "addDomain": "Add domain",
+  "removeDomain": "Remove domain",
+  "domainsHint": "Type a domain and press Add or Enter. With no domains, the company keeps only its portal address.",
   "axios": {
     "start": {
       "title": "Saving domains",

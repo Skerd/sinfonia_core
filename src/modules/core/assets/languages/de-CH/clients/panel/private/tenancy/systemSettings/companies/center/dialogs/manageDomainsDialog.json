@@ -4,7 +4,10 @@
   "description": "nur diese Adressen öffnen die eigene Website des Unternehmens, und jede gehört genau einem Unternehmen. Das DNS der Domain muss auf die Plattform zeigen, bevor sie funktioniert.",
   "save": "Domänen speichern",
   "domainsLabel": "Eigene Domänen",
-  "domainsHint": "Eine pro Zeile, zum Beispiel shop.example.com. Leer lassen, um nur die Portal-Adresse zu behalten.",
+  "domainPlaceholder": "shop.example.com",
+  "addDomain": "Domäne hinzufügen",
+  "removeDomain": "Domäne entfernen",
+  "domainsHint": "Domäne eingeben und auf Hinzufügen klicken oder Enter drücken. Ohne Domänen behält die Firma nur ihre Portal-Adresse.",
   "axios": {
     "start": {
       "title": "Domänen werden gespeichert",

@@ -4,7 +4,10 @@
   "description": "solo questi indirizzi aprono il sito dell’azienda, e ognuno appartiene a una sola azienda. Il DNS del dominio deve puntare alla piattaforma prima che funzioni.",
   "save": "Salva domini",
   "domainsLabel": "Domini propri",
-  "domainsHint": "Uno per riga, per esempio shop.example.com. Lascia vuoto per tenere solo l’indirizzo del portale.",
+  "domainPlaceholder": "shop.example.com",
+  "addDomain": "Aggiungi dominio",
+  "removeDomain": "Rimuovi dominio",
+  "domainsHint": "Scrivi un dominio e premi Aggiungi o Invio. Senza domini, l’azienda tiene solo il suo indirizzo nel portale.",
   "axios": {
     "start": {
       "title": "Salvataggio dei domini",
