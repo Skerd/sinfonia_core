@@ -151,17 +151,15 @@ function ModulesCatalog({modulesCatalog, open, onOpenChange, company, onSuccess}
     );
 }
 
-const ModulesCatalogConnected = compose(withLanguage(LANGUAGE_PATH))(
-    withAxios<PlatformModulesResponse, Record<string, unknown>, "modulesCatalog">(
-        {
-            url: "/api/platform/companies/modules",
-            method: "GET",
-            data: {},
-        },
-        false,
-        "modulesCatalog"
-    )<ManageModulesDialogProps>(ModulesCatalog)
-);
+const ModulesCatalogConnected = withAxios<PlatformModulesResponse, Record<string, unknown>, "modulesCatalog">(
+    {
+        url: "/api/platform/companies/modules",
+        method: "GET",
+        data: {},
+    },
+    false,
+    "modulesCatalog"
+)<ManageModulesDialogProps>(ModulesCatalog);
 
 export default function ManageModulesDialog(props: ManageModulesDialogProps) {
     return <ModulesCatalogConnected {...props} />;
