@@ -3,7 +3,6 @@
   "title": "Moduli",
   "description": "scegli i moduli che questa azienda può usare. Un modulo disattivato viene nascosto; i suoi dati restano.",
   "required": "Sempre attivo",
-  "notInstalled": "Non installato su questo server",
   "requiredBy": "Richiesto da",
   "protectedModule": "Mantenuto: questa azienda è protetta",
   "cancel": "Annulla",

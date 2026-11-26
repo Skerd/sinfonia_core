@@ -3,7 +3,6 @@
   "title": "Module",
   "description": "Wählen Sie die Module, die diese Firma nutzen darf. Ein deaktiviertes Modul wird ausgeblendet; seine Daten bleiben erhalten.",
   "required": "Immer aktiv",
-  "notInstalled": "Auf diesem Server nicht installiert",
   "requiredBy": "Benötigt von",
   "protectedModule": "Bleibt: Diese Firma ist geschützt",
   "cancel": "Abbrechen",

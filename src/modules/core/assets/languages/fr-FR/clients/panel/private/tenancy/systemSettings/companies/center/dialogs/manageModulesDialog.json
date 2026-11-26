@@ -3,7 +3,6 @@
   "title": "Modules",
   "description": "choisissez les modules que cette entreprise peut utiliser. Un module désactivé est masqué ; ses données sont conservées.",
   "required": "Toujours actif",
-  "notInstalled": "Non installé sur ce serveur",
   "requiredBy": "Requis par",
   "protectedModule": "Conservé : cette entreprise est protégée",
   "cancel": "Annuler",

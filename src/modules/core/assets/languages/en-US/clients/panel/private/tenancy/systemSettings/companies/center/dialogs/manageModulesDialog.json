@@ -3,7 +3,6 @@
   "title": "Modules",
   "description": "choose the modules this company can use. Turning one off hides it; its data is kept.",
   "required": "Always on",
-  "notInstalled": "Not installed on this server",
   "requiredBy": "Needed by",
   "protectedModule": "Kept: this company is protected",
   "cancel": "Cancel",

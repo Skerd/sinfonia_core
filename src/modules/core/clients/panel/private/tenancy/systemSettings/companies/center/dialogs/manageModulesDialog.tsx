@@ -41,8 +41,9 @@ type ManageModulesFormProps = WithLanguageType & WithAxiosType<SetCompanyModules
 
 /**
  * Checkbox list of the platform's modules. Checking one adds what it depends on; one that a
- * checked module needs cannot be unchecked; required and uninstalled modules are locked. The
- * server re-applies the dependency closure, so this is a convenience, not the rule.
+ * checked module needs cannot be unchecked; required modules are locked. Only the modules this server
+ * has installed are listed: the server keeps a company's grants of the others. It re-applies the
+ * dependency closure, so this is a convenience, not the rule.
  */
 function ManageModulesForm({
     open,
@@ -74,20 +75,18 @@ function ManageModulesForm({
                     <DialogDescription>{company.name} — {resolveLanguageKey("description")}</DialogDescription>
                 </DialogHeader>
                 <div className="flex flex-col gap-3">
-                    {modulesCatalog.map((module) => {
+                    {modulesCatalog.filter((module) => module.installed).map((module) => {
                         const dependents = selectedDependentsOf(module.name, selected, modulesCatalog);
                         // A protected company keeps every module it has (D143); the server refuses a removal.
                         const kept = company.isProtected && (company.modules ?? []).includes(module.name);
-                        const locked = module.required || !module.installed || dependents.length > 0 || kept;
+                        const locked = module.required || dependents.length > 0 || kept;
                         const note = module.required
                             ? resolveLanguageKey("required")
-                            : !module.installed
-                                ? resolveLanguageKey("notInstalled")
-                                : dependents.length > 0
-                                    ? `${resolveLanguageKey("requiredBy")} ${dependents.map(moduleLabel).join(", ")}`
-                                    : kept
-                                        ? resolveLanguageKey("protectedModule")
-                                        : module.description;
+                            : dependents.length > 0
+                                ? `${resolveLanguageKey("requiredBy")} ${dependents.map(moduleLabel).join(", ")}`
+                                : kept
+                                    ? resolveLanguageKey("protectedModule")
+                                    : module.description;
                         const id = `company_module_${module.name}`;
                         return (
                             <div key={module.name} className="flex items-start gap-3">
