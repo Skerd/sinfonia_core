@@ -41,13 +41,15 @@ describe("portal storefront parts shared by the shop and the services (D142)", (
         expect(screen.getByLabelText("Visit Alpha Studio")).toHaveAttribute("href", "https://alpha.example.test/services");
     });
 
-    it("names the board a task is posted on and a company that quoted, each linking to its own site (D172)", () => {
-        render(<PortalSellerCard seller={{...SELLER, name: "Board", siteSlug: "tasks"}} sectionPath="tasks" kind="task" size="card" />);
+    it("names the platform a task is posted on without a link, and a company that quoted with its own site (D172, D197)", () => {
+        // The platform company keeps the board and has no site of its own: its name shows, linking nowhere.
+        render(<PortalSellerCard seller={{_id: "6a1f0c2b9d3e4f5a6b7c8d00", name: "Kudoo"}} sectionPath="tasks" kind="task" size="card" />);
         render(<PortalSellerCard seller={SELLER} sectionPath="services" kind="quote" size="card" />);
 
         expect(screen.getByText("postedOn")).toBeInTheDocument();
+        expect(screen.getByText("Kudoo")).toBeInTheDocument();
+        expect(screen.queryByLabelText("Visit Kudoo")).toBeNull();
         expect(screen.getByText("sentQuote")).toBeInTheDocument();
-        expect(screen.getByLabelText("Visit Board")).toHaveAttribute("href", "https://tasks.example.test/tasks");
         expect(screen.getByLabelText("Visit Alpha Studio")).toHaveAttribute("href", "https://alpha.example.test/services");
     });
 
