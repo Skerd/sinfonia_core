@@ -26,8 +26,12 @@ export function isModuleEnabled(moduleName: string): boolean {
 let companyModules: ReadonlySet<string> | null = null;
 let companyModulesVersion = 0;
 
-export function setCompanyModules(modules: readonly string[] | null): void {
+/** Modules the signed-in company does not run but whose platform lists it keeps (the platform company, D195). */
+let platformListModules: ReadonlySet<string> = new Set();
+
+export function setCompanyModules(modules: readonly string[] | null, platformLists: readonly string[] = []): void {
     companyModules = modules ? new Set([...ALWAYS_ENABLED_MODULES, ...modules]) : null;
+    platformListModules = new Set(platformLists);
     companyModulesVersion += 1;
 }
 
@@ -39,6 +43,14 @@ export function getCompanyModulesVersion(): number {
 /** Built into this bundle and enabled for the signed-in company. */
 export function isModuleActive(moduleName: string): boolean {
     return isModuleEnabled(moduleName) && (companyModules === null || companyModules.has(moduleName));
+}
+
+/**
+ * Built, not one of the signed-in company's modules, but the company keeps its platform lists (D195): only the
+ * module's platform-list pages and their menu entries are active (see `platformListUrls` on route contributions).
+ */
+export function isPlatformListModule(moduleName: string): boolean {
+    return isModuleEnabled(moduleName) && !isModuleActive(moduleName) && platformListModules.has(moduleName);
 }
 
 /** First segment after `…/modules/` in a Vite glob key or absolute path. */

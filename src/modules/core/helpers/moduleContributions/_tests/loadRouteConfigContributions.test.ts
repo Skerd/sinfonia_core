@@ -1,4 +1,5 @@
-import {describe, expect, it, vi} from "vitest";
+import {afterEach, describe, expect, it, vi} from "vitest";
+import {setCompanyModules} from "@coreModule/helpers/modules/enabledModules.ts";
 import type {RouteConfigArgs} from "@coreModule/helpers/types/routeConfigContribution.types.ts";
 import {createRouteConfigContributions} from "@coreModule/helpers/moduleContributions/loadRouteConfigContributions.ts";
 
@@ -63,5 +64,41 @@ describe("createRouteConfigContributions", () => {
     it("rejects a non-function hook", () => {
         const {run} = createRouteConfigContributions({[path("bad")]: {default: {contributeRoutes: "nope"}}});
         expect(() => run(args)).toThrow("[routeConfigContribution] Invalid default export");
+    });
+});
+
+describe("createRouteConfigContributions: a module kept only for its platform lists (D195)", () => {
+    const at = (...segments: string[]): RouteConfigArgs => ({...args, menu: segments[0], subview: segments[1], segments});
+    const shop = vi.fn(() => "shop view");
+    const contributions = () => createRouteConfigContributions({
+        [path("eCommerce")]: {default: {id: "eCommerce", platformListUrls: ["/tenancy/systemSettings/categories"], contributeRoutes: shop}},
+    });
+
+    afterEach(() => {
+        setCompanyModules(null);
+        shop.mockClear();
+    });
+
+    it("serves only its platform-list pages and what is under them", () => {
+        setCompanyModules(["core"], ["eCommerce"]);
+        const {run, platformListUrlsOf} = contributions();
+        expect(run(at("tenancy", "systemSettings", "categories"))).toBe("shop view");
+        expect(run(at("tenancy", "systemSettings", "categories", "edit"))).toBe("shop view");
+        expect(run(at("tenancy", "systemSettings", "categoriesx"))).toBeUndefined();
+        expect(run(at("shop", "orders"))).toBeUndefined();
+        expect(shop).toHaveBeenCalledTimes(2);
+        expect(platformListUrlsOf("eCommerce")).toEqual(["/tenancy/systemSettings/categories"]);
+    });
+
+    it("serves every page for a company that runs the module, and none for one that does not", () => {
+        setCompanyModules(["eCommerce"]);
+        expect(contributions().run(at("shop", "orders"))).toBe("shop view");
+        setCompanyModules(["core"]);
+        expect(contributions().run(at("tenancy", "systemSettings", "categories"))).toBeUndefined();
+    });
+
+    it("rejects platformListUrls that are not strings", () => {
+        const {run} = createRouteConfigContributions({[path("bad")]: {default: {platformListUrls: [1]}}});
+        expect(() => run(args)).toThrow();
     });
 });

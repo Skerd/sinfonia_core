@@ -13,6 +13,7 @@
 import {
     getCompanyModulesVersion,
     isModuleActive,
+    isPlatformListModule,
     moduleNameFromModulePath,
 } from "@coreModule/helpers/modules/enabledModules.ts";
 
@@ -78,6 +79,17 @@ export function resetContributionWarnings(): void {
 /** Source path of every accepted entry, for error messages that name the offending file. */
 const sourcePaths = new WeakMap<object, string>();
 
+/** The module an entry came from, from its file's path; `undefined` for entries outside `src/modules/*`. */
+export function contributionModuleName(entry: ContributionBase): string | undefined {
+    return moduleNameFromModulePath(sourcePaths.get(entry) ?? "");
+}
+
+/** Whether an entry is kept only for its module's platform lists (D195), so only its platform-list pages may show. */
+export function isPlatformListEntry(entry: ContributionBase): boolean {
+    const moduleName = contributionModuleName(entry);
+    return moduleName !== undefined && isPlatformListModule(moduleName);
+}
+
 /** `id`, else the file the entry came from, else a placeholder. */
 export function describeContribution(entry: ContributionBase): string {
     return entry.id ?? sourcePaths.get(entry) ?? "(anonymous)";
@@ -93,6 +105,11 @@ export type ContributionListOptions = {
     isValid: (entry: Record<string, unknown>) => boolean;
     /** `false` keeps every built module's entries (kinds used before sign-in or by shared rendering). */
     companyScoped?: boolean;
+    /**
+     * `true` also keeps the entries of modules the company keeps only the platform lists of (D195). The kind's loader
+     * then narrows them to the platform-list pages ({@link isPlatformListEntry}).
+     */
+    platformLists?: boolean;
 };
 
 /**
@@ -106,6 +123,7 @@ export function createContributionList<T extends ContributionBase>({
     glob,
     isValid,
     companyScoped = true,
+    platformLists = false,
 }: ContributionListOptions): () => readonly T[] {
     let cached: readonly T[] | undefined;
     let active: {version: number; entries: readonly T[]} | undefined;
@@ -166,8 +184,8 @@ export function createContributionList<T extends ContributionBase>({
             active = {
                 version,
                 entries: Object.freeze(all.filter((entry) => {
-                    const moduleName = moduleNameFromModulePath(sourcePaths.get(entry) ?? "");
-                    return moduleName === undefined || isModuleActive(moduleName);
+                    const moduleName = contributionModuleName(entry);
+                    return moduleName === undefined || isModuleActive(moduleName) || (platformLists && isPlatformListModule(moduleName));
                 })),
             };
         }

@@ -1,4 +1,5 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
+import {setCompanyModules} from "@coreModule/helpers/modules/enabledModules.ts";
 import type {NavSubCollapsible} from "@coreModule/helpers/types/sidebarNav.types.ts";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {createTenancySettingsContributions} from "@coreModule/helpers/moduleContributions/loadTenancySettingsContributions.ts";
@@ -43,5 +44,36 @@ describe("createTenancySettingsContributions", () => {
     it("rejects an entry without the hook", () => {
         const {getSubCollapsibles} = createTenancySettingsContributions({[path("bad")]: {default: [{id: "x"}]}});
         expect(() => getSubCollapsibles(resolve)).toThrow(`Invalid entry at ${path("bad")}[0]`);
+    });
+});
+
+describe("createTenancySettingsContributions: a module kept only for its platform lists (D195)", () => {
+    const link = (url: string) => ({title: url, url, permissions: [], usersPermissions: [], atLeastOnePermission: true});
+    const shopMenu = (): NavSubCollapsible => ({
+        title: "Shop", permissions: [], usersPermissions: [], atLeastOnePermission: true,
+        items: [
+            link("/tenancy/systemSettings/whatWeSell"),
+            link("/tenancy/systemSettings/categories"),
+            {title: "POS", permissions: [], usersPermissions: [], atLeastOnePermission: true, items: [link("/tenancy/systemSettings/posconfigs")]},
+        ],
+    });
+    const contributions = () => createTenancySettingsContributions(
+        {[path("eCommerce")]: {default: {id: "eCommerce", getTenancySettingsItems: shopMenu}}},
+        (moduleName) => (moduleName === "eCommerce" ? ["/tenancy/systemSettings/categories"] : []),
+    );
+
+    afterEach(() => {
+        setCompanyModules(null);
+    });
+
+    it("keeps only the entries of its platform-list pages", () => {
+        setCompanyModules(["core"], ["eCommerce"]);
+        const [menu] = contributions().getSubCollapsibles(resolve);
+        expect(menu.items.map((entry) => entry.title)).toEqual(["/tenancy/systemSettings/categories"]);
+    });
+
+    it("keeps the whole menu for a company that runs the module", () => {
+        setCompanyModules(["eCommerce"]);
+        expect(contributions().getSubCollapsibles(resolve)[0].items).toHaveLength(3);
     });
 });

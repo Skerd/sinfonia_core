@@ -20,4 +20,10 @@ export type RouteConfigContribution = {
     id?: string;
     order?: number;
     contributeRoutes?: (args: RouteConfigArgs) => ReactNode | undefined;
+    /**
+     * The module's platform-list pages (D195), e.g. `/tenancy/systemSettings/categories`. A company that keeps the
+     * module's platform lists without running the module (the platform company) gets only these pages, with what is
+     * under them, and only their menu entries.
+     */
+    platformListUrls?: readonly string[];
 };

@@ -6,6 +6,7 @@ import {
     isComponentLike,
     isOptionalRecordOf,
     isPlainObject,
+    isPlatformListEntry,
     memoizeOnList,
     mergeRecords,
     resetContributionWarnings,
@@ -292,5 +293,32 @@ describe("createContributionList: company modules", () => {
         expect(compute).toHaveBeenCalledTimes(1);
         setCompanyModules(["dentalClinic"]);
         expect(derived()).toBe("core,clinic");
+    });
+});
+
+describe("createContributionList: platform lists of modules the company does not run (D195)", () => {
+    const glob = () => ({
+        [`/src/modules/eCommerce/clients/panel/testContribution.ts`]: {default: {id: "shop"}},
+        [`/src/modules/core/clients/panel/testContribution.ts`]: {default: {id: "core"}},
+    });
+    const names = (entries: readonly {id?: string}[]) => entries.map((entry) => entry.id);
+
+    afterEach(() => {
+        setCompanyModules(null);
+    });
+
+    it("keeps such a module's entries only for kinds that take platform lists, and marks them", () => {
+        setCompanyModules(["core"], ["eCommerce"]);
+        const scoped = createContributionList<{id?: string}>({kind: "testContribution", glob: glob(), isValid: () => true});
+        const withLists = createContributionList<{id?: string}>({kind: "testContribution", glob: glob(), isValid: () => true, platformLists: true});
+        expect(names(scoped())).toEqual(["core"]);
+        expect(names(withLists())).toEqual(["core", "shop"]);
+        expect(withLists().map(isPlatformListEntry)).toEqual([false, true]);
+    });
+
+    it("treats a module the company runs as a whole module", () => {
+        setCompanyModules(["eCommerce"], ["eCommerce"]);
+        const withLists = createContributionList<{id?: string}>({kind: "testContribution", glob: glob(), isValid: () => true, platformLists: true});
+        expect(withLists().map(isPlatformListEntry)).toEqual([false, false]);
     });
 });
