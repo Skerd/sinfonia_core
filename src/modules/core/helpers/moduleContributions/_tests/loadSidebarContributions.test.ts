@@ -1,5 +1,6 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 import type {NavGroup} from "@coreModule/helpers/types/sidebarNav.types.ts";
+import {setCompanyModules} from "@coreModule/helpers/modules/enabledModules.ts";
 import type {ResolveLanguageKey} from "@coreModule/helpers/hocs/withLanguage.tsx";
 import {createSidebarContributions} from "@coreModule/helpers/moduleContributions/loadSidebarContributions.ts";
 
@@ -78,5 +79,35 @@ describe("createSidebarContributions", () => {
     ])("rejects an entry with %s", (_label, entry) => {
         const {getNavGroups} = createSidebarContributions({[path("bad")]: {default: entry}});
         expect(() => getNavGroups(resolve)).toThrow(`[sidebarContribution] Invalid default export in ${path("bad")}`);
+    });
+});
+
+describe("createSidebarContributions: the platform pages of a module the company does not run (D197)", () => {
+    const link = (url: string) => ({title: url, url, permissions: [], usersPermissions: [], atLeastOnePermission: true});
+    const marketplace = (): NavGroup[] => [
+        {...group("Marketplace"), items: [link("/marketplace/listings"), link("/marketplace/taskrequests"), link("/marketplace/disputes")]},
+        {...group("Reports"), items: [link("/marketplace/reports")]},
+    ];
+    const contributions = () => createSidebarContributions(
+        {[path("marketplace")]: {default: {id: "marketplace", getNavGroups: marketplace}}},
+        (moduleName) => (moduleName === "marketplace" ? ["/marketplace/taskrequests", "/marketplace/disputes"] : []),
+    );
+
+    afterEach(() => {
+        setCompanyModules(null);
+    });
+
+    it("keeps only the links to its platform pages, and the groups still holding one", () => {
+        setCompanyModules(["core"], ["marketplace"]);
+        const groups = contributions().getNavGroups(resolve);
+        expect(titles(groups)).toEqual(["Marketplace"]);
+        expect(groups[0].items.map((item) => item.title)).toEqual(["/marketplace/taskrequests", "/marketplace/disputes"]);
+    });
+
+    it("keeps every group for a company that runs the module, and none for one that keeps no platform pages of it", () => {
+        setCompanyModules(["marketplace"]);
+        expect(titles(contributions().getNavGroups(resolve))).toEqual(["Marketplace", "Reports"]);
+        setCompanyModules(["core"]);
+        expect(contributions().getNavGroups(resolve)).toEqual([]);
     });
 });
