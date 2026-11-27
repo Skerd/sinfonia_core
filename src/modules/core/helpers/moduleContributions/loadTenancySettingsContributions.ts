@@ -6,18 +6,18 @@ import {
     type ContributionGlob,
     contributionModuleName,
     createContributionList,
-    isPlatformListEntry,
+    isPlatformEntry,
     safeInvoke,
 } from "@coreModule/helpers/moduleContributions/contributionRegistry.ts";
-import {isUnderUrl, platformListUrlsOf} from "@coreModule/helpers/moduleContributions/loadRouteConfigContributions.ts";
+import {isUnderUrl, platformUrlsOf} from "@coreModule/helpers/moduleContributions/loadRouteConfigContributions.ts";
 
 const KIND = "tenancySettingsContribution";
 
 /** Only the links to `urls` (and what is under them), and the collapsibles still holding one. */
-export function keepPlatformListItems(items: readonly NavSubItem[], urls: readonly string[]): NavSubItem[] {
+export function keepPlatformItems(items: readonly NavSubItem[], urls: readonly string[]): NavSubItem[] {
     return items.flatMap((item): NavSubItem[] => {
         if ("items" in item && item.items) {
-            const children = keepPlatformListItems(item.items, urls);
+            const children = keepPlatformItems(item.items, urls);
             return children.length ? [{...item, items: children}] : [];
         }
         const path = typeof item.url === "string" ? item.url : item.url?.pathname;
@@ -26,23 +26,23 @@ export function keepPlatformListItems(items: readonly NavSubItem[], urls: readon
 }
 
 /**
- * A module kept only for its platform lists (D195) shows only the entries of its platform-list pages; the module's
- * route contribution names them (`platformListUrls`).
+ * A module kept only for its platform pages (D195, D197) shows only the entries of those pages; the module's
+ * route contribution names them (`platformUrls`).
  */
-function narrowToPlatformLists(urls: readonly string[], item: NavSubCollapsible): NavSubCollapsible | undefined {
-    const items = keepPlatformListItems(item.items, urls);
+function narrowToPlatformPages(urls: readonly string[], item: NavSubCollapsible): NavSubCollapsible | undefined {
+    const items = keepPlatformItems(item.items, urls);
     return items.length ? {...item, items} : undefined;
 }
 
 export function createTenancySettingsContributions(
     glob: ContributionGlob,
-    urlsOf: (moduleName: string) => readonly string[] = platformListUrlsOf,
+    urlsOf: (moduleName: string) => readonly string[] = platformUrlsOf,
 ) {
     const list = createContributionList<TenancySettingsContribution>({
         kind: KIND,
         glob,
         isValid: (entry) => typeof entry.getTenancySettingsItems === "function",
-        platformLists: true,
+        platformPages: true,
     });
 
     /** One collapsible per contribution, in order; `null`/`undefined` results and throwing modules are skipped. */
@@ -50,9 +50,9 @@ export function createTenancySettingsContributions(
         list().flatMap((contribution) => {
             const item = safeInvoke(KIND, contribution, () => contribution.getTenancySettingsItems(resolveLanguageKey));
             if (!item || typeof item !== "object") return [];
-            if (!isPlatformListEntry(contribution)) return [item];
+            if (!isPlatformEntry(contribution)) return [item];
             const moduleName = contributionModuleName(contribution);
-            const narrowed = narrowToPlatformLists(moduleName ? urlsOf(moduleName) : [], item);
+            const narrowed = narrowToPlatformPages(moduleName ? urlsOf(moduleName) : [], item);
             return narrowed ? [narrowed] : [];
         });
 

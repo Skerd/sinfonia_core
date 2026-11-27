@@ -6,7 +6,7 @@ import {
     contributionModuleName,
     createContributionList,
     isOptionalFunction,
-    isPlatformListEntry,
+    isPlatformEntry,
     isString,
 } from "@coreModule/helpers/moduleContributions/contributionRegistry.ts";
 
@@ -20,17 +20,17 @@ export function createRouteConfigContributions(glob: ContributionGlob) {
         kind: "routeConfigContribution",
         glob,
         isValid: (entry) => isOptionalFunction(entry.contributeRoutes)
-            && (entry.platformListUrls === undefined || (Array.isArray(entry.platformListUrls) && entry.platformListUrls.every(isString))),
-        platformLists: true,
+            && (entry.platformUrls === undefined || (Array.isArray(entry.platformUrls) && entry.platformUrls.every(isString))),
+        platformPages: true,
     });
 
-    /** Whether a module kept only for its platform lists (D195) owns the page at `path`. */
+    /** Whether a module kept only for its platform pages (D195, D197) owns the page at `path`. */
     const ownsPlatformListPage = (contribution: RouteConfigContribution, path: string): boolean =>
-        (contribution.platformListUrls ?? []).some((url) => isUnderUrl(path, url));
+        (contribution.platformUrls ?? []).some((url) => isUnderUrl(path, url));
 
-    /** The platform-list pages of a module (D195), for its menu entries. */
-    const platformListUrlsOf = (moduleName: string): readonly string[] =>
-        list().flatMap((contribution) => (contributionModuleName(contribution) === moduleName ? contribution.platformListUrls ?? [] : []));
+    /** The platform pages of a module (D195, D197), for its menu entries. */
+    const platformUrlsOf = (moduleName: string): readonly string[] =>
+        list().flatMap((contribution) => (contributionModuleName(contribution) === moduleName ? contribution.platformUrls ?? [] : []));
 
     /**
      * First contribution that returns non-`undefined` wins; `null` (or `false`) is a handled empty view.
@@ -40,7 +40,7 @@ export function createRouteConfigContributions(glob: ContributionGlob) {
     const run = (args: RouteConfigArgs): ReactNode | undefined => {
         const path = `/${args.segments.join("/")}`;
         for (const contribution of list()) {
-            if (isPlatformListEntry(contribution) && !ownsPlatformListPage(contribution, path)) continue;
+            if (isPlatformEntry(contribution) && !ownsPlatformListPage(contribution, path)) continue;
             const out = contribution.contributeRoutes?.(args);
             if (out !== undefined) {
                 return out;
@@ -49,7 +49,7 @@ export function createRouteConfigContributions(glob: ContributionGlob) {
         return undefined;
     };
 
-    return {list, run, platformListUrlsOf};
+    return {list, run, platformUrlsOf};
 }
 
 const routeConfigContributions = createRouteConfigContributions(
@@ -65,7 +65,7 @@ export function runRouteConfigContributions(args: RouteConfigArgs): ReactNode | 
     return routeConfigContributions.run(args);
 }
 
-/** The platform-list pages of a module (D195): `platformListUrls` of its route contribution. */
-export function platformListUrlsOf(moduleName: string): readonly string[] {
-    return routeConfigContributions.platformListUrlsOf(moduleName);
+/** The platform pages of a module (D195, D197): `platformUrls` of its route contribution. */
+export function platformUrlsOf(moduleName: string): readonly string[] {
+    return routeConfigContributions.platformUrlsOf(moduleName);
 }

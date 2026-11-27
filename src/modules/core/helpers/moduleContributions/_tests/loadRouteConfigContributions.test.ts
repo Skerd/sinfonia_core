@@ -71,7 +71,7 @@ describe("createRouteConfigContributions: a module kept only for its platform li
     const at = (...segments: string[]): RouteConfigArgs => ({...args, menu: segments[0], subview: segments[1], segments});
     const shop = vi.fn(() => "shop view");
     const contributions = () => createRouteConfigContributions({
-        [path("eCommerce")]: {default: {id: "eCommerce", platformListUrls: ["/tenancy/systemSettings/categories"], contributeRoutes: shop}},
+        [path("eCommerce")]: {default: {id: "eCommerce", platformUrls: ["/tenancy/systemSettings/categories"], contributeRoutes: shop}},
     });
 
     afterEach(() => {
@@ -81,13 +81,13 @@ describe("createRouteConfigContributions: a module kept only for its platform li
 
     it("serves only its platform-list pages and what is under them", () => {
         setCompanyModules(["core"], ["eCommerce"]);
-        const {run, platformListUrlsOf} = contributions();
+        const {run, platformUrlsOf} = contributions();
         expect(run(at("tenancy", "systemSettings", "categories"))).toBe("shop view");
         expect(run(at("tenancy", "systemSettings", "categories", "edit"))).toBe("shop view");
         expect(run(at("tenancy", "systemSettings", "categoriesx"))).toBeUndefined();
         expect(run(at("shop", "orders"))).toBeUndefined();
         expect(shop).toHaveBeenCalledTimes(2);
-        expect(platformListUrlsOf("eCommerce")).toEqual(["/tenancy/systemSettings/categories"]);
+        expect(platformUrlsOf("eCommerce")).toEqual(["/tenancy/systemSettings/categories"]);
     });
 
     it("serves every page for a company that runs the module, and none for one that does not", () => {
@@ -97,8 +97,8 @@ describe("createRouteConfigContributions: a module kept only for its platform li
         expect(contributions().run(at("tenancy", "systemSettings", "categories"))).toBeUndefined();
     });
 
-    it("rejects platformListUrls that are not strings", () => {
-        const {run} = createRouteConfigContributions({[path("bad")]: {default: {platformListUrls: [1]}}});
+    it("rejects platformUrls that are not strings", () => {
+        const {run} = createRouteConfigContributions({[path("bad")]: {default: {platformUrls: [1]}}});
         expect(() => run(args)).toThrow();
     });
 });

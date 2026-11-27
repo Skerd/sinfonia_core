@@ -60,7 +60,7 @@ export function AuthenticationProvider({
             .then(({data}) => {
                 if (abortController.signal.aborted) return;
                 // Before hydrating: menus, routes and settings read the company's modules on first render.
-                setCompanyModules(data.company.modules, data.company.platformListModules);
+                setCompanyModules(data.company.modules, data.company.platformModules);
                 dispatch(updateUserData(data));
                 dispatch(updateToken(loginToken));
                 setIsHydrated(true);
