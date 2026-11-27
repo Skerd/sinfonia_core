@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/components/entityPage/hierarchy/platformListHierarchy.tsx",
+  "title": "Gerarchia delle categorie",
+  "search": "Cerca in qualsiasi lingua",
+  "openCategory": "Apri {category}",
+  "expandCategory": "Mostra le categorie sotto {category}",
+  "collapseCategory": "Nascondi le categorie sotto {category}",
+  "collapseAll": "Comprimi tutto",
+  "requested": "Richiesta",
+  "noSubcategories": "Nessuna sottocategoria",
+  "subcategories": {
+    "one": "{count} sottocategoria",
+    "other": "{count} sottocategorie"
+  },
+  "topLevelCount": {
+    "one": "{count} categoria principale",
+    "other": "{count} categorie principali"
+  },
+  "noMatchTitle": "Nessuna categoria trovata",
+  "noMatchDescription": "Niente corrisponde a «{query}». Prova un'altra parola o richiedi la categoria.",
+  "loadError": "Impossibile caricare le categorie.",
+  "retry": "Riprova",
+  "truncated": "Qui sono mostrate solo le prime 500; cerca per trovare le altre.",
+  "truncatedSearch": "Sono mostrati solo i primi 50 risultati; aggiungi una parola per restringere."
+}

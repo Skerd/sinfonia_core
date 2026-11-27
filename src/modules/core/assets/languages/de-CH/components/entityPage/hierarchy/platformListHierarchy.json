@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/components/entityPage/hierarchy/platformListHierarchy.tsx",
+  "title": "Kategorienhierarchie",
+  "search": "In jeder Sprache suchen",
+  "openCategory": "{category} öffnen",
+  "expandCategory": "Kategorien unter {category} anzeigen",
+  "collapseCategory": "Kategorien unter {category} ausblenden",
+  "collapseAll": "Alle zuklappen",
+  "requested": "Angefragt",
+  "noSubcategories": "Keine Unterkategorien",
+  "subcategories": {
+    "one": "{count} Unterkategorie",
+    "other": "{count} Unterkategorien"
+  },
+  "topLevelCount": {
+    "one": "{count} Hauptkategorie",
+    "other": "{count} Hauptkategorien"
+  },
+  "noMatchTitle": "Keine Kategorie gefunden",
+  "noMatchDescription": "Nichts passt zu «{query}». Versuchen Sie ein anderes Wort oder fragen Sie die Kategorie an.",
+  "loadError": "Die Kategorien konnten nicht geladen werden.",
+  "retry": "Erneut versuchen",
+  "truncated": "Hier werden nur die ersten 500 angezeigt; suchen Sie, um die übrigen zu finden.",
+  "truncatedSearch": "Nur die ersten 50 Treffer werden angezeigt; fügen Sie ein Wort hinzu, um einzugrenzen."
+}

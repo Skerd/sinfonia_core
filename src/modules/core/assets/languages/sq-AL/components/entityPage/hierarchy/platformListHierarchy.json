@@ -1,0 +1,25 @@
+{
+  "path": "src/modules/core/components/entityPage/hierarchy/platformListHierarchy.tsx",
+  "title": "Hierarkia e kategorive",
+  "search": "Kërkoni në çdo gjuhë",
+  "openCategory": "Hapni {category}",
+  "expandCategory": "Shfaqni kategoritë nën {category}",
+  "collapseCategory": "Fshihni kategoritë nën {category}",
+  "collapseAll": "Mbyllni të gjitha",
+  "requested": "E kërkuar",
+  "noSubcategories": "Pa nënkategori",
+  "subcategories": {
+    "one": "{count} nënkategori",
+    "other": "{count} nënkategori"
+  },
+  "topLevelCount": {
+    "one": "{count} kategori kryesore",
+    "other": "{count} kategori kryesore"
+  },
+  "noMatchTitle": "Nuk u gjet asnjë kategori",
+  "noMatchDescription": "Asgjë nuk përputhet me “{query}”. Provoni një fjalë tjetër, ose kërkoni kategorinë.",
+  "loadError": "Kategoritë nuk u ngarkuan.",
+  "retry": "Provoni përsëri",
+  "truncated": "Shfaqen vetëm 500 të parat; kërkoni për të gjetur të tjerat.",
+  "truncatedSearch": "Shfaqen vetëm 50 përputhjet e para; shtoni një fjalë për ta ngushtuar."
+}
