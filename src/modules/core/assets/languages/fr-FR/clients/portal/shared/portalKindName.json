@@ -12,6 +12,10 @@
     "tab": "Voitures",
     "item": "Voiture"
   },
+  "vehicle": {
+    "tab": "Voitures précises",
+    "item": "Voiture précise"
+  },
   "treatment": {
     "tab": "Dentaire",
     "item": "Soin"

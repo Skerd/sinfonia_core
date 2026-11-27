@@ -12,6 +12,10 @@
     "tab": "Auto",
     "item": "Auto"
   },
+  "vehicle": {
+    "tab": "Auto precise",
+    "item": "Auto precisa"
+  },
   "treatment": {
     "tab": "Dentista",
     "item": "Trattamento"

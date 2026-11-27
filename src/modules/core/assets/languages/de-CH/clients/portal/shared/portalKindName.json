@@ -12,6 +12,10 @@
     "tab": "Autos",
     "item": "Auto"
   },
+  "vehicle": {
+    "tab": "Bestimmte Autos",
+    "item": "Bestimmtes Auto"
+  },
   "treatment": {
     "tab": "Zahnmedizin",
     "item": "Behandlung"

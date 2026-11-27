@@ -12,6 +12,10 @@
     "tab": "Makina",
     "item": "Makinë"
   },
+  "vehicle": {
+    "tab": "Makina të caktuara",
+    "item": "Makinë e caktuar"
+  },
   "treatment": {
     "tab": "Dentare",
     "item": "Trajtim"

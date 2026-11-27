@@ -12,6 +12,10 @@
     "tab": "Cars",
     "item": "Car"
   },
+  "vehicle": {
+    "tab": "Exact cars",
+    "item": "Exact car"
+  },
   "treatment": {
     "tab": "Dental",
     "item": "Treatment"
